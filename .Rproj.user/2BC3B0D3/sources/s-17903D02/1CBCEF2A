@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1539296223570.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "1CBCEF2A",
+    "lastKnownWriteTime" : 1539299805,
+    "last_content_update" : 1539299805828,
+    "path" : "~/GitHub/RMAS/R/write_config.R",
+    "project_path" : "R/write_config.R",
+    "properties" : {
+        "cursorPosition" : "5,38",
+        "docOutlineVisible" : "1",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
