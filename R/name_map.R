@@ -9,7 +9,8 @@ name_map <-function(toMAS = TRUE, in_name){
            "SR_LN(R0)" = "R0",
            "SR_BH_steep" = "h",
            "SR_sigmaR" = "sigma_r",
-           "SR_autocorr" = "rho"
+           "SR_autocorr" = "rho",
+           "VonBert_K_Fem_GP_1" = "c"
            )
   }
   return(new_name)
