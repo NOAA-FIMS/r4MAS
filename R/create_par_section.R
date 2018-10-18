@@ -9,16 +9,28 @@ create_par_section <- function(section_type, id = 1,
   output_list$id <- id
   new_names <- unlist(lapply(par_names, name_map, toMAS=TRUE))
 
-  create_par <-  function(x){
+  for(x in 1:length(new_names)){
+      if(new_names[[x]]=='R0'){
+        par_list[[new_names[x]]]$`value` <- exp(par_value[x])
+      } else{
       par_list[[new_names[x]]]$`value` <- par_value[x]
-      par_list[[new_names[x]]]$estimated <- ifelse(par_phase[x]<0, "false", "true")
+      }
+      if(!is.na(par_units[x])){
+        par_list[[new_names[x]]]$units <- par_units[x]
+      }
+
+      if(par_phase[x]<0){
+        par_list[[new_names[x]]]$estimated <- "false"
+        par_list[[new_names[x]]]$phase <- -par_phase[x]
+      } else{
+        par_list[[new_names[x]]]$estimated <- "true"
+        par_list[[new_names[x]]]$phase <- par_phase[x]
+      }
       par_list[[new_names[x]]]$min <- par_lo[x]
       par_list[[new_names[x]]]$max <- par_hi[x]
-      par_list[[new_names[x]]]$phase <- par_phase[x]
-      return(par_list)
+
 
   }
-   par_list <- lapply(1:length(par_names), create_par)
 
 
   output_list$parameters <- par_list
