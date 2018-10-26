@@ -1,4 +1,5 @@
 devtools::load_all("C:\\Users\\chris\\Documents\\GitHub\\jsonlite")
+devtools::install_github("r4ss/r4ss", force=TRUE)
 hake_om <- "C:/Users/chris/Documents/StockAssessment/hake_om/"
 hake_out<- r4ss::SS_output(hake_om)
 r4ss::SS_plots(hake_out, plot=c(1:6,8:24))
@@ -42,32 +43,33 @@ sel1 <- create_par_section("selectivity", 1, "logistic", par_names=sel_sub1$Labe
 sel2 <- create_par_section("selectivity", 2, "logistic", par_names=sel_sub1$Label, par_lo=sel_sub1$LO, par_hi=sel_sub1$HI, par_units=NA, par_phase=sel_sub1$PHASE, par_value=sel_sub1$INIT
 )
 hake_ctl<- r4ss::SS_readctl_3.24(paste0(hake_om,"2018hake_control.ss"))
-hake_dat <- r4ss::SS_readdat_3.24(paste0(hake_om,"2018hake_data.ss"))
+hake_dat <- r4ss::SS_readdat_3.30(paste0(hake_om,"2018hake_data.ss"))
 
 movement <- movement_matrix(1,1,1)
 par <- vector("list")
 par$analyst <- "Christine Stawitz"
 par$study_name <- "HakeCaseStudy"
-par$movement_type <-
-par$years <- 2017-1966
-par$seasons <- 1
+par$movement_type <- "spatial"
+par$years <- hake_dat$endyr - hake_dat$styr
+par$seasons <- hake_dat$nseas
 par$ages <- c(0.01,1:20)
-par$extended_plus_group <- 20
-par$first_year <- 1966
-par$last_year <- 2017
-par$season$id <- 1
-par$season$name <- "season 1"
-par$season$months <- 12
+par$extended_plus_group <- hake_ctl$Nages
+par$first_year <- hake_dat$styr
+par$last_year <- hake_dat$endyr
+par$season <- create_seasons("season 1", 1, hake_dat$months_per_seas)
 par$growth <- growth
 par$recruitment <- rec
 par$natural_mortality <- M
 par$selectivity <- sel1
 par$selectivity <- sel2
-par$fishing_mortality
-par$area
-par$likelihood_component
-par$population
-par$fleet
-par$survey
+par$fishing_mortality <- make_F(nyears, 1, TRUE, TRUE, phase=, values = NA)
+par$area <- make_area("California current")
+par$likelihood_component <-
+par$population <-
+par$fleet <-
+par$survey <-
+
+make_population(id=1, natal_area=1, name="Population 1", hcr="foo", years = par$years, movement = par$movement_type, maturity = c(1,10), growth = growth, M = M, recruitment = par$parameters)
+environment(make_population)
 
 write_config(par, "C:\\Users\\chris\\Documents\\GitHub\\MAS\\Tests\\HakeCaseStudy\\parconfig.json")
