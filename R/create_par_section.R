@@ -1,7 +1,7 @@
 create_par_section <- function(section_type, id = 1,
                                model, par_names, par_lo,
                                par_hi, par_units, par_phase,
-                               par_value){
+                               par_value, rec_devs = NA){
   output_list <- vector("list")
   par_list <-vector("list")
 
@@ -31,7 +31,11 @@ create_par_section <- function(section_type, id = 1,
 
 
   }
-
+  if(section_type=="recruitment"){
+    par_list$recruitment_deviations$estimated = "false"
+    par_list$recruitment_deviations$phase = 4
+    par_list$recruitment_deviations$values = rec_devs
+  }
 
   output_list$parameters <- par_list
   return(output_list)
