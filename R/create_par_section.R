@@ -36,6 +36,13 @@ create_par_section <- function(section_type, id = 1,
     par_list$recruitment_deviations$phase = 4
     par_list$recruitment_deviations$values = rec_devs
   }
+  if(section_type=="selectivity"){
+    if(grep("Age", par_names)>0){
+      par_list$selectivity$base <- "age"
+    } else{
+      par_list$selectivity$base <- "length"
+    }
+  }
 
   output_list$parameters <- par_list
   return(output_list)

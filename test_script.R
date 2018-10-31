@@ -29,10 +29,13 @@ hakepars<- r4ss::SS_parlines(paste0(hake_om,"2018hake_control.ss"))
 hake_ctl<- r4ss::SS_readctl(paste0(hake_om,"2018hake_control.ss"))
 hake_dat <- r4ss::SS_readdat_3.30(paste0(hake_om,"2018hake_data.ss"))
 lapply(hakepars$Label, name_map, toMAS=TRUE)
+
+
 growth_ind<- c(2,3,4,7,8)
 growth_sub <- hakepars[growth_ind,]
 rec_ind<- c(18,19,20)
 rec_sub <- hakepars[rec_ind,]
+
 growth <- create_par_section("growth", 1, "von_bertalanffy_modified",
                    par_names = growth_sub$Label, par_lo=growth_sub$LO,
                    par_hi=growth_sub$HI, par_units=c(rep("cm",2),rep(NA,3)),
@@ -53,35 +56,61 @@ sel1 <- create_par_section("selectivity", 1, "logistic", par_names=sel_sub1$Labe
 sel2 <- create_par_section("selectivity", 2, "logistic", par_names=sel_sub1$Label, par_lo=sel_sub1$LO, par_hi=sel_sub1$HI, par_units=NA, par_phase=sel_sub1$PHASE, par_value=sel_sub1$INIT
 )
 
+F_values= hake_out$derived_quants %>% filter(substr(Label,1,2)=="F_") %>% select(Value)
+nyears <- hake_dat$endyr - hake_dat$styr
+
 
 movement <- movement_matrix(1,1,1)
-par <- vector("list")
-par$analyst <- "Christine Stawitz"
-par$study_name <- "HakeCaseStudy"
-par$movement_type <- "spatial"
-par$years <- hake_dat$endyr - hake_dat$styr
-par$seasons <- hake_dat$nseas
-par$ages <- c(0.01,1:20) # not working with read ctl file
-par$extended_plus_group <- hake_ctl$Nages
-par$first_year <- hake_dat$styr
-par$last_year <- hake_dat$endyr
-par$season <- create_seasons("season 1", 1, hake_dat$months_per_seas)
-par$growth <- growth
-par$recruitment <- rec
-par$natural_mortality <- M
-par$selectivity <- sel1
-par$selectivity <- sel2
-F_values<- hake_out$derived_quants %>% filter(substr(Label,1,2)=="F_") %>% select(Value)
-par$fishing_mortality <- make_F(par$years, 1, TRUE, TRUE, phase=1, values = F_values[2:52,])
-par$area <- make_area("California current")
+par <- make_branch(analyst = "Christine Stawitz",
+                    study_name = "HakeCaseStudy",
+                   movement_type ="spatial",
+                   years = nyears,
+                   seasons =hake_dat$nseas,
+                   ages = c(0.01,1:20),
+                   extended_plus_group = hake_ctl$Nages,
+                  first_year = hake_dat$styr,
+                  last_year = hake_dat$endyr,
+                  season = list("name"="season 1",
+                                    "id"=1:length(hake_dat$months_per_seas),
+                                    "months"= hake_dat$months_per_seas),
+                  growth = growth,
+                  recruitment = rec,
+                  natural_mortality = M,
+                  selectivity = list(sel1, sel2),
+                  fishing_mortality = list("id" = id,
+                                     "parameters" = list(
+                                     "estimated" = "true",
+                                     "delta_method"= "true",
+                                    "phase" = 1,
+                                    "values" = F_values[2:52,])),
+       area = list("id"=1, "name"="California current"),
+    likelihood_component =list("id" = c(1,2,3),
+                               "models"=c("lognormal", "multinomial", "multinomial"),
+                               "lambdas" = lambdas,
+                               "years"=nyears),
+    population = list("id"=1, "natal_area"=1,
+                      "name"="Population 1",
+                      "hcr"="foo",
+                      "years" = nyears,
+                      "movement" = "spatial",
+                      "maturity" = c(0,rep(1,19)),
+                      "growth" = growth,
+                      "M"= M,
+                      "recruitment" = rec),
+    fleet = list("name"= "fleet1",
+                   "id" = 1,
+                 "fishing_mortality" = 1,
+                 "selectivity" = 1,
+                 "likelihood_components" = list("id" = 1, "component" = "age_comp")),
+    survey = list("name"= "survey1",
+                    "id" = 1,
+                  "fishing_mortality" = 1,
+                  "selectivity" = 2,
+                  "likelihood_components" = list("id" = 1, "component" = "age_comp")
+                  ))
 
-par$likelihood_component <- make_likelihood_component(ids = c(1,2,3), models=c("lognormal", "multinomial", "multinomial"), lambdas = lambdas, nyears=par$years)
-
-par$population <-make_population(id=1, natal_area=1, name="Population 1", hcr="foo", years = par$years, movement = par$movement_type, maturity = c(1,10), growth = growth, M = M, recruitment = par$parameters)
-
-par$fleet <-
-par$survey <-
+    list("id" = 1, "component" = "biomass_index")
 
 
 
-write_config(par, "C:\\Users\\chris\\Documents\\GitHub\\MAS\\Tests\\HakeCaseStudy\\parconfig.json")
+write_config(par, "C:\\Users\\chris\\Documents\\GitHub\\MAS\\Tests\\HakeCaseStudy\\par2config.json")
