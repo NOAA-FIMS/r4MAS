@@ -48,6 +48,11 @@ output_plots <- function(dir, ages, years){
   fem_list <- get_each_sex("Female", non_blanks, idx, 1, 1)
   male_list <- get_each_sex("Male", non_blanks, idx, 1, 1)
 
+
+  if(!dir.exists(file.path(dir,"Figs"))){
+    dir.create(file.path(dir,"Figs"))
+  }
+
   each_plot <- function(input_list){
     #Names of each quantity
     if(length(grep("Figs",getwd()))==0){
@@ -115,6 +120,8 @@ output_plots <- function(dir, ages, years){
     }
     setwd(dir)
   }
+  each_plot(fem_list)
+  each_plot(male_list)
 
 
 
@@ -139,7 +146,9 @@ output_plots <- function(dir, ages, years){
   for(i in 1:length(ind)){
     obs <- obs_report[[names(obs_report)[i]]]
     exp <- exp_report[[names(exp_report)[ind[i]]]]
-
+    if(length(grep("Figs",getwd()))==0){
+      setwd("./Figs")
+    }
     if(is.null(dim(obs))){
       exp <- apply(exp, 2, sum)
       pdf(paste0("ObsvsExpected", pattern_obs[i],
