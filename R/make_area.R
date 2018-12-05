@@ -1,9 +1,7 @@
-make_area <- function(area_names){
-  area <- area_list <- vector("list")
-  for(i in 1:length(area_names)){
-    area$id <- i
-    area$name <- area_names[i]
-    area_list[[i]] <- area
-  }
-  return(area_list)
+make_area <- function(name, id){
+  function_env <- sys.frame(sys.parent(0))
+  arguments <- ls(function_env)[-1]
+  return_list <- vector("list")
+  return_list <- lapply(X=arguments, function(X) return_list$X <- get(X, function_env))
+  setNames(return_list, arguments)
 }
