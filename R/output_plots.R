@@ -1,9 +1,9 @@
-output_plots <- function(dir, ages, years){
+output_plots <- function(dir, ages, years, pop_name, rep_name, figs_dir){
   #setwd("C:/Users/chris/Documents/StockAssessment/MAS")
   setwd(dir)
 
   #Read in populations.txt and report file
-  MAS_pops=scan("populations.txt",
+  MAS_pops=scan(pop_name,
                 what="character",
                 flush=TRUE,
                 blank.lines.skip=FALSE,
@@ -49,14 +49,14 @@ output_plots <- function(dir, ages, years){
   male_list <- get_each_sex("Male", non_blanks, idx, 1, 1)
 
 
-  if(!dir.exists(file.path(dir,"Figs"))){
-    dir.create(file.path(dir,"Figs"))
+  if(!dir.exists(file.path(dir,figs_dir))){
+    dir.create(file.path(dir,figs_dir))
   }
 
   each_plot <- function(input_list){
     #Names of each quantity
     if(length(grep("Figs",getwd()))==0){
-      setwd("./Figs")
+      setwd(paste0(".",figs_dir))
     }
     quants <- names(input_list)
 
@@ -125,7 +125,7 @@ output_plots <- function(dir, ages, years){
 
 
 
-  MAS_rep=scan("mas_report.txt",
+  MAS_rep=scan(rep_name,
                 what="character",
                 flush=TRUE,
                 blank.lines.skip=FALSE,
@@ -147,7 +147,7 @@ output_plots <- function(dir, ages, years){
     obs <- obs_report[[names(obs_report)[i]]]
     exp <- exp_report[[names(exp_report)[ind[i]]]]
     if(length(grep("Figs",getwd()))==0){
-      setwd("./Figs")
+      setwd(paste0(".",figs_dir))
     }
     if(is.null(dim(obs))){
       exp <- apply(exp, 2, sum)
@@ -185,4 +185,4 @@ output_plots <- function(dir, ages, years){
 }
 
 
-output_plots(dir="C:/Users/chris/Documents/StockAssessment/MAS", years = 1966:2017, ages=c(0.01,seq(1,15)))
+output_plots(dir="C:/Users/chris/Documents/StockAssessment/MAS", years = 1966:2017, ages=c(0.01,seq(1,15)), pop_name = "populations_2.txt", rep_name = "mas_report_2.txt", figs_dir="/Figs2")
