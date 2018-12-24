@@ -18,7 +18,7 @@ output_plots <- function(dir, ages, years, pop_name, rep_name, figs_dir){
   rec_param_list<- strsplit(non_blanks[id_rec], "\t")
 
   #Get vector and matrices for each sex
-  get_each_sex <- function(sex, non_blanks, id_sex, name_diff, k_start){
+  get_each_sex <- function(sex, non_blanks, id_sex, name_diff){
 
     #Identify strings corresponding to sex
   id_sex <- unlist(lapply(sex, grep, non_blanks))
@@ -27,16 +27,21 @@ output_plots <- function(dir, ages, years, pop_name, rep_name, figs_dir){
   vals_sex <- vector("list")
 
   #Get values for each quantity
-  get_vals <- function(i,k){
+  get_vals <- function(i, k){
     return(as.double(unlist(strsplit(non_blanks[id_sex[i]+k], " "))))
   }
 
   for(i in 1:length(id_sex)){
-    k <- k_start
-
-    tmp <- get_vals(i, k)
-    while(!any(is.na(get_vals(i, k+1)))){
-      tmp <- rbind(tmp, get_vals(i, k+1))
+    #Find first non-string value following the name
+    for(j in 1:5){
+      if(!any(is.na(get_vals(i,j)))){
+        k <- j
+        break
+      }
+    }
+    tmp <- NULL
+    while(!any(is.na(get_vals(i, k)))){
+      tmp <- rbind(tmp, get_vals(i, k))
       k <- k+1
     }
     vals_sex[[names_sex[i]]] <- tmp
@@ -45,8 +50,8 @@ output_plots <- function(dir, ages, years, pop_name, rep_name, figs_dir){
   }
 
   #List of populations values
-  fem_list <- get_each_sex("Female", non_blanks, idx, 1, 1)
-  male_list <- get_each_sex("Male", non_blanks, idx, 1, 1)
+  fem_list <- get_each_sex("Female", non_blanks, idx, 1)
+  male_list <- get_each_sex("Male", non_blanks, idx, 1)
 
 
   if(!dir.exists(file.path(dir,figs_dir))){
@@ -61,20 +66,22 @@ output_plots <- function(dir, ages, years, pop_name, rep_name, figs_dir){
     quants <- names(input_list)
 
     for(i in 1:length(input_list)){
+      if(i==26){browser()}
       curr <- input_list[[quants[i]]]
-      if(is.null(nrow(curr))){
+      if(nrow(curr)<=1){
         png(paste0(quants[i], ".png"))
         dim_vect <- length(curr)
         if(dim_vect == length(ages)){
-          plot(curr~ages, main=quants[i],
+          plot(curr[1,]~ages, main=quants[i],
                xlab="Ages", type="l",
                ylab=quants[i])
         } else if(dim_vect == length(years)){
-          plot(curr~years, main=quants[i],
+          plot(curr[1,]~years, main=quants[i],
                xlab="Yrs",
                ylab=quants[i],
                type="l")
         } else{
+          browser()
           print("dimensions do not match!")
         }
         dev.off()
@@ -114,6 +121,8 @@ output_plots <- function(dir, ages, years, pop_name, rep_name, figs_dir){
           }
           dev.off()
         } else{
+
+          browser()
           print("Dimensions do not match!")
         }
       }
@@ -135,8 +144,8 @@ output_plots <- function(dir, ages, years, pop_name, rep_name, figs_dir){
   idx=which(MAS_rep!="")
   non_blanks=MAS_rep[idx]
 
-  exp_report <- get_each_sex("Expected", non_blanks, id_sex=idx, 0, 2)
-  obs_report <- get_each_sex("Observed", non_blanks, id_sex = idx,0,2)
+  exp_report <- get_each_sex("Expected", non_blanks, id_sex=idx, 0)
+  obs_report <- get_each_sex("Observed", non_blanks, id_sex = idx,0)
 
   pattern_obs <- sub("Observed ","", names(obs_report))
   pattern_obs <- sub(": O", "", pattern_obs)
@@ -158,16 +167,19 @@ output_plots <- function(dir, ages, years, pop_name, rep_name, figs_dir){
       dev.off()
     } else{
     if(any(dim(obs)!=dim(exp))){
+      browser()
+      if(dim(obs)[2]==dim(exp)[2]){
+        pdf(paste0("ObsVsExpected", pattern_obs[i],".pdf"))
+        par(mfrow=c(2,2))
+        exp <- apply(exp, 2, sum)
+        plot(as.numeric(obs)~years, pch=19, main=paste(pattern_obs, years))
+          lines(exp~years)
+        dev.off()
+      } else{
+
       print("dimensions don't match")
-    } else if(dim(obs)[1]==2){
-      pdf(paste0("ObsVsExpected", pattern_obs[i],".pdf"))
-      par(mfrow=c(2,2))
-      for(j in 1:nrow(obs)){
-        plot(obs[j,]~years, pch=19, main=paste(pattern_obs[i], years[j]))
-        lines(exp[j,]~years)
-      }
-      dev.off()
-    } else{
+    }
+      } else{
       pdf(paste0("ObsVsExpected", pattern_obs[i],
                  ".pdf"))
       par(mfrow=c(2,2))
@@ -184,5 +196,3 @@ output_plots <- function(dir, ages, years, pop_name, rep_name, figs_dir){
 
 }
 
-
-output_plots(dir="C:/Users/chris/Documents/StockAssessment/MAS", years = 1966:2017, ages=c(0.01,seq(1,15)), pop_name = "populations_2.txt", rep_name = "mas_report_2.txt", figs_dir="/Figs2")

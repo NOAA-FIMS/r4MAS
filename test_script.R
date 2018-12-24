@@ -10,10 +10,7 @@ hake_out<- r4ss::SS_output(hake_om, covar=F)
 hake_out$current_depletion
 setwd(pkg)
 r4ss::SS_plots(hake_out, plot=c(1:6,8:24))
-#generate recdevs
-devs<-exp(-0.5*1.4^2)*exp(rnorm(47+24,0, 1.4))
-scaled <- (devs- mean(devs))
-sd(scaled)
+
 
 case_1_config <- read_config("C:\\Users\\chris\\Documents\\GitHub\\MAS\\Tests\\CaseStudy1\\mas_case_1_config.json")
 case_2_config <- read_config("C:\\Users\\chris\\Documents\\GitHub\\MAS\\Tests\\CaseStudy2\\mas_case_2_config.json")
@@ -59,7 +56,7 @@ sel2 <- create_par_section("selectivity", 2, "logistic", par_names=sel_sub1$Labe
 F_values= hake_out$derived_quants %>% filter(substr(Label,1,2)=="F_") %>% select(Value)
 nyears <- hake_dat$endyr - hake_dat$styr
 
-
+lambdas <- 1
 movement <- movement_matrix(1,1,1)
 par <- make_branch(analyst = "Christine Stawitz",
                     study_name = "HakeCaseStudy",
@@ -110,7 +107,85 @@ par <- make_branch(analyst = "Christine Stawitz",
                   ))
 
     list("id" = 1, "component" = "biomass_index")
+data_in <- vector("list")
+dat_types <- c("CPUE", "agecomp", "lencomp")
+existing_dat <- which(dat_types %in% names(hake_dat))
 
+mas_type <- unlist(lapply(dat_types[existing_dat], switch,
+               agecomp = "catch_proportion_at_age",
+               lencomp = "catch_proportion_at_length",
+               CPUE = "catch_biomass"))
+more_info <- unlist(lapply(dat_types[existing_dat],
+                    switch,
+                    agecomp = "age_info",
+                    lencomp = "len_info",
+                    CPUE = "CPUEinfo"))
+info <- unlist(hake_dat[more_info])
+units_name <- paste(more_info, ".Units",
+                    rep(1:length(more_info),each=2),
+                    sep="")
+m_f <- paste(more_info, ".combine_M_F",
+                    rep(1:length(more_info),each=2),
+             sep="")
 
+value_list <- hake_dat[dat_types[existing_dat]]
+se<- value_list$CPUE[,c("se_log")]
+value_list$CPUE <- value_list$CPUE[,c("obs")]
+value_list$agecomp <- value_list$agecomp[,paste0("a", 1:15)]
+data_objs <- make_data_obj(data_list= value_list,
+                           name = make.unique(mas_type),
+                           units = rep("MT", length(value_list)),
+                           data_object_type = mas_type,
+                           sex = rep("undifferentiated", 2),
+                           areas_of_operation = list(case_1_data_$data_object$areas_of_operation,           case_1_data_$data_object$areas_of_operation                                                  ),
+                           observation_error = list(se, matrix(nrow=dim(value_list$agecomp)[1],
+                                                               ncol=dim(value_list$agecomp)[2])))
+par$ages <- c(.01,seq(1,20))
+hake_data <- make_data(config_object = par, data_object = data_objs)
+hake_data$data_object[[2]][[8]] <- as.matrix(hake_data$data_object[[2]][[8]])
 
 write_config(par, "C:\\Users\\chris\\Documents\\GitHub\\MAS\\Tests\\HakeCaseStudy\\par2config.json")
+write_data(hake_data, "C:\\Users\\chris\\Documents\\GitHub\\MAS\\Tests\\HakeCaseStudy\\hakedata.json")
+
+
+
+
+
+output_plots(dir="C:/Users/chris/Documents/StockAssessment/MAS", years = 1966:2017, ages=c(0.01,seq(1,15)), pop_name = "populations (12).txt", rep_name = "mas_report (11).txt", figs_dir="/Figs_zero")
+
+require(dplyr)
+MAS_N<-read.csv("MAS_numatage.csv", header = FALSE)
+SS_N <- read.csv("SS_numatage.csv", header = FALSE)
+
+plot_NAtAge <- function(SS, MAS){
+  years <- seq(1966,2017)
+  ages <- seq(0,15)
+  pdf("NAtAge_ByAge.pdf")
+  for(i in 1:nrow(SS)){
+    plot(NA, xlim= c(1964, 2017),
+       ylim=c(min(rbind(MAS[i,], SS[i,])),
+                  max(rbind(SS[i,], MAS[i,]))),
+       xlab= "Year", ylab = "Number",
+       main=paste("Age", ages[i]))
+    points(as.numeric(SS[i,])~years)
+    lines(as.numeric(MAS[i,])~years)
+  }
+  dev.off()
+
+  pdf("NAtAge_ByYr.pdf")
+  for(i in 1:ncol(SS)){
+
+    plot(NA, xlim= c(0, 15),
+         ylim=c(min(cbind(MAS[,i], SS[,i])),
+                    max(cbind(SS[,i], MAS[,i]))),
+         main = paste("Year", years[i]), xlab= "Age",
+         ylab = "Number")
+    points(as.numeric(SS[,i])~ages)
+    lines(as.numeric(MAS[,i])~ages)
+  }
+  dev.off()
+
+}
+plot_NAtAge(SS_N, MAS_N)
+hakeom<-r4ss::SS_output(getwd(), covar=FALSE)
+r4ss::SS_plots(hakeom)
