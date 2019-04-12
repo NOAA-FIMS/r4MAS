@@ -66,7 +66,7 @@ output_plots <- function(dir, ages, years, pop_name, rep_name, figs_dir){
     quants <- names(input_list)
 
     for(i in 1:length(input_list)){
-      if(i==26){browser()}
+
       curr <- input_list[[quants[i]]]
       if(nrow(curr)<=1){
         png(paste0(quants[i], ".png"))
@@ -143,7 +143,6 @@ output_plots <- function(dir, ages, years, pop_name, rep_name, figs_dir){
 
   idx=which(MAS_rep!="")
   non_blanks=MAS_rep[idx]
-
   exp_report <- get_each_sex("Expected", non_blanks, id_sex=idx, 0)
   obs_report <- get_each_sex("Observed", non_blanks, id_sex = idx,0)
 
@@ -153,6 +152,7 @@ output_plots <- function(dir, ages, years, pop_name, rep_name, figs_dir){
                        grep, x=names(exp_report)))
 
   for(i in 1:length(ind)){
+
     obs <- obs_report[[names(obs_report)[i]]]
     exp <- exp_report[[names(exp_report)[ind[i]]]]
     if(length(grep("Figs",getwd()))==0){
@@ -167,12 +167,12 @@ output_plots <- function(dir, ages, years, pop_name, rep_name, figs_dir){
       dev.off()
     } else{
     if(any(dim(obs)!=dim(exp))){
-      browser()
+
       if(dim(obs)[2]==dim(exp)[2]){
         pdf(paste0("ObsVsExpected", pattern_obs[i],".pdf"))
-        par(mfrow=c(2,2))
+        par(mfrow=c(1,1))
         exp <- apply(exp, 2, sum)
-        plot(as.numeric(obs)~years, pch=19, main=paste(pattern_obs, years))
+        plot(as.numeric(obs)~years, pch=19, main=pattern_obs[i])
           lines(exp~years)
         dev.off()
       } else{
@@ -180,14 +180,24 @@ output_plots <- function(dir, ages, years, pop_name, rep_name, figs_dir){
       print("dimensions don't match")
     }
       } else{
+        if(dim(obs)[1]>1){
       pdf(paste0("ObsVsExpected", pattern_obs[i],
                  ".pdf"))
       par(mfrow=c(2,2))
       for(j in 1:ncol(obs)){
         plot(obs[,j]~ages, pch=19, main=paste(pattern_obs[i],j))
       lines(exp[,j]~ages)
+      }
+
+      dev.off()
+        } else{
+          pdf(paste0("ObsVsExpected", pattern_obs[i],
+                     ".pdf"))
+          par(mfrow=c(1,1))
+            plot(as.numeric(obs)~years, pch=19, main=pattern_obs[i])
+            lines(as.numeric(exp)~years)
+            dev.off()
     }
-    dev.off()
     }
   }
 

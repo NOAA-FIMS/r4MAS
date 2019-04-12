@@ -151,11 +151,11 @@ write_data(hake_data, "C:\\Users\\chris\\Documents\\GitHub\\MAS\\Tests\\HakeCase
 
 
 
-output_plots(dir="C:/Users/chris/Documents/StockAssessment/MAS", years = 1966:2017, ages=c(0.01,seq(1,15)), pop_name = "populations (12).txt", rep_name = "mas_report (11).txt", figs_dir="/Figs_zero")
+output_plots(dir="C:/Users/chris/Documents/StockAssessment/MAS", years = 1966:2017, ages=c(0.01,seq(1,15)), pop_name = "populations (43).txt", rep_name = "mas_report (34).txt", figs_dir="/Figs_zero")
 
 require(dplyr)
-MAS_N<-read.csv("MAS_numatage.csv", header = FALSE)
-SS_N <- read.csv("SS_numatage.csv", header = FALSE)
+MAS_N<-read.csv("C:/Users/chris/Documents/StockAssessment/MAS/MAS_numatage.csv", header = FALSE)
+SS_N <- read.csv("C:/Users/chris/Documents/StockAssessment/MAS/SS_numatage.csv", header = FALSE)
 
 plot_NAtAge <- function(SS, MAS){
   years <- seq(1966,2017)
@@ -189,3 +189,6 @@ plot_NAtAge <- function(SS, MAS){
 plot_NAtAge(SS_N, MAS_N)
 hakeom<-r4ss::SS_output(getwd(), covar=FALSE)
 r4ss::SS_plots(hakeom)
+
+
+read.csv("SS_Input_")
