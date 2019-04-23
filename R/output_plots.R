@@ -1,6 +1,6 @@
-output_plots <- function(dir, ages, years, pop_name, rep_name, figs_dir){
+output_plots <- function(data.dir, ages, years, pop_name, rep_name, figs_dir){
   #setwd("C:/Users/chris/Documents/StockAssessment/MAS")
-  setwd(dir)
+  setwd(here(data.dir))
 
   #Read in populations.txt and report file
   MAS_pops=scan(pop_name,
@@ -16,14 +16,23 @@ output_plots <- function(dir, ages, years, pop_name, rep_name, figs_dir){
   rec_params <- c("R0\t", "h\t", "SB0\t")
   id_rec <- unlist(lapply(rec_params, grep,non_blanks))
   rec_param_list<- strsplit(non_blanks[id_rec], "\t")
-
   #Get vector and matrices for each sex
   get_each_sex <- function(sex, non_blanks, id_sex, name_diff){
 
     #Identify strings corresponding to sex
   id_sex <- unlist(lapply(sex, grep, non_blanks))
-  #Name of the quantity is the string before sex
-  names_sex <- paste(non_blanks[id_sex-name_diff], substr(sex,1,1))
+  id_sex_total <- unlist(lapply("Total", grep, non_blanks[id_sex+1]))
+  #Name of the quantity is the string before sex 
+  #if sex is MF, otherwise it is "Males and Females"
+  #or "Total"
+  if(sex %in% c("Male", "Female")){
+  names_sex <- paste(non_blanks[id_sex-name_diff],
+                     sex)
+  } else {
+    id_sex <- id_sex[id_sex_total]
+    names_sex <- paste(non_blanks[id_sex-name_diff],
+                       "Total")
+  }
   vals_sex <- vector("list")
 
   #Get values for each quantity
@@ -54,14 +63,14 @@ output_plots <- function(dir, ages, years, pop_name, rep_name, figs_dir){
   male_list <- get_each_sex("Male", non_blanks, idx, 1)
 
 
-  if(!dir.exists(file.path(dir,figs_dir))){
-    dir.create(file.path(dir,figs_dir))
+  if(!dir.exists(here(figs_dir))){
+    dir.create(here(figs_dir))
   }
 
   each_plot <- function(input_list){
     #Names of each quantity
-    if(length(grep("Figs",getwd()))==0){
-      setwd(paste0(".",figs_dir))
+    if(length(grep("plots",getwd()))==0){
+      setwd(here(figs_dir))
     }
     quants <- names(input_list)
 
@@ -121,19 +130,18 @@ output_plots <- function(dir, ages, years, pop_name, rep_name, figs_dir){
           }
           dev.off()
         } else{
-
-          browser()
           print("Dimensions do not match!")
         }
       }
     }
-    setwd(dir)
+    setwd(here())
   }
   each_plot(fem_list)
   each_plot(male_list)
 
 
-
+  
+  setwd(here(data.dir))
   MAS_rep=scan(rep_name,
                 what="character",
                 flush=TRUE,
@@ -143,20 +151,22 @@ output_plots <- function(dir, ages, years, pop_name, rep_name, figs_dir){
 
   idx=which(MAS_rep!="")
   non_blanks=MAS_rep[idx]
+  
+  browser()
   exp_report <- get_each_sex("Expected", non_blanks, id_sex=idx, 0)
   obs_report <- get_each_sex("Observed", non_blanks, id_sex = idx,0)
 
   pattern_obs <- sub("Observed ","", names(obs_report))
   pattern_obs <- sub(": O", "", pattern_obs)
-  ind <- unlist(lapply(paste0(pattern_obs,":"),
+  ind <- unlist(lapply(pattern_obs,
                        grep, x=names(exp_report)))
 
   for(i in 1:length(ind)){
 
     obs <- obs_report[[names(obs_report)[i]]]
     exp <- exp_report[[names(exp_report)[ind[i]]]]
-    if(length(grep("Figs",getwd()))==0){
-      setwd(paste0(".",figs_dir))
+    if(length(grep("plots",getwd()))==0){
+      setwd(here(figs_dir))
     }
     if(is.null(dim(obs))){
       exp <- apply(exp, 2, sum)
@@ -181,7 +191,9 @@ output_plots <- function(dir, ages, years, pop_name, rep_name, figs_dir){
     }
       } else{
         if(dim(obs)[1]>1){
-      pdf(paste0("ObsVsExpected", pattern_obs[i],
+      pdf(paste0("ObsVsExpected", 
+                 strsplit(pattern_obs[i],
+                          ":")[[1]][1],
                  ".pdf"))
       par(mfrow=c(2,2))
       for(j in 1:ncol(obs)){

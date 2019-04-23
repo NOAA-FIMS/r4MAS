@@ -148,10 +148,10 @@ write_config(par, "C:\\Users\\chris\\Documents\\GitHub\\MAS\\Tests\\HakeCaseStud
 write_data(hake_data, "C:\\Users\\chris\\Documents\\GitHub\\MAS\\Tests\\HakeCaseStudy\\hakedata.json")
 
 
-
-
-
-output_plots(dir="C:/Users/chris/Documents/StockAssessment/MAS", years = 1966:2017, ages=c(0.01,seq(1,15)), pop_name = "populations (43).txt", rep_name = "mas_report (34).txt", figs_dir="/Figs_zero")
+require(here)
+setwd(here())
+devtools::load_all()
+output_plots(data.dir = "data", years = 1966:2017, ages=c(0.01,seq(1,15)), pop_name = "populations (50).txt", rep_name = "mas_report (41).txt", figs_dir="plots")
 
 require(dplyr)
 MAS_N<-read.csv("C:/Users/chris/Documents/StockAssessment/MAS/MAS_numatage.csv", header = FALSE)
