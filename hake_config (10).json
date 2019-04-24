@@ -1,0 +1,709 @@
+{
+    "analyst": "Christine Stawitz",
+    "study_name": "HakeCaseStudy",
+    "movement_type": "spatial",
+    "years": 52,
+    "seasons": 1,
+    "ages": [0.01, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+    "extended_plus_group": 17,
+    "first_year": 1966,
+    "last_year": 2017,
+    "season": {
+        "id": 1,
+        "name": "season 1",
+        "months": 12
+    },
+    "growth": {
+        "model": "von_bertalanffy_modified",
+        "id": 1,
+        "parameters": {
+            "amin": {
+                "value": 0.01,
+                "estimated": "false"
+            },
+            "amax": {
+                "value": 20.0,
+                "estimated": "false"
+            },
+            "lmin": {
+                "value": 5,
+                "units": "cm",
+                "estimated": "false",
+                "phase": 5,
+                "min": 2,
+                "max": 15
+            },
+            "lmax": {
+                "value": 53.2,
+                "units": "cm",
+                "estimated": "false",
+                "phase": 1,
+                "min": 45,
+                "max": 90
+            },
+            "c": {
+                "value": 0.3,
+                "estimated": "false",
+                "phase": 3,
+                "min": 0.2,
+                "max": 0.4
+            },
+            "alpha_f": {
+                "value": 0.000025,
+                "estimated": "false",
+                "phase": 1,
+                "min": -3,
+                "max": 3
+            },
+            "beta_f": {
+                "value": 2.9624,
+                "estimated": "false",
+                "phase": 1,
+                "min": -3,
+                "max": 3
+            },
+            "alpha_m": {
+                "value": 0.000025,
+                "estimated": "false",
+                "phase": 1,
+                "min": -3,
+                "max": 3
+            },
+            "beta_m": {
+                "value": 2.9624,
+                "estimated": "false",
+                "phase": 1,
+                "min": -3,
+                "max": 3
+            }
+        }
+    },
+    "recruitment": {
+        "model": "beverton_holt_alt",
+        "id": 1,
+        "parameters": {
+            "R0": {
+                "value": 4.50E+06,
+                "estimated": "false",
+                "phase": 1
+            },
+            "h": {
+                "value": 0.84,
+                "estimated": "false",
+                "phase": 2,
+                "min": 0.2,
+                "max": 1
+            },
+            "sigma_r": {
+                "value": 1.4,
+                "estimated": "false",
+                "phase": 4,
+                "min": 1,
+                "max": 1.6
+            },
+            "recruitment_deviations": {
+                "constrained": "true",
+                "random_effect": "false",
+                "estimated": "false",
+                "phase": 2,
+                "values": [-0.71541,
+                    2.83159,
+                    1.80863,
+                    0.75168,
+                    0.539391,
+                    1.61759,
+                    -1.05124,
+                    -0.30771,
+                    -0.04914,
+                    1.63367,
+                    2.49332,
+                    1.43003,
+                    -0.01469,
+                    1.15045,
+                    -0.30952,
+                    -0.01874,
+                    -1.74132,
+                    -1.19311,
+                    -0.46358,
+                    -0.02618,
+                    0.593384,
+                    0.691324,
+                    1.55536,
+                    -0.41882,
+                    -1.16805,
+                    0.57705,
+                    1.33567,
+                    1.09291,
+                    1.14464,
+                    -1.00693,
+                    0.803032,
+                    -0.95934,
+                    2.27876,
+                    -0.15233,
+                    0.20247,
+                    0.604562,
+                    0.317423,
+                    -0.37207,
+                    -0.90337,
+                    0.355439,
+                    -0.67293,
+                    2.51554,
+                    2.38601,
+                    0.425961,
+                    -0.56496,
+                    -2.171,
+                    -1.31383,
+                    0.252923,
+                    -0.12739,
+                    -0.59097,
+                    -0.02669,
+                    -0.11233],
+		"min":-10.0,
+		"max" : 10.0
+            }
+        }
+    },
+    "natural_mortality": {
+        "id": 1,
+        "parameters": {
+            "estimated": "false",
+            "phase": 4,
+            "min": [0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05],
+            "max": [0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4],
+            "values": [0.185, 0.185, 0.185, 0.185, 0.185, 0.185, 0.185, 0.185, 0.185, 0.185, 0.185, 0.185, 0.185, 0.185, 0.185, 0.185]
+        }
+    },
+    "selectivity": {
+        "model": "logistic",
+        "id": 1,
+        "base": "age",
+        "parameters": {
+            "a50": {
+                "value": 3.021,
+                "estimated": "false",
+                "phase": 1,
+                "min": 0.0,
+                "max": 10
+            },
+            "s": {
+                "value": 1.1,
+                "estimated": "false",
+                "phase": 2,
+                "min": 0,
+                "max": 5
+            }
+        }
+    },
+    "selectivity": {
+        "model": "logistic",
+        "id": 2,
+        "base": "age",
+        "parameters": {
+            "a50": {
+                "value": 1.982,
+                "estimated": "false",
+                "phase": 1,
+                "min": 0.0,
+                "max": 10000
+            },
+            "s": {
+                "value": 0.642,
+                "estimated": "false",
+                "phase": 2,
+                "min": 0,
+                "max": 50
+            }
+        }
+    }, 
+    "fishing_mortality": {
+        "id": 1,
+        "parameters": {
+            "estimated": "false",
+	    "phase": 3,
+            "values": [[0.031224],
+[0.0470276],
+[0.0213668],
+[0.0241831],
+[0.0277665],
+[0.0176019],
+[0.0133794],
+[0.0189218],
+[0.0260314],
+[0.0201609],
+[0.020022],
+[0.0115624],
+[0.0099571],
+[0.0119387],
+[0.00881487],
+[0.015131],
+[0.0142814],
+[0.015303],
+[0.0191413],
+[0.0187089],
+[0.0319375],
+[0.0445871],
+[0.0494961],
+[0.0731034],
+[0.0551562],
+[0.0569747],
+[0.0822902],
+[0.0674724],
+[0.110919],
+[0.0723674],
+[0.0911356],
+[0.100458],
+[0.11318],
+[0.0921295],
+[0.0494344],
+[0.0463502],
+[0.0359664],
+[0.048963],
+[0.0925861],
+[0.116457],
+[0.134947],
+[0.131987],
+[0.100835],
+[0.0436698],
+[0.0466078],
+[0.0562877],
+[0.0405836],
+[0.0567373],
+[0.0697234],
+[0.0507303],
+[0.114692],
+[0.181499]]
+        }
+    },
+    "area": {
+        "id": 1,
+        "name": "California current"
+    },
+    "movement":
+            {
+                "id": 1,
+                "estimated": "false",
+                "recruits": [
+                    [[1.0]]
+                ],
+                "male": [
+                    [[1.0]]
+                ],
+                "female": [[[1.0]]]
+            },
+    "population": {
+        "id": 1,  
+        "name": "population 1",
+        "hcr": "NPFMC Tier 3 HCR",
+        "natal_area": 1,
+        "sex_ratio": 0.5,
+        "movement": [
+            {
+                "year": 1,
+                "id": 1,
+                "ensemble": [1, 2]
+            },
+            {
+                "year": 2,
+                "id": 1
+            },
+            {
+                "year": 3,
+                "id": 1
+            },
+            {
+                "year": 4,
+                "id": 1
+            },
+            {
+                "year": 5,
+                "id": 1
+            },
+            {
+                "year": 6,
+                "id": 1
+            },
+            {
+                "year": 7,
+                "id": 1
+            },
+            {
+                "year": 8,
+                "id": 1
+            },
+            {
+                "year": 9,
+                "id": 1
+            },
+            {
+                "year": 10,
+                "id": 1
+            },
+            {
+                "year": 11,
+                "id": 1
+            },
+            {
+                "year": 12,
+                "id": 1
+            },
+            {
+                "year": 13,
+                "id": 1
+            },
+            {
+                "year": 14,
+                "id": 1
+            },
+            {
+                "year": 15,
+                "id": 1
+            },
+            {
+                "year": 16,
+                "id": 1
+            },
+            {
+                "year": 17,
+                "id": 1
+            },
+            {
+                "year": 18,
+                "id": 1
+            },
+            {
+                "year": 19,
+                "id": 1
+            },
+            {
+                "year": 20,
+                "id": 1
+            },
+            {
+                "year": 21,
+                "id": 1
+            },
+            {
+                "year": 22,
+                "id": 1
+            },
+            {
+                "year": 23,
+                "id": 1
+            },
+            {
+                "year": 24,
+                "id": 1
+            },
+            {
+                "year": 25,
+                "id": 1
+            },
+            {
+                "year": 26,
+                "id": 1
+            },
+            {
+                "year": 27,
+                "id": 1
+            },
+            {
+                "year": 28,
+                "id": 1
+            },
+            {
+                "year": 29,
+                "id": 1
+            },
+            {
+                "year": 30,
+                "id": 1
+            },
+            {
+                "year": 31,
+                "id": 1
+            },
+            {
+                "year": 32,
+                "id": 1
+            },
+            {
+                "year": 33,
+                "id": 1
+            },
+            {
+                "year": 34,
+                "id": 1
+            },
+            {
+                "year": 35,
+                "id": 1
+            },
+            {
+                "year": 36,
+                "id": 1
+            },
+            {
+                "year": 37,
+                "id": 1
+            },
+            {
+                "year": 38,
+                "id": 1
+            },
+            {
+                "year": 39,
+                "id": 1
+            },
+            {
+                "year": 40,
+                "id": 1
+            },
+            {
+                "year": 41,
+                "id": 1
+            },
+            {
+                "year": 42,
+                "id": 1
+            },
+            {
+                "year": 43,
+                "id": 1
+            },
+            {
+                "year": 44,
+                "id": 1
+            },
+            {
+                "year": 45,
+                "id": 1
+            },
+            {
+                "year": 46,
+                "id": 1
+            },
+            {
+                "year": 47,
+                "id": 1
+            },
+            {
+                "year": 48,
+                "id": 1
+            },
+            {
+                "year": 49,
+                "id": 1
+            },
+            {
+                "year": 50,
+                "id": 1
+            },
+            {
+                "year": 51,
+                "id": 1
+            },
+            {
+                "year": 52,
+                "id": 1
+            }
+        ],
+        "maturity": [
+            {
+                "sex": "male",
+                "area": 1,
+                "values": [
+                    0.00,
+                    0.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00
+                ]
+            },
+            {
+                "sex": "female",
+                "area": 1,
+                "values": [
+                    0.00,
+                    0.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00,
+                    1.00
+                ]
+            }
+        ],
+        "parameters": {
+            "growth": {
+		"id":1,
+		"ensemble":[1,2,3,4]
+		},
+            "natural_mortality": [
+                {
+                    "id": 1,
+                    "area": 1,
+                    "ensemble": [1, 2],
+                    "sex": "male"
+                }, {
+                    "id": 1,
+                    "area": 1,
+                    "ensemble": [1, 2],
+                    "sex": "female"
+                }
+            ],
+            "recruitment": [
+                {
+                    "area": 1,
+                    "season": 1,
+                    "id": 1,
+                    "ensemble": [1, 2]
+                }
+            ],
+            "initial_deviations": [
+                {
+                    "sex": "female",
+                    "area": 1,
+                    "estimated": "false",
+                    "values": [-0.71541,
+                        1.15439,
+                        1.47628,
+                        0.035054,
+                        -1.46468,
+                        0.110836,
+                        1.23541,
+                        0.466786,
+                        0.124641,
+                        -0.28993,
+                        -1.23446,
+                        1.50501,
+                        1.13354,
+                        -1.05821,
+                        -1.27339,
+                        -0.316]
+                },
+                {
+                    "sex": "male",
+                    "area": 1,
+                    "estimated": "false",
+                    "values": [-0.71541,
+                        1.15439,
+                        1.47628,
+                        0.035054,
+                        -1.46468,
+                        0.110836,
+                        1.23541,
+                        0.466786,
+                        0.124641,
+                        -0.28993,
+                        -1.23446,
+                        1.50501,
+                        1.13354,
+                        -1.05821,
+                        -1.27339,
+                        -0.316]
+                }
+            ]
+        }
+    },
+    "likelihood_component": {
+        "id": 1,
+        "model": "multinomial_robust"
+    },
+    "likelihood_component": {
+        "id": 2,
+        "model": "multinomial_robust"
+    },
+    "likelihood_component": {
+        "id": 3,
+        "model": "lognormal",
+        "standard_error": 0.05
+    },
+    "likelihood_component": {
+        "id": 4,
+        "model": "lognormal",
+        "standard_error": 0.05
+    },
+    "fleet": {
+        "name": "fleet 1",
+        "id": 1,
+        "fishing_mortality": [
+            {
+                "id": 1,
+                "ensemble": [1],
+                "area": 1,
+                "season": 1
+            }
+        ],
+        "selectivity": [
+            {
+                "id": 1,
+                "season": 1,
+                "ensemble": [1],
+                "fraction": 0.5,
+                "area": 1
+            }
+        ],
+        "likelihood_components": [
+            {
+                "id": 1,
+                "component": "age_comp"
+            },
+            {
+                "id": 3,
+                "component": "biomass_comp"
+            }
+        ]
+    },
+    "survey": {
+        "id": 1,
+        "name": "survey_1",
+        "parameters": {
+            "q": {
+                "value": 1.1096,
+                "min":0.0,
+                "units": "something/tonnes",
+                "estimated": "false",
+		"min": 0.0,
+                "phase": 1
+            }
+        },
+        "selectivity": [
+            {
+                "id": 2,
+                "season": 1,
+                "fraction": 0.5,
+                "area": 1
+            }
+        ],
+        "likelihood_components": [
+            {
+                "id": 2,
+                "component": "age_comp"
+            },
+            {
+                "id": 4,
+                "component": "biomass_comp"
+            }
+        ]
+    }
+}
