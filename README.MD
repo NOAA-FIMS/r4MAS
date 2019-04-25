@@ -1,6 +1,6 @@
 # README
 
-# (ASAP) Age Structured Assessment Program
+# (RMAS) R interface to Metapopulation Assessment System
 
 **************
 
