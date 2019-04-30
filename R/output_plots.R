@@ -203,7 +203,7 @@ output_plots <- function(data.dir, ages, years, pop_name, rep_name, figs_dir){
 
       dev.off()
         } else{
-          pdf(paste0("ObsVsExpected", pattern_obs[i],
+          pdf(paste0("ObsVsExpected", sub(": ", "", pattern_obs[i]),
                      ".pdf"))
           par(mfrow=c(1,1))
             plot(as.numeric(obs)~years, pch=19, main=pattern_obs[i])
