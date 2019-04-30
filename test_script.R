@@ -151,7 +151,7 @@ write_data(hake_data, "C:\\Users\\chris\\Documents\\GitHub\\MAS\\Tests\\HakeCase
 require(here)
 setwd(here())
 devtools::load_all()
-output_plots(data.dir = "data", years = 1966:2017, ages=c(0.01,seq(1,15)), pop_name = "populations (50).txt", rep_name = "mas_report (41).txt", figs_dir="plots")
+output_plots(data.dir = "data", years = 1966:2017, ages=c(0.01,seq(1,15)), pop_name = "populations (51).txt", rep_name = "mas_report (42).txt", figs_dir="plots")
 
 require(dplyr)
 MAS_N<-read.csv("C:/Users/chris/Documents/StockAssessment/MAS/MAS_numatage.csv", header = FALSE)
