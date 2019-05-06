@@ -8,6 +8,10 @@ https://nmfs-fish-tools.github.io/RMAS/
 
 **************
 
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2787/badge)](https://bestpractices.coreinfrastructure.org/projects/2787)
+
+**************
+
 ## This is a repository for the Stock Assesment Tool: RMAS
 - Supported by the NOAA Fisheries Integrated Toolbox
 
