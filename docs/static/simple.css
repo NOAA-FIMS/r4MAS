@@ -1,12 +1,13 @@
 
 .container{
-    display: flex;
-    flex-direction:column;
-    height: 100%;
-  color:#3F51B5;
-  margin:60px;
+  display: flex;
+  flex-direction:column;
+  height: 100%;
+  color:#0a4595;
+  margin:60px 100px;
 
 }
+
 .mywrap{
   display: flex;
   flex-direction:row;
@@ -19,7 +20,7 @@
   min-width: 200px;
   margin-right:auto;
   height: 95px;
-    color: #3F51B5;
+    color: #0a4595;
     font-family: 'Source Sans Pro';
     font-size: 36px;
     text-align: left;
@@ -36,12 +37,29 @@ a{
 }
 
 .badge{
- width: 95px;
- background-image: url("./badge.png");
+ width: 60px;
+ max-height: 60px;
  border: none;
  background-repeat: no-repeat;
  background-size: cover;
 }
+
+#badge_internal_active{
+background-image: url("./badge_internal_active.png")
+}
+
+#badge_internal_inactive{
+background-image: url("./badge_internal_inactive.png")
+}
+
+#badge_external_active{
+background-image: url("./badge_internal_active.png")
+}
+
+#badge_external_active{
+background-image: url("./badge_internal_active.png")
+}
+
 
 #check{
 
@@ -72,7 +90,7 @@ font-style: normal;
 text-decoration: none;
 text-align: center;
 background: #FFFFFF;
-border: 3px dotted #3F51B5;
+border: 3px dotted #0a4595;
 border-radius: 21px;
 margin-right: 10px;
 
@@ -81,7 +99,7 @@ margin-right: 10px;
 
 width: 100%;
 height: 8px;
-background-color:#3F51B5;
+background-color:#0a4595;
 border: 0 none;
 margin-top: 20px;
 margin-bottom:20px;
@@ -92,7 +110,7 @@ margin-bottom:20px;
 
 width: auto;
 height: 30px;
-color: #3F51B5;
+color: #0a4595;
 font-weight: bold;
 font-style: normal;
 text-decoration: none;
@@ -105,7 +123,7 @@ font-size: large;
 .pdfIcon{
 width:35px;
 height: 35px;
-color: #3F51B5;
+color: #0a4595;
 font-size: 24px;
 font-weight: normal;
 background-image: url("./icons8-pdf-50.png");
@@ -140,10 +158,9 @@ font-weight: bold;
 font-style: normal;
 text-decoration: none;
 text-align: center;
-background: rgba(63,81,181,0.5);
+background: rgba(1,1,1,0.5);
 border: none;
 border-radius: 21px;
-box-shadow: 0 5px 5px -5px #333;
 margin-left: auto;
 }
 
@@ -168,20 +185,21 @@ text-align: left;
 .mainText {
 
 width: auto;
-min-height: 250px;
+min-height: 150px;
 color: #000000;
 font-family: sans-serif;
 font-size: 16px;
 text-align: left;
-padding-top: 15px;
+padding: 15px 30px 15px 0;
 line-height: 22px;
+text-align: justify;
 }
 
 .ref {
 
 width: 441px;
 height: 40px;
-color: #3F51B5;
+color: #0a4595;
 
 font-size: large;
 font-weight: normal;
@@ -202,10 +220,9 @@ text-align: left;
     font-weight: bold;
     font-family: sans-serif;
     text-decoration: none;
-    background: rgba(63,81,181,0.4);
+    background: rgba(1,1,1,0.5);
     border: 1px solid #FFFFFF;
     border-radius: 10px;
-    box-shadow: 0 5px 5px -5px #333;
     text-align: center;
     margin-left: auto;
 }
@@ -217,10 +234,23 @@ text-align: left;
     margin-bottom: 25px;
 }
 
-ul {
-  list-style-type: none;
+footer{
   display: flex;
   flex-direction: column;
+  font-size: 12px;
+  color:black;
+  text-decoration: underline;
+
+}
+
+ul {
+  list-style-type: square;
+  display: flex;
+  flex-direction: column;
+}
+
+#assocaited_tools{
+list-style-type: none;
 }
 
 li{
