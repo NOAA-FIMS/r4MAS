@@ -153,42 +153,14 @@ setwd(here())
 devtools::load_all()
 output_plots(data.dir = "data", years = 1966:2017, ages=c(0.01,seq(1,15)), pop_name = "populations (51).txt", rep_name = "mas_report (42).txt", figs_dir="plots")
 
+
+
 require(dplyr)
 MAS_N<-read.csv("C:/Users/chris/Documents/StockAssessment/MAS/MAS_numatage.csv", header = FALSE)
 SS_N <- read.csv("C:/Users/chris/Documents/StockAssessment/MAS/SS_numatage.csv", header = FALSE)
 
-plot_NAtAge <- function(SS, MAS){
-  years <- seq(1966,2017)
-  ages <- seq(0,15)
-  pdf("NAtAge_ByAge.pdf")
-  for(i in 1:nrow(SS)){
-    plot(NA, xlim= c(1964, 2017),
-       ylim=c(min(rbind(MAS[i,], SS[i,])),
-                  max(rbind(SS[i,], MAS[i,]))),
-       xlab= "Year", ylab = "Number",
-       main=paste("Age", ages[i]))
-    points(as.numeric(SS[i,])~years)
-    lines(as.numeric(MAS[i,])~years)
-  }
-  dev.off()
 
-  pdf("NAtAge_ByYr.pdf")
-  for(i in 1:ncol(SS)){
-
-    plot(NA, xlim= c(0, 15),
-         ylim=c(min(cbind(MAS[,i], SS[,i])),
-                    max(cbind(SS[,i], MAS[,i]))),
-         main = paste("Year", years[i]), xlab= "Age",
-         ylab = "Number")
-    points(as.numeric(SS[,i])~ages)
-    lines(as.numeric(MAS[,i])~ages)
-  }
-  dev.off()
-
-}
 plot_NAtAge(SS_N, MAS_N)
 hakeom<-r4ss::SS_output(getwd(), covar=FALSE)
 r4ss::SS_plots(hakeom)
 
-
-read.csv("SS_Input_")

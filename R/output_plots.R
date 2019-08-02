@@ -152,7 +152,6 @@ output_plots <- function(data.dir, ages, years, pop_name, rep_name, figs_dir){
   idx=which(MAS_rep!="")
   non_blanks=MAS_rep[idx]
   
-  browser()
   exp_report <- get_each_sex("Expected", non_blanks, id_sex=idx, 0)
   obs_report <- get_each_sex("Observed", non_blanks, id_sex = idx,0)
 
@@ -170,8 +169,8 @@ output_plots <- function(data.dir, ages, years, pop_name, rep_name, figs_dir){
     }
     if(is.null(dim(obs))){
       exp <- apply(exp, 2, sum)
-      pdf(paste0("ObsvsExpected", pattern_obs[i],
-                 ".pdf"))
+      png(paste0("ObsvsExpected", pattern_obs[i],
+                 ".png"))
       plot(obs~years, pch=19, main=paste(pattern_obs[i]))
       lines(exp~years)
       dev.off()
@@ -179,7 +178,7 @@ output_plots <- function(data.dir, ages, years, pop_name, rep_name, figs_dir){
     if(any(dim(obs)!=dim(exp))){
 
       if(dim(obs)[2]==dim(exp)[2]){
-        pdf(paste0("ObsVsExpected", pattern_obs[i],".pdf"))
+        png(paste0("ObsVsExpected", pattern_obs[i],".png"))
         par(mfrow=c(1,1))
         exp <- apply(exp, 2, sum)
         plot(as.numeric(obs)~years, pch=19, main=pattern_obs[i])
@@ -203,8 +202,8 @@ output_plots <- function(data.dir, ages, years, pop_name, rep_name, figs_dir){
 
       dev.off()
         } else{
-          pdf(paste0("ObsVsExpected", sub(": ", "", pattern_obs[i]),
-                     ".pdf"))
+          png(paste0("ObsVsExpected", sub(": ", "", pattern_obs[i]),
+                     ".png"))
           par(mfrow=c(1,1))
             plot(as.numeric(obs)~years, pch=19, main=pattern_obs[i])
             lines(as.numeric(exp)~years)
