@@ -86,13 +86,13 @@ knitr::include_graphics("C:/Users/chris/Documents/GitHub/RMAS/plots/ObsVsExpecte
 ```
 
 ```{r echo=FALSE}
-rec_ss<- hake_out$parameters %>% filter(grepl("Recr",Label)) %>% select(Value)
+rec_ss<- hake_out$parameters %>% filter(grepl("RecrDev",Label)) %>% select(Value)
 rec_mas <- MAS %>% filter(grepl("recruitment",Name)) %>%
   select(Value)
 ind <- hake_out$startyr:hake_out$endyr
 plot(NA, xlim=c(hake_out$startyr,hake_out$endyr),
      ylim=c(-3,3), xlab="Year", ylab="Recruitment deviation")
-points(rec_ss[1:length(ind),"Value"] ~ ind)
+points(rec_ss[1:(length(ind)),"Value"] ~ ind)
 lines(as.numeric(as.character(rec_mas$Value))~ind)
 ```
 ```{r echo=FALSE}

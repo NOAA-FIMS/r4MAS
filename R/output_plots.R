@@ -90,7 +90,6 @@ output_plots <- function(data.dir, ages, years, pop_name, rep_name, figs_dir){
                ylab=quants[i],
                type="l")
         } else{
-          browser()
           print("dimensions do not match!")
         }
         dev.off()
@@ -214,6 +213,20 @@ output_plots <- function(data.dir, ages, years, pop_name, rep_name, figs_dir){
 
 
   }
-
+  
+  est_header <- grep("Estimated",non_blanks)
+  est_area <- grep("Area", non_blanks)
+  par_entries <- non_blanks[(est_header+1):(est_area-1)]
+  par_split <- unlist(strsplit(par_entries," "))
+  par_nonblanks <-par_split[which(par_split!="")]
+  par_mat <- matrix(par_nonblanks[4:length(par_nonblanks)], ncol=3, byrow=T)
+  
+  par_mat <- data.frame(par_mat)
+  names(par_mat) <- par_nonblanks[1:3]
+  #Return only non-empty MAS report file entries
+  n_header <- grep("Numbers",non_blanks)
+  n_at_age <- non_blanks[(n_header[1]+1):(n_header[1]+length(ages))]
+  
+  return(list("parameters" = par_mat, "n_at_age" = n_at_age))
 }
 
