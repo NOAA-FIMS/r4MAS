@@ -1,13 +1,11 @@
-plot_NAtAge <- function(SS, MAS, pdf_on = TRUE, byage){
+plot_NAtAge <- function(SS, MAS, pdf_on = TRUE, byage, years, ages){
 
-  years <- seq(1966,2017)
-  ages <- seq(0,15)
   if(byage){
   if(pdf_on){
   pdf("plots/NAtAge_ByAge.pdf")
   }
   for(i in 1:nrow(SS)){
-    plot(NA, xlim= c(1964, 2017),
+    plot(NA, xlim= c(min(years), max(years)),
          ylim=c(min(rbind(MAS[i,], SS[i,])),
                 max(rbind(SS[i,], MAS[i,]))),
          xlab= "Year", ylab = "Number",
@@ -26,7 +24,7 @@ plot_NAtAge <- function(SS, MAS, pdf_on = TRUE, byage){
   
   for(i in 1:ncol(SS)){
     
-    plot(NA, xlim= c(0, 15),
+    plot(NA, xlim= c(min(ages), max(ages)),
          ylim=c(min(cbind(MAS[,i], SS[,i])),
                 max(cbind(SS[,i], MAS[,i]))),
          main = paste("Year", years[i]), xlab= "Age",
