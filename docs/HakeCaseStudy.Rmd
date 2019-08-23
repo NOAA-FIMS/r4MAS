@@ -1,0 +1,124 @@
+---
+title: "CaseStudy"
+author: "Christine Stawitz"
+date: "August 5, 2019"
+output: 
+  html_document:
+    theme: flatly
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(here)
+require(kableExtra)
+require(dplyr)
+devtools::load_all("C:\\Users\\chris\\Documents\\GitHub\\jsonlite")
+devtools::load_all("C:\\Users\\chris\\Documents\\GitHub\\RMAS")
+
+devtools::install_github("r4ss/r4ss", dependencies=FALSE)
+hake_orig <- "C:/Users/chris/Documents/StockAssessment/hake_em/"
+hake_om <- "C:/Users/chris/Documents/StockAssessment/hake_om"
+
+hake_out<- r4ss::SS_output(hake_orig, covar=F, verbose=FALSE)
+hake_in <- r4ss::SS_output(hake_om, covar=F, verbose=FALSE,forecast = F)
+
+MAS <- output_plots(data.dir = "data", years = 1966:2017, ages=c(0.01,seq(1,15)), pop_name = "populations (52).txt", rep_name = "mas_report (46).txt", figs_dir="plots")
+
+
+
+  
+MAS_N<-read.csv("C:/Users/chris/Documents/StockAssessment/MAS/MAS_numatage.csv", header = FALSE)
+SS_N <- read.csv("C:/Users/chris/Documents/StockAssessment/MAS/SS_numatage2.csv", header = FALSE)
+
+r4ss::SS_plots(hake_out, plot=c(1:6,8:24), html=FALSE, verbose = FALSE, uncertainty=FALSE)
+```
+
+## Model configuration and OM parameter values
+This is a benchmark run with data generated using Stock Synthesis' bootstrap function on a species with life history parameters and weight-at-age similar to Pacific hake. However, fishery dynamics were greatly simplified. The model uses empirical weight-at-age for growth, a logistic age-based selectivity curve for the fishery and acoustic survey, and fixed values of natural mortality and steepness. Model years spanned `r hake_out$startyr` to `r hake_out$endyr`  with `r hake_out$nseasons` season(s) and `r hake_out$nsexes` sex(es). Age bins were `r hake_out$agebins`. Other key parameters are given below in Table 1:
+
+```{r, results="asis", echo=FALSE}
+partable <- hake_in$parameters %>%
+  filter(!grepl("F_|Recr|Impl|Early",Label))
+kable(partable[,c("Label","Value", "Phase")], format="html", caption = "Table 1: Life History parameters used to generate data.") %>% kable_styling()
+
+```
+
+## Estimating
+Both models kept most life history parameters fixed and estimated values for $R_0$, recruitment deviations, fishing, and selectivity parameters. Parameter estimates for SS and MAS are given below:
+
+```{r, results="asis", echo=FALSE}
+partable <- hake_out$parameters %>%
+  filter(!grepl("F_|Recr|Impl|Early",Label))
+kable(partable[,c("Label","Value", "Phase")], format="html", caption = "Table 2: Life History parameters estimated by Stock Synthesis.") %>% kable_styling()
+parMAS <- MAS %>% filter(!grepl("fishing|recr",Name))
+kable(parMAS, format="html", caption = "Table 2: Parameters estimates in MAS") %>% kable_styling()
+```
+
+
+## Issues uncovered
+We found a number of inconsistencies doing this comparison. First, to ensure SS and MAS values were comparable, we needed to implement specifying early recruitment deviations in MAS. Second, we made a number of changes to the way empirical weight-at-age was handled in MAS. Finally, we found the lognormal likelihood function specified in MAS was incorrect. After these were fixed, we were able to get reasonably consistent estimates for different indices. 
+
+
+
+```{r ss, echo = FALSE, message=FALSE, warning=FALSE, fig.cap="Generated data", echo=FALSE}
+
+knitr::include_graphics(paste0(hake_orig,"plots/data_plot.png"))
+
+```
+
+
+```{r, fig.cap = "Weight at size plot", echo=FALSE}
+
+knitr::include_graphics(paste0(hake_orig,"plots/bio5_weightatsize.png"))
+```
+
+
+
+## Comparing assessment model outputs {.tabset}
+
+### Time series
+```{r echo=FALSE}
+knitr::include_graphics("C:/Users/chris/Documents/GitHub/RMAS/plots/ObsVsExpectedSurvey IndexTotal.png")
+
+knitr::include_graphics("C:/Users/chris/Documents/GitHub/RMAS/plots/ObsVsExpectedCatch BiomassTotal.png")
+```
+
+```{r echo=FALSE}
+rec_ss<- hake_out$parameters %>% filter(grepl("RecrDev",Label)) %>% select(Value)
+rec_mas <- MAS %>% filter(grepl("recruitment",Name)) %>%
+  select(Value)
+ind <- hake_out$startyr:hake_out$endyr
+plot(NA, xlim=c(hake_out$startyr,hake_out$endyr),
+     ylim=c(-3,3), xlab="Year", ylab="Recruitment deviation")
+points(rec_ss[1:(length(ind)),"Value"] ~ ind)
+lines(as.numeric(as.character(rec_mas$Value))~ind)
+```
+```{r echo=FALSE}
+F_ss<- hake_out$parameters %>% filter(grepl("F_",Label)) %>% select(Value)
+F_mas <- MAS %>% filter(grepl("fishing",Name)) %>%
+  select(Value)
+plot(NA, xlim=c(hake_out$startyr,hake_out$endyr),
+     ylim=c(0,0.5), xlab="Year", ylab="F")
+points(F_ss[1:length(ind),"Value"] ~ ind)
+lines(as.numeric(as.character(F_mas$Value))~ind)
+```
+
+
+
+### Numbers-at-age by age
+Points are estimated numbers from Stock Synthesis; lines are estimated numbers from MAS.
+
+```{r, echo=FALSE}
+
+plot_NAtAge(SS_N, MAS_N, pdf_on=FALSE, byage = T)
+```
+
+### Numbers-at-age by year
+Points are estimated numbers from Stock Synthesis; lines are estimated numbers from MAS.
+
+```{r, echo=FALSE}
+plot_NAtAge(SS_N, MAS_N, pdf_on=FALSE, byage = F)
+```
+
