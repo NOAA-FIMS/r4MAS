@@ -15,6 +15,6 @@ make_derived_quant <- function(id, type, sex, years, ages, dimensions, values){
   #                                                    do_by_sex <- function(i, sex, id, area, values, list__){
   #                                                      list__[[i]] <- generic_assignment(list__[[i]], "sex", sex)
   #                                                      }
-  return(ls())
+  return(population)
 
 }

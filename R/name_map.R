@@ -5,7 +5,7 @@
 #'@return new_name - the mapped name
 #'
 #'@example name_map("SR_LN(R0)")
-name_map <-function(toMAS = TRUE, in_name){
+name_map_SS_MAS <-function(toMAS = TRUE, in_name){
   if(toMAS){
     new_name <- switch(in_name, "L_at_Amin_Fem_GP_1" = "lmin",
            "L_at_Amax_Fem_GP_1" = "lmax",

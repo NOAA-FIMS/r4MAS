@@ -1,17 +1,11 @@
-create_par_schema <- function(parameter_df){
-  output_list <- vector("list")
+create_par_schema <- function(parameter_df, recruit_table){
   par_list <-vector("list")
-
-  output_list$model <- model
-  output_list$id <- id
+  par_names <- rownames(parameter_df)
   new_names <- unlist(lapply(par_names, name_map, toMAS=TRUE))
 
-  for(x in 1:length(new_names)){
-      if(new_names[[x]]=='R0'){
-        par_list[[new_names[x]]]$`value` <- exp(par_value[x])
-      } else{
+  for(x in 1:length(par_names)){
       par_list[[new_names[x]]]$`value` <- par_value[x]
-      }
+      
       if(!is.na(par_units[x])){
         par_list[[new_names[x]]]$units <- par_units[x]
       }
@@ -41,6 +35,5 @@ create_par_schema <- function(parameter_df){
     }
   }
 
-  output_list$parameters <- par_list
-  return(output_list)
+  return(par_list)
 }

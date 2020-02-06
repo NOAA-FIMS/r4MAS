@@ -4,7 +4,7 @@ make_branch <- function(analyst = "", study_name = "", movement_type ="", years 
 
   return_list <- vector("list")
   for(i in 1:length(arguments)){
-    return_list[[arguments[i]]] <- get(arguments[i],                                                function_env)
+    return_list[[arguments[i]]] <- get(arguments[i], function_env)
     if(mode(return_list[[arguments[[i]]]])=="list"){
       if(length(return_list[[arguments[i]]]$id)==0){
         browser()
