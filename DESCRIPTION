@@ -11,6 +11,10 @@ LazyData: true
 Depends: R (>= 3.1.0)
 Imports:
     r4ss,
-    jsonlite
+    jsonlite,
+    Rcpp
 Remotes:
     cstawitz/jsonlite
+RoxygenNote: 7.0.2
+LinkingTo: 
+    Rcpp

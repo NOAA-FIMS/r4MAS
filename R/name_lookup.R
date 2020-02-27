@@ -2,6 +2,7 @@
 #'@description Function to map names between different stock assessment models
 #'@param input_format string; the model the data or output is coming from
 #'@param names string or vector of strings; names to map
+#'@param lookup data frame that contains the lookup table to map in between different models
 #'@return new_name - the mapped name
 #'
 #'@example name_lookup(input_format = "SS", names = "SR_LN(R0)")
@@ -33,28 +34,42 @@ name_lookup <-function(input_format, names, lookup){
   
   for(i in 1:length(search_strings)){
     
+    #Find which lookup table entry corresponds to the current string
     matches <- grep(search_strings[i],names, fixed = TRUE)
     lookup_index <- grep(search_strings[i],lookup[,input_format], fixed=TRUE)
     
     #Indices for female- and male- specific parameter value
     fem_par <- grep(lookup[female,input_format], names[matches])
     male_par <-  grep(lookup[male,input_format], names[matches])
-    year_par <- grep("_\\d{4}$" , names[matches])
     
+    #Look for strings corresponding to years in the parameter names
+    year_regexpr <- "_\\d{4}$"
+    year_par <- grep( year_regexpr, names[matches])
+    
+    #Case 1: One parameter matches; ex: steepness
     case1_bool <- length(matches)==1
+    
+    #Case 2: One female parameter matches; ex: fecundity
     case2_bool <- (length(matches)==1)&&(length(fem_par)==1)&&(length(male_par)==0)
+    
+    #Case 3: Sex-specific parameters; ex: sex-specific M
     case3_bool <- (length(fem_par)==1)&&(length(male_par)==1)
+    
+    #Case 4: Parameters with years in them; ex: time-varying selectivity
     case4_bool <- (length(year_par)>0)
     
     
-    if((length(fem_par)==1) && (length(male_par)==0)){
+    if(case1_bool){
     #If only one parameter matches, put in 'name' column
     new_name[matches,1] <- get_name(lookup_index)
     new_name[matches,2] <- get_name(female)
     
-    new_names_rows <- new_names_rows + 1
-    } else if((length(fem_par)==1) && (length(male_par)==1)){
-        sex_index <- c(matches[fem_par], matches[male_par])
+    #Increment counter
+    #new_names_rows <- new_names_rows + 1
+    } else if(case3_bool){
+        
+      #In this case, there is one parameter for each sex - denoted by containing corresponding strings for "female" and "male" in it
+      sex_index <- c(matches[fem_par], matches[male_par])
         
         #Double-check sex index and matches correspond
         assertthat::assert_that((sex_index==matches)||sex_index==rev(matches), msg = "Sex index doesn't match parameter names")
@@ -62,11 +77,34 @@ name_lookup <-function(input_format, names, lookup){
         #If so, there is one version of this parameter for each sex
         new_name[sex_index,1] <- get_name(lookup_index)
         new_name[sex_index,2] <- get_name(c(female,male))
-        new_name_rows <- new_names_rows + 2
-    } else if((length(fem_par)>1) || (length(male_par)>1)){
+        #new_name_rows <- new_names_rows + 2
         
-        browser()
-    } else if(length(fem_par)==0){
+    } else if(case2_bool){
+      #If so, there is one version of this parameter total but it is female-specific
+      new_name[matches[fem_par],1] <- get_name(lookup_index)
+      new_name[matches[fem_par],2] <- get_name(female)
+      #new_name_rows <- new_names_rows + 1
+        
+    } else if(case4_bool){
+      #We know there are values corresponding to year, but may be >1 corresponding to yr
+      without_year <- sub(year_regexpr, "", names[matches])
+      if(all(without_year==without_year[1])){
+        #If year is the only unique part of variable name, these are values per year
+        year_pos <- regexec(year_regexpr,names[matches])
+        #Extract years with specific parameter values
+        years <- regmatches(names[matches], year_pos)
+        
+        #Give each parameter the same name so it can be a vector
+        new_name[matches,1] <- rep(get_name(lookup_index), length(years))
+        new_name[matches,4] <- years
+        
+        #Increment counter
+        #new_name_rows <- new_name_rows + length(years)
+      } else{
+        #If year is not the only unique part of the name, there might be sex- or fleet-specific parameters
+        
+      }
+        
     }
   }
   return(new_name)

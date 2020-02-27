@@ -11,6 +11,10 @@ parameter_df <- petrale_out$parameters
 
 names <- rownames(parameter_df)
 new_name <- name_lookup(input_format = "r4ss", lookup=lookup, names = names)
+broke_names<-names[is.na(new_name[,1])]
+
+name_lookup(input_format = "r4ss", lookup=lookup, names = broke_names)
+
 
 out_schema <- vector("list")
 
