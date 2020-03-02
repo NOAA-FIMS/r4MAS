@@ -17,9 +17,9 @@
 #include <cstdlib>
 #include <iostream>
 
-#include "../mas/MAS.hpp"
-#include "../mas/Options.hpp"
-#include "../mas/ObjectiveFunction.hpp"
+#include "MAS.hpp"
+#include "Options.hpp"
+#include "ObjectiveFunction.hpp"
 
 
 #include <RcppCommon.h>
