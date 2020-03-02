@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   R4MAS.hpp
  * Author: mattadmin
  *
@@ -17,9 +17,9 @@
 #include <cstdlib>
 #include <iostream>
 
-#include "MAS.hpp"
-#include "Options.hpp"
-#include "ObjectiveFunction.hpp"
+#include "mas/MAS.hpp"
+#include "mas/Options.hpp"
+#include "mas/ObjectiveFunction.hpp"
 
 
 #include <RcppCommon.h>
@@ -37,12 +37,12 @@ struct triple {
     T1 first;
     T2 second;
     T3 third;
-
+    
     triple(T1 first, T2 second, T3 third) :
     first(first), second(second), third(third) {
     }
-
-
+    
+    
 };
 
 struct Parameter {
@@ -50,50 +50,51 @@ public:
     double value;
     double min = std::numeric_limits<double>::min();
     double max = std::numeric_limits<double>::max();
+    double lambda = 1.0;
     int phase = 1;
     bool estimated = false;
-
+    
     Parameter(const Parameter& other) :
     value(other.value), min(other.min), max(other.max), phase(other.phase), estimated(other.estimated) {
     }
-
+    
     Parameter(double value = 0.0) :
     value(value) {
     }
-
-
+    
+    
 };
 
 class MASSubModel {
 public:
-
+    
     typedef typename mas::VariableTrait<double>::variable variable;
-
+    
     static std::vector<MASSubModel*> submodels;
-
+    
     virtual void AddToMAS(mas::Information<double>& info) {
-
+        
     }
-
+    
     virtual void ExtractFromMAS(mas::Information<double>& info) {
-
+        
     }
-
+    
     void InitializeParameter(mas::ModelObject<double>* model,
-            variable& v, const Parameter& p, const std::string& name) {
+                             variable& v, const Parameter& p, const std::string& name) {
         v = p.value;
         if (p.estimated) {
             mas::VariableTrait<double>::SetName(v, name);
             if (p.min != std::numeric_limits<double>::min()) {
                 mas::VariableTrait<double>::SetMinBoundary(v, p.min);
             }
-
+            
             if (p.max != std::numeric_limits<double>::max()) {
                 mas::VariableTrait<double>::SetMaxBoundary(v, p.max);
             }
             model->Register(v, p.phase);
         }
-
+        
     }
 };
 
@@ -115,7 +116,7 @@ SexType GetSexType(std::string sex) {
         return UNDIFFERENTIATED;
     } else {
         std::cout << "MAS Error: unknown sex type \"" << sex << "\" for maturity input.\n";
-
+        
     }
     return UNDIFFERENTIATED;
 }
@@ -126,7 +127,7 @@ SexType GetSexType(std::string sex) {
 
 class SelectivityBase : public MASSubModel {
 protected:
-
+    
     static int id_g;
 };
 
@@ -134,40 +135,41 @@ int SelectivityBase::id_g = 1;
 
 class LogisticSelectivity : public SelectivityBase {
 public:
-    Parameter a50; //age of 50% selectivity 
+    Parameter a50; //age of 50% selectivity
     Parameter slope; //the rate of increase in selectivity at a50
     int id;
-
+    
     LogisticSelectivity() {
         this->id = SelectivityBase::id_g++;
         LogisticSelectivity::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
     }
-
+    
     LogisticSelectivity(const LogisticSelectivity& other) :
     a50(other.a50), slope(other.slope), id(other.id) {
     }
-
+    
     virtual void AddToMAS(mas::Information<double>& info) {
         std::shared_ptr<mas::LogisticSel<double> > sel = std::make_shared<mas::LogisticSel<double> >();
         mas::VariableTrait<double>::SetValue(sel->a50, a50.value);
         mas::VariableTrait<double>::SetMinBoundary(sel->a50, a50.min);
         mas::VariableTrait<double>::SetMaxBoundary(sel->a50, a50.max);
         sel->id = id;
-
-
+        
+        
         mas::VariableTrait<double>::SetValue(sel->s, slope.value);
         mas::VariableTrait<double>::SetMinBoundary(sel->s, slope.min);
         mas::VariableTrait<double>::SetMaxBoundary(sel->s, slope.max);
-
+        
         if (a50.estimated) {
             std::cout << "\n\nregistering a50\n";
             std::stringstream ss;
             ss << "logistic_selectivity_a50_" << id;
             mas::VariableTrait<double>::SetName(sel->a50, ss.str());
             sel->Register(sel->a50, a50.phase);
+            sel->lambdas.push_back(a50.lambda);
         }
-
+        
         sel->id = id;
         if (this->slope.estimated) {
             std::cout << "\n\nregistering slope\n";
@@ -175,11 +177,12 @@ public:
             ss << "logistic_selectivity_slope_" << id;
             mas::VariableTrait<double>::SetName(sel->s, ss.str());
             sel->Register(sel->s, slope.phase);
+            sel->lambdas.push_back(slope.lambda);
         }
         info.selectivity_models[sel->id] = sel;
-
+        
     }
-
+    
     void ExtractFromMAS(mas::Information<double>& info) {
         typename mas::Information<double>::selectivity_model_iterator it;
         it = info.selectivity_models.find(this->id);
@@ -190,7 +193,7 @@ public:
             this->slope.value = lsel->s.GetValue();
         }
     }
-
+    
     static std::map<int, LogisticSelectivity*> initialized_models;
     typedef typename std::map<int, LogisticSelectivity*>::iterator model_iterator;
 };
@@ -204,22 +207,22 @@ public:
     Parameter beta_asc; // ascending beta
     Parameter alpha_desc; // descending alpha
     Parameter beta_desc; // descending beta
-
+    
     DoubleLogisticSelectivity() {
         this->id = SelectivityBase::id_g++;
         DoubleLogisticSelectivity::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
-
+        
     }
-
+    
     DoubleLogisticSelectivity(const DoubleLogisticSelectivity& other) :
     id(other.id), alpha_asc(other.alpha_asc), beta_asc(other.beta_asc), alpha_desc(other.alpha_desc), beta_desc(other.beta_desc) {
     }
-
+    
     virtual void AddToMAS(mas::Information<double>& info) {
         std::shared_ptr<mas::DoubleLogisticSel<double> > sel = std::make_shared<mas::DoubleLogisticSel<double> >();
         mas::DoubleLogisticSel<double>* selex = sel.get();
-
+        
         mas::VariableTrait<double>::SetValue(selex->alpha_asc, this->alpha_asc.value);
         mas::VariableTrait<double>::SetMinBoundary(selex->alpha_asc, this->alpha_asc.min);
         mas::VariableTrait<double>::SetMaxBoundary(selex->alpha_asc, this->alpha_asc.max);
@@ -228,8 +231,9 @@ public:
             ss << "double_logistic_selectivity_alpha_asc_" << id;
             mas::VariableTrait<double>::SetName(selex->alpha_asc, ss.str());
             sel->Register(selex->alpha_asc, this->alpha_asc.phase);
+            sel->lambdas.push_back(alpha_asc.lambda);
         }
-
+        
         mas::VariableTrait<double>::SetValue(selex->beta_asc, this->beta_asc.value);
         mas::VariableTrait<double>::SetMinBoundary(selex->beta_asc, this->beta_asc.min);
         mas::VariableTrait<double>::SetMaxBoundary(selex->beta_asc, this->beta_asc.max);
@@ -238,8 +242,9 @@ public:
             ss << "double_logistic_selectivity_beta_asc_" << id;
             mas::VariableTrait<double>::SetName(selex->beta_asc, ss.str());
             sel->Register(selex->beta_asc, this->beta_asc.phase);
+            sel->lambdas.push_back(beta_asc.lambda);
         }
-
+        
         mas::VariableTrait<double>::SetValue(selex->alpha_desc, this->alpha_desc.value);
         mas::VariableTrait<double>::SetMinBoundary(selex->alpha_desc, this->alpha_desc.min);
         mas::VariableTrait<double>::SetMaxBoundary(selex->alpha_desc, this->alpha_desc.max);
@@ -248,8 +253,9 @@ public:
             ss << "double_logistic_selectivity_alpha_desc_" << id;
             mas::VariableTrait<double>::SetName(selex->alpha_desc, ss.str());
             sel->Register(selex->alpha_desc, this->alpha_desc.phase);
+            sel->lambdas.push_back(alpha_desc.lambda);
         }
-
+        
         mas::VariableTrait<double>::SetValue(selex->beta_desc, this->beta_desc.value);
         mas::VariableTrait<double>::SetMinBoundary(selex->beta_desc, this->beta_desc.min);
         mas::VariableTrait<double>::SetMaxBoundary(selex->beta_desc, this->beta_desc.max);
@@ -258,13 +264,14 @@ public:
             ss << "double_logistic_selectivity_beta_desc_" << id;
             mas::VariableTrait<double>::SetName(selex->beta_desc, ss.str());
             sel->Register(selex->beta_desc, this->beta_desc.phase);
+            sel->lambdas.push_back(beta_desc.lambda);
         }
-
-
+        
+        
     }
-
+    
     void ExtractFromMAS(mas::Information<double>& info) {
-
+        
         typename mas::Information<double>::selectivity_model_iterator it;
         it = info.selectivity_models.find(this->id);
         if (it != info.selectivity_models.end()) {
@@ -276,7 +283,7 @@ public:
             this->beta_desc = lsel->beta_desc.GetValue();
         }
     }
-
+    
     static std::map<int, DoubleLogisticSelectivity*> initialized_models;
     typedef typename std::map<int, DoubleLogisticSelectivity*>::iterator model_iterator;
 };
@@ -285,18 +292,18 @@ std::map<int, DoubleLogisticSelectivity*> DoubleLogisticSelectivity::initialized
 
 class AgeBasedSelectivity : public SelectivityBase {
 public:
-
+    
     Rcpp::NumericVector values;
     bool estimated = false;
     int phase = 1;
     int id;
-
+    
     AgeBasedSelectivity() {
         this->id = SelectivityBase::id_g++;
         AgeBasedSelectivity::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
     }
-
+    
     virtual void AddToMAS(mas::Information<double>& info) {
         if (this->values.size() != info.ages.size()) {
             info.valid_configuration = false;
@@ -304,9 +311,9 @@ public:
             return;
         }
         std::shared_ptr<mas::AgeBased<double> > sel = std::make_shared<mas::AgeBased<double> > ();
-
+        
         mas::AgeBased<double>* selex = sel.get();
-
+        
         selex->id = this->id;
         for (int i = 0; i < this->values.size(); i++) {
             selex->w.push_back(this->values[i]);
@@ -320,7 +327,7 @@ public:
         }
         info.selectivity_models[selex->id] = sel;
     }
-
+    
     void ExtractFromMAS(mas::Information<double>& info) {
         typename mas::Information<double>::selectivity_model_iterator it;
         it = info.selectivity_models.find(this->id);
@@ -331,9 +338,9 @@ public:
                 this->values[i] = lsel->w[i].GetValue();
             }
         }
-
+        
     }
-
+    
     static std::map<int, AgeBasedSelectivity*> initialized_models;
     typedef typename std::map<int, AgeBasedSelectivity*>::iterator model_iterator;
 };
@@ -345,7 +352,7 @@ std::map<int, AgeBasedSelectivity*> AgeBasedSelectivity::initialized_models;
  */
 class FishingMortality : public MASSubModel {
     static int id_g;
-
+    
 public:
     int id;
     Rcpp::NumericVector values;
@@ -353,23 +360,23 @@ public:
     int phase = 1;
     double min = std::numeric_limits<double>::min();
     double max = std::numeric_limits<double>::max();
-
+    
     FishingMortality() {
         this->id = FishingMortality::id_g++;
         FishingMortality::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
-
+        
     }
-
+    
     FishingMortality(const FishingMortality& other) :
     id(other.id), values(other.values), estimate(other.estimate), phase(other.phase), min(other.min), max(other.max) {
         std::cout << "Fishing Mortaility copy constructor";
     }
-
+    
     void SetValues(Rcpp::NumericVector values) {
         this->values = values;
     }
-
+    
     virtual void AddToMAS(mas::Information<double>& info) {
         std::shared_ptr<mas::FishingMortality<double> > fm = std::make_shared<mas::FishingMortality<double> >();
         mas::FishingMortality<double>* m = fm.get();
@@ -380,7 +387,7 @@ public:
             info.valid_configuration = false;
             return;
         }
-
+        
         fm->fishing_mortality.resize(info.nyears);
         typedef typename mas::VariableTrait<double>::variable variable;
         int i = 0;
@@ -390,7 +397,7 @@ public:
                 fm->fishing_mortality[y][s] = variable(this->values[i++]);
             }
         }
-
+        
         if (this->estimate) {
             for (int y = 0; y < info.nyears; y++) {
                 fm->fishing_mortality[y].resize(info.nseasons);
@@ -409,10 +416,10 @@ public:
                 }
             }
         }
-
+        
         info.fishing_mortality_models[m->id] = fm;
     }
-
+    
     void ExtractFromMAS(mas::Information<double>& info) {
         typename mas::Information<double>::fishing_mortality_model_iterator fit;
         fit = info.fishing_mortality_models.find(this->id);
@@ -425,7 +432,7 @@ public:
             }
         }
     }
-
+    
     static std::map<int, FishingMortality*> initialized_models;
     typedef typename std::map<int, FishingMortality*>::iterator model_iterator;
 };
@@ -435,8 +442,8 @@ int FishingMortality::id_g = 1;
 
 class NaturalMortality : public MASSubModel {
     static int id_g;
-
-
+    
+    
 public:
     int id;
     Rcpp::NumericVector values;
@@ -444,30 +451,30 @@ public:
     int phase = 1;
     double min = std::numeric_limits<double>::min();
     double max = std::numeric_limits<double>::max();
-
+    
     NaturalMortality() {
         this->id = NaturalMortality::id_g++;
         NaturalMortality::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
-
+        
     }
-
+    
     void SetValues(Rcpp::NumericVector values) {
         this->values = values;
     }
-
+    
     virtual void AddToMAS(mas::Information<double>& info) {
         typedef typename mas::VariableTrait<double>::variable variable;
-
+        
         std::shared_ptr<mas::NaturalMortality<double> > nm = std::make_shared<mas::NaturalMortality<double> > ();
         mas::NaturalMortality<double>* m = nm.get();
         m->mortality_vector.resize(info.ages.size());
         m->id = this->id;
-
+        
         for (int i = 0; i < info.ages.size(); i++) {
             m->mortality_vector[i] = variable(this->values[i]);
         }
-
+        
         if (this->estimate) {
             for (int i = 0; i < info.ages.size(); i++) {
                 std::stringstream ss;
@@ -482,10 +489,10 @@ public:
                 m->Register(m->mortality_vector[i], phase);
             }
         }
-
+        
         info.natural_mortality_models[this->id] = nm;
     }
-
+    
     void ExtractFromMAS(mas::Information<double>& info) {
         typename mas::Information<double>::natural_mortality_model_iterator nit;
         nit = info.natural_mortality_models.find(this->id);
@@ -497,7 +504,7 @@ public:
             }
         }
     }
-
+    
     static std::map<int, NaturalMortality*> initialized_models;
     typedef typename std::map<int, NaturalMortality*>::iterator model_iterator;
 };
@@ -507,23 +514,23 @@ int NaturalMortality::id_g = 1;
 
 class InitialDeviations {
     static int id_g;
-
+    
 public:
     int id;
     Rcpp::NumericVector values;
     bool estimate = false;
     int phase = 1;
-
+    
     InitialDeviations() {
         this->id = InitialDeviations::id_g++;
         InitialDeviations::initialized_models[this->id] = this;
     }
-
+    
     void SetValues(Rcpp::NumericVector values) {
         this->values = values;
     }
-
-
+    
+    
     static std::map<int, InitialDeviations*> initialized_models;
     typedef typename std::map<int, InitialDeviations*>::iterator model_iterator;
 };
@@ -537,10 +544,10 @@ int InitialDeviations::id_g = 1;
 class RecruitmentBase : public MASSubModel {
 protected:
     static int id_g;
-
+    
 public:
-
-
+    
+    
 };
 int RecruitmentBase::id_g = 1;
 
@@ -549,35 +556,35 @@ public:
     Rcpp::NumericVector deviations;
     double deviations_min = std::numeric_limits<double>::min();
     double deviations_max = std::numeric_limits<double>::max();
-
+    
     bool estimate_deviations = true;
     int deviation_phase = 1;
     bool constrained_deviations = true;
-
+    
     Parameter R0;
     Parameter alpha;
     Parameter beta;
     int id;
-
+    
     RickerRecruitment() {
         this->id = RecruitmentBase::id_g++;
         RickerRecruitment::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
-
+        
     }
-
+    
     void SetDeviations(Rcpp::NumericVector values) {
         this->deviations = values;
     }
-
+    
     virtual void AddToMAS(mas::Information<double>& info) {
         typedef typename mas::VariableTrait<double>::variable variable;
-
+        
         std::shared_ptr<mas::Ricker<double> > rec = std::make_shared<mas::Ricker<double> >();
         mas::Ricker<double>* r = rec.get();
         r->id = this->id;
-
-
+        
+        
         r->log_R0 = std::log(this->R0.value);
         if (this->R0.estimated) {
             std::stringstream ss;
@@ -591,7 +598,7 @@ public:
             }
             r->Register(r->log_R0, this->R0.phase);
         }
-
+        
         r->alpha = this->alpha.value;
         if (this->alpha.estimated) {
             std::stringstream ss;
@@ -605,7 +612,7 @@ public:
             }
             r->Register(r->alpha, this->alpha.phase);
         }
-
+        
         r->beta = this->beta.value;
         if (this->beta.estimated) {
             std::stringstream ss;
@@ -619,13 +626,13 @@ public:
             }
             r->Register(r->beta, this->beta.phase);
         }
-
+        
         r->recruitment_deviations.resize(info.nyears);
         for (int i = 0; i < this->deviations.size(); i++) {
             r->recruitment_deviations[i] = variable(this->deviations[i]);
         }
         r->recruitment_deviations_constrained = this->constrained_deviations;
-
+        
         if (this->estimate_deviations) {
             for (int i = 0; i < this->deviations.size(); i++) {
                 std::stringstream ss;
@@ -639,14 +646,14 @@ public:
                 }
                 r->recruitment_deviations[i] = variable(this->deviations[i]);
                 r->Register(r->recruitment_deviations[i], this->deviation_phase);
-
+                
             }
         }
-
-
+        
+        
         info.recruitment_models[this->id] = rec;
     }
-
+    
     void ExtractFromMAS(mas::Information<double>& info) {
         typename mas::Information<double>::recruitment_model_iterator rit;
         rit = info.recruitment_models.find(this->id);
@@ -658,8 +665,8 @@ public:
             this->beta.value = r->beta.GetValue();
         }
     }
-
-
+    
+    
     static std::map<int, RickerRecruitment*> initialized_models;
     typedef typename std::map<int, RickerRecruitment*>::iterator model_iterator;
 };
@@ -678,31 +685,31 @@ public:
     Parameter R0;
     Parameter h;
     Parameter sigma_r;
-
+    
     BevertonHoltRecruitment() {
         this->id = RecruitmentBase::id_g++;
         BevertonHoltRecruitment::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
     }
-
+    
     void SetDeviations(Rcpp::NumericVector values) {
         this->deviations = values;
     }
-
+    
     virtual void AddToMAS(mas::Information<double>& info) {
         typedef typename mas::VariableTrait<double>::variable variable;
-
+        
         std::shared_ptr<mas::BevertonHolt<double> > rec = std::make_shared<mas::BevertonHolt<double> >();
         mas::BevertonHolt<double>* r = rec.get();
         r->id = this->id;
-
+        
         r->R0 = this->R0.value;
         r->log_R0 = std::log(this->R0.value);
-
-
+        
+        
         if (this->R0.estimated) {
             std::stringstream ss;
-            ss << "log_R0" << this->id;
+            ss << "log_R0_" << this->id;
             mas::VariableTrait<double>::SetName(r->log_R0, ss.str());
             if (this->R0.min != std::numeric_limits<double>::min()) {
                 mas::VariableTrait<double>::SetMinBoundary(r->log_R0, std::log(this->R0.min));
@@ -712,13 +719,13 @@ public:
             }
             r->Register(r->log_R0, this->R0.phase);
         }
-
+        
         r->h = this->h.value;
         if (this->h.estimated) {
             std::stringstream ss;
             ss << "h" << this->id;
             mas::VariableTrait<double>::SetName(r->h, ss.str());
-
+            
             if (this->h.min != std::numeric_limits<double>::min()) {
                 mas::VariableTrait<double>::SetMinBoundary(r->h, h.min);
             }
@@ -727,7 +734,7 @@ public:
             }
             r->Register(r->h, this->h.phase);
         }
-
+        
         r->sigma_r = this->sigma_r.value;
         if (this->sigma_r.estimated) {
             std::stringstream ss;
@@ -741,13 +748,13 @@ public:
             }
             r->Register(r->sigma_r, this->sigma_r.phase);
         }
-
+        
         r->recruitment_deviations.resize(info.nyears);
         for (int i = 0; i < this->deviations.size(); i++) {
             r->recruitment_deviations[i] = variable(this->deviations[i]);
         }
         r->recruitment_deviations_constrained = this->constrained_deviations;
-
+        
         if (this->estimate_deviations) {
             for (int i = 0; i < this->deviations.size(); i++) {
                 std::stringstream ss;
@@ -760,14 +767,14 @@ public:
                     mas::VariableTrait<double>::SetMaxBoundary(r->recruitment_deviations[i], this->deviations_max);
                 }
                 r->Register(r->recruitment_deviations[i], this->deviation_phase);
-
+                
             }
         }
-
-
+        
+        
         info.recruitment_models[this->id] = rec;
     }
-
+    
     void ExtractFromMAS(mas::Information<double>& info) {
         typename mas::Information<double>::recruitment_model_iterator rit;
         rit = info.recruitment_models.find(this->id);
@@ -779,7 +786,7 @@ public:
             this->sigma_r.value = r->sigma_r.GetValue();
         }
     }
-
+    
     static std::map<int, BevertonHoltRecruitment*> initialized_models;
     typedef typename std::map<int, BevertonHoltRecruitment*>::iterator model_iterator;
 };
@@ -815,83 +822,83 @@ public:
     Parameter k;
     Parameter l_inf;
     int id;
-
+    
     VonBertalanffy() {
         this->id = GrowthBase::id_g++;
         VonBertalanffy::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
     }
-
+    
     void SetUndifferentiatedWeightAtSeasonStart(Rcpp::NumericVector data) {
         this->weight_at_season_start_males = data;
         this->weight_at_season_start_females = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetUndifferentiatedWeightAtSpawning(Rcpp::NumericVector data) {
         this->weight_at_spawning_males = data;
         this->weight_at_spawning_females = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetUndifferentiatedCatchWeight(Rcpp::NumericVector data) {
         this->weight_at_catch_males = data;
         this->weight_at_catch_females = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetUndifferentiatedSurveyWeight(Rcpp::NumericVector data) {
         this->weight_at_survey_males = data;
         this->weight_at_survey_females = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetFemaleWeightAtSeasonStart(Rcpp::NumericVector data) {
         this->weight_at_season_start_males = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetFemaleWeightAtSpawning(Rcpp::NumericVector data) {
         this->weight_at_spawning_males = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetFemaleCatchWeight(Rcpp::NumericVector data) {
         this->weight_at_catch_males = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetFemaleSurveyWeight(Rcpp::NumericVector data) {
         this->weight_at_survey_males = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetMaleWeightAtSeasonStart(Rcpp::NumericVector data) {
         this->weight_at_season_start_males = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetMaleWeightAtSpawning(Rcpp::NumericVector data) {
         this->weight_at_spawning_males = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetMaleCatchWeight(Rcpp::NumericVector data) {
         this->weight_at_catch_males = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetMaleSurveyWeight(Rcpp::NumericVector data) {
         this->weight_at_survey_males = data;
         this-> has_emprical_weight = true;
     }
-
+    
     virtual void AddToMAS(mas::Information<double>& info) {
         std::shared_ptr<mas::VonBertalanffy<double> > vb = std::make_shared<mas::VonBertalanffy<double> >();
         mas::VonBertalanffy<double>* g = vb.get();
         g->id = this->id;
         std::stringstream ss;
-
+        
         ss << "amin_" << this->id;
         this->InitializeParameter(g, g->a_min, this->a_min, ss.str());
         ss.str("");
@@ -915,19 +922,19 @@ public:
         ss.str("");
         ss << "l_inf_" << this->id;
         this->InitializeParameter(g, g->l_inf, this->l_inf, ss.str());
-
+        
         size_t data_length = info.ages.size() * info.nyears * info.nseasons;
-
-
+        
+        
         std::shared_ptr<mas::WeightFunctorBase<double> > weight_functor;
         if (this->has_emprical_weight == true) {
-
-
+            
+            
             weight_functor = std::make_shared<mas::EmpiricalWeightFunctor<double> >();
             g->weight_functor = weight_functor;
-
+            
             mas::EmpiricalWeightFunctor<double>* eg = (mas::EmpiricalWeightFunctor<double>*)weight_functor.get();
-
+            
             /**
              * Catch weight
              */
@@ -940,8 +947,8 @@ public:
                 size_t ages = info.ages.size();
                 size_t years = info.nyears;
                 size_t seasons = info.nseasons;
-
-
+                
+                
                 mas::EmpricalDataStructure<double> eds;
                 std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
@@ -956,7 +963,7 @@ public:
                 mas::GrowthBase<double>::Do3DInterpolation(eds.empirical_data_at_age, eds.interpolated_data_at_age);
                 eg->weight_at_age_data[mas::CATCH_MEAN_WEIGHT_AT_AGE][mas::FEMALE] = eds;
             }
-
+            
             if (this->weight_at_catch_males.size()) {
                 if (this->weight_at_catch_males.size() != data_length) {
                     std::cout << "weight_at_catch_males vector not equal to (nyears*nseasons*nages)\n";
@@ -966,8 +973,8 @@ public:
                 size_t ages = info.ages.size();
                 size_t years = info.nyears;
                 size_t seasons = info.nseasons;
-
-
+                
+                
                 mas::EmpricalDataStructure<double> eds;
                 std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
@@ -994,8 +1001,8 @@ public:
                 size_t ages = info.ages.size();
                 size_t years = info.nyears;
                 size_t seasons = info.nseasons;
-
-
+                
+                
                 mas::EmpricalDataStructure<double> eds;
                 std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
@@ -1010,7 +1017,7 @@ public:
                 mas::GrowthBase<double>::Do3DInterpolation(eds.empirical_data_at_age, eds.interpolated_data_at_age);
                 eg->weight_at_age_data[mas::SURVEY_MEAN_WEIGHT_AT_AGE][mas::FEMALE] = eds;
             }
-
+            
             if (this->weight_at_survey_males.size()) {
                 if (this->weight_at_survey_males.size() != data_length) {
                     std::cout << "weight_at_survey_males vector not equal to (nyears*nseasons*nages)\n";
@@ -1020,8 +1027,8 @@ public:
                 size_t ages = info.ages.size();
                 size_t years = info.nyears;
                 size_t seasons = info.nseasons;
-
-
+                
+                
                 mas::EmpricalDataStructure<double> eds;
                 std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
@@ -1048,8 +1055,8 @@ public:
                 size_t ages = info.ages.size();
                 size_t years = info.nyears;
                 size_t seasons = info.nseasons;
-
-
+                
+                
                 mas::EmpricalDataStructure<double> eds;
                 std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
@@ -1064,7 +1071,7 @@ public:
                 mas::GrowthBase<double>::Do3DInterpolation(eds.empirical_data_at_age, eds.interpolated_data_at_age);
                 eg->weight_at_age_data[mas::MEAN_WEIGHT_AT_AGE_SPAWNING][mas::FEMALE] = eds;
             }
-
+            
             if (this->weight_at_spawning_males.size()) {
                 if (this->weight_at_spawning_males.size() != data_length) {
                     std::cout << "weight_at_spawning_males vector not equal to (nyears*nseasons*nages)\n";
@@ -1074,8 +1081,8 @@ public:
                 size_t ages = info.ages.size();
                 size_t years = info.nyears;
                 size_t seasons = info.nseasons;
-
-
+                
+                
                 mas::EmpricalDataStructure<double> eds;
                 std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
@@ -1102,8 +1109,8 @@ public:
                 size_t ages = info.ages.size();
                 size_t years = info.nyears;
                 size_t seasons = info.nseasons;
-
-
+                
+                
                 mas::EmpricalDataStructure<double> eds;
                 std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
@@ -1118,7 +1125,7 @@ public:
                 mas::GrowthBase<double>::Do3DInterpolation(eds.empirical_data_at_age, eds.interpolated_data_at_age);
                 eg->weight_at_age_data[mas::MEAN_WEIGHT_AT_AGE_SEASON_START][mas::FEMALE] = eds;
             }
-
+            
             if (this->weight_at_season_start_males.size()) {
                 if (this->weight_at_season_start_males.size() != data_length) {
                     std::cout << "weight_at_season_start_males vector not equal to (nyears*nseasons*nages)\n";
@@ -1128,8 +1135,8 @@ public:
                 size_t ages = info.ages.size();
                 size_t years = info.nyears;
                 size_t seasons = info.nseasons;
-
-
+                
+                
                 mas::EmpricalDataStructure<double> eds;
                 std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
@@ -1145,18 +1152,18 @@ public:
                 eg->weight_at_age_data[mas::MEAN_WEIGHT_AT_AGE_SEASON_START][mas::MALE] = eds;
             }
         } else {
-
+            
             //instantiate default here
             weight_functor = std::make_shared<mas::DefaultWeightFunctor<double> >(g->alpha_f, g->alpha_m, g->beta_f, g->beta_f);
             g->weight_functor = weight_functor;
         }
         info.growth_models[this->id] = vb;
     }
-
+    
     void ExtractFromMAS(mas::Information<double>& info) {
-
+        
     }
-
+    
     static std::map<int, VonBertalanffy*> initialized_models;
     typedef typename std::map<int, VonBertalanffy*>::iterator model_iterator;
 };
@@ -1185,83 +1192,83 @@ public:
     Parameter l_inf;
     Parameter c;
     int id;
-
+    
     VonBertalanffyModified() {
         this->id = GrowthBase::id_g++;
         VonBertalanffyModified::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
     }
-
+    
     void SetUndifferentiatedWeightAtSeasonStart(Rcpp::NumericVector data) {
         this->weight_at_season_start_males = data;
         this->weight_at_season_start_females = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetUndifferentiatedWeightAtSpawning(Rcpp::NumericVector data) {
         this->weight_at_spawning_males = data;
         this->weight_at_spawning_females = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetUndifferentiatedCatchWeight(Rcpp::NumericVector data) {
         this->weight_at_catch_males = data;
         this->weight_at_catch_females = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetUndifferentiatedSurveyWeight(Rcpp::NumericVector data) {
         this->weight_at_survey_males = data;
         this->weight_at_survey_females = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetFemaleWeightAtSeasonStart(Rcpp::NumericVector data) {
         this->weight_at_season_start_males = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetFemaleWeightAtSpawning(Rcpp::NumericVector data) {
         this->weight_at_spawning_males = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetFemaleCatchWeight(Rcpp::NumericVector data) {
         this->weight_at_catch_males = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetFemaleSurveyWeight(Rcpp::NumericVector data) {
         this->weight_at_survey_males = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetMaleWeightAtSeasonStart(Rcpp::NumericVector data) {
         this->weight_at_season_start_males = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetMaleWeightAtSpawning(Rcpp::NumericVector data) {
         this->weight_at_spawning_males = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetMaleCatchWeight(Rcpp::NumericVector data) {
         this->weight_at_catch_males = data;
         this-> has_emprical_weight = true;
     }
-
+    
     void SetMaleSurveyWeight(Rcpp::NumericVector data) {
         this->weight_at_survey_males = data;
         this-> has_emprical_weight = true;
     }
-
+    
     virtual void AddToMAS(mas::Information<double>& info) {
         std::shared_ptr<mas::VonBertalanffyModified<double> > vb = std::make_shared<mas::VonBertalanffyModified<double> >();
         mas::VonBertalanffyModified<double>* g = vb.get();
         g->id = this->id;
         std::stringstream ss;
-
+        
         ss << "amin_" << this->id;
         this->InitializeParameter(g, g->a_min, this->a_min, ss.str());
         ss.str("");
@@ -1291,17 +1298,17 @@ public:
         ss.str("");
         ss << "l_inf_" << this->id;
         this->InitializeParameter(g, g->l_inf, this->l_inf, ss.str());
-
+        
         std::shared_ptr<mas::WeightFunctorBase<double> > weight_functor;
         size_t data_length = info.ages.size() * info.nyears * info.nseasons;
         if (this->has_emprical_weight == true) {
-
-
+            
+            
             weight_functor = std::make_shared<mas::EmpiricalWeightFunctor<double> >();
             //            g->weight_functor = weight_functor;
-
+            
             mas::EmpiricalWeightFunctor<double>* eg = (mas::EmpiricalWeightFunctor<double>*)weight_functor.get();
-
+            
             /**
              * Catch weight
              */
@@ -1314,8 +1321,8 @@ public:
                 size_t ages = info.ages.size();
                 size_t years = info.nyears;
                 size_t seasons = info.nseasons;
-
-
+                
+                
                 mas::EmpricalDataStructure<double> eds;
                 std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
@@ -1329,13 +1336,13 @@ public:
                     d->data.push_back(this->weight_at_catch_females[i]);
                 }
                 eds.empirical_data_at_age = data;
-
-
+                
+                
                 mas::GrowthBase<double>::Do3DInterpolation(eds.empirical_data_at_age, eds.interpolated_data_at_age);
                 eg->weight_at_age_data[mas::CATCH_MEAN_WEIGHT_AT_AGE][mas::FEMALE] = eds;
-
+                
             }
-
+            
             if (this->weight_at_catch_males.size()) {
                 if (this->weight_at_catch_males.size() != data_length) {
                     std::cout << "weight_at_catch_males vector not equal to (nyears*nseasons*nages)\n";
@@ -1345,8 +1352,8 @@ public:
                 size_t ages = info.ages.size();
                 size_t years = info.nyears;
                 size_t seasons = info.nseasons;
-
-
+                
+                
                 mas::EmpricalDataStructure<double> eds;
                 std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
@@ -1359,7 +1366,7 @@ public:
                     d->data[i] = this->weight_at_catch_males[i];
                 }
                 eds.empirical_data_at_age = data;
-
+                
                 mas::GrowthBase<double>::Do3DInterpolation(eds.empirical_data_at_age, eds.interpolated_data_at_age);
                 eg->weight_at_age_data[mas::CATCH_MEAN_WEIGHT_AT_AGE][mas::MALE] = eds;
             }
@@ -1375,8 +1382,8 @@ public:
                 size_t ages = info.ages.size();
                 size_t years = info.nyears;
                 size_t seasons = info.nseasons;
-
-
+                
+                
                 mas::EmpricalDataStructure<double> eds;
                 std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
@@ -1389,11 +1396,11 @@ public:
                     d->data[i] = this->weight_at_survey_females[i];
                 }
                 eds.empirical_data_at_age = data;
-
+                
                 mas::GrowthBase<double>::Do3DInterpolation(eds.empirical_data_at_age, eds.interpolated_data_at_age);
                 eg->weight_at_age_data[mas::SURVEY_MEAN_WEIGHT_AT_AGE][mas::FEMALE] = eds;
             }
-
+            
             if (this->weight_at_survey_males.size()) {
                 if (this->weight_at_survey_males.size() != data_length) {
                     std::cout << "weight_at_survey_males vector not equal to (nyears*nseasons*nages)\n";
@@ -1403,8 +1410,8 @@ public:
                 size_t ages = info.ages.size();
                 size_t years = info.nyears;
                 size_t seasons = info.nseasons;
-
-
+                
+                
                 mas::EmpricalDataStructure<double> eds;
                 std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
@@ -1417,7 +1424,7 @@ public:
                     d->data[i] = this->weight_at_survey_males[i];
                 }
                 eds.empirical_data_at_age = data;
-
+                
                 mas::GrowthBase<double>::Do3DInterpolation(eds.empirical_data_at_age, eds.interpolated_data_at_age);
                 eg->weight_at_age_data[mas::SURVEY_MEAN_WEIGHT_AT_AGE][mas::MALE] = eds;
             }
@@ -1433,8 +1440,8 @@ public:
                 size_t ages = info.ages.size();
                 size_t years = info.nyears;
                 size_t seasons = info.nseasons;
-
-
+                
+                
                 mas::EmpricalDataStructure<double> eds;
                 std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
@@ -1447,11 +1454,11 @@ public:
                     d->data[i] = this->weight_at_spawning_females[i];
                 }
                 eds.empirical_data_at_age = data;
-
+                
                 mas::GrowthBase<double>::Do3DInterpolation(eds.empirical_data_at_age, eds.interpolated_data_at_age);
                 eg->weight_at_age_data[mas::MEAN_WEIGHT_AT_AGE_SPAWNING][mas::FEMALE] = eds;
             }
-
+            
             if (this->weight_at_spawning_males.size()) {
                 if (this->weight_at_spawning_males.size() != data_length) {
                     std::cout << "weight_at_spawning_males vector not equal to (nyears*nseasons*nages)\n";
@@ -1461,8 +1468,8 @@ public:
                 size_t ages = info.ages.size();
                 size_t years = info.nyears;
                 size_t seasons = info.nseasons;
-
-
+                
+                
                 mas::EmpricalDataStructure<double> eds;
                 std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
@@ -1475,7 +1482,7 @@ public:
                     d->data[i] = this->weight_at_spawning_males[i];
                 }
                 eds.empirical_data_at_age = data;
-
+                
                 mas::GrowthBase<double>::Do3DInterpolation(eds.empirical_data_at_age, eds.interpolated_data_at_age);
                 eg->weight_at_age_data[mas::MEAN_WEIGHT_AT_AGE_SPAWNING][mas::MALE] = eds;
             }
@@ -1491,8 +1498,8 @@ public:
                 size_t ages = info.ages.size();
                 size_t years = info.nyears;
                 size_t seasons = info.nseasons;
-
-
+                
+                
                 mas::EmpricalDataStructure<double> eds;
                 std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
@@ -1505,11 +1512,11 @@ public:
                     d->data[i] = this->weight_at_season_start_females[i];
                 }
                 eds.empirical_data_at_age = data;
-
+                
                 mas::GrowthBase<double>::Do3DInterpolation(eds.empirical_data_at_age, eds.interpolated_data_at_age);
                 eg->weight_at_age_data[mas::MEAN_WEIGHT_AT_AGE_SEASON_START][mas::FEMALE] = eds;
             }
-
+            
             if (this->weight_at_season_start_males.size()) {
                 if (this->weight_at_season_start_males.size() != data_length) {
                     std::cout << "weight_at_season_start_males vector not equal to (nyears*nseasons*nages)\n";
@@ -1519,8 +1526,8 @@ public:
                 size_t ages = info.ages.size();
                 size_t years = info.nyears;
                 size_t seasons = info.nseasons;
-
-
+                
+                
                 mas::EmpricalDataStructure<double> eds;
                 std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
@@ -1533,23 +1540,23 @@ public:
                     d->data[i] = this->weight_at_season_start_males[i];
                 }
                 eds.empirical_data_at_age = data;
-
+                
                 mas::GrowthBase<double>::Do3DInterpolation(eds.empirical_data_at_age, eds.interpolated_data_at_age);
                 eg->weight_at_age_data[mas::MEAN_WEIGHT_AT_AGE_SEASON_START][mas::MALE] = eds;
             }
         } else {
-
+            
             //instantiate default here
             weight_functor = std::make_shared<mas::DefaultWeightFunctor<double> >(g->alpha_f, g->alpha_m, g->beta_f, g->beta_f);
         }
         vb->weight_functor = weight_functor;
         info.growth_models[this->id] = vb;
     }
-
+    
     void ExtractFromMAS(mas::Information<double>& info) {
-
+        
     }
-
+    
     static std::map<int, VonBertalanffyModified*> initialized_models;
     typedef typename std::map<int, VonBertalanffyModified*>::iterator model_iterator;
 };
@@ -1558,26 +1565,26 @@ std::map<int, VonBertalanffyModified*> VonBertalanffyModified::initialized_model
 
 class Area : public MASSubModel {
 protected:
-
-
+    
+    
 public:
     static int id_g;
     int id;
     std::string name;
-
+    
     Area() {
         id = Area::id_g++;
         Area::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
     }
-
+    
     virtual void AddToMAS(mas::Information<double>& info) {
         std::shared_ptr<mas::Area<double> > area = std::make_shared<mas::Area<double> >();
         mas::Area<double>* a = area.get();
         a->id = this->id;
         info.areas[a->id] = area;
     }
-
+    
     static std::map<int, Area*> initialized_models;
     typedef typename std::map<int, Area*>::iterator model_iterator;
 };
@@ -1595,32 +1602,32 @@ int Area::id_g = 1;
 class Movement : public MASSubModel {
 protected:
     static int id_g;
-
-
+    
+    
 public:
     int id;
     Rcpp::NumericVector connectivity_males;
     Rcpp::NumericVector connectivity_females;
     Rcpp::NumericVector connectivity_recruits;
-
+    
     bool estimate_movement = false;
     int movement_phase = 1;
-
+    
     Movement() {
         this->id = Movement::id_g++;
         Movement::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
     }
-
+    
     virtual void AddToMAS(mas::Information<double>& info) {
         if (this->connectivity_females.size() != std::pow(Area::id_g - 1, 2) ||
-                this->connectivity_males.size() != std::pow(Area::id_g - 1, 2) ||
-                this->connectivity_recruits.size() != std::pow(Area::id_g - 1, 2)) {
+            this->connectivity_males.size() != std::pow(Area::id_g - 1, 2) ||
+            this->connectivity_recruits.size() != std::pow(Area::id_g - 1, 2)) {
             std::cout << "MAS Error: Movement connectivity not equal to " << std::pow(Area::id_g - 1, 2) << "\n";
             info.valid_configuration = false;
         } else {
             typedef typename mas::VariableTrait<double>::variable variable;
-
+            
             std::shared_ptr<mas::Movement<double> > movement = std::make_shared<mas::Movement<double> >();
             mas::Movement<double>* m = movement.get();
             m->id = this->id;
@@ -1628,12 +1635,12 @@ public:
             m->male_connectivity.resize(info.nseasons);
             m->female_connectivity.resize(info.nseasons);
             m->recruit_connectivity.resize(info.nseasons);
-
+            
             for (int s = 0; s < info.nseasons; s++) {
                 m->male_connectivity[s].resize(Area::id_g - 1);
                 m->female_connectivity[s].resize(Area::id_g - 1);
                 m->recruit_connectivity[s].resize(Area::id_g - 1);
-
+                
                 for (int i = 0; i < Area::id_g - 1; i++) {
                     m->male_connectivity[s][i].resize(Area::id_g - 1);
                     m->female_connectivity[s][i].resize(Area::id_g - 1);
@@ -1648,11 +1655,11 @@ public:
             info.movement_models[m->id] = movement;
         }
     }
-
+    
     void ExtractFromMAS(mas::Information<double>& info) {
         typename mas::Information<double>::movement_model_iterator mit;
         mit = info.movement_models.find(this->id);
-
+        
         if (mit != info.movement_models.end()) {
             std::shared_ptr<mas::Movement<double> > movement = (*mit).second;
             mas::Movement<double>* m = movement.get();
@@ -1668,7 +1675,7 @@ public:
             }
         }
     }
-
+    
     static std::map<int, Movement*> initialized_models;
     typedef typename std::map<int, Movement*>::iterator model_iterator;
 };
@@ -1682,12 +1689,12 @@ class Maturity {
 public:
     int id;
     Rcpp::NumericVector values;
-
+    
     Maturity() {
         this->id = Maturity::id_g++;
         Maturity::initialized_models[this->id] = this;
     }
-
+    
     static std::map<int, Maturity*> initialized_models;
     typedef typename std::map<int, Maturity*>::iterator model_iterator;
 };
@@ -1707,47 +1714,47 @@ protected:
     int growth = -999;
     typedef typename std::map<int, int>::iterator deviations_iterator;
 public:
-
+    
     int id;
     double sex_ratio = 0.5;
     double spawning_season_offset = 0.35;
-
+    
     //not exposed
     std::map<int, int> maturity_males;
     std::map<int, int> maturity_females;
     typedef typename std::map<int, int>::iterator maturity_iterator;
-
+    
     Population() {
         this->id = Population::id_g++;
         Population::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
     }
-
+    
     void SetGrowth(int id) {
-
+        
         this->growth = id;
         std::cout << "Setting growth " << this->growth << "\n";
     }
-
+    
     void AddMovement(int id, int year) {
         this->movement.push_back(std::make_pair(id, year));
     }
-
+    
     void AddMaturity(int id, int area, std::string sex) {
-
+        
         std::locale loc;
         for (std::string::size_type i = 0; i < sex.length(); ++i)
             std::tolower(sex[i], loc);
-
+        
         switch (GetSexType(sex)) {
-
+                
             case MALE:
                 this->maturity_males[area] = id;
                 break;
             case FEMALE:
                 this->maturity_females[area] = id;
                 break;
-
+                
             case UNDIFFERENTIATED:
                 this->maturity_males[area] = id;
                 this->maturity_females[area] = id;
@@ -1756,21 +1763,21 @@ public:
                 std::cout << "MAS Error: unknown sex type \"" << sex << "\" for maturity input.\n";
         }
     }
-
+    
     void AddNaturalMortality(int id, int area, const std::string& sex) {
         std::locale loc;
         for (std::string::size_type i = 0; i < sex.length(); ++i)
             std::tolower(sex[i], loc);
-
+        
         switch (GetSexType(sex)) {
-
+                
             case MALE:
                 this->natural_mortality_males.push_back(std::make_pair(id, area));
                 break;
             case FEMALE:
                 this->natural_mortality_females.push_back(std::make_pair(id, area));
                 break;
-
+                
             case UNDIFFERENTIATED:
                 this->natural_mortality_males.push_back(std::make_pair(id, area));
                 this->natural_mortality_females.push_back(std::make_pair(id, area));
@@ -1779,26 +1786,26 @@ public:
                 std::cout << "MAS Error: unknown sex type \"" << sex << "\" for natural mortality input.\n";
         }
     }
-
+    
     void AddRecruitment(int id, int area) {
         this->recruitment.push_back(std::make_pair(id, area));
     }
-
+    
     void SetInitialDeviations(int devs, int area, std::string sex) {
-
+        
         std::locale loc;
         for (std::string::size_type i = 0; i < sex.length(); ++i)
             std::tolower(sex[i], loc);
-
+        
         switch (GetSexType(sex)) {
-
+                
             case MALE:
                 this->intial_deviations_males[area] = devs;
                 break;
             case FEMALE:
                 this->intial_deviations_females[area] = devs;
                 break;
-
+                
             case UNDIFFERENTIATED:
                 this->intial_deviations_males[area] = devs;
                 this->intial_deviations_females[area] = devs;
@@ -1807,12 +1814,12 @@ public:
                 std::cout << "MAS Error: unknown sex type \"" << sex << "\" for maturity input.\n";
         }
     }
-
+    
     virtual void AddToMAS(mas::Information<double>& info) {
         typedef typename mas::VariableTrait<double>::variable variable;
         std::shared_ptr<mas::Population<double> > population = std::make_shared<mas::Population<double> >();
         mas::Population<double>* pop = population.get();
-
+        
         pop->id = this->id;
         pop->female_fraction_value = this->sex_ratio;
         pop->growth_id = this->growth;
@@ -1832,7 +1839,7 @@ public:
                 pop->maturity_models[(*mit).second][mas::FEMALE] = values;
             }
         }
-
+        
         for (mit = this->maturity_males.begin(); mit != this->maturity_males.end(); ++mit) {
             typename Maturity::model_iterator it;
             it = Maturity::initialized_models.find((*mit).first);
@@ -1845,18 +1852,18 @@ public:
                 pop->maturity_models[(*mit).second][mas::MALE] = values;
             }
         }
-
+        
         for (int i = 0; i < this->movement.size(); i++) {
             pop->movement_models_ids[movement[i].second] = movement[i].first;
         }
-
+        
         /*
          * Initial deviations
          */
         deviations_iterator dev_it;
         for (dev_it = this->intial_deviations_females.begin(); dev_it != this->intial_deviations_females.end(); ++dev_it) {
             typename InitialDeviations::model_iterator dit;
-
+            
             dit = InitialDeviations::initialized_models.find((*dev_it).second);
             if (dit != InitialDeviations::initialized_models.end()) {
                 InitialDeviations* devs = (*dit).second;
@@ -1864,13 +1871,13 @@ public:
                     std::cout << "MAS Error: Initial deviations vector size not equal to " << info.ages.size() << "\n";
                     info.valid_configuration = false;
                 } else {
-
+                    
                     std::vector<variable>& v = pop->initial_deviations_females[(*dev_it).first].second;
                     v.resize(devs->values.size());
                     for (int i = 0; i < v.size(); i++) {
                         v[i] = variable(devs->values[i]);
                     }
-
+                    
                     if (devs->estimate) {
                         for (int i = 0; i < v.size(); i++) {
                             std::stringstream ss;
@@ -1879,16 +1886,16 @@ public:
                             pop->Register(v[i], devs->phase);
                         }
                     }
-
-
+                    
+                    
                 }
-
+                
             }
         }
-
+        
         for (dev_it = this->intial_deviations_males.begin(); dev_it != this->intial_deviations_males.end(); ++dev_it) {
             typename InitialDeviations::model_iterator dit;
-
+            
             dit = InitialDeviations::initialized_models.find((*dev_it).second);
             if (dit != InitialDeviations::initialized_models.end()) {
                 InitialDeviations* devs = (*dit).second;
@@ -1896,13 +1903,13 @@ public:
                     std::cout << "MAS Error: Initial deviations vector size not equal to " << info.ages.size() << "\n";
                     info.valid_configuration = false;
                 } else {
-
+                    
                     std::vector<variable>& v = pop->initial_deviations_males[(*dev_it).first].second;
                     v.resize(devs->values.size());
                     for (int i = 0; i < v.size(); i++) {
                         v[i] = variable(devs->values[i]);
                     }
-
+                    
                     if (devs->estimate) {
                         for (int i = 0; i < v.size(); i++) {
                             std::stringstream ss;
@@ -1911,21 +1918,21 @@ public:
                             pop->Register(v[i], devs->phase);
                         }
                     }
-
-
+                    
+                    
                 }
-
+                
             }
         }
-
+        
         /*
          * Recruitment
          */
         for (int i = 0; i < this->recruitment.size(); i++) {
             pop->recruitment_ids[recruitment[i].second] = this->recruitment[i].first;
         }
-
-
+        
+        
         /*
          * Growth
          */
@@ -1936,26 +1943,26 @@ public:
             std::cout << "MAS Error: No growth model set for Population " << this->id << "\n";
             info.valid_configuration = false;
         }
-
-
+        
+        
         /*
          * Natural Mortality
          */
-
+        
         for (int i = 0; i < this->natural_mortality_males.size(); i++) {
             pop->male_natural_mortality_ids[recruitment[i].second] = this->natural_mortality_males[i].first;
         }
         for (int i = 0; i < this->natural_mortality_females.size(); i++) {
             pop->female_natural_mortality_ids[recruitment[i].second] = this->natural_mortality_females[i].first;
         }
-
+        
         info.populations[this->id] = population;
     }
-
+    
     void ExtractFromMAS(mas::Information<double>& info) {
-
+        
     }
-
+    
     static std::map<int, Population*> initialized_models;
     typedef typename std::map<int, Population*>::iterator model_iterator;
 };
@@ -1983,7 +1990,7 @@ class Lognormal : public NLLBase {
     bool has_lambdas = false;
 public:
     int id;
-
+    
     Lognormal() {
         this->id = NLLBase::id_g++;
         this->id_ = this->id;
@@ -1991,13 +1998,13 @@ public:
         MASSubModel::submodels.push_back(this);
         NLLBase::nll_submodels.push_back(this);
     }
-
+    
     void SetLambdaValues(Rcpp::NumericVector lambdas, Rcpp::IntegerVector lambda_dimensions) {
         this->lambdas = lambdas;
         this->lambda_dimensions = lambda_dimensions;
         this->has_lambdas = true;
     }
-
+    
     virtual void AddToMAS(mas::Information<double>& info) {
         std::shared_ptr < mas::DataObject<double > > lambda_data(new mas::DataObject<double>());
         std::shared_ptr<mas::Lognormal<double> > ln = std::make_shared<mas::Lognormal<double> >();
@@ -2011,12 +2018,12 @@ public:
             for (int i = 0; i < this->lambda_dimensions.size(); i++) {
                 prod *= this->lambdas[i];
             }
-
+            
             if (this->lambdas.size() != prod) {
                 std::cout << "MAS Error: Lognormal lambda vector not equal to dimensions product\n";
                 info.valid_configuration = false;
             }
-
+            
             switch (lambdas.size()) {
                 case 1:
                     d->imax = this->lambda_dimensions[0];
@@ -2035,14 +2042,14 @@ public:
                 d->data.push_back(this->lambdas[i]);
             }
         }
-
+        
         info.likelihood_components[nll->id] = ln;
     }
-
+    
     void ExtractFromMAS(mas::Information<double>& info) {
-
+        
     }
-
+    
     static std::map<int, Lognormal*> initialized_models;
     typedef typename std::map<int, Lognormal*>::iterator model_iterator;
 };
@@ -2055,22 +2062,22 @@ class DirichletMultinomial : public NLLBase {
     bool has_lambdas = false;
 public:
     int id;
-
+    
     DirichletMultinomial() {
         this->id = NLLBase::id_g++;
         this->id_ = this->id;
-
+        
         DirichletMultinomial::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
         NLLBase::nll_submodels.push_back(this);
     }
-
+    
     void SetLambdaValues(Rcpp::NumericVector lambdas, Rcpp::IntegerVector lambda_dimensions) {
         this->lambdas = lambdas;
         this->lambda_dimensions = lambda_dimensions;
         this->has_lambdas = true;
     }
-
+    
     virtual void AddToMAS(mas::Information<double>& info) {
         std::shared_ptr < mas::DataObject<double > > lambda_data(new mas::DataObject<double>());
         std::shared_ptr<mas::DirichletMultinomial<double> > ln = std::make_shared<mas::DirichletMultinomial<double> >();
@@ -2084,12 +2091,12 @@ public:
             for (int i = 0; i < this->lambda_dimensions.size(); i++) {
                 prod *= this->lambdas[i];
             }
-
+            
             if (this->lambdas.size() != prod) {
                 std::cout << "MAS Error: DirichletMultinomial lambda vector not equal to dimensions product\n";
                 info.valid_configuration = false;
             }
-
+            
             switch (lambdas.size()) {
                 case 1:
                     d->imax = this->lambda_dimensions[0];
@@ -2108,14 +2115,14 @@ public:
                 d->data.push_back(this->lambdas[i]);
             }
         }
-
+        
         info.likelihood_components[nll->id] = ln;
     }
-
+    
     void ExtractFromMAS(mas::Information<double>& info) {
-
+        
     }
-
+    
     static std::map<int, DirichletMultinomial*> initialized_models;
     typedef typename std::map<int, DirichletMultinomial*>::iterator model_iterator;
 };
@@ -2128,25 +2135,25 @@ class DirichletMultinomialRobust : public NLLBase {
     bool has_lambdas = false;
 public:
     int id;
-
+    
     DirichletMultinomialRobust() {
         this->id = NLLBase::id_g++;
         this->id_ = this->id;
-
+        
         DirichletMultinomialRobust::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
         NLLBase::nll_submodels.push_back(this);
     }
-
+    
     void SetLambdaValues(Rcpp::NumericVector lambdas, Rcpp::IntegerVector lambda_dimensions) {
         this->lambdas = lambdas;
         this->lambda_dimensions = lambda_dimensions;
         this->has_lambdas = true;
     }
-
+    
     virtual void AddToMAS(mas::Information<double>& info) {
         std::shared_ptr < mas::DataObject<double > > lambda_data(new mas::DataObject<double>());
-
+        
         std::shared_ptr<mas::DirichletMultinomialRobust<double> > ln = std::make_shared<mas::DirichletMultinomialRobust<double> >();
         mas::DirichletMultinomialRobust<double>* nll = ln.get();
         nll->lambda = lambda_data;
@@ -2158,12 +2165,12 @@ public:
             for (int i = 0; i < this->lambda_dimensions.size(); i++) {
                 prod *= this->lambdas[i];
             }
-
+            
             if (this->lambdas.size() != prod) {
                 std::cout << "MAS Error: DirichletMultinomialRobust lambda vector not equal to dimensions product\n";
                 info.valid_configuration = false;
             }
-
+            
             switch (lambdas.size()) {
                 case 1:
                     d->imax = this->lambda_dimensions[0];
@@ -2182,14 +2189,14 @@ public:
                 d->data.push_back(this->lambdas[i]);
             }
         }
-
+        
         info.likelihood_components[nll->id] = ln;
     }
-
+    
     void ExtractFromMAS(mas::Information<double>& info) {
-
+        
     }
-
+    
     static std::map<int, DirichletMultinomialRobust*> initialized_models;
     typedef typename std::map<int, DirichletMultinomialRobust*>::iterator model_iterator;
 };
@@ -2202,28 +2209,28 @@ class Multinomial : public NLLBase {
     bool has_lambdas = false;
 public:
     int id;
-
+    
     Multinomial() {
         this->id = NLLBase::id_g++;
         this->id_ = this->id;
-
+        
         Multinomial::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
         NLLBase::nll_submodels.push_back(this);
     }
-
+    
     void SetLambdaValues(Rcpp::NumericVector lambdas, Rcpp::IntegerVector lambda_dimensions) {
         this->lambdas = lambdas;
         this->lambda_dimensions = lambda_dimensions;
         this->has_lambdas = true;
     }
-
+    
     virtual void AddToMAS(mas::Information<double>& info) {
         std::shared_ptr<mas::Multinomial<double> > ln = std::make_shared<mas::Multinomial<double> >();
         mas::Multinomial<double>* nll = ln.get();
         std::shared_ptr < mas::DataObject<double > > lambda_data(new mas::DataObject<double>());
         nll->lambda = lambda_data;
-
+        
         nll->id = this->id;
         if (this->has_lambdas) {
             nll->lambda = std::make_shared<mas::DataObject<double> >();
@@ -2232,12 +2239,12 @@ public:
             for (int i = 0; i < this->lambda_dimensions.size(); i++) {
                 prod *= this->lambdas[i];
             }
-
+            
             if (this->lambdas.size() != prod) {
                 std::cout << "MAS Error: Multinomial lambda vector not equal to dimensions product\n";
                 info.valid_configuration = false;
             }
-
+            
             switch (lambdas.size()) {
                 case 1:
                     d->imax = this->lambda_dimensions[0];
@@ -2256,14 +2263,14 @@ public:
                 d->data.push_back(this->lambdas[i]);
             }
         }
-
+        
         info.likelihood_components[nll->id] = ln;
     }
-
+    
     void ExtractFromMAS(mas::Information<double>& info) {
-
+        
     }
-
+    
     static std::map<int, Multinomial*> initialized_models;
     typedef typename std::map<int, Multinomial*>::iterator model_iterator;
 };
@@ -2276,22 +2283,22 @@ class MultinomialRobust : public NLLBase {
     bool has_lambdas = false;
 public:
     int id;
-
+    
     MultinomialRobust() {
         this->id = NLLBase::id_g++;
         this->id_ = this->id;
-
+        
         MultinomialRobust::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
         NLLBase::nll_submodels.push_back(this);
     }
-
+    
     void SetLambdaValues(Rcpp::NumericVector lambdas, Rcpp::IntegerVector lambda_dimensions) {
         this->lambdas = lambdas;
         this->lambda_dimensions = lambda_dimensions;
         this->has_lambdas = true;
     }
-
+    
     virtual void AddToMAS(mas::Information<double>& info) {
         std::shared_ptr<mas::MultinomialRobust<double> > ln = std::make_shared<mas::MultinomialRobust<double> >();
         mas::MultinomialRobust<double>* nll = ln.get();
@@ -2305,12 +2312,12 @@ public:
             for (int i = 0; i < this->lambda_dimensions.size(); i++) {
                 prod *= this->lambdas[i];
             }
-
+            
             if (this->lambdas.size() != prod) {
                 std::cout << "MAS Error: MultinomialRobust lambda vector not equal to dimensions product\n";
                 info.valid_configuration = false;
             }
-
+            
             switch (lambdas.size()) {
                 case 1:
                     d->imax = this->lambda_dimensions[0];
@@ -2329,14 +2336,14 @@ public:
                 d->data.push_back(this->lambdas[i]);
             }
         }
-
+        
         info.likelihood_components[nll->id] = ln;
     }
-
+    
     void ExtractFromMAS(mas::Information<double>& info) {
-
+        
     }
-
+    
     static std::map<int, MultinomialRobust*> initialized_models;
     typedef typename std::map<int, MultinomialRobust*>::iterator model_iterator;
 };
@@ -2346,12 +2353,12 @@ std::map<int, MultinomialRobust*> MultinomialRobust::initialized_models;
 class IndexData {
     static int id_g;
 public:
-
+    
     IndexData() {
         this->id = IndexData::id_g++;
         IndexData::initialized_models[this->id] = this;
     }
-
+    
     int id;
     Rcpp::NumericVector data;
     Rcpp::NumericVector error;
@@ -2367,12 +2374,12 @@ int IndexData::id_g = 1;
 class AgeCompData {
     static int id_g;
 public:
-
+    
     AgeCompData() {
         this->id = AgeCompData::id_g++;
         AgeCompData::initialized_models[this->id] = this;
     }
-
+    
     int id;
     Rcpp::NumericVector data;
     Rcpp::NumericVector sample_size;
@@ -2389,13 +2396,13 @@ class LengthCompData {
 public:
     static int id_g;
 public:
-
+    
     LengthCompData() {
         this->id = LengthCompData::id_g++;
         LengthCompData::initialized_models[this->id] = this;
-
+        
     }
-
+    
     int id;
     Rcpp::NumericVector data;
     Rcpp::NumericVector sample_size;
@@ -2411,9 +2418,9 @@ int LengthCompData::id_g = 1;
 class Fleet : public MASSubModel {
 protected:
     static int id_g;
-
-
-
+    
+    
+    
     std::vector<std::pair<SexType, int> > index_data;
     std::vector<std::pair<SexType, int> > age_comp_data;
     std::vector<std::pair<SexType, int> > length_comp_data;
@@ -2425,72 +2432,72 @@ protected:
     int length_comp_nll_id = -999;
     int selectivity_model_id;
     int area_id;
-
+    
     std::vector<triple<int, int, int> > fishing_nortality; //id, season, area
     std::vector<triple<int, int, int> > selectivity; //id, season, area
 public:
     int used = false;
     double catch_fraction_of_year = 1.0;
     int id;
-
+    
     Fleet() {
         this->id = Fleet::id_g++;
         Fleet::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
     }
-
+    
     void AddIndexData(int id, std::string sex) {
         std::locale loc;
         for (std::string::size_type i = 0; i < sex.length(); ++i)
             std::tolower(sex[i], loc);
-
+        
         SexType st = GetSexType(sex);
         this->index_data.push_back(std::make_pair(st, id));
     }
-
+    
     void AddAgeCompData(int id, std::string sex) {
         std::locale loc;
         for (std::string::size_type i = 0; i < sex.length(); ++i)
             std::tolower(sex[i], loc);
-
+        
         SexType st = GetSexType(sex);
         this->age_comp_data.push_back(std::make_pair(st, id));
-
+        
     }
-
+    
     void AddLengthCompData(int id, std::string sex) {
         std::locale loc;
         for (std::string::size_type i = 0; i < sex.length(); ++i)
             std::tolower(sex[i], loc);
-
+        
         SexType st = GetSexType(sex);
         this->length_comp_data.push_back(std::make_pair(st, id));
     }
-
+    
     void SetIndexCompNllComponent(int model_id) {
         this->index_nll_id = model_id;
     }
-
+    
     void SetAgeCompNllComponent(int model_id) {
         this->age_comp_nll_id = model_id;
     }
-
+    
     void SetLengthCompNllComponent(int model_id) {
         this->length_comp_nll_id = model_id;
     }
-
+    
     void AddFishingMortality(int id, int season, int area) {
         this->fishing_nortality.push_back(triple<int, int, int>(id, season, area));
     }
-
+    
     void AddSelectivity(int id, int season, int area) {
         this->selectivity.push_back(triple<int, int, int>(id, season, area));
     }
-
+    
     virtual void AddToMAS(mas::Information<double>& info) {
         if (this->used) {
-
-
+            
+            
             std::shared_ptr<mas::Fleet<double> > fleet = std::make_shared<mas::Fleet<double> > ();
             mas::Fleet<double>* f = fleet.get();
             f->id = this->id;
@@ -2506,7 +2513,7 @@ public:
                 f->area_season_catch_fraction[sarea][sseason] = fraction;
                 f->season_area_catch_fraction[sseason][sarea] = fraction;
             }
-
+            
             for (int i = 0; i < this->fishing_nortality.size(); i++) {
                 int sseason = this->fishing_nortality[i].second;
                 int sid = this->selectivity[i].first;
@@ -2514,10 +2521,10 @@ public:
                 f->season_area_fishing_mortality_ids[sseason][sarea] = sid;
                 f->area_season_fishing_mortality_ids[sarea][sseason] = sid;
             }
-
+            
             if (this->index_nll_id != -999) {
                 f->fishery_biomass_likelihood_component_id = this->index_nll_id;
-
+                
                 bool nll_exists = false;
                 for (int i = 0; i < NLLBase::nll_submodels.size(); i++) {
                     if (NLLBase::nll_submodels[i]->id_ == this->index_nll_id) {
@@ -2528,7 +2535,7 @@ public:
                     std::cout << "MAS Error: Index NLL not found!";
                     info.valid_configuration = false;
                 }
-
+                
                 for (int i = 0; i < this->index_data.size(); i++) {
                     IndexData::model_iterator it;
                     it = IndexData::initialized_models.find(this->index_data[i].second);
@@ -2549,14 +2556,14 @@ public:
                                 d->sex_type = mas::UNDIFFERENTIATED;
                                 break;
                         }
-
+                        
                         if (data->data.size() != info.nyears * info.nseasons || data->error.size() != info.nyears * info.nseasons) {
                             std::cout << "MAS Error: Index data or error vector not equal to (nseasons*nyears)\n";
                             info.valid_configuration = false;
                         } else {
                             d->imax = info.nyears;
                             d->jmax = info.nseasons;
-
+                            
                             for (int i = 0; i < data->data.size(); i++) {
                                 d->data.push_back(data->data[i]);
                                 d->observation_error.push_back(data->error[i]);
@@ -2570,12 +2577,12 @@ public:
                         }
                     }
                 }
-
+                
             }
-
+            
             if (this->age_comp_nll_id != -999) {
                 f->fishery_age_comp_likelihood_component_id = this->age_comp_nll_id;
-
+                
                 bool nll_exists = false;
                 for (int i = 0; i < NLLBase::nll_submodels.size(); i++) {
                     if (NLLBase::nll_submodels[i]->id_ == this->age_comp_nll_id) {
@@ -2606,11 +2613,15 @@ public:
                                 d->sex_type = mas::UNDIFFERENTIATED;
                                 break;
                         }
-
-                        if (data->data.size() != info.nyears * info.nseasons * info.ages.size() || data->sample_size.size() != info.nyears * info.nseasons) {
-                            std::cout << "MAS Error: Fleet Age Comp data vector not equal to (nseasons*nyears*nages) or error vector not equal to (nseasons*nyears)\n";
+                        
+                        if (data->data.size() != info.nyears * info.nseasons * info.ages.size()) {
+                            std::cout << "MAS Error: Fleet Age Comp data vector not equal to (nseasons*nyears*nages) \n";
+                            info.valid_configuration = false;
+                        } else if (data->sample_size.size() != info.nyears * info.nseasons) {
+                            std::cout << "MAS Error: Fleet Age Comp error vector not equal to (nseasons*nyears) \n";
                             info.valid_configuration = false;
                         } else {
+                            
                             d->imax = info.nyears;
                             d->jmax = info.nseasons;
                             d->kmax = info.ages.size();
@@ -2623,31 +2634,31 @@ public:
                             d->id = this->id;
                             d->name = "AgeComp Data";
                             d->type = mas::CATCH_PROPORTION_AT_AGE;
-
+                            
                             d->Validate();
                             info.data_dictionary[d->id].push_back(dd);
                             info.data.push_back(dd);
                         }
                     }
                 }
-
+                
             }
-
+            
             info.fleets[f->id ] = fleet;
         } else {
             std::cout << "MAS Warning: Fleet_" << this->id << " defined, but not used in the Model.\n";
             mas::mas_log << "MAS Warning: Fleet_" << this->id << " defined, but not used in the Model.\n";
         }
-
-
-
+        
+        
+        
     }
-
+    
     void ExtractFromMAS(mas::Information<double>& info) {
-
-
+        
+        
     }
-
+    
     static std::map<int, Fleet*> initialized_models;
     typedef typename std::map<int, Fleet*>::iterator model_iterator;
 };
@@ -2656,13 +2667,13 @@ std::map<int, Fleet*> Fleet::initialized_models;
 int Fleet::id_g = 1;
 
 class Survey : public MASSubModel {
-
+    
     enum Sex {
         MALE = 0,
         FEMALE,
         UNDIFFERENTIATED
     };
-
+    
     static int id_g;
     std::vector<std::pair<SexType, int> > index_data;
     std::vector<std::pair<SexType, int> > age_comp_data;
@@ -2670,64 +2681,64 @@ class Survey : public MASSubModel {
     int index_nll_id = -999;
     int age_comp_nll_id = -999;
     int length_comp_nll_id = -999;
-
+    
     std::vector<triple<int, int, int> > selectivity; //id, season, area
 public:
     bool used = false;
     int id;
     Parameter q;
     double survey_fraction_of_year = 1.0;
-
+    
     Survey() {
         this->id = Survey::id_g++;
         Survey::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
     }
-
+    
     void AddIndexData(int id, std::string sex) {
         std::locale loc;
         for (std::string::size_type i = 0; i < sex.length(); ++i)
             std::tolower(sex[i], loc);
-
+        
         SexType st = GetSexType(sex);
         this->index_data.push_back(std::make_pair(st, id));
     }
-
+    
     void AddAgeCompData(int id, std::string sex) {
         std::locale loc;
         for (std::string::size_type i = 0; i < sex.length(); ++i)
             std::tolower(sex[i], loc);
-
+        
         SexType st = GetSexType(sex);
         this->age_comp_data.push_back(std::make_pair(st, id));
-
+        
     }
-
+    
     void AddLengthCompData(int id, std::string sex) {
         std::locale loc;
         for (std::string::size_type i = 0; i < sex.length(); ++i)
             std::tolower(sex[i], loc);
-
+        
         SexType st = GetSexType(sex);
         this->length_comp_data.push_back(std::make_pair(st, id));
     }
-
+    
     void SetIndexCompNllComponent(int model_id) {
         this->index_nll_id = model_id;
     }
-
+    
     void SetAgeCompNllComponent(int model_id) {
         this->age_comp_nll_id = model_id;
     }
-
+    
     void SetLengthCompNllComponent(int model_id) {
         this->length_comp_nll_id = model_id;
     }
-
+    
     void AddSelectivity(int id, int season, int area) {
         this->selectivity.push_back(triple<int, int, int>(id, season, area));
     }
-
+    
     virtual void AddToMAS(mas::Information<double>& info) {
         std::cout << "Pushing survey " << this->id << " to MAS model engine!!!\n\n";
         if (this->used) {
@@ -2745,32 +2756,32 @@ public:
                 s->area_season_survey_fraction[sarea][sseason] = fraction;
                 s->season_area_survey_fraction[sseason][sarea] = fraction;
             }
-
-
+            
+            
             mas::VariableTrait<double>::SetValue(s->q, q.value);
             if (q.estimated) {
-
+                
                 std::stringstream ss;
                 ss << "q_" << this->id;
                 mas::VariableTrait<double>::SetName(s->q, ss.str());
                 if (q.min != std::numeric_limits<double>::min()) {
                     mas::VariableTrait<double>::SetMinBoundary(s->q, q.min);
                 }
-
+                
                 if (q.max != std::numeric_limits<double>::max()) {
                     mas::VariableTrait<double>::SetMaxBoundary(s->q, q.max);
                 }
-
+                
                 survey->Register(s->q, q.phase);
                 std::cout << "Survey " << survey->id << " \"q\" will be estimated in phase " << q.phase << "!\n";
-
+                
             } else {
                 std::cout << "Survey " << survey->id << " \"q\" not estimated!\n";
             }
-
+            
             if (this->index_nll_id != -999) {
                 s->survey_biomass_likelihood_component_id = this->index_nll_id;
-
+                
                 bool nll_exists = false;
                 for (int i = 0; i < NLLBase::nll_submodels.size(); i++) {
                     if (NLLBase::nll_submodels[i]->id_ == this->index_nll_id) {
@@ -2781,7 +2792,7 @@ public:
                     std::cout << "MAS Error: Index NLL not found!";
                     info.valid_configuration = false;
                 }
-
+                
                 for (int i = 0; i < this->index_data.size(); i++) {
                     IndexData::model_iterator it;
                     it = IndexData::initialized_models.find(this->index_data[i].second);
@@ -2802,14 +2813,14 @@ public:
                                 d->sex_type = mas::UNDIFFERENTIATED;
                                 break;
                         }
-
+                        
                         if (data->data.size() != info.nyears * info.nseasons || data->error.size() != info.nyears * info.nseasons) {
                             std::cout << "MAS Error: Index data or error vector not equal to (nseasons*nyears)\n";
                             info.valid_configuration = false;
                         } else {
                             d->imax = info.nyears;
                             d->jmax = info.nseasons;
-
+                            
                             for (int i = 0; i < data->data.size(); i++) {
                                 d->data.push_back(data->data[i]);
                                 d->observation_error.push_back(data->error[i]);
@@ -2823,12 +2834,12 @@ public:
                         }
                     }
                 }
-
+                
             }
-
+            
             if (this->age_comp_nll_id != -999) {
                 s->survey_age_comp_likelihood_component_id = this->age_comp_nll_id;
-
+                
                 bool nll_exists = false;
                 for (int i = 0; i < NLLBase::nll_submodels.size(); i++) {
                     if (NLLBase::nll_submodels[i]->id_ == this->age_comp_nll_id) {
@@ -2859,9 +2870,12 @@ public:
                                 d->sex_type = mas::UNDIFFERENTIATED;
                                 break;
                         }
-
-                        if (data->data.size() != info.nyears * info.nseasons * info.ages.size() || data->sample_size.size() != info.nyears * info.nseasons) {
-                            std::cout << "MAS Error: Survey Age Comp data vector not equal to (nseasons*nyears*nages) or error vector not equal to (nseasons*nyears)\n";
+                        
+                        if (data->data.size() != info.nyears * info.nseasons * info.ages.size()) {
+                            std::cout << "MAS Error: Survey Age Comp data vector not equal to (nseasons*nyears*nages) \n";
+                            info.valid_configuration = false;
+                        } else if (data->sample_size.size() != info.nyears * info.nseasons) {
+                            std::cout << "MAS Error: Survey Age Comp error vector not equal to (nseasons*nyears) \n";
                             info.valid_configuration = false;
                         } else {
                             d->imax = info.nyears;
@@ -2876,27 +2890,28 @@ public:
                             d->id = this->id;
                             d->name = "AgeComp Data";
                             d->type = mas::SURVEY_PROPORTION_AT_AGE;
-
+                            
                             d->Validate();
                             info.data_dictionary[d->id].push_back(dd);
                             info.data.push_back(dd);
                         }
                     }
                 }
-
+                
             }
-
+            
             info.survey_models[survey->id] = survey;
         } else {
+            
             std::cout << "MAS Warning: Survey_" << this->id << " defined, but not used in the Model.\n";
             mas::mas_log << "MAS Warning: Survey_" << this->id << " defined, but not used in the Model.\n";
         }
     }
-
+    
     void ExtractFromMAS(mas::Information<double>& info) {
-
+        
     }
-
+    
     static std::map<int, Survey*> initialized_models;
     typedef typename std::map<int, Survey*>::iterator model_iterator;
 };
@@ -2909,53 +2924,62 @@ class MASModel {
     std::set<int> fleets;
     std::set<int> surveys;
     std::set<int> populations;
-
-
+    
+    
 private:
-
+    
     /**
      * Create the actual MAS model
      */
     void Initialize() {
         if (!this->initialized) {
-
+            
         }
     }
+    
     mas::MASObjectiveFunction<double > mas;
 public:
     int nyears;
     int nseasons;
     int nages;
+    int max_line_searches = 50;
+    double tolerance = 1e-4;
     double spawning_season_offset = 0.35;
     double catch_season_offset = 0.5;
     double survey_season_offset = 0.5;
     double extended_plus_group = 0;
     Rcpp::NumericVector ages;
-
+    
     int GetNAges() const {
+        
         return nages;
     }
-
+    
     void SetNAges(int nages) {
+        
         this->nages = nages;
     }
-
+    
     int GetNSeasons() const {
+        
         return nseasons;
     }
-
+    
     void SetNSeasons(int nseasons) {
+        
         this->nseasons = nseasons;
     }
-
+    
     int GetNYears() const {
+        
         return nyears;
     }
-
+    
     void SetNYears(int nyears) {
+        
         this->nyears = nyears;
     }
-
+    
     void Run() {
         if (this->nages == 0) {
             std::cout << "MAS error: nages = 0\n";
@@ -2965,95 +2989,102 @@ public:
             std::cout << "MAS error: nyears = 0\n";
             return;
         }
-
+        
         if (this->extended_plus_group == 0) {
             std::cout << "MAS error: extended_plus_group = 0\n";
             return;
         } else {
             mas::AreaPopulationInfo<double>::length_weight_key_carryout = this->extended_plus_group;
         }
-
+        
         mas.mas_instance.info.nyears = this->nyears;
         mas.mas_instance.info.nseasons = this->nseasons;
         mas.mas_instance.info.spawning_season_offset = this->spawning_season_offset;
         mas.mas_instance.info.survey_fraction_of_year = this->survey_season_offset;
         mas.mas_instance.info.catch_fraction_of_year = this->catch_season_offset;
-
+        
         typedef typename mas::VariableTrait<double>::variable variable;
         mas.mas_instance.info.ages.resize(this->nages);
         mas.mas_instance.info.ages_real.resize(this->nages);
-
+        
         for (int i = 0; i < nages; i++) {
             mas.mas_instance.info.ages[i] = variable(this->ages[i]);
-
+            
             mas.mas_instance.info.ages_real[i] = (this->ages[i]);
             mas::GrowthBase<double>::ages.push_back(this->ages[i]);
             mas::GrowthBase<double>::ages_to_intrpolate.insert(this->ages[i]);
             mas::GrowthBase<double>::ages_to_intrpolate.insert(this->ages[i] + this->catch_season_offset);
             mas::GrowthBase<double>::ages_to_intrpolate.insert(this->ages[i] + this->survey_season_offset);
             mas::GrowthBase<double>::ages_to_intrpolate.insert(this->ages[i] + this->spawning_season_offset);
-
+            
         }
-
+        
         for (int i = 0; i < NLLBase::nll_submodels.size(); i++) {
             NLLBase::nll_submodels[i]->AddToMAS(mas.mas_instance.info);
         }
-
+        
         for (int i = 0; i < MASSubModel::submodels.size(); i++) {
             MASSubModel::submodels[i]->AddToMAS(mas.mas_instance.info);
         }
-
-
-
+        
+        
+        
         mas.mas_instance.info.CreateModel();
         mas.Initialize();
-
-        //        for (int i = 0; i < mas.parameters_m.size(); i++) {
-        //            std::cout << mas.parameters_m[i]->GetName() << " = " << mas.parameters_m[i]->GetValue() << "\n";
-        //        }
-
-
-
+        
+        
+        
         if (mas.mas_instance.info.valid_configuration == true) {
             atl::LBFGS<double> min;
             min.SetPrintWidth(2);
-            min.max_line_searches = 50;
+            min.max_line_searches = this->max_line_searches;
+            min.SetTolerance(this->tolerance);
             min.SetObjectiveFunction(&mas);
             min.Run();
         } else {
             std::cout << "MAS Error: Invalid Model Configuration, see mas.log\n";
         }
-
-
+        
+        
     }
-
+    
     void AddFleet(int id) {
         Fleet::model_iterator it = Fleet::initialized_models.find(id);
         if (it != Fleet::initialized_models.end()) {
-            (*it).second->used = true;
+            (
+             
+             *it).second->used = true;
             this->fleets.insert(id);
         }
-
+        
     }
-
+    
     void AddSurvey(int id) {
         Survey::model_iterator it = Survey::initialized_models.find(id);
         if (it != Survey::initialized_models.end()) {
-            (*it).second->used = true;
+            (
+             
+             *it).second->used = true;
             this->surveys.insert(id);
         }
     }
-
+    
     void AddPopulation(int id) {
+        
         this->populations.insert(id);
     }
-
+    
     std::string GetOuptput() {
         mas::JSONOutputGenerator<double> json;
+        
         return json.GenerateOutput(mas.mas_instance);
     }
-
-
+    
+    Rcpp::List GetParameterEstimates() {
+        Rcpp::List l;
+        
+    }
+    
 };
 
 RCPP_EXPOSED_CLASS(Parameter)
@@ -3083,275 +3114,279 @@ RCPP_EXPOSED_CLASS(MASModel)
 
 RCPP_MODULE(rmas) {
     class_<Parameter>("Parameter")
-            .constructor()
-            .constructor<double>()
-            .constructor<Parameter>()
-            .field("value", &Parameter::value)
-            .field("min", &Parameter::min)
-            .field("max", &Parameter::max)
-            .field("estimated", &Parameter::estimated)
-            .field("phase", &Parameter::phase);
-
+    .constructor()
+    .constructor<double>()
+    .constructor<Parameter>()
+    .field("value", &Parameter::value)
+    .field("min", &Parameter::min)
+    .field("max", &Parameter::max)
+    .field("estimated", &Parameter::estimated)
+    .field("phase", &Parameter::phase)
+    .field("lambda", &Parameter::lambda);
+    
     class_<LogisticSelectivity>("LogisticSelectivity")
-            .constructor()
-            .field("a50", &LogisticSelectivity::a50)
-            .field("slope", &LogisticSelectivity::slope)
-            .field("id", &LogisticSelectivity::id)
-            ;
-
+    .constructor()
+    .field("a50", &LogisticSelectivity::a50)
+    .field("slope", &LogisticSelectivity::slope)
+    .field("id", &LogisticSelectivity::id)
+    ;
+    
     class_<AgeBasedSelectivity>("AgeBasedSelectivity")
-            .constructor()
-            .field("values", &AgeBasedSelectivity::values)
-            .field("id", &AgeBasedSelectivity::id)
-            .field("estimated", &AgeBasedSelectivity::estimated)
-            .field("phase", &AgeBasedSelectivity::phase)
-            ;
-
+    .constructor()
+    .field("values", &AgeBasedSelectivity::values)
+    .field("id", &AgeBasedSelectivity::id)
+    .field("estimated", &AgeBasedSelectivity::estimated)
+    .field("phase", &AgeBasedSelectivity::phase)
+    ;
+    
     class_<DoubleLogisticSelectivity>("DoubleLogisticSelectivity")
-            .constructor()
-            .field("alpha_asc", &DoubleLogisticSelectivity::alpha_asc)
-            .field("beta_asc", &DoubleLogisticSelectivity::beta_asc)
-            .field("alpha_desc", &DoubleLogisticSelectivity::alpha_desc)
-            .field("beta_desc", &DoubleLogisticSelectivity::beta_desc)
-            .field("id", &DoubleLogisticSelectivity::id)
-            ;
+    .constructor()
+    .field("alpha_asc", &DoubleLogisticSelectivity::alpha_asc)
+    .field("beta_asc", &DoubleLogisticSelectivity::beta_asc)
+    .field("alpha_desc", &DoubleLogisticSelectivity::alpha_desc)
+    .field("beta_desc", &DoubleLogisticSelectivity::beta_desc)
+    .field("id", &DoubleLogisticSelectivity::id)
+    ;
     class_<FishingMortality>("FishingMortality")
-            .constructor()
-            .method("SetValues", &FishingMortality::SetValues)
-            .field("id", &FishingMortality::id)
-            .field("values", &FishingMortality::values)
-            .field("min", &FishingMortality::min)
-            .field("max", &FishingMortality::max)
-            .field("estimate", &FishingMortality::estimate)
-            .field("phase", &FishingMortality::phase)
-            ;
-
+    .constructor()
+    .method("SetValues", &FishingMortality::SetValues)
+    .field("id", &FishingMortality::id)
+    .field("values", &FishingMortality::values)
+    .field("min", &FishingMortality::min)
+    .field("max", &FishingMortality::max)
+    .field("estimate", &FishingMortality::estimate)
+    .field("phase", &FishingMortality::phase)
+    ;
+    
     class_<NaturalMortality>("NaturalMortality")
-            .constructor()
-            .method("SetValues", &NaturalMortality::SetValues)
-            .field("id", &NaturalMortality::id)
-            .field("values", &NaturalMortality::values)
-            .field("estimate", &NaturalMortality::estimate)
-            .field("phase", &NaturalMortality::phase)
-            ;
-
+    .constructor()
+    .method("SetValues", &NaturalMortality::SetValues)
+    .field("id", &NaturalMortality::id)
+    .field("values", &NaturalMortality::values)
+    .field("estimate", &NaturalMortality::estimate)
+    .field("phase", &NaturalMortality::phase)
+    ;
+    
     class_<InitialDeviations>("InitialDeviations")
-            .constructor()
-            .method("SetValues", &InitialDeviations::SetValues)
-            .field("id", &InitialDeviations::id)
-            .field("values", &InitialDeviations::values)
-            .field("estimate", &InitialDeviations::estimate)
-            .field("phase", &InitialDeviations::phase)
-            ;
-
+    .constructor()
+    .method("SetValues", &InitialDeviations::SetValues)
+    .field("id", &InitialDeviations::id)
+    .field("values", &InitialDeviations::values)
+    .field("estimate", &InitialDeviations::estimate)
+    .field("phase", &InitialDeviations::phase)
+    ;
+    
     class_<RickerRecruitment>("RickerRecruitment")
-            .constructor()
-            .method("SetDeviations", &RickerRecruitment::SetDeviations)
-            .field("R0", &RickerRecruitment::R0)
-            .field("alpha", &RickerRecruitment::alpha)
-            .field("constrained_deviations", &RickerRecruitment::constrained_deviations)
-            .field("estimate_deviations", &RickerRecruitment::estimate_deviations)
-            .field("deviation_phase", &RickerRecruitment::deviation_phase)
-            .field("deviations_min", &RickerRecruitment::deviations_min)
-            .field("deviations_max", &RickerRecruitment::deviations_max)
-            .field("id", &RickerRecruitment::id)
-            ;
-
+    .constructor()
+    .method("SetDeviations", &RickerRecruitment::SetDeviations)
+    .field("R0", &RickerRecruitment::R0)
+    .field("alpha", &RickerRecruitment::alpha)
+    .field("constrained_deviations", &RickerRecruitment::constrained_deviations)
+    .field("estimate_deviations", &RickerRecruitment::estimate_deviations)
+    .field("deviation_phase", &RickerRecruitment::deviation_phase)
+    .field("deviations_min", &RickerRecruitment::deviations_min)
+    .field("deviations_max", &RickerRecruitment::deviations_max)
+    .field("id", &RickerRecruitment::id)
+    ;
+    
     class_<BevertonHoltRecruitment>("BevertonHoltRecruitment")
-            .constructor()
-            .method("SetDeviations", &BevertonHoltRecruitment::SetDeviations)
-            .field("R0", &BevertonHoltRecruitment::R0)
-            .field("sigma_r", &BevertonHoltRecruitment::sigma_r)
-            .field("h", &BevertonHoltRecruitment::h)
-            .field("constrained_deviations", &BevertonHoltRecruitment::constrained_deviations)
-            .field("estimate_deviations", &BevertonHoltRecruitment::estimate_deviations)
-            .field("deviation_phase", &BevertonHoltRecruitment::deviation_phase)
-            .field("deviations_min", &BevertonHoltRecruitment::deviations_min)
-            .field("deviations_max", &BevertonHoltRecruitment::deviations_max)
-            .field("id", &BevertonHoltRecruitment::id)
-            ;
-
+    .constructor()
+    .method("SetDeviations", &BevertonHoltRecruitment::SetDeviations)
+    .field("R0", &BevertonHoltRecruitment::R0)
+    .field("sigma_r", &BevertonHoltRecruitment::sigma_r)
+    .field("h", &BevertonHoltRecruitment::h)
+    .field("constrained_deviations", &BevertonHoltRecruitment::constrained_deviations)
+    .field("estimate_deviations", &BevertonHoltRecruitment::estimate_deviations)
+    .field("deviation_phase", &BevertonHoltRecruitment::deviation_phase)
+    .field("deviations_min", &BevertonHoltRecruitment::deviations_min)
+    .field("deviations_max", &BevertonHoltRecruitment::deviations_max)
+    .field("id", &BevertonHoltRecruitment::id)
+    ;
+    
     class_<VonBertalanffy>("VonBertalanffy")
-            .constructor()
-            .method("SetUndifferentiatedWeightAtSeasonStart", &VonBertalanffy::SetUndifferentiatedWeightAtSeasonStart)
-            .method("SetUndifferentiatedWeightAtSpawning", &VonBertalanffy::SetUndifferentiatedWeightAtSpawning)
-            .method("SetUndifferentiatedCatchWeight", &VonBertalanffy::SetUndifferentiatedCatchWeight)
-            .method("SetUndifferentiatedSurveyWeight", &VonBertalanffy::SetUndifferentiatedSurveyWeight)
-            .method("SetMaleWeightAtSeasonStart", &VonBertalanffy::SetMaleWeightAtSeasonStart)
-            .method("SetMaleWeightAtSpawning", &VonBertalanffy::SetMaleWeightAtSpawning)
-            .method("SetMaleCatchWeight", &VonBertalanffy::SetMaleCatchWeight)
-            .method("SetMaleSurveyWeight", &VonBertalanffy::SetMaleSurveyWeight)
-            .method("SetFemaleWeightAtSeasonStart", &VonBertalanffy::SetFemaleWeightAtSeasonStart)
-            .method("SetFemaleWeightAtSpawning", &VonBertalanffy::SetFemaleWeightAtSpawning)
-            .method("SetFemaleCatchWeight", &VonBertalanffy::SetFemaleCatchWeight)
-            .method("SetFemaleSurveyWeight", &VonBertalanffy::SetFemaleSurveyWeight)
-            .field("a_max", &VonBertalanffy::a_max)
-            .field("a_min", &VonBertalanffy::a_min)
-            .field("alpha_f", &VonBertalanffy::alpha_f)
-            .field("alpha_m", &VonBertalanffy::alpha_m)
-            .field("beta_f", &VonBertalanffy::beta_f)
-            .field("beta_m", &VonBertalanffy::beta_m)
-            .field("k", &VonBertalanffy::k)
-            .field("l_inf", &VonBertalanffy::l_inf)
-            .field("id", &VonBertalanffy::id)
-            ;
-
+    .constructor()
+    .method("SetUndifferentiatedWeightAtSeasonStart", &VonBertalanffy::SetUndifferentiatedWeightAtSeasonStart)
+    .method("SetUndifferentiatedWeightAtSpawning", &VonBertalanffy::SetUndifferentiatedWeightAtSpawning)
+    .method("SetUndifferentiatedCatchWeight", &VonBertalanffy::SetUndifferentiatedCatchWeight)
+    .method("SetUndifferentiatedSurveyWeight", &VonBertalanffy::SetUndifferentiatedSurveyWeight)
+    .method("SetMaleWeightAtSeasonStart", &VonBertalanffy::SetMaleWeightAtSeasonStart)
+    .method("SetMaleWeightAtSpawning", &VonBertalanffy::SetMaleWeightAtSpawning)
+    .method("SetMaleCatchWeight", &VonBertalanffy::SetMaleCatchWeight)
+    .method("SetMaleSurveyWeight", &VonBertalanffy::SetMaleSurveyWeight)
+    .method("SetFemaleWeightAtSeasonStart", &VonBertalanffy::SetFemaleWeightAtSeasonStart)
+    .method("SetFemaleWeightAtSpawning", &VonBertalanffy::SetFemaleWeightAtSpawning)
+    .method("SetFemaleCatchWeight", &VonBertalanffy::SetFemaleCatchWeight)
+    .method("SetFemaleSurveyWeight", &VonBertalanffy::SetFemaleSurveyWeight)
+    .field("a_max", &VonBertalanffy::a_max)
+    .field("a_min", &VonBertalanffy::a_min)
+    .field("alpha_f", &VonBertalanffy::alpha_f)
+    .field("alpha_m", &VonBertalanffy::alpha_m)
+    .field("beta_f", &VonBertalanffy::beta_f)
+    .field("beta_m", &VonBertalanffy::beta_m)
+    .field("k", &VonBertalanffy::k)
+    .field("l_inf", &VonBertalanffy::l_inf)
+    .field("id", &VonBertalanffy::id)
+    ;
+    
     class_<VonBertalanffyModified>("VonBertalanffyModified")
-            .constructor()
-            .method("SetUndifferentiatedWeightAtSeasonStart", &VonBertalanffyModified::SetUndifferentiatedWeightAtSeasonStart)
-            .method("SetUndifferentiatedWeightAtSpawning", &VonBertalanffyModified::SetUndifferentiatedWeightAtSpawning)
-            .method("SetUndifferentiatedCatchWeight", &VonBertalanffyModified::SetUndifferentiatedCatchWeight)
-            .method("SetUndifferentiatedSurveyWeight", &VonBertalanffyModified::SetUndifferentiatedSurveyWeight)
-            .method("SetMaleWeightAtSeasonStart", &VonBertalanffyModified::SetMaleWeightAtSeasonStart)
-            .method("SetMaleWeightAtSpawning", &VonBertalanffyModified::SetMaleWeightAtSpawning)
-            .method("SetMaleCatchWeight", &VonBertalanffyModified::SetMaleCatchWeight)
-            .method("SetMaleSurveyWeight", &VonBertalanffyModified::SetMaleSurveyWeight)
-            .method("SetFemaleWeightAtSeasonStart", &VonBertalanffyModified::SetFemaleWeightAtSeasonStart)
-            .method("SetFemaleWeightAtSpawning", &VonBertalanffyModified::SetFemaleWeightAtSpawning)
-            .method("SetFemaleCatchWeight", &VonBertalanffyModified::SetFemaleCatchWeight)
-            .method("SetFemaleSurveyWeight", &VonBertalanffyModified::SetFemaleSurveyWeight)
-            .field("a_max", &VonBertalanffyModified::a_max)
-            .field("a_min", &VonBertalanffyModified::a_min)
-            .field("alpha_f", &VonBertalanffyModified::alpha_f)
-            .field("alpha_m", &VonBertalanffyModified::alpha_m)
-            .field("beta_f", &VonBertalanffyModified::beta_f)
-            .field("beta_m", &VonBertalanffyModified::beta_m)
-            .field("c", &VonBertalanffyModified::c)
-            .field("lmin", &VonBertalanffyModified::lmin)
-            .field("lmax", &VonBertalanffyModified::lmax)
-            .field("l_inf", &VonBertalanffyModified::l_inf)
-            .field("id", &VonBertalanffyModified::id)
-            ;
-
+    .constructor()
+    .method("SetUndifferentiatedWeightAtSeasonStart", &VonBertalanffyModified::SetUndifferentiatedWeightAtSeasonStart)
+    .method("SetUndifferentiatedWeightAtSpawning", &VonBertalanffyModified::SetUndifferentiatedWeightAtSpawning)
+    .method("SetUndifferentiatedCatchWeight", &VonBertalanffyModified::SetUndifferentiatedCatchWeight)
+    .method("SetUndifferentiatedSurveyWeight", &VonBertalanffyModified::SetUndifferentiatedSurveyWeight)
+    .method("SetMaleWeightAtSeasonStart", &VonBertalanffyModified::SetMaleWeightAtSeasonStart)
+    .method("SetMaleWeightAtSpawning", &VonBertalanffyModified::SetMaleWeightAtSpawning)
+    .method("SetMaleCatchWeight", &VonBertalanffyModified::SetMaleCatchWeight)
+    .method("SetMaleSurveyWeight", &VonBertalanffyModified::SetMaleSurveyWeight)
+    .method("SetFemaleWeightAtSeasonStart", &VonBertalanffyModified::SetFemaleWeightAtSeasonStart)
+    .method("SetFemaleWeightAtSpawning", &VonBertalanffyModified::SetFemaleWeightAtSpawning)
+    .method("SetFemaleCatchWeight", &VonBertalanffyModified::SetFemaleCatchWeight)
+    .method("SetFemaleSurveyWeight", &VonBertalanffyModified::SetFemaleSurveyWeight)
+    .field("a_max", &VonBertalanffyModified::a_max)
+    .field("a_min", &VonBertalanffyModified::a_min)
+    .field("alpha_f", &VonBertalanffyModified::alpha_f)
+    .field("alpha_m", &VonBertalanffyModified::alpha_m)
+    .field("beta_f", &VonBertalanffyModified::beta_f)
+    .field("beta_m", &VonBertalanffyModified::beta_m)
+    .field("c", &VonBertalanffyModified::c)
+    .field("lmin", &VonBertalanffyModified::lmin)
+    .field("lmax", &VonBertalanffyModified::lmax)
+    .field("l_inf", &VonBertalanffyModified::l_inf)
+    .field("id", &VonBertalanffyModified::id)
+    ;
+    
     class_<Area>("Area")
-            .constructor()
-            .field("id", &Area::id)
-            .field("name", &Area::name)
-            ;
-
+    .constructor()
+    .field("id", &Area::id)
+    .field("name", &Area::name)
+    ;
+    
     class_<Movement>("Movement")
-            .constructor()
-            .field("id", &Movement::id)
-            .field("connectivity_males", &Movement::connectivity_males)
-            .field("connectivity_females", &Movement::connectivity_females)
-            .field("connectivity_recruits", &Movement::connectivity_recruits)
-            .field("estimate_movement", &Movement::estimate_movement)
-            .field("movement_phase", &Movement::movement_phase)
-            ;
-
+    .constructor()
+    .field("id", &Movement::id)
+    .field("connectivity_males", &Movement::connectivity_males)
+    .field("connectivity_females", &Movement::connectivity_females)
+    .field("connectivity_recruits", &Movement::connectivity_recruits)
+    .field("estimate_movement", &Movement::estimate_movement)
+    .field("movement_phase", &Movement::movement_phase)
+    ;
+    
     class_<Maturity>("Maturity")
-            .constructor()
-            .field("id", &Maturity::id)
-            .field("values", &Maturity::values)
-            ;
-
+    .constructor()
+    .field("id", &Maturity::id)
+    .field("values", &Maturity::values)
+    ;
+    
     class_<Population>("Population")
-            .constructor()
-            .field("id", &Population::id)
-            .field("sex_ratio", &Population::sex_ratio)
-            .field("spawning_season_offset", &Population::spawning_season_offset)
-            .method("SetGrowth", &Population::SetGrowth)
-            .method("AddMaturity", &Population::AddMaturity)
-            .method("AddMovement", &Population::AddMovement)
-            .method("AddNaturalMortality", &Population::AddNaturalMortality)
-            .method("AddRecruitment", &Population::AddRecruitment)
-            .method("SetInitialDeviations", &Population::SetInitialDeviations)
-            ;
+    .constructor()
+    .field("id", &Population::id)
+    .field("sex_ratio", &Population::sex_ratio)
+    .field("spawning_season_offset", &Population::spawning_season_offset)
+    .method("SetGrowth", &Population::SetGrowth)
+    .method("AddMaturity", &Population::AddMaturity)
+    .method("AddMovement", &Population::AddMovement)
+    .method("AddNaturalMortality", &Population::AddNaturalMortality)
+    .method("AddRecruitment", &Population::AddRecruitment)
+    .method("SetInitialDeviations", &Population::SetInitialDeviations)
+    ;
     class_<Lognormal>("Lognormal")
-            .constructor()
-            .field("id", &Lognormal::id)
-            .method("SetLambdaValues", &Lognormal::SetLambdaValues)
-            ;
+    .constructor()
+    .field("id", &Lognormal::id)
+    .method("SetLambdaValues", &Lognormal::SetLambdaValues)
+    ;
     class_<DirichletMultinomial>("DirichletMultinomial")
-            .constructor()
-            .field("id", &DirichletMultinomial::id)
-            .method("SetLambdaValues", &DirichletMultinomial::SetLambdaValues)
-            ;
+    .constructor()
+    .field("id", &DirichletMultinomial::id)
+    .method("SetLambdaValues", &DirichletMultinomial::SetLambdaValues)
+    ;
     class_<DirichletMultinomialRobust>("DirichletMultinomialRobust")
-            .constructor()
-            .field("id", &DirichletMultinomialRobust::id)
-            .method("SetLambdaValues", &DirichletMultinomialRobust::SetLambdaValues)
-            ;
+    .constructor()
+    .field("id", &DirichletMultinomialRobust::id)
+    .method("SetLambdaValues", &DirichletMultinomialRobust::SetLambdaValues)
+    ;
     class_<Multinomial>("Multinomial")
-            .constructor()
-            .field("id", &Multinomial::id)
-            .method("SetLambdaValues", &Multinomial::SetLambdaValues)
-            ;
+    .constructor()
+    .field("id", &Multinomial::id)
+    .method("SetLambdaValues", &Multinomial::SetLambdaValues)
+    ;
     class_<MultinomialRobust>("MultinomialRobust")
-            .constructor()
-            .field("id", &MultinomialRobust::id)
-            .method("SetLambdaValues", &MultinomialRobust::SetLambdaValues)
-            ;
+    .constructor()
+    .field("id", &MultinomialRobust::id)
+    .method("SetLambdaValues", &MultinomialRobust::SetLambdaValues)
+    ;
     class_<Fleet>("Fleet")
-            .constructor()
-            .field("id", &Fleet::id)
-            .field("catch_fraction_of_year", &Fleet::catch_fraction_of_year)
-            .method("AddFishingMortality", &Fleet::AddFishingMortality)
-            .method("AddSelectivity", &Fleet::AddSelectivity)
-            .method("AddAgeCompData", &Fleet::AddAgeCompData)
-            .method("AddIndexData", &Fleet::AddIndexData)
-            .method("AddLengthCompData", &Fleet::AddLengthCompData)
-            .method("SetAgeCompNllComponent", &Fleet::SetAgeCompNllComponent)
-            .method("SetIndexNllComponent", &Fleet::SetIndexCompNllComponent)
-            .method("SetLengthCompNllComponent", &Fleet::SetLengthCompNllComponent)
-            ;
-
+    .constructor()
+    .field("id", &Fleet::id)
+    .field("catch_fraction_of_year", &Fleet::catch_fraction_of_year)
+    .method("AddFishingMortality", &Fleet::AddFishingMortality)
+    .method("AddSelectivity", &Fleet::AddSelectivity)
+    .method("AddAgeCompData", &Fleet::AddAgeCompData)
+    .method("AddIndexData", &Fleet::AddIndexData)
+    .method("AddLengthCompData", &Fleet::AddLengthCompData)
+    .method("SetAgeCompNllComponent", &Fleet::SetAgeCompNllComponent)
+    .method("SetIndexNllComponent", &Fleet::SetIndexCompNllComponent)
+    .method("SetLengthCompNllComponent", &Fleet::SetLengthCompNllComponent)
+    ;
+    
     class_<Survey>("Survey")
-            .constructor()
-            .field("id", &Survey::id)
-            .field("survey_fraction_of_year", &Survey::survey_fraction_of_year)
-            .field("q", &Survey::q)
-            .method("AddSelectivity", &Survey::AddSelectivity)
-            .method("AddAgeCompData", &Survey::AddAgeCompData)
-            .method("AddIndexData", &Survey::AddIndexData)
-            .method("AddLengthCompData", &Survey::AddLengthCompData)
-            .method("SetAgeCompNllComponent", &Survey::SetAgeCompNllComponent)
-            .method("SetIndexNllComponent", &Survey::SetIndexCompNllComponent)
-            .method("SetLengthCompNllComponent", &Survey::SetLengthCompNllComponent)
-            ;
-
+    .constructor()
+    .field("id", &Survey::id)
+    .field("survey_fraction_of_year", &Survey::survey_fraction_of_year)
+    .field("q", &Survey::q)
+    .method("AddSelectivity", &Survey::AddSelectivity)
+    .method("AddAgeCompData", &Survey::AddAgeCompData)
+    .method("AddIndexData", &Survey::AddIndexData)
+    .method("AddLengthCompData", &Survey::AddLengthCompData)
+    .method("SetAgeCompNllComponent", &Survey::SetAgeCompNllComponent)
+    .method("SetIndexNllComponent", &Survey::SetIndexCompNllComponent)
+    .method("SetLengthCompNllComponent", &Survey::SetLengthCompNllComponent)
+    ;
+    
     class_<IndexData>("IndexData")
-            .constructor()
-            .field("id", &IndexData::id)
-            .field("values", &IndexData::data)
-            .field("error", &IndexData::error)
-            .field("sex", &IndexData::sex)
-            .field("missing_value", &IndexData::missing_values)
-            ;
-
+    .constructor()
+    .field("id", &IndexData::id)
+    .field("values", &IndexData::data)
+    .field("error", &IndexData::error)
+    .field("sex", &IndexData::sex)
+    .field("missing_value", &IndexData::missing_values)
+    ;
+    
     class_<AgeCompData>("AgeCompData")
-            .constructor()
-            .field("id", &AgeCompData::id)
-            .field("values", &AgeCompData::data)
-            .field("sample_size", &AgeCompData::sample_size)
-            .field("sex", &AgeCompData::sex)
-            .field("missing_value", &AgeCompData::missing_values)
-            ;
+    .constructor()
+    .field("id", &AgeCompData::id)
+    .field("values", &AgeCompData::data)
+    .field("sample_size", &AgeCompData::sample_size)
+    .field("sex", &AgeCompData::sex)
+    .field("missing_value", &AgeCompData::missing_values)
+    ;
     class_<LengthCompData>("LengthCompData")
-            .constructor()
-            .field("id", &LengthCompData::id)
-            .field("values", &LengthCompData::data)
-            .field("sample_size", &LengthCompData::sample_size)
-            .field("sex", &LengthCompData::sex)
-            .field("missing_value", &LengthCompData::missing_values)
-            ;
-
-
+    .constructor()
+    .field("id", &LengthCompData::id)
+    .field("values", &LengthCompData::data)
+    .field("sample_size", &LengthCompData::sample_size)
+    .field("sex", &LengthCompData::sex)
+    .field("missing_value", &LengthCompData::missing_values)
+    ;
+    
+    
     class_<MASModel>("MASModel")
-            .constructor()
-            .field("nyears", &MASModel::nyears)
-            .field("nseasons", &MASModel::nseasons)
-            .field("nages", &MASModel::nages)
-            .field("ages", &MASModel::ages)
-            .field("catch_season_offset", &MASModel::catch_season_offset)
-            .field("spawning_season_offset", &MASModel::spawning_season_offset)
-            .field("extended_plus_group", &MASModel::extended_plus_group)
-            .method("AddFleet", &MASModel::AddFleet)
-            .method("AddSurvey", &MASModel::AddSurvey)
-            .method("AddPopulation", &MASModel::AddPopulation)
-            .method("Run", &MASModel::Run)
-            .method("GetOutput", &MASModel::GetOuptput)
-            ;
+    .constructor()
+    .field("nyears", &MASModel::nyears)
+    .field("nseasons", &MASModel::nseasons)
+    .field("nages", &MASModel::nages)
+    .field("ages", &MASModel::ages)
+    .field("max_line_searches", &MASModel::max_line_searches)
+    .field("tolerance", &MASModel::tolerance)
+    .field("catch_season_offset", &MASModel::catch_season_offset)
+    .field("spawning_season_offset", &MASModel::spawning_season_offset)
+    .field("survey_season_offset", &MASModel::survey_season_offset)
+    .field("extended_plus_group", &MASModel::extended_plus_group)
+    .method("AddFleet", &MASModel::AddFleet)
+    .method("AddSurvey", &MASModel::AddSurvey)
+    .method("AddPopulation", &MASModel::AddPopulation)
+    .method("Run", &MASModel::Run)
+    .method("GetOutput", &MASModel::GetOuptput)
+    ;
 }
 
 
