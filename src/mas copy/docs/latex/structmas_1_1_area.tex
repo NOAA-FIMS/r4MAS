@@ -1,0 +1,983 @@
+\hypertarget{structmas_1_1_area}{\section{mas\-:\-:Area$<$ R\-E\-A\-L\-\_\-\-T $>$ Struct Template Reference}
+\label{structmas_1_1_area}\index{mas\-::\-Area$<$ R\-E\-A\-L\-\_\-\-T $>$@{mas\-::\-Area$<$ R\-E\-A\-L\-\_\-\-T $>$}}
+}
+
+
+{\ttfamily \#include $<$Area.\-hpp$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{structmas_1_1_variable_trait}{mas\-::\-Variable\-Trait}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$\-::\hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable}
+\item 
+typedef std\-::set\\*
+$<$ std\-::shared\-\_\-ptr$<$ \hyperlink{structmas_1_1_fleet}{Fleet}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$\-::iterator \hyperlink{structmas_1_1_area_afac4316f68a1431235c7d28968655ad7}{active\-\_\-fleets\-\_\-iterator}
+\item 
+typedef std\-::map$<$ int, \\*
+std\-::vector$<$ std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_fleet}{Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\\*
+ $>$ $>$ $>$\-::iterator \hyperlink{structmas_1_1_area_a93e43b48e01d6deb544629b9a16df074}{seasonal\-\_\-fleet\-\_\-operations\-\_\-iterator}
+\item 
+typedef std\-::map$<$ int, \\*
+std\-::map$<$ int, std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_survey}{mas\-::\-Survey}$<$ R\-E\-A\-L\-\_\-\-T $>$\\*
+ $>$ $>$ $>$\-::iterator \hyperlink{structmas_1_1_area_ae1b22fac7afc3a1cd975eda651a4f635}{survey\-\_\-model\-\_\-iterator}
+\item 
+typedef std\-::map$<$ int, \\*
+std\-::shared\-\_\-ptr$<$ \hyperlink{structmas_1_1_survey}{mas\-::\-Survey}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$\-::iterator \hyperlink{structmas_1_1_area_a406c0cf877a7c6b88586fa6da3108de2}{survey\-\_\-season\-\_\-iterator}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{structmas_1_1_area_a21fe8830e100359433438c8241eefb01}{Initialize} (size\-\_\-t \hyperlink{structmas_1_1_area_a2a4e96c3f8817d242c50655f341083c0}{years}, size\-\_\-t \hyperlink{structmas_1_1_area_a45d133239182e8d71e2fd4d1ed1ba04f}{seasons}, size\-\_\-t \hyperlink{structmas_1_1_area_a9eec0d816a288d4c8afeb0e2dffa12df}{ages})
+\item 
+void \hyperlink{structmas_1_1_area_afb563772ce57ef8474346f933f8ace19}{Prepare} ()
+\item 
+void \hyperlink{structmas_1_1_area_aa1d33e6024732d606ab53b64dcac43cb}{Push\-Numbers\-And\-Biomass} (const std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \&S\-N\-\_\-, const std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \&S\-N\-\_\-\-Biomass\-\_\-, const std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \&N\-\_\-, const std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \&C\-\_\-, const std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \&C\-\_\-\-Biomass\-\_\-, int population, \hyperlink{namespacemas_a177aaabcef4ec0c3f390a7c9f6ad563b}{mas\-::\-Fish\-Sex\-Type} sex=\hyperlink{namespacemas_a177aaabcef4ec0c3f390a7c9f6ad563ba6afb238d6c6138b53f11ec1b44e92417}{mas\-::\-U\-N\-D\-I\-F\-F\-E\-R\-E\-N\-T\-I\-A\-T\-E\-D})
+\item 
+void \hyperlink{structmas_1_1_area_a76d23e8841d3359f0ec57b57b1766b97}{Compute\-Proportions} ()
+\item 
+const \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} \hyperlink{structmas_1_1_area_aaff61be87f94ae8935798a97fa952969}{Compute} ()
+\item 
+const \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} \& \hyperlink{structmas_1_1_area_ac02af6cd4a6b8bb7e49467bbdc53170b}{Get\-Catch\-Biomass\-Component} () const 
+\item 
+const \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} \& \hyperlink{structmas_1_1_area_a9d931cc1786c247c2e02a0528785c103}{Get\-Survey\-Age\-Comp\-Component} () const 
+\item 
+const \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} \& \hyperlink{structmas_1_1_area_a77ec966df7a802605411051802949e36}{Get\-Survey\-Biomass\-Component} () const 
+\item 
+const \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} \& \hyperlink{structmas_1_1_area_a388c1fcb87b7c661edb42acf97287731}{Get\-Fishery\-Age\-Comp\-Component} () const 
+\item 
+const \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} \& \hyperlink{structmas_1_1_area_ab1672695b4cfbe7a7003e37f49f36d5d}{Get\-Recruitment\-Deviations\-Component} () const 
+\item 
+virtual const std\-::string \hyperlink{structmas_1_1_area_a763dda5093e54bf8a83ba61e8b4da078}{To\-J\-S\-O\-N\-String} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\-::string \hyperlink{structmas_1_1_area_a03c8c1768c367f3251dfca8adffeb780}{name}
+\item 
+R\-E\-A\-L\-\_\-\-T \hyperlink{structmas_1_1_area_a5cb89e458c67e5fcaa967a8c268f2249}{logscale\-\_\-standard\-\_\-deviation\-\_\-catch\-\_\-biomass} = static\-\_\-cast$<$R\-E\-A\-L\-\_\-\-T$>$ (.\-1)
+\item 
+R\-E\-A\-L\-\_\-\-T \hyperlink{structmas_1_1_area_aa2ea154a326396d16d67ae84d39ccb3b}{logscale\-\_\-standard\-\_\-deviation\-\_\-survey\-\_\-biomass} = static\-\_\-cast$<$R\-E\-A\-L\-\_\-\-T$>$ (.\-3)
+\item 
+int \hyperlink{structmas_1_1_area_a43732f02d867125feb9ae56e96114619}{id}
+\item 
+int \hyperlink{structmas_1_1_area_a2a4e96c3f8817d242c50655f341083c0}{years}
+\item 
+int \hyperlink{structmas_1_1_area_a45d133239182e8d71e2fd4d1ed1ba04f}{seasons}
+\item 
+int \hyperlink{structmas_1_1_area_a9eec0d816a288d4c8afeb0e2dffa12df}{ages}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_ad9a5d453e1aa68aee982bb93738a24b4}{catch\-\_\-biomass\-\_\-total}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a59bb446f6c932a2255fe8093d731e403}{survey\-\_\-biomass\-\_\-total}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_ae68e2cf3d18984ac27d377c1cfeaa0b2}{catch\-\_\-biomass\-\_\-total\-\_\-males}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a87c205e8c7eb39bc4b50492c7707a310}{survey\-\_\-biomass\-\_\-total\-\_\-males}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a65e5b1f37aa45c18d0eefcabd88bf504}{catch\-\_\-biomass\-\_\-total\-\_\-females}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_ac9e78d0a2d1fbb1d24d2a92205b9ec16}{survey\-\_\-biomass\-\_\-total\-\_\-females}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_aa9febdb0cb6d7832ce2d5f915795a886}{numbers\-\_\-at\-\_\-age}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_acb6bf1955e92c0864eee535a74ecb9bd}{numbers\-\_\-total}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a973d245c1b74dc6099d174c3afe5e661}{proportion\-\_\-at\-\_\-age}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a896fd8fcd47d539873630d45ec818ade}{catch\-\_\-proportion\-\_\-at\-\_\-age}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_acf32183c88a8bb1979036c7e34340c58}{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a1a1735c4520ba32f042d753486914fe6}{catch\-\_\-at\-\_\-age}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a7db1d1a4c66e3c535133c2aecbb4cc29}{catch\-\_\-biomass\-\_\-at\-\_\-age}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_ab8802451bd599039ee254b6737e8fad9}{survey\-\_\-numbers\-\_\-at\-\_\-age}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_acaf171532a97cd7cd992779b02cce273}{survey\-\_\-biomass\-\_\-at\-\_\-age}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a4a85aa755774a12a5fa4e7debda4cdad}{survey\-\_\-proportion\-\_\-at\-\_\-age}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a73ef63706809741b03510ccdf85c5c8b}{survey\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_abd69833d78a921fd8c8b13140e46ad06}{numbers\-\_\-at\-\_\-age\-\_\-males}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a8c1682e2c1ac46f6b6be45c68bc999c8}{numbers\-\_\-total\-\_\-males}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_ab5ddd76246ce29807ff2143e858b4907}{proportion\-\_\-at\-\_\-age\-\_\-males}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a4c7e17b198774676569c7ab30987fee6}{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_aea1735e78135761b1308da0eaf619338}{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a3e226c7a59b5840c37917d492ea0b958}{catch\-\_\-at\-\_\-age\-\_\-males}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a029e7f2d0fccc9acf8e2d5767644d1fa}{catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-males}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_ae6160129e74d4b173cb755976835d162}{survey\-\_\-numbers\-\_\-at\-\_\-age\-\_\-males}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a5ece3cad1dd8083d91747c5aa81b1193}{survey\-\_\-biomass\-\_\-at\-\_\-age\-\_\-males}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_ab2207ba2c622fe615b415efa69df5f84}{survey\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a11cdc9068612b7e08790a2ba50460e53}{survey\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a4ee583e6a3480b7216f38c9ebe8b8f60}{numbers\-\_\-at\-\_\-age\-\_\-females}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a6ba5fdd790fe552bb732e8b81824c3d6}{numbers\-\_\-total\-\_\-females}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a169ca9a1c03c80c565ef1ca425078fad}{proportion\-\_\-at\-\_\-age\-\_\-females}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a1e2aa0671666187c26108ef2dc669239}{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_ab3e0fc299986b3ce569d3da2c750fb05}{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a6f5963d3731bc788e4ec0c0975ebb9b3}{catch\-\_\-at\-\_\-age\-\_\-females}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a77be076c07976d8b8ca1f94e9f9bc00a}{catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-females}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a5c4aa87c77904d0ea7b60aad5cf5e852}{survey\-\_\-numbers\-\_\-at\-\_\-age\-\_\-females}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a903b4c889f85bdbd4804f15a6278c7b0}{survey\-\_\-biomass\-\_\-at\-\_\-age\-\_\-females}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a58a763df34868ff121faabd55c2f9741}{survey\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a0f91784fa56884376c4ee3d8a2fc0ec3}{survey\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a3489f1ad9f89aa85559a05457afb40c5}{N\-\_\-diff2}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_aed10a818480665caf15bb1c8ad84150d}{N\-\_\-\-Proportion\-\_\-diff2}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a3f51d606be9b45fe96667507434dc690}{C\-\_\-\-Proportion\-\_\-diff2}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_ad0afc58b6fcbd08ddceaa9f1db430bdd}{C\-\_\-\-Biomass\-\_\-\-Proportion\-\_\-diff2}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a0144a4142a67be22d63290f836eb3961}{C\-\_\-diff2}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a48db0d88a1d19d6e6a43fef8c9a2ab0a}{C\-\_\-\-Biomass\-\_\-diff2}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a3107466153d6d6c2970e3666266eb02a}{S\-N\-\_\-diff2}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_aea96de5bbac44de13b5e79a75a270cbd}{S\-N\-\_\-\-Biomass\-\_\-diff2}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a0266b0fefd2b239bd153bd224081011c}{S\-N\-\_\-\-Proportion\-\_\-diff2}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} $>$ \hyperlink{structmas_1_1_area_a0fb7cac6b986e07c833a1b55b48b8327}{S\-N\-\_\-\-Biomass\-\_\-\-Proportion\-\_\-diff2}
+\item 
+std\-::map$<$ int, std\-::vector\\*
+$<$ std\-::shared\-\_\-ptr$<$ \hyperlink{structmas_1_1_fleet}{Fleet}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ $>$ \hyperlink{structmas_1_1_area_ac0d892bff62ae6d168ae9161f5db7cf2}{seasonal\-\_\-fleet\-\_\-operations}
+\item 
+std\-::map$<$ int, std\-::vector\\*
+$<$ std\-::shared\-\_\-ptr$<$ \hyperlink{structmas_1_1_survey}{Survey}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ $>$ \hyperlink{structmas_1_1_area_a513c4bf4e2a1fdd3c63f1bac10e25bc5}{seasonal\-\_\-survey\-\_\-operations}
+\item 
+std\-::set$<$ std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_fleet}{Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{structmas_1_1_area_a94bbe58cca17c234df40191bebfef069}{active\-\_\-fleets}
+\item 
+std\-::map$<$ int, std\-::map$<$ int, \\*
+std\-::shared\-\_\-ptr$<$ \hyperlink{structmas_1_1_survey}{mas\-::\-Survey}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ $>$ \hyperlink{structmas_1_1_area_a06176622d9d6d00ac6725d3f585dad6f}{survey\-\_\-models}
+\item 
+std\-::vector$<$ std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_data_object}{Data\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{structmas_1_1_area_a742a11ec29fd3c8cbba9c4fc2ffb650b}{survey\-\_\-biomass\-\_\-data}
+\item 
+std\-::vector$<$ std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_data_object}{Data\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{structmas_1_1_area_a1a00923508e1f489be3f5885c9208a75}{survey\-\_\-proportion\-\_\-data\-\_\-\-N}
+\item 
+std\-::vector$<$ std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_data_object}{Data\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{structmas_1_1_area_adfe5f97ac7d375c9045b3a17a3c9ccf6}{survey\-\_\-proportion\-\_\-data}
+\item 
+std\-::vector$<$ std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_data_object}{Data\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{structmas_1_1_area_a33b8c87411a6eb87d89faf910a6e33d1}{survey\-\_\-proportion\-\_\-length\-\_\-data\-\_\-\-N}
+\item 
+std\-::vector$<$ std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_data_object}{Data\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{structmas_1_1_area_a267134d80dcd5d56d4e63b158ebaacdf}{survey\-\_\-proportion\-\_\-length\-\_\-data}
+\item 
+std\-::vector$<$ std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_data_object}{Data\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{structmas_1_1_area_a2710e056d30edc617f3073d3df19f28f}{survey\-\_\-mean\-\_\-size\-\_\-data}
+\item 
+std\-::vector$<$ std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_data_object}{Data\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{structmas_1_1_area_ade9dc79427b4c9c46ec5c3ebae967ff0}{catch\-\_\-biomass\-\_\-data}
+\item 
+std\-::vector$<$ std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_data_object}{Data\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{structmas_1_1_area_a9c253f70d158bb49a41ca2c24d1dbb3b}{catch\-\_\-proportion\-\_\-data\-\_\-\-N}
+\item 
+std\-::vector$<$ std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_data_object}{Data\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{structmas_1_1_area_a3a14e9f155e3184451799e8fc8db97ab}{catch\-\_\-proportion\-\_\-data}
+\item 
+std\-::vector$<$ std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_data_object}{Data\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{structmas_1_1_area_a9bd6774752ab571a166a9c0a5fe169aa}{catch\-\_\-proportion\-\_\-length\-\_\-data\-\_\-\-N}
+\item 
+std\-::vector$<$ std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_data_object}{Data\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{structmas_1_1_area_a323cc7addcbd5afb8c3295150afd7cfb}{catch\-\_\-proportion\-\_\-length\-\_\-data}
+\item 
+std\-::vector$<$ std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_data_object}{Data\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{structmas_1_1_area_af01729bc7ed50ebd5238fc2332e21501}{catch\-\_\-mean\-\_\-size\-\_\-data}
+\item 
+\hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} \hyperlink{structmas_1_1_area_ac0c9427ab19559cd60bbf26c1ac75c63}{catch\-\_\-biomass\-\_\-component}
+\item 
+\hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} \hyperlink{structmas_1_1_area_a8b7482442ba3e2008120c09b14343f56}{survey\-\_\-biomass\-\_\-component}
+\item 
+\hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} \hyperlink{structmas_1_1_area_a21ab68ae7dd85bcae3c3094f08b5ccb9}{fishery\-\_\-age\-\_\-comp\-\_\-component}
+\item 
+\hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} \hyperlink{structmas_1_1_area_ac9d145e72568af28ce8c973dffab11b3}{survey\-\_\-age\-\_\-comp\-\_\-component}
+\item 
+\hyperlink{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{variable} \hyperlink{structmas_1_1_area_aaa231bd2abc74fef23bd8fcf4644236a}{recruitment\-\_\-deviations\-\_\-component}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename R\-E\-A\-L\-\_\-\-T$>$struct mas\-::\-Area$<$ R\-E\-A\-L\-\_\-\-T $>$}
+
+
+
+Definition at line 46 of file Area.\-hpp.
+
+
+
+\subsection{Member Typedef Documentation}
+\hypertarget{structmas_1_1_area_afac4316f68a1431235c7d28968655ad7}{\index{mas\-::\-Area@{mas\-::\-Area}!active\-\_\-fleets\-\_\-iterator@{active\-\_\-fleets\-\_\-iterator}}
+\index{active\-\_\-fleets\-\_\-iterator@{active\-\_\-fleets\-\_\-iterator}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{active\-\_\-fleets\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::set$<$std\-::shared\-\_\-ptr$<${\bf Fleet}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$\-::iterator {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf active\-\_\-fleets\-\_\-iterator}}}\label{structmas_1_1_area_afac4316f68a1431235c7d28968655ad7}
+
+
+Definition at line 130 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a93e43b48e01d6deb544629b9a16df074}{\index{mas\-::\-Area@{mas\-::\-Area}!seasonal\-\_\-fleet\-\_\-operations\-\_\-iterator@{seasonal\-\_\-fleet\-\_\-operations\-\_\-iterator}}
+\index{seasonal\-\_\-fleet\-\_\-operations\-\_\-iterator@{seasonal\-\_\-fleet\-\_\-operations\-\_\-iterator}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{seasonal\-\_\-fleet\-\_\-operations\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::map$<$int, std\-::vector$<$ std\-::shared\-\_\-ptr$<${\bf Fleet}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ $>$\-::iterator {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf seasonal\-\_\-fleet\-\_\-operations\-\_\-iterator}}}\label{structmas_1_1_area_a93e43b48e01d6deb544629b9a16df074}
+
+
+Definition at line 131 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_ae1b22fac7afc3a1cd975eda651a4f635}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-model\-\_\-iterator@{survey\-\_\-model\-\_\-iterator}}
+\index{survey\-\_\-model\-\_\-iterator@{survey\-\_\-model\-\_\-iterator}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-model\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::map$<$int, std\-::map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Survey}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ $>$\-::iterator {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf survey\-\_\-model\-\_\-iterator}}}\label{structmas_1_1_area_ae1b22fac7afc3a1cd975eda651a4f635}
+
+
+Definition at line 134 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a406c0cf877a7c6b88586fa6da3108de2}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-season\-\_\-iterator@{survey\-\_\-season\-\_\-iterator}}
+\index{survey\-\_\-season\-\_\-iterator@{survey\-\_\-season\-\_\-iterator}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-season\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Survey}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$\-::iterator {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf survey\-\_\-season\-\_\-iterator}}}\label{structmas_1_1_area_a406c0cf877a7c6b88586fa6da3108de2}
+
+
+Definition at line 135 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}{\index{mas\-::\-Area@{mas\-::\-Area}!variable@{variable}}
+\index{variable@{variable}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{variable}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef {\bf mas\-::\-Variable\-Trait}$<$R\-E\-A\-L\-\_\-\-T$>$\-::{\bf variable} {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf variable}}}\label{structmas_1_1_area_a3fb53ebc27c5323de15a81fbfbc7c878}
+
+
+Definition at line 47 of file Area.\-hpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{structmas_1_1_area_aaff61be87f94ae8935798a97fa952969}{\index{mas\-::\-Area@{mas\-::\-Area}!Compute@{Compute}}
+\index{Compute@{Compute}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{Compute}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ const {\bf variable} {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Compute (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_aaff61be87f94ae8935798a97fa952969}
+
+
+Definition at line 402 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a76d23e8841d3359f0ec57b57b1766b97}{\index{mas\-::\-Area@{mas\-::\-Area}!Compute\-Proportions@{Compute\-Proportions}}
+\index{Compute\-Proportions@{Compute\-Proportions}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{Compute\-Proportions}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Compute\-Proportions (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_a76d23e8841d3359f0ec57b57b1766b97}
+
+
+Definition at line 328 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_ac02af6cd4a6b8bb7e49467bbdc53170b}{\index{mas\-::\-Area@{mas\-::\-Area}!Get\-Catch\-Biomass\-Component@{Get\-Catch\-Biomass\-Component}}
+\index{Get\-Catch\-Biomass\-Component@{Get\-Catch\-Biomass\-Component}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{Get\-Catch\-Biomass\-Component}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ const {\bf variable}\& {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Get\-Catch\-Biomass\-Component (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_ac02af6cd4a6b8bb7e49467bbdc53170b}
+Returns a reference to the catch biomass component for the likelihood function.
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Definition at line 514 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a388c1fcb87b7c661edb42acf97287731}{\index{mas\-::\-Area@{mas\-::\-Area}!Get\-Fishery\-Age\-Comp\-Component@{Get\-Fishery\-Age\-Comp\-Component}}
+\index{Get\-Fishery\-Age\-Comp\-Component@{Get\-Fishery\-Age\-Comp\-Component}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{Get\-Fishery\-Age\-Comp\-Component}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ const {\bf variable}\& {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Get\-Fishery\-Age\-Comp\-Component (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_a388c1fcb87b7c661edb42acf97287731}
+Returns a reference to the fishery age composition component for the likelihood function.
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Definition at line 544 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_ab1672695b4cfbe7a7003e37f49f36d5d}{\index{mas\-::\-Area@{mas\-::\-Area}!Get\-Recruitment\-Deviations\-Component@{Get\-Recruitment\-Deviations\-Component}}
+\index{Get\-Recruitment\-Deviations\-Component@{Get\-Recruitment\-Deviations\-Component}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{Get\-Recruitment\-Deviations\-Component}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ const {\bf variable}\& {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Get\-Recruitment\-Deviations\-Component (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_ab1672695b4cfbe7a7003e37f49f36d5d}
+Returns a reference to the recruitment deviations component for the likelihood function.
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Definition at line 554 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a9d931cc1786c247c2e02a0528785c103}{\index{mas\-::\-Area@{mas\-::\-Area}!Get\-Survey\-Age\-Comp\-Component@{Get\-Survey\-Age\-Comp\-Component}}
+\index{Get\-Survey\-Age\-Comp\-Component@{Get\-Survey\-Age\-Comp\-Component}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{Get\-Survey\-Age\-Comp\-Component}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ const {\bf variable}\& {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Get\-Survey\-Age\-Comp\-Component (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_a9d931cc1786c247c2e02a0528785c103}
+Returns a reference to the survey age composition component for the likelihood function.
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Definition at line 524 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a77ec966df7a802605411051802949e36}{\index{mas\-::\-Area@{mas\-::\-Area}!Get\-Survey\-Biomass\-Component@{Get\-Survey\-Biomass\-Component}}
+\index{Get\-Survey\-Biomass\-Component@{Get\-Survey\-Biomass\-Component}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{Get\-Survey\-Biomass\-Component}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ const {\bf variable}\& {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Get\-Survey\-Biomass\-Component (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_a77ec966df7a802605411051802949e36}
+Returns a reference to the survey biomass component for the likelihood function.
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Definition at line 534 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a21fe8830e100359433438c8241eefb01}{\index{mas\-::\-Area@{mas\-::\-Area}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{Initialize}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Initialize (
+\begin{DoxyParamCaption}
+\item[{size\-\_\-t}]{years, }
+\item[{size\-\_\-t}]{seasons, }
+\item[{size\-\_\-t}]{ages}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_a21fe8830e100359433438c8241eefb01}
+
+
+Definition at line 159 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_afb563772ce57ef8474346f933f8ace19}{\index{mas\-::\-Area@{mas\-::\-Area}!Prepare@{Prepare}}
+\index{Prepare@{Prepare}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{Prepare}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Prepare (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_afb563772ce57ef8474346f933f8ace19}
+
+
+Definition at line 219 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_aa1d33e6024732d606ab53b64dcac43cb}{\index{mas\-::\-Area@{mas\-::\-Area}!Push\-Numbers\-And\-Biomass@{Push\-Numbers\-And\-Biomass}}
+\index{Push\-Numbers\-And\-Biomass@{Push\-Numbers\-And\-Biomass}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{Push\-Numbers\-And\-Biomass}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Push\-Numbers\-And\-Biomass (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ {\bf variable} $>$ \&}]{S\-N\-\_\-, }
+\item[{const std\-::vector$<$ {\bf variable} $>$ \&}]{S\-N\-\_\-\-Biomass\-\_\-, }
+\item[{const std\-::vector$<$ {\bf variable} $>$ \&}]{N\-\_\-, }
+\item[{const std\-::vector$<$ {\bf variable} $>$ \&}]{C\-\_\-, }
+\item[{const std\-::vector$<$ {\bf variable} $>$ \&}]{C\-\_\-\-Biomass\-\_\-, }
+\item[{int}]{population, }
+\item[{{\bf mas\-::\-Fish\-Sex\-Type}}]{sex = {\ttfamily {\bf mas\-::\-U\-N\-D\-I\-F\-F\-E\-R\-E\-N\-T\-I\-A\-T\-E\-D}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_aa1d33e6024732d606ab53b64dcac43cb}
+
+
+Definition at line 272 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a763dda5093e54bf8a83ba61e8b4da078}{\index{mas\-::\-Area@{mas\-::\-Area}!To\-J\-S\-O\-N\-String@{To\-J\-S\-O\-N\-String}}
+\index{To\-J\-S\-O\-N\-String@{To\-J\-S\-O\-N\-String}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{To\-J\-S\-O\-N\-String}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ virtual const std\-::string {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::To\-J\-S\-O\-N\-String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{structmas_1_1_area_a763dda5093e54bf8a83ba61e8b4da078}
+
+
+Definition at line 558 of file Area.\-hpp.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structmas_1_1_area_a94bbe58cca17c234df40191bebfef069}{\index{mas\-::\-Area@{mas\-::\-Area}!active\-\_\-fleets@{active\-\_\-fleets}}
+\index{active\-\_\-fleets@{active\-\_\-fleets}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{active\-\_\-fleets}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::set$<$std\-::shared\-\_\-ptr$<${\bf Fleet}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::active\-\_\-fleets}}\label{structmas_1_1_area_a94bbe58cca17c234df40191bebfef069}
+
+
+Definition at line 129 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a9eec0d816a288d4c8afeb0e2dffa12df}{\index{mas\-::\-Area@{mas\-::\-Area}!ages@{ages}}
+\index{ages@{ages}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{ages}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ int {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::ages}}\label{structmas_1_1_area_a9eec0d816a288d4c8afeb0e2dffa12df}
+
+
+Definition at line 55 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a48db0d88a1d19d6e6a43fef8c9a2ab0a}{\index{mas\-::\-Area@{mas\-::\-Area}!C\-\_\-\-Biomass\-\_\-diff2@{C\-\_\-\-Biomass\-\_\-diff2}}
+\index{C\-\_\-\-Biomass\-\_\-diff2@{C\-\_\-\-Biomass\-\_\-diff2}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{C\-\_\-\-Biomass\-\_\-diff2}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::C\-\_\-\-Biomass\-\_\-diff2}}\label{structmas_1_1_area_a48db0d88a1d19d6e6a43fef8c9a2ab0a}
+
+
+Definition at line 114 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_ad0afc58b6fcbd08ddceaa9f1db430bdd}{\index{mas\-::\-Area@{mas\-::\-Area}!C\-\_\-\-Biomass\-\_\-\-Proportion\-\_\-diff2@{C\-\_\-\-Biomass\-\_\-\-Proportion\-\_\-diff2}}
+\index{C\-\_\-\-Biomass\-\_\-\-Proportion\-\_\-diff2@{C\-\_\-\-Biomass\-\_\-\-Proportion\-\_\-diff2}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{C\-\_\-\-Biomass\-\_\-\-Proportion\-\_\-diff2}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::C\-\_\-\-Biomass\-\_\-\-Proportion\-\_\-diff2}}\label{structmas_1_1_area_ad0afc58b6fcbd08ddceaa9f1db430bdd}
+
+
+Definition at line 112 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a0144a4142a67be22d63290f836eb3961}{\index{mas\-::\-Area@{mas\-::\-Area}!C\-\_\-diff2@{C\-\_\-diff2}}
+\index{C\-\_\-diff2@{C\-\_\-diff2}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{C\-\_\-diff2}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::C\-\_\-diff2}}\label{structmas_1_1_area_a0144a4142a67be22d63290f836eb3961}
+
+
+Definition at line 113 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a3f51d606be9b45fe96667507434dc690}{\index{mas\-::\-Area@{mas\-::\-Area}!C\-\_\-\-Proportion\-\_\-diff2@{C\-\_\-\-Proportion\-\_\-diff2}}
+\index{C\-\_\-\-Proportion\-\_\-diff2@{C\-\_\-\-Proportion\-\_\-diff2}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{C\-\_\-\-Proportion\-\_\-diff2}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::C\-\_\-\-Proportion\-\_\-diff2}}\label{structmas_1_1_area_a3f51d606be9b45fe96667507434dc690}
+
+
+Definition at line 111 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a1a1735c4520ba32f042d753486914fe6}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-at\-\_\-age@{catch\-\_\-at\-\_\-age}}
+\index{catch\-\_\-at\-\_\-age@{catch\-\_\-at\-\_\-age}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-at\-\_\-age}}\label{structmas_1_1_area_a1a1735c4520ba32f042d753486914fe6}
+
+
+Definition at line 76 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a6f5963d3731bc788e4ec0c0975ebb9b3}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-at\-\_\-age\-\_\-females@{catch\-\_\-at\-\_\-age\-\_\-females}}
+\index{catch\-\_\-at\-\_\-age\-\_\-females@{catch\-\_\-at\-\_\-age\-\_\-females}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-at\-\_\-age\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-at\-\_\-age\-\_\-females}}\label{structmas_1_1_area_a6f5963d3731bc788e4ec0c0975ebb9b3}
+
+
+Definition at line 101 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a3e226c7a59b5840c37917d492ea0b958}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-at\-\_\-age\-\_\-males@{catch\-\_\-at\-\_\-age\-\_\-males}}
+\index{catch\-\_\-at\-\_\-age\-\_\-males@{catch\-\_\-at\-\_\-age\-\_\-males}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-at\-\_\-age\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-at\-\_\-age\-\_\-males}}\label{structmas_1_1_area_a3e226c7a59b5840c37917d492ea0b958}
+
+
+Definition at line 89 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a7db1d1a4c66e3c535133c2aecbb4cc29}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-biomass\-\_\-at\-\_\-age@{catch\-\_\-biomass\-\_\-at\-\_\-age}}
+\index{catch\-\_\-biomass\-\_\-at\-\_\-age@{catch\-\_\-biomass\-\_\-at\-\_\-age}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-biomass\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-at\-\_\-age}}\label{structmas_1_1_area_a7db1d1a4c66e3c535133c2aecbb4cc29}
+
+
+Definition at line 77 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a77be076c07976d8b8ca1f94e9f9bc00a}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-females@{catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-females}}
+\index{catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-females@{catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-females}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-females}}\label{structmas_1_1_area_a77be076c07976d8b8ca1f94e9f9bc00a}
+
+
+Definition at line 102 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a029e7f2d0fccc9acf8e2d5767644d1fa}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-males@{catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-males}}
+\index{catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-males@{catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-males}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-males}}\label{structmas_1_1_area_a029e7f2d0fccc9acf8e2d5767644d1fa}
+
+
+Definition at line 90 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_ac0c9427ab19559cd60bbf26c1ac75c63}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-biomass\-\_\-component@{catch\-\_\-biomass\-\_\-component}}
+\index{catch\-\_\-biomass\-\_\-component@{catch\-\_\-biomass\-\_\-component}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-biomass\-\_\-component}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ {\bf variable} {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-component}}\label{structmas_1_1_area_ac0c9427ab19559cd60bbf26c1ac75c63}
+
+
+Definition at line 153 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_ade9dc79427b4c9c46ec5c3ebae967ff0}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-biomass\-\_\-data@{catch\-\_\-biomass\-\_\-data}}
+\index{catch\-\_\-biomass\-\_\-data@{catch\-\_\-biomass\-\_\-data}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-biomass\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<$std\-::shared\-\_\-ptr$<${\bf Data\-Object}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-data}}\label{structmas_1_1_area_ade9dc79427b4c9c46ec5c3ebae967ff0}
+
+
+Definition at line 144 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_acf32183c88a8bb1979036c7e34340c58}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age@{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age}}
+\index{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age@{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age}}\label{structmas_1_1_area_acf32183c88a8bb1979036c7e34340c58}
+
+
+Definition at line 75 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_ab3e0fc299986b3ce569d3da2c750fb05}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females@{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}}
+\index{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females@{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}}\label{structmas_1_1_area_ab3e0fc299986b3ce569d3da2c750fb05}
+
+
+Definition at line 100 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_aea1735e78135761b1308da0eaf619338}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males@{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}}
+\index{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males@{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}}\label{structmas_1_1_area_aea1735e78135761b1308da0eaf619338}
+
+
+Definition at line 88 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_ad9a5d453e1aa68aee982bb93738a24b4}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-biomass\-\_\-total@{catch\-\_\-biomass\-\_\-total}}
+\index{catch\-\_\-biomass\-\_\-total@{catch\-\_\-biomass\-\_\-total}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-biomass\-\_\-total}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-total}}\label{structmas_1_1_area_ad9a5d453e1aa68aee982bb93738a24b4}
+
+
+Definition at line 62 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a65e5b1f37aa45c18d0eefcabd88bf504}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-biomass\-\_\-total\-\_\-females@{catch\-\_\-biomass\-\_\-total\-\_\-females}}
+\index{catch\-\_\-biomass\-\_\-total\-\_\-females@{catch\-\_\-biomass\-\_\-total\-\_\-females}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-biomass\-\_\-total\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-total\-\_\-females}}\label{structmas_1_1_area_a65e5b1f37aa45c18d0eefcabd88bf504}
+
+
+Definition at line 68 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_ae68e2cf3d18984ac27d377c1cfeaa0b2}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-biomass\-\_\-total\-\_\-males@{catch\-\_\-biomass\-\_\-total\-\_\-males}}
+\index{catch\-\_\-biomass\-\_\-total\-\_\-males@{catch\-\_\-biomass\-\_\-total\-\_\-males}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-biomass\-\_\-total\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-total\-\_\-males}}\label{structmas_1_1_area_ae68e2cf3d18984ac27d377c1cfeaa0b2}
+
+
+Definition at line 65 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_af01729bc7ed50ebd5238fc2332e21501}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-mean\-\_\-size\-\_\-data@{catch\-\_\-mean\-\_\-size\-\_\-data}}
+\index{catch\-\_\-mean\-\_\-size\-\_\-data@{catch\-\_\-mean\-\_\-size\-\_\-data}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-mean\-\_\-size\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<$std\-::shared\-\_\-ptr$<${\bf Data\-Object}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-mean\-\_\-size\-\_\-data}}\label{structmas_1_1_area_af01729bc7ed50ebd5238fc2332e21501}
+
+
+Definition at line 149 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a896fd8fcd47d539873630d45ec818ade}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-proportion\-\_\-at\-\_\-age@{catch\-\_\-proportion\-\_\-at\-\_\-age}}
+\index{catch\-\_\-proportion\-\_\-at\-\_\-age@{catch\-\_\-proportion\-\_\-at\-\_\-age}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-proportion\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-proportion\-\_\-at\-\_\-age}}\label{structmas_1_1_area_a896fd8fcd47d539873630d45ec818ade}
+
+
+Definition at line 74 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a1e2aa0671666187c26108ef2dc669239}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females@{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}}
+\index{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females@{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}}\label{structmas_1_1_area_a1e2aa0671666187c26108ef2dc669239}
+
+
+Definition at line 99 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a4c7e17b198774676569c7ab30987fee6}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males@{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}}
+\index{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males@{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}}\label{structmas_1_1_area_a4c7e17b198774676569c7ab30987fee6}
+
+
+Definition at line 87 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a3a14e9f155e3184451799e8fc8db97ab}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-proportion\-\_\-data@{catch\-\_\-proportion\-\_\-data}}
+\index{catch\-\_\-proportion\-\_\-data@{catch\-\_\-proportion\-\_\-data}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-proportion\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<$std\-::shared\-\_\-ptr$<${\bf Data\-Object}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-proportion\-\_\-data}}\label{structmas_1_1_area_a3a14e9f155e3184451799e8fc8db97ab}
+
+
+Definition at line 146 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a9c253f70d158bb49a41ca2c24d1dbb3b}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-proportion\-\_\-data\-\_\-\-N@{catch\-\_\-proportion\-\_\-data\-\_\-\-N}}
+\index{catch\-\_\-proportion\-\_\-data\-\_\-\-N@{catch\-\_\-proportion\-\_\-data\-\_\-\-N}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-proportion\-\_\-data\-\_\-\-N}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<$std\-::shared\-\_\-ptr$<${\bf Data\-Object}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-proportion\-\_\-data\-\_\-\-N}}\label{structmas_1_1_area_a9c253f70d158bb49a41ca2c24d1dbb3b}
+
+
+Definition at line 145 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a323cc7addcbd5afb8c3295150afd7cfb}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-proportion\-\_\-length\-\_\-data@{catch\-\_\-proportion\-\_\-length\-\_\-data}}
+\index{catch\-\_\-proportion\-\_\-length\-\_\-data@{catch\-\_\-proportion\-\_\-length\-\_\-data}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-proportion\-\_\-length\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<$std\-::shared\-\_\-ptr$<${\bf Data\-Object}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-proportion\-\_\-length\-\_\-data}}\label{structmas_1_1_area_a323cc7addcbd5afb8c3295150afd7cfb}
+
+
+Definition at line 148 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a9bd6774752ab571a166a9c0a5fe169aa}{\index{mas\-::\-Area@{mas\-::\-Area}!catch\-\_\-proportion\-\_\-length\-\_\-data\-\_\-\-N@{catch\-\_\-proportion\-\_\-length\-\_\-data\-\_\-\-N}}
+\index{catch\-\_\-proportion\-\_\-length\-\_\-data\-\_\-\-N@{catch\-\_\-proportion\-\_\-length\-\_\-data\-\_\-\-N}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{catch\-\_\-proportion\-\_\-length\-\_\-data\-\_\-\-N}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<$std\-::shared\-\_\-ptr$<${\bf Data\-Object}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-proportion\-\_\-length\-\_\-data\-\_\-\-N}}\label{structmas_1_1_area_a9bd6774752ab571a166a9c0a5fe169aa}
+
+
+Definition at line 147 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a21ab68ae7dd85bcae3c3094f08b5ccb9}{\index{mas\-::\-Area@{mas\-::\-Area}!fishery\-\_\-age\-\_\-comp\-\_\-component@{fishery\-\_\-age\-\_\-comp\-\_\-component}}
+\index{fishery\-\_\-age\-\_\-comp\-\_\-component@{fishery\-\_\-age\-\_\-comp\-\_\-component}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{fishery\-\_\-age\-\_\-comp\-\_\-component}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ {\bf variable} {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::fishery\-\_\-age\-\_\-comp\-\_\-component}}\label{structmas_1_1_area_a21ab68ae7dd85bcae3c3094f08b5ccb9}
+
+
+Definition at line 155 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a43732f02d867125feb9ae56e96114619}{\index{mas\-::\-Area@{mas\-::\-Area}!id@{id}}
+\index{id@{id}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{id}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ int {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::id}}\label{structmas_1_1_area_a43732f02d867125feb9ae56e96114619}
+
+
+Definition at line 51 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a5cb89e458c67e5fcaa967a8c268f2249}{\index{mas\-::\-Area@{mas\-::\-Area}!logscale\-\_\-standard\-\_\-deviation\-\_\-catch\-\_\-biomass@{logscale\-\_\-standard\-\_\-deviation\-\_\-catch\-\_\-biomass}}
+\index{logscale\-\_\-standard\-\_\-deviation\-\_\-catch\-\_\-biomass@{logscale\-\_\-standard\-\_\-deviation\-\_\-catch\-\_\-biomass}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{logscale\-\_\-standard\-\_\-deviation\-\_\-catch\-\_\-biomass}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ R\-E\-A\-L\-\_\-\-T {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::logscale\-\_\-standard\-\_\-deviation\-\_\-catch\-\_\-biomass = static\-\_\-cast$<$R\-E\-A\-L\-\_\-\-T$>$ (.\-1)}}\label{structmas_1_1_area_a5cb89e458c67e5fcaa967a8c268f2249}
+
+
+Definition at line 49 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_aa2ea154a326396d16d67ae84d39ccb3b}{\index{mas\-::\-Area@{mas\-::\-Area}!logscale\-\_\-standard\-\_\-deviation\-\_\-survey\-\_\-biomass@{logscale\-\_\-standard\-\_\-deviation\-\_\-survey\-\_\-biomass}}
+\index{logscale\-\_\-standard\-\_\-deviation\-\_\-survey\-\_\-biomass@{logscale\-\_\-standard\-\_\-deviation\-\_\-survey\-\_\-biomass}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{logscale\-\_\-standard\-\_\-deviation\-\_\-survey\-\_\-biomass}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ R\-E\-A\-L\-\_\-\-T {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::logscale\-\_\-standard\-\_\-deviation\-\_\-survey\-\_\-biomass = static\-\_\-cast$<$R\-E\-A\-L\-\_\-\-T$>$ (.\-3)}}\label{structmas_1_1_area_aa2ea154a326396d16d67ae84d39ccb3b}
+
+
+Definition at line 50 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a3489f1ad9f89aa85559a05457afb40c5}{\index{mas\-::\-Area@{mas\-::\-Area}!N\-\_\-diff2@{N\-\_\-diff2}}
+\index{N\-\_\-diff2@{N\-\_\-diff2}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{N\-\_\-diff2}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::N\-\_\-diff2}}\label{structmas_1_1_area_a3489f1ad9f89aa85559a05457afb40c5}
+
+
+Definition at line 109 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_aed10a818480665caf15bb1c8ad84150d}{\index{mas\-::\-Area@{mas\-::\-Area}!N\-\_\-\-Proportion\-\_\-diff2@{N\-\_\-\-Proportion\-\_\-diff2}}
+\index{N\-\_\-\-Proportion\-\_\-diff2@{N\-\_\-\-Proportion\-\_\-diff2}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{N\-\_\-\-Proportion\-\_\-diff2}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::N\-\_\-\-Proportion\-\_\-diff2}}\label{structmas_1_1_area_aed10a818480665caf15bb1c8ad84150d}
+
+
+Definition at line 110 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a03c8c1768c367f3251dfca8adffeb780}{\index{mas\-::\-Area@{mas\-::\-Area}!name@{name}}
+\index{name@{name}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{name}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::string {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::name}}\label{structmas_1_1_area_a03c8c1768c367f3251dfca8adffeb780}
+
+
+Definition at line 48 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_aa9febdb0cb6d7832ce2d5f915795a886}{\index{mas\-::\-Area@{mas\-::\-Area}!numbers\-\_\-at\-\_\-age@{numbers\-\_\-at\-\_\-age}}
+\index{numbers\-\_\-at\-\_\-age@{numbers\-\_\-at\-\_\-age}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{numbers\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::numbers\-\_\-at\-\_\-age}}\label{structmas_1_1_area_aa9febdb0cb6d7832ce2d5f915795a886}
+
+
+Definition at line 71 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a4ee583e6a3480b7216f38c9ebe8b8f60}{\index{mas\-::\-Area@{mas\-::\-Area}!numbers\-\_\-at\-\_\-age\-\_\-females@{numbers\-\_\-at\-\_\-age\-\_\-females}}
+\index{numbers\-\_\-at\-\_\-age\-\_\-females@{numbers\-\_\-at\-\_\-age\-\_\-females}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{numbers\-\_\-at\-\_\-age\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::numbers\-\_\-at\-\_\-age\-\_\-females}}\label{structmas_1_1_area_a4ee583e6a3480b7216f38c9ebe8b8f60}
+
+
+Definition at line 96 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_abd69833d78a921fd8c8b13140e46ad06}{\index{mas\-::\-Area@{mas\-::\-Area}!numbers\-\_\-at\-\_\-age\-\_\-males@{numbers\-\_\-at\-\_\-age\-\_\-males}}
+\index{numbers\-\_\-at\-\_\-age\-\_\-males@{numbers\-\_\-at\-\_\-age\-\_\-males}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{numbers\-\_\-at\-\_\-age\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::numbers\-\_\-at\-\_\-age\-\_\-males}}\label{structmas_1_1_area_abd69833d78a921fd8c8b13140e46ad06}
+
+
+Definition at line 84 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_acb6bf1955e92c0864eee535a74ecb9bd}{\index{mas\-::\-Area@{mas\-::\-Area}!numbers\-\_\-total@{numbers\-\_\-total}}
+\index{numbers\-\_\-total@{numbers\-\_\-total}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{numbers\-\_\-total}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::numbers\-\_\-total}}\label{structmas_1_1_area_acb6bf1955e92c0864eee535a74ecb9bd}
+
+
+Definition at line 72 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a6ba5fdd790fe552bb732e8b81824c3d6}{\index{mas\-::\-Area@{mas\-::\-Area}!numbers\-\_\-total\-\_\-females@{numbers\-\_\-total\-\_\-females}}
+\index{numbers\-\_\-total\-\_\-females@{numbers\-\_\-total\-\_\-females}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{numbers\-\_\-total\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::numbers\-\_\-total\-\_\-females}}\label{structmas_1_1_area_a6ba5fdd790fe552bb732e8b81824c3d6}
+
+
+Definition at line 97 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a8c1682e2c1ac46f6b6be45c68bc999c8}{\index{mas\-::\-Area@{mas\-::\-Area}!numbers\-\_\-total\-\_\-males@{numbers\-\_\-total\-\_\-males}}
+\index{numbers\-\_\-total\-\_\-males@{numbers\-\_\-total\-\_\-males}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{numbers\-\_\-total\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::numbers\-\_\-total\-\_\-males}}\label{structmas_1_1_area_a8c1682e2c1ac46f6b6be45c68bc999c8}
+
+
+Definition at line 85 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a973d245c1b74dc6099d174c3afe5e661}{\index{mas\-::\-Area@{mas\-::\-Area}!proportion\-\_\-at\-\_\-age@{proportion\-\_\-at\-\_\-age}}
+\index{proportion\-\_\-at\-\_\-age@{proportion\-\_\-at\-\_\-age}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{proportion\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::proportion\-\_\-at\-\_\-age}}\label{structmas_1_1_area_a973d245c1b74dc6099d174c3afe5e661}
+
+
+Definition at line 73 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a169ca9a1c03c80c565ef1ca425078fad}{\index{mas\-::\-Area@{mas\-::\-Area}!proportion\-\_\-at\-\_\-age\-\_\-females@{proportion\-\_\-at\-\_\-age\-\_\-females}}
+\index{proportion\-\_\-at\-\_\-age\-\_\-females@{proportion\-\_\-at\-\_\-age\-\_\-females}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{proportion\-\_\-at\-\_\-age\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::proportion\-\_\-at\-\_\-age\-\_\-females}}\label{structmas_1_1_area_a169ca9a1c03c80c565ef1ca425078fad}
+
+
+Definition at line 98 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_ab5ddd76246ce29807ff2143e858b4907}{\index{mas\-::\-Area@{mas\-::\-Area}!proportion\-\_\-at\-\_\-age\-\_\-males@{proportion\-\_\-at\-\_\-age\-\_\-males}}
+\index{proportion\-\_\-at\-\_\-age\-\_\-males@{proportion\-\_\-at\-\_\-age\-\_\-males}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{proportion\-\_\-at\-\_\-age\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::proportion\-\_\-at\-\_\-age\-\_\-males}}\label{structmas_1_1_area_ab5ddd76246ce29807ff2143e858b4907}
+
+
+Definition at line 86 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_aaa231bd2abc74fef23bd8fcf4644236a}{\index{mas\-::\-Area@{mas\-::\-Area}!recruitment\-\_\-deviations\-\_\-component@{recruitment\-\_\-deviations\-\_\-component}}
+\index{recruitment\-\_\-deviations\-\_\-component@{recruitment\-\_\-deviations\-\_\-component}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{recruitment\-\_\-deviations\-\_\-component}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ {\bf variable} {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::recruitment\-\_\-deviations\-\_\-component}}\label{structmas_1_1_area_aaa231bd2abc74fef23bd8fcf4644236a}
+
+
+Definition at line 157 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_ac0d892bff62ae6d168ae9161f5db7cf2}{\index{mas\-::\-Area@{mas\-::\-Area}!seasonal\-\_\-fleet\-\_\-operations@{seasonal\-\_\-fleet\-\_\-operations}}
+\index{seasonal\-\_\-fleet\-\_\-operations@{seasonal\-\_\-fleet\-\_\-operations}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{seasonal\-\_\-fleet\-\_\-operations}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::map$<$int, std\-::vector$<$ std\-::shared\-\_\-ptr$<${\bf Fleet}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ $>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::seasonal\-\_\-fleet\-\_\-operations}}\label{structmas_1_1_area_ac0d892bff62ae6d168ae9161f5db7cf2}
+
+
+Definition at line 127 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a513c4bf4e2a1fdd3c63f1bac10e25bc5}{\index{mas\-::\-Area@{mas\-::\-Area}!seasonal\-\_\-survey\-\_\-operations@{seasonal\-\_\-survey\-\_\-operations}}
+\index{seasonal\-\_\-survey\-\_\-operations@{seasonal\-\_\-survey\-\_\-operations}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{seasonal\-\_\-survey\-\_\-operations}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::map$<$int, std\-::vector$<$ std\-::shared\-\_\-ptr$<${\bf Survey}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ $>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::seasonal\-\_\-survey\-\_\-operations}}\label{structmas_1_1_area_a513c4bf4e2a1fdd3c63f1bac10e25bc5}
+
+
+Definition at line 128 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a45d133239182e8d71e2fd4d1ed1ba04f}{\index{mas\-::\-Area@{mas\-::\-Area}!seasons@{seasons}}
+\index{seasons@{seasons}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{seasons}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ int {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::seasons}}\label{structmas_1_1_area_a45d133239182e8d71e2fd4d1ed1ba04f}
+
+
+Definition at line 54 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_aea96de5bbac44de13b5e79a75a270cbd}{\index{mas\-::\-Area@{mas\-::\-Area}!S\-N\-\_\-\-Biomass\-\_\-diff2@{S\-N\-\_\-\-Biomass\-\_\-diff2}}
+\index{S\-N\-\_\-\-Biomass\-\_\-diff2@{S\-N\-\_\-\-Biomass\-\_\-diff2}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{S\-N\-\_\-\-Biomass\-\_\-diff2}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::S\-N\-\_\-\-Biomass\-\_\-diff2}}\label{structmas_1_1_area_aea96de5bbac44de13b5e79a75a270cbd}
+
+
+Definition at line 116 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a0fb7cac6b986e07c833a1b55b48b8327}{\index{mas\-::\-Area@{mas\-::\-Area}!S\-N\-\_\-\-Biomass\-\_\-\-Proportion\-\_\-diff2@{S\-N\-\_\-\-Biomass\-\_\-\-Proportion\-\_\-diff2}}
+\index{S\-N\-\_\-\-Biomass\-\_\-\-Proportion\-\_\-diff2@{S\-N\-\_\-\-Biomass\-\_\-\-Proportion\-\_\-diff2}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{S\-N\-\_\-\-Biomass\-\_\-\-Proportion\-\_\-diff2}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::S\-N\-\_\-\-Biomass\-\_\-\-Proportion\-\_\-diff2}}\label{structmas_1_1_area_a0fb7cac6b986e07c833a1b55b48b8327}
+
+
+Definition at line 118 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a3107466153d6d6c2970e3666266eb02a}{\index{mas\-::\-Area@{mas\-::\-Area}!S\-N\-\_\-diff2@{S\-N\-\_\-diff2}}
+\index{S\-N\-\_\-diff2@{S\-N\-\_\-diff2}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{S\-N\-\_\-diff2}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::S\-N\-\_\-diff2}}\label{structmas_1_1_area_a3107466153d6d6c2970e3666266eb02a}
+
+
+Definition at line 115 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a0266b0fefd2b239bd153bd224081011c}{\index{mas\-::\-Area@{mas\-::\-Area}!S\-N\-\_\-\-Proportion\-\_\-diff2@{S\-N\-\_\-\-Proportion\-\_\-diff2}}
+\index{S\-N\-\_\-\-Proportion\-\_\-diff2@{S\-N\-\_\-\-Proportion\-\_\-diff2}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{S\-N\-\_\-\-Proportion\-\_\-diff2}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::S\-N\-\_\-\-Proportion\-\_\-diff2}}\label{structmas_1_1_area_a0266b0fefd2b239bd153bd224081011c}
+
+
+Definition at line 117 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_ac9d145e72568af28ce8c973dffab11b3}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-age\-\_\-comp\-\_\-component@{survey\-\_\-age\-\_\-comp\-\_\-component}}
+\index{survey\-\_\-age\-\_\-comp\-\_\-component@{survey\-\_\-age\-\_\-comp\-\_\-component}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-age\-\_\-comp\-\_\-component}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ {\bf variable} {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-age\-\_\-comp\-\_\-component}}\label{structmas_1_1_area_ac9d145e72568af28ce8c973dffab11b3}
+
+
+Definition at line 156 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_acaf171532a97cd7cd992779b02cce273}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-biomass\-\_\-at\-\_\-age@{survey\-\_\-biomass\-\_\-at\-\_\-age}}
+\index{survey\-\_\-biomass\-\_\-at\-\_\-age@{survey\-\_\-biomass\-\_\-at\-\_\-age}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-biomass\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-biomass\-\_\-at\-\_\-age}}\label{structmas_1_1_area_acaf171532a97cd7cd992779b02cce273}
+
+
+Definition at line 79 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a903b4c889f85bdbd4804f15a6278c7b0}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-biomass\-\_\-at\-\_\-age\-\_\-females@{survey\-\_\-biomass\-\_\-at\-\_\-age\-\_\-females}}
+\index{survey\-\_\-biomass\-\_\-at\-\_\-age\-\_\-females@{survey\-\_\-biomass\-\_\-at\-\_\-age\-\_\-females}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-biomass\-\_\-at\-\_\-age\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-biomass\-\_\-at\-\_\-age\-\_\-females}}\label{structmas_1_1_area_a903b4c889f85bdbd4804f15a6278c7b0}
+
+
+Definition at line 104 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a5ece3cad1dd8083d91747c5aa81b1193}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-biomass\-\_\-at\-\_\-age\-\_\-males@{survey\-\_\-biomass\-\_\-at\-\_\-age\-\_\-males}}
+\index{survey\-\_\-biomass\-\_\-at\-\_\-age\-\_\-males@{survey\-\_\-biomass\-\_\-at\-\_\-age\-\_\-males}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-biomass\-\_\-at\-\_\-age\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-biomass\-\_\-at\-\_\-age\-\_\-males}}\label{structmas_1_1_area_a5ece3cad1dd8083d91747c5aa81b1193}
+
+
+Definition at line 92 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a8b7482442ba3e2008120c09b14343f56}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-biomass\-\_\-component@{survey\-\_\-biomass\-\_\-component}}
+\index{survey\-\_\-biomass\-\_\-component@{survey\-\_\-biomass\-\_\-component}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-biomass\-\_\-component}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ {\bf variable} {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-biomass\-\_\-component}}\label{structmas_1_1_area_a8b7482442ba3e2008120c09b14343f56}
+
+
+Definition at line 154 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a742a11ec29fd3c8cbba9c4fc2ffb650b}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-biomass\-\_\-data@{survey\-\_\-biomass\-\_\-data}}
+\index{survey\-\_\-biomass\-\_\-data@{survey\-\_\-biomass\-\_\-data}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-biomass\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<$std\-::shared\-\_\-ptr$<${\bf Data\-Object}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-biomass\-\_\-data}}\label{structmas_1_1_area_a742a11ec29fd3c8cbba9c4fc2ffb650b}
+
+
+Definition at line 137 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a73ef63706809741b03510ccdf85c5c8b}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age@{survey\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age}}
+\index{survey\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age@{survey\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age}}\label{structmas_1_1_area_a73ef63706809741b03510ccdf85c5c8b}
+
+
+Definition at line 81 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a0f91784fa56884376c4ee3d8a2fc0ec3}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females@{survey\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}}
+\index{survey\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females@{survey\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}}\label{structmas_1_1_area_a0f91784fa56884376c4ee3d8a2fc0ec3}
+
+
+Definition at line 106 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a11cdc9068612b7e08790a2ba50460e53}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males@{survey\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}}
+\index{survey\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males@{survey\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}}\label{structmas_1_1_area_a11cdc9068612b7e08790a2ba50460e53}
+
+
+Definition at line 94 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a59bb446f6c932a2255fe8093d731e403}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-biomass\-\_\-total@{survey\-\_\-biomass\-\_\-total}}
+\index{survey\-\_\-biomass\-\_\-total@{survey\-\_\-biomass\-\_\-total}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-biomass\-\_\-total}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-biomass\-\_\-total}}\label{structmas_1_1_area_a59bb446f6c932a2255fe8093d731e403}
+
+
+Definition at line 63 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_ac9e78d0a2d1fbb1d24d2a92205b9ec16}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-biomass\-\_\-total\-\_\-females@{survey\-\_\-biomass\-\_\-total\-\_\-females}}
+\index{survey\-\_\-biomass\-\_\-total\-\_\-females@{survey\-\_\-biomass\-\_\-total\-\_\-females}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-biomass\-\_\-total\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-biomass\-\_\-total\-\_\-females}}\label{structmas_1_1_area_ac9e78d0a2d1fbb1d24d2a92205b9ec16}
+
+
+Definition at line 69 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a87c205e8c7eb39bc4b50492c7707a310}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-biomass\-\_\-total\-\_\-males@{survey\-\_\-biomass\-\_\-total\-\_\-males}}
+\index{survey\-\_\-biomass\-\_\-total\-\_\-males@{survey\-\_\-biomass\-\_\-total\-\_\-males}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-biomass\-\_\-total\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-biomass\-\_\-total\-\_\-males}}\label{structmas_1_1_area_a87c205e8c7eb39bc4b50492c7707a310}
+
+
+Definition at line 66 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a2710e056d30edc617f3073d3df19f28f}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-mean\-\_\-size\-\_\-data@{survey\-\_\-mean\-\_\-size\-\_\-data}}
+\index{survey\-\_\-mean\-\_\-size\-\_\-data@{survey\-\_\-mean\-\_\-size\-\_\-data}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-mean\-\_\-size\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<$std\-::shared\-\_\-ptr$<${\bf Data\-Object}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-mean\-\_\-size\-\_\-data}}\label{structmas_1_1_area_a2710e056d30edc617f3073d3df19f28f}
+
+
+Definition at line 142 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a06176622d9d6d00ac6725d3f585dad6f}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-models@{survey\-\_\-models}}
+\index{survey\-\_\-models@{survey\-\_\-models}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-models}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::map$<$int, std\-::map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Survey}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ $>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-models}}\label{structmas_1_1_area_a06176622d9d6d00ac6725d3f585dad6f}
+
+
+Definition at line 133 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_ab8802451bd599039ee254b6737e8fad9}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-numbers\-\_\-at\-\_\-age@{survey\-\_\-numbers\-\_\-at\-\_\-age}}
+\index{survey\-\_\-numbers\-\_\-at\-\_\-age@{survey\-\_\-numbers\-\_\-at\-\_\-age}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-numbers\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-numbers\-\_\-at\-\_\-age}}\label{structmas_1_1_area_ab8802451bd599039ee254b6737e8fad9}
+
+
+Definition at line 78 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a5c4aa87c77904d0ea7b60aad5cf5e852}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-numbers\-\_\-at\-\_\-age\-\_\-females@{survey\-\_\-numbers\-\_\-at\-\_\-age\-\_\-females}}
+\index{survey\-\_\-numbers\-\_\-at\-\_\-age\-\_\-females@{survey\-\_\-numbers\-\_\-at\-\_\-age\-\_\-females}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-numbers\-\_\-at\-\_\-age\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-numbers\-\_\-at\-\_\-age\-\_\-females}}\label{structmas_1_1_area_a5c4aa87c77904d0ea7b60aad5cf5e852}
+
+
+Definition at line 103 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_ae6160129e74d4b173cb755976835d162}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-numbers\-\_\-at\-\_\-age\-\_\-males@{survey\-\_\-numbers\-\_\-at\-\_\-age\-\_\-males}}
+\index{survey\-\_\-numbers\-\_\-at\-\_\-age\-\_\-males@{survey\-\_\-numbers\-\_\-at\-\_\-age\-\_\-males}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-numbers\-\_\-at\-\_\-age\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-numbers\-\_\-at\-\_\-age\-\_\-males}}\label{structmas_1_1_area_ae6160129e74d4b173cb755976835d162}
+
+
+Definition at line 91 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a4a85aa755774a12a5fa4e7debda4cdad}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-proportion\-\_\-at\-\_\-age@{survey\-\_\-proportion\-\_\-at\-\_\-age}}
+\index{survey\-\_\-proportion\-\_\-at\-\_\-age@{survey\-\_\-proportion\-\_\-at\-\_\-age}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-proportion\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-proportion\-\_\-at\-\_\-age}}\label{structmas_1_1_area_a4a85aa755774a12a5fa4e7debda4cdad}
+
+
+Definition at line 80 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a58a763df34868ff121faabd55c2f9741}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females@{survey\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}}
+\index{survey\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females@{survey\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}}\label{structmas_1_1_area_a58a763df34868ff121faabd55c2f9741}
+
+
+Definition at line 105 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_ab2207ba2c622fe615b415efa69df5f84}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males@{survey\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}}
+\index{survey\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males@{survey\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}}\label{structmas_1_1_area_ab2207ba2c622fe615b415efa69df5f84}
+
+
+Definition at line 93 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_adfe5f97ac7d375c9045b3a17a3c9ccf6}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-proportion\-\_\-data@{survey\-\_\-proportion\-\_\-data}}
+\index{survey\-\_\-proportion\-\_\-data@{survey\-\_\-proportion\-\_\-data}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-proportion\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<$std\-::shared\-\_\-ptr$<${\bf Data\-Object}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-proportion\-\_\-data}}\label{structmas_1_1_area_adfe5f97ac7d375c9045b3a17a3c9ccf6}
+
+
+Definition at line 139 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a1a00923508e1f489be3f5885c9208a75}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-proportion\-\_\-data\-\_\-\-N@{survey\-\_\-proportion\-\_\-data\-\_\-\-N}}
+\index{survey\-\_\-proportion\-\_\-data\-\_\-\-N@{survey\-\_\-proportion\-\_\-data\-\_\-\-N}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-proportion\-\_\-data\-\_\-\-N}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<$std\-::shared\-\_\-ptr$<${\bf Data\-Object}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-proportion\-\_\-data\-\_\-\-N}}\label{structmas_1_1_area_a1a00923508e1f489be3f5885c9208a75}
+
+
+Definition at line 138 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a267134d80dcd5d56d4e63b158ebaacdf}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-proportion\-\_\-length\-\_\-data@{survey\-\_\-proportion\-\_\-length\-\_\-data}}
+\index{survey\-\_\-proportion\-\_\-length\-\_\-data@{survey\-\_\-proportion\-\_\-length\-\_\-data}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-proportion\-\_\-length\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<$std\-::shared\-\_\-ptr$<${\bf Data\-Object}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-proportion\-\_\-length\-\_\-data}}\label{structmas_1_1_area_a267134d80dcd5d56d4e63b158ebaacdf}
+
+
+Definition at line 141 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a33b8c87411a6eb87d89faf910a6e33d1}{\index{mas\-::\-Area@{mas\-::\-Area}!survey\-\_\-proportion\-\_\-length\-\_\-data\-\_\-\-N@{survey\-\_\-proportion\-\_\-length\-\_\-data\-\_\-\-N}}
+\index{survey\-\_\-proportion\-\_\-length\-\_\-data\-\_\-\-N@{survey\-\_\-proportion\-\_\-length\-\_\-data\-\_\-\-N}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{survey\-\_\-proportion\-\_\-length\-\_\-data\-\_\-\-N}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<$std\-::shared\-\_\-ptr$<${\bf Data\-Object}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-proportion\-\_\-length\-\_\-data\-\_\-\-N}}\label{structmas_1_1_area_a33b8c87411a6eb87d89faf910a6e33d1}
+
+
+Definition at line 140 of file Area.\-hpp.
+
+\hypertarget{structmas_1_1_area_a2a4e96c3f8817d242c50655f341083c0}{\index{mas\-::\-Area@{mas\-::\-Area}!years@{years}}
+\index{years@{years}!mas::Area@{mas\-::\-Area}}
+\subsubsection[{years}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ int {\bf mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::years}}\label{structmas_1_1_area_a2a4e96c3f8817d242c50655f341083c0}
+
+
+Definition at line 53 of file Area.\-hpp.
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/oppy/\-Net\-Beans\-Projects/mas/\hyperlink{_area_8hpp}{Area.\-hpp}\end{DoxyCompactItemize}

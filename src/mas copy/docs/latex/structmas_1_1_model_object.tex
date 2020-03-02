@@ -1,0 +1,172 @@
+\hypertarget{structmas_1_1_model_object}{\section{mas\-:\-:Model\-Object$<$ R\-E\-A\-L\-\_\-\-T $>$ Struct Template Reference}
+\label{structmas_1_1_model_object}\index{mas\-::\-Model\-Object$<$ R\-E\-A\-L\-\_\-\-T $>$@{mas\-::\-Model\-Object$<$ R\-E\-A\-L\-\_\-\-T $>$}}
+}
+
+
+{\ttfamily \#include $<$Common.\-hpp$>$}
+
+Inheritance diagram for mas\-:\-:Model\-Object$<$ R\-E\-A\-L\-\_\-\-T $>$\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=12.000000cm]{structmas_1_1_model_object}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{structmas_1_1_variable_trait}{Variable\-Trait}$<$ R\-E\-A\-L\-\_\-\-T $>$\\*
+\-::\hyperlink{structmas_1_1_model_object_a4e62fdbb5826f8fac311262b888ab10a}{variable} \hyperlink{structmas_1_1_model_object_a4e62fdbb5826f8fac311262b888ab10a}{variable}
+\item 
+typedef std\-::map$<$ \hyperlink{structmas_1_1_model_object_a4e62fdbb5826f8fac311262b888ab10a}{variable} \\*
+$\ast$, int $>$\-::iterator \hyperlink{structmas_1_1_model_object_af95a47b3862d83583751c2d835887697}{estimable\-\_\-parameter\-\_\-iterator}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{structmas_1_1_model_object_aefad28a4f78daee1ead3eaa0a44577ae}{Register} (\hyperlink{structmas_1_1_model_object_a4e62fdbb5826f8fac311262b888ab10a}{variable} \&var, int phase=1)
+\item 
+virtual const std\-::string \hyperlink{structmas_1_1_model_object_a68948da33f7370cfea0f07bbe072a439}{J\-S\-O\-N\-Parameter} (\hyperlink{structmas_1_1_model_object_a4e62fdbb5826f8fac311262b888ab10a}{variable} \&var, const std\-::string \&name)
+\item 
+virtual const std\-::string \hyperlink{structmas_1_1_model_object_af40b3c89b11919fc5aea21dcf1cd027b}{To\-J\-S\-O\-N\-String} ()
+\item 
+virtual std\-::string \hyperlink{structmas_1_1_model_object_a8eaf6c7c52e42ea8869aefa318358cb5}{To\-String} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{structmas_1_1_model_object_a1455cdfd12f282766b0689f3a345dbb7}{id}
+\item 
+std\-::map$<$ \hyperlink{structmas_1_1_model_object_a4e62fdbb5826f8fac311262b888ab10a}{variable} $\ast$, int $>$ \hyperlink{structmas_1_1_model_object_aaea24720c307701c6c4494088013cc46}{estimated\-\_\-parameters\-\_\-map}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_model_object_a4e62fdbb5826f8fac311262b888ab10a}{variable} $\ast$ $>$ \hyperlink{structmas_1_1_model_object_ae9b9d70e413f78bf9b566eba16d1e71c}{estimated\-\_\-parameters}
+\item 
+std\-::vector$<$ int $>$ \hyperlink{structmas_1_1_model_object_a6e26b63869a25bbe17a8d57e4d4ab77a}{estimated\-\_\-phase}
+\item 
+bool \hyperlink{structmas_1_1_model_object_a47d30dfc08290aebd94cf3096d53ef6a}{used} = false
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename R\-E\-A\-L\-\_\-\-T$>$struct mas\-::\-Model\-Object$<$ R\-E\-A\-L\-\_\-\-T $>$}
+
+
+
+Definition at line 50 of file Common.\-hpp.
+
+
+
+\subsection{Member Typedef Documentation}
+\hypertarget{structmas_1_1_model_object_af95a47b3862d83583751c2d835887697}{\index{mas\-::\-Model\-Object@{mas\-::\-Model\-Object}!estimable\-\_\-parameter\-\_\-iterator@{estimable\-\_\-parameter\-\_\-iterator}}
+\index{estimable\-\_\-parameter\-\_\-iterator@{estimable\-\_\-parameter\-\_\-iterator}!mas::ModelObject@{mas\-::\-Model\-Object}}
+\subsubsection[{estimable\-\_\-parameter\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::map$<${\bf variable}$\ast$, int$>$\-::iterator {\bf mas\-::\-Model\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf estimable\-\_\-parameter\-\_\-iterator}}}\label{structmas_1_1_model_object_af95a47b3862d83583751c2d835887697}
+
+
+Definition at line 54 of file Common.\-hpp.
+
+\hypertarget{structmas_1_1_model_object_a4e62fdbb5826f8fac311262b888ab10a}{\index{mas\-::\-Model\-Object@{mas\-::\-Model\-Object}!variable@{variable}}
+\index{variable@{variable}!mas::ModelObject@{mas\-::\-Model\-Object}}
+\subsubsection[{variable}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef {\bf Variable\-Trait}$<$R\-E\-A\-L\-\_\-\-T$>$\-::{\bf variable} {\bf mas\-::\-Model\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf variable}}}\label{structmas_1_1_model_object_a4e62fdbb5826f8fac311262b888ab10a}
+
+
+Definition at line 51 of file Common.\-hpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{structmas_1_1_model_object_a68948da33f7370cfea0f07bbe072a439}{\index{mas\-::\-Model\-Object@{mas\-::\-Model\-Object}!J\-S\-O\-N\-Parameter@{J\-S\-O\-N\-Parameter}}
+\index{J\-S\-O\-N\-Parameter@{J\-S\-O\-N\-Parameter}!mas::ModelObject@{mas\-::\-Model\-Object}}
+\subsubsection[{J\-S\-O\-N\-Parameter}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ virtual const std\-::string {\bf mas\-::\-Model\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::J\-S\-O\-N\-Parameter (
+\begin{DoxyParamCaption}
+\item[{{\bf variable} \&}]{var, }
+\item[{const std\-::string \&}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{structmas_1_1_model_object_a68948da33f7370cfea0f07bbe072a439}
+
+
+Definition at line 65 of file Common.\-hpp.
+
+\hypertarget{structmas_1_1_model_object_aefad28a4f78daee1ead3eaa0a44577ae}{\index{mas\-::\-Model\-Object@{mas\-::\-Model\-Object}!Register@{Register}}
+\index{Register@{Register}!mas::ModelObject@{mas\-::\-Model\-Object}}
+\subsubsection[{Register}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Model\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Register (
+\begin{DoxyParamCaption}
+\item[{{\bf variable} \&}]{var, }
+\item[{int}]{phase = {\ttfamily 1}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_model_object_aefad28a4f78daee1ead3eaa0a44577ae}
+
+
+Definition at line 59 of file Common.\-hpp.
+
+\hypertarget{structmas_1_1_model_object_af40b3c89b11919fc5aea21dcf1cd027b}{\index{mas\-::\-Model\-Object@{mas\-::\-Model\-Object}!To\-J\-S\-O\-N\-String@{To\-J\-S\-O\-N\-String}}
+\index{To\-J\-S\-O\-N\-String@{To\-J\-S\-O\-N\-String}!mas::ModelObject@{mas\-::\-Model\-Object}}
+\subsubsection[{To\-J\-S\-O\-N\-String}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ virtual const std\-::string {\bf mas\-::\-Model\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::To\-J\-S\-O\-N\-String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{structmas_1_1_model_object_af40b3c89b11919fc5aea21dcf1cd027b}
+
+
+Reimplemented in \hyperlink{classmas_1_1_population_adb6e6afabb8a27f64592f36909d43612}{mas\-::\-Population$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_fleet_a438089d58f104668621d9426fa1e1c86}{mas\-::\-Fleet$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_deriso_aabf1cedad5697f1924a09d3a168453c4}{mas\-::\-Deriso$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_schnute_case_i_v_a1f6dc0866ead488d7258b75193305c9b}{mas\-::\-Schnute\-Case\-I\-V$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_shepherd_aafe14075a992d9157bc8594aac0a2eeb}{mas\-::\-Shepherd$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_schnute_case_i_i_i_a7f55a0a6f9f4f8f577c952ec974c89c4}{mas\-::\-Schnute\-Case\-I\-I\-I$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_inverse_quadratic_r_b_f_a59195ed8bba6ab30d34fa1d204c264bf}{mas\-::\-Inverse\-Quadratic\-R\-B\-F$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_beverton_holt_dep_ac2af0de80fd4cc3606d8986cfa1e5781}{mas\-::\-Beverton\-Holt\-Dep$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_schnute_case_i_i_a291cd832a760d0a08e838fd251f98b2b}{mas\-::\-Schnute\-Case\-I\-I$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_beverton_holt_alt_ae81da66f21c345daabf90fc7aa0db6c7}{mas\-::\-Beverton\-Holt\-Alt$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_gaussian_r_b_f_a0b07e709655b2c7da7c89dd48491d091}{mas\-::\-Gaussian\-R\-B\-F$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_schnute_case_i_a84e734071e4bf0cce1d36c00f94768db}{mas\-::\-Schnute\-Case\-I$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_beverton_holt_a273d2704a4974d3fdbb9287ad0984b69}{mas\-::\-Beverton\-Holt$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_fishing_mortality_ac76d1e34d6c062d090bc5265d100395d}{mas\-::\-Fishing\-Mortality$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_ricker_alt_a76187fc316998d57d245c189560bcade}{mas\-::\-Ricker\-Alt$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_von_bertalanffy_modified_a47465618fc2471ad0f47f94fe3974597}{mas\-::\-Von\-Bertalanffy\-Modified$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_double_logistic_sel_af25cc89b1ae6e3b53774c59b8b440699}{mas\-::\-Double\-Logistic\-Sel$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_ricker_af6cb56b70e0449cfb5fdfab757971560}{mas\-::\-Ricker$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_von_bertalanffy_a1b579d133d8f9d068afec3b3a386ceec}{mas\-::\-Von\-Bertalanffy$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_logistic_sel_afa9abd8671cf8d82a6973c4369741b41}{mas\-::\-Logistic\-Sel$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_movement_a6ace5dba1349ee6fde5c242a467155d4}{mas\-::\-Movement$<$ R\-E\-A\-L\-\_\-\-T $>$}, and \hyperlink{structmas_1_1_natural_mortality_ae788facfc8178ed04eeb1d31caada8f3}{mas\-::\-Natural\-Mortality$<$ R\-E\-A\-L\-\_\-\-T $>$}.
+
+
+
+Definition at line 87 of file Common.\-hpp.
+
+\hypertarget{structmas_1_1_model_object_a8eaf6c7c52e42ea8869aefa318358cb5}{\index{mas\-::\-Model\-Object@{mas\-::\-Model\-Object}!To\-String@{To\-String}}
+\index{To\-String@{To\-String}!mas::ModelObject@{mas\-::\-Model\-Object}}
+\subsubsection[{To\-String}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ virtual std\-::string {\bf mas\-::\-Model\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::To\-String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{structmas_1_1_model_object_a8eaf6c7c52e42ea8869aefa318358cb5}
+
+
+Reimplemented in \hyperlink{structmas_1_1_multinomial_robust_a57b1509abe3c1640fb0e24f636fbbd87}{mas\-::\-Multinomial\-Robust$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_schnute_case_i_v_ac95b913d4a28421b37e8c91e76906f2d}{mas\-::\-Schnute\-Case\-I\-V$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_multinomial_a90903904b06f2e5a79ffba4981fef34a}{mas\-::\-Multinomial$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_schnute_case_i_i_i_af99d1855589bc44641952cfc89d11a72}{mas\-::\-Schnute\-Case\-I\-I\-I$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_inverse_quadratic_r_b_f_a51999c40500b4bedc5bb24a1b0b87bb7}{mas\-::\-Inverse\-Quadratic\-R\-B\-F$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_dirichlet_multinomial_robust_a25f3b78a3072162c8e1fce217a599a14}{mas\-::\-Dirichlet\-Multinomial\-Robust$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_schnute_case_i_i_ac4cca4d5d808023e1a72651ea090fc58}{mas\-::\-Schnute\-Case\-I\-I$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_gaussian_r_b_f_a08856503cb0e77c17f891621aef50d21}{mas\-::\-Gaussian\-R\-B\-F$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_schnute_case_i_a75bd8ce2e0224680c775a70122f18232}{mas\-::\-Schnute\-Case\-I$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_dirichlet_multinomial_a92d0abed181db2f54d7d44ac7cb4fa27}{mas\-::\-Dirichlet\-Multinomial$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_von_bertalanffy_modified_a45e40092ed15953212d65c406908d708}{mas\-::\-Von\-Bertalanffy\-Modified$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_n_l_l_functor_accd55442e1e88b423471b67c40860197}{mas\-::\-N\-L\-L\-Functor$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_double_logistic_sel_ab91353c57277a40f04c505ce77332c65}{mas\-::\-Double\-Logistic\-Sel$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_fishing_mortality_a584a63c9d45ec427965f2d98c2a88c81}{mas\-::\-Fishing\-Mortality$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_von_bertalanffy_af301e548d6d3e9df5a2fc65132378195}{mas\-::\-Von\-Bertalanffy$<$ R\-E\-A\-L\-\_\-\-T $>$}, and \hyperlink{structmas_1_1_logistic_sel_a625cc43faa89094c25da029a827ba638}{mas\-::\-Logistic\-Sel$<$ R\-E\-A\-L\-\_\-\-T $>$}.
+
+
+
+Definition at line 91 of file Common.\-hpp.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structmas_1_1_model_object_ae9b9d70e413f78bf9b566eba16d1e71c}{\index{mas\-::\-Model\-Object@{mas\-::\-Model\-Object}!estimated\-\_\-parameters@{estimated\-\_\-parameters}}
+\index{estimated\-\_\-parameters@{estimated\-\_\-parameters}!mas::ModelObject@{mas\-::\-Model\-Object}}
+\subsubsection[{estimated\-\_\-parameters}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$\ast$$>$ {\bf mas\-::\-Model\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::estimated\-\_\-parameters}}\label{structmas_1_1_model_object_ae9b9d70e413f78bf9b566eba16d1e71c}
+
+
+Definition at line 55 of file Common.\-hpp.
+
+\hypertarget{structmas_1_1_model_object_aaea24720c307701c6c4494088013cc46}{\index{mas\-::\-Model\-Object@{mas\-::\-Model\-Object}!estimated\-\_\-parameters\-\_\-map@{estimated\-\_\-parameters\-\_\-map}}
+\index{estimated\-\_\-parameters\-\_\-map@{estimated\-\_\-parameters\-\_\-map}!mas::ModelObject@{mas\-::\-Model\-Object}}
+\subsubsection[{estimated\-\_\-parameters\-\_\-map}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::map$<${\bf variable}$\ast$, int$>$ {\bf mas\-::\-Model\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::estimated\-\_\-parameters\-\_\-map}}\label{structmas_1_1_model_object_aaea24720c307701c6c4494088013cc46}
+
+
+Definition at line 53 of file Common.\-hpp.
+
+\hypertarget{structmas_1_1_model_object_a6e26b63869a25bbe17a8d57e4d4ab77a}{\index{mas\-::\-Model\-Object@{mas\-::\-Model\-Object}!estimated\-\_\-phase@{estimated\-\_\-phase}}
+\index{estimated\-\_\-phase@{estimated\-\_\-phase}!mas::ModelObject@{mas\-::\-Model\-Object}}
+\subsubsection[{estimated\-\_\-phase}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<$int$>$ {\bf mas\-::\-Model\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::estimated\-\_\-phase}}\label{structmas_1_1_model_object_a6e26b63869a25bbe17a8d57e4d4ab77a}
+
+
+Definition at line 56 of file Common.\-hpp.
+
+\hypertarget{structmas_1_1_model_object_a1455cdfd12f282766b0689f3a345dbb7}{\index{mas\-::\-Model\-Object@{mas\-::\-Model\-Object}!id@{id}}
+\index{id@{id}!mas::ModelObject@{mas\-::\-Model\-Object}}
+\subsubsection[{id}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ int {\bf mas\-::\-Model\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::id}}\label{structmas_1_1_model_object_a1455cdfd12f282766b0689f3a345dbb7}
+
+
+Definition at line 52 of file Common.\-hpp.
+
+\hypertarget{structmas_1_1_model_object_a47d30dfc08290aebd94cf3096d53ef6a}{\index{mas\-::\-Model\-Object@{mas\-::\-Model\-Object}!used@{used}}
+\index{used@{used}!mas::ModelObject@{mas\-::\-Model\-Object}}
+\subsubsection[{used}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ bool {\bf mas\-::\-Model\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::used = false}}\label{structmas_1_1_model_object_a47d30dfc08290aebd94cf3096d53ef6a}
+
+
+Definition at line 57 of file Common.\-hpp.
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/oppy/\-Net\-Beans\-Projects/mas/\hyperlink{_common_8hpp}{Common.\-hpp}\end{DoxyCompactItemize}

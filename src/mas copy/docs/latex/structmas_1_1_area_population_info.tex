@@ -1,0 +1,987 @@
+\hypertarget{structmas_1_1_area_population_info}{\section{mas\-:\-:Area\-Population\-Info$<$ R\-E\-A\-L\-\_\-\-T $>$ Struct Template Reference}
+\label{structmas_1_1_area_population_info}\index{mas\-::\-Area\-Population\-Info$<$ R\-E\-A\-L\-\_\-\-T $>$@{mas\-::\-Area\-Population\-Info$<$ R\-E\-A\-L\-\_\-\-T $>$}}
+}
+
+
+{\ttfamily \#include $<$Harvest\-Control\-Rule.\-hpp$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{structmas_1_1_variable_trait}{mas\-::\-Variable\-Trait}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$\-::\hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{structmas_1_1_area_population_info_a893f8e2939dd83a2ab8e465b9706b2d7}{Initialize} ()
+\item 
+void \hyperlink{structmas_1_1_area_population_info_afda3030fd614e624940e7f7af8635743}{Reset} ()
+\item 
+void \hyperlink{structmas_1_1_area_population_info_a3f470932353ccf59f5878b495c3a96e3}{Weight\-At\-Age} ()
+\item 
+void \hyperlink{structmas_1_1_area_population_info_a6eaca87c03aa609ea7bbf929471e0c4d}{Initialize\-M} ()
+\item 
+void \hyperlink{structmas_1_1_area_population_info_a9140eb45a3f5c805fe910becc071b7c1}{Initial\-Numbers} ()
+\item 
+void \hyperlink{structmas_1_1_area_population_info_a6a0103263d4bc2a959383a418b8f85f0}{Unfished\-Equil\-Spawning\-Biomass} ()
+\item 
+void \hyperlink{structmas_1_1_area_population_info_a402454ad4cdb27bca009ed6849480493}{Increment\-Time} (int \&y, int \&s)
+\item 
+void \hyperlink{structmas_1_1_area_population_info_afdc91af5b79e73a28ec25ac888a7887c}{Decrement\-Time} (int \&y, int \&s)
+\item 
+void \hyperlink{structmas_1_1_area_population_info_ad1230e6f6231c80999e505cc155871d0}{Fit\-Initial\-F} (size\-\_\-t max\-\_\-iterations=1000, R\-E\-A\-L\-\_\-\-T tolerance=1e-\/5)
+\item 
+void \hyperlink{structmas_1_1_area_population_info_a239841a4fe87172244cbeaf032377b0c}{F\-Calc} ()
+\item 
+void \hyperlink{structmas_1_1_area_population_info_a8f0c8db32396c9195b7d4529e0f9a3f8}{Mortality} (int year, int season)
+\item 
+void \hyperlink{structmas_1_1_area_population_info_af44665ba8836483729f075ef6ae6a319}{Fecundity} (int year, int season)
+\item 
+void \hyperlink{structmas_1_1_area_population_info_a0a8a880f6240760dd7f09e59d3ff85db}{Recruitment} (int year, int season)
+\item 
+void \hyperlink{structmas_1_1_area_population_info_a0f622a53062680ea05910957df677c49}{Numbers\-At\-Age} (int year, int season)
+\item 
+void \hyperlink{structmas_1_1_area_population_info_a16235cc8c7e6d08f4b3581c49e07eeba}{Numbers\-At\-Age\-End\-Year\-Plus\-One} ()
+\item 
+void \hyperlink{structmas_1_1_area_population_info_a493690d2feaebb0a0756181d72ac1db4}{Spawning\-Biomass} (int year, int season)
+\item 
+void \hyperlink{structmas_1_1_area_population_info_a44c2cff8a28b114f441cc1b421d13ba2}{Catch\-At\-Age} (int year, int season)
+\item 
+void \hyperlink{structmas_1_1_area_population_info_a2ee688f3fbe309d5be814eee7866a131}{Survey\-Numbers\-At\-Age} (int year, int season)
+\item 
+void \hyperlink{structmas_1_1_area_population_info_a9313eb325ac90089d3864766489dfdf8}{Push\-To\-Area} ()
+\item 
+void \hyperlink{structmas_1_1_area_population_info_afe6a1961af7bee73fb0b660c5f3ac358}{Push\-Numbers\-To\-Fleet} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{structmas_1_1_area_population_info_a1794b6f07e5bd538fdce710d62617f71}{id}
+\item 
+int \hyperlink{structmas_1_1_area_population_info_a718466a245393c1fb6b8ebd03ef346ee}{uid} = -\/9999
+\item 
+\hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} \hyperlink{structmas_1_1_area_population_info_aa8014e9618bcf75fdf503c0d8983590b}{spawning\-\_\-season\-\_\-offset} = .\-25
+\item 
+int \hyperlink{structmas_1_1_area_population_info_a777033e8de0e61461394edc007a12e90}{spawning\-\_\-season} = 1
+\item 
+\hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} \hyperlink{structmas_1_1_area_population_info_a686e5f2a86446de54fa3aa3cd0aecba5}{catch\-\_\-fraction\-\_\-of\-\_\-year} = .\-5
+\item 
+\hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} \hyperlink{structmas_1_1_area_population_info_a770e532e8ac9f51d0fb6c43dd16a250a}{survey\-\_\-fraction\-\_\-of\-\_\-year} = .\-75
+\item 
+\hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} \hyperlink{structmas_1_1_area_population_info_a57d3f8bab19c26fb9e981afcdb80fb4f}{kg\-\_\-to\-\_\-tonnes} = 1000.\-0
+\item 
+\hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} \hyperlink{structmas_1_1_area_population_info_aade6418ce6dcfc635ad230e813ff8165}{A} = 0.\-000025
+\item 
+\hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} \hyperlink{structmas_1_1_area_population_info_a82cc0a8d9e86bd5b6e6152b66601ad88}{B} = 3.\-0
+\item 
+bool \hyperlink{structmas_1_1_area_population_info_a59115f3aefbc75978d3f83911119cbaa}{males} = true
+\item 
+\hyperlink{namespacemas_a177aaabcef4ec0c3f390a7c9f6ad563b}{mas\-::\-Fish\-Sex\-Type} \hyperlink{structmas_1_1_area_population_info_a4eb0872d4ac95ec63d9134f5bc0fd29c}{sex}
+\item 
+\hyperlink{classmas_1_1_population}{Population}$<$ R\-E\-A\-L\-\_\-\-T $>$ $\ast$ \hyperlink{structmas_1_1_area_population_info_ad4e0348af8d76c0eb5d7ba8120186f78}{natal\-\_\-population}
+\item 
+bool \hyperlink{structmas_1_1_area_population_info_a9127961ba1b99fbf6f55a00d05eadff4}{natal\-\_\-homing} = false
+\item 
+std\-::shared\-\_\-ptr$<$ \hyperlink{structmas_1_1_area}{Area}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ \hyperlink{structmas_1_1_area_population_info_a6f1983de42fde246cfc0381467ca7213}{area}
+\item 
+std\-::shared\-\_\-ptr$<$ \hyperlink{structmas_1_1_area}{Area}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ \hyperlink{structmas_1_1_area_population_info_a04927ec6ccc6dd7ef32b795c9511f268}{natal\-\_\-area}
+\item 
+std\-::shared\-\_\-ptr$<$ \hyperlink{structmas_1_1_growth_base}{Growth\-Base}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ \hyperlink{structmas_1_1_area_population_info_a1b4170de0de0fb71776f3b4beb6e19a8}{growth\-\_\-model}
+\item 
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_natural_mortality}{mas\-::\-Natural\-Mortality}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ \hyperlink{structmas_1_1_area_population_info_a313b0e5b00579750cebccc55fc177ffa}{natural\-\_\-mortality\-\_\-model}
+\item 
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_recruitment_base}{mas\-::\-Recruitment\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ \hyperlink{structmas_1_1_area_population_info_a59e658dc82c72ae21f3b52d84ad5ec25}{recruitment\-\_\-model}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_recruitment_base}{mas\-::\-Recruitment\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{structmas_1_1_area_population_info_a55b58b150ddfdd74d09247c2537a2d08}{seasonal\-\_\-recruitment\-\_\-models}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_recruitment_base}{mas\-::\-Recruitment\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{structmas_1_1_area_population_info_a1f60363498c8044b38d34519e3a26d6c}{season\-\_\-fishing\-\_\-mortality}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_a4849fa1ac89280ac40ae053fc2c1facf}{ages}
+\item 
+std\-::vector$<$ R\-E\-A\-L\-\_\-\-T $>$ \hyperlink{structmas_1_1_area_population_info_a69512a2ac34572e7c292d2378fe4042d}{maturity}
+\item 
+\hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} \hyperlink{structmas_1_1_area_population_info_acdfe3416f9a818b73fd894371b664c2a}{initial\-F} = static\-\_\-cast$<$R\-E\-A\-L\-\_\-\-T$>$ (0.\-0)
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_aa6937a7e21cc365c77bea5298e745594}{initial\-S}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_aefb43fab9ad2e986901994bb4212ab18}{M}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_a95948eb1ffbe50ce1dd4dd1cb9da292e}{F}
+\item 
+std\-::unordered\-\_\-set$<$ int $>$ \hyperlink{structmas_1_1_area_population_info_ad455e6e80920b7712afeb51d644efde0}{active\-\_\-fleets}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ $>$ \hyperlink{structmas_1_1_area_population_info_a5638df90f97b38acf6c5421a76fa116b}{F\-\_\-at\-\_\-age}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ $>$ \hyperlink{structmas_1_1_area_population_info_aa31c41581f5ce29f5041d104c096407e}{Z\-\_\-at\-\_\-age}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ $>$ \hyperlink{structmas_1_1_area_population_info_a6a1fab6322320fae5353b34c22b710ec}{S\-N\-\_\-at\-\_\-age}
+\item 
+\hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} \hyperlink{structmas_1_1_area_population_info_a945614eeb02706eb328e2b16e49097f2}{R0}
+\item 
+\hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} \hyperlink{structmas_1_1_area_population_info_ad3d38ac9eaa0d47c65aff338751b6246}{h}
+\item 
+\hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} \hyperlink{structmas_1_1_area_population_info_a5f549939ff6cb6558b22a6f24da63556}{S\-B0}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_a15a6fc016fc9c8ec98cf1eaf2e5bde17}{initial\-\_\-numbers}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_ac172313ebaa727bc964575f00effff02}{initial\-\_\-deviations}
+\item 
+int \hyperlink{structmas_1_1_area_population_info_a13a36cb1ecbd6fdcae5959989aeb4da9}{years}
+\item 
+int \hyperlink{structmas_1_1_area_population_info_ac7fc7361c1804c2d24a2c88931c75c0f}{seasons}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_a481004bc1cd53ff327d50aa8058ca34b}{length\-\_\-at\-\_\-season\-\_\-start}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_ae61079bdeee2f985c3ec234a33e7c146}{length\-\_\-at\-\_\-spawning}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_abde813f753a9b255e06476c5d9db5240}{length\-\_\-at\-\_\-catch\-\_\-time}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_ae8102e517c90423dcf087083da3125e5}{length\-\_\-at\-\_\-survey\-\_\-time}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_a3c23c29d9a1521625a0a850e2964d966}{weight\-\_\-at\-\_\-season\-\_\-start}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_a04ce0531dba318eb0da60cc2f5899787}{weight\-\_\-at\-\_\-spawning}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_a9111e0b85aba10c24a77ced73c9726af}{weight\-\_\-at\-\_\-catch\-\_\-time}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_ae5bf4e615534e995e26a1be48c9ace1d}{weight\-\_\-at\-\_\-survey\-\_\-time}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_a61c8acbefc2062274ecf9b4a5acca6d3}{equilibrium\-\_\-to\-\_\-survival\-\_\-at\-\_\-spawning}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_afcb882cbdf32fc615f9f23af09a51af3}{fecundity\-\_\-at\-\_\-age}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_a88242109e6eece96d7612b16aaaad5cd}{spawning\-\_\-biomass}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_ac5d5a79a364772e7a089e4ee6c2d07d8}{imigrants}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_a53541078254449fb756b436519339f57}{redistributed\-\_\-recruits}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_aa1d1148625eac638e680972d69d8cc46}{emigrants}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_acfb334a8301d5f2ecbf71d60c81f25c8}{growth}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_a9e811bb777f1568893088289284399de}{recruitment}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_a50ceeafa603d18d211caec81d5ecf260}{abundance}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_a5eedff2d62eea8538560489f556abbc6}{Z}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_a243e378f215ec809ae0448004a1bd299}{S}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_a3e1b6deaa2b9795de4dcd18c9cfe1efa}{S\-N}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_a4244c6789b2e4d8de445344523c12bf5}{S\-N\-\_\-\-Biomass}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_a165249a99c59b7544c773822c73f98ab}{N}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_a864fe1c9aabb8e902c54b8947e4d2d06}{C}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_aaee654771bcfe566f6705a5bbffea906}{C\-\_\-\-Biomass}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_ab421644219439711d69400b0d3ed8917}{expected\-\_\-\-N}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{variable} $>$ \hyperlink{structmas_1_1_area_population_info_a52e46740a74a71eb75083b35b1e8cd53}{N\-\_\-proj}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static uint32\-\_\-t \hyperlink{structmas_1_1_area_population_info_af68d37d923cc8de6d425900490f6e105}{length\-\_\-weight\-\_\-key\-\_\-carryout} = 10
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$class R\-E\-A\-L\-\_\-\-T$>$struct mas\-::\-Area\-Population\-Info$<$ R\-E\-A\-L\-\_\-\-T $>$}
+
+Runtime calculated information for a population in a specific area, by sex. 
+
+Definition at line 46 of file Harvest\-Control\-Rule.\-hpp.
+
+
+
+\subsection{Member Typedef Documentation}
+\hypertarget{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!variable@{variable}}
+\index{variable@{variable}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{variable}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ typedef {\bf mas\-::\-Variable\-Trait}$<$R\-E\-A\-L\-\_\-\-T$>$\-::{\bf variable} {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf variable}}}\label{structmas_1_1_area_population_info_a154b6c5cf71d1241e90b0f0173dbe32c}
+
+
+Definition at line 43 of file Population.\-hpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{structmas_1_1_area_population_info_a44c2cff8a28b114f441cc1b421d13ba2}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!Catch\-At\-Age@{Catch\-At\-Age}}
+\index{Catch\-At\-Age@{Catch\-At\-Age}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{Catch\-At\-Age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Catch\-At\-Age (
+\begin{DoxyParamCaption}
+\item[{int}]{year, }
+\item[{int}]{season}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_population_info_a44c2cff8a28b114f441cc1b421d13ba2}
+Evaluates catch at age for all ages and season
+
+
+\begin{DoxyParams}{Parameters}
+{\em year} & \\
+\hline
+{\em season} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 761 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_afdc91af5b79e73a28ec25ac888a7887c}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!Decrement\-Time@{Decrement\-Time}}
+\index{Decrement\-Time@{Decrement\-Time}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{Decrement\-Time}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Decrement\-Time (
+\begin{DoxyParamCaption}
+\item[{int \&}]{y, }
+\item[{int \&}]{s}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_population_info_afdc91af5b79e73a28ec25ac888a7887c}
+
+
+Definition at line 366 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a239841a4fe87172244cbeaf032377b0c}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!F\-Calc@{F\-Calc}}
+\index{F\-Calc@{F\-Calc}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{F\-Calc}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::F\-Calc (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_population_info_a239841a4fe87172244cbeaf032377b0c}
+Calculate the F required to harvest the observed catch biomass by 1 fleet in one time period (year) in 1 area with 1 population using bisection search 
+
+Definition at line 505 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_af44665ba8836483729f075ef6ae6a319}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!Fecundity@{Fecundity}}
+\index{Fecundity@{Fecundity}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{Fecundity}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Fecundity (
+\begin{DoxyParamCaption}
+\item[{int}]{year, }
+\item[{int}]{season}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_population_info_af44665ba8836483729f075ef6ae6a319}
+Evaluates fecundity for all ages in a year and season.
+
+
+\begin{DoxyParams}{Parameters}
+{\em year} & \\
+\hline
+{\em season} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 623 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_ad1230e6f6231c80999e505cc155871d0}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!Fit\-Initial\-F@{Fit\-Initial\-F}}
+\index{Fit\-Initial\-F@{Fit\-Initial\-F}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{Fit\-Initial\-F}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Fit\-Initial\-F (
+\begin{DoxyParamCaption}
+\item[{size\-\_\-t}]{max\-\_\-iterations = {\ttfamily 1000}, }
+\item[{R\-E\-A\-L\-\_\-\-T}]{tolerance = {\ttfamily 1e-\/5}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_population_info_ad1230e6f6231c80999e505cc155871d0}
+Evaluates growth for all ages in a year and season.
+
+
+\begin{DoxyParams}{Parameters}
+{\em year} & \\
+\hline
+{\em season} & Calculate the F required to harvest the observed catch biomass by 1 fleet in one time period (year) in 1 area with 1 population using bisection search \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 440 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a402454ad4cdb27bca009ed6849480493}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!Increment\-Time@{Increment\-Time}}
+\index{Increment\-Time@{Increment\-Time}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{Increment\-Time}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Increment\-Time (
+\begin{DoxyParamCaption}
+\item[{int \&}]{y, }
+\item[{int \&}]{s}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_population_info_a402454ad4cdb27bca009ed6849480493}
+
+
+Definition at line 357 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a893f8e2939dd83a2ab8e465b9706b2d7}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{Initialize}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Initialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_population_info_a893f8e2939dd83a2ab8e465b9706b2d7}
+
+
+Definition at line 134 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a6eaca87c03aa609ea7bbf929471e0c4d}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!Initialize\-M@{Initialize\-M}}
+\index{Initialize\-M@{Initialize\-M}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{Initialize\-M}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Initialize\-M (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_population_info_a6eaca87c03aa609ea7bbf929471e0c4d}
+
+
+Definition at line 299 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a9140eb45a3f5c805fe910becc071b7c1}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!Initial\-Numbers@{Initial\-Numbers}}
+\index{Initial\-Numbers@{Initial\-Numbers}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{Initial\-Numbers}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf Initial\-Numbers} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_population_info_a9140eb45a3f5c805fe910becc071b7c1}
+
+
+Definition at line 305 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a8f0c8db32396c9195b7d4529e0f9a3f8}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!Mortality@{Mortality}}
+\index{Mortality@{Mortality}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{Mortality}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Mortality (
+\begin{DoxyParamCaption}
+\item[{int}]{year, }
+\item[{int}]{season}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_population_info_a8f0c8db32396c9195b7d4529e0f9a3f8}
+Evaluates mortality for all ages in a year and season. 
+\begin{DoxyParams}{Parameters}
+{\em year} & \\
+\hline
+{\em season} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 595 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a0f622a53062680ea05910957df677c49}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!Numbers\-At\-Age@{Numbers\-At\-Age}}
+\index{Numbers\-At\-Age@{Numbers\-At\-Age}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{Numbers\-At\-Age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Numbers\-At\-Age (
+\begin{DoxyParamCaption}
+\item[{int}]{year, }
+\item[{int}]{season}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_population_info_a0f622a53062680ea05910957df677c49}
+Evaluates numbers at age for all ages in a year and season. N\-O M\-O\-V\-E\-M\-E\-N\-T I\-N H\-E\-R\-E
+
+
+\begin{DoxyParams}{Parameters}
+{\em year} & \\
+\hline
+{\em season} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 673 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a16235cc8c7e6d08f4b3581c49e07eeba}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!Numbers\-At\-Age\-End\-Year\-Plus\-One@{Numbers\-At\-Age\-End\-Year\-Plus\-One}}
+\index{Numbers\-At\-Age\-End\-Year\-Plus\-One@{Numbers\-At\-Age\-End\-Year\-Plus\-One}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{Numbers\-At\-Age\-End\-Year\-Plus\-One}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Numbers\-At\-Age\-End\-Year\-Plus\-One (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_population_info_a16235cc8c7e6d08f4b3581c49e07eeba}
+Evaluates numbers at age for all ages at the beginning of year 'year' plus one for projections N\-O M\-O\-V\-E\-M\-E\-N\-T I\-N H\-E\-R\-E
+
+
+\begin{DoxyParams}{Parameters}
+{\em year} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 708 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_afe6a1961af7bee73fb0b660c5f3ac358}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!Push\-Numbers\-To\-Fleet@{Push\-Numbers\-To\-Fleet}}
+\index{Push\-Numbers\-To\-Fleet@{Push\-Numbers\-To\-Fleet}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{Push\-Numbers\-To\-Fleet}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Push\-Numbers\-To\-Fleet (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_population_info_afe6a1961af7bee73fb0b660c5f3ac358}
+
+
+Definition at line 857 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a9313eb325ac90089d3864766489dfdf8}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!Push\-To\-Area@{Push\-To\-Area}}
+\index{Push\-To\-Area@{Push\-To\-Area}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{Push\-To\-Area}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Push\-To\-Area (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_population_info_a9313eb325ac90089d3864766489dfdf8}
+
+
+Definition at line 847 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a0a8a880f6240760dd7f09e59d3ff85db}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!Recruitment@{Recruitment}}
+\index{Recruitment@{Recruitment}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{Recruitment}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Recruitment (
+\begin{DoxyParamCaption}
+\item[{int}]{year, }
+\item[{int}]{season}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_population_info_a0a8a880f6240760dd7f09e59d3ff85db}
+Evaluates spawn and recruitment for all ages in a year and season.
+
+
+\begin{DoxyParams}{Parameters}
+{\em year} & \\
+\hline
+{\em season} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 637 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_afda3030fd614e624940e7f7af8635743}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!Reset@{Reset}}
+\index{Reset@{Reset}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{Reset}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Reset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_population_info_afda3030fd614e624940e7f7af8635743}
+
+
+Definition at line 200 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a493690d2feaebb0a0756181d72ac1db4}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!Spawning\-Biomass@{Spawning\-Biomass}}
+\index{Spawning\-Biomass@{Spawning\-Biomass}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{Spawning\-Biomass}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Spawning\-Biomass (
+\begin{DoxyParamCaption}
+\item[{int}]{year, }
+\item[{int}]{season}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_population_info_a493690d2feaebb0a0756181d72ac1db4}
+Evaluates female spawning biomass for all ages in a year and season. N\-O\-T\-E\-: this needs to be rewritten to be calculated for females only and the values shared with males
+
+
+\begin{DoxyParams}{Parameters}
+{\em year} & \\
+\hline
+{\em season} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 740 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a2ee688f3fbe309d5be814eee7866a131}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!Survey\-Numbers\-At\-Age@{Survey\-Numbers\-At\-Age}}
+\index{Survey\-Numbers\-At\-Age@{Survey\-Numbers\-At\-Age}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{Survey\-Numbers\-At\-Age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Survey\-Numbers\-At\-Age (
+\begin{DoxyParamCaption}
+\item[{int}]{year, }
+\item[{int}]{season}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_population_info_a2ee688f3fbe309d5be814eee7866a131}
+Evaluates survey numbers at age for all ages and season 
+\begin{DoxyParams}{Parameters}
+{\em year} & \\
+\hline
+{\em season} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 808 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a6a0103263d4bc2a959383a418b8f85f0}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!Unfished\-Equil\-Spawning\-Biomass@{Unfished\-Equil\-Spawning\-Biomass}}
+\index{Unfished\-Equil\-Spawning\-Biomass@{Unfished\-Equil\-Spawning\-Biomass}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{Unfished\-Equil\-Spawning\-Biomass}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Unfished\-Equil\-Spawning\-Biomass (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_population_info_a6a0103263d4bc2a959383a418b8f85f0}
+
+
+Definition at line 327 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a3f470932353ccf59f5878b495c3a96e3}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!Weight\-At\-Age@{Weight\-At\-Age}}
+\index{Weight\-At\-Age@{Weight\-At\-Age}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{Weight\-At\-Age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Weight\-At\-Age (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_area_population_info_a3f470932353ccf59f5878b495c3a96e3}
+Evaluates length at age and weight at age
+
+time of spawning, peak fishing, and survey could differ across areas for a population 
+
+Definition at line 281 of file Population.\-hpp.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structmas_1_1_area_population_info_aade6418ce6dcfc635ad230e813ff8165}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!A@{A}}
+\index{A@{A}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{A}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ {\bf variable} {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::A = 0.\-000025}}\label{structmas_1_1_area_population_info_aade6418ce6dcfc635ad230e813ff8165}
+
+
+Definition at line 52 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a50ceeafa603d18d211caec81d5ecf260}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!abundance@{abundance}}
+\index{abundance@{abundance}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{abundance}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::abundance}}\label{structmas_1_1_area_population_info_a50ceeafa603d18d211caec81d5ecf260}
+
+
+Definition at line 119 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_ad455e6e80920b7712afeb51d644efde0}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!active\-\_\-fleets@{active\-\_\-fleets}}
+\index{active\-\_\-fleets@{active\-\_\-fleets}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{active\-\_\-fleets}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-set$<$int$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::active\-\_\-fleets}}\label{structmas_1_1_area_population_info_ad455e6e80920b7712afeb51d644efde0}
+
+
+Definition at line 82 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a4849fa1ac89280ac40ae053fc2c1facf}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!ages@{ages}}
+\index{ages@{ages}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{ages}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::ages}}\label{structmas_1_1_area_population_info_a4849fa1ac89280ac40ae053fc2c1facf}
+
+
+Definition at line 73 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a6f1983de42fde246cfc0381467ca7213}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!area@{area}}
+\index{area@{area}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{area}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::shared\-\_\-ptr$<${\bf Area}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::area}}\label{structmas_1_1_area_population_info_a6f1983de42fde246cfc0381467ca7213}
+
+
+Definition at line 61 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a82cc0a8d9e86bd5b6e6152b66601ad88}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!B@{B}}
+\index{B@{B}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{B}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ {\bf variable} {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::B = 3.\-0}}\label{structmas_1_1_area_population_info_a82cc0a8d9e86bd5b6e6152b66601ad88}
+
+
+Definition at line 53 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a864fe1c9aabb8e902c54b8947e4d2d06}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!C@{C}}
+\index{C@{C}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{C}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::C}}\label{structmas_1_1_area_population_info_a864fe1c9aabb8e902c54b8947e4d2d06}
+
+
+Definition at line 126 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_aaee654771bcfe566f6705a5bbffea906}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!C\-\_\-\-Biomass@{C\-\_\-\-Biomass}}
+\index{C\-\_\-\-Biomass@{C\-\_\-\-Biomass}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{C\-\_\-\-Biomass}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::C\-\_\-\-Biomass}}\label{structmas_1_1_area_population_info_aaee654771bcfe566f6705a5bbffea906}
+
+
+Definition at line 127 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a686e5f2a86446de54fa3aa3cd0aecba5}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!catch\-\_\-fraction\-\_\-of\-\_\-year@{catch\-\_\-fraction\-\_\-of\-\_\-year}}
+\index{catch\-\_\-fraction\-\_\-of\-\_\-year@{catch\-\_\-fraction\-\_\-of\-\_\-year}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{catch\-\_\-fraction\-\_\-of\-\_\-year}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ {\bf variable} {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-fraction\-\_\-of\-\_\-year = .\-5}}\label{structmas_1_1_area_population_info_a686e5f2a86446de54fa3aa3cd0aecba5}
+
+
+Definition at line 49 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_aa1d1148625eac638e680972d69d8cc46}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!emigrants@{emigrants}}
+\index{emigrants@{emigrants}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{emigrants}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::emigrants}}\label{structmas_1_1_area_population_info_aa1d1148625eac638e680972d69d8cc46}
+
+
+Definition at line 116 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a61c8acbefc2062274ecf9b4a5acca6d3}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!equilibrium\-\_\-to\-\_\-survival\-\_\-at\-\_\-spawning@{equilibrium\-\_\-to\-\_\-survival\-\_\-at\-\_\-spawning}}
+\index{equilibrium\-\_\-to\-\_\-survival\-\_\-at\-\_\-spawning@{equilibrium\-\_\-to\-\_\-survival\-\_\-at\-\_\-spawning}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{equilibrium\-\_\-to\-\_\-survival\-\_\-at\-\_\-spawning}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::equilibrium\-\_\-to\-\_\-survival\-\_\-at\-\_\-spawning}}\label{structmas_1_1_area_population_info_a61c8acbefc2062274ecf9b4a5acca6d3}
+
+
+Definition at line 110 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_ab421644219439711d69400b0d3ed8917}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!expected\-\_\-\-N@{expected\-\_\-\-N}}
+\index{expected\-\_\-\-N@{expected\-\_\-\-N}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{expected\-\_\-\-N}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::expected\-\_\-\-N}}\label{structmas_1_1_area_population_info_ab421644219439711d69400b0d3ed8917}
+
+
+Definition at line 128 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a95948eb1ffbe50ce1dd4dd1cb9da292e}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!F@{F}}
+\index{F@{F}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{F}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::F}}\label{structmas_1_1_area_population_info_a95948eb1ffbe50ce1dd4dd1cb9da292e}
+
+
+Definition at line 81 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a5638df90f97b38acf6c5421a76fa116b}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!F\-\_\-at\-\_\-age@{F\-\_\-at\-\_\-age}}
+\index{F\-\_\-at\-\_\-age@{F\-\_\-at\-\_\-age}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{F\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::vector$<${\bf variable}$>$ $>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::F\-\_\-at\-\_\-age}}\label{structmas_1_1_area_population_info_a5638df90f97b38acf6c5421a76fa116b}
+
+
+Definition at line 83 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_afcb882cbdf32fc615f9f23af09a51af3}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!fecundity\-\_\-at\-\_\-age@{fecundity\-\_\-at\-\_\-age}}
+\index{fecundity\-\_\-at\-\_\-age@{fecundity\-\_\-at\-\_\-age}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{fecundity\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::fecundity\-\_\-at\-\_\-age}}\label{structmas_1_1_area_population_info_afcb882cbdf32fc615f9f23af09a51af3}
+
+
+Definition at line 111 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_acfb334a8301d5f2ecbf71d60c81f25c8}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!growth@{growth}}
+\index{growth@{growth}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{growth}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::growth}}\label{structmas_1_1_area_population_info_acfb334a8301d5f2ecbf71d60c81f25c8}
+
+
+Definition at line 117 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a1b4170de0de0fb71776f3b4beb6e19a8}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!growth\-\_\-model@{growth\-\_\-model}}
+\index{growth\-\_\-model@{growth\-\_\-model}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{growth\-\_\-model}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::shared\-\_\-ptr$<${\bf Growth\-Base}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::growth\-\_\-model}}\label{structmas_1_1_area_population_info_a1b4170de0de0fb71776f3b4beb6e19a8}
+
+
+Definition at line 63 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_ad3d38ac9eaa0d47c65aff338751b6246}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!h@{h}}
+\index{h@{h}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{h}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ {\bf variable} {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::h}}\label{structmas_1_1_area_population_info_ad3d38ac9eaa0d47c65aff338751b6246}
+
+
+Definition at line 89 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a1794b6f07e5bd538fdce710d62617f71}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!id@{id}}
+\index{id@{id}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{id}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ int {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::id}}\label{structmas_1_1_area_population_info_a1794b6f07e5bd538fdce710d62617f71}
+
+
+Definition at line 44 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_ac5d5a79a364772e7a089e4ee6c2d07d8}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!imigrants@{imigrants}}
+\index{imigrants@{imigrants}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{imigrants}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::imigrants}}\label{structmas_1_1_area_population_info_ac5d5a79a364772e7a089e4ee6c2d07d8}
+
+
+Definition at line 114 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_ac172313ebaa727bc964575f00effff02}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!initial\-\_\-deviations@{initial\-\_\-deviations}}
+\index{initial\-\_\-deviations@{initial\-\_\-deviations}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{initial\-\_\-deviations}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::initial\-\_\-deviations}}\label{structmas_1_1_area_population_info_ac172313ebaa727bc964575f00effff02}
+
+
+Definition at line 94 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a15a6fc016fc9c8ec98cf1eaf2e5bde17}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!initial\-\_\-numbers@{initial\-\_\-numbers}}
+\index{initial\-\_\-numbers@{initial\-\_\-numbers}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{initial\-\_\-numbers}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::initial\-\_\-numbers}}\label{structmas_1_1_area_population_info_a15a6fc016fc9c8ec98cf1eaf2e5bde17}
+
+
+Definition at line 93 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_acdfe3416f9a818b73fd894371b664c2a}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!initial\-F@{initial\-F}}
+\index{initial\-F@{initial\-F}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{initial\-F}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ {\bf variable} {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::initial\-F = static\-\_\-cast$<$R\-E\-A\-L\-\_\-\-T$>$ (0.\-0)}}\label{structmas_1_1_area_population_info_acdfe3416f9a818b73fd894371b664c2a}
+
+
+Definition at line 78 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_aa6937a7e21cc365c77bea5298e745594}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!initial\-S@{initial\-S}}
+\index{initial\-S@{initial\-S}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{initial\-S}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::initial\-S}}\label{structmas_1_1_area_population_info_aa6937a7e21cc365c77bea5298e745594}
+
+
+Definition at line 79 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a57d3f8bab19c26fb9e981afcdb80fb4f}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!kg\-\_\-to\-\_\-tonnes@{kg\-\_\-to\-\_\-tonnes}}
+\index{kg\-\_\-to\-\_\-tonnes@{kg\-\_\-to\-\_\-tonnes}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{kg\-\_\-to\-\_\-tonnes}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ {\bf variable} {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::kg\-\_\-to\-\_\-tonnes = 1000.\-0}}\label{structmas_1_1_area_population_info_a57d3f8bab19c26fb9e981afcdb80fb4f}
+
+
+Definition at line 51 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_abde813f753a9b255e06476c5d9db5240}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!length\-\_\-at\-\_\-catch\-\_\-time@{length\-\_\-at\-\_\-catch\-\_\-time}}
+\index{length\-\_\-at\-\_\-catch\-\_\-time@{length\-\_\-at\-\_\-catch\-\_\-time}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{length\-\_\-at\-\_\-catch\-\_\-time}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::length\-\_\-at\-\_\-catch\-\_\-time}}\label{structmas_1_1_area_population_info_abde813f753a9b255e06476c5d9db5240}
+
+
+Definition at line 102 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a481004bc1cd53ff327d50aa8058ca34b}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!length\-\_\-at\-\_\-season\-\_\-start@{length\-\_\-at\-\_\-season\-\_\-start}}
+\index{length\-\_\-at\-\_\-season\-\_\-start@{length\-\_\-at\-\_\-season\-\_\-start}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{length\-\_\-at\-\_\-season\-\_\-start}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::length\-\_\-at\-\_\-season\-\_\-start}}\label{structmas_1_1_area_population_info_a481004bc1cd53ff327d50aa8058ca34b}
+
+
+Definition at line 100 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_ae61079bdeee2f985c3ec234a33e7c146}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!length\-\_\-at\-\_\-spawning@{length\-\_\-at\-\_\-spawning}}
+\index{length\-\_\-at\-\_\-spawning@{length\-\_\-at\-\_\-spawning}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{length\-\_\-at\-\_\-spawning}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::length\-\_\-at\-\_\-spawning}}\label{structmas_1_1_area_population_info_ae61079bdeee2f985c3ec234a33e7c146}
+
+
+Definition at line 101 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_ae8102e517c90423dcf087083da3125e5}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!length\-\_\-at\-\_\-survey\-\_\-time@{length\-\_\-at\-\_\-survey\-\_\-time}}
+\index{length\-\_\-at\-\_\-survey\-\_\-time@{length\-\_\-at\-\_\-survey\-\_\-time}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{length\-\_\-at\-\_\-survey\-\_\-time}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::length\-\_\-at\-\_\-survey\-\_\-time}}\label{structmas_1_1_area_population_info_ae8102e517c90423dcf087083da3125e5}
+
+
+Definition at line 103 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_af68d37d923cc8de6d425900490f6e105}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!length\-\_\-weight\-\_\-key\-\_\-carryout@{length\-\_\-weight\-\_\-key\-\_\-carryout}}
+\index{length\-\_\-weight\-\_\-key\-\_\-carryout@{length\-\_\-weight\-\_\-key\-\_\-carryout}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{length\-\_\-weight\-\_\-key\-\_\-carryout}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ uint32\-\_\-t {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::length\-\_\-weight\-\_\-key\-\_\-carryout = 10\hspace{0.3cm}{\ttfamily [static]}}}\label{structmas_1_1_area_population_info_af68d37d923cc8de6d425900490f6e105}
+
+
+Definition at line 132 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_aefb43fab9ad2e986901994bb4212ab18}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!M@{M}}
+\index{M@{M}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{M}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::M}}\label{structmas_1_1_area_population_info_aefb43fab9ad2e986901994bb4212ab18}
+
+
+Definition at line 80 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a59115f3aefbc75978d3f83911119cbaa}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!males@{males}}
+\index{males@{males}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ bool {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::males = true}}\label{structmas_1_1_area_population_info_a59115f3aefbc75978d3f83911119cbaa}
+
+
+Definition at line 55 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a69512a2ac34572e7c292d2378fe4042d}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!maturity@{maturity}}
+\index{maturity@{maturity}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{maturity}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<$R\-E\-A\-L\-\_\-\-T$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::maturity}}\label{structmas_1_1_area_population_info_a69512a2ac34572e7c292d2378fe4042d}
+
+
+Definition at line 74 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a165249a99c59b7544c773822c73f98ab}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!N@{N}}
+\index{N@{N}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{N}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::N}}\label{structmas_1_1_area_population_info_a165249a99c59b7544c773822c73f98ab}
+
+
+Definition at line 125 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a52e46740a74a71eb75083b35b1e8cd53}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!N\-\_\-proj@{N\-\_\-proj}}
+\index{N\-\_\-proj@{N\-\_\-proj}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{N\-\_\-proj}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::N\-\_\-proj}}\label{structmas_1_1_area_population_info_a52e46740a74a71eb75083b35b1e8cd53}
+
+
+Definition at line 129 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a04927ec6ccc6dd7ef32b795c9511f268}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!natal\-\_\-area@{natal\-\_\-area}}
+\index{natal\-\_\-area@{natal\-\_\-area}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{natal\-\_\-area}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::shared\-\_\-ptr$<${\bf Area}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::natal\-\_\-area}}\label{structmas_1_1_area_population_info_a04927ec6ccc6dd7ef32b795c9511f268}
+
+
+Definition at line 62 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a9127961ba1b99fbf6f55a00d05eadff4}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!natal\-\_\-homing@{natal\-\_\-homing}}
+\index{natal\-\_\-homing@{natal\-\_\-homing}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{natal\-\_\-homing}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ bool {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::natal\-\_\-homing = false}}\label{structmas_1_1_area_population_info_a9127961ba1b99fbf6f55a00d05eadff4}
+
+
+Definition at line 60 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_ad4e0348af8d76c0eb5d7ba8120186f78}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!natal\-\_\-population@{natal\-\_\-population}}
+\index{natal\-\_\-population@{natal\-\_\-population}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{natal\-\_\-population}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ {\bf Population}$<$R\-E\-A\-L\-\_\-\-T$>$$\ast$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::natal\-\_\-population}}\label{structmas_1_1_area_population_info_ad4e0348af8d76c0eb5d7ba8120186f78}
+
+
+Definition at line 58 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a313b0e5b00579750cebccc55fc177ffa}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!natural\-\_\-mortality\-\_\-model@{natural\-\_\-mortality\-\_\-model}}
+\index{natural\-\_\-mortality\-\_\-model@{natural\-\_\-mortality\-\_\-model}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{natural\-\_\-mortality\-\_\-model}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::shared\-\_\-ptr$<${\bf mas\-::\-Natural\-Mortality}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::natural\-\_\-mortality\-\_\-model}}\label{structmas_1_1_area_population_info_a313b0e5b00579750cebccc55fc177ffa}
+
+
+Definition at line 65 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a945614eeb02706eb328e2b16e49097f2}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!R0@{R0}}
+\index{R0@{R0}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{R0}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ {\bf variable} {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::R0}}\label{structmas_1_1_area_population_info_a945614eeb02706eb328e2b16e49097f2}
+
+
+Definition at line 88 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a9e811bb777f1568893088289284399de}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!recruitment@{recruitment}}
+\index{recruitment@{recruitment}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{recruitment}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::recruitment}}\label{structmas_1_1_area_population_info_a9e811bb777f1568893088289284399de}
+
+
+Definition at line 118 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a59e658dc82c72ae21f3b52d84ad5ec25}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!recruitment\-\_\-model@{recruitment\-\_\-model}}
+\index{recruitment\-\_\-model@{recruitment\-\_\-model}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{recruitment\-\_\-model}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::shared\-\_\-ptr$<${\bf mas\-::\-Recruitment\-Base}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::recruitment\-\_\-model}}\label{structmas_1_1_area_population_info_a59e658dc82c72ae21f3b52d84ad5ec25}
+
+
+Definition at line 66 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a53541078254449fb756b436519339f57}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!redistributed\-\_\-recruits@{redistributed\-\_\-recruits}}
+\index{redistributed\-\_\-recruits@{redistributed\-\_\-recruits}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{redistributed\-\_\-recruits}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::redistributed\-\_\-recruits}}\label{structmas_1_1_area_population_info_a53541078254449fb756b436519339f57}
+
+
+Definition at line 115 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a243e378f215ec809ae0448004a1bd299}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!S@{S}}
+\index{S@{S}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{S}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::S}}\label{structmas_1_1_area_population_info_a243e378f215ec809ae0448004a1bd299}
+
+
+Definition at line 122 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a5f549939ff6cb6558b22a6f24da63556}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!S\-B0@{S\-B0}}
+\index{S\-B0@{S\-B0}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{S\-B0}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ {\bf variable} {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::S\-B0}}\label{structmas_1_1_area_population_info_a5f549939ff6cb6558b22a6f24da63556}
+
+
+Definition at line 91 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a1f60363498c8044b38d34519e3a26d6c}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!season\-\_\-fishing\-\_\-mortality@{season\-\_\-fishing\-\_\-mortality}}
+\index{season\-\_\-fishing\-\_\-mortality@{season\-\_\-fishing\-\_\-mortality}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{season\-\_\-fishing\-\_\-mortality}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Recruitment\-Base}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::season\-\_\-fishing\-\_\-mortality}}\label{structmas_1_1_area_population_info_a1f60363498c8044b38d34519e3a26d6c}
+
+
+Definition at line 68 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a55b58b150ddfdd74d09247c2537a2d08}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!seasonal\-\_\-recruitment\-\_\-models@{seasonal\-\_\-recruitment\-\_\-models}}
+\index{seasonal\-\_\-recruitment\-\_\-models@{seasonal\-\_\-recruitment\-\_\-models}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{seasonal\-\_\-recruitment\-\_\-models}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Recruitment\-Base}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::seasonal\-\_\-recruitment\-\_\-models}}\label{structmas_1_1_area_population_info_a55b58b150ddfdd74d09247c2537a2d08}
+
+
+Definition at line 67 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_ac7fc7361c1804c2d24a2c88931c75c0f}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!seasons@{seasons}}
+\index{seasons@{seasons}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{seasons}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ int {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::seasons}}\label{structmas_1_1_area_population_info_ac7fc7361c1804c2d24a2c88931c75c0f}
+
+
+Definition at line 98 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a4eb0872d4ac95ec63d9134f5bc0fd29c}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!sex@{sex}}
+\index{sex@{sex}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{sex}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ {\bf mas\-::\-Fish\-Sex\-Type} {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::sex}}\label{structmas_1_1_area_population_info_a4eb0872d4ac95ec63d9134f5bc0fd29c}
+
+
+Definition at line 56 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a3e1b6deaa2b9795de4dcd18c9cfe1efa}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!S\-N@{S\-N}}
+\index{S\-N@{S\-N}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{S\-N}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::S\-N}}\label{structmas_1_1_area_population_info_a3e1b6deaa2b9795de4dcd18c9cfe1efa}
+
+
+Definition at line 123 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a6a1fab6322320fae5353b34c22b710ec}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!S\-N\-\_\-at\-\_\-age@{S\-N\-\_\-at\-\_\-age}}
+\index{S\-N\-\_\-at\-\_\-age@{S\-N\-\_\-at\-\_\-age}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{S\-N\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::vector$<${\bf variable}$>$ $>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::S\-N\-\_\-at\-\_\-age}}\label{structmas_1_1_area_population_info_a6a1fab6322320fae5353b34c22b710ec}
+
+
+Definition at line 85 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a4244c6789b2e4d8de445344523c12bf5}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!S\-N\-\_\-\-Biomass@{S\-N\-\_\-\-Biomass}}
+\index{S\-N\-\_\-\-Biomass@{S\-N\-\_\-\-Biomass}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{S\-N\-\_\-\-Biomass}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::S\-N\-\_\-\-Biomass}}\label{structmas_1_1_area_population_info_a4244c6789b2e4d8de445344523c12bf5}
+
+
+Definition at line 124 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a88242109e6eece96d7612b16aaaad5cd}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!spawning\-\_\-biomass@{spawning\-\_\-biomass}}
+\index{spawning\-\_\-biomass@{spawning\-\_\-biomass}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{spawning\-\_\-biomass}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::spawning\-\_\-biomass}}\label{structmas_1_1_area_population_info_a88242109e6eece96d7612b16aaaad5cd}
+
+
+Definition at line 112 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a777033e8de0e61461394edc007a12e90}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!spawning\-\_\-season@{spawning\-\_\-season}}
+\index{spawning\-\_\-season@{spawning\-\_\-season}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{spawning\-\_\-season}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ int {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::spawning\-\_\-season = 1}}\label{structmas_1_1_area_population_info_a777033e8de0e61461394edc007a12e90}
+
+
+Definition at line 48 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_aa8014e9618bcf75fdf503c0d8983590b}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!spawning\-\_\-season\-\_\-offset@{spawning\-\_\-season\-\_\-offset}}
+\index{spawning\-\_\-season\-\_\-offset@{spawning\-\_\-season\-\_\-offset}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{spawning\-\_\-season\-\_\-offset}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ {\bf variable} {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::spawning\-\_\-season\-\_\-offset = .\-25}}\label{structmas_1_1_area_population_info_aa8014e9618bcf75fdf503c0d8983590b}
+
+
+Definition at line 47 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a770e532e8ac9f51d0fb6c43dd16a250a}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!survey\-\_\-fraction\-\_\-of\-\_\-year@{survey\-\_\-fraction\-\_\-of\-\_\-year}}
+\index{survey\-\_\-fraction\-\_\-of\-\_\-year@{survey\-\_\-fraction\-\_\-of\-\_\-year}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{survey\-\_\-fraction\-\_\-of\-\_\-year}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ {\bf variable} {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-fraction\-\_\-of\-\_\-year = .\-75}}\label{structmas_1_1_area_population_info_a770e532e8ac9f51d0fb6c43dd16a250a}
+
+
+Definition at line 50 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a718466a245393c1fb6b8ebd03ef346ee}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!uid@{uid}}
+\index{uid@{uid}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{uid}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ int {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::uid = -\/9999}}\label{structmas_1_1_area_population_info_a718466a245393c1fb6b8ebd03ef346ee}
+
+
+Definition at line 45 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a9111e0b85aba10c24a77ced73c9726af}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!weight\-\_\-at\-\_\-catch\-\_\-time@{weight\-\_\-at\-\_\-catch\-\_\-time}}
+\index{weight\-\_\-at\-\_\-catch\-\_\-time@{weight\-\_\-at\-\_\-catch\-\_\-time}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{weight\-\_\-at\-\_\-catch\-\_\-time}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::weight\-\_\-at\-\_\-catch\-\_\-time}}\label{structmas_1_1_area_population_info_a9111e0b85aba10c24a77ced73c9726af}
+
+
+Definition at line 107 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a3c23c29d9a1521625a0a850e2964d966}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!weight\-\_\-at\-\_\-season\-\_\-start@{weight\-\_\-at\-\_\-season\-\_\-start}}
+\index{weight\-\_\-at\-\_\-season\-\_\-start@{weight\-\_\-at\-\_\-season\-\_\-start}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{weight\-\_\-at\-\_\-season\-\_\-start}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::weight\-\_\-at\-\_\-season\-\_\-start}}\label{structmas_1_1_area_population_info_a3c23c29d9a1521625a0a850e2964d966}
+
+
+Definition at line 105 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a04ce0531dba318eb0da60cc2f5899787}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!weight\-\_\-at\-\_\-spawning@{weight\-\_\-at\-\_\-spawning}}
+\index{weight\-\_\-at\-\_\-spawning@{weight\-\_\-at\-\_\-spawning}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{weight\-\_\-at\-\_\-spawning}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::weight\-\_\-at\-\_\-spawning}}\label{structmas_1_1_area_population_info_a04ce0531dba318eb0da60cc2f5899787}
+
+
+Definition at line 106 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_ae5bf4e615534e995e26a1be48c9ace1d}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!weight\-\_\-at\-\_\-survey\-\_\-time@{weight\-\_\-at\-\_\-survey\-\_\-time}}
+\index{weight\-\_\-at\-\_\-survey\-\_\-time@{weight\-\_\-at\-\_\-survey\-\_\-time}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{weight\-\_\-at\-\_\-survey\-\_\-time}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::weight\-\_\-at\-\_\-survey\-\_\-time}}\label{structmas_1_1_area_population_info_ae5bf4e615534e995e26a1be48c9ace1d}
+
+
+Definition at line 108 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a13a36cb1ecbd6fdcae5959989aeb4da9}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!years@{years}}
+\index{years@{years}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{years}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ int {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::years}}\label{structmas_1_1_area_population_info_a13a36cb1ecbd6fdcae5959989aeb4da9}
+
+
+Definition at line 97 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_a5eedff2d62eea8538560489f556abbc6}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!Z@{Z}}
+\index{Z@{Z}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{Z}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Z}}\label{structmas_1_1_area_population_info_a5eedff2d62eea8538560489f556abbc6}
+
+
+Definition at line 121 of file Population.\-hpp.
+
+\hypertarget{structmas_1_1_area_population_info_aa31c41581f5ce29f5041d104c096407e}{\index{mas\-::\-Area\-Population\-Info@{mas\-::\-Area\-Population\-Info}!Z\-\_\-at\-\_\-age@{Z\-\_\-at\-\_\-age}}
+\index{Z\-\_\-at\-\_\-age@{Z\-\_\-at\-\_\-age}!mas::AreaPopulationInfo@{mas\-::\-Area\-Population\-Info}}
+\subsubsection[{Z\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::vector$<${\bf variable}$>$ $>$ {\bf mas\-::\-Area\-Population\-Info}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Z\-\_\-at\-\_\-age}}\label{structmas_1_1_area_population_info_aa31c41581f5ce29f5041d104c096407e}
+
+
+Definition at line 84 of file Population.\-hpp.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/home/oppy/\-Net\-Beans\-Projects/mas/\hyperlink{_harvest_control_rule_8hpp}{Harvest\-Control\-Rule.\-hpp}\item 
+/home/oppy/\-Net\-Beans\-Projects/mas/\hyperlink{_population_8hpp}{Population.\-hpp}\end{DoxyCompactItemize}

@@ -1,0 +1,390 @@
+<html>
+<head><b><p style="font-size:xx-large;">Meta-population Assessment System Report</b></p></head>
+<body>
+<b>Study Name:</b> HakeCaseStudy
+<br><b>Analyst:</b> Christine Stawitz
+<br><b>Number of Populations:</b> 1
+<br><b>Number of Areas:</b> 1
+<br>Population Name: population 1<br>Population Id: 1<br>Population Area Info: <br>Population: 1<br>Area: 1<br>Sex: Males
+<br><br><script type = "text/javascript" src = "https://www.gstatic.com/charts/loader.js" > </script> 
+<script type = "text/javascript" >
+google.charts.load('current', {'packages':['line']});
+google.charts.setOnLoadCallback(DrawChart0);
+function DrawChart0(){
+var data = new google.visualization.DataTable();
+data.addColumn('number', 'Age');
+data.addColumn('number', 'Numbers');
+
+data.addRows([[0,1.39284e+06],
+[1,1.23228e+06],
+[2,1.83146e+06],
+[3,554518],
+[4,167143],
+[5,445515],
+[6,344286],
+[7,275385],
+[8,221940],
+[9,180003],
+[10,146551],
+[11,119773],
+[12,98123.8],
+[13,80536.8],
+[14,66278.4],
+[15,411170]]);
+      var options = {
+ chart: {
+title: 'Inital Numbers At Age',
+subtitle: ''
+},hAxis:{title : ''},vAxis:{title : ''},
+ width: 900,
+height: 500
+};
+
+ var chart = new google.charts.Line(document.getElementById('line_0'));
+chart.draw(data, google.charts.Line.convertOptions(options));
+}</script>
+<div id="line_0"></div>
+
+<br><br>Recruitment model: beverton_holt_alt<br>R0	4501855.000000000000000<br>h	0.840000000000000
+<br>SB0	5074.120746029244401<br><script type = "text/javascript" src = "https://www.gstatic.com/charts/loader.js" > </script> 
+<script type = "text/javascript" >
+google.charts.load('current', {'packages':['line']});
+google.charts.setOnLoadCallback(DrawChart1);
+function DrawChart1(){
+var data = new google.visualization.DataTable();
+data.addColumn('number', 'Year');
+data.addColumn('number', 'Recruits');
+
+data.addRows([[0,2.25093e+06],
+[1,1.93525e+07],
+[2,7.16128e+06],
+[3,2.68767e+06],
+[4,1.92532e+06],
+[5,5.8879e+06],
+[6,415648],
+[7,879503],
+[8,1.15209e+06],
+[9,5.94978e+06],
+[10,1.3839e+07],
+[11,4.8316e+06],
+[12,1.20104e+06],
+[13,3.7462e+06],
+[14,931800],
+[15,1.22198e+06],
+[16,286811],
+[17,431105],
+[18,820318],
+[19,1.23672e+06],
+[20,2.27141e+06],
+[21,2.50241e+06],
+[22,5.79676e+06],
+[23,887060],
+[24,478134],
+[25,2.24479e+06],
+[26,4.64026e+06],
+[27,3.6222e+06],
+[28,3.81772e+06],
+[29,536716],
+[30,2.77067e+06],
+[31,555403],
+[32,1.15097e+07],
+[33,1.11618e+06],
+[34,1.55263e+06],
+[35,2.31641e+06],
+[36,1.78402e+06],
+[37,946403],
+[38,596324],
+[39,1.81329e+06],
+[40,701427],
+[41,1.3959e+07],
+[42,1.21113e+07],
+[43,1.81222e+06],
+[44,751752],
+[45,209462],
+[46,393125],
+[47,1.64001e+06],
+[48,1.14542e+06],
+[49,1.04925e+06],
+[50,2.17485e+06],
+[51,1.53216e+06]]);
+      var options = {
+ chart: {
+title: 'Yearly Recruits',
+subtitle: ''
+},hAxis:{title : ''},vAxis:{title : ''},
+ width: 900,
+height: 500
+};
+
+ var chart = new google.charts.Line(document.getElementById('line_1'));
+chart.draw(data, google.charts.Line.convertOptions(options));
+}</script>
+<div id="line_1"></div>
+
+<script type = "text/javascript" src = "https://www.gstatic.com/charts/loader.js" > </script> 
+<script type = "text/javascript" >
+google.charts.load('current', {'packages':['line']});
+google.charts.setOnLoadCallback(DrawChart2);
+function DrawChart2(){
+var data = new google.visualization.DataTable();
+data.addColumn('number', 'Year');
+data.addColumn('number', 'Biomass');
+
+data.addRows([[0,2134.48],
+[1,2320.67],
+[2,2395.73],
+[3,3125.16],
+[4,4239.74],
+[5,4650.99],
+[6,4471.1],
+[7,4389.96],
+[8,4319.59],
+[9,4024.41],
+[10,3668.46],
+[11,3599.96],
+[12,4138.92],
+[13,4799.71],
+[14,4809.58],
+[15,4488.79],
+[16,4189.31],
+[17,3876.4],
+[18,3513.17],
+[19,3126.81],
+[20,2793.95],
+[21,2502.07],
+[22,2288.85],
+[23,2146.61],
+[24,2161.2],
+[25,2214.06],
+[26,2016.01],
+[27,1781.46],
+[28,1810.09],
+[29,1959.9],
+[30,2113.72],
+[31,2063.82],
+[32,1914.55],
+[33,1761.68],
+[34,2055.43],
+[35,2515.85],
+[36,2541.96],
+[37,2402.18],
+[38,2305.19],
+[39,2101.3],
+[40,1823.34],
+[41,1576.85],
+[42,1426.18],
+[43,1848.79],
+[44,2951.93],
+[45,3617.14],
+[46,3454.14],
+[47,3060.7],
+[48,2679.04],
+[49,2409.85],
+[50,2217.24],
+[51,1929.63]]);
+      var options = {
+ chart: {
+title: 'Yearly Spawning Biomass',
+subtitle: ''
+},hAxis:{title : ''},vAxis:{title : ''},
+ width: 900,
+height: 500
+};
+
+ var chart = new google.charts.Line(document.getElementById('line_2'));
+chart.draw(data, google.charts.Line.convertOptions(options));
+}</script>
+<div id="line_2"></div>
+
+<br>Population: 1<br>Area: 1<br>Sex: Females<br><br><script type = "text/javascript" src = "https://www.gstatic.com/charts/loader.js" > </script> 
+<script type = "text/javascript" >
+google.charts.load('current', {'packages':['line']});
+google.charts.setOnLoadCallback(DrawChart3);
+function DrawChart3(){
+var data = new google.visualization.DataTable();
+data.addColumn('number', 'Age');
+data.addColumn('number', 'Numbers');
+
+data.addRows([[0,1.39284e+06],
+[1,1.23228e+06],
+[2,1.83146e+06],
+[3,554518],
+[4,167143],
+[5,445515],
+[6,344286],
+[7,275385],
+[8,221940],
+[9,180003],
+[10,146551],
+[11,119773],
+[12,98123.8],
+[13,80536.8],
+[14,66278.4],
+[15,411170]]);
+      var options = {
+ chart: {
+title: 'Inital Numbers At Age',
+subtitle: ''
+},hAxis:{title : ''},vAxis:{title : ''},
+ width: 900,
+height: 500
+};
+
+ var chart = new google.charts.Line(document.getElementById('line_3'));
+chart.draw(data, google.charts.Line.convertOptions(options));
+}</script>
+<div id="line_3"></div>
+
+<br><br>Recruitment model: beverton_holt_alt<br>R0	4501855.000000000000000<br>h	0.840000000000000
+<br>SB0	5074.120746029244401<br><script type = "text/javascript" src = "https://www.gstatic.com/charts/loader.js" > </script> 
+<script type = "text/javascript" >
+google.charts.load('current', {'packages':['line']});
+google.charts.setOnLoadCallback(DrawChart4);
+function DrawChart4(){
+var data = new google.visualization.DataTable();
+data.addColumn('number', 'Year');
+data.addColumn('number', 'Recruits');
+
+data.addRows([[0,2.25093e+06],
+[1,1.93525e+07],
+[2,7.16128e+06],
+[3,2.68767e+06],
+[4,1.92532e+06],
+[5,5.8879e+06],
+[6,415648],
+[7,879503],
+[8,1.15209e+06],
+[9,5.94978e+06],
+[10,1.3839e+07],
+[11,4.8316e+06],
+[12,1.20104e+06],
+[13,3.7462e+06],
+[14,931800],
+[15,1.22198e+06],
+[16,286811],
+[17,431105],
+[18,820318],
+[19,1.23672e+06],
+[20,2.27141e+06],
+[21,2.50241e+06],
+[22,5.79676e+06],
+[23,887060],
+[24,478134],
+[25,2.24479e+06],
+[26,4.64026e+06],
+[27,3.6222e+06],
+[28,3.81772e+06],
+[29,536716],
+[30,2.77067e+06],
+[31,555403],
+[32,1.15097e+07],
+[33,1.11618e+06],
+[34,1.55263e+06],
+[35,2.31641e+06],
+[36,1.78402e+06],
+[37,946403],
+[38,596324],
+[39,1.81329e+06],
+[40,701427],
+[41,1.3959e+07],
+[42,1.21113e+07],
+[43,1.81222e+06],
+[44,751752],
+[45,209462],
+[46,393125],
+[47,1.64001e+06],
+[48,1.14542e+06],
+[49,1.04925e+06],
+[50,2.17485e+06],
+[51,1.53216e+06]]);
+      var options = {
+ chart: {
+title: 'Yearly Recruits',
+subtitle: ''
+},hAxis:{title : ''},vAxis:{title : ''},
+ width: 900,
+height: 500
+};
+
+ var chart = new google.charts.Line(document.getElementById('line_4'));
+chart.draw(data, google.charts.Line.convertOptions(options));
+}</script>
+<div id="line_4"></div>
+
+<script type = "text/javascript" src = "https://www.gstatic.com/charts/loader.js" > </script> 
+<script type = "text/javascript" >
+google.charts.load('current', {'packages':['line']});
+google.charts.setOnLoadCallback(DrawChart5);
+function DrawChart5(){
+var data = new google.visualization.DataTable();
+data.addColumn('number', 'Year');
+data.addColumn('number', 'Biomass');
+
+data.addRows([[0,2134.48],
+[1,2320.67],
+[2,2395.73],
+[3,3125.16],
+[4,4239.74],
+[5,4650.99],
+[6,4471.1],
+[7,4389.96],
+[8,4319.59],
+[9,4024.41],
+[10,3668.46],
+[11,3599.96],
+[12,4138.92],
+[13,4799.71],
+[14,4809.58],
+[15,4488.79],
+[16,4189.31],
+[17,3876.4],
+[18,3513.17],
+[19,3126.81],
+[20,2793.95],
+[21,2502.07],
+[22,2288.85],
+[23,2146.61],
+[24,2161.2],
+[25,2214.06],
+[26,2016.01],
+[27,1781.46],
+[28,1810.09],
+[29,1959.9],
+[30,2113.72],
+[31,2063.82],
+[32,1914.55],
+[33,1761.68],
+[34,2055.43],
+[35,2515.85],
+[36,2541.96],
+[37,2402.18],
+[38,2305.19],
+[39,2101.3],
+[40,1823.34],
+[41,1576.85],
+[42,1426.18],
+[43,1848.79],
+[44,2951.93],
+[45,3617.14],
+[46,3454.14],
+[47,3060.7],
+[48,2679.04],
+[49,2409.85],
+[50,2217.24],
+[51,1929.63]]);
+      var options = {
+ chart: {
+title: 'Yearly Spawning Biomass',
+subtitle: ''
+},hAxis:{title : ''},vAxis:{title : ''},
+ width: 900,
+height: 500
+};
+
+ var chart = new google.charts.Line(document.getElementById('line_5'));
+chart.draw(data, google.charts.Line.convertOptions(options));
+}</script>
+<div id="line_5"></div>
+
+</body>
+</html>

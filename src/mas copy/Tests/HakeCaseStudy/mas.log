@@ -1,0 +1,134 @@
+MAS Run: Thu Jan 30 09:42:51 2020
+
+Configuration Warning: Recruitment model "Von Bertalannfy Modified" does not define "l_inf". Model will use the default value of 0 and "l_inf" will not be estimated.
+Configuration Warning: Recruitment model "Beverton-Holt" does not define "rho". Model will use the default value of 0 and "rho" will not be estimated.
+Configuration Warning: No "sigma" defined for selectivity model "1". Default is set to 0.5.
+Configuration Warning: No "sigma" defined for selectivity model "2". Default is set to 0.5.
+Configuration Warning: No "sigma" defined for selectivity model "3". Default is set to 0.5.
+Configuration Warning: No "sigma" defined for selectivity model "4". Default is set to 0.5.
+Configuration Warning: No "sigma" defined for selectivity model "5". Default is set to 0.5.
+survey_q_1						1.02629						1
+
+
+Estimated Parameters						Initial Value						Phase
+
+Recruitment:
+beverton_holt_alt__log_R0_1						15.32						1
+recruitment_deviations[0]_1						-0.0772156						1
+recruitment_deviations[1]_1						2.54666						1
+recruitment_deviations[2]_1						1.46967						1
+recruitment_deviations[3]_1						0.445111						1
+recruitment_deviations[4]_1						0.190267						1
+recruitment_deviations[5]_1						1.31046						1
+recruitment_deviations[6]_1						-1.25637						1
+recruitment_deviations[7]_1						-0.675785						1
+recruitment_deviations[8]_1						-0.429431						1
+recruitment_deviations[9]_1						1.25283						1
+recruitment_deviations[10]_1						2.03453						1
+recruitment_deviations[11]_1						1.04506						1
+recruitment_deviations[12]_1						-0.137076						1
+recruitment_deviations[13]_1						0.847174						1
+recruitment_deviations[14]_1						-0.6108						1
+recruitment_deviations[15]_1						-0.350431						1
+recruitment_deviations[16]_1						-1.50918						1
+recruitment_deviations[17]_1						-1.47876						1
+recruitment_deviations[18]_1						-0.63436						1
+recruitment_deviations[19]_1						-0.397999						1
+recruitment_deviations[20]_1						0.165157						1
+recruitment_deviations[21]_1						0.490104						1
+recruitment_deviations[22]_1						1.27297						1
+recruitment_deviations[23]_1						-0.644795						1
+recruitment_deviations[24]_1						-1.18274						1
+recruitment_deviations[25]_1						0.384982						1
+recruitment_deviations[26]_1						1.09624						1
+recruitment_deviations[27]_1						0.875623						1
+recruitment_deviations[28]_1						0.866394						1
+recruitment_deviations[29]_1						-1.06746						1
+recruitment_deviations[30]_1						0.557309						1
+recruitment_deviations[31]_1						-1.06165						1
+recruitment_deviations[32]_1						1.95533						1
+recruitment_deviations[33]_1						-0.358617						1
+recruitment_deviations[34]_1						0.0251671						1
+recruitment_deviations[35]_1						0.354296						1
+recruitment_deviations[36]_1						0.171867						1
+recruitment_deviations[37]_1						-0.531506						1
+recruitment_deviations[38]_1						-0.940154						1
+recruitment_deviations[39]_1						0.149695						1
+recruitment_deviations[40]_1						-0.919626						1
+recruitment_deviations[41]_1						2.20567						1
+recruitment_deviations[42]_1						2.06487						1
+recruitment_deviations[43]_1						0.159286						1
+recruitment_deviations[44]_1						-0.729474						1
+recruitment_deviations[45]_1						-2.12108						1
+recruitment_deviations[46]_1						-1.44503						1
+recruitment_deviations[47]_1						-0.168841						1
+recruitment_deviations[48]_1						-0.390915						1
+recruitment_deviations[49]_1						-0.772474						1
+recruitment_deviations[50]_1						0.339279						1
+recruitment_deviations[51]_1						0.0383304						1
+
+Growth:
+
+NLL Component:
+
+Selectivity:
+logistic_selectivity_a50_2						1.982						2
+logistic_selectivity_s_2						0.642						2
+logistic_selectivity_a50_1						3.022						2
+logistic_selectivity_s_1						1.1						2
+
+Movement:
+
+Natural Mortality:
+fishing_mortality[21][0]_1						0.0332534						1
+fishing_mortality[22][0]_1						0.0459574						1
+fishing_mortality[23][0]_1						0.0453842						1
+fishing_mortality[24][0]_1						0.0474189						1
+fishing_mortality[25][0]_1						0.0545802						1
+fishing_mortality[26][0]_1						0.0505714						1
+fishing_mortality[27][0]_1						0.0425334						1
+fishing_mortality[9][0]_1						0.0249121						1
+fishing_mortality[10][0]_1						0.0209248						1
+fishing_mortality[11][0]_1						0.008205						1
+fishing_mortality[12][0]_1						0.0058217						1
+fishing_mortality[13][0]_1						0.0089747						1
+fishing_mortality[14][0]_1						0.0061948						1
+fishing_mortality[15][0]_1						0.0127848						1
+fishing_mortality[16][0]_1						0.0114017						1
+fishing_mortality[34][0]_1						0.032566						1
+fishing_mortality[18][0]_1						0.0190988						1
+fishing_mortality[19][0]_1						0.0154499						1
+fishing_mortality[20][0]_1						0.0359415						1
+fishing_mortality[35][0]_1						0.0316814						1
+fishing_mortality[36][0]_1						0.0281576						1
+fishing_mortality[37][0]_1						0.0297958						1
+fishing_mortality[38][0]_1						0.0635607						1
+fishing_mortality[44][0]_1						0.0200368						1
+fishing_mortality[45][0]_1						0.0371789						1
+fishing_mortality[46][0]_1						0.0339743						1
+fishing_mortality[39][0]_1						0.0859549						1
+fishing_mortality[40][0]_1						0.099956						1
+fishing_mortality[41][0]_1						0.0900233						1
+fishing_mortality[42][0]_1						0.0779426						1
+fishing_mortality[43][0]_1						0.0195867						1
+fishing_mortality[47][0]_1						0.049398						1
+fishing_mortality[48][0]_1						0.0544887						1
+fishing_mortality[49][0]_1						0.0406939						1
+fishing_mortality[50][0]_1						0.0761063						1
+fishing_mortality[28][0]_1						0.0733614						1
+fishing_mortality[29][0]_1						0.0469342						1
+fishing_mortality[30][0]_1						0.0563835						1
+fishing_mortality[31][0]_1						0.0765224						1
+fishing_mortality[32][0]_1						0.0782336						1
+fishing_mortality[51][0]_1						0.140393						1
+fishing_mortality[5][0]_1						0.0131093						1
+fishing_mortality[6][0]_1						0.0109083						1
+fishing_mortality[7][0]_1						0.0145342						1
+fishing_mortality[8][0]_1						0.0210646						1
+fishing_mortality[17][0]_1						0.015131						1
+fishing_mortality[33][0]_1						0.0684825						1
+fishing_mortality[0][0]_1						0.0191795						1
+fishing_mortality[1][0]_1						0.0296448						1
+fishing_mortality[2][0]_1						0.0159503						1
+fishing_mortality[3][0]_1						0.0118485						1
+fishing_mortality[4][0]_1						0.0155172						1

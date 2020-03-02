@@ -1,0 +1,1020 @@
+\hypertarget{structmas_1_1_fleet}{\section{mas\-:\-:Fleet$<$ R\-E\-A\-L\-\_\-\-T $>$ Struct Template Reference}
+\label{structmas_1_1_fleet}\index{mas\-::\-Fleet$<$ R\-E\-A\-L\-\_\-\-T $>$@{mas\-::\-Fleet$<$ R\-E\-A\-L\-\_\-\-T $>$}}
+}
+
+
+{\ttfamily \#include $<$Fleet.\-hpp$>$}
+
+Inheritance diagram for mas\-:\-:Fleet$<$ R\-E\-A\-L\-\_\-\-T $>$\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{structmas_1_1_fleet}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{structmas_1_1_variable_trait}{Variable\-Trait}$<$ R\-E\-A\-L\-\_\-\-T $>$\\*
+\-::\hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, std\-::unordered\-\_\-map$<$ int, \\*
+int $>$ $>$\-::iterator \hyperlink{structmas_1_1_fleet_aadb49821d696137325793eec3abdde87}{season\-\_\-area\-\_\-selectivity\-\_\-ids\-\_\-iterator}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_selectivity_base}{mas\-::\-Selectivity\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$\\*
+ $>$ $>$\-::iterator \hyperlink{structmas_1_1_fleet_a7754c30a6a70e4bac646b59fb93db23e}{area\-\_\-sectivity\-\_\-iterator}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, std\-::unordered\-\_\-map$<$ int, \\*
+int $>$ $>$\-::iterator \hyperlink{structmas_1_1_fleet_ad3f5709dbe6c7d4b2d9082783272a48a}{season\-\_\-area\-\_\-id\-\_\-iterator}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, int $>$\-::iterator \hyperlink{structmas_1_1_fleet_ac0ff17aa69ffb817ba0d36aa19b42277}{area\-\_\-id\-\_\-iterator}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, int $>$\-::iterator \hyperlink{structmas_1_1_fleet_a28ea634c7029c6e00c6362c152d0ac7a}{season\-\_\-id\-\_\-iterator}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_selectivity_base}{mas\-::\-Selectivity\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$\\*
+ $>$ $>$ $>$\-::iterator \hyperlink{structmas_1_1_fleet_af276dbe3918638c6bc4556bd97330939}{season\-\_\-area\-\_\-selectivity\-\_\-iterator}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_fishing_mortality}{mas\-::\-Fishing\-Mortality}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ $>$\-::iterator \hyperlink{structmas_1_1_fleet_aab7bbd15fe8e99db584f6d936c028bf3}{season\-\_\-area\-\_\-fishing\-\_\-mortality\-\_\-iterator}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_fishing_mortality}{mas\-::\-Fishing\-Mortality}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$\-::iterator \hyperlink{structmas_1_1_fleet_a72800f7ad0b8ec91f129bd8020c19912}{area\-\_\-fishing\-\_\-mortality\-\_\-iterator}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_fishing_mortality}{mas\-::\-Fishing\-Mortality}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$\-::iterator \hyperlink{structmas_1_1_fleet_a446379b7a809ae7e2dd208c577e87a20}{delta\-\_\-method\-\_\-fishing\-\_\-mortality\-\_\-iterator}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{structmas_1_1_fleet_a179636161da4b8c126d3afd1b7ea6edd}{Initialize} (size\-\_\-t \hyperlink{structmas_1_1_fleet_a823238fd7eb794d49a64743395bf1ae5}{years}, size\-\_\-t \hyperlink{structmas_1_1_fleet_a389f70f4bb3190303aba1ae9aca8c018}{seasons}, size\-\_\-t \hyperlink{structmas_1_1_fleet_adc63e3bd51a0e1897fba4c726f7ca8f8}{ages})
+\item 
+void \hyperlink{structmas_1_1_fleet_a54693c200e2a03dfd1dc36cbdbfab912}{Initialize\-N\-L\-L\-Components} ()
+\item 
+void \hyperlink{structmas_1_1_fleet_aa131029e55eb68d71f6b65b4ddea485a}{Prepare} ()
+\item 
+void \hyperlink{structmas_1_1_fleet_ae1e568c71625f18513261850e4a78236}{Initialize\-Fishing\-Mortality} ()
+\item 
+bool \hyperlink{structmas_1_1_fleet_a1c931c611ed3b073606e95f028508703}{Operates\-In\-Area} (int area)
+\item 
+void \hyperlink{structmas_1_1_fleet_a2539b0783335bf2121a5c841da94d321}{Compute\-Proportions} ()
+\item 
+void \hyperlink{structmas_1_1_fleet_ab82761b712d8029a6cb0712e8a7964bd}{Compute\-N\-L\-L\-Components} ()
+\item 
+void \hyperlink{structmas_1_1_fleet_a9fd5e000daf896b61cf6bd01e5ba2bd4}{Compute\-Goodness\-Of\-Fit} ()
+\item 
+void \hyperlink{structmas_1_1_fleet_aa147d8f74e9976533fef4aa99b01a540}{Evaluate\-Biomass\-Component} (int year, int season)
+\item 
+void \hyperlink{structmas_1_1_fleet_aedb94a407107c79e0d4c134f9bba3502}{Evaluate\-Age\-Comp\-Component} (int year, int season)
+\item 
+virtual const std\-::string \hyperlink{structmas_1_1_fleet_a438089d58f104668621d9426fa1e1c86}{To\-J\-S\-O\-N\-String} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} \hyperlink{structmas_1_1_fleet_a940dd1929ae7d8efec755542a0462e45}{f}
+\item 
+std\-::string \hyperlink{structmas_1_1_fleet_a4c22a8ff3dfa7b1a7684afccfc461c54}{name}
+\item 
+int \hyperlink{structmas_1_1_fleet_a823238fd7eb794d49a64743395bf1ae5}{years}
+\item 
+int \hyperlink{structmas_1_1_fleet_a389f70f4bb3190303aba1ae9aca8c018}{seasons}
+\item 
+int \hyperlink{structmas_1_1_fleet_adc63e3bd51a0e1897fba4c726f7ca8f8}{ages}
+\item 
+bool \hyperlink{structmas_1_1_fleet_a983d40b11fbaef98245d435a6420f162}{has\-\_\-catch\-\_\-data\-\_\-annual\-\_\-biomass}
+\item 
+bool \hyperlink{structmas_1_1_fleet_aab0d326e2e7fb03bcd5a8073b526c255}{has\-\_\-catch\-\_\-data\-\_\-biomass\-\_\-time\-\_\-by\-\_\-age}
+\item 
+bool \hyperlink{structmas_1_1_fleet_ab292045bcb9dd21ab25a0b6f2404e351}{has\-\_\-catch\-\_\-data\-\_\-numbers\-\_\-at\-\_\-age}
+\item 
+bool \hyperlink{structmas_1_1_fleet_af74c0ec58026828cd286f6f4c317e517}{has\-\_\-catch\-\_\-data\-\_\-proportion\-\_\-at\-\_\-age}
+\item 
+std\-::shared\-\_\-ptr$<$ \hyperlink{structmas_1_1_data_object}{Data\-Object}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ \hyperlink{structmas_1_1_fleet_a996dcf8ffd91799f62cf2421d81eaac0}{catch\-\_\-biomass\-\_\-data}
+\item 
+std\-::shared\-\_\-ptr$<$ \hyperlink{structmas_1_1_data_object}{Data\-Object}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ \hyperlink{structmas_1_1_fleet_a39314db6371bbf66ec72d41e871e6eca}{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-data\-\_\-\-N}
+\item 
+std\-::shared\-\_\-ptr$<$ \hyperlink{structmas_1_1_data_object}{Data\-Object}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ \hyperlink{structmas_1_1_fleet_ae6c54a589f2e6cbdb413e3759bffca5d}{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-data}
+\item 
+std\-::shared\-\_\-ptr$<$ \hyperlink{structmas_1_1_data_object}{Data\-Object}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ \hyperlink{structmas_1_1_fleet_a5bacb0578a3e651fc28a8ba2d233a14b}{catch\-\_\-proportion\-\_\-at\-\_\-length\-\_\-data\-\_\-\-N}
+\item 
+std\-::shared\-\_\-ptr$<$ \hyperlink{structmas_1_1_data_object}{Data\-Object}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ \hyperlink{structmas_1_1_fleet_ae18e627f80c8ca519535bfc90d9634b5}{catch\-\_\-proportion\-\_\-at\-\_\-length\-\_\-data}
+\item 
+std\-::shared\-\_\-ptr$<$ \hyperlink{structmas_1_1_data_object}{Data\-Object}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ \hyperlink{structmas_1_1_fleet_a46862ac16c8d360c9290dad74aee9a17}{catch\-\_\-mean\-\_\-size\-\_\-at\-\_\-age\-\_\-data}
+\item 
+std\-::shared\-\_\-ptr$<$ \hyperlink{structmas_1_1_data_object}{Data\-Object}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ \hyperlink{structmas_1_1_fleet_acc8b3609ca90f6efd5801fb8820777f8}{catch\-\_\-mean\-\_\-weight\-\_\-at\-\_\-age\-\_\-data}
+\item 
+std\-::vector$<$ std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_data_object}{Data\-Object}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{structmas_1_1_fleet_a9b5dca826b2d1b7b05a705b903a27fad}{data\-\_\-objects}
+\item 
+int \hyperlink{structmas_1_1_fleet_aa87c827150245f5859ca47fc303eceb8}{fishery\-\_\-age\-\_\-comp\-\_\-likelihood\-\_\-component\-\_\-id} = -\/999
+\item 
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_n_l_l_functor}{mas\-::\-N\-L\-L\-Functor}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ \hyperlink{structmas_1_1_fleet_ae0e54dbe1514b3d5a33293b4250e0be4}{fishery\-\_\-age\-\_\-comp\-\_\-likelihood\-\_\-component}
+\item 
+int \hyperlink{structmas_1_1_fleet_a2f3667e571a5c22538606e4c3156f7b5}{fishery\-\_\-biomass\-\_\-likelihood\-\_\-component\-\_\-id} = -\/999
+\item 
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_n_l_l_functor}{mas\-::\-N\-L\-L\-Functor}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ \hyperlink{structmas_1_1_fleet_abd3235a7cfd42c0106c59e8b51f4671d}{fishery\-\_\-biomass\-\_\-likelihood\-\_\-component}
+\item 
+std\-::unordered\-\_\-set$<$ int $>$ \hyperlink{structmas_1_1_fleet_aaa8ca2ea30b1afee976199eaabd6caa0}{operational\-\_\-areas}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::unordered\-\_\-map$<$ int, int $>$ $>$ \hyperlink{structmas_1_1_fleet_a2c2c1b323ec7845085ebe105b5f64096}{season\-\_\-area\-\_\-selectivity\-\_\-ids}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_selectivity_base}{mas\-::\-Selectivity\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ $>$ \hyperlink{structmas_1_1_fleet_aa8e734855b66757bf86314f6ae76878c}{season\-\_\-area\-\_\-selectivity}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::unordered\-\_\-map$<$ int, int $>$ $>$ \hyperlink{structmas_1_1_fleet_ac13bc4011086cb3fc3b6838d02885db5}{area\-\_\-season\-\_\-selectivity\-\_\-ids}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_selectivity_base}{mas\-::\-Selectivity\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ $>$ \hyperlink{structmas_1_1_fleet_a0cf9a3f0c5ae179699c1264a7583db56}{area\-\_\-season\-\_\-selectivity}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::unordered\-\_\-map$<$ int, int $>$ $>$ \hyperlink{structmas_1_1_fleet_a31e805b1616d5a216530b48ea154c973}{area\-\_\-season\-\_\-fishing\-\_\-mortality\-\_\-ids}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_fishing_mortality}{mas\-::\-Fishing\-Mortality}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ $>$ \hyperlink{structmas_1_1_fleet_a5fbc6ef08467142e1797a26f557481e8}{area\-\_\-season\-\_\-fishing\-\_\-mortality}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::unordered\-\_\-map$<$ int, int $>$ $>$ \hyperlink{structmas_1_1_fleet_acab7b946bf0d12476d4167f9d35693e8}{season\-\_\-area\-\_\-fishing\-\_\-mortality\-\_\-ids}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_fishing_mortality}{mas\-::\-Fishing\-Mortality}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ $>$ \hyperlink{structmas_1_1_fleet_a2eba2d477fe351f44a1c22f51f75018f}{season\-\_\-area\-\_\-fishing\-\_\-mortality}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_fishing_mortality}{mas\-::\-Fishing\-Mortality}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{structmas_1_1_fleet_afd6e03157a9ad766993a41d4eb61124c}{delta\-\_\-method\-\_\-fishing\-\_\-mortality}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_aec96c786b81fb4cf0d908de0297cc2f4}{catch\-\_\-biomass\-\_\-total}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_a9ff1f7b831b4297a0241ce24f83b9e0f}{catch\-\_\-biomass\-\_\-total\-\_\-males}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_a25f8a76ca51ac7bf920d94d8d3c122c7}{catch\-\_\-biomass\-\_\-total\-\_\-females}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_a1f88d8e497852415b1e4010f8ab4d18f}{numbers\-\_\-at\-\_\-age}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_ad7457fd4d7e459925b87d50dc591b04c}{numbers\-\_\-total}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_a19e63403b6cc924ffbbf4876fdeb1cd0}{proportion\-\_\-at\-\_\-age}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_ad4ec4a206dbb1af192c85ae7ab0929ea}{catch\-\_\-proportion\-\_\-at\-\_\-age}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_ab29452b064132572243fbbb6ce7e8c06}{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_a2a423b2624e36ff6ff786b4bea5db2fe}{catch\-\_\-at\-\_\-age}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ $>$ $>$ \hyperlink{structmas_1_1_fleet_a5a9769854c2272ced6396dc091b3e318}{f\-\_\-at\-\_\-age}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ $>$ $>$ \hyperlink{structmas_1_1_fleet_a0bd290f2fba5bd5f00a1666673d77a3b}{z\-\_\-at\-\_\-age}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_a6bcc185d0581e22288665272df90d8a0}{catch\-\_\-biomass\-\_\-at\-\_\-age}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_aa4aa9e9a3d34fc15d15543ae02aea2bd}{numbers\-\_\-at\-\_\-age\-\_\-males}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_a40064758c90639b12944f9ef12aeaf01}{numbers\-\_\-total\-\_\-males}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_a8a3bf314e6f6249f84fdaded007a0067}{proportion\-\_\-at\-\_\-age\-\_\-males}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_a03a9617218d69139a286073025084dbd}{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_aa15871c1252f3fc4f0d5eb19376ef18c}{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_a384cc77fb80ba8d2d91722468839ea5d}{catch\-\_\-at\-\_\-age\-\_\-males}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ $>$ $>$ \hyperlink{structmas_1_1_fleet_a1019367ebec70e8480fa5bcf76851d6f}{f\-\_\-at\-\_\-age\-\_\-males}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ $>$ $>$ \hyperlink{structmas_1_1_fleet_a177b878b912cd2c01729070c46e0f27d}{z\-\_\-at\-\_\-age\-\_\-males}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_a21e595437d97bf9d2197cf2bdddcc7a0}{catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-males}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_afbe9209cae969e13ee6480efab603e02}{numbers\-\_\-at\-\_\-age\-\_\-females}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_a18952440bdaafdde0b75dd313ad542f5}{numbers\-\_\-total\-\_\-females}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_a8d2308d55f6d12305f288caefe6cac1a}{proportion\-\_\-at\-\_\-age\-\_\-females}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_a6fc705bf1cfbe3641f610a98bc57402d}{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_a461ed479ae0c386f261777e33a111e93}{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_a35939904cb0bd61c26516b2bf5753b2a}{catch\-\_\-at\-\_\-age\-\_\-females}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ $>$ $>$ \hyperlink{structmas_1_1_fleet_abbb7e39885ce82578a901e585d3c1526}{f\-\_\-at\-\_\-age\-\_\-females}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ $>$ $>$ \hyperlink{structmas_1_1_fleet_afb9df73617514f0606882e3ae2abb63c}{z\-\_\-at\-\_\-age\-\_\-females}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_ae892beaea7811cf46a6b5e8f2e2a3912}{catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-females}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_a43e9e4e070b2a3d7ab2c9a0ab59b1d15}{N\-\_\-diff2}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_a1f236a57978e3fbd4b59aeae849b00b5}{N\-\_\-\-Proportion\-\_\-diff2}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_a6ec61ed407b54fc36001cd7052f2493a}{C\-\_\-\-Proportion\-\_\-diff2}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_ac54bf241532c1f1a5859317484f54699}{C\-\_\-\-Biomass\-\_\-\-Proportion\-\_\-diff2}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_adaf77725042f3af5dbdb9a73aa506f4b}{C\-\_\-diff2}
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} $>$ \hyperlink{structmas_1_1_fleet_a9851fff6a635dce825730a1218361b35}{C\-\_\-\-Biomass\-\_\-diff2}
+\item 
+\hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} \hyperlink{structmas_1_1_fleet_a205664ab22c0904b56ee4700ae011a8d}{catch\-\_\-biomass\-\_\-component}
+\item 
+\hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} \hyperlink{structmas_1_1_fleet_abff6202073d68fa9699506af85b124b3}{fishery\-\_\-age\-\_\-comp\-\_\-component}
+\item 
+\hyperlink{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{variable} \hyperlink{structmas_1_1_fleet_a36c9122dc2cb7bb8bf4d2a060c001f2a}{nll}
+\item 
+R\-E\-A\-L\-\_\-\-T \hyperlink{structmas_1_1_fleet_a1dfe358f8efd67a467f70b3a87d49e51}{catch\-\_\-biomass\-\_\-chi\-\_\-squared}
+\item 
+R\-E\-A\-L\-\_\-\-T \hyperlink{structmas_1_1_fleet_a3eed643265324852c1b411a75d68cf21}{fishery\-\_\-age\-\_\-comp\-\_\-chi\-\_\-squared}
+\item 
+R\-E\-A\-L\-\_\-\-T \hyperlink{structmas_1_1_fleet_a441dfd7f3172ab329520882e66669ddd}{catch\-\_\-fraction\-\_\-of\-\_\-year} = 0.\-5
+\item 
+std\-::vector$<$ \hyperlink{structmas_1_1_n_l_l_component}{N\-L\-L\-Component}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ \hyperlink{structmas_1_1_fleet_a41686751b90e9c47278be5df82eb0f3c}{nll\-\_\-components}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename R\-E\-A\-L\-\_\-\-T$>$struct mas\-::\-Fleet$<$ R\-E\-A\-L\-\_\-\-T $>$}
+
+
+
+Definition at line 47 of file Fleet.\-hpp.
+
+
+
+\subsection{Member Typedef Documentation}
+\hypertarget{structmas_1_1_fleet_a72800f7ad0b8ec91f129bd8020c19912}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!area\-\_\-fishing\-\_\-mortality\-\_\-iterator@{area\-\_\-fishing\-\_\-mortality\-\_\-iterator}}
+\index{area\-\_\-fishing\-\_\-mortality\-\_\-iterator@{area\-\_\-fishing\-\_\-mortality\-\_\-iterator}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{area\-\_\-fishing\-\_\-mortality\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Fishing\-Mortality}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$\-::iterator {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf area\-\_\-fishing\-\_\-mortality\-\_\-iterator}}}\label{structmas_1_1_fleet_a72800f7ad0b8ec91f129bd8020c19912}
+
+
+Definition at line 99 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_ac0ff17aa69ffb817ba0d36aa19b42277}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!area\-\_\-id\-\_\-iterator@{area\-\_\-id\-\_\-iterator}}
+\index{area\-\_\-id\-\_\-iterator@{area\-\_\-id\-\_\-iterator}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{area\-\_\-id\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, int$>$\-::iterator {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf area\-\_\-id\-\_\-iterator}}}\label{structmas_1_1_fleet_ac0ff17aa69ffb817ba0d36aa19b42277}
+
+
+Definition at line 95 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a7754c30a6a70e4bac646b59fb93db23e}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!area\-\_\-sectivity\-\_\-iterator@{area\-\_\-sectivity\-\_\-iterator}}
+\index{area\-\_\-sectivity\-\_\-iterator@{area\-\_\-sectivity\-\_\-iterator}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{area\-\_\-sectivity\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Selectivity\-Base}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$\-::iterator {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf area\-\_\-sectivity\-\_\-iterator}}}\label{structmas_1_1_fleet_a7754c30a6a70e4bac646b59fb93db23e}
+
+
+Definition at line 93 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a446379b7a809ae7e2dd208c577e87a20}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!delta\-\_\-method\-\_\-fishing\-\_\-mortality\-\_\-iterator@{delta\-\_\-method\-\_\-fishing\-\_\-mortality\-\_\-iterator}}
+\index{delta\-\_\-method\-\_\-fishing\-\_\-mortality\-\_\-iterator@{delta\-\_\-method\-\_\-fishing\-\_\-mortality\-\_\-iterator}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{delta\-\_\-method\-\_\-fishing\-\_\-mortality\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Fishing\-Mortality}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$\-::iterator {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf delta\-\_\-method\-\_\-fishing\-\_\-mortality\-\_\-iterator}}}\label{structmas_1_1_fleet_a446379b7a809ae7e2dd208c577e87a20}
+
+
+Definition at line 100 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_aab7bbd15fe8e99db584f6d936c028bf3}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!season\-\_\-area\-\_\-fishing\-\_\-mortality\-\_\-iterator@{season\-\_\-area\-\_\-fishing\-\_\-mortality\-\_\-iterator}}
+\index{season\-\_\-area\-\_\-fishing\-\_\-mortality\-\_\-iterator@{season\-\_\-area\-\_\-fishing\-\_\-mortality\-\_\-iterator}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{season\-\_\-area\-\_\-fishing\-\_\-mortality\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Fishing\-Mortality}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ $>$\-::iterator {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf season\-\_\-area\-\_\-fishing\-\_\-mortality\-\_\-iterator}}}\label{structmas_1_1_fleet_aab7bbd15fe8e99db584f6d936c028bf3}
+
+
+Definition at line 98 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_ad3f5709dbe6c7d4b2d9082783272a48a}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!season\-\_\-area\-\_\-id\-\_\-iterator@{season\-\_\-area\-\_\-id\-\_\-iterator}}
+\index{season\-\_\-area\-\_\-id\-\_\-iterator@{season\-\_\-area\-\_\-id\-\_\-iterator}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{season\-\_\-area\-\_\-id\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, std\-::unordered\-\_\-map$<$int, int$>$ $>$\-::iterator {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf season\-\_\-area\-\_\-id\-\_\-iterator}}}\label{structmas_1_1_fleet_ad3f5709dbe6c7d4b2d9082783272a48a}
+
+
+Definition at line 94 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_aadb49821d696137325793eec3abdde87}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!season\-\_\-area\-\_\-selectivity\-\_\-ids\-\_\-iterator@{season\-\_\-area\-\_\-selectivity\-\_\-ids\-\_\-iterator}}
+\index{season\-\_\-area\-\_\-selectivity\-\_\-ids\-\_\-iterator@{season\-\_\-area\-\_\-selectivity\-\_\-ids\-\_\-iterator}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{season\-\_\-area\-\_\-selectivity\-\_\-ids\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, std\-::unordered\-\_\-map$<$int, int$>$ $>$\-::iterator {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf season\-\_\-area\-\_\-selectivity\-\_\-ids\-\_\-iterator}}}\label{structmas_1_1_fleet_aadb49821d696137325793eec3abdde87}
+
+
+Definition at line 92 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_af276dbe3918638c6bc4556bd97330939}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!season\-\_\-area\-\_\-selectivity\-\_\-iterator@{season\-\_\-area\-\_\-selectivity\-\_\-iterator}}
+\index{season\-\_\-area\-\_\-selectivity\-\_\-iterator@{season\-\_\-area\-\_\-selectivity\-\_\-iterator}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{season\-\_\-area\-\_\-selectivity\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Selectivity\-Base}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ $>$\-::iterator {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf season\-\_\-area\-\_\-selectivity\-\_\-iterator}}}\label{structmas_1_1_fleet_af276dbe3918638c6bc4556bd97330939}
+
+
+Definition at line 97 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a28ea634c7029c6e00c6362c152d0ac7a}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!season\-\_\-id\-\_\-iterator@{season\-\_\-id\-\_\-iterator}}
+\index{season\-\_\-id\-\_\-iterator@{season\-\_\-id\-\_\-iterator}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{season\-\_\-id\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, int$>$\-::iterator {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf season\-\_\-id\-\_\-iterator}}}\label{structmas_1_1_fleet_a28ea634c7029c6e00c6362c152d0ac7a}
+
+
+Definition at line 96 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!variable@{variable}}
+\index{variable@{variable}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{variable}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef {\bf Variable\-Trait}$<$R\-E\-A\-L\-\_\-\-T$>$\-::{\bf variable} {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf variable}}}\label{structmas_1_1_fleet_a1902d0842cb7ce9b9bdd4be013e709a9}
+
+
+Definition at line 48 of file Fleet.\-hpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{structmas_1_1_fleet_a9fd5e000daf896b61cf6bd01e5ba2bd4}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!Compute\-Goodness\-Of\-Fit@{Compute\-Goodness\-Of\-Fit}}
+\index{Compute\-Goodness\-Of\-Fit@{Compute\-Goodness\-Of\-Fit}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{Compute\-Goodness\-Of\-Fit}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Compute\-Goodness\-Of\-Fit (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_fleet_a9fd5e000daf896b61cf6bd01e5ba2bd4}
+Pearson's chi-\/squared test on biomass and age comp. 
+
+Definition at line 449 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_ab82761b712d8029a6cb0712e8a7964bd}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!Compute\-N\-L\-L\-Components@{Compute\-N\-L\-L\-Components}}
+\index{Compute\-N\-L\-L\-Components@{Compute\-N\-L\-L\-Components}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{Compute\-N\-L\-L\-Components}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Compute\-N\-L\-L\-Components (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_fleet_ab82761b712d8029a6cb0712e8a7964bd}
+
+
+Definition at line 384 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a2539b0783335bf2121a5c841da94d321}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!Compute\-Proportions@{Compute\-Proportions}}
+\index{Compute\-Proportions@{Compute\-Proportions}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{Compute\-Proportions}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Compute\-Proportions (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_fleet_a2539b0783335bf2121a5c841da94d321}
+
+
+Definition at line 332 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_aedb94a407107c79e0d4c134f9bba3502}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!Evaluate\-Age\-Comp\-Component@{Evaluate\-Age\-Comp\-Component}}
+\index{Evaluate\-Age\-Comp\-Component@{Evaluate\-Age\-Comp\-Component}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{Evaluate\-Age\-Comp\-Component}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Evaluate\-Age\-Comp\-Component (
+\begin{DoxyParamCaption}
+\item[{int}]{year, }
+\item[{int}]{season}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_fleet_aedb94a407107c79e0d4c134f9bba3502}
+
+
+Definition at line 465 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_aa147d8f74e9976533fef4aa99b01a540}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!Evaluate\-Biomass\-Component@{Evaluate\-Biomass\-Component}}
+\index{Evaluate\-Biomass\-Component@{Evaluate\-Biomass\-Component}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{Evaluate\-Biomass\-Component}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Evaluate\-Biomass\-Component (
+\begin{DoxyParamCaption}
+\item[{int}]{year, }
+\item[{int}]{season}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_fleet_aa147d8f74e9976533fef4aa99b01a540}
+
+
+Definition at line 454 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a179636161da4b8c126d3afd1b7ea6edd}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{Initialize}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Initialize (
+\begin{DoxyParamCaption}
+\item[{size\-\_\-t}]{years, }
+\item[{size\-\_\-t}]{seasons, }
+\item[{size\-\_\-t}]{ages}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_fleet_a179636161da4b8c126d3afd1b7ea6edd}
+
+
+Definition at line 159 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_ae1e568c71625f18513261850e4a78236}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!Initialize\-Fishing\-Mortality@{Initialize\-Fishing\-Mortality}}
+\index{Initialize\-Fishing\-Mortality@{Initialize\-Fishing\-Mortality}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{Initialize\-Fishing\-Mortality}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Initialize\-Fishing\-Mortality (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_fleet_ae1e568c71625f18513261850e4a78236}
+
+
+Definition at line 307 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a54693c200e2a03dfd1dc36cbdbfab912}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!Initialize\-N\-L\-L\-Components@{Initialize\-N\-L\-L\-Components}}
+\index{Initialize\-N\-L\-L\-Components@{Initialize\-N\-L\-L\-Components}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{Initialize\-N\-L\-L\-Components}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Initialize\-N\-L\-L\-Components (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_fleet_a54693c200e2a03dfd1dc36cbdbfab912}
+
+
+Definition at line 222 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a1c931c611ed3b073606e95f028508703}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!Operates\-In\-Area@{Operates\-In\-Area}}
+\index{Operates\-In\-Area@{Operates\-In\-Area}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{Operates\-In\-Area}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ bool {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Operates\-In\-Area (
+\begin{DoxyParamCaption}
+\item[{int}]{area}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_fleet_a1c931c611ed3b073606e95f028508703}
+
+
+Definition at line 326 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_aa131029e55eb68d71f6b65b4ddea485a}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!Prepare@{Prepare}}
+\index{Prepare@{Prepare}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{Prepare}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Prepare (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_fleet_aa131029e55eb68d71f6b65b4ddea485a}
+
+
+Definition at line 252 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a438089d58f104668621d9426fa1e1c86}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!To\-J\-S\-O\-N\-String@{To\-J\-S\-O\-N\-String}}
+\index{To\-J\-S\-O\-N\-String@{To\-J\-S\-O\-N\-String}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{To\-J\-S\-O\-N\-String}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ virtual const std\-::string {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::To\-J\-S\-O\-N\-String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{structmas_1_1_fleet_a438089d58f104668621d9426fa1e1c86}
+
+
+Reimplemented from \hyperlink{structmas_1_1_model_object_af40b3c89b11919fc5aea21dcf1cd027b}{mas\-::\-Model\-Object$<$ R\-E\-A\-L\-\_\-\-T $>$}.
+
+
+
+Definition at line 481 of file Fleet.\-hpp.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structmas_1_1_fleet_adc63e3bd51a0e1897fba4c726f7ca8f8}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!ages@{ages}}
+\index{ages@{ages}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{ages}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ int {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::ages}}\label{structmas_1_1_fleet_adc63e3bd51a0e1897fba4c726f7ca8f8}
+
+
+Definition at line 55 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a5fbc6ef08467142e1797a26f557481e8}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!area\-\_\-season\-\_\-fishing\-\_\-mortality@{area\-\_\-season\-\_\-fishing\-\_\-mortality}}
+\index{area\-\_\-season\-\_\-fishing\-\_\-mortality@{area\-\_\-season\-\_\-fishing\-\_\-mortality}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{area\-\_\-season\-\_\-fishing\-\_\-mortality}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Fishing\-Mortality}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::area\-\_\-season\-\_\-fishing\-\_\-mortality}}\label{structmas_1_1_fleet_a5fbc6ef08467142e1797a26f557481e8}
+
+
+Definition at line 87 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a31e805b1616d5a216530b48ea154c973}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!area\-\_\-season\-\_\-fishing\-\_\-mortality\-\_\-ids@{area\-\_\-season\-\_\-fishing\-\_\-mortality\-\_\-ids}}
+\index{area\-\_\-season\-\_\-fishing\-\_\-mortality\-\_\-ids@{area\-\_\-season\-\_\-fishing\-\_\-mortality\-\_\-ids}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{area\-\_\-season\-\_\-fishing\-\_\-mortality\-\_\-ids}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::unordered\-\_\-map$<$int, int$>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::area\-\_\-season\-\_\-fishing\-\_\-mortality\-\_\-ids}}\label{structmas_1_1_fleet_a31e805b1616d5a216530b48ea154c973}
+
+
+Definition at line 86 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a0cf9a3f0c5ae179699c1264a7583db56}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!area\-\_\-season\-\_\-selectivity@{area\-\_\-season\-\_\-selectivity}}
+\index{area\-\_\-season\-\_\-selectivity@{area\-\_\-season\-\_\-selectivity}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{area\-\_\-season\-\_\-selectivity}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Selectivity\-Base}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::area\-\_\-season\-\_\-selectivity}}\label{structmas_1_1_fleet_a0cf9a3f0c5ae179699c1264a7583db56}
+
+
+Definition at line 84 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_ac13bc4011086cb3fc3b6838d02885db5}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!area\-\_\-season\-\_\-selectivity\-\_\-ids@{area\-\_\-season\-\_\-selectivity\-\_\-ids}}
+\index{area\-\_\-season\-\_\-selectivity\-\_\-ids@{area\-\_\-season\-\_\-selectivity\-\_\-ids}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{area\-\_\-season\-\_\-selectivity\-\_\-ids}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::unordered\-\_\-map$<$int, int$>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::area\-\_\-season\-\_\-selectivity\-\_\-ids}}\label{structmas_1_1_fleet_ac13bc4011086cb3fc3b6838d02885db5}
+
+
+Definition at line 83 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a9851fff6a635dce825730a1218361b35}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!C\-\_\-\-Biomass\-\_\-diff2@{C\-\_\-\-Biomass\-\_\-diff2}}
+\index{C\-\_\-\-Biomass\-\_\-diff2@{C\-\_\-\-Biomass\-\_\-diff2}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{C\-\_\-\-Biomass\-\_\-diff2}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::C\-\_\-\-Biomass\-\_\-diff2}}\label{structmas_1_1_fleet_a9851fff6a635dce825730a1218361b35}
+
+
+Definition at line 146 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_ac54bf241532c1f1a5859317484f54699}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!C\-\_\-\-Biomass\-\_\-\-Proportion\-\_\-diff2@{C\-\_\-\-Biomass\-\_\-\-Proportion\-\_\-diff2}}
+\index{C\-\_\-\-Biomass\-\_\-\-Proportion\-\_\-diff2@{C\-\_\-\-Biomass\-\_\-\-Proportion\-\_\-diff2}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{C\-\_\-\-Biomass\-\_\-\-Proportion\-\_\-diff2}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::C\-\_\-\-Biomass\-\_\-\-Proportion\-\_\-diff2}}\label{structmas_1_1_fleet_ac54bf241532c1f1a5859317484f54699}
+
+
+Definition at line 144 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_adaf77725042f3af5dbdb9a73aa506f4b}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!C\-\_\-diff2@{C\-\_\-diff2}}
+\index{C\-\_\-diff2@{C\-\_\-diff2}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{C\-\_\-diff2}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::C\-\_\-diff2}}\label{structmas_1_1_fleet_adaf77725042f3af5dbdb9a73aa506f4b}
+
+
+Definition at line 145 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a6ec61ed407b54fc36001cd7052f2493a}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!C\-\_\-\-Proportion\-\_\-diff2@{C\-\_\-\-Proportion\-\_\-diff2}}
+\index{C\-\_\-\-Proportion\-\_\-diff2@{C\-\_\-\-Proportion\-\_\-diff2}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{C\-\_\-\-Proportion\-\_\-diff2}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::C\-\_\-\-Proportion\-\_\-diff2}}\label{structmas_1_1_fleet_a6ec61ed407b54fc36001cd7052f2493a}
+
+
+Definition at line 143 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a2a423b2624e36ff6ff786b4bea5db2fe}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-at\-\_\-age@{catch\-\_\-at\-\_\-age}}
+\index{catch\-\_\-at\-\_\-age@{catch\-\_\-at\-\_\-age}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-at\-\_\-age}}\label{structmas_1_1_fleet_a2a423b2624e36ff6ff786b4bea5db2fe}
+
+
+Definition at line 114 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a35939904cb0bd61c26516b2bf5753b2a}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-at\-\_\-age\-\_\-females@{catch\-\_\-at\-\_\-age\-\_\-females}}
+\index{catch\-\_\-at\-\_\-age\-\_\-females@{catch\-\_\-at\-\_\-age\-\_\-females}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-at\-\_\-age\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-at\-\_\-age\-\_\-females}}\label{structmas_1_1_fleet_a35939904cb0bd61c26516b2bf5753b2a}
+
+
+Definition at line 135 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a384cc77fb80ba8d2d91722468839ea5d}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-at\-\_\-age\-\_\-males@{catch\-\_\-at\-\_\-age\-\_\-males}}
+\index{catch\-\_\-at\-\_\-age\-\_\-males@{catch\-\_\-at\-\_\-age\-\_\-males}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-at\-\_\-age\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-at\-\_\-age\-\_\-males}}\label{structmas_1_1_fleet_a384cc77fb80ba8d2d91722468839ea5d}
+
+
+Definition at line 125 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a6bcc185d0581e22288665272df90d8a0}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-biomass\-\_\-at\-\_\-age@{catch\-\_\-biomass\-\_\-at\-\_\-age}}
+\index{catch\-\_\-biomass\-\_\-at\-\_\-age@{catch\-\_\-biomass\-\_\-at\-\_\-age}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-biomass\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-at\-\_\-age}}\label{structmas_1_1_fleet_a6bcc185d0581e22288665272df90d8a0}
+
+
+Definition at line 117 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_ae892beaea7811cf46a6b5e8f2e2a3912}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-females@{catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-females}}
+\index{catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-females@{catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-females}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-females}}\label{structmas_1_1_fleet_ae892beaea7811cf46a6b5e8f2e2a3912}
+
+
+Definition at line 138 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a21e595437d97bf9d2197cf2bdddcc7a0}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-males@{catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-males}}
+\index{catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-males@{catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-males}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-at\-\_\-age\-\_\-males}}\label{structmas_1_1_fleet_a21e595437d97bf9d2197cf2bdddcc7a0}
+
+
+Definition at line 128 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a1dfe358f8efd67a467f70b3a87d49e51}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-biomass\-\_\-chi\-\_\-squared@{catch\-\_\-biomass\-\_\-chi\-\_\-squared}}
+\index{catch\-\_\-biomass\-\_\-chi\-\_\-squared@{catch\-\_\-biomass\-\_\-chi\-\_\-squared}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-biomass\-\_\-chi\-\_\-squared}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ R\-E\-A\-L\-\_\-\-T {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-chi\-\_\-squared}}\label{structmas_1_1_fleet_a1dfe358f8efd67a467f70b3a87d49e51}
+
+
+Definition at line 152 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a205664ab22c0904b56ee4700ae011a8d}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-biomass\-\_\-component@{catch\-\_\-biomass\-\_\-component}}
+\index{catch\-\_\-biomass\-\_\-component@{catch\-\_\-biomass\-\_\-component}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-biomass\-\_\-component}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ {\bf variable} {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-component}}\label{structmas_1_1_fleet_a205664ab22c0904b56ee4700ae011a8d}
+
+
+Definition at line 148 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a996dcf8ffd91799f62cf2421d81eaac0}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-biomass\-\_\-data@{catch\-\_\-biomass\-\_\-data}}
+\index{catch\-\_\-biomass\-\_\-data@{catch\-\_\-biomass\-\_\-data}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-biomass\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::shared\-\_\-ptr$<${\bf Data\-Object}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-data}}\label{structmas_1_1_fleet_a996dcf8ffd91799f62cf2421d81eaac0}
+
+
+Definition at line 61 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_ab29452b064132572243fbbb6ce7e8c06}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age@{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age}}
+\index{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age@{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age}}\label{structmas_1_1_fleet_ab29452b064132572243fbbb6ce7e8c06}
+
+
+Definition at line 113 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a461ed479ae0c386f261777e33a111e93}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females@{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}}
+\index{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females@{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}}\label{structmas_1_1_fleet_a461ed479ae0c386f261777e33a111e93}
+
+
+Definition at line 134 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_aa15871c1252f3fc4f0d5eb19376ef18c}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males@{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}}
+\index{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males@{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}}\label{structmas_1_1_fleet_aa15871c1252f3fc4f0d5eb19376ef18c}
+
+
+Definition at line 124 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_aec96c786b81fb4cf0d908de0297cc2f4}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-biomass\-\_\-total@{catch\-\_\-biomass\-\_\-total}}
+\index{catch\-\_\-biomass\-\_\-total@{catch\-\_\-biomass\-\_\-total}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-biomass\-\_\-total}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-total}}\label{structmas_1_1_fleet_aec96c786b81fb4cf0d908de0297cc2f4}
+
+
+Definition at line 103 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a25f8a76ca51ac7bf920d94d8d3c122c7}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-biomass\-\_\-total\-\_\-females@{catch\-\_\-biomass\-\_\-total\-\_\-females}}
+\index{catch\-\_\-biomass\-\_\-total\-\_\-females@{catch\-\_\-biomass\-\_\-total\-\_\-females}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-biomass\-\_\-total\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-total\-\_\-females}}\label{structmas_1_1_fleet_a25f8a76ca51ac7bf920d94d8d3c122c7}
+
+
+Definition at line 105 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a9ff1f7b831b4297a0241ce24f83b9e0f}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-biomass\-\_\-total\-\_\-males@{catch\-\_\-biomass\-\_\-total\-\_\-males}}
+\index{catch\-\_\-biomass\-\_\-total\-\_\-males@{catch\-\_\-biomass\-\_\-total\-\_\-males}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-biomass\-\_\-total\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-biomass\-\_\-total\-\_\-males}}\label{structmas_1_1_fleet_a9ff1f7b831b4297a0241ce24f83b9e0f}
+
+
+Definition at line 104 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a441dfd7f3172ab329520882e66669ddd}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-fraction\-\_\-of\-\_\-year@{catch\-\_\-fraction\-\_\-of\-\_\-year}}
+\index{catch\-\_\-fraction\-\_\-of\-\_\-year@{catch\-\_\-fraction\-\_\-of\-\_\-year}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-fraction\-\_\-of\-\_\-year}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ R\-E\-A\-L\-\_\-\-T {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-fraction\-\_\-of\-\_\-year = 0.\-5}}\label{structmas_1_1_fleet_a441dfd7f3172ab329520882e66669ddd}
+
+
+Definition at line 155 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a46862ac16c8d360c9290dad74aee9a17}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-mean\-\_\-size\-\_\-at\-\_\-age\-\_\-data@{catch\-\_\-mean\-\_\-size\-\_\-at\-\_\-age\-\_\-data}}
+\index{catch\-\_\-mean\-\_\-size\-\_\-at\-\_\-age\-\_\-data@{catch\-\_\-mean\-\_\-size\-\_\-at\-\_\-age\-\_\-data}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-mean\-\_\-size\-\_\-at\-\_\-age\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::shared\-\_\-ptr$<${\bf Data\-Object}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-mean\-\_\-size\-\_\-at\-\_\-age\-\_\-data}}\label{structmas_1_1_fleet_a46862ac16c8d360c9290dad74aee9a17}
+
+
+Definition at line 67 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_acc8b3609ca90f6efd5801fb8820777f8}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-mean\-\_\-weight\-\_\-at\-\_\-age\-\_\-data@{catch\-\_\-mean\-\_\-weight\-\_\-at\-\_\-age\-\_\-data}}
+\index{catch\-\_\-mean\-\_\-weight\-\_\-at\-\_\-age\-\_\-data@{catch\-\_\-mean\-\_\-weight\-\_\-at\-\_\-age\-\_\-data}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-mean\-\_\-weight\-\_\-at\-\_\-age\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::shared\-\_\-ptr$<${\bf Data\-Object}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-mean\-\_\-weight\-\_\-at\-\_\-age\-\_\-data}}\label{structmas_1_1_fleet_acc8b3609ca90f6efd5801fb8820777f8}
+
+
+Definition at line 68 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_ad4ec4a206dbb1af192c85ae7ab0929ea}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-proportion\-\_\-at\-\_\-age@{catch\-\_\-proportion\-\_\-at\-\_\-age}}
+\index{catch\-\_\-proportion\-\_\-at\-\_\-age@{catch\-\_\-proportion\-\_\-at\-\_\-age}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-proportion\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-proportion\-\_\-at\-\_\-age}}\label{structmas_1_1_fleet_ad4ec4a206dbb1af192c85ae7ab0929ea}
+
+
+Definition at line 112 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_ae6c54a589f2e6cbdb413e3759bffca5d}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-data@{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-data}}
+\index{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-data@{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-data}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::shared\-\_\-ptr$<${\bf Data\-Object}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-data}}\label{structmas_1_1_fleet_ae6c54a589f2e6cbdb413e3759bffca5d}
+
+
+Definition at line 64 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a39314db6371bbf66ec72d41e871e6eca}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-data\-\_\-\-N@{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-data\-\_\-\-N}}
+\index{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-data\-\_\-\-N@{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-data\-\_\-\-N}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-data\-\_\-\-N}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::shared\-\_\-ptr$<${\bf Data\-Object}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-data\-\_\-\-N}}\label{structmas_1_1_fleet_a39314db6371bbf66ec72d41e871e6eca}
+
+
+Definition at line 63 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a6fc705bf1cfbe3641f610a98bc57402d}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females@{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}}
+\index{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females@{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-females}}\label{structmas_1_1_fleet_a6fc705bf1cfbe3641f610a98bc57402d}
+
+
+Definition at line 133 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a03a9617218d69139a286073025084dbd}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males@{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}}
+\index{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males@{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-proportion\-\_\-at\-\_\-age\-\_\-males}}\label{structmas_1_1_fleet_a03a9617218d69139a286073025084dbd}
+
+
+Definition at line 123 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_ae18e627f80c8ca519535bfc90d9634b5}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-proportion\-\_\-at\-\_\-length\-\_\-data@{catch\-\_\-proportion\-\_\-at\-\_\-length\-\_\-data}}
+\index{catch\-\_\-proportion\-\_\-at\-\_\-length\-\_\-data@{catch\-\_\-proportion\-\_\-at\-\_\-length\-\_\-data}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-proportion\-\_\-at\-\_\-length\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::shared\-\_\-ptr$<${\bf Data\-Object}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-proportion\-\_\-at\-\_\-length\-\_\-data}}\label{structmas_1_1_fleet_ae18e627f80c8ca519535bfc90d9634b5}
+
+
+Definition at line 66 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a5bacb0578a3e651fc28a8ba2d233a14b}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!catch\-\_\-proportion\-\_\-at\-\_\-length\-\_\-data\-\_\-\-N@{catch\-\_\-proportion\-\_\-at\-\_\-length\-\_\-data\-\_\-\-N}}
+\index{catch\-\_\-proportion\-\_\-at\-\_\-length\-\_\-data\-\_\-\-N@{catch\-\_\-proportion\-\_\-at\-\_\-length\-\_\-data\-\_\-\-N}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{catch\-\_\-proportion\-\_\-at\-\_\-length\-\_\-data\-\_\-\-N}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::shared\-\_\-ptr$<${\bf Data\-Object}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::catch\-\_\-proportion\-\_\-at\-\_\-length\-\_\-data\-\_\-\-N}}\label{structmas_1_1_fleet_a5bacb0578a3e651fc28a8ba2d233a14b}
+
+
+Definition at line 65 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a9b5dca826b2d1b7b05a705b903a27fad}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!data\-\_\-objects@{data\-\_\-objects}}
+\index{data\-\_\-objects@{data\-\_\-objects}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{data\-\_\-objects}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<$std\-::shared\-\_\-ptr$<${\bf Data\-Object}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::data\-\_\-objects}}\label{structmas_1_1_fleet_a9b5dca826b2d1b7b05a705b903a27fad}
+
+
+Definition at line 70 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_afd6e03157a9ad766993a41d4eb61124c}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!delta\-\_\-method\-\_\-fishing\-\_\-mortality@{delta\-\_\-method\-\_\-fishing\-\_\-mortality}}
+\index{delta\-\_\-method\-\_\-fishing\-\_\-mortality@{delta\-\_\-method\-\_\-fishing\-\_\-mortality}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{delta\-\_\-method\-\_\-fishing\-\_\-mortality}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Fishing\-Mortality}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::delta\-\_\-method\-\_\-fishing\-\_\-mortality}}\label{structmas_1_1_fleet_afd6e03157a9ad766993a41d4eb61124c}
+
+
+Definition at line 91 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a940dd1929ae7d8efec755542a0462e45}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!f@{f}}
+\index{f@{f}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{f}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ {\bf variable} {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::f}}\label{structmas_1_1_fleet_a940dd1929ae7d8efec755542a0462e45}
+
+
+Definition at line 49 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a5a9769854c2272ced6396dc091b3e318}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!f\-\_\-at\-\_\-age@{f\-\_\-at\-\_\-age}}
+\index{f\-\_\-at\-\_\-age@{f\-\_\-at\-\_\-age}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{f\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::unordered\-\_\-map$<$int, std\-::vector$<${\bf variable}$>$ $>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::f\-\_\-at\-\_\-age}}\label{structmas_1_1_fleet_a5a9769854c2272ced6396dc091b3e318}
+
+
+Definition at line 115 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_abbb7e39885ce82578a901e585d3c1526}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!f\-\_\-at\-\_\-age\-\_\-females@{f\-\_\-at\-\_\-age\-\_\-females}}
+\index{f\-\_\-at\-\_\-age\-\_\-females@{f\-\_\-at\-\_\-age\-\_\-females}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{f\-\_\-at\-\_\-age\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::unordered\-\_\-map$<$int, std\-::vector$<${\bf variable}$>$ $>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::f\-\_\-at\-\_\-age\-\_\-females}}\label{structmas_1_1_fleet_abbb7e39885ce82578a901e585d3c1526}
+
+
+Definition at line 136 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a1019367ebec70e8480fa5bcf76851d6f}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!f\-\_\-at\-\_\-age\-\_\-males@{f\-\_\-at\-\_\-age\-\_\-males}}
+\index{f\-\_\-at\-\_\-age\-\_\-males@{f\-\_\-at\-\_\-age\-\_\-males}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{f\-\_\-at\-\_\-age\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::unordered\-\_\-map$<$int, std\-::vector$<${\bf variable}$>$ $>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::f\-\_\-at\-\_\-age\-\_\-males}}\label{structmas_1_1_fleet_a1019367ebec70e8480fa5bcf76851d6f}
+
+
+Definition at line 126 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a3eed643265324852c1b411a75d68cf21}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!fishery\-\_\-age\-\_\-comp\-\_\-chi\-\_\-squared@{fishery\-\_\-age\-\_\-comp\-\_\-chi\-\_\-squared}}
+\index{fishery\-\_\-age\-\_\-comp\-\_\-chi\-\_\-squared@{fishery\-\_\-age\-\_\-comp\-\_\-chi\-\_\-squared}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{fishery\-\_\-age\-\_\-comp\-\_\-chi\-\_\-squared}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ R\-E\-A\-L\-\_\-\-T {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::fishery\-\_\-age\-\_\-comp\-\_\-chi\-\_\-squared}}\label{structmas_1_1_fleet_a3eed643265324852c1b411a75d68cf21}
+
+
+Definition at line 153 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_abff6202073d68fa9699506af85b124b3}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!fishery\-\_\-age\-\_\-comp\-\_\-component@{fishery\-\_\-age\-\_\-comp\-\_\-component}}
+\index{fishery\-\_\-age\-\_\-comp\-\_\-component@{fishery\-\_\-age\-\_\-comp\-\_\-component}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{fishery\-\_\-age\-\_\-comp\-\_\-component}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ {\bf variable} {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::fishery\-\_\-age\-\_\-comp\-\_\-component}}\label{structmas_1_1_fleet_abff6202073d68fa9699506af85b124b3}
+
+
+Definition at line 149 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_ae0e54dbe1514b3d5a33293b4250e0be4}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!fishery\-\_\-age\-\_\-comp\-\_\-likelihood\-\_\-component@{fishery\-\_\-age\-\_\-comp\-\_\-likelihood\-\_\-component}}
+\index{fishery\-\_\-age\-\_\-comp\-\_\-likelihood\-\_\-component@{fishery\-\_\-age\-\_\-comp\-\_\-likelihood\-\_\-component}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{fishery\-\_\-age\-\_\-comp\-\_\-likelihood\-\_\-component}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::shared\-\_\-ptr$<${\bf mas\-::\-N\-L\-L\-Functor}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::fishery\-\_\-age\-\_\-comp\-\_\-likelihood\-\_\-component}}\label{structmas_1_1_fleet_ae0e54dbe1514b3d5a33293b4250e0be4}
+
+
+Definition at line 74 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_aa87c827150245f5859ca47fc303eceb8}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!fishery\-\_\-age\-\_\-comp\-\_\-likelihood\-\_\-component\-\_\-id@{fishery\-\_\-age\-\_\-comp\-\_\-likelihood\-\_\-component\-\_\-id}}
+\index{fishery\-\_\-age\-\_\-comp\-\_\-likelihood\-\_\-component\-\_\-id@{fishery\-\_\-age\-\_\-comp\-\_\-likelihood\-\_\-component\-\_\-id}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{fishery\-\_\-age\-\_\-comp\-\_\-likelihood\-\_\-component\-\_\-id}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ int {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::fishery\-\_\-age\-\_\-comp\-\_\-likelihood\-\_\-component\-\_\-id = -\/999}}\label{structmas_1_1_fleet_aa87c827150245f5859ca47fc303eceb8}
+
+
+Definition at line 73 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_abd3235a7cfd42c0106c59e8b51f4671d}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!fishery\-\_\-biomass\-\_\-likelihood\-\_\-component@{fishery\-\_\-biomass\-\_\-likelihood\-\_\-component}}
+\index{fishery\-\_\-biomass\-\_\-likelihood\-\_\-component@{fishery\-\_\-biomass\-\_\-likelihood\-\_\-component}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{fishery\-\_\-biomass\-\_\-likelihood\-\_\-component}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::shared\-\_\-ptr$<${\bf mas\-::\-N\-L\-L\-Functor}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::fishery\-\_\-biomass\-\_\-likelihood\-\_\-component}}\label{structmas_1_1_fleet_abd3235a7cfd42c0106c59e8b51f4671d}
+
+
+Definition at line 77 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a2f3667e571a5c22538606e4c3156f7b5}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!fishery\-\_\-biomass\-\_\-likelihood\-\_\-component\-\_\-id@{fishery\-\_\-biomass\-\_\-likelihood\-\_\-component\-\_\-id}}
+\index{fishery\-\_\-biomass\-\_\-likelihood\-\_\-component\-\_\-id@{fishery\-\_\-biomass\-\_\-likelihood\-\_\-component\-\_\-id}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{fishery\-\_\-biomass\-\_\-likelihood\-\_\-component\-\_\-id}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ int {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::fishery\-\_\-biomass\-\_\-likelihood\-\_\-component\-\_\-id = -\/999}}\label{structmas_1_1_fleet_a2f3667e571a5c22538606e4c3156f7b5}
+
+
+Definition at line 76 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a983d40b11fbaef98245d435a6420f162}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!has\-\_\-catch\-\_\-data\-\_\-annual\-\_\-biomass@{has\-\_\-catch\-\_\-data\-\_\-annual\-\_\-biomass}}
+\index{has\-\_\-catch\-\_\-data\-\_\-annual\-\_\-biomass@{has\-\_\-catch\-\_\-data\-\_\-annual\-\_\-biomass}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{has\-\_\-catch\-\_\-data\-\_\-annual\-\_\-biomass}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ bool {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::has\-\_\-catch\-\_\-data\-\_\-annual\-\_\-biomass}}\label{structmas_1_1_fleet_a983d40b11fbaef98245d435a6420f162}
+
+
+Definition at line 56 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_aab0d326e2e7fb03bcd5a8073b526c255}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!has\-\_\-catch\-\_\-data\-\_\-biomass\-\_\-time\-\_\-by\-\_\-age@{has\-\_\-catch\-\_\-data\-\_\-biomass\-\_\-time\-\_\-by\-\_\-age}}
+\index{has\-\_\-catch\-\_\-data\-\_\-biomass\-\_\-time\-\_\-by\-\_\-age@{has\-\_\-catch\-\_\-data\-\_\-biomass\-\_\-time\-\_\-by\-\_\-age}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{has\-\_\-catch\-\_\-data\-\_\-biomass\-\_\-time\-\_\-by\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ bool {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::has\-\_\-catch\-\_\-data\-\_\-biomass\-\_\-time\-\_\-by\-\_\-age}}\label{structmas_1_1_fleet_aab0d326e2e7fb03bcd5a8073b526c255}
+
+
+Definition at line 57 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_ab292045bcb9dd21ab25a0b6f2404e351}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!has\-\_\-catch\-\_\-data\-\_\-numbers\-\_\-at\-\_\-age@{has\-\_\-catch\-\_\-data\-\_\-numbers\-\_\-at\-\_\-age}}
+\index{has\-\_\-catch\-\_\-data\-\_\-numbers\-\_\-at\-\_\-age@{has\-\_\-catch\-\_\-data\-\_\-numbers\-\_\-at\-\_\-age}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{has\-\_\-catch\-\_\-data\-\_\-numbers\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ bool {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::has\-\_\-catch\-\_\-data\-\_\-numbers\-\_\-at\-\_\-age}}\label{structmas_1_1_fleet_ab292045bcb9dd21ab25a0b6f2404e351}
+
+
+Definition at line 58 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_af74c0ec58026828cd286f6f4c317e517}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!has\-\_\-catch\-\_\-data\-\_\-proportion\-\_\-at\-\_\-age@{has\-\_\-catch\-\_\-data\-\_\-proportion\-\_\-at\-\_\-age}}
+\index{has\-\_\-catch\-\_\-data\-\_\-proportion\-\_\-at\-\_\-age@{has\-\_\-catch\-\_\-data\-\_\-proportion\-\_\-at\-\_\-age}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{has\-\_\-catch\-\_\-data\-\_\-proportion\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ bool {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::has\-\_\-catch\-\_\-data\-\_\-proportion\-\_\-at\-\_\-age}}\label{structmas_1_1_fleet_af74c0ec58026828cd286f6f4c317e517}
+
+
+Definition at line 59 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a43e9e4e070b2a3d7ab2c9a0ab59b1d15}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!N\-\_\-diff2@{N\-\_\-diff2}}
+\index{N\-\_\-diff2@{N\-\_\-diff2}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{N\-\_\-diff2}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::N\-\_\-diff2}}\label{structmas_1_1_fleet_a43e9e4e070b2a3d7ab2c9a0ab59b1d15}
+
+
+Definition at line 141 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a1f236a57978e3fbd4b59aeae849b00b5}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!N\-\_\-\-Proportion\-\_\-diff2@{N\-\_\-\-Proportion\-\_\-diff2}}
+\index{N\-\_\-\-Proportion\-\_\-diff2@{N\-\_\-\-Proportion\-\_\-diff2}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{N\-\_\-\-Proportion\-\_\-diff2}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::N\-\_\-\-Proportion\-\_\-diff2}}\label{structmas_1_1_fleet_a1f236a57978e3fbd4b59aeae849b00b5}
+
+
+Definition at line 142 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a4c22a8ff3dfa7b1a7684afccfc461c54}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!name@{name}}
+\index{name@{name}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{name}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::string {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::name}}\label{structmas_1_1_fleet_a4c22a8ff3dfa7b1a7684afccfc461c54}
+
+
+Definition at line 50 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a36c9122dc2cb7bb8bf4d2a060c001f2a}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!nll@{nll}}
+\index{nll@{nll}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{nll}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ {\bf variable} {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::nll}}\label{structmas_1_1_fleet_a36c9122dc2cb7bb8bf4d2a060c001f2a}
+
+
+Definition at line 150 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a41686751b90e9c47278be5df82eb0f3c}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!nll\-\_\-components@{nll\-\_\-components}}
+\index{nll\-\_\-components@{nll\-\_\-components}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{nll\-\_\-components}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf N\-L\-L\-Component}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::nll\-\_\-components}}\label{structmas_1_1_fleet_a41686751b90e9c47278be5df82eb0f3c}
+
+
+Definition at line 157 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a1f88d8e497852415b1e4010f8ab4d18f}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!numbers\-\_\-at\-\_\-age@{numbers\-\_\-at\-\_\-age}}
+\index{numbers\-\_\-at\-\_\-age@{numbers\-\_\-at\-\_\-age}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{numbers\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::numbers\-\_\-at\-\_\-age}}\label{structmas_1_1_fleet_a1f88d8e497852415b1e4010f8ab4d18f}
+
+
+Definition at line 109 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_afbe9209cae969e13ee6480efab603e02}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!numbers\-\_\-at\-\_\-age\-\_\-females@{numbers\-\_\-at\-\_\-age\-\_\-females}}
+\index{numbers\-\_\-at\-\_\-age\-\_\-females@{numbers\-\_\-at\-\_\-age\-\_\-females}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{numbers\-\_\-at\-\_\-age\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::numbers\-\_\-at\-\_\-age\-\_\-females}}\label{structmas_1_1_fleet_afbe9209cae969e13ee6480efab603e02}
+
+
+Definition at line 130 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_aa4aa9e9a3d34fc15d15543ae02aea2bd}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!numbers\-\_\-at\-\_\-age\-\_\-males@{numbers\-\_\-at\-\_\-age\-\_\-males}}
+\index{numbers\-\_\-at\-\_\-age\-\_\-males@{numbers\-\_\-at\-\_\-age\-\_\-males}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{numbers\-\_\-at\-\_\-age\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::numbers\-\_\-at\-\_\-age\-\_\-males}}\label{structmas_1_1_fleet_aa4aa9e9a3d34fc15d15543ae02aea2bd}
+
+
+Definition at line 120 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_ad7457fd4d7e459925b87d50dc591b04c}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!numbers\-\_\-total@{numbers\-\_\-total}}
+\index{numbers\-\_\-total@{numbers\-\_\-total}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{numbers\-\_\-total}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::numbers\-\_\-total}}\label{structmas_1_1_fleet_ad7457fd4d7e459925b87d50dc591b04c}
+
+
+Definition at line 110 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a18952440bdaafdde0b75dd313ad542f5}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!numbers\-\_\-total\-\_\-females@{numbers\-\_\-total\-\_\-females}}
+\index{numbers\-\_\-total\-\_\-females@{numbers\-\_\-total\-\_\-females}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{numbers\-\_\-total\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::numbers\-\_\-total\-\_\-females}}\label{structmas_1_1_fleet_a18952440bdaafdde0b75dd313ad542f5}
+
+
+Definition at line 131 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a40064758c90639b12944f9ef12aeaf01}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!numbers\-\_\-total\-\_\-males@{numbers\-\_\-total\-\_\-males}}
+\index{numbers\-\_\-total\-\_\-males@{numbers\-\_\-total\-\_\-males}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{numbers\-\_\-total\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::numbers\-\_\-total\-\_\-males}}\label{structmas_1_1_fleet_a40064758c90639b12944f9ef12aeaf01}
+
+
+Definition at line 121 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_aaa8ca2ea30b1afee976199eaabd6caa0}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!operational\-\_\-areas@{operational\-\_\-areas}}
+\index{operational\-\_\-areas@{operational\-\_\-areas}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{operational\-\_\-areas}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-set$<$int$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::operational\-\_\-areas}}\label{structmas_1_1_fleet_aaa8ca2ea30b1afee976199eaabd6caa0}
+
+
+Definition at line 79 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a19e63403b6cc924ffbbf4876fdeb1cd0}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!proportion\-\_\-at\-\_\-age@{proportion\-\_\-at\-\_\-age}}
+\index{proportion\-\_\-at\-\_\-age@{proportion\-\_\-at\-\_\-age}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{proportion\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::proportion\-\_\-at\-\_\-age}}\label{structmas_1_1_fleet_a19e63403b6cc924ffbbf4876fdeb1cd0}
+
+
+Definition at line 111 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a8d2308d55f6d12305f288caefe6cac1a}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!proportion\-\_\-at\-\_\-age\-\_\-females@{proportion\-\_\-at\-\_\-age\-\_\-females}}
+\index{proportion\-\_\-at\-\_\-age\-\_\-females@{proportion\-\_\-at\-\_\-age\-\_\-females}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{proportion\-\_\-at\-\_\-age\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::proportion\-\_\-at\-\_\-age\-\_\-females}}\label{structmas_1_1_fleet_a8d2308d55f6d12305f288caefe6cac1a}
+
+
+Definition at line 132 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a8a3bf314e6f6249f84fdaded007a0067}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!proportion\-\_\-at\-\_\-age\-\_\-males@{proportion\-\_\-at\-\_\-age\-\_\-males}}
+\index{proportion\-\_\-at\-\_\-age\-\_\-males@{proportion\-\_\-at\-\_\-age\-\_\-males}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{proportion\-\_\-at\-\_\-age\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<${\bf variable}$>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::proportion\-\_\-at\-\_\-age\-\_\-males}}\label{structmas_1_1_fleet_a8a3bf314e6f6249f84fdaded007a0067}
+
+
+Definition at line 122 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a2eba2d477fe351f44a1c22f51f75018f}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!season\-\_\-area\-\_\-fishing\-\_\-mortality@{season\-\_\-area\-\_\-fishing\-\_\-mortality}}
+\index{season\-\_\-area\-\_\-fishing\-\_\-mortality@{season\-\_\-area\-\_\-fishing\-\_\-mortality}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{season\-\_\-area\-\_\-fishing\-\_\-mortality}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Fishing\-Mortality}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::season\-\_\-area\-\_\-fishing\-\_\-mortality}}\label{structmas_1_1_fleet_a2eba2d477fe351f44a1c22f51f75018f}
+
+
+Definition at line 90 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_acab7b946bf0d12476d4167f9d35693e8}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!season\-\_\-area\-\_\-fishing\-\_\-mortality\-\_\-ids@{season\-\_\-area\-\_\-fishing\-\_\-mortality\-\_\-ids}}
+\index{season\-\_\-area\-\_\-fishing\-\_\-mortality\-\_\-ids@{season\-\_\-area\-\_\-fishing\-\_\-mortality\-\_\-ids}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{season\-\_\-area\-\_\-fishing\-\_\-mortality\-\_\-ids}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::unordered\-\_\-map$<$int, int$>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::season\-\_\-area\-\_\-fishing\-\_\-mortality\-\_\-ids}}\label{structmas_1_1_fleet_acab7b946bf0d12476d4167f9d35693e8}
+
+
+Definition at line 89 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_aa8e734855b66757bf86314f6ae76878c}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!season\-\_\-area\-\_\-selectivity@{season\-\_\-area\-\_\-selectivity}}
+\index{season\-\_\-area\-\_\-selectivity@{season\-\_\-area\-\_\-selectivity}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{season\-\_\-area\-\_\-selectivity}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Selectivity\-Base}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::season\-\_\-area\-\_\-selectivity}}\label{structmas_1_1_fleet_aa8e734855b66757bf86314f6ae76878c}
+
+
+Definition at line 81 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a2c2c1b323ec7845085ebe105b5f64096}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!season\-\_\-area\-\_\-selectivity\-\_\-ids@{season\-\_\-area\-\_\-selectivity\-\_\-ids}}
+\index{season\-\_\-area\-\_\-selectivity\-\_\-ids@{season\-\_\-area\-\_\-selectivity\-\_\-ids}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{season\-\_\-area\-\_\-selectivity\-\_\-ids}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::unordered\-\_\-map$<$int, int$>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::season\-\_\-area\-\_\-selectivity\-\_\-ids}}\label{structmas_1_1_fleet_a2c2c1b323ec7845085ebe105b5f64096}
+
+
+Definition at line 80 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a389f70f4bb3190303aba1ae9aca8c018}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!seasons@{seasons}}
+\index{seasons@{seasons}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{seasons}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ int {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::seasons}}\label{structmas_1_1_fleet_a389f70f4bb3190303aba1ae9aca8c018}
+
+
+Definition at line 54 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a823238fd7eb794d49a64743395bf1ae5}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!years@{years}}
+\index{years@{years}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{years}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ int {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::years}}\label{structmas_1_1_fleet_a823238fd7eb794d49a64743395bf1ae5}
+
+
+Definition at line 53 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a0bd290f2fba5bd5f00a1666673d77a3b}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!z\-\_\-at\-\_\-age@{z\-\_\-at\-\_\-age}}
+\index{z\-\_\-at\-\_\-age@{z\-\_\-at\-\_\-age}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{z\-\_\-at\-\_\-age}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::unordered\-\_\-map$<$int, std\-::vector$<${\bf variable}$>$ $>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::z\-\_\-at\-\_\-age}}\label{structmas_1_1_fleet_a0bd290f2fba5bd5f00a1666673d77a3b}
+
+
+Definition at line 116 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_afb9df73617514f0606882e3ae2abb63c}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!z\-\_\-at\-\_\-age\-\_\-females@{z\-\_\-at\-\_\-age\-\_\-females}}
+\index{z\-\_\-at\-\_\-age\-\_\-females@{z\-\_\-at\-\_\-age\-\_\-females}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{z\-\_\-at\-\_\-age\-\_\-females}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::unordered\-\_\-map$<$int, std\-::vector$<${\bf variable}$>$ $>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::z\-\_\-at\-\_\-age\-\_\-females}}\label{structmas_1_1_fleet_afb9df73617514f0606882e3ae2abb63c}
+
+
+Definition at line 137 of file Fleet.\-hpp.
+
+\hypertarget{structmas_1_1_fleet_a177b878b912cd2c01729070c46e0f27d}{\index{mas\-::\-Fleet@{mas\-::\-Fleet}!z\-\_\-at\-\_\-age\-\_\-males@{z\-\_\-at\-\_\-age\-\_\-males}}
+\index{z\-\_\-at\-\_\-age\-\_\-males@{z\-\_\-at\-\_\-age\-\_\-males}!mas::Fleet@{mas\-::\-Fleet}}
+\subsubsection[{z\-\_\-at\-\_\-age\-\_\-males}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::unordered\-\_\-map$<$int, std\-::vector$<${\bf variable}$>$ $>$ $>$ {\bf mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::z\-\_\-at\-\_\-age\-\_\-males}}\label{structmas_1_1_fleet_a177b878b912cd2c01729070c46e0f27d}
+
+
+Definition at line 127 of file Fleet.\-hpp.
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/oppy/\-Net\-Beans\-Projects/mas/\hyperlink{_fleet_8hpp}{Fleet.\-hpp}\end{DoxyCompactItemize}

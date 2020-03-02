@@ -1,0 +1,129 @@
+MAS Run: Wed Feb 26 13:07:54 2020
+
+Configuration Warning: Recruitment model "Von Bertalannfy Modified" does not define "l_inf". Model will use the default value of 0 and "l_inf" will not be estimated.
+Configuration Warning: Recruitment model "Von Bertalannfy Modified" does not define "l_inf". Model will use the default value of 0 and "l_inf" will not be estimated.
+Configuration Warning: No "sigma" defined for selectivity model "1". Default is set to 0.5.
+Configuration Warning: No "sigma" defined for selectivity model "2". Default is set to 0.5.
+Configuration Warning: No "sigma" defined for selectivity model "3". Default is set to 0.5.
+Configuration Warning: No "sigma" defined for selectivity model "4". Default is set to 0.5.
+Configuration Warning: No "sigma" defined for selectivity model "5". Default is set to 0.5.
+Configuration Warning: No "sigma" defined for selectivity model "6". Default is set to 0.5.
+Configuration Warning: No "sigma" defined for selectivity model "7". Default is set to 0.5.
+Configuration Warning: initial number deviations for population "2" not defined.
+
+
+Estimated Parameters						Initial Value						Phase
+
+Recruitment:
+beverton_holt_alt__log_R0_2						14.7318						1
+beverton_holt_alt_h_2						0.75						2
+recruitment_deviations[0]_2						0						1
+recruitment_deviations[1]_2						0						1
+recruitment_deviations[2]_2						0						1
+recruitment_deviations[3]_2						0						1
+recruitment_deviations[4]_2						0						1
+recruitment_deviations[5]_2						0						1
+recruitment_deviations[6]_2						0						1
+recruitment_deviations[7]_2						0						1
+recruitment_deviations[8]_2						0						1
+recruitment_deviations[9]_2						0						1
+recruitment_deviations[10]_2						0						1
+recruitment_deviations[11]_2						0						1
+recruitment_deviations[12]_2						0						1
+recruitment_deviations[13]_2						0						1
+recruitment_deviations[14]_2						0						1
+recruitment_deviations[15]_2						0						1
+recruitment_deviations[16]_2						0						1
+recruitment_deviations[17]_2						0						1
+recruitment_deviations[18]_2						0						1
+recruitment_deviations[19]_2						0						1
+recruitment_deviations[20]_2						0						1
+recruitment_deviations[21]_2						0						1
+recruitment_deviations[22]_2						0						1
+recruitment_deviations[23]_2						0						1
+recruitment_deviations[24]_2						0						1
+recruitment_deviations[25]_2						0						1
+recruitment_deviations[26]_2						0						1
+recruitment_deviations[27]_2						0						1
+recruitment_deviations[28]_2						0						1
+recruitment_deviations[29]_2						0						1
+beverton_holt_alt__log_R0_1						15.4249						1
+beverton_holt_alt_h_1						0.75						2
+recruitment_deviations[0]_1						0						1
+recruitment_deviations[1]_1						0						1
+recruitment_deviations[2]_1						0						1
+recruitment_deviations[3]_1						0						1
+recruitment_deviations[4]_1						0						1
+recruitment_deviations[5]_1						0						1
+recruitment_deviations[6]_1						0						1
+recruitment_deviations[7]_1						0						1
+recruitment_deviations[8]_1						0						1
+recruitment_deviations[9]_1						0						1
+recruitment_deviations[10]_1						0						1
+recruitment_deviations[11]_1						0						1
+recruitment_deviations[12]_1						0						1
+recruitment_deviations[13]_1						0						1
+recruitment_deviations[14]_1						0						1
+recruitment_deviations[15]_1						0						1
+recruitment_deviations[16]_1						0						1
+recruitment_deviations[17]_1						0						1
+recruitment_deviations[18]_1						0						1
+recruitment_deviations[19]_1						0						1
+recruitment_deviations[20]_1						0						1
+recruitment_deviations[21]_1						0						1
+recruitment_deviations[22]_1						0						1
+recruitment_deviations[23]_1						0						1
+recruitment_deviations[24]_1						0						1
+recruitment_deviations[25]_1						0						1
+recruitment_deviations[26]_1						0						1
+recruitment_deviations[27]_1						0						1
+recruitment_deviations[28]_1						0						1
+recruitment_deviations[29]_1						0						1
+
+Growth:
+
+NLL Component:
+
+Selectivity:
+logistic_selectivity_a50_4						3						1
+logistic_selectivity_s_4						0.25						2
+logistic_selectivity_a50_3						3						1
+logistic_selectivity_s_3						0.25						2
+logistic_selectivity_a50_2						2.5						1
+logistic_selectivity_s_2						0.25						2
+logistic_selectivity_a50_1						2.5						1
+logistic_selectivity_s_1						0.25						2
+
+Movement:
+
+Natural Mortality:
+fishing_mortality[0][0]_1						0.1						1
+fishing_mortality[1][0]_1						0.1						1
+fishing_mortality[2][0]_1						0.1						1
+fishing_mortality[3][0]_1						0.1						1
+fishing_mortality[4][0]_1						0.1						1
+fishing_mortality[5][0]_1						0.1						1
+fishing_mortality[6][0]_1						0.1						1
+fishing_mortality[7][0]_1						0.1						1
+fishing_mortality[8][0]_1						0.1						1
+fishing_mortality[17][0]_1						0.4						1
+fishing_mortality[9][0]_1						0.1						1
+fishing_mortality[10][0]_1						0.4						1
+fishing_mortality[11][0]_1						0.4						1
+fishing_mortality[12][0]_1						0.4						1
+fishing_mortality[13][0]_1						0.4						1
+fishing_mortality[14][0]_1						0.4						1
+fishing_mortality[15][0]_1						0.4						1
+fishing_mortality[16][0]_1						0.4						1
+fishing_mortality[18][0]_1						0.4						1
+fishing_mortality[19][0]_1						0.4						1
+fishing_mortality[20][0]_1						0.2						1
+fishing_mortality[21][0]_1						0.2						1
+fishing_mortality[22][0]_1						0.2						1
+fishing_mortality[23][0]_1						0.2						1
+fishing_mortality[24][0]_1						0.2						1
+fishing_mortality[25][0]_1						0.2						1
+fishing_mortality[26][0]_1						0.2						1
+fishing_mortality[27][0]_1						0.2						1
+fishing_mortality[28][0]_1						0.2						1
+fishing_mortality[29][0]_1						0.2						1

@@ -1,0 +1,190 @@
+\hypertarget{structmas_1_1_growth_base}{\section{mas\-:\-:Growth\-Base$<$ R\-E\-A\-L\-\_\-\-T $>$ Struct Template Reference}
+\label{structmas_1_1_growth_base}\index{mas\-::\-Growth\-Base$<$ R\-E\-A\-L\-\_\-\-T $>$@{mas\-::\-Growth\-Base$<$ R\-E\-A\-L\-\_\-\-T $>$}}
+}
+
+
+{\ttfamily \#include $<$Growth.\-hpp$>$}
+
+Inheritance diagram for mas\-:\-:Growth\-Base$<$ R\-E\-A\-L\-\_\-\-T $>$\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.111111cm]{structmas_1_1_growth_base}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{structmas_1_1_variable_trait}{Variable\-Trait}$<$ R\-E\-A\-L\-\_\-\-T $>$\\*
+\-::\hyperlink{structmas_1_1_growth_base_a2b2f3559be1ce3134ab0a145fa3a8f43}{variable} \hyperlink{structmas_1_1_growth_base_a2b2f3559be1ce3134ab0a145fa3a8f43}{variable}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual const \hyperlink{structmas_1_1_growth_base_a2b2f3559be1ce3134ab0a145fa3a8f43}{variable} \hyperlink{structmas_1_1_growth_base_a381e3400e22b2739830351acdf4689b5}{Evaluate} (const \hyperlink{structmas_1_1_growth_base_a2b2f3559be1ce3134ab0a145fa3a8f43}{variable} \&age, const int \&sex)=0
+\item 
+const \hyperlink{structmas_1_1_growth_base_a2b2f3559be1ce3134ab0a145fa3a8f43}{variable} \hyperlink{structmas_1_1_growth_base_afa288d34bcad493a5a893ffe8d3c0920}{Weight} (const \hyperlink{structmas_1_1_growth_base_a2b2f3559be1ce3134ab0a145fa3a8f43}{variable} \&length, const int \&sex)
+\item 
+virtual const \hyperlink{structmas_1_1_growth_base_a2b2f3559be1ce3134ab0a145fa3a8f43}{variable} \hyperlink{structmas_1_1_growth_base_a74588899b86934b281e51b8a4fb15876}{Variance} (const \hyperlink{structmas_1_1_growth_base_a2b2f3559be1ce3134ab0a145fa3a8f43}{variable} \&age, const int \&sex)
+\item 
+virtual const std\-::string \hyperlink{structmas_1_1_growth_base_a3645c79a5cd9ed606bcf2f381aef5259}{Name} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structmas_1_1_growth_base_a2b2f3559be1ce3134ab0a145fa3a8f43}{variable} \hyperlink{structmas_1_1_growth_base_aab84c98377a8d04e4dcaaa7e7e19d2e2}{a\-\_\-min}
+\item 
+\hyperlink{structmas_1_1_growth_base_a2b2f3559be1ce3134ab0a145fa3a8f43}{variable} \hyperlink{structmas_1_1_growth_base_af5003b2a605a0107482b9dd9d368ef2d}{a\-\_\-max}
+\item 
+\hyperlink{structmas_1_1_growth_base_a2b2f3559be1ce3134ab0a145fa3a8f43}{variable} \hyperlink{structmas_1_1_growth_base_a412552f9b7d23d1c1f056e826b8981ae}{alpha\-\_\-f} = 0.\-000025
+\item 
+\hyperlink{structmas_1_1_growth_base_a2b2f3559be1ce3134ab0a145fa3a8f43}{variable} \hyperlink{structmas_1_1_growth_base_a396354505138367e93a446571e934e9e}{alpha\-\_\-m} = 0.\-000025
+\item 
+\hyperlink{structmas_1_1_growth_base_a2b2f3559be1ce3134ab0a145fa3a8f43}{variable} \hyperlink{structmas_1_1_growth_base_ab24d4baacfb805e7b48db9b74e332658}{beta\-\_\-f} = 3.\-0
+\item 
+\hyperlink{structmas_1_1_growth_base_a2b2f3559be1ce3134ab0a145fa3a8f43}{variable} \hyperlink{structmas_1_1_growth_base_a17b3c2eef24ac82f2feb94119eb4ae64}{beta\-\_\-m} = 3.\-0
+\item 
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_data_object}{mas\-::\-Data\-Object}$<$ \hyperlink{structmas_1_1_growth_base_a2b2f3559be1ce3134ab0a145fa3a8f43}{variable} $>$ $>$ \hyperlink{structmas_1_1_growth_base_a8b31d8d43f6ec3383d3be31a674f997a}{age\-\_\-length\-\_\-key}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename R\-E\-A\-L\-\_\-\-T$>$struct mas\-::\-Growth\-Base$<$ R\-E\-A\-L\-\_\-\-T $>$}
+
+
+
+Definition at line 41 of file Growth.\-hpp.
+
+
+
+\subsection{Member Typedef Documentation}
+\hypertarget{structmas_1_1_growth_base_a2b2f3559be1ce3134ab0a145fa3a8f43}{\index{mas\-::\-Growth\-Base@{mas\-::\-Growth\-Base}!variable@{variable}}
+\index{variable@{variable}!mas::GrowthBase@{mas\-::\-Growth\-Base}}
+\subsubsection[{variable}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T $>$ typedef {\bf Variable\-Trait}$<$R\-E\-A\-L\-\_\-\-T$>$\-::{\bf variable} {\bf mas\-::\-Growth\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf variable}}}\label{structmas_1_1_growth_base_a2b2f3559be1ce3134ab0a145fa3a8f43}
+
+
+Definition at line 42 of file Growth.\-hpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{structmas_1_1_growth_base_a381e3400e22b2739830351acdf4689b5}{\index{mas\-::\-Growth\-Base@{mas\-::\-Growth\-Base}!Evaluate@{Evaluate}}
+\index{Evaluate@{Evaluate}!mas::GrowthBase@{mas\-::\-Growth\-Base}}
+\subsubsection[{Evaluate}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T $>$ virtual const {\bf variable} {\bf mas\-::\-Growth\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Evaluate (
+\begin{DoxyParamCaption}
+\item[{const {\bf variable} \&}]{age, }
+\item[{const int \&}]{sex}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{structmas_1_1_growth_base_a381e3400e22b2739830351acdf4689b5}
+Computes the length of a fish at age by sex.
+
+
+\begin{DoxyParams}{Parameters}
+{\em age} & \\
+\hline
+{\em sex} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+length 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{structmas_1_1_schnute_case_i_v_a8100c63161dead550bf517365e355fec}{mas\-::\-Schnute\-Case\-I\-V$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_schnute_case_i_i_i_a36829dacc125f07c7c9595f1e8ca0d8a}{mas\-::\-Schnute\-Case\-I\-I\-I$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_schnute_case_i_i_ac582befc654cf955f0afafed8889b0e1}{mas\-::\-Schnute\-Case\-I\-I$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_schnute_case_i_acc1a2f969120393ef5275ee3f297dfc9}{mas\-::\-Schnute\-Case\-I$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_von_bertalanffy_modified_ac5e51a32119b7353bb32d64f440416c7}{mas\-::\-Von\-Bertalanffy\-Modified$<$ R\-E\-A\-L\-\_\-\-T $>$}, and \hyperlink{structmas_1_1_von_bertalanffy_ac89c031af93f2baf47d357bca9c37b6a}{mas\-::\-Von\-Bertalanffy$<$ R\-E\-A\-L\-\_\-\-T $>$}.
+
+\hypertarget{structmas_1_1_growth_base_a3645c79a5cd9ed606bcf2f381aef5259}{\index{mas\-::\-Growth\-Base@{mas\-::\-Growth\-Base}!Name@{Name}}
+\index{Name@{Name}!mas::GrowthBase@{mas\-::\-Growth\-Base}}
+\subsubsection[{Name}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T $>$ virtual const std\-::string {\bf mas\-::\-Growth\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{structmas_1_1_growth_base_a3645c79a5cd9ed606bcf2f381aef5259}
+
+
+Reimplemented in \hyperlink{structmas_1_1_schnute_case_i_v_a7193145ce124fd855fc7d950a936fc20}{mas\-::\-Schnute\-Case\-I\-V$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_schnute_case_i_i_i_a0b7e35620fbbdc033702c304054aa9e3}{mas\-::\-Schnute\-Case\-I\-I\-I$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_schnute_case_i_i_a1f2900afe54ea24bcd555dd5eab8ce03}{mas\-::\-Schnute\-Case\-I\-I$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_schnute_case_i_a5588227ee2b536f92b34c02d95a7d148}{mas\-::\-Schnute\-Case\-I$<$ R\-E\-A\-L\-\_\-\-T $>$}, \hyperlink{structmas_1_1_von_bertalanffy_modified_a6c845df6e13d5219cd56614d323aaa79}{mas\-::\-Von\-Bertalanffy\-Modified$<$ R\-E\-A\-L\-\_\-\-T $>$}, and \hyperlink{structmas_1_1_von_bertalanffy_a8d8c204940577c3b4e515baae839c15d}{mas\-::\-Von\-Bertalanffy$<$ R\-E\-A\-L\-\_\-\-T $>$}.
+
+
+
+Definition at line 71 of file Growth.\-hpp.
+
+\hypertarget{structmas_1_1_growth_base_a74588899b86934b281e51b8a4fb15876}{\index{mas\-::\-Growth\-Base@{mas\-::\-Growth\-Base}!Variance@{Variance}}
+\index{Variance@{Variance}!mas::GrowthBase@{mas\-::\-Growth\-Base}}
+\subsubsection[{Variance}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T $>$ virtual const {\bf variable} {\bf mas\-::\-Growth\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Variance (
+\begin{DoxyParamCaption}
+\item[{const {\bf variable} \&}]{age, }
+\item[{const int \&}]{sex}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{structmas_1_1_growth_base_a74588899b86934b281e51b8a4fb15876}
+
+
+Definition at line 67 of file Growth.\-hpp.
+
+\hypertarget{structmas_1_1_growth_base_afa288d34bcad493a5a893ffe8d3c0920}{\index{mas\-::\-Growth\-Base@{mas\-::\-Growth\-Base}!Weight@{Weight}}
+\index{Weight@{Weight}!mas::GrowthBase@{mas\-::\-Growth\-Base}}
+\subsubsection[{Weight}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T $>$ const {\bf variable} {\bf mas\-::\-Growth\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Weight (
+\begin{DoxyParamCaption}
+\item[{const {\bf variable} \&}]{length, }
+\item[{const int \&}]{sex}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmas_1_1_growth_base_afa288d34bcad493a5a893ffe8d3c0920}
+
+
+Definition at line 62 of file Growth.\-hpp.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structmas_1_1_growth_base_af5003b2a605a0107482b9dd9d368ef2d}{\index{mas\-::\-Growth\-Base@{mas\-::\-Growth\-Base}!a\-\_\-max@{a\-\_\-max}}
+\index{a\-\_\-max@{a\-\_\-max}!mas::GrowthBase@{mas\-::\-Growth\-Base}}
+\subsubsection[{a\-\_\-max}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T $>$ {\bf variable} {\bf mas\-::\-Growth\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::a\-\_\-max}}\label{structmas_1_1_growth_base_af5003b2a605a0107482b9dd9d368ef2d}
+
+
+Definition at line 44 of file Growth.\-hpp.
+
+\hypertarget{structmas_1_1_growth_base_aab84c98377a8d04e4dcaaa7e7e19d2e2}{\index{mas\-::\-Growth\-Base@{mas\-::\-Growth\-Base}!a\-\_\-min@{a\-\_\-min}}
+\index{a\-\_\-min@{a\-\_\-min}!mas::GrowthBase@{mas\-::\-Growth\-Base}}
+\subsubsection[{a\-\_\-min}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T $>$ {\bf variable} {\bf mas\-::\-Growth\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::a\-\_\-min}}\label{structmas_1_1_growth_base_aab84c98377a8d04e4dcaaa7e7e19d2e2}
+
+
+Definition at line 43 of file Growth.\-hpp.
+
+\hypertarget{structmas_1_1_growth_base_a8b31d8d43f6ec3383d3be31a674f997a}{\index{mas\-::\-Growth\-Base@{mas\-::\-Growth\-Base}!age\-\_\-length\-\_\-key@{age\-\_\-length\-\_\-key}}
+\index{age\-\_\-length\-\_\-key@{age\-\_\-length\-\_\-key}!mas::GrowthBase@{mas\-::\-Growth\-Base}}
+\subsubsection[{age\-\_\-length\-\_\-key}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T $>$ std\-::shared\-\_\-ptr$<${\bf mas\-::\-Data\-Object}$<${\bf variable}$>$ $>$ {\bf mas\-::\-Growth\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::age\-\_\-length\-\_\-key}}\label{structmas_1_1_growth_base_a8b31d8d43f6ec3383d3be31a674f997a}
+
+
+Definition at line 51 of file Growth.\-hpp.
+
+\hypertarget{structmas_1_1_growth_base_a412552f9b7d23d1c1f056e826b8981ae}{\index{mas\-::\-Growth\-Base@{mas\-::\-Growth\-Base}!alpha\-\_\-f@{alpha\-\_\-f}}
+\index{alpha\-\_\-f@{alpha\-\_\-f}!mas::GrowthBase@{mas\-::\-Growth\-Base}}
+\subsubsection[{alpha\-\_\-f}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T $>$ {\bf variable} {\bf mas\-::\-Growth\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::alpha\-\_\-f = 0.\-000025}}\label{structmas_1_1_growth_base_a412552f9b7d23d1c1f056e826b8981ae}
+
+
+Definition at line 46 of file Growth.\-hpp.
+
+\hypertarget{structmas_1_1_growth_base_a396354505138367e93a446571e934e9e}{\index{mas\-::\-Growth\-Base@{mas\-::\-Growth\-Base}!alpha\-\_\-m@{alpha\-\_\-m}}
+\index{alpha\-\_\-m@{alpha\-\_\-m}!mas::GrowthBase@{mas\-::\-Growth\-Base}}
+\subsubsection[{alpha\-\_\-m}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T $>$ {\bf variable} {\bf mas\-::\-Growth\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::alpha\-\_\-m = 0.\-000025}}\label{structmas_1_1_growth_base_a396354505138367e93a446571e934e9e}
+
+
+Definition at line 47 of file Growth.\-hpp.
+
+\hypertarget{structmas_1_1_growth_base_ab24d4baacfb805e7b48db9b74e332658}{\index{mas\-::\-Growth\-Base@{mas\-::\-Growth\-Base}!beta\-\_\-f@{beta\-\_\-f}}
+\index{beta\-\_\-f@{beta\-\_\-f}!mas::GrowthBase@{mas\-::\-Growth\-Base}}
+\subsubsection[{beta\-\_\-f}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T $>$ {\bf variable} {\bf mas\-::\-Growth\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::beta\-\_\-f = 3.\-0}}\label{structmas_1_1_growth_base_ab24d4baacfb805e7b48db9b74e332658}
+
+
+Definition at line 48 of file Growth.\-hpp.
+
+\hypertarget{structmas_1_1_growth_base_a17b3c2eef24ac82f2feb94119eb4ae64}{\index{mas\-::\-Growth\-Base@{mas\-::\-Growth\-Base}!beta\-\_\-m@{beta\-\_\-m}}
+\index{beta\-\_\-m@{beta\-\_\-m}!mas::GrowthBase@{mas\-::\-Growth\-Base}}
+\subsubsection[{beta\-\_\-m}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T $>$ {\bf variable} {\bf mas\-::\-Growth\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::beta\-\_\-m = 3.\-0}}\label{structmas_1_1_growth_base_a17b3c2eef24ac82f2feb94119eb4ae64}
+
+
+Definition at line 49 of file Growth.\-hpp.
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/oppy/\-Net\-Beans\-Projects/mas/\hyperlink{_growth_8hpp}{Growth.\-hpp}\end{DoxyCompactItemize}

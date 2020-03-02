@@ -1,0 +1,700 @@
+\hypertarget{classmas_1_1_information}{\section{mas\-:\-:Information$<$ R\-E\-A\-L\-\_\-\-T $>$ Class Template Reference}
+\label{classmas_1_1_information}\index{mas\-::\-Information$<$ R\-E\-A\-L\-\_\-\-T $>$@{mas\-::\-Information$<$ R\-E\-A\-L\-\_\-\-T $>$}}
+}
+
+
+{\ttfamily \#include $<$Information.\-hpp$>$}
+
+Inheritance diagram for mas\-:\-:Information$<$ R\-E\-A\-L\-\_\-\-T $>$\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmas_1_1_information}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_season}{mas\-::\-Season}$<$ R\-E\-A\-L\-\_\-\-T $>$\\*
+ $>$ $>$\-::iterator \hyperlink{classmas_1_1_information_a4ada3467c12527ed5400cc67e80e31f2}{seasons\-\_\-iterator}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_area}{mas\-::\-Area}$<$ R\-E\-A\-L\-\_\-\-T $>$\\*
+ $>$ $>$\-::iterator \hyperlink{classmas_1_1_information_a6183f0d8819e3ecb50239da88d2cfdb3}{area\-\_\-iterator}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{classmas_1_1_population}{mas\-::\-Population}$<$ R\-E\-A\-L\-\_\-\-T $>$\\*
+ $>$ $>$\-::iterator \hyperlink{classmas_1_1_information_a61b09f185a136338d02e6307134677d1}{population\-\_\-iterator}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_growth_base}{mas\-::\-Growth\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$\\*
+ $>$ $>$\-::iterator \hyperlink{classmas_1_1_information_aa19e91aec674c826cbb84ebdc1d17be7}{growth\-\_\-model\-\_\-iterator}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_recruitment_base}{mas\-::\-Recruitment\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$\\*
+ $>$ $>$\-::iterator \hyperlink{classmas_1_1_information_a3948a990e86ca1174a515134fbd78dc5}{recruitment\-\_\-model\-\_\-iterator}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_natural_mortality}{mas\-::\-Natural\-Mortality}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$\-::iterator \hyperlink{classmas_1_1_information_a146940168f5079ca711b74f29ea7d6bc}{natural\-\_\-mortality\-\_\-model\-\_\-iterator}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_fishing_mortality}{mas\-::\-Fishing\-Mortality}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$\-::iterator \hyperlink{classmas_1_1_information_a4410f0f10156666ee305f22698943955}{fishing\-\_\-mortality\-\_\-model\-\_\-iterator}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_fecundity_base}{mas\-::\-Fecundity\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$\\*
+ $>$ $>$\-::iterator \hyperlink{classmas_1_1_information_a1d4b59c5d61de9efed4709ce6e0a056a}{fecundity\-\_\-model\-\_\-iterator}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_movement}{mas\-::\-Movement}$<$ R\-E\-A\-L\-\_\-\-T $>$\\*
+ $>$ $>$\-::iterator \hyperlink{classmas_1_1_information_aa69e662c74a82f02c72a94684c289490}{movement\-\_\-model\-\_\-iterator}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_selectivity_base}{mas\-::\-Selectivity\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$\\*
+ $>$ $>$\-::iterator \hyperlink{classmas_1_1_information_a0760e4946119a28f018ff73cbdd0171f}{selectivity\-\_\-model\-\_\-iterator}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_fleet}{mas\-::\-Fleet}$<$ R\-E\-A\-L\-\_\-\-T $>$\\*
+ $>$ $>$\-::iterator \hyperlink{classmas_1_1_information_a35add34ab4432f87d932531b06444ff7}{fleet\-\_\-iterator}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_survey}{mas\-::\-Survey}$<$ R\-E\-A\-L\-\_\-\-T $>$\\*
+ $>$ $>$\-::iterator \hyperlink{classmas_1_1_information_ababaa75ccc01c68865bae68aa44453b3}{survey\-\_\-model\-\_\-iterator}
+\item 
+typedef std\-::unordered\-\_\-map\\*
+$<$ int, std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_n_l_l_functor}{mas\-::\-N\-L\-L\-Functor}$<$ R\-E\-A\-L\-\_\-\-T $>$\\*
+ $>$ $>$\-::iterator \hyperlink{classmas_1_1_information_a566708cde6d1c6f4846f41566c6ee846}{likelihood\-\_\-components\-\_\-iterator}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmas_1_1_information_aff6ea69c6e89a795900043e3ee6b25b3}{Information} ()
+\item 
+\hyperlink{classmas_1_1_information_a01305102ef89867b1fbdc545c4af3893}{Information} (const \hyperlink{classmas_1_1_information}{Information}$<$ R\-E\-A\-L\-\_\-\-T $>$ \&orig)
+\item 
+virtual \hyperlink{classmas_1_1_information_a22f67a9193a45e1d7917e96e6f79bcb0}{$\sim$\-Information} ()
+\item 
+void \hyperlink{classmas_1_1_information_a87d31bf74b83b4d90cc49a6ce0830da5}{Write\-J\-S\-O\-N\-Config} (const std\-::string \&path)
+\item 
+void \hyperlink{classmas_1_1_information_a7637882f3b75458d88dee1075f2483f0}{Parse\-Config} (const std\-::string \&path)
+\item 
+void \hyperlink{classmas_1_1_information_aed7467a3ffe58e76ef6910f4f3dc1d95}{Handle\-Likelihood\-Component} (rapidjson\-::\-Document\-::\-Member\-Iterator \&likelihood\-\_\-component)
+\item 
+void \hyperlink{classmas_1_1_information_ace06cf6d7f8c2c65bcc5264fcdea7808}{Handle\-Survey\-Model} (rapidjson\-::\-Document\-::\-Member\-Iterator \&survey\-\_\-model)
+\item 
+void \hyperlink{classmas_1_1_information_a390e0c06f1dde7a6971fdc58bc3faa94}{Handle\-Fishing\-Mortality\-Model} (rapidjson\-::\-Document\-::\-Member\-Iterator \&mortality\-\_\-model)
+\item 
+void \hyperlink{classmas_1_1_information_ad07e1708a544dd3f31184793b1985136}{Handle\-Natural\-Mortality\-Model} (rapidjson\-::\-Document\-::\-Member\-Iterator \&mortality\-\_\-model)
+\item 
+void \hyperlink{classmas_1_1_information_a5f5c3c867caa0875099f7619842c4897}{Handle\-Movement\-Model} (rapidjson\-::\-Document\-::\-Member\-Iterator \&movement\-\_\-model)
+\item 
+void \hyperlink{classmas_1_1_information_aaf3678eaf754f85e15b713271b2ca29d}{Handle\-Fleet\-Model} (rapidjson\-::\-Document\-::\-Member\-Iterator \&fleet\-\_\-model)
+\item 
+void \hyperlink{classmas_1_1_information_a45a60ea2a7c1082e8f73da9822056afd}{Handle\-Population\-Model} (rapidjson\-::\-Document\-::\-Member\-Iterator \&population\-\_\-model)
+\item 
+void \hyperlink{classmas_1_1_information_a0a3b16dccc3c1e9c83791f9ee499e345}{Handle\-Area\-Model} (rapidjson\-::\-Document\-::\-Member\-Iterator \&area\-\_\-model)
+\item 
+void \hyperlink{classmas_1_1_information_a8b90279ef4aee66ac9d983f337350ffc}{Handle\-Selectivity\-Model} (rapidjson\-::\-Document\-::\-Member\-Iterator \&selectivity\-\_\-model)
+\item 
+void \hyperlink{classmas_1_1_information_a01ef7a80bb30104b29e2a02f8a68585b}{Handle\-Growth\-Model} (rapidjson\-::\-Document\-::\-Member\-Iterator \&growth\-\_\-model)
+\item 
+void \hyperlink{classmas_1_1_information_a7a1ada30329d94513bd1fe4da9f5eada}{Handle\-Recruitment\-Model} (rapidjson\-::\-Document\-::\-Member\-Iterator \&recruitment\-\_\-model)
+\item 
+void \hyperlink{classmas_1_1_information_aa9231a08baef815e554c9409721db949}{Parse\-Data} (const std\-::string \&path)
+\item 
+void \hyperlink{classmas_1_1_information_a4acd2cd593e38ff9811a8b82f8d80b9f}{Show\-Data} ()
+\item 
+void \hyperlink{classmas_1_1_information_aedf136f9e26677da4001be0246416ec9}{Create\-Model} ()
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{classmas_1_1_population}{mas\-::\-Population}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \& \hyperlink{classmas_1_1_information_a2f8b99cfb05913e795d8039fee851867}{Get\-Populations} ()
+\item 
+void \hyperlink{classmas_1_1_information_a5d48355043bf563672afdb6d2881eba6}{Dump\-Fishing\-Mortality} (std\-::string file)
+\item 
+void \hyperlink{classmas_1_1_information_a4507090a348f2fa3b5a1cb3a53138004}{Dump\-Selectivity} (std\-::string file)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classmas_1_1_information_aba4d8ca8604985a74a51beb13dae9d55}{nyears}
+\item 
+int \hyperlink{classmas_1_1_information_a454f7c72980b885c8a3f52a651435dde}{nseasons} = 1
+\item 
+int \hyperlink{classmas_1_1_information_a7c6cdee59338bfc38ff3cc7a4d49cdd7}{first\-\_\-year}
+\item 
+int \hyperlink{classmas_1_1_information_ae988a6b80c30334b911f952df97201cc}{last\-\_\-year}
+\item 
+std\-::vector$<$ variable $>$ \hyperlink{classmas_1_1_information_a5522e2cd2f93a0ac42574f96acd9dbcd}{ages}
+\item 
+bool \hyperlink{classmas_1_1_information_abfd53a611fac22190c00882c84b8c39d}{natal\-\_\-movement} = false
+\item 
+bool \hyperlink{classmas_1_1_information_a5205ee6cc8165f1bf1feb30c6332fbb9}{valid\-\_\-configuration} = true
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr$<$ \hyperlink{structmas_1_1_area}{mas\-::\-Area}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{classmas_1_1_information_a1d2b80f338f3a82fa8a85cfbac2c490d}{areas}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr$<$ \hyperlink{structmas_1_1_season}{mas\-::\-Season}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{classmas_1_1_information_a65c0643d2ab88f4e23004aaf9565b359}{seasons}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{classmas_1_1_population}{mas\-::\-Population}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{classmas_1_1_information_aea96825c5714a43ad531811a402d8d39}{populations}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_fishing_mortality}{mas\-::\-Fishing\-Mortality}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{classmas_1_1_information_a104fa47bf1c9f21b186059d4897f0dad}{fishing\-\_\-mortality\-\_\-models}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_selectivity_base}{mas\-::\-Selectivity\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{classmas_1_1_information_ae771fa7c04d112e57d58ade01645d298}{selectivity\-\_\-models}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr$<$ \hyperlink{structmas_1_1_fleet}{mas\-::\-Fleet}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{classmas_1_1_information_a2790d8daab0d9435a246dd9823772500}{fleets}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr$<$ \hyperlink{structmas_1_1_survey}{mas\-::\-Survey}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{classmas_1_1_information_ad9eb1c49a6565f76e0605afdb39fa8fa}{survey\-\_\-models}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_growth_base}{mas\-::\-Growth\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{classmas_1_1_information_a0088dd940274db906032cd1d91abdedc}{growth\-\_\-models}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_fecundity_base}{mas\-::\-Fecundity\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{classmas_1_1_information_ac4ed9602f5cf956d2225e2cfc9ec84c1}{fecundity\-\_\-models}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr$<$ \hyperlink{structmas_1_1_movement}{mas\-::\-Movement}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{classmas_1_1_information_a0e3fd8c389a107440c7e5e57fe933527}{movement\-\_\-models}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_natural_mortality}{mas\-::\-Natural\-Mortality}\\*
+$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{classmas_1_1_information_acf9c6846c98a230ec902d85e3ee3b5c8}{natural\-\_\-mortality\-\_\-models}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_recruitment_base}{mas\-::\-Recruitment\-Base}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{classmas_1_1_information_ad540badf665ee856a5de0e4da0bb2e5e}{recruitment\-\_\-models}
+\item 
+std\-::unordered\-\_\-map$<$ int, \\*
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{structmas_1_1_n_l_l_functor}{mas\-::\-N\-L\-L\-Functor}$<$ R\-E\-A\-L\-\_\-\-T $>$ $>$ $>$ \hyperlink{classmas_1_1_information_aa58693a25eea57a0080bb4b99515fc23}{likelihood\-\_\-components}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename R\-E\-A\-L\-\_\-\-T$>$class mas\-::\-Information$<$ R\-E\-A\-L\-\_\-\-T $>$}
+
+
+
+Definition at line 63 of file Information.\-hpp.
+
+
+
+\subsection{Member Typedef Documentation}
+\hypertarget{classmas_1_1_information_a6183f0d8819e3ecb50239da88d2cfdb3}{\index{mas\-::\-Information@{mas\-::\-Information}!area\-\_\-iterator@{area\-\_\-iterator}}
+\index{area\-\_\-iterator@{area\-\_\-iterator}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{area\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Area}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$\-::iterator {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf area\-\_\-iterator}}}\label{classmas_1_1_information_a6183f0d8819e3ecb50239da88d2cfdb3}
+
+
+Definition at line 112 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a1d4b59c5d61de9efed4709ce6e0a056a}{\index{mas\-::\-Information@{mas\-::\-Information}!fecundity\-\_\-model\-\_\-iterator@{fecundity\-\_\-model\-\_\-iterator}}
+\index{fecundity\-\_\-model\-\_\-iterator@{fecundity\-\_\-model\-\_\-iterator}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{fecundity\-\_\-model\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Fecundity\-Base}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$\-::iterator {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf fecundity\-\_\-model\-\_\-iterator}}}\label{classmas_1_1_information_a1d4b59c5d61de9efed4709ce6e0a056a}
+
+
+Definition at line 118 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a4410f0f10156666ee305f22698943955}{\index{mas\-::\-Information@{mas\-::\-Information}!fishing\-\_\-mortality\-\_\-model\-\_\-iterator@{fishing\-\_\-mortality\-\_\-model\-\_\-iterator}}
+\index{fishing\-\_\-mortality\-\_\-model\-\_\-iterator@{fishing\-\_\-mortality\-\_\-model\-\_\-iterator}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{fishing\-\_\-mortality\-\_\-model\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Fishing\-Mortality}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$\-::iterator {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf fishing\-\_\-mortality\-\_\-model\-\_\-iterator}}}\label{classmas_1_1_information_a4410f0f10156666ee305f22698943955}
+
+
+Definition at line 117 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a35add34ab4432f87d932531b06444ff7}{\index{mas\-::\-Information@{mas\-::\-Information}!fleet\-\_\-iterator@{fleet\-\_\-iterator}}
+\index{fleet\-\_\-iterator@{fleet\-\_\-iterator}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{fleet\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Fleet}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$\-::iterator {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf fleet\-\_\-iterator}}}\label{classmas_1_1_information_a35add34ab4432f87d932531b06444ff7}
+
+
+Definition at line 121 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_aa19e91aec674c826cbb84ebdc1d17be7}{\index{mas\-::\-Information@{mas\-::\-Information}!growth\-\_\-model\-\_\-iterator@{growth\-\_\-model\-\_\-iterator}}
+\index{growth\-\_\-model\-\_\-iterator@{growth\-\_\-model\-\_\-iterator}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{growth\-\_\-model\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Growth\-Base}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$\-::iterator {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf growth\-\_\-model\-\_\-iterator}}}\label{classmas_1_1_information_aa19e91aec674c826cbb84ebdc1d17be7}
+
+
+Definition at line 114 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a566708cde6d1c6f4846f41566c6ee846}{\index{mas\-::\-Information@{mas\-::\-Information}!likelihood\-\_\-components\-\_\-iterator@{likelihood\-\_\-components\-\_\-iterator}}
+\index{likelihood\-\_\-components\-\_\-iterator@{likelihood\-\_\-components\-\_\-iterator}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{likelihood\-\_\-components\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-N\-L\-L\-Functor}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$\-::iterator {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf likelihood\-\_\-components\-\_\-iterator}}}\label{classmas_1_1_information_a566708cde6d1c6f4846f41566c6ee846}
+
+
+Definition at line 123 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_aa69e662c74a82f02c72a94684c289490}{\index{mas\-::\-Information@{mas\-::\-Information}!movement\-\_\-model\-\_\-iterator@{movement\-\_\-model\-\_\-iterator}}
+\index{movement\-\_\-model\-\_\-iterator@{movement\-\_\-model\-\_\-iterator}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{movement\-\_\-model\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Movement}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$\-::iterator {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf movement\-\_\-model\-\_\-iterator}}}\label{classmas_1_1_information_aa69e662c74a82f02c72a94684c289490}
+
+
+Definition at line 119 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a146940168f5079ca711b74f29ea7d6bc}{\index{mas\-::\-Information@{mas\-::\-Information}!natural\-\_\-mortality\-\_\-model\-\_\-iterator@{natural\-\_\-mortality\-\_\-model\-\_\-iterator}}
+\index{natural\-\_\-mortality\-\_\-model\-\_\-iterator@{natural\-\_\-mortality\-\_\-model\-\_\-iterator}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{natural\-\_\-mortality\-\_\-model\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Natural\-Mortality}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$\-::iterator {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf natural\-\_\-mortality\-\_\-model\-\_\-iterator}}}\label{classmas_1_1_information_a146940168f5079ca711b74f29ea7d6bc}
+
+
+Definition at line 116 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a61b09f185a136338d02e6307134677d1}{\index{mas\-::\-Information@{mas\-::\-Information}!population\-\_\-iterator@{population\-\_\-iterator}}
+\index{population\-\_\-iterator@{population\-\_\-iterator}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{population\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Population}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$\-::iterator {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf population\-\_\-iterator}}}\label{classmas_1_1_information_a61b09f185a136338d02e6307134677d1}
+
+
+Definition at line 113 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a3948a990e86ca1174a515134fbd78dc5}{\index{mas\-::\-Information@{mas\-::\-Information}!recruitment\-\_\-model\-\_\-iterator@{recruitment\-\_\-model\-\_\-iterator}}
+\index{recruitment\-\_\-model\-\_\-iterator@{recruitment\-\_\-model\-\_\-iterator}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{recruitment\-\_\-model\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Recruitment\-Base}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$\-::iterator {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf recruitment\-\_\-model\-\_\-iterator}}}\label{classmas_1_1_information_a3948a990e86ca1174a515134fbd78dc5}
+
+
+Definition at line 115 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a4ada3467c12527ed5400cc67e80e31f2}{\index{mas\-::\-Information@{mas\-::\-Information}!seasons\-\_\-iterator@{seasons\-\_\-iterator}}
+\index{seasons\-\_\-iterator@{seasons\-\_\-iterator}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{seasons\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Season}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$\-::iterator {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf seasons\-\_\-iterator}}}\label{classmas_1_1_information_a4ada3467c12527ed5400cc67e80e31f2}
+
+
+Definition at line 111 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a0760e4946119a28f018ff73cbdd0171f}{\index{mas\-::\-Information@{mas\-::\-Information}!selectivity\-\_\-model\-\_\-iterator@{selectivity\-\_\-model\-\_\-iterator}}
+\index{selectivity\-\_\-model\-\_\-iterator@{selectivity\-\_\-model\-\_\-iterator}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{selectivity\-\_\-model\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Selectivity\-Base}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$\-::iterator {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf selectivity\-\_\-model\-\_\-iterator}}}\label{classmas_1_1_information_a0760e4946119a28f018ff73cbdd0171f}
+
+
+Definition at line 120 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_ababaa75ccc01c68865bae68aa44453b3}{\index{mas\-::\-Information@{mas\-::\-Information}!survey\-\_\-model\-\_\-iterator@{survey\-\_\-model\-\_\-iterator}}
+\index{survey\-\_\-model\-\_\-iterator@{survey\-\_\-model\-\_\-iterator}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{survey\-\_\-model\-\_\-iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ typedef std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Survey}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$\-::iterator {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf survey\-\_\-model\-\_\-iterator}}}\label{classmas_1_1_information_ababaa75ccc01c68865bae68aa44453b3}
+
+
+Definition at line 122 of file Information.\-hpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmas_1_1_information_aff6ea69c6e89a795900043e3ee6b25b3}{\index{mas\-::\-Information@{mas\-::\-Information}!Information@{Information}}
+\index{Information@{Information}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{Information}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf Information} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmas_1_1_information_aff6ea69c6e89a795900043e3ee6b25b3}
+
+
+Definition at line 125 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a01305102ef89867b1fbdc545c4af3893}{\index{mas\-::\-Information@{mas\-::\-Information}!Information@{Information}}
+\index{Information@{Information}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{Information}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::{\bf Information} (
+\begin{DoxyParamCaption}
+\item[{const {\bf Information}$<$ R\-E\-A\-L\-\_\-\-T $>$ \&}]{orig}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmas_1_1_information_a01305102ef89867b1fbdc545c4af3893}
+
+
+Definition at line 128 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a22f67a9193a45e1d7917e96e6f79bcb0}{\index{mas\-::\-Information@{mas\-::\-Information}!$\sim$\-Information@{$\sim$\-Information}}
+\index{$\sim$\-Information@{$\sim$\-Information}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{$\sim$\-Information}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ virtual {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::$\sim${\bf Information} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{classmas_1_1_information_a22f67a9193a45e1d7917e96e6f79bcb0}
+
+
+Definition at line 131 of file Information.\-hpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmas_1_1_information_aedf136f9e26677da4001be0246416ec9}{\index{mas\-::\-Information@{mas\-::\-Information}!Create\-Model@{Create\-Model}}
+\index{Create\-Model@{Create\-Model}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{Create\-Model}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Create\-Model (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmas_1_1_information_aedf136f9e26677da4001be0246416ec9}
+
+
+Definition at line 7567 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a5d48355043bf563672afdb6d2881eba6}{\index{mas\-::\-Information@{mas\-::\-Information}!Dump\-Fishing\-Mortality@{Dump\-Fishing\-Mortality}}
+\index{Dump\-Fishing\-Mortality@{Dump\-Fishing\-Mortality}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{Dump\-Fishing\-Mortality}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Dump\-Fishing\-Mortality (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{file}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmas_1_1_information_a5d48355043bf563672afdb6d2881eba6}
+
+
+Definition at line 8326 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a4507090a348f2fa3b5a1cb3a53138004}{\index{mas\-::\-Information@{mas\-::\-Information}!Dump\-Selectivity@{Dump\-Selectivity}}
+\index{Dump\-Selectivity@{Dump\-Selectivity}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{Dump\-Selectivity}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Dump\-Selectivity (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{file}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmas_1_1_information_a4507090a348f2fa3b5a1cb3a53138004}
+
+
+Definition at line 8335 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a2f8b99cfb05913e795d8039fee851867}{\index{mas\-::\-Information@{mas\-::\-Information}!Get\-Populations@{Get\-Populations}}
+\index{Get\-Populations@{Get\-Populations}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{Get\-Populations}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Population}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$\& {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Get\-Populations (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmas_1_1_information_a2f8b99cfb05913e795d8039fee851867}
+
+
+Definition at line 8322 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a0a3b16dccc3c1e9c83791f9ee499e345}{\index{mas\-::\-Information@{mas\-::\-Information}!Handle\-Area\-Model@{Handle\-Area\-Model}}
+\index{Handle\-Area\-Model@{Handle\-Area\-Model}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{Handle\-Area\-Model}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Handle\-Area\-Model (
+\begin{DoxyParamCaption}
+\item[{rapidjson\-::\-Document\-::\-Member\-Iterator \&}]{area\-\_\-model}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmas_1_1_information_a0a3b16dccc3c1e9c83791f9ee499e345}
+
+
+Definition at line 1818 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a390e0c06f1dde7a6971fdc58bc3faa94}{\index{mas\-::\-Information@{mas\-::\-Information}!Handle\-Fishing\-Mortality\-Model@{Handle\-Fishing\-Mortality\-Model}}
+\index{Handle\-Fishing\-Mortality\-Model@{Handle\-Fishing\-Mortality\-Model}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{Handle\-Fishing\-Mortality\-Model}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Handle\-Fishing\-Mortality\-Model (
+\begin{DoxyParamCaption}
+\item[{rapidjson\-::\-Document\-::\-Member\-Iterator \&}]{mortality\-\_\-model}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmas_1_1_information_a390e0c06f1dde7a6971fdc58bc3faa94}
+
+
+Definition at line 785 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_aaf3678eaf754f85e15b713271b2ca29d}{\index{mas\-::\-Information@{mas\-::\-Information}!Handle\-Fleet\-Model@{Handle\-Fleet\-Model}}
+\index{Handle\-Fleet\-Model@{Handle\-Fleet\-Model}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{Handle\-Fleet\-Model}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Handle\-Fleet\-Model (
+\begin{DoxyParamCaption}
+\item[{rapidjson\-::\-Document\-::\-Member\-Iterator \&}]{fleet\-\_\-model}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmas_1_1_information_aaf3678eaf754f85e15b713271b2ca29d}
+
+
+Definition at line 1235 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a01ef7a80bb30104b29e2a02f8a68585b}{\index{mas\-::\-Information@{mas\-::\-Information}!Handle\-Growth\-Model@{Handle\-Growth\-Model}}
+\index{Handle\-Growth\-Model@{Handle\-Growth\-Model}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{Handle\-Growth\-Model}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Handle\-Growth\-Model (
+\begin{DoxyParamCaption}
+\item[{rapidjson\-::\-Document\-::\-Member\-Iterator \&}]{growth\-\_\-model}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmas_1_1_information_a01ef7a80bb30104b29e2a02f8a68585b}
+
+
+Definition at line 2721 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_aed7467a3ffe58e76ef6910f4f3dc1d95}{\index{mas\-::\-Information@{mas\-::\-Information}!Handle\-Likelihood\-Component@{Handle\-Likelihood\-Component}}
+\index{Handle\-Likelihood\-Component@{Handle\-Likelihood\-Component}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{Handle\-Likelihood\-Component}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Handle\-Likelihood\-Component (
+\begin{DoxyParamCaption}
+\item[{rapidjson\-::\-Document\-::\-Member\-Iterator \&}]{likelihood\-\_\-component}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmas_1_1_information_aed7467a3ffe58e76ef6910f4f3dc1d95}
+
+
+Definition at line 339 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a5f5c3c867caa0875099f7619842c4897}{\index{mas\-::\-Information@{mas\-::\-Information}!Handle\-Movement\-Model@{Handle\-Movement\-Model}}
+\index{Handle\-Movement\-Model@{Handle\-Movement\-Model}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{Handle\-Movement\-Model}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Handle\-Movement\-Model (
+\begin{DoxyParamCaption}
+\item[{rapidjson\-::\-Document\-::\-Member\-Iterator \&}]{movement\-\_\-model}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmas_1_1_information_a5f5c3c867caa0875099f7619842c4897}
+
+
+Definition at line 1037 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_ad07e1708a544dd3f31184793b1985136}{\index{mas\-::\-Information@{mas\-::\-Information}!Handle\-Natural\-Mortality\-Model@{Handle\-Natural\-Mortality\-Model}}
+\index{Handle\-Natural\-Mortality\-Model@{Handle\-Natural\-Mortality\-Model}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{Handle\-Natural\-Mortality\-Model}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Handle\-Natural\-Mortality\-Model (
+\begin{DoxyParamCaption}
+\item[{rapidjson\-::\-Document\-::\-Member\-Iterator \&}]{mortality\-\_\-model}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmas_1_1_information_ad07e1708a544dd3f31184793b1985136}
+
+
+Definition at line 926 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a45a60ea2a7c1082e8f73da9822056afd}{\index{mas\-::\-Information@{mas\-::\-Information}!Handle\-Population\-Model@{Handle\-Population\-Model}}
+\index{Handle\-Population\-Model@{Handle\-Population\-Model}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{Handle\-Population\-Model}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Handle\-Population\-Model (
+\begin{DoxyParamCaption}
+\item[{rapidjson\-::\-Document\-::\-Member\-Iterator \&}]{population\-\_\-model}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmas_1_1_information_a45a60ea2a7c1082e8f73da9822056afd}
+
+
+Definition at line 1424 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a7a1ada30329d94513bd1fe4da9f5eada}{\index{mas\-::\-Information@{mas\-::\-Information}!Handle\-Recruitment\-Model@{Handle\-Recruitment\-Model}}
+\index{Handle\-Recruitment\-Model@{Handle\-Recruitment\-Model}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{Handle\-Recruitment\-Model}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Handle\-Recruitment\-Model (
+\begin{DoxyParamCaption}
+\item[{rapidjson\-::\-Document\-::\-Member\-Iterator \&}]{recruitment\-\_\-model}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmas_1_1_information_a7a1ada30329d94513bd1fe4da9f5eada}
+
+
+Definition at line 5615 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a8b90279ef4aee66ac9d983f337350ffc}{\index{mas\-::\-Information@{mas\-::\-Information}!Handle\-Selectivity\-Model@{Handle\-Selectivity\-Model}}
+\index{Handle\-Selectivity\-Model@{Handle\-Selectivity\-Model}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{Handle\-Selectivity\-Model}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Handle\-Selectivity\-Model (
+\begin{DoxyParamCaption}
+\item[{rapidjson\-::\-Document\-::\-Member\-Iterator \&}]{selectivity\-\_\-model}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmas_1_1_information_a8b90279ef4aee66ac9d983f337350ffc}
+
+
+Definition at line 1900 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_ace06cf6d7f8c2c65bcc5264fcdea7808}{\index{mas\-::\-Information@{mas\-::\-Information}!Handle\-Survey\-Model@{Handle\-Survey\-Model}}
+\index{Handle\-Survey\-Model@{Handle\-Survey\-Model}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{Handle\-Survey\-Model}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Handle\-Survey\-Model (
+\begin{DoxyParamCaption}
+\item[{rapidjson\-::\-Document\-::\-Member\-Iterator \&}]{survey\-\_\-model}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmas_1_1_information_ace06cf6d7f8c2c65bcc5264fcdea7808}
+
+
+Definition at line 582 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a7637882f3b75458d88dee1075f2483f0}{\index{mas\-::\-Information@{mas\-::\-Information}!Parse\-Config@{Parse\-Config}}
+\index{Parse\-Config@{Parse\-Config}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{Parse\-Config}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Parse\-Config (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{path}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmas_1_1_information_a7637882f3b75458d88dee1075f2483f0}
+
+
+Definition at line 212 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_aa9231a08baef815e554c9409721db949}{\index{mas\-::\-Information@{mas\-::\-Information}!Parse\-Data@{Parse\-Data}}
+\index{Parse\-Data@{Parse\-Data}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{Parse\-Data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Parse\-Data (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{path}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmas_1_1_information_aa9231a08baef815e554c9409721db949}
+
+
+Definition at line 7221 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a4acd2cd593e38ff9811a8b82f8d80b9f}{\index{mas\-::\-Information@{mas\-::\-Information}!Show\-Data@{Show\-Data}}
+\index{Show\-Data@{Show\-Data}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{Show\-Data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Show\-Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmas_1_1_information_a4acd2cd593e38ff9811a8b82f8d80b9f}
+
+
+Definition at line 7561 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a87d31bf74b83b4d90cc49a6ce0830da5}{\index{mas\-::\-Information@{mas\-::\-Information}!Write\-J\-S\-O\-N\-Config@{Write\-J\-S\-O\-N\-Config}}
+\index{Write\-J\-S\-O\-N\-Config@{Write\-J\-S\-O\-N\-Config}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{Write\-J\-S\-O\-N\-Config}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ void {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::Write\-J\-S\-O\-N\-Config (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{path}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmas_1_1_information_a87d31bf74b83b4d90cc49a6ce0830da5}
+
+
+Definition at line 134 of file Information.\-hpp.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classmas_1_1_information_a5522e2cd2f93a0ac42574f96acd9dbcd}{\index{mas\-::\-Information@{mas\-::\-Information}!ages@{ages}}
+\index{ages@{ages}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{ages}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::vector$<$variable$>$ {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::ages}}\label{classmas_1_1_information_a5522e2cd2f93a0ac42574f96acd9dbcd}
+
+
+Definition at line 80 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a1d2b80f338f3a82fa8a85cfbac2c490d}{\index{mas\-::\-Information@{mas\-::\-Information}!areas@{areas}}
+\index{areas@{areas}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{areas}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Area}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::areas}}\label{classmas_1_1_information_a1d2b80f338f3a82fa8a85cfbac2c490d}
+
+
+Definition at line 87 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_ac4ed9602f5cf956d2225e2cfc9ec84c1}{\index{mas\-::\-Information@{mas\-::\-Information}!fecundity\-\_\-models@{fecundity\-\_\-models}}
+\index{fecundity\-\_\-models@{fecundity\-\_\-models}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{fecundity\-\_\-models}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Fecundity\-Base}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::fecundity\-\_\-models}}\label{classmas_1_1_information_ac4ed9602f5cf956d2225e2cfc9ec84c1}
+
+
+Definition at line 101 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a7c6cdee59338bfc38ff3cc7a4d49cdd7}{\index{mas\-::\-Information@{mas\-::\-Information}!first\-\_\-year@{first\-\_\-year}}
+\index{first\-\_\-year@{first\-\_\-year}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{first\-\_\-year}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ int {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::first\-\_\-year}}\label{classmas_1_1_information_a7c6cdee59338bfc38ff3cc7a4d49cdd7}
+
+
+Definition at line 78 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a104fa47bf1c9f21b186059d4897f0dad}{\index{mas\-::\-Information@{mas\-::\-Information}!fishing\-\_\-mortality\-\_\-models@{fishing\-\_\-mortality\-\_\-models}}
+\index{fishing\-\_\-mortality\-\_\-models@{fishing\-\_\-mortality\-\_\-models}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{fishing\-\_\-mortality\-\_\-models}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Fishing\-Mortality}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::fishing\-\_\-mortality\-\_\-models}}\label{classmas_1_1_information_a104fa47bf1c9f21b186059d4897f0dad}
+
+
+Definition at line 92 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a2790d8daab0d9435a246dd9823772500}{\index{mas\-::\-Information@{mas\-::\-Information}!fleets@{fleets}}
+\index{fleets@{fleets}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{fleets}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Fleet}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::fleets}}\label{classmas_1_1_information_a2790d8daab0d9435a246dd9823772500}
+
+
+Definition at line 94 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a0088dd940274db906032cd1d91abdedc}{\index{mas\-::\-Information@{mas\-::\-Information}!growth\-\_\-models@{growth\-\_\-models}}
+\index{growth\-\_\-models@{growth\-\_\-models}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{growth\-\_\-models}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Growth\-Base}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::growth\-\_\-models}}\label{classmas_1_1_information_a0088dd940274db906032cd1d91abdedc}
+
+
+Definition at line 100 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_ae988a6b80c30334b911f952df97201cc}{\index{mas\-::\-Information@{mas\-::\-Information}!last\-\_\-year@{last\-\_\-year}}
+\index{last\-\_\-year@{last\-\_\-year}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{last\-\_\-year}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ int {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::last\-\_\-year}}\label{classmas_1_1_information_ae988a6b80c30334b911f952df97201cc}
+
+
+Definition at line 79 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_aa58693a25eea57a0080bb4b99515fc23}{\index{mas\-::\-Information@{mas\-::\-Information}!likelihood\-\_\-components@{likelihood\-\_\-components}}
+\index{likelihood\-\_\-components@{likelihood\-\_\-components}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{likelihood\-\_\-components}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-N\-L\-L\-Functor}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::likelihood\-\_\-components}}\label{classmas_1_1_information_aa58693a25eea57a0080bb4b99515fc23}
+
+
+Definition at line 108 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a0e3fd8c389a107440c7e5e57fe933527}{\index{mas\-::\-Information@{mas\-::\-Information}!movement\-\_\-models@{movement\-\_\-models}}
+\index{movement\-\_\-models@{movement\-\_\-models}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{movement\-\_\-models}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Movement}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::movement\-\_\-models}}\label{classmas_1_1_information_a0e3fd8c389a107440c7e5e57fe933527}
+
+
+Definition at line 102 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_abfd53a611fac22190c00882c84b8c39d}{\index{mas\-::\-Information@{mas\-::\-Information}!natal\-\_\-movement@{natal\-\_\-movement}}
+\index{natal\-\_\-movement@{natal\-\_\-movement}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{natal\-\_\-movement}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ bool {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::natal\-\_\-movement = false}}\label{classmas_1_1_information_abfd53a611fac22190c00882c84b8c39d}
+
+
+Definition at line 81 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_acf9c6846c98a230ec902d85e3ee3b5c8}{\index{mas\-::\-Information@{mas\-::\-Information}!natural\-\_\-mortality\-\_\-models@{natural\-\_\-mortality\-\_\-models}}
+\index{natural\-\_\-mortality\-\_\-models@{natural\-\_\-mortality\-\_\-models}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{natural\-\_\-mortality\-\_\-models}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Natural\-Mortality}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::natural\-\_\-mortality\-\_\-models}}\label{classmas_1_1_information_acf9c6846c98a230ec902d85e3ee3b5c8}
+
+
+Definition at line 105 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a454f7c72980b885c8a3f52a651435dde}{\index{mas\-::\-Information@{mas\-::\-Information}!nseasons@{nseasons}}
+\index{nseasons@{nseasons}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{nseasons}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ int {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::nseasons = 1}}\label{classmas_1_1_information_a454f7c72980b885c8a3f52a651435dde}
+
+
+Definition at line 77 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_aba4d8ca8604985a74a51beb13dae9d55}{\index{mas\-::\-Information@{mas\-::\-Information}!nyears@{nyears}}
+\index{nyears@{nyears}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{nyears}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ int {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::nyears}}\label{classmas_1_1_information_aba4d8ca8604985a74a51beb13dae9d55}
+
+
+Definition at line 76 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_aea96825c5714a43ad531811a402d8d39}{\index{mas\-::\-Information@{mas\-::\-Information}!populations@{populations}}
+\index{populations@{populations}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{populations}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Population}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::populations}}\label{classmas_1_1_information_aea96825c5714a43ad531811a402d8d39}
+
+
+Definition at line 91 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_ad540badf665ee856a5de0e4da0bb2e5e}{\index{mas\-::\-Information@{mas\-::\-Information}!recruitment\-\_\-models@{recruitment\-\_\-models}}
+\index{recruitment\-\_\-models@{recruitment\-\_\-models}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{recruitment\-\_\-models}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Recruitment\-Base}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::recruitment\-\_\-models}}\label{classmas_1_1_information_ad540badf665ee856a5de0e4da0bb2e5e}
+
+
+Definition at line 106 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a65c0643d2ab88f4e23004aaf9565b359}{\index{mas\-::\-Information@{mas\-::\-Information}!seasons@{seasons}}
+\index{seasons@{seasons}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{seasons}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Season}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::seasons}}\label{classmas_1_1_information_a65c0643d2ab88f4e23004aaf9565b359}
+
+
+Definition at line 88 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_ae771fa7c04d112e57d58ade01645d298}{\index{mas\-::\-Information@{mas\-::\-Information}!selectivity\-\_\-models@{selectivity\-\_\-models}}
+\index{selectivity\-\_\-models@{selectivity\-\_\-models}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{selectivity\-\_\-models}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Selectivity\-Base}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::selectivity\-\_\-models}}\label{classmas_1_1_information_ae771fa7c04d112e57d58ade01645d298}
+
+
+Definition at line 93 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_ad9eb1c49a6565f76e0605afdb39fa8fa}{\index{mas\-::\-Information@{mas\-::\-Information}!survey\-\_\-models@{survey\-\_\-models}}
+\index{survey\-\_\-models@{survey\-\_\-models}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{survey\-\_\-models}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ std\-::unordered\-\_\-map$<$int, std\-::shared\-\_\-ptr$<${\bf mas\-::\-Survey}$<$R\-E\-A\-L\-\_\-\-T$>$ $>$ $>$ {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::survey\-\_\-models}}\label{classmas_1_1_information_ad9eb1c49a6565f76e0605afdb39fa8fa}
+
+
+Definition at line 97 of file Information.\-hpp.
+
+\hypertarget{classmas_1_1_information_a5205ee6cc8165f1bf1feb30c6332fbb9}{\index{mas\-::\-Information@{mas\-::\-Information}!valid\-\_\-configuration@{valid\-\_\-configuration}}
+\index{valid\-\_\-configuration@{valid\-\_\-configuration}!mas::Information@{mas\-::\-Information}}
+\subsubsection[{valid\-\_\-configuration}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\-E\-A\-L\-\_\-\-T$>$ bool {\bf mas\-::\-Information}$<$ R\-E\-A\-L\-\_\-\-T $>$\-::valid\-\_\-configuration = true}}\label{classmas_1_1_information_a5205ee6cc8165f1bf1feb30c6332fbb9}
+
+
+Definition at line 82 of file Information.\-hpp.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/oppy/\-Net\-Beans\-Projects/mas/\hyperlink{_information_8hpp}{Information.\-hpp}\end{DoxyCompactItemize}

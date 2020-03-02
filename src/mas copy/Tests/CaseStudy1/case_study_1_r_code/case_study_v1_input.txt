@@ -1,0 +1,125 @@
+# VerboseEquilibriumOutput flag (Verbose=1)
+0
+# NPopulation, the number of populations
+2
+# NAge, the number of age groups in each population
+10
+# MaxPlusGroupAge, the maximum age in the plus group for mean length and weight calculation, MaxPlusGroupAge>=NAge
+20
+# NGender, the number of genders in each population
+2
+# NArea, the number of areas in the model
+2
+# NFleet, the number of fleets in the model
+2
+# FleetArea, the fishing area for each fleet
+1 2
+# NSurvey, the number of surveys
+2
+# SurveyArea, the survey area for each survey
+1 2
+# NYear, the number of years in the assessment time horizon
+20
+# NSeason, the number of seasons
+1
+# MaxIteration, the maximum number of iterations to compute unfished and fished equilibrium
+100
+# EquilibriumConvergenceCriterion, the convergence criterion for equilibrium spawning biomasses
+0.0001
+# OutputNumbersUnits, the units for output population numbers (numbers of fish)
+1000
+# OutputBiomassUnits, the units for output population numbers (kg of fish)
+1000
+# StartZFraction, the array for timing of start of year by population and area
+0 0
+0 0
+# SpawningZFraction, the array for timing of spawning season by population and area
+0.25 0.25
+0.25 0.25
+# CatchZFraction, the array for timing of catch by population and area
+0.5 0.5
+0.5 0.5
+# SurveyZFraction, the array for timing of survey by population and area
+0.75 0.75
+0.75 0.75
+# MovementProbability, the 3D array for fish movement probability submodel parameters by population, area and area
+0.9 0.75
+0.1 0.25
+0.1 0.25
+0.9 0.75
+# RecruitmentDistribution, the 3D array for recruitment movement probability submodel parameters by population, area and area
+0.9 0.75
+0.1 0.25
+0.1 0.25
+0.9 0.75
+# NaturalMortality, the 4D array for natural mortality at age submodel parameters by population, area, gender and age
+0.5 0.55 0.5 0.55 0.5 0.55 0.5 0.55 
+0.3 0.35 0.3 0.35 0.3 0.35 0.3 0.35
+0.2 0.25 0.2 0.25 0.2 0.25 0.2 0.25 
+0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 
+0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 
+0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2
+0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 
+0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 
+0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 
+0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 
+# Maturity.a50, the 3D array for maturity a50 parameters by population, area and gender
+3.0 3.0 3.0 3.0
+3.0 3.0 3.0 3.0
+# Maturity.slope, the 3D array for maturity slope parameters by population, area and gender
+0.1 0.5 0.1 0.5
+0.1 0.5 0.1 0.5
+# Length.Amin, the 3D array for length Amin parameters by population, area and gender
+1.0 1.0 1.0 1.0
+1.0 1.0 1.0 1.0
+# Length.Amax, the 3D array for length Amax parameters by population, area and gender
+7.0 7.0 7.0 7.0
+7.0 7.0 7.0 7.0
+# Length.Lmin, the 3D array for length Lmin parameters by population, area and gender
+20.0 20.0 20.0 20.0
+20.0 20.0 20.0 20.0
+# Length.Lmax, the 3D array for length Lmax parameters by population, area and gender
+70.0 65.0 70.0 65.0
+70.0 65.0 70.0 65.0
+# Length.c, the 3D array for length c parameters by population, area and gender
+0.5 0.5 0.5 0.5
+0.5 0.5 0.5 0.5
+# WeightAtLength.A, the weight at length A parameters by population, area and gender
+2.5e-5 2.5e-5 2.5e-5 2.5e-5
+2.5e-5 2.5e-5 2.5e-5 2.5e-5
+# WeightAtLength.B, the weight at length B parameters by population, area and gender
+3.00 2.95 3.00 2.95
+3.00 2.95 3.00 2.95
+# Recruitment.SpawningBiomassUnits, the stock-recruitment biomass units parameters by population and area 
+1000.0 1000.0
+1000.0 1000.0
+# Recruitment.GenderFraction, the stock-recruitment gender fraction parameters by population, area and gender
+0.5 0.5 0.5 0.5
+0.5 0.5 0.5 0.5
+# Recruitment.h, the stock-recruitment steepness parameters by population and area
+0.75 0.70
+0.75 0.80
+# Recruitment.UnfishedR, the stock-recruitment unfished R parameters by population and area
+1.0e7 1.0e7
+5.0e6 1.0e7
+# Recruitment.sigmaR, the stock-recruitment sigmaR parameters by population and area
+0.5 0.5
+0.5 0.5
+# EquilibriumFishingMortality, the equilibrium fishing mortality submodel parameters by fleet and area
+0.1 0.0
+0.0 0.1
+# FishingMortality, the fishing mortality parameters by year, fleet and area 
+0.4 0.4 0.4 0.4 0.4 0.4 0.4 0.4 0.4 0.4 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 
+# FisherySelectivity.a50, the fishery selectivity a50 parameters by population, fleet and gender
+3.0 3.0 3.0 3.0 
+3.0 3.0 3.0 3.0 
+# FisherySelectivity.slope, the fishery selectivity a50 parameters by population, fleet and gender
+0.1 0.1 0.5 0.5 
+0.1 0.1 0.5 0.5 
+# SurveySelectivity.a50, the survey selectivity a50 parameters by population, survey and gender
+3.0 2.75 3.0 2.75 
+3.0 2.75 3.0 2.75 
+# SurveySelectivity.slope, the survey selectivity slope parameters by population, survey and gender
+0.25 0.5 0.25 0.5 
+0.25 0.5 0.25 0.5 
