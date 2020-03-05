@@ -1,10 +1,10 @@
-setwd("/Users/mattadmin/NetBeansProjects/R4MAS/dist/Release/GNU-MacOSX")
+
 #source("asap3_s2.R")
 library(Rcpp)
 library(jsonlite)
 #load the r4mas module
 r4mas <-
-  Module("rmas", dyn.load(paste("R4MAS", .Platform$dynlib.ext, sep = "")))
+  Module("rmas", dyn.load(paste("src/RMAS", .Platform$dynlib.ext, sep = "")))
 
 nyears<-30
 nseasons<-1
@@ -383,7 +383,7 @@ mas_model$Run()
 write(mas_model$GetOutput(), file="mas_s2_output.json")
 
 args <- commandArgs(trailingOnly = TRUE)
-args <- "./data/mas_s2_output.json"
+args <- "./inst/extdata/mas_s2_output.json"
 json_output <- jsonlite::read_json(args[1])
 years <- json_output$nyears
 ages <- json_output$nages
