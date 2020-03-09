@@ -2,6 +2,7 @@
 #source("asap3_s2.R")
 library(Rcpp)
 library(jsonlite)
+library(callr)
 #Load the RMAS package - assumes you are in the package working directory
 devtools::load_all(".")
 #load the r4mas module
@@ -21,23 +22,12 @@ input_data <- write_test_data()
 
 #Recruitment
 recruitment<-new(r4mas$BevertonHoltRecruitment)
-recruitment$R0$value<-1000
-recruitment$R0$estimated<-TRUE
-recruitment$R0$phase<-1
-recruitment$h$value<-0.75
-recruitment$h$estimated<-FALSE
-recruitment$h$phase<-2
-recruitment$h$min<-0.2001
-recruitment$h$max<-1.0
-recruitment$sigma_r$value<-0.55
-recruitment$sigma_r$estimated<-FALSE
 
-recruitment$estimate_deviations<-TRUE
-recruitment$constrained_deviations<-TRUE
-recruitment$deviations_min<--15.0
-recruitment$deviations_max<-15.0
-recruitment$deviation_phase<-1
-recruitment$SetDeviations(rep(0.0,22))
+devs_list <- list(TRUE, TRUE, rep(0.0,22))
+recruitment <- create_par_section(section_type = "recruitment", section_type_object = recruitment, par_names = c("R0","h","sigma_r","recdevs"),
+                   par_lo = c(NA, 0.2001,NA,-15), par_hi = c(NA,1.0,NA,15), par_units = NA, par_phase = c(1,-2,-1,1), par_value = c(1000,0.75,0.55, NA), 
+                   rec_devs=devs_list)
+
 
 #Growth
 growth<-new(r4mas$VonBertalanffyModified)
@@ -208,7 +198,7 @@ mas_model$AddPopulation(population$id)
 # Run the model
 ############################################################
 
-mas_model$Run()
+callr::r(mas_model$Run())
 write(mas_model$GetOutput(), file="mas_s2_output.json")
 
 
