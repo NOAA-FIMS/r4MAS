@@ -1,3 +1,3 @@
 onUnload <- function (libpath) {
-  library.dynam.unload("R4MAS", libpath)
+  library.dynam.unload("RMAS", libpath)
 }
