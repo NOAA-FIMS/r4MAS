@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/*
+/* 
  * File:   R4MAS.hpp
  * Author: mattadmin
  *
@@ -39,7 +39,7 @@ struct triple {
     T3 third;
     
     triple(T1 first, T2 second, T3 third) :
-    first(first), second(second), third(third) {
+        first(first), second(second), third(third) {
     }
     
     
@@ -55,11 +55,11 @@ public:
     bool estimated = false;
     
     Parameter(const Parameter& other) :
-    value(other.value), min(other.min), max(other.max), phase(other.phase), estimated(other.estimated) {
+        value(other.value), min(other.min), max(other.max), phase(other.phase), estimated(other.estimated) {
     }
     
     Parameter(double value = 0.0) :
-    value(value) {
+        value(value) {
     }
     
     
@@ -135,7 +135,7 @@ int SelectivityBase::id_g = 1;
 
 class LogisticSelectivity : public SelectivityBase {
 public:
-    Parameter a50; //age of 50% selectivity
+    Parameter a50; //age of 50% selectivity 
     Parameter slope; //the rate of increase in selectivity at a50
     int id;
     
@@ -146,7 +146,7 @@ public:
     }
     
     LogisticSelectivity(const LogisticSelectivity& other) :
-    a50(other.a50), slope(other.slope), id(other.id) {
+        a50(other.a50), slope(other.slope), id(other.id) {
     }
     
     virtual void AddToMAS(mas::Information<double>& info) {
@@ -216,7 +216,7 @@ public:
     }
     
     DoubleLogisticSelectivity(const DoubleLogisticSelectivity& other) :
-    id(other.id), alpha_asc(other.alpha_asc), beta_asc(other.beta_asc), alpha_desc(other.alpha_desc), beta_desc(other.beta_desc) {
+        id(other.id), alpha_asc(other.alpha_asc), beta_asc(other.beta_asc), alpha_desc(other.alpha_desc), beta_desc(other.beta_desc) {
     }
     
     virtual void AddToMAS(mas::Information<double>& info) {
@@ -369,7 +369,7 @@ public:
     }
     
     FishingMortality(const FishingMortality& other) :
-    id(other.id), values(other.values), estimate(other.estimate), phase(other.phase), min(other.min), max(other.max) {
+        id(other.id), values(other.values), estimate(other.estimate), phase(other.phase), min(other.min), max(other.max) {
         std::cout << "Fishing Mortaility copy constructor";
     }
     
@@ -1747,20 +1747,20 @@ public:
             std::tolower(sex[i], loc);
         
         switch (GetSexType(sex)) {
-                
-            case MALE:
-                this->maturity_males[area] = id;
-                break;
-            case FEMALE:
-                this->maturity_females[area] = id;
-                break;
-                
-            case UNDIFFERENTIATED:
-                this->maturity_males[area] = id;
-                this->maturity_females[area] = id;
-                break;
-            default:
-                std::cout << "MAS Error: unknown sex type \"" << sex << "\" for maturity input.\n";
+        
+        case MALE:
+            this->maturity_males[area] = id;
+            break;
+        case FEMALE:
+            this->maturity_females[area] = id;
+            break;
+            
+        case UNDIFFERENTIATED:
+            this->maturity_males[area] = id;
+            this->maturity_females[area] = id;
+            break;
+        default:
+            std::cout << "MAS Error: unknown sex type \"" << sex << "\" for maturity input.\n";
         }
     }
     
@@ -1770,20 +1770,20 @@ public:
             std::tolower(sex[i], loc);
         
         switch (GetSexType(sex)) {
-                
-            case MALE:
-                this->natural_mortality_males.push_back(std::make_pair(id, area));
-                break;
-            case FEMALE:
-                this->natural_mortality_females.push_back(std::make_pair(id, area));
-                break;
-                
-            case UNDIFFERENTIATED:
-                this->natural_mortality_males.push_back(std::make_pair(id, area));
-                this->natural_mortality_females.push_back(std::make_pair(id, area));
-                break;
-            default:
-                std::cout << "MAS Error: unknown sex type \"" << sex << "\" for natural mortality input.\n";
+        
+        case MALE:
+            this->natural_mortality_males.push_back(std::make_pair(id, area));
+            break;
+        case FEMALE:
+            this->natural_mortality_females.push_back(std::make_pair(id, area));
+            break;
+            
+        case UNDIFFERENTIATED:
+            this->natural_mortality_males.push_back(std::make_pair(id, area));
+            this->natural_mortality_females.push_back(std::make_pair(id, area));
+            break;
+        default:
+            std::cout << "MAS Error: unknown sex type \"" << sex << "\" for natural mortality input.\n";
         }
     }
     
@@ -1798,20 +1798,20 @@ public:
             std::tolower(sex[i], loc);
         
         switch (GetSexType(sex)) {
-                
-            case MALE:
-                this->intial_deviations_males[area] = devs;
-                break;
-            case FEMALE:
-                this->intial_deviations_females[area] = devs;
-                break;
-                
-            case UNDIFFERENTIATED:
-                this->intial_deviations_males[area] = devs;
-                this->intial_deviations_females[area] = devs;
-                break;
-            default:
-                std::cout << "MAS Error: unknown sex type \"" << sex << "\" for maturity input.\n";
+        
+        case MALE:
+            this->intial_deviations_males[area] = devs;
+            break;
+        case FEMALE:
+            this->intial_deviations_females[area] = devs;
+            break;
+            
+        case UNDIFFERENTIATED:
+            this->intial_deviations_males[area] = devs;
+            this->intial_deviations_females[area] = devs;
+            break;
+        default:
+            std::cout << "MAS Error: unknown sex type \"" << sex << "\" for maturity input.\n";
         }
     }
     
@@ -2025,18 +2025,18 @@ public:
             }
             
             switch (lambdas.size()) {
-                case 1:
-                    d->imax = this->lambda_dimensions[0];
-                    break;
-                case 2:
-                    d->imax = this->lambda_dimensions[0];
-                    d->jmax = this->lambda_dimensions[1];
-                    break;
-                case 3:
-                    d->imax = this->lambda_dimensions[0];
-                    d->jmax = this->lambda_dimensions[1];
-                    d->kmax = this->lambda_dimensions[2];
-                    break;
+            case 1:
+                d->imax = this->lambda_dimensions[0];
+                break;
+            case 2:
+                d->imax = this->lambda_dimensions[0];
+                d->jmax = this->lambda_dimensions[1];
+                break;
+            case 3:
+                d->imax = this->lambda_dimensions[0];
+                d->jmax = this->lambda_dimensions[1];
+                d->kmax = this->lambda_dimensions[2];
+                break;
             }
             for (int i = 0; i < this->lambdas.size(); i++) {
                 d->data.push_back(this->lambdas[i]);
@@ -2098,18 +2098,18 @@ public:
             }
             
             switch (lambdas.size()) {
-                case 1:
-                    d->imax = this->lambda_dimensions[0];
-                    break;
-                case 2:
-                    d->imax = this->lambda_dimensions[0];
-                    d->jmax = this->lambda_dimensions[1];
-                    break;
-                case 3:
-                    d->imax = this->lambda_dimensions[0];
-                    d->jmax = this->lambda_dimensions[1];
-                    d->kmax = this->lambda_dimensions[2];
-                    break;
+            case 1:
+                d->imax = this->lambda_dimensions[0];
+                break;
+            case 2:
+                d->imax = this->lambda_dimensions[0];
+                d->jmax = this->lambda_dimensions[1];
+                break;
+            case 3:
+                d->imax = this->lambda_dimensions[0];
+                d->jmax = this->lambda_dimensions[1];
+                d->kmax = this->lambda_dimensions[2];
+                break;
             }
             for (int i = 0; i < this->lambdas.size(); i++) {
                 d->data.push_back(this->lambdas[i]);
@@ -2172,18 +2172,18 @@ public:
             }
             
             switch (lambdas.size()) {
-                case 1:
-                    d->imax = this->lambda_dimensions[0];
-                    break;
-                case 2:
-                    d->imax = this->lambda_dimensions[0];
-                    d->jmax = this->lambda_dimensions[1];
-                    break;
-                case 3:
-                    d->imax = this->lambda_dimensions[0];
-                    d->jmax = this->lambda_dimensions[1];
-                    d->kmax = this->lambda_dimensions[2];
-                    break;
+            case 1:
+                d->imax = this->lambda_dimensions[0];
+                break;
+            case 2:
+                d->imax = this->lambda_dimensions[0];
+                d->jmax = this->lambda_dimensions[1];
+                break;
+            case 3:
+                d->imax = this->lambda_dimensions[0];
+                d->jmax = this->lambda_dimensions[1];
+                d->kmax = this->lambda_dimensions[2];
+                break;
             }
             for (int i = 0; i < this->lambdas.size(); i++) {
                 d->data.push_back(this->lambdas[i]);
@@ -2246,18 +2246,18 @@ public:
             }
             
             switch (lambdas.size()) {
-                case 1:
-                    d->imax = this->lambda_dimensions[0];
-                    break;
-                case 2:
-                    d->imax = this->lambda_dimensions[0];
-                    d->jmax = this->lambda_dimensions[1];
-                    break;
-                case 3:
-                    d->imax = this->lambda_dimensions[0];
-                    d->jmax = this->lambda_dimensions[1];
-                    d->kmax = this->lambda_dimensions[2];
-                    break;
+            case 1:
+                d->imax = this->lambda_dimensions[0];
+                break;
+            case 2:
+                d->imax = this->lambda_dimensions[0];
+                d->jmax = this->lambda_dimensions[1];
+                break;
+            case 3:
+                d->imax = this->lambda_dimensions[0];
+                d->jmax = this->lambda_dimensions[1];
+                d->kmax = this->lambda_dimensions[2];
+                break;
             }
             for (int i = 0; i < this->lambdas.size(); i++) {
                 d->data.push_back(this->lambdas[i]);
@@ -2319,18 +2319,18 @@ public:
             }
             
             switch (lambdas.size()) {
-                case 1:
-                    d->imax = this->lambda_dimensions[0];
-                    break;
-                case 2:
-                    d->imax = this->lambda_dimensions[0];
-                    d->jmax = this->lambda_dimensions[1];
-                    break;
-                case 3:
-                    d->imax = this->lambda_dimensions[0];
-                    d->jmax = this->lambda_dimensions[1];
-                    d->kmax = this->lambda_dimensions[2];
-                    break;
+            case 1:
+                d->imax = this->lambda_dimensions[0];
+                break;
+            case 2:
+                d->imax = this->lambda_dimensions[0];
+                d->jmax = this->lambda_dimensions[1];
+                break;
+            case 3:
+                d->imax = this->lambda_dimensions[0];
+                d->jmax = this->lambda_dimensions[1];
+                d->kmax = this->lambda_dimensions[2];
+                break;
             }
             for (int i = 0; i < this->lambdas.size(); i++) {
                 d->data.push_back(this->lambdas[i]);
@@ -2546,15 +2546,15 @@ public:
                         d->missing_value = data->missing_values;
                         d->dimensions = 2;
                         switch (this->index_data[i].first) {
-                            case MALE:
-                                d->sex_type = mas::MALE;
-                                break;
-                            case FEMALE:
-                                d->sex_type = mas::FEMALE;
-                                break;
-                            case UNDIFFERENTIATED:
-                                d->sex_type = mas::UNDIFFERENTIATED;
-                                break;
+                        case MALE:
+                            d->sex_type = mas::MALE;
+                            break;
+                        case FEMALE:
+                            d->sex_type = mas::FEMALE;
+                            break;
+                        case UNDIFFERENTIATED:
+                            d->sex_type = mas::UNDIFFERENTIATED;
+                            break;
                         }
                         
                         if (data->data.size() != info.nyears * info.nseasons || data->error.size() != info.nyears * info.nseasons) {
@@ -2603,15 +2603,15 @@ public:
                         d->missing_value = data->missing_values;
                         d->dimensions = 3;
                         switch (this->age_comp_data[i].first) {
-                            case MALE:
-                                d->sex_type = mas::MALE;
-                                break;
-                            case FEMALE:
-                                d->sex_type = mas::FEMALE;
-                                break;
-                            case UNDIFFERENTIATED:
-                                d->sex_type = mas::UNDIFFERENTIATED;
-                                break;
+                        case MALE:
+                            d->sex_type = mas::MALE;
+                            break;
+                        case FEMALE:
+                            d->sex_type = mas::FEMALE;
+                            break;
+                        case UNDIFFERENTIATED:
+                            d->sex_type = mas::UNDIFFERENTIATED;
+                            break;
                         }
                         
                         if (data->data.size() != info.nyears * info.nseasons * info.ages.size()) {
@@ -2803,15 +2803,15 @@ public:
                         d->missing_value = data->missing_values;
                         d->dimensions = 2;
                         switch (this->index_data[i].first) {
-                            case MALE:
-                                d->sex_type = mas::MALE;
-                                break;
-                            case FEMALE:
-                                d->sex_type = mas::FEMALE;
-                                break;
-                            case UNDIFFERENTIATED:
-                                d->sex_type = mas::UNDIFFERENTIATED;
-                                break;
+                        case MALE:
+                            d->sex_type = mas::MALE;
+                            break;
+                        case FEMALE:
+                            d->sex_type = mas::FEMALE;
+                            break;
+                        case UNDIFFERENTIATED:
+                            d->sex_type = mas::UNDIFFERENTIATED;
+                            break;
                         }
                         
                         if (data->data.size() != info.nyears * info.nseasons || data->error.size() != info.nyears * info.nseasons) {
@@ -2860,15 +2860,15 @@ public:
                         d->missing_value = data->missing_values;
                         d->dimensions = 3;
                         switch (this->age_comp_data[i].first) {
-                            case MALE:
-                                d->sex_type = mas::MALE;
-                                break;
-                            case FEMALE:
-                                d->sex_type = mas::FEMALE;
-                                break;
-                            case UNDIFFERENTIATED:
-                                d->sex_type = mas::UNDIFFERENTIATED;
-                                break;
+                        case MALE:
+                            d->sex_type = mas::MALE;
+                            break;
+                        case FEMALE:
+                            d->sex_type = mas::FEMALE;
+                            break;
+                        case UNDIFFERENTIATED:
+                            d->sex_type = mas::UNDIFFERENTIATED;
+                            break;
                         }
                         
                         if (data->data.size() != info.nyears * info.nseasons * info.ages.size()) {
@@ -2937,12 +2937,12 @@ private:
         }
     }
     
-    mas::MASObjectiveFunction<double > mas;
+    std::shared_ptr<mas::MASObjectiveFunction<double > >  mas;
 public:
     int nyears;
     int nseasons;
     int nages;
-    int max_line_searches = 50;
+    int max_line_searches = 100;
     double tolerance = 1e-4;
     double spawning_season_offset = 0.35;
     double catch_season_offset = 0.5;
@@ -2981,6 +2981,7 @@ public:
     }
     
     void Run() {
+        mas =  std::make_shared<mas::MASObjectiveFunction<double > >();
         if (this->nages == 0) {
             std::cout << "MAS error: nages = 0\n";
             return;
@@ -2997,20 +2998,21 @@ public:
             mas::AreaPopulationInfo<double>::length_weight_key_carryout = this->extended_plus_group;
         }
         
-        mas.mas_instance.info.nyears = this->nyears;
-        mas.mas_instance.info.nseasons = this->nseasons;
-        mas.mas_instance.info.spawning_season_offset = this->spawning_season_offset;
-        mas.mas_instance.info.survey_fraction_of_year = this->survey_season_offset;
-        mas.mas_instance.info.catch_fraction_of_year = this->catch_season_offset;
+        mas->mas_instance.info.nyears = this->nyears;
+        mas->mas_instance.info.nseasons = this->nseasons;
+        mas->mas_instance.info.spawning_season_offset = this->spawning_season_offset;
+        mas->mas_instance.info.survey_fraction_of_year = this->survey_season_offset;
+        mas->mas_instance.info.catch_fraction_of_year = this->catch_season_offset;
         
         typedef typename mas::VariableTrait<double>::variable variable;
-        mas.mas_instance.info.ages.resize(this->nages);
-        mas.mas_instance.info.ages_real.resize(this->nages);
-        
+        mas->mas_instance.info.ages.resize(this->nages);
+        mas->mas_instance.info.ages_real.resize(this->nages);
+        mas::GrowthBase<double>::ages.clear();
+        mas::GrowthBase<double>::ages_to_intrpolate.clear();
         for (int i = 0; i < nages; i++) {
-            mas.mas_instance.info.ages[i] = variable(this->ages[i]);
+            mas->mas_instance.info.ages[i] = variable(this->ages[i]);
             
-            mas.mas_instance.info.ages_real[i] = (this->ages[i]);
+            mas->mas_instance.info.ages_real[i] = (this->ages[i]);
             mas::GrowthBase<double>::ages.push_back(this->ages[i]);
             mas::GrowthBase<double>::ages_to_intrpolate.insert(this->ages[i]);
             mas::GrowthBase<double>::ages_to_intrpolate.insert(this->ages[i] + this->catch_season_offset);
@@ -3020,27 +3022,28 @@ public:
         }
         
         for (int i = 0; i < NLLBase::nll_submodels.size(); i++) {
-            NLLBase::nll_submodels[i]->AddToMAS(mas.mas_instance.info);
+            NLLBase::nll_submodels[i]->AddToMAS(mas->mas_instance.info);
         }
         
         for (int i = 0; i < MASSubModel::submodels.size(); i++) {
-            MASSubModel::submodels[i]->AddToMAS(mas.mas_instance.info);
+            MASSubModel::submodels[i]->AddToMAS(mas->mas_instance.info);
         }
         
         
         
-        mas.mas_instance.info.CreateModel();
-        mas.Initialize();
+        mas->mas_instance.info.CreateModel();
+        mas->Initialize();
         
         
         
-        if (mas.mas_instance.info.valid_configuration == true) {
+        if (mas->mas_instance.info.valid_configuration == true) {
             atl::LBFGS<double> min;
             min.SetPrintWidth(2);
             min.max_line_searches = this->max_line_searches;
             min.SetTolerance(this->tolerance);
-            min.SetObjectiveFunction(&mas);
+            min.SetObjectiveFunction(mas.get());
             min.Run();
+            // mas->mas_instance.Finalize();
         } else {
             std::cout << "MAS Error: Invalid Model Configuration, see mas.log\n";
         }
@@ -3052,8 +3055,8 @@ public:
         Fleet::model_iterator it = Fleet::initialized_models.find(id);
         if (it != Fleet::initialized_models.end()) {
             (
-             
-             *it).second->used = true;
+                    
+                    *it).second->used = true;
             this->fleets.insert(id);
         }
         
@@ -3063,8 +3066,8 @@ public:
         Survey::model_iterator it = Survey::initialized_models.find(id);
         if (it != Survey::initialized_models.end()) {
             (
-             
-             *it).second->used = true;
+                    
+                    *it).second->used = true;
             this->surveys.insert(id);
         }
     }
@@ -3076,8 +3079,8 @@ public:
     
     std::string GetOuptput() {
         mas::JSONOutputGenerator<double> json;
-        
-        return json.GenerateOutput(mas.mas_instance);
+        // mas->SetVarianceCovariance();
+        return json.GenerateOutput(mas->mas_instance);
     }
     
     Rcpp::List GetParameterEstimates() {
@@ -3085,309 +3088,314 @@ public:
         
     }
     
+    void Reset() {
+        NLLBase::nll_submodels.clear();
+    }
+    
 };
 
 RCPP_EXPOSED_CLASS(Parameter)
-RCPP_EXPOSED_CLASS(LogisticSelectivity)
-RCPP_EXPOSED_CLASS(DoubleLogisticSelectivity)
-RCPP_EXPOSED_CLASS(FishingMortality)
-RCPP_EXPOSED_CLASS(NaturalMortality)
-RCPP_EXPOSED_CLASS(RickerRecruitment)
-RCPP_EXPOSED_CLASS(BevertonHoltRecruitment)
-RCPP_EXPOSED_CLASS(VonBertalanffy)
-RCPP_EXPOSED_CLASS(VonBertalanffyModified)
-RCPP_EXPOSED_CLASS(Area)
-RCPP_EXPOSED_CLASS(Movement)
-RCPP_EXPOSED_CLASS(Maturity)
-RCPP_EXPOSED_CLASS(Population)
-RCPP_EXPOSED_CLASS(Lognormal)
-RCPP_EXPOSED_CLASS(DirichletMultinomial)
-RCPP_EXPOSED_CLASS(DirichletMultinomialRobust)
-RCPP_EXPOSED_CLASS(Multinomial)
-RCPP_EXPOSED_CLASS(MultinomialRobust)
-RCPP_EXPOSED_CLASS(Fleet)
-RCPP_EXPOSED_CLASS(Survey)
-RCPP_EXPOSED_CLASS(IndexData)
-RCPP_EXPOSED_CLASS(AgeCompData)
-RCPP_EXPOSED_CLASS(LengthCompData)
-RCPP_EXPOSED_CLASS(MASModel)
-
-RCPP_MODULE(rmas) {
-    class_<Parameter>("Parameter")
-    .constructor()
-    .constructor<double>()
-    .constructor<Parameter>()
-    .field("value", &Parameter::value)
-    .field("min", &Parameter::min)
-    .field("max", &Parameter::max)
-    .field("estimated", &Parameter::estimated)
-    .field("phase", &Parameter::phase)
-    .field("lambda", &Parameter::lambda);
+    RCPP_EXPOSED_CLASS(LogisticSelectivity)
+    RCPP_EXPOSED_CLASS(DoubleLogisticSelectivity)
+    RCPP_EXPOSED_CLASS(FishingMortality)
+    RCPP_EXPOSED_CLASS(NaturalMortality)
+    RCPP_EXPOSED_CLASS(RickerRecruitment)
+    RCPP_EXPOSED_CLASS(BevertonHoltRecruitment)
+    RCPP_EXPOSED_CLASS(VonBertalanffy)
+    RCPP_EXPOSED_CLASS(VonBertalanffyModified)
+    RCPP_EXPOSED_CLASS(Area)
+    RCPP_EXPOSED_CLASS(Movement)
+    RCPP_EXPOSED_CLASS(Maturity)
+    RCPP_EXPOSED_CLASS(Population)
+    RCPP_EXPOSED_CLASS(Lognormal)
+    RCPP_EXPOSED_CLASS(DirichletMultinomial)
+    RCPP_EXPOSED_CLASS(DirichletMultinomialRobust)
+    RCPP_EXPOSED_CLASS(Multinomial)
+    RCPP_EXPOSED_CLASS(MultinomialRobust)
+    RCPP_EXPOSED_CLASS(Fleet)
+    RCPP_EXPOSED_CLASS(Survey)
+    RCPP_EXPOSED_CLASS(IndexData)
+    RCPP_EXPOSED_CLASS(AgeCompData)
+    RCPP_EXPOSED_CLASS(LengthCompData)
+    RCPP_EXPOSED_CLASS(MASModel)
     
-    class_<LogisticSelectivity>("LogisticSelectivity")
-    .constructor()
-    .field("a50", &LogisticSelectivity::a50)
-    .field("slope", &LogisticSelectivity::slope)
-    .field("id", &LogisticSelectivity::id)
-    ;
-    
-    class_<AgeBasedSelectivity>("AgeBasedSelectivity")
-    .constructor()
-    .field("values", &AgeBasedSelectivity::values)
-    .field("id", &AgeBasedSelectivity::id)
-    .field("estimated", &AgeBasedSelectivity::estimated)
-    .field("phase", &AgeBasedSelectivity::phase)
-    ;
-    
-    class_<DoubleLogisticSelectivity>("DoubleLogisticSelectivity")
-    .constructor()
-    .field("alpha_asc", &DoubleLogisticSelectivity::alpha_asc)
-    .field("beta_asc", &DoubleLogisticSelectivity::beta_asc)
-    .field("alpha_desc", &DoubleLogisticSelectivity::alpha_desc)
-    .field("beta_desc", &DoubleLogisticSelectivity::beta_desc)
-    .field("id", &DoubleLogisticSelectivity::id)
-    ;
-    class_<FishingMortality>("FishingMortality")
-    .constructor()
-    .method("SetValues", &FishingMortality::SetValues)
-    .field("id", &FishingMortality::id)
-    .field("values", &FishingMortality::values)
-    .field("min", &FishingMortality::min)
-    .field("max", &FishingMortality::max)
-    .field("estimate", &FishingMortality::estimate)
-    .field("phase", &FishingMortality::phase)
-    ;
-    
-    class_<NaturalMortality>("NaturalMortality")
-    .constructor()
-    .method("SetValues", &NaturalMortality::SetValues)
-    .field("id", &NaturalMortality::id)
-    .field("values", &NaturalMortality::values)
-    .field("estimate", &NaturalMortality::estimate)
-    .field("phase", &NaturalMortality::phase)
-    ;
-    
-    class_<InitialDeviations>("InitialDeviations")
-    .constructor()
-    .method("SetValues", &InitialDeviations::SetValues)
-    .field("id", &InitialDeviations::id)
-    .field("values", &InitialDeviations::values)
-    .field("estimate", &InitialDeviations::estimate)
-    .field("phase", &InitialDeviations::phase)
-    ;
-    
-    class_<RickerRecruitment>("RickerRecruitment")
-    .constructor()
-    .method("SetDeviations", &RickerRecruitment::SetDeviations)
-    .field("R0", &RickerRecruitment::R0)
-    .field("alpha", &RickerRecruitment::alpha)
-    .field("constrained_deviations", &RickerRecruitment::constrained_deviations)
-    .field("estimate_deviations", &RickerRecruitment::estimate_deviations)
-    .field("deviation_phase", &RickerRecruitment::deviation_phase)
-    .field("deviations_min", &RickerRecruitment::deviations_min)
-    .field("deviations_max", &RickerRecruitment::deviations_max)
-    .field("id", &RickerRecruitment::id)
-    ;
-    
-    class_<BevertonHoltRecruitment>("BevertonHoltRecruitment")
-    .constructor()
-    .method("SetDeviations", &BevertonHoltRecruitment::SetDeviations)
-    .field("R0", &BevertonHoltRecruitment::R0)
-    .field("sigma_r", &BevertonHoltRecruitment::sigma_r)
-    .field("h", &BevertonHoltRecruitment::h)
-    .field("constrained_deviations", &BevertonHoltRecruitment::constrained_deviations)
-    .field("estimate_deviations", &BevertonHoltRecruitment::estimate_deviations)
-    .field("deviation_phase", &BevertonHoltRecruitment::deviation_phase)
-    .field("deviations_min", &BevertonHoltRecruitment::deviations_min)
-    .field("deviations_max", &BevertonHoltRecruitment::deviations_max)
-    .field("id", &BevertonHoltRecruitment::id)
-    ;
-    
-    class_<VonBertalanffy>("VonBertalanffy")
-    .constructor()
-    .method("SetUndifferentiatedWeightAtSeasonStart", &VonBertalanffy::SetUndifferentiatedWeightAtSeasonStart)
-    .method("SetUndifferentiatedWeightAtSpawning", &VonBertalanffy::SetUndifferentiatedWeightAtSpawning)
-    .method("SetUndifferentiatedCatchWeight", &VonBertalanffy::SetUndifferentiatedCatchWeight)
-    .method("SetUndifferentiatedSurveyWeight", &VonBertalanffy::SetUndifferentiatedSurveyWeight)
-    .method("SetMaleWeightAtSeasonStart", &VonBertalanffy::SetMaleWeightAtSeasonStart)
-    .method("SetMaleWeightAtSpawning", &VonBertalanffy::SetMaleWeightAtSpawning)
-    .method("SetMaleCatchWeight", &VonBertalanffy::SetMaleCatchWeight)
-    .method("SetMaleSurveyWeight", &VonBertalanffy::SetMaleSurveyWeight)
-    .method("SetFemaleWeightAtSeasonStart", &VonBertalanffy::SetFemaleWeightAtSeasonStart)
-    .method("SetFemaleWeightAtSpawning", &VonBertalanffy::SetFemaleWeightAtSpawning)
-    .method("SetFemaleCatchWeight", &VonBertalanffy::SetFemaleCatchWeight)
-    .method("SetFemaleSurveyWeight", &VonBertalanffy::SetFemaleSurveyWeight)
-    .field("a_max", &VonBertalanffy::a_max)
-    .field("a_min", &VonBertalanffy::a_min)
-    .field("alpha_f", &VonBertalanffy::alpha_f)
-    .field("alpha_m", &VonBertalanffy::alpha_m)
-    .field("beta_f", &VonBertalanffy::beta_f)
-    .field("beta_m", &VonBertalanffy::beta_m)
-    .field("k", &VonBertalanffy::k)
-    .field("l_inf", &VonBertalanffy::l_inf)
-    .field("id", &VonBertalanffy::id)
-    ;
-    
-    class_<VonBertalanffyModified>("VonBertalanffyModified")
-    .constructor()
-    .method("SetUndifferentiatedWeightAtSeasonStart", &VonBertalanffyModified::SetUndifferentiatedWeightAtSeasonStart)
-    .method("SetUndifferentiatedWeightAtSpawning", &VonBertalanffyModified::SetUndifferentiatedWeightAtSpawning)
-    .method("SetUndifferentiatedCatchWeight", &VonBertalanffyModified::SetUndifferentiatedCatchWeight)
-    .method("SetUndifferentiatedSurveyWeight", &VonBertalanffyModified::SetUndifferentiatedSurveyWeight)
-    .method("SetMaleWeightAtSeasonStart", &VonBertalanffyModified::SetMaleWeightAtSeasonStart)
-    .method("SetMaleWeightAtSpawning", &VonBertalanffyModified::SetMaleWeightAtSpawning)
-    .method("SetMaleCatchWeight", &VonBertalanffyModified::SetMaleCatchWeight)
-    .method("SetMaleSurveyWeight", &VonBertalanffyModified::SetMaleSurveyWeight)
-    .method("SetFemaleWeightAtSeasonStart", &VonBertalanffyModified::SetFemaleWeightAtSeasonStart)
-    .method("SetFemaleWeightAtSpawning", &VonBertalanffyModified::SetFemaleWeightAtSpawning)
-    .method("SetFemaleCatchWeight", &VonBertalanffyModified::SetFemaleCatchWeight)
-    .method("SetFemaleSurveyWeight", &VonBertalanffyModified::SetFemaleSurveyWeight)
-    .field("a_max", &VonBertalanffyModified::a_max)
-    .field("a_min", &VonBertalanffyModified::a_min)
-    .field("alpha_f", &VonBertalanffyModified::alpha_f)
-    .field("alpha_m", &VonBertalanffyModified::alpha_m)
-    .field("beta_f", &VonBertalanffyModified::beta_f)
-    .field("beta_m", &VonBertalanffyModified::beta_m)
-    .field("c", &VonBertalanffyModified::c)
-    .field("lmin", &VonBertalanffyModified::lmin)
-    .field("lmax", &VonBertalanffyModified::lmax)
-    .field("l_inf", &VonBertalanffyModified::l_inf)
-    .field("id", &VonBertalanffyModified::id)
-    ;
-    
-    class_<Area>("Area")
-    .constructor()
-    .field("id", &Area::id)
-    .field("name", &Area::name)
-    ;
-    
-    class_<Movement>("Movement")
-    .constructor()
-    .field("id", &Movement::id)
-    .field("connectivity_males", &Movement::connectivity_males)
-    .field("connectivity_females", &Movement::connectivity_females)
-    .field("connectivity_recruits", &Movement::connectivity_recruits)
-    .field("estimate_movement", &Movement::estimate_movement)
-    .field("movement_phase", &Movement::movement_phase)
-    ;
-    
-    class_<Maturity>("Maturity")
-    .constructor()
-    .field("id", &Maturity::id)
-    .field("values", &Maturity::values)
-    ;
-    
-    class_<Population>("Population")
-    .constructor()
-    .field("id", &Population::id)
-    .field("sex_ratio", &Population::sex_ratio)
-    .field("spawning_season_offset", &Population::spawning_season_offset)
-    .method("SetGrowth", &Population::SetGrowth)
-    .method("AddMaturity", &Population::AddMaturity)
-    .method("AddMovement", &Population::AddMovement)
-    .method("AddNaturalMortality", &Population::AddNaturalMortality)
-    .method("AddRecruitment", &Population::AddRecruitment)
-    .method("SetInitialDeviations", &Population::SetInitialDeviations)
-    ;
-    class_<Lognormal>("Lognormal")
-    .constructor()
-    .field("id", &Lognormal::id)
-    .method("SetLambdaValues", &Lognormal::SetLambdaValues)
-    ;
-    class_<DirichletMultinomial>("DirichletMultinomial")
-    .constructor()
-    .field("id", &DirichletMultinomial::id)
-    .method("SetLambdaValues", &DirichletMultinomial::SetLambdaValues)
-    ;
-    class_<DirichletMultinomialRobust>("DirichletMultinomialRobust")
-    .constructor()
-    .field("id", &DirichletMultinomialRobust::id)
-    .method("SetLambdaValues", &DirichletMultinomialRobust::SetLambdaValues)
-    ;
-    class_<Multinomial>("Multinomial")
-    .constructor()
-    .field("id", &Multinomial::id)
-    .method("SetLambdaValues", &Multinomial::SetLambdaValues)
-    ;
-    class_<MultinomialRobust>("MultinomialRobust")
-    .constructor()
-    .field("id", &MultinomialRobust::id)
-    .method("SetLambdaValues", &MultinomialRobust::SetLambdaValues)
-    ;
-    class_<Fleet>("Fleet")
-    .constructor()
-    .field("id", &Fleet::id)
-    .field("catch_fraction_of_year", &Fleet::catch_fraction_of_year)
-    .method("AddFishingMortality", &Fleet::AddFishingMortality)
-    .method("AddSelectivity", &Fleet::AddSelectivity)
-    .method("AddAgeCompData", &Fleet::AddAgeCompData)
-    .method("AddIndexData", &Fleet::AddIndexData)
-    .method("AddLengthCompData", &Fleet::AddLengthCompData)
-    .method("SetAgeCompNllComponent", &Fleet::SetAgeCompNllComponent)
-    .method("SetIndexNllComponent", &Fleet::SetIndexCompNllComponent)
-    .method("SetLengthCompNllComponent", &Fleet::SetLengthCompNllComponent)
-    ;
-    
-    class_<Survey>("Survey")
-    .constructor()
-    .field("id", &Survey::id)
-    .field("survey_fraction_of_year", &Survey::survey_fraction_of_year)
-    .field("q", &Survey::q)
-    .method("AddSelectivity", &Survey::AddSelectivity)
-    .method("AddAgeCompData", &Survey::AddAgeCompData)
-    .method("AddIndexData", &Survey::AddIndexData)
-    .method("AddLengthCompData", &Survey::AddLengthCompData)
-    .method("SetAgeCompNllComponent", &Survey::SetAgeCompNllComponent)
-    .method("SetIndexNllComponent", &Survey::SetIndexCompNllComponent)
-    .method("SetLengthCompNllComponent", &Survey::SetLengthCompNllComponent)
-    ;
-    
-    class_<IndexData>("IndexData")
-    .constructor()
-    .field("id", &IndexData::id)
-    .field("values", &IndexData::data)
-    .field("error", &IndexData::error)
-    .field("sex", &IndexData::sex)
-    .field("missing_value", &IndexData::missing_values)
-    ;
-    
-    class_<AgeCompData>("AgeCompData")
-    .constructor()
-    .field("id", &AgeCompData::id)
-    .field("values", &AgeCompData::data)
-    .field("sample_size", &AgeCompData::sample_size)
-    .field("sex", &AgeCompData::sex)
-    .field("missing_value", &AgeCompData::missing_values)
-    ;
-    class_<LengthCompData>("LengthCompData")
-    .constructor()
-    .field("id", &LengthCompData::id)
-    .field("values", &LengthCompData::data)
-    .field("sample_size", &LengthCompData::sample_size)
-    .field("sex", &LengthCompData::sex)
-    .field("missing_value", &LengthCompData::missing_values)
-    ;
-    
-    
-    class_<MASModel>("MASModel")
-    .constructor()
-    .field("nyears", &MASModel::nyears)
-    .field("nseasons", &MASModel::nseasons)
-    .field("nages", &MASModel::nages)
-    .field("ages", &MASModel::ages)
-    .field("max_line_searches", &MASModel::max_line_searches)
-    .field("tolerance", &MASModel::tolerance)
-    .field("catch_season_offset", &MASModel::catch_season_offset)
-    .field("spawning_season_offset", &MASModel::spawning_season_offset)
-    .field("survey_season_offset", &MASModel::survey_season_offset)
-    .field("extended_plus_group", &MASModel::extended_plus_group)
-    .method("AddFleet", &MASModel::AddFleet)
-    .method("AddSurvey", &MASModel::AddSurvey)
-    .method("AddPopulation", &MASModel::AddPopulation)
-    .method("Run", &MASModel::Run)
-    .method("GetOutput", &MASModel::GetOuptput)
-    ;
-}
+    RCPP_MODULE(rmas) {
+        class_<Parameter>("Parameter")
+        .constructor()
+        .constructor<double>()
+        .constructor<Parameter>()
+        .field("value", &Parameter::value)
+        .field("min", &Parameter::min)
+        .field("max", &Parameter::max)
+        .field("estimated", &Parameter::estimated)
+        .field("phase", &Parameter::phase)
+        .field("lambda", &Parameter::lambda);
+        
+        class_<LogisticSelectivity>("LogisticSelectivity")
+            .constructor()
+            .field("a50", &LogisticSelectivity::a50)
+            .field("slope", &LogisticSelectivity::slope)
+            .field("id", &LogisticSelectivity::id)
+        ;
+        
+        class_<AgeBasedSelectivity>("AgeBasedSelectivity")
+            .constructor()
+            .field("values", &AgeBasedSelectivity::values)
+            .field("id", &AgeBasedSelectivity::id)
+            .field("estimated", &AgeBasedSelectivity::estimated)
+            .field("phase", &AgeBasedSelectivity::phase)
+        ;
+        
+        class_<DoubleLogisticSelectivity>("DoubleLogisticSelectivity")
+            .constructor()
+            .field("alpha_asc", &DoubleLogisticSelectivity::alpha_asc)
+            .field("beta_asc", &DoubleLogisticSelectivity::beta_asc)
+            .field("alpha_desc", &DoubleLogisticSelectivity::alpha_desc)
+            .field("beta_desc", &DoubleLogisticSelectivity::beta_desc)
+            .field("id", &DoubleLogisticSelectivity::id)
+        ;
+        class_<FishingMortality>("FishingMortality")
+            .constructor()
+            .method("SetValues", &FishingMortality::SetValues)
+            .field("id", &FishingMortality::id)
+            .field("values", &FishingMortality::values)
+            .field("min", &FishingMortality::min)
+            .field("max", &FishingMortality::max)
+            .field("estimate", &FishingMortality::estimate)
+            .field("phase", &FishingMortality::phase)
+        ;
+        
+        class_<NaturalMortality>("NaturalMortality")
+            .constructor()
+            .method("SetValues", &NaturalMortality::SetValues)
+            .field("id", &NaturalMortality::id)
+            .field("values", &NaturalMortality::values)
+            .field("estimate", &NaturalMortality::estimate)
+            .field("phase", &NaturalMortality::phase)
+        ;
+        
+        class_<InitialDeviations>("InitialDeviations")
+            .constructor()
+            .method("SetValues", &InitialDeviations::SetValues)
+            .field("id", &InitialDeviations::id)
+            .field("values", &InitialDeviations::values)
+            .field("estimate", &InitialDeviations::estimate)
+            .field("phase", &InitialDeviations::phase)
+        ;
+        
+        class_<RickerRecruitment>("RickerRecruitment")
+            .constructor()
+            .method("SetDeviations", &RickerRecruitment::SetDeviations)
+            .field("R0", &RickerRecruitment::R0)
+            .field("alpha", &RickerRecruitment::alpha)
+            .field("constrained_deviations", &RickerRecruitment::constrained_deviations)
+            .field("estimate_deviations", &RickerRecruitment::estimate_deviations)
+            .field("deviation_phase", &RickerRecruitment::deviation_phase)
+            .field("deviations_min", &RickerRecruitment::deviations_min)
+            .field("deviations_max", &RickerRecruitment::deviations_max)
+            .field("id", &RickerRecruitment::id)
+        ;
+        
+        class_<BevertonHoltRecruitment>("BevertonHoltRecruitment")
+            .constructor()
+            .method("SetDeviations", &BevertonHoltRecruitment::SetDeviations)
+            .field("R0", &BevertonHoltRecruitment::R0)
+            .field("sigma_r", &BevertonHoltRecruitment::sigma_r)
+            .field("h", &BevertonHoltRecruitment::h)
+            .field("constrained_deviations", &BevertonHoltRecruitment::constrained_deviations)
+            .field("estimate_deviations", &BevertonHoltRecruitment::estimate_deviations)
+            .field("deviation_phase", &BevertonHoltRecruitment::deviation_phase)
+            .field("deviations_min", &BevertonHoltRecruitment::deviations_min)
+            .field("deviations_max", &BevertonHoltRecruitment::deviations_max)
+            .field("id", &BevertonHoltRecruitment::id)
+        ;
+        
+        class_<VonBertalanffy>("VonBertalanffy")
+            .constructor()
+            .method("SetUndifferentiatedWeightAtSeasonStart", &VonBertalanffy::SetUndifferentiatedWeightAtSeasonStart)
+            .method("SetUndifferentiatedWeightAtSpawning", &VonBertalanffy::SetUndifferentiatedWeightAtSpawning)
+            .method("SetUndifferentiatedCatchWeight", &VonBertalanffy::SetUndifferentiatedCatchWeight)
+            .method("SetUndifferentiatedSurveyWeight", &VonBertalanffy::SetUndifferentiatedSurveyWeight)
+            .method("SetMaleWeightAtSeasonStart", &VonBertalanffy::SetMaleWeightAtSeasonStart)
+            .method("SetMaleWeightAtSpawning", &VonBertalanffy::SetMaleWeightAtSpawning)
+            .method("SetMaleCatchWeight", &VonBertalanffy::SetMaleCatchWeight)
+            .method("SetMaleSurveyWeight", &VonBertalanffy::SetMaleSurveyWeight)
+            .method("SetFemaleWeightAtSeasonStart", &VonBertalanffy::SetFemaleWeightAtSeasonStart)
+            .method("SetFemaleWeightAtSpawning", &VonBertalanffy::SetFemaleWeightAtSpawning)
+            .method("SetFemaleCatchWeight", &VonBertalanffy::SetFemaleCatchWeight)
+            .method("SetFemaleSurveyWeight", &VonBertalanffy::SetFemaleSurveyWeight)
+            .field("a_max", &VonBertalanffy::a_max)
+            .field("a_min", &VonBertalanffy::a_min)
+            .field("alpha_f", &VonBertalanffy::alpha_f)
+            .field("alpha_m", &VonBertalanffy::alpha_m)
+            .field("beta_f", &VonBertalanffy::beta_f)
+            .field("beta_m", &VonBertalanffy::beta_m)
+            .field("k", &VonBertalanffy::k)
+            .field("l_inf", &VonBertalanffy::l_inf)
+            .field("id", &VonBertalanffy::id)
+        ;
+        
+        class_<VonBertalanffyModified>("VonBertalanffyModified")
+            .constructor()
+            .method("SetUndifferentiatedWeightAtSeasonStart", &VonBertalanffyModified::SetUndifferentiatedWeightAtSeasonStart)
+            .method("SetUndifferentiatedWeightAtSpawning", &VonBertalanffyModified::SetUndifferentiatedWeightAtSpawning)
+            .method("SetUndifferentiatedCatchWeight", &VonBertalanffyModified::SetUndifferentiatedCatchWeight)
+            .method("SetUndifferentiatedSurveyWeight", &VonBertalanffyModified::SetUndifferentiatedSurveyWeight)
+            .method("SetMaleWeightAtSeasonStart", &VonBertalanffyModified::SetMaleWeightAtSeasonStart)
+            .method("SetMaleWeightAtSpawning", &VonBertalanffyModified::SetMaleWeightAtSpawning)
+            .method("SetMaleCatchWeight", &VonBertalanffyModified::SetMaleCatchWeight)
+            .method("SetMaleSurveyWeight", &VonBertalanffyModified::SetMaleSurveyWeight)
+            .method("SetFemaleWeightAtSeasonStart", &VonBertalanffyModified::SetFemaleWeightAtSeasonStart)
+            .method("SetFemaleWeightAtSpawning", &VonBertalanffyModified::SetFemaleWeightAtSpawning)
+            .method("SetFemaleCatchWeight", &VonBertalanffyModified::SetFemaleCatchWeight)
+            .method("SetFemaleSurveyWeight", &VonBertalanffyModified::SetFemaleSurveyWeight)
+            .field("a_max", &VonBertalanffyModified::a_max)
+            .field("a_min", &VonBertalanffyModified::a_min)
+            .field("alpha_f", &VonBertalanffyModified::alpha_f)
+            .field("alpha_m", &VonBertalanffyModified::alpha_m)
+            .field("beta_f", &VonBertalanffyModified::beta_f)
+            .field("beta_m", &VonBertalanffyModified::beta_m)
+            .field("c", &VonBertalanffyModified::c)
+            .field("lmin", &VonBertalanffyModified::lmin)
+            .field("lmax", &VonBertalanffyModified::lmax)
+            .field("l_inf", &VonBertalanffyModified::l_inf)
+            .field("id", &VonBertalanffyModified::id)
+        ;
+        
+        class_<Area>("Area")
+            .constructor()
+            .field("id", &Area::id)
+            .field("name", &Area::name)
+        ;
+        
+        class_<Movement>("Movement")
+            .constructor()
+            .field("id", &Movement::id)
+            .field("connectivity_males", &Movement::connectivity_males)
+            .field("connectivity_females", &Movement::connectivity_females)
+            .field("connectivity_recruits", &Movement::connectivity_recruits)
+            .field("estimate_movement", &Movement::estimate_movement)
+            .field("movement_phase", &Movement::movement_phase)
+        ;
+        
+        class_<Maturity>("Maturity")
+            .constructor()
+            .field("id", &Maturity::id)
+            .field("values", &Maturity::values)
+        ;
+        
+        class_<Population>("Population")
+            .constructor()
+            .field("id", &Population::id)
+            .field("sex_ratio", &Population::sex_ratio)
+            .field("spawning_season_offset", &Population::spawning_season_offset)
+            .method("SetGrowth", &Population::SetGrowth)
+            .method("AddMaturity", &Population::AddMaturity)
+            .method("AddMovement", &Population::AddMovement)
+            .method("AddNaturalMortality", &Population::AddNaturalMortality)
+            .method("AddRecruitment", &Population::AddRecruitment)
+            .method("SetInitialDeviations", &Population::SetInitialDeviations)
+        ;
+        class_<Lognormal>("Lognormal")
+            .constructor()
+            .field("id", &Lognormal::id)
+            .method("SetLambdaValues", &Lognormal::SetLambdaValues)
+        ;
+        class_<DirichletMultinomial>("DirichletMultinomial")
+            .constructor()
+            .field("id", &DirichletMultinomial::id)
+            .method("SetLambdaValues", &DirichletMultinomial::SetLambdaValues)
+        ;
+        class_<DirichletMultinomialRobust>("DirichletMultinomialRobust")
+            .constructor()
+            .field("id", &DirichletMultinomialRobust::id)
+            .method("SetLambdaValues", &DirichletMultinomialRobust::SetLambdaValues)
+        ;
+        class_<Multinomial>("Multinomial")
+            .constructor()
+            .field("id", &Multinomial::id)
+            .method("SetLambdaValues", &Multinomial::SetLambdaValues)
+        ;
+        class_<MultinomialRobust>("MultinomialRobust")
+            .constructor()
+            .field("id", &MultinomialRobust::id)
+            .method("SetLambdaValues", &MultinomialRobust::SetLambdaValues)
+        ;
+        class_<Fleet>("Fleet")
+            .constructor()
+            .field("id", &Fleet::id)
+            .field("catch_fraction_of_year", &Fleet::catch_fraction_of_year)
+            .method("AddFishingMortality", &Fleet::AddFishingMortality)
+            .method("AddSelectivity", &Fleet::AddSelectivity)
+            .method("AddAgeCompData", &Fleet::AddAgeCompData)
+            .method("AddIndexData", &Fleet::AddIndexData)
+            .method("AddLengthCompData", &Fleet::AddLengthCompData)
+            .method("SetAgeCompNllComponent", &Fleet::SetAgeCompNllComponent)
+            .method("SetIndexNllComponent", &Fleet::SetIndexCompNllComponent)
+            .method("SetLengthCompNllComponent", &Fleet::SetLengthCompNllComponent)
+        ;
+        
+        class_<Survey>("Survey")
+            .constructor()
+            .field("id", &Survey::id)
+            .field("survey_fraction_of_year", &Survey::survey_fraction_of_year)
+            .field("q", &Survey::q)
+            .method("AddSelectivity", &Survey::AddSelectivity)
+            .method("AddAgeCompData", &Survey::AddAgeCompData)
+            .method("AddIndexData", &Survey::AddIndexData)
+            .method("AddLengthCompData", &Survey::AddLengthCompData)
+            .method("SetAgeCompNllComponent", &Survey::SetAgeCompNllComponent)
+            .method("SetIndexNllComponent", &Survey::SetIndexCompNllComponent)
+            .method("SetLengthCompNllComponent", &Survey::SetLengthCompNllComponent)
+        ;
+        
+        class_<IndexData>("IndexData")
+            .constructor()
+            .field("id", &IndexData::id)
+            .field("values", &IndexData::data)
+            .field("error", &IndexData::error)
+            .field("sex", &IndexData::sex)
+            .field("missing_value", &IndexData::missing_values)
+        ;
+        
+        class_<AgeCompData>("AgeCompData")
+            .constructor()
+            .field("id", &AgeCompData::id)
+            .field("values", &AgeCompData::data)
+            .field("sample_size", &AgeCompData::sample_size)
+            .field("sex", &AgeCompData::sex)
+            .field("missing_value", &AgeCompData::missing_values)
+        ;
+        class_<LengthCompData>("LengthCompData")
+            .constructor()
+            .field("id", &LengthCompData::id)
+            .field("values", &LengthCompData::data)
+            .field("sample_size", &LengthCompData::sample_size)
+            .field("sex", &LengthCompData::sex)
+            .field("missing_value", &LengthCompData::missing_values)
+        ;
+        
+        
+        class_<MASModel>("MASModel")
+            .constructor()
+            .field("nyears", &MASModel::nyears)
+            .field("nseasons", &MASModel::nseasons)
+            .field("nages", &MASModel::nages)
+            .field("ages", &MASModel::ages)
+            .field("max_line_searches", &MASModel::max_line_searches)
+            .field("tolerance", &MASModel::tolerance)
+            .field("catch_season_offset", &MASModel::catch_season_offset)
+            .field("spawning_season_offset", &MASModel::spawning_season_offset)
+            .field("survey_season_offset", &MASModel::survey_season_offset)
+            .field("extended_plus_group", &MASModel::extended_plus_group)
+            .method("AddFleet", &MASModel::AddFleet)
+            .method("AddSurvey", &MASModel::AddSurvey)
+            .method("AddPopulation", &MASModel::AddPopulation)
+            .method("Run", &MASModel::Run)
+            .method("GetOutput", &MASModel::GetOuptput)
+            .method("Reset", &MASModel::Reset)
+        ;
+    }
 
 
 #endif /* R4MAS_HPP */
