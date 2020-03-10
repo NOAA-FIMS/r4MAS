@@ -23,10 +23,10 @@ create_par_section <- function(section_type, section_type_object, id = 1,
 
       if(par_phase[x]<0){
         section_type_object[[par_names[x]]]$estimated <- FALSE
-        section_type_object[[par_names[x]]]$phase <- -par_phase[x]
       } else{
         section_type_object[[par_names[x]]]$estimated <- TRUE
         section_type_object[[par_names[x]]]$phase <- par_phase[x]
+
       }
       if(!is.na(par_lo[x])){section_type_object[[par_names[x]]]$min <- par_lo[x]}
     if(!is.na(par_hi[x])){section_type_object[[par_names[x]]]$max <- par_hi[x]}

@@ -18,7 +18,7 @@ ages<-c(0.1, seq(1,11))
 area1<-new(r4mas$Area)
 area1$name<-"area1"
 
-input_data <- write_test_data()
+input_data <- write_test_data(nyears = 30)
 
 #Recruitment
 recruitment<-new(r4mas$BevertonHoltRecruitment)
@@ -64,6 +64,7 @@ maturity$values<-c(0.011488685,
 #Natural Mortality
 natural_mortality<-new(r4mas$NaturalMortality)
 natural_mortality$SetValues(rep(0.2,nages))
+#need to add reset button to static variable so you can run again
 
 
 
@@ -198,7 +199,9 @@ mas_model$AddPopulation(population$id)
 # Run the model
 ############################################################
 
-callr::r(mas_model$Run())
+mas_model$Run()
+mas_model
+
 write(mas_model$GetOutput(), file="mas_s2_output.json")
 
 

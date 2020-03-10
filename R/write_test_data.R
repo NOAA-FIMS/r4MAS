@@ -1,19 +1,48 @@
-write_test_data <- function(catch_comp_csv = NULL, survey_comp_csv = NULL){
+write_test_data <- function(nyears, ewaa_vector = NULL, catch_index_v = NULL, survey_index_v = NULL, catch_comp_csv = NULL, survey_comp_csv = NULL){
 
+  if(!is.null(ewaa_vector)){
+    empirical_weight <- ewaa_vector
+  } else{
 empirical_weight<- c(0.5306555, 1.1963283, 2.0582654, 3.0349873, 4.0552124, 5.0646975, 6.0262262, 6.9169206, 7.7248909, 8.4461128, 9.0818532, 9.636695, 
     rep(c(0.5306555, 1.1963283, 2.0582654, 3.0349873, 4.0552124, 5.0646975, 6.0262262, 6.9169206, 7.7248909, 8.4461128, 9.0818532, 9.636695),29)) 
-
-catch_index <- list("values"=c(160.9729922, 469.039834, 767.2392242, 995.4491466, 760.1287713, 1330.812956, 
-                      1293.228597, 2476.815314, 1325.554509, 1523.691282, 1621.524464, 1611.573564, 
-                      1113.866103, 1538.117519, 1508.500687, 1266.046142, 2238.86148, 1607.917363, 
-                      1453.868581, 1295.528013, 1613.812022, 1072.966713, 1636.167979, 1210.822294, 
-                      1129.045115, 964.3269465, 923.3521247, 1218.20288, 881.6275361, 1270.847518), "error"=rep(0.01,30))
-
-survey_index<- list("values" = c(1.769444064, 1.507772568, 1.533016092, 1.616248667, 1.383168775, 1.616386391, 1.412438781, 1.312749108, 
-                       1.196086699, 1.100803192, 1.237393383, 1.059375707, 0.960531835, 0.975227232, 1.029677793, 0.859372577, 
-                       0.920958391, 0.702236849, 0.910970335, 0.671124274, 0.771789588, 0.636336668,  0.602957579, 0.66842653, 
-                       0.501908084, 0.462440308, 0.537562886, 0.564409646, 0.566285357, 0.495778669),
-                    "error"=rep(0.2, 30))
+  }
+  
+  if(!is.null(catch_index_v)){
+    if(!names(catch_index_v)==c("values","error")){
+      stop("Error: catch index must have names of values and error.")
+    } else{
+      if((length(catch_index_v$values)!=nyears)|(length(catch_index_v$error))){
+        stop("Error: catch_index$values and catch_index$error must have one entry corresponding to each year.")
+      }
+    }
+    catch_index <- catch_index_v
+  } else{
+    
+    catch_index <- list("values"=c(160.9729922, 469.039834, 767.2392242, 995.4491466, 760.1287713, 1330.812956, 
+                                   1293.228597, 2476.815314, 1325.554509, 1523.691282, 1621.524464, 1611.573564, 
+                                   1113.866103, 1538.117519, 1508.500687, 1266.046142, 2238.86148, 1607.917363, 
+                                   1453.868581, 1295.528013, 1613.812022, 1072.966713, 1636.167979, 1210.822294, 
+                                   1129.045115, 964.3269465, 923.3521247, 1218.20288, 881.6275361, 1270.847518), "error"=rep(0.01,30))
+  }
+  
+  if(!is.null(survey_index_v)){
+    if(!names(survey_index_v)==c("values","error")){
+      stop("Error: survey index must have names of values and error.")
+    } else{
+      if((length(survey_index_v$values)!=nyears)|(length(survey_index_v$error))){
+        stop("Error: survey_index$values and survey_index$error must have one entry corresponding to each year.")
+      }
+    }
+    survey_index <- survey_index_v
+  } else{
+    
+    survey_index<- list("values" = c(1.769444064, 1.507772568, 1.533016092, 1.616248667, 1.383168775, 1.616386391, 1.412438781, 1.312749108, 
+                                     1.196086699, 1.100803192, 1.237393383, 1.059375707, 0.960531835, 0.975227232, 1.029677793, 0.859372577, 
+                                     0.920958391, 0.702236849, 0.910970335, 0.671124274, 0.771789588, 0.636336668,  0.602957579, 0.66842653, 
+                                     0.501908084, 0.462440308, 0.537562886, 0.564409646, 0.566285357, 0.495778669),
+                        "error"=rep(0.2, 30))
+    
+  }
 
 if(!is.null(catch_comp_csv)){
 catch_comp<- read.csv(catch_comp_csv)
