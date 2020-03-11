@@ -1,5 +1,5 @@
 ## usethis namespace: start
 #' @importFrom Rcpp sourceCpp
-#' @useDynLib RMAS, .registration = TRUE
+#' @useDynLib R4MAS, .registration = TRUE
 ## usethis namespace: end
 NULL

@@ -1,6 +1,6 @@
 create_par_section <- function(section_type, section_type_object, id = 1,
                                par_names, par_lo=NULL,
-                               par_hi=NULL, par_units, par_phase,
+                               par_hi=NULL, par_units=NA, par_phase=NA,
                                par_value, rec_devs = NA){
   
 
