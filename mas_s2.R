@@ -136,11 +136,9 @@ survey_comp$sample_size <-input_data$survey_comp$sample_size
 
 
 #NLL models
-fleet_index_comp_nll<-new(r4mas$Lognormal)
-fleet_age_comp_nll<-new(r4mas$MultinomialRobust)
-survey_index_comp_nll<-new(r4mas$Lognormal)
-survey_age_comp_nll<-new(r4mas$MultinomialRobust)
-survey2_index_comp_nll<-new(r4mas$Lognormal)
+fleet_index_comp_nll<-survey_index_comp_nll <- survey2_index_comp_nll <- new(r4mas$Lognormal)
+fleet_age_comp_nll<-survey_age_comp_nll <- new(r4mas$MultinomialRobust)
+
 
 #Fleet
 fleet<- make_fleet(r4mas, catch_comp, catch_index, fleet_selectivity, area1, fishing_mortality)
