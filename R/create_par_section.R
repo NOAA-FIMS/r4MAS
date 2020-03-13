@@ -1,9 +1,20 @@
 create_par_section <- function(section_type, section_type_object, id = 1,
                                par_names, par_lo=NULL,
-                               par_hi=NULL, par_units=NA, par_phase=NA,
+                               par_hi=NULL, par_units=NULL, par_phase=NULL,
                                par_value, rec_devs = NA){
   
 
+  check_if_null <- function(x, ind){
+
+    bool <- FALSE
+    if(is.null(x)){
+      bool <- TRUE
+    } else if(is.na(x[ind])){
+      bool <- TRUE
+    }
+    return(bool)
+  }
+  
   for(x in 1:length(par_names)){
     if(par_names[x]=="recdevs"){
       section_type_object$estimate_deviations = rec_devs[[1]]
@@ -17,10 +28,11 @@ create_par_section <- function(section_type, section_type_object, id = 1,
       
     } else{
       section_type_object[[par_names[x]]]$value <- par_value[x]
-      if(!is.na(par_units[x])){
+      if(!check_if_null(par_units,x)){
         section_type_object[[par_names[x]]]$units <- par_units[x]
       }
 
+      if(!check_if_null(par_phase,x)){
       if(par_phase[x]<0){
         section_type_object[[par_names[x]]]$estimated <- FALSE
       } else{
@@ -28,20 +40,15 @@ create_par_section <- function(section_type, section_type_object, id = 1,
         section_type_object[[par_names[x]]]$phase <- par_phase[x]
 
       }
-      if(!is.na(par_lo[x])){section_type_object[[par_names[x]]]$min <- par_lo[x]}
-    if(!is.na(par_hi[x])){section_type_object[[par_names[x]]]$max <- par_hi[x]}
-
-
-    }
+      }
+      if(!check_if_null(par_lo,x)){
+          section_type_object[[par_names[x]]]$min <- par_lo[x]
+      }
+      if(!check_if_null(par_hi,x)){
+          section_type_object[[par_names[x]]]$max <- par_hi[x]}
+      }
   }
 
-  if(section_type=="selectivity"){
-    if(grep("Age", par_names)>0){
-      section_type_object$selectivity$base <- "age"
-    } else{
-      section_type_object$selectivity$base <- "length"
-    }
-  }
 
   return(section_type_object)
 }

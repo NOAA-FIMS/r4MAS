@@ -36,15 +36,9 @@ growth$SetUndifferentiatedCatchWeight(empirical_weight)
 growth$SetUndifferentiatedSurveyWeight(empirical_weight)
 growth$SetUndifferentiatedWeightAtSeasonStart(empirical_weight)
 growth$SetUndifferentiatedWeightAtSpawning(empirical_weight)
-growth$a_min$value<-0.01
-growth$a_max$value<-10.0
-growth$c$value<-0.3
-growth$lmin$value<-5
-growth$lmax$value<-50
-growth$alpha_f$value<-0.000025
-growth$alpha_m$value<-0.000025
-growth$beta_f$value<-2.9624
-growth$beta_m$value<-2.9624
+growth <- create_par_section(section_type="growth", section_type_object = growth, 
+                             par_names = c("a_min","a_max","c","lmin","lmax","alpha_f","alpha_m","beta_f","beta_m"),
+                             par_value=c(0.01,10.0,0.3,5,50,2.5E-5,2.5E-5,2.9624,2.9624))
 
 #Maturity
 maturity<-new(r4mas$Maturity)
@@ -104,30 +98,16 @@ fishing_mortality$SetValues(rep(0.3,30))
 
 #Selectivity Model
 fleet_selectivity<-new(r4mas$LogisticSelectivity)
-fleet_selectivity$a50$value<-1.5
-fleet_selectivity$a50$estimated<-TRUE
-fleet_selectivity$a50$phase<-2
-fleet_selectivity$a50$min<-0.0
-fleet_selectivity$a50$max<-10.0
+fleet_selectivity <- create_par_section("selectivity",fleet_selectivity, par_names = c("a50","slope"),
+                                        par_lo = c(0.0,0.0001), par_hi = c(10.0,5.0), par_phase = c(2,0.5),
+                                        par_value = c(1.5,1.5))
 
-fleet_selectivity$slope$value<-1.5
-fleet_selectivity$slope$estimated<-TRUE
-fleet_selectivity$slope$phase<-.5
-fleet_selectivity$slope$min<-0.0001
-fleet_selectivity$slope$max<-5.0
 
 survey_selectivity<-new(r4mas$LogisticSelectivity)
-survey_selectivity$a50$value<-1.0
-survey_selectivity$a50$estimated<-TRUE
-survey_selectivity$a50$phase<-2
-survey_selectivity$a50$min<-0.0
-survey_selectivity$a50$max<-10.0
+survey_selectivity <- create_par_section("selectivity",survey_selectivity, par_names = c("a50","slope"),
+                                        par_lo = c(0.0,0.0001), par_hi = c(10.0,5.0), par_phase = c(2,2),
+                                        par_value = c(1.0,0.3))
 
-survey_selectivity$slope$value<-0.3
-survey_selectivity$slope$estimated<-TRUE
-survey_selectivity$slope$phase<-2
-survey_selectivity$slope$min<-0.0001
-survey_selectivity$slope$max<-5.0
 
 survey2_selectivity<-new(r4mas$AgeBasedSelectivity)
 survey2_selectivity$estimated<-FALSE
