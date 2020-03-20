@@ -376,12 +376,8 @@ summary {
 
 remotes::install_github(&quot;nmfs-fish-tools/RMAS&quot;)</code></pre>
 <p>Next, you will need to load the .dll included in the RMAS package.</p>
-<pre class="r"><code>require(Rcpp)</code></pre>
 <pre><code>## Loading required package: Rcpp</code></pre>
-<pre class="r"><code>require(RMAS)</code></pre>
 <pre><code>## Loading required package: RMAS</code></pre>
-<pre class="r"><code>r4mas &lt;-
-  Module(&quot;rmas&quot;, dyn.load(paste(&quot;src/RMAS&quot;, .Platform$dynlib.ext, sep = &quot;&quot;)))</code></pre>
 </div>
 <div id="setting-model-specifications" class="section level2">
 <h2>Setting model specifications</h2>
@@ -389,7 +385,7 @@ remotes::install_github(&quot;nmfs-fish-tools/RMAS&quot;)</code></pre>
 <p>RMAS uses classes to parallel the object-oriented structure of MAS. In R, model classes are initiralized using the <code>new()</code> command. For each model component, the associated class is initialized and then its attributes are populated. To view available attributes for each class, use the <code>show()</code> function as shown below.</p>
 <pre class="r"><code>#View attributes and methods associated with each class
 show(r4mas$Area)</code></pre>
-<pre><code>## C++ class &#39;Area&#39; &lt;0000000016bf4000&gt;
+<pre><code>## C++ class &#39;Area&#39; &lt;0000000014df6340&gt;
 ## Constructors:
 ##     Area()
 ## 
@@ -485,6 +481,7 @@ survey2_selectivity$values&lt;-c(1.0,rep(0.0,nages-1))</code></pre>
 </div>
 <div id="creating-the-population" class="section level2">
 <h2>Creating the population</h2>
+<p>Now that the classes for parameter values and movement have been created, you can create a population class and add the relevant classes.</p>
 <pre class="r"><code>population&lt;-new(r4mas$Population)
 
 for (y in 0:(nyears))
@@ -496,11 +493,11 @@ population$AddNaturalMortality(natural_mortality$id,area1$id,&quot;undifferentia
 population$AddMaturity(maturity$id,area1$id, &quot;undifferentiated&quot;)
 population$AddRecruitment(recruitment$id,area1$id)
 population$SetInitialDeviations(initial_deviations$id, area1$id, &quot;undifferentiated&quot;)
-population$SetGrowth(growth$id)
-population$sex_ratio&lt;-0.5</code></pre>
+population$SetGrowth(growth$id)</code></pre>
 </div>
 <div id="adding-data-to-the-model" class="section level2">
 <h2>Adding data to the model</h2>
+<p>Next, use the data classes (<code>IndexData</code> and <code>AgeCompData</code>) to add values, error, and sample sizes for each data set. Indices and error values are the same length as the number of years, <code>{r} nyears</code>. Age comp data are passed as a vector of length <code>nages</code> x <code>nyears</code>. The <code>sample_size</code> vectors should be of length <code>nyears</code>.</p>
 <pre class="r"><code>#Index data
 catch_index&lt;-new(r4mas$IndexData)
 catch_index$values &lt;- input_data$catch_index$values
@@ -524,6 +521,7 @@ survey_comp$sample_size &lt;-input_data$survey_comp$sample_size</code></pre>
 </div>
 <div id="defining-fleets" class="section level2">
 <h2>Defining fleets</h2>
+<p>To make each fishing fleet, you can use the <code>make_fleet()</code> function. This takes the fishery data associated with that fleet, the selectivity associated with that fleet, the area, and fishing mortality parameters and returns an <code>r4mas</code> fleet object.</p>
 <pre class="r"><code>#NLL models
 fleet_index_comp_nll&lt;-survey_index_comp_nll &lt;- survey2_index_comp_nll &lt;- new(r4mas$Lognormal)
 fleet_age_comp_nll&lt;-survey_age_comp_nll &lt;- new(r4mas$MultinomialRobust)
@@ -547,6 +545,7 @@ survey$q$phase&lt;-1</code></pre>
 </div>
 <div id="build-and-run-the-model-and-write-output" class="section level2">
 <h2>Build and run the model and write output</h2>
+<p>Finally, we create a <code>MASModel</code> object and add the relevant model configuration parameters, fleets, surveys, and populations to the model object. We call the <code>Run()</code> method to run the model and then write the output to a .json file.</p>
 <pre class="r"><code>#build the MAS model
 mas_model&lt;-new(r4mas$MASModel)
 mas_model$nyears&lt;-nyears
@@ -557,19 +556,33 @@ mas_model$ages&lt;-ages
 mas_model$AddFleet(fleet$id)
 mas_model$catch_season_offset&lt;-0.5
 mas_model$spawning_season_offset&lt;-0.5
+population$sex_ratio&lt;-0.5
 
 mas_model$AddSurvey(survey$id)
 mas_model$AddPopulation(population$id)
 
 
-#########################################################
+##########
 # Run the model
-############################################################
 
 mas_model$Run()
-mas_model</code></pre>
-<pre><code>## C++ object &lt;0000000014b567c0&gt; of class &#39;MASModel&#39; &lt;0000000016bf8570&gt;</code></pre>
-<pre class="r"><code>write(mas_model$GetOutput(), file=&quot;mas_s2_output.json&quot;)</code></pre>
+
+write(mas_model$GetOutput(), file=&quot;mas_s2_output.json&quot;)</code></pre>
+</div>
+<div id="read-in-model-output" class="section level2">
+<h2>Read in model output</h2>
+<p>We use the <code>jsonlite</code> package to read in model output. This creates a list in your R environment with the associated output values and estimates.</p>
+<pre class="r"><code>require(jsonlite)</code></pre>
+<pre><code>## Loading required package: jsonlite</code></pre>
+<pre class="r"><code>json_output &lt;- jsonlite::read_json(paste(d,&quot;/extdata/mas_s2_output.json&quot;, sep=&quot;&quot;))
+
+years &lt;- json_output$nyears
+ages &lt;- json_output$nages
+popdy &lt;- json_output$population_dynamics
+
+#View the estimated values
+#popdy$fleet$undifferentiated
+#popdy$survey$undifferentiated</code></pre>
 </div>
 
 

@@ -88,30 +88,6 @@ population$SetInitialDeviations(initial_deviations$id, area1$id, "undifferentiat
 population$SetGrowth(growth$id)
 population$sex_ratio<-0.5
 
-#Fishing Mortality
-fishing_mortality<-new(r4mas$FishingMortality)
-fishing_mortality$estimate<-TRUE
-fishing_mortality$phase<-1
-fishing_mortality$min<-1e-8
-fishing_mortality$max<-30
-fishing_mortality$SetValues(rep(0.3,30))
-
-#Selectivity Model
-fleet_selectivity<-new(r4mas$LogisticSelectivity)
-fleet_selectivity <- create_par_section("selectivity",fleet_selectivity, par_names = c("a50","slope"),
-                                        par_lo = c(0.0,0.0001), par_hi = c(10.0,5.0), par_phase = c(2,0.5),
-                                        par_value = c(1.5,1.5))
-
-
-survey_selectivity<-new(r4mas$LogisticSelectivity)
-survey_selectivity <- create_par_section("selectivity",survey_selectivity, par_names = c("a50","slope"),
-                                        par_lo = c(0.0,0.0001), par_hi = c(10.0,5.0), par_phase = c(2,2),
-                                        par_value = c(1.0,0.3))
-
-
-survey2_selectivity<-new(r4mas$AgeBasedSelectivity)
-survey2_selectivity$estimated<-FALSE
-survey2_selectivity$values<-c(1.0,rep(0.0,nages-1))
 
 #Index data
 catch_index<-new(r4mas$IndexData)

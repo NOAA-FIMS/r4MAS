@@ -30,8 +30,9 @@ Next, you will need to load the .dll included in the RMAS package.
 ```{r dll_load, echo = FALSE}
 require(Rcpp)
 require(RMAS)
+d <- system.file(package = "RMAS")
 r4mas <-
-  Module("rmas", dyn.load(paste("src/RMAS", .Platform$dynlib.ext, sep = "")))
+  Module("rmas", dyn.load(paste(d,"/libs/x64/RMAS", .Platform$dynlib.ext, sep = "")))
 ```
 
 
@@ -252,7 +253,7 @@ mas_model$AddPopulation(population$id)
 
 mas_model$Run()
 
-jsonlite::write(mas_model$GetOutput(), file="mas_s2_output.json")
+write(mas_model$GetOutput(), file="mas_s2_output.json")
 ```
 
 ## Read in model output
@@ -260,7 +261,17 @@ jsonlite::write(mas_model$GetOutput(), file="mas_s2_output.json")
 We use the `jsonlite` package to read in model output. This creates a list in your R environment with the associated output values and estimates. 
 
 ```{r}
-json_output <- jsonlite::read_json("./inst/extdata/mas_s2_output.json")
+require(jsonlite)
+json_output <- jsonlite::read_json(paste(d,"/extdata/mas_s2_output.json", sep=""))
+
+years <- json_output$nyears
+ages <- json_output$nages
+popdy <- json_output$population_dynamics
+
+#View the estimated values
+#popdy$fleet$undifferentiated
+#popdy$survey$undifferentiated
+
 
 
 ```
