@@ -1,6 +1,6 @@
 # README
 
-# (RMAS) R interface to Metapopulation Assessment System
+# (RMAS) R interface to the Metapopulation Assessment System
 
 **************
 
@@ -16,6 +16,30 @@ https://nmfs-fish-tools.github.io/RMAS/
 ## This is a repository for the Stock Assesment Tool: RMAS
 - Supported by the NOAA Fisheries Integrated Toolbox
 
+## About RMAS
+
+## Installation instructions
+`RMAS` runs the Metapopulation Assessment System model solver, which is written in C++. Since this package contains C++ files, you will need to ensure you have a C++ compiler installed. You can install a C++ compiler here, please make sure it is C++14 or more recent.
+
+Please install `RMAS` from Github using the `devtools` package as follows:
+```
+devtools::install_github("nmfs-fish-tools/RMAS")
+```
+
+**Windows users**: If you receive errors related to C++ when installing RMAS, it could be because your R installation uses the default Makevars.win file. To update your Makevars.win file, please run the following code in your R terminal:
+
+```
+dotR <- file.path(Sys.getenv("HOME"), ".R")
+if (!file.exists(dotR)) 
+  dir.create(dotR)
+M <- file.path(dotR, "Makevars.win")
+if (!file.exists(M)) 
+  file.create(M)
+cat("\nCXX14FLAGS=-O3 -Wno-unused-variable -Wno-unused-function",
+    "CXX14 = $(BINPREF)g++ -m$(WIN) -std=c++1y",
+    "CXX11FLAGS=-O3 -Wno-unused-variable -Wno-unused-function",
+    file = M, sep = "\n", append = TRUE)
+```
 
 ## Disclaimer
 
