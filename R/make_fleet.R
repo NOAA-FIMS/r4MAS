@@ -1,3 +1,5 @@
+
+
 make_fleet <- function(env__, catch_comp, catch_index, fleet_selectivity, area1, fishing_mortality){
   fleet <- new(env__$Fleet)
   fleet$AddAgeCompData(catch_comp$id, "undifferentiated")

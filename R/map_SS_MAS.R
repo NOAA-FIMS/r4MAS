@@ -4,8 +4,8 @@
 #'@param in_name string; the string to map to a new name
 #'@return new_name - the mapped name
 #'
-#'@example name_map("SR_LN(R0)")
-name_map_SS_MAS <-function(toMAS = TRUE, in_name){
+#'@example map_SS_MAS("SR_LN(R0)")
+map_SS_MAS <-function(toMAS = TRUE, in_name){
   if(toMAS){
     new_name <- switch(in_name, "L_at_Amin_Fem_GP_1" = "lmin",
            "L_at_Amax_Fem_GP_1" = "lmax",
