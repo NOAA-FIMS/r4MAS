@@ -20,7 +20,7 @@ assign_values(X, function_env, return_list)
 }}
 }
 \description{
-A function that may be called by \code{lapply()} to assign all of the variables in the given environment to slots within a list. This
+A function that may be called by \code{lapply()} to assign all of the variables in the given environment to slots within a list.
 }
 \seealso{
 \code{\link[base:get]{base::get()}}

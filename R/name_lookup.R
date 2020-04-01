@@ -1,3 +1,5 @@
+#'Function to map stock assessment quantities between platforms
+#'@name name_lookup
 #'@author Christine Stawitz
 #'@description Function to map names between different stock assessment models
 #'@param input_format string; the model the data or output is coming from

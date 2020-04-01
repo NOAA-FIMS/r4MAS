@@ -1,3 +1,5 @@
+#'Function mapping SS values to MAS
+#'@name map_SS_MAS
 #'@author Christine Stawitz
 #'@description Function to map names between different stock assessment models
 #'@param toMAS boolean; if this will be written to a MAS-style JSON input

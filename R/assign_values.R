@@ -1,6 +1,6 @@
 #' Assign environment variables to a list
-#' 
-#' A function that may be called by `lapply()` to assign all of the variables in the given environment to slots within a list. This
+#' @name assign_values
+#' @description A function that may be called by `lapply()` to assign all of the variables in the given environment to slots within a list. 
 #'
 #' @param X - the name of the variable in `function_env` to assign to the list slot named `X`
 #' @param function_env - the environment in which you want the function to search for the variable named `X`
