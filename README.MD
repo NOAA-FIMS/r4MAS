@@ -1,10 +1,9 @@
 # README
 
-# This is a repository for the Stock Assesment Tool: RMAS - R interface to the Metapopulation Assessment System
+# RMAS - R interface to the Metapopulation Assessment System
 
 **************
-
-[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2787/badge)](https://bestpractices.coreinfrastructure.org/projects/2787)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/nmfs-fish-tools/RMAS) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2787/badge)](https://bestpractices.coreinfrastructure.org/projects/2787)
 
 **************
 The Metapopulation Assessment System (MAS) is a modular tool for creating and fitting fisheries stock assessment models. The R interface to MAS (RMAS) allows users to build and run MAS models directly using the `R` language. It also includes functions to help translate between MAS and other stock assessment software and to plot outputs of MAS models, including estimates of key biological and observation parameters and derived quantities such as biological reference points, estimated biomass, and estimated numbers-at-age.
@@ -37,12 +36,11 @@ cat("\nCXX14FLAGS=-O3 -Wno-unused-variable -Wno-unused-function",
     "CXX11FLAGS=-O3 -Wno-unused-variable -Wno-unused-function",
     file = M, sep = "\n", append = TRUE)
 ```
-To get notifications about r4ss, you can watch this GitHub project.
+To get notifications about `RMAS`, you can watch this GitHub project.
 
 ## Creating a model
 Once you've installed the package and have confirmed you can load it, we recommend starting with the introductory [vignette](vignettes/Introduction.Rmd) to see an example of building and running a simple model within RMAS. The [write_test_data()](R/write_test_data.R) function will generate simple dummy input data. You can replace these dummy data with your own data.
 
-## Model features and options.
 
 ## Disclaimer
 
