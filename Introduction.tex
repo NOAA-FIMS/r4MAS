@@ -1,0 +1,430 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Introduction},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Introduction}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\hypertarget{overview}{%
+\subsection{Overview}\label{overview}}
+
+This package allows you to build and run a Metapopulation Assessment
+System (MAS) stock assessment model directly from R. It also includes
+functions to inter-translate between different assessment platforms. In
+this vignette, we detail how to set up a MAS model and run it from R
+using dummy data included in the package. It is straightforward to
+replace this with your own data.
+
+The first step is to ensure you have \texttt{Rcpp}, the R package that
+allows calling of C++ code directly from R, and \texttt{jsonlite}, the R
+package that facilitates reading input and output files from JSON
+format. Right now, the \texttt{RMAS} package is only available on Github
+so you need to install it with the \texttt{remotes} package (this
+package is included in \texttt{devtools} if you have already installed
+that.)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{##install.packages("Rcpp")}
+\CommentTok{##install.packages("jsonlite")}
+\CommentTok{##install.packages("remotes")}
+
+\NormalTok{remotes}\OperatorTok{::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"nmfs-fish-tools/RMAS"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Next, you will need to load the .dll included in the RMAS package.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{require}\NormalTok{(Rcpp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: Rcpp
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{require}\NormalTok{(RMAS)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: RMAS
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{r4mas <-}
+\StringTok{  }\KeywordTok{Module}\NormalTok{(}\StringTok{"rmas"}\NormalTok{, }\KeywordTok{dyn.load}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"src/RMAS"}\NormalTok{, .Platform}\OperatorTok{$}\NormalTok{dynlib.ext, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{setting-model-specifications}{%
+\subsection{Setting model
+specifications}\label{setting-model-specifications}}
+
+Next, we define model scalars, such as the number of years of the model,
+the number of seasons, and the vector of ages. For this example, we will
+use the test data created by \texttt{rmas::write\_test\_data()}, but
+this can be replaced by user input data later on in the script.
+
+RMAS uses classes to parallel the object-oriented structure of MAS. In
+R, model classes are initiralized using the \texttt{new()} command. For
+each model component, the associated class is initialized and then its
+attributes are populated. To view available attributes for each class,
+use the \texttt{show()} function as shown below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#View attributes and methods associated with each class}
+\KeywordTok{show}\NormalTok{(r4mas}\OperatorTok{$}\NormalTok{Area)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## C++ class 'Area' <0000000014ba7a80>
+## Constructors:
+##     Area()
+## 
+## Fields: 
+##     int id
+##     std::string name
+## 
+## Methods: no methods exposed by this class
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#define area}
+\NormalTok{area1<-}\KeywordTok{new}\NormalTok{(r4mas}\OperatorTok{$}\NormalTok{Area)}
+\NormalTok{area1}\OperatorTok{$}\NormalTok{name<-}\StringTok{"area1"}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{setting-parameter-values}{%
+\subsection{Setting parameter values}\label{setting-parameter-values}}
+
+Next, we populate the parameter constructors for each different set of
+parameters: recruitment, growth, maturity, mortality, and movement. For
+functions with several parameters (e.g.~the Beverton-Holt recruitment
+function), the \texttt{create\_par\_section()} function exists. This
+takes a number of arguments: the type of section, the associated object
+created for that function, then a series of vectors of length equivalent
+to the number of parameters. These vectors denote the name, lower bound,
+upper bound, units, phase, and value for each parameter. If any
+parameter doesn't have one of these attributes, you can use an NA in the
+vector. Or, if one of the attributes is not defined for all attributes
+(e.g.~units in this case), you can pass a single NA for that attribute
+or leave the argument blank.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Recruitment}
+\NormalTok{recruitment<-}\KeywordTok{new}\NormalTok{(r4mas}\OperatorTok{$}\NormalTok{BevertonHoltRecruitment)}
+
+\NormalTok{devs_list <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\OtherTok{TRUE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{, }\KeywordTok{rep}\NormalTok{(}\FloatTok{0.0}\NormalTok{,}\DecValTok{22}\NormalTok{))}
+\NormalTok{recruitment <-}\StringTok{ }\KeywordTok{create_par_section}\NormalTok{(}\DataTypeTok{section_type =} \StringTok{"recruitment"}\NormalTok{, }\DataTypeTok{section_type_object =}\NormalTok{ recruitment, }\DataTypeTok{par_names =} \KeywordTok{c}\NormalTok{(}\StringTok{"R0"}\NormalTok{,}\StringTok{"h"}\NormalTok{,}\StringTok{"sigma_r"}\NormalTok{,}\StringTok{"recdevs"}\NormalTok{),}
+                   \DataTypeTok{par_lo =} \KeywordTok{c}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\FloatTok{0.2001}\NormalTok{,}\OtherTok{NA}\NormalTok{,}\OperatorTok{-}\DecValTok{15}\NormalTok{), }\DataTypeTok{par_hi =} \KeywordTok{c}\NormalTok{(}\OtherTok{NA}\NormalTok{,}\FloatTok{1.0}\NormalTok{,}\OtherTok{NA}\NormalTok{,}\DecValTok{15}\NormalTok{), }\DataTypeTok{par_units =} \OtherTok{NA}\NormalTok{, }\DataTypeTok{par_phase =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\OperatorTok{-}\DecValTok{2}\NormalTok{,}\OperatorTok{-}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{), }\DataTypeTok{par_value =} \KeywordTok{c}\NormalTok{(}\DecValTok{1000}\NormalTok{,}\FloatTok{0.75}\NormalTok{,}\FloatTok{0.55}\NormalTok{, }\OtherTok{NA}\NormalTok{), }
+                   \DataTypeTok{rec_devs=}\NormalTok{devs_list)}
+
+
+\CommentTok{#Initial Deviations}
+\NormalTok{initial_deviations<-}\KeywordTok{new}\NormalTok{(r4mas}\OperatorTok{$}\NormalTok{InitialDeviations)}
+\NormalTok{initial_deviations}\OperatorTok{$}\NormalTok{values<-}\KeywordTok{rep}\NormalTok{(}\FloatTok{0.0}\NormalTok{,nages)}
+\NormalTok{initial_deviations}\OperatorTok{$}\NormalTok{estimate<-}\OtherTok{FALSE}
+\NormalTok{initial_deviations}\OperatorTok{$}\NormalTok{phase<-}\DecValTok{1}
+
+
+\CommentTok{#Growth}
+\NormalTok{growth<-}\KeywordTok{new}\NormalTok{(r4mas}\OperatorTok{$}\NormalTok{VonBertalanffyModified)}
+\NormalTok{empirical_weight <-}\StringTok{ }\NormalTok{input_data}\OperatorTok{$}\NormalTok{ewaa}
+\NormalTok{growth}\OperatorTok{$}\KeywordTok{SetUndifferentiatedCatchWeight}\NormalTok{(empirical_weight)}
+\NormalTok{growth}\OperatorTok{$}\KeywordTok{SetUndifferentiatedSurveyWeight}\NormalTok{(empirical_weight)}
+\NormalTok{growth}\OperatorTok{$}\KeywordTok{SetUndifferentiatedWeightAtSeasonStart}\NormalTok{(empirical_weight)}
+\NormalTok{growth}\OperatorTok{$}\KeywordTok{SetUndifferentiatedWeightAtSpawning}\NormalTok{(empirical_weight)}
+\NormalTok{growth <-}\StringTok{ }\KeywordTok{create_par_section}\NormalTok{(}\DataTypeTok{section_type=}\StringTok{"growth"}\NormalTok{, }\DataTypeTok{section_type_object =}\NormalTok{ growth, }
+                             \DataTypeTok{par_names =} \KeywordTok{c}\NormalTok{(}\StringTok{"a_min"}\NormalTok{,}\StringTok{"a_max"}\NormalTok{,}\StringTok{"c"}\NormalTok{,}\StringTok{"lmin"}\NormalTok{,}\StringTok{"lmax"}\NormalTok{,}\StringTok{"alpha_f"}\NormalTok{,}\StringTok{"alpha_m"}\NormalTok{,}\StringTok{"beta_f"}\NormalTok{,}\StringTok{"beta_m"}\NormalTok{),}
+                             \DataTypeTok{par_value=}\KeywordTok{c}\NormalTok{(}\FloatTok{0.01}\NormalTok{,}\FloatTok{10.0}\NormalTok{,}\FloatTok{0.3}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{50}\NormalTok{,}\FloatTok{2.5E-5}\NormalTok{,}\FloatTok{2.5E-5}\NormalTok{,}\FloatTok{2.9624}\NormalTok{,}\FloatTok{2.9624}\NormalTok{))}
+
+\CommentTok{#Maturity}
+\NormalTok{maturity<-}\KeywordTok{new}\NormalTok{(r4mas}\OperatorTok{$}\NormalTok{Maturity)}
+\NormalTok{maturity}\OperatorTok{$}\NormalTok{values<-}\KeywordTok{c}\NormalTok{(}\FloatTok{0.011488685}\NormalTok{,}
+                   \FloatTok{0.16041065}\NormalTok{,}
+                   \FloatTok{0.45232527}\NormalTok{,}
+                   \FloatTok{0.497389935}\NormalTok{,}
+                   \FloatTok{0.499869405}\NormalTok{,}
+                   \FloatTok{0.499993495}\NormalTok{,}
+                   \FloatTok{0.499999675}\NormalTok{,}
+                   \FloatTok{0.499999985}\NormalTok{,}
+                   \FloatTok{0.5}\NormalTok{,}
+                   \FloatTok{0.5}\NormalTok{,}
+                   \FloatTok{0.5}\NormalTok{,}
+                   \FloatTok{0.5}\NormalTok{)}
+
+\CommentTok{#Natural Mortality}
+\NormalTok{natural_mortality<-}\KeywordTok{new}\NormalTok{(r4mas}\OperatorTok{$}\NormalTok{NaturalMortality)}
+\NormalTok{natural_mortality}\OperatorTok{$}\KeywordTok{SetValues}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\FloatTok{0.2}\NormalTok{,nages))}
+\CommentTok{#need to add reset button to static variable so you can run again}
+
+\CommentTok{#define Movement (only 1 area in this model)}
+\NormalTok{movement<-}\KeywordTok{new}\NormalTok{(r4mas}\OperatorTok{$}\NormalTok{Movement)}
+\NormalTok{movement}\OperatorTok{$}\NormalTok{connectivity_females<-}\KeywordTok{c}\NormalTok{(}\FloatTok{1.0}\NormalTok{)}
+\NormalTok{movement}\OperatorTok{$}\NormalTok{connectivity_males<-}\KeywordTok{c}\NormalTok{(}\FloatTok{1.0}\NormalTok{)}
+\NormalTok{movement}\OperatorTok{$}\NormalTok{connectivity_recruits<-}\KeywordTok{c}\NormalTok{(}\FloatTok{1.0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Next we define the functions related to fishing, i.e.~fishing mortality
+and selectivity.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Fishing Mortality}
+\NormalTok{fishing_mortality<-}\KeywordTok{new}\NormalTok{(r4mas}\OperatorTok{$}\NormalTok{FishingMortality)}
+\NormalTok{fishing_mortality}\OperatorTok{$}\NormalTok{estimate<-}\OtherTok{TRUE}
+\NormalTok{fishing_mortality}\OperatorTok{$}\NormalTok{phase<-}\DecValTok{1}
+\NormalTok{fishing_mortality}\OperatorTok{$}\NormalTok{min<-}\FloatTok{1e-8}
+\NormalTok{fishing_mortality}\OperatorTok{$}\NormalTok{max<-}\DecValTok{30}
+\NormalTok{fishing_mortality}\OperatorTok{$}\KeywordTok{SetValues}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\FloatTok{0.3}\NormalTok{,}\DecValTok{30}\NormalTok{))}
+
+\CommentTok{#Selectivity Model}
+\NormalTok{fleet_selectivity<-}\KeywordTok{new}\NormalTok{(r4mas}\OperatorTok{$}\NormalTok{LogisticSelectivity)}
+\NormalTok{fleet_selectivity <-}\StringTok{ }\KeywordTok{create_par_section}\NormalTok{(}\StringTok{"selectivity"}\NormalTok{,fleet_selectivity, }\DataTypeTok{par_names =} \KeywordTok{c}\NormalTok{(}\StringTok{"a50"}\NormalTok{,}\StringTok{"slope"}\NormalTok{),}
+                                        \DataTypeTok{par_lo =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.0}\NormalTok{,}\FloatTok{0.0001}\NormalTok{), }\DataTypeTok{par_hi =} \KeywordTok{c}\NormalTok{(}\FloatTok{10.0}\NormalTok{,}\FloatTok{5.0}\NormalTok{), }\DataTypeTok{par_phase =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\FloatTok{0.5}\NormalTok{),}
+                                        \DataTypeTok{par_value =} \KeywordTok{c}\NormalTok{(}\FloatTok{1.5}\NormalTok{,}\FloatTok{1.5}\NormalTok{))}
+
+
+\NormalTok{survey_selectivity<-}\KeywordTok{new}\NormalTok{(r4mas}\OperatorTok{$}\NormalTok{LogisticSelectivity)}
+\NormalTok{survey_selectivity <-}\StringTok{ }\KeywordTok{create_par_section}\NormalTok{(}\StringTok{"selectivity"}\NormalTok{,survey_selectivity, }\DataTypeTok{par_names =} \KeywordTok{c}\NormalTok{(}\StringTok{"a50"}\NormalTok{,}\StringTok{"slope"}\NormalTok{),}
+                                        \DataTypeTok{par_lo =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.0}\NormalTok{,}\FloatTok{0.0001}\NormalTok{), }\DataTypeTok{par_hi =} \KeywordTok{c}\NormalTok{(}\FloatTok{10.0}\NormalTok{,}\FloatTok{5.0}\NormalTok{), }\DataTypeTok{par_phase =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{),}
+                                        \DataTypeTok{par_value =} \KeywordTok{c}\NormalTok{(}\FloatTok{1.0}\NormalTok{,}\FloatTok{0.3}\NormalTok{))}
+
+
+\NormalTok{survey2_selectivity<-}\KeywordTok{new}\NormalTok{(r4mas}\OperatorTok{$}\NormalTok{AgeBasedSelectivity)}
+\NormalTok{survey2_selectivity}\OperatorTok{$}\NormalTok{estimated<-}\OtherTok{FALSE}
+\NormalTok{survey2_selectivity}\OperatorTok{$}\NormalTok{values<-}\KeywordTok{c}\NormalTok{(}\FloatTok{1.0}\NormalTok{,}\KeywordTok{rep}\NormalTok{(}\FloatTok{0.0}\NormalTok{,nages}\DecValTok{-1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{creating-the-population}{%
+\subsection{Creating the population}\label{creating-the-population}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{population<-}\KeywordTok{new}\NormalTok{(r4mas}\OperatorTok{$}\NormalTok{Population)}
+
+\ControlFlowTok{for}\NormalTok{ (y }\ControlFlowTok{in} \DecValTok{0}\OperatorTok{:}\NormalTok{(nyears))}
+\NormalTok{\{}
+\NormalTok{  population}\OperatorTok{$}\KeywordTok{AddMovement}\NormalTok{(movement}\OperatorTok{$}\NormalTok{id, y)}
+\NormalTok{\}}
+
+\NormalTok{population}\OperatorTok{$}\KeywordTok{AddNaturalMortality}\NormalTok{(natural_mortality}\OperatorTok{$}\NormalTok{id,area1}\OperatorTok{$}\NormalTok{id,}\StringTok{"undifferentiated"}\NormalTok{)}
+\NormalTok{population}\OperatorTok{$}\KeywordTok{AddMaturity}\NormalTok{(maturity}\OperatorTok{$}\NormalTok{id,area1}\OperatorTok{$}\NormalTok{id, }\StringTok{"undifferentiated"}\NormalTok{)}
+\NormalTok{population}\OperatorTok{$}\KeywordTok{AddRecruitment}\NormalTok{(recruitment}\OperatorTok{$}\NormalTok{id,area1}\OperatorTok{$}\NormalTok{id)}
+\NormalTok{population}\OperatorTok{$}\KeywordTok{SetInitialDeviations}\NormalTok{(initial_deviations}\OperatorTok{$}\NormalTok{id, area1}\OperatorTok{$}\NormalTok{id, }\StringTok{"undifferentiated"}\NormalTok{)}
+\NormalTok{population}\OperatorTok{$}\KeywordTok{SetGrowth}\NormalTok{(growth}\OperatorTok{$}\NormalTok{id)}
+\NormalTok{population}\OperatorTok{$}\NormalTok{sex_ratio<-}\FloatTok{0.5}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{adding-data-to-the-model}{%
+\subsection{Adding data to the model}\label{adding-data-to-the-model}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Index data}
+\NormalTok{catch_index<-}\KeywordTok{new}\NormalTok{(r4mas}\OperatorTok{$}\NormalTok{IndexData)}
+\NormalTok{catch_index}\OperatorTok{$}\NormalTok{values <-}\StringTok{ }\NormalTok{input_data}\OperatorTok{$}\NormalTok{catch_index}\OperatorTok{$}\NormalTok{values}
+\NormalTok{catch_index}\OperatorTok{$}\NormalTok{error <-}\StringTok{ }\NormalTok{input_data}\OperatorTok{$}\NormalTok{catch_index}\OperatorTok{$}\NormalTok{error}
+
+\NormalTok{survey_index<-}\KeywordTok{new}\NormalTok{(r4mas}\OperatorTok{$}\NormalTok{IndexData)}
+\NormalTok{survey_index}\OperatorTok{$}\NormalTok{values <-}\StringTok{ }\NormalTok{input_data}\OperatorTok{$}\NormalTok{survey_index}\OperatorTok{$}\NormalTok{values}
+\NormalTok{survey_index}\OperatorTok{$}\NormalTok{error <-}\StringTok{ }\NormalTok{input_data}\OperatorTok{$}\NormalTok{survey_index}\OperatorTok{$}\NormalTok{error}
+
+
+\CommentTok{#Age Comp Data}
+\NormalTok{catch_comp<-}\KeywordTok{new}\NormalTok{(r4mas}\OperatorTok{$}\NormalTok{AgeCompData)}
+\NormalTok{catch_comp}\OperatorTok{$}\NormalTok{values <-}\StringTok{ }\NormalTok{input_data}\OperatorTok{$}\NormalTok{catch_comp}\OperatorTok{$}\NormalTok{values}
+\NormalTok{catch_comp}\OperatorTok{$}\NormalTok{sample_size <-input_data}\OperatorTok{$}\NormalTok{catch_comp}\OperatorTok{$}\NormalTok{sample_size}
+
+
+
+\NormalTok{survey_comp<-}\KeywordTok{new}\NormalTok{(r4mas}\OperatorTok{$}\NormalTok{AgeCompData)}
+\NormalTok{survey_comp}\OperatorTok{$}\NormalTok{values <-}\StringTok{ }\NormalTok{input_data}\OperatorTok{$}\NormalTok{survey_comp}\OperatorTok{$}\NormalTok{values}
+\NormalTok{survey_comp}\OperatorTok{$}\NormalTok{sample_size <-input_data}\OperatorTok{$}\NormalTok{survey_comp}\OperatorTok{$}\NormalTok{sample_size}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{defining-fleets}{%
+\subsection{Defining fleets}\label{defining-fleets}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#NLL models}
+\NormalTok{fleet_index_comp_nll<-survey_index_comp_nll <-}\StringTok{ }\NormalTok{survey2_index_comp_nll <-}\StringTok{ }\KeywordTok{new}\NormalTok{(r4mas}\OperatorTok{$}\NormalTok{Lognormal)}
+\NormalTok{fleet_age_comp_nll<-survey_age_comp_nll <-}\StringTok{ }\KeywordTok{new}\NormalTok{(r4mas}\OperatorTok{$}\NormalTok{MultinomialRobust)}
+
+
+\CommentTok{#Fleet}
+\NormalTok{fleet<-}\StringTok{ }\KeywordTok{make_fleet}\NormalTok{(r4mas, catch_comp, catch_index, fleet_selectivity, area1, fishing_mortality)}
+
+\CommentTok{#Survey}
+\NormalTok{survey<-}\KeywordTok{new}\NormalTok{(r4mas}\OperatorTok{$}\NormalTok{Survey)}
+\NormalTok{survey}\OperatorTok{$}\KeywordTok{AddAgeCompData}\NormalTok{(survey_comp}\OperatorTok{$}\NormalTok{id,}\StringTok{"undifferentiated"}\NormalTok{)}
+\NormalTok{survey}\OperatorTok{$}\KeywordTok{AddIndexData}\NormalTok{(survey_index}\OperatorTok{$}\NormalTok{id,}\StringTok{"undifferentiated"}\NormalTok{)}
+\NormalTok{survey}\OperatorTok{$}\KeywordTok{SetIndexNllComponent}\NormalTok{(survey_index_comp_nll}\OperatorTok{$}\NormalTok{id)}
+\NormalTok{survey}\OperatorTok{$}\KeywordTok{SetAgeCompNllComponent}\NormalTok{(survey_age_comp_nll}\OperatorTok{$}\NormalTok{id)}
+\NormalTok{survey}\OperatorTok{$}\KeywordTok{AddSelectivity}\NormalTok{(survey_selectivity}\OperatorTok{$}\NormalTok{id, }\DecValTok{1}\NormalTok{, area1}\OperatorTok{$}\NormalTok{id)}
+\NormalTok{survey}\OperatorTok{$}\NormalTok{q}\OperatorTok{$}\NormalTok{value<-}\FloatTok{0.0001}
+\NormalTok{survey}\OperatorTok{$}\NormalTok{q}\OperatorTok{$}\NormalTok{min<-}\DecValTok{0}
+\NormalTok{survey}\OperatorTok{$}\NormalTok{q}\OperatorTok{$}\NormalTok{max<-}\DecValTok{10}
+\NormalTok{survey}\OperatorTok{$}\NormalTok{q}\OperatorTok{$}\NormalTok{estimated<-}\OtherTok{TRUE}
+\NormalTok{survey}\OperatorTok{$}\NormalTok{q}\OperatorTok{$}\NormalTok{phase<-}\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{build-and-run-the-model-and-write-output}{%
+\subsection{Build and run the model and write
+output}\label{build-and-run-the-model-and-write-output}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#build the MAS model}
+\NormalTok{mas_model<-}\KeywordTok{new}\NormalTok{(r4mas}\OperatorTok{$}\NormalTok{MASModel)}
+\NormalTok{mas_model}\OperatorTok{$}\NormalTok{nyears<-nyears}
+\NormalTok{mas_model}\OperatorTok{$}\NormalTok{nseasons<-nseasons}
+\NormalTok{mas_model}\OperatorTok{$}\NormalTok{nages<-nages}
+\NormalTok{mas_model}\OperatorTok{$}\NormalTok{extended_plus_group<-}\DecValTok{15}
+\NormalTok{mas_model}\OperatorTok{$}\NormalTok{ages<-ages}
+\NormalTok{mas_model}\OperatorTok{$}\KeywordTok{AddFleet}\NormalTok{(fleet}\OperatorTok{$}\NormalTok{id)}
+\NormalTok{mas_model}\OperatorTok{$}\NormalTok{catch_season_offset<-}\FloatTok{0.5}
+\NormalTok{mas_model}\OperatorTok{$}\NormalTok{spawning_season_offset<-}\FloatTok{0.5}
+
+\NormalTok{mas_model}\OperatorTok{$}\KeywordTok{AddSurvey}\NormalTok{(survey}\OperatorTok{$}\NormalTok{id)}
+\NormalTok{mas_model}\OperatorTok{$}\KeywordTok{AddPopulation}\NormalTok{(population}\OperatorTok{$}\NormalTok{id)}
+
+
+\CommentTok{#########################################################}
+\CommentTok{# Run the model}
+\CommentTok{############################################################}
+
+\NormalTok{mas_model}\OperatorTok{$}\KeywordTok{Run}\NormalTok{()}
+\NormalTok{mas_model}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## C++ object <0000000016c1bc20> of class 'MASModel' <0000000016c15900>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{write}\NormalTok{(mas_model}\OperatorTok{$}\KeywordTok{GetOutput}\NormalTok{(), }\DataTypeTok{file=}\StringTok{"mas_s2_output.json"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\end{document}
