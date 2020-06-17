@@ -262,17 +262,18 @@ We use the `jsonlite` package to read in model output. This creates a list in yo
 
 ```{r}
 require(jsonlite)
-json_output <- jsonlite::read_json(paste(d,"/extdata/mas_s2_output.json", sep=""))
+json_loc <- paste(d,"/extdata/mas_s2_output.json", sep="")
+json_output <- jsonlite::read_json(json_loc)
 
 years <- json_output$nyears
 ages <- json_output$nages
 popdy <- json_output$population_dynamics
 
 #View the estimated values
-#popdy$fleet$undifferentiated
+popdy$fleet$undifferentiated
 #popdy$survey$undifferentiated
 
 
-
 ```
+
 
