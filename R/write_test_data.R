@@ -1,3 +1,11 @@
+#' This function writes dummy data that is used in the "Introduction" vignette
+#' @name write_test_data
+#' @param nyears scalar, number of years in the model
+#' @param ewaa_vector vector of empirical weight-at-age, length nyears * nages
+#' @param catch_index_v list with two entries, one named "values" and one named "errors" corresponding to catch, each list entry has length nyears
+#' @param survey_index_v list with two entries, one named "values" and one named "errors" corresponding to index, each list entry has length nyears
+#' @param catch_comp_csv a string with the name of the .csv file containing the catch age composition data, if NULL (the default) dummy data are used
+#' @param survey_comp_csv a string with the name of the .csv file containing the survey age composition data, if NULL (the default) dummy data are used
 write_test_data <- function(nyears, ewaa_vector = NULL, catch_index_v = NULL, survey_index_v = NULL, catch_comp_csv = NULL, survey_comp_csv = NULL){
 
   if(!is.null(ewaa_vector)){

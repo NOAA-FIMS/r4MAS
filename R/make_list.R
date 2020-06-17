@@ -1,6 +1,6 @@
 #' Make a list of everything in function environment
-#' 
-#' A function that returns a list representing the parent environment
+#' @name make_list
+#' @description A function that returns a list representing the parent environment
 #' @return a list with the associated names and values of the environment objects
 #' @export
 #' @md

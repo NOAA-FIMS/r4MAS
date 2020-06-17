@@ -1,20 +1,45 @@
 # README
 
-# (RMAS) R interface to Metapopulation Assessment System
+# RMAS - R interface to the Metapopulation Assessment System
 
 **************
-
-https://nmfs-fish-tools.github.io/RMAS/
-
-**************
-
-
-[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2787/badge)](https://bestpractices.coreinfrastructure.org/projects/2787)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/nmfs-fish-tools/RMAS) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2787/badge)](https://bestpractices.coreinfrastructure.org/projects/2787)
 
 **************
+The Metapopulation Assessment System (MAS) is a modular tool for creating and fitting fisheries stock assessment models. The R interface to MAS (RMAS) allows users to build and run MAS models directly using the `R` language. It also includes functions to help translate between MAS and other stock assessment software and to plot outputs of MAS models, including estimates of key biological and observation parameters and derived quantities such as biological reference points, estimated biomass, and estimated numbers-at-age.
 
-## This is a repository for the Stock Assesment Tool: RMAS
-- Supported by the NOAA Fisheries Integrated Toolbox
+This tool is supported by the NOAA Fisheries Integrated Toolbox. More information can be found on the toolbox [landing page](https://nmfs-fish-tools.github.io/RMAS/)
+
+# Getting started
+
+## Installation instructions
+Since this package contains C++ files, you will need to ensure you have a C++ compiler installed. You can install a C++ compiler here, please make sure it is C++14 or more recent.
+
+Please install and load `RMAS` from Github using the `remotes` package as follows:
+```
+install.packages("remotes")
+remotes::install_github("nmfs-fish-tools/RMAS")
+library(RMAS)
+```
+
+**Windows users**: If you receive errors related to C++ when loading RMAS, it could be because your R installation uses the default Makevars.win file. To update your Makevars.win file, please run the following code in your R terminal:
+
+```
+dotR <- file.path(Sys.getenv("HOME"), ".R")
+if (!file.exists(dotR)) 
+  dir.create(dotR)
+M <- file.path(dotR, "Makevars.win")
+if (!file.exists(M)) 
+  file.create(M)
+cat("\nCXX14FLAGS=-O3 -Wno-unused-variable -Wno-unused-function",
+    "CXX14 = $(BINPREF)g++ -m$(WIN) -std=c++1y",
+    "CXX11FLAGS=-O3 -Wno-unused-variable -Wno-unused-function",
+    file = M, sep = "\n", append = TRUE)
+```
+To get notifications about `RMAS`, you can watch this GitHub project.
+
+## Creating a model
+Once you've installed the package and have confirmed you can load it, we recommend starting with the introductory [vignette](vignettes/Introduction.Rmd) to see an example of building and running a simple model within RMAS. The [write_test_data()](R/write_test_data.R) function will generate simple dummy input data. You can replace these dummy data with your own data.
 
 
 ## Disclaimer

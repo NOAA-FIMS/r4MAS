@@ -1,5 +1,15 @@
+#'Function to read in a MAS output txt file (deprecated) and create plots.
+#'@name output_plots
+#'@param data.dir the directory where the output txt is stored
+#'@param ages a vector of the ages in the model
+#'@param years a vector of the years in the model
+#'@param pop_name a string denoting the name of the population file
+#'@param rep_name a string denoting the name of the report file
+#'@param figs_dir the directory where output figures should be stored
+#'@return a list with two entries - parameter values and N at age
+
 output_plots <- function(data.dir, ages, years, pop_name, rep_name, figs_dir){
-  #setwd("C:/Users/chris/Documents/StockAssessment/MAS")
+
   setwd(here(data.dir))
 
   #Read in populations.txt and report file
