@@ -14,7 +14,11 @@
 #ifndef COMMON_HPP
 #define COMMON_HPP
 
+#define USE_ATL_AS_ESTIMATION_ENGINE
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 #include "third_party/ATL/ATL.hpp"
+#endif
 
 #include <vector>
 #include <map>
@@ -24,6 +28,16 @@
 namespace mas {
 
     std::ofstream mas_log("mas.log");
+
+
+
+    /**
+     * 
+     * We are using The Analytics Template Library as the estimation engine, 
+     * this can be swapped out by defining the wrapper functions below.
+     * 
+     */
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     template<typename REAL_T>
     struct VariableTrait {
@@ -44,7 +58,115 @@ namespace mas {
         static void SetMaxBoundary(variable& var, const REAL_T& value) {
             var.SetMaxBoundary(value);
         }
+
+        static void SetRecording(bool record) {
+            variable::tape.SetRecording(record);
+        }
+
+        static bool IsRecording() {
+            return variable::tape.recording;
+        }
+
     };
+
+    template<class REAL_T, class EXPR>
+    inline const atl::ACos<REAL_T, EXPR> acos(const atl::ExpressionBase<REAL_T, EXPR>& exp) {
+        return atl::acos(exp);
+    }
+
+    template<class REAL_T, class EXPR>
+    inline const atl::ASin<REAL_T, EXPR> asin(const atl::ExpressionBase<REAL_T, EXPR>& exp) {
+        return atl::asin(exp);
+    }
+
+    template<class REAL_T, class EXPR>
+    inline const atl::ATan<REAL_T, EXPR> atan(const atl::ExpressionBase<REAL_T, EXPR>& exp) {
+        return atl::atan(exp);
+    }
+
+    template<class REAL_T, class EXPR>
+    inline const atl::Ceil<REAL_T, EXPR> ceil(const atl::ExpressionBase<REAL_T, EXPR>& exp) {
+        return atl::ceil(exp);
+    }
+
+    template<class REAL_T, class EXPR>
+    inline const atl::Cos<REAL_T, EXPR> cos(const atl::ExpressionBase<REAL_T, EXPR>& exp) {
+        return atl::cos(exp);
+    }
+
+    template<class REAL_T, class EXPR>
+    inline const atl::Cosh<REAL_T, EXPR> cosh(const atl::ExpressionBase<REAL_T, EXPR>& exp) {
+        return atl::cosh(exp);
+    }
+
+    template<class REAL_T, class EXPR>
+    inline const atl::Exp<REAL_T, EXPR> exp(const atl::ExpressionBase<REAL_T, EXPR>& exp) {
+        return atl::exp(exp);
+    }
+
+    template<class REAL_T, class EXPR>
+    inline const atl::Variable<REAL_T> mfexp(const atl::ExpressionBase<REAL_T, EXPR>& expr) {
+        return atl::mfexp(expr);
+    }
+
+    template<class REAL_T, class EXPR>
+    inline const atl::Fabs<REAL_T, EXPR> fabs(const atl::ExpressionBase<REAL_T, EXPR>& expr) {
+        return atl::fabs(expr);
+    }
+
+    template<class REAL_T, class EXPR>
+    inline const atl::Log<REAL_T, EXPR> log(const atl::ExpressionBase<REAL_T, EXPR>& exp) {
+        return atl::log(exp);
+    }
+
+    template<class REAL_T, class EXPR>
+    inline const atl::Log10<REAL_T, EXPR> log10(const atl::ExpressionBase<REAL_T, EXPR>& exp) {
+        return atl::log10(exp);
+    }
+
+    template<class REAL_T, class EXPR>
+    inline const atl::Sin<REAL_T, EXPR> sin(const atl::ExpressionBase<REAL_T, EXPR>& exp) {
+        return atl::sin(exp);
+    }
+
+    template<class REAL_T, class EXPR>
+    inline const atl::Sinh<REAL_T, EXPR> sinh(const atl::ExpressionBase<REAL_T, EXPR>& exp) {
+        return atl::sinh(exp);
+    }
+
+    template<class REAL_T, class EXPR>
+    inline const atl::Sqrt<REAL_T, EXPR> sqrt(const atl::ExpressionBase<REAL_T, EXPR>& exp) {
+        return atl::sqrt(exp);
+    }
+
+    template<class REAL_T, class EXPR>
+    inline const atl::Tan<REAL_T, EXPR> tan(const atl::ExpressionBase<REAL_T, EXPR>& exp) {
+        return atl::tan(exp);
+    }
+
+    template<class REAL_T, class EXPR>
+    inline const atl::Tanh<REAL_T, EXPR> tanh(const atl::ExpressionBase<REAL_T, EXPR>& exp) {
+        return atl::tanh(exp);
+    }
+
+    template <class REAL_T, class LHS, class RHS>
+    inline const atl::Pow<REAL_T, LHS, RHS> pow(const atl::ExpressionBase<REAL_T, LHS>& a,
+            const atl::ExpressionBase<REAL_T, RHS>& b) {
+        return atl::pow(a.Cast(), b.Cast());
+    }
+
+    template <class REAL_T, class LHS>
+    inline const atl::Pow<REAL_T, LHS, atl::Real<REAL_T> > pow(const atl::ExpressionBase<REAL_T, LHS>& a,
+            REAL_T b) {
+        return atl::pow(a.Cast(), b);
+    }
+
+    template <class REAL_T, class RHS>
+    inline const atl::Pow<REAL_T, atl::Real<REAL_T>, RHS> pow(const REAL_T& a,
+            const atl::ExpressionBase<REAL_T, RHS>& b) {
+        return atl::pow(a, b.Cast());
+    }
+#endif
 
     template<typename REAL_T>
     struct ModelObject {

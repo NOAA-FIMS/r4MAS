@@ -117,7 +117,7 @@ namespace mas {
                 const int& sex,
                 const DataObjectType& ew_type, variable& ret) {
             //
-            ret = sex == 0 ? alpha_f * atl::pow(length, beta_f) : alpha_m * atl::pow(length, beta_m);
+            ret = sex == 0 ? alpha_f * mas::pow(length, beta_f) : alpha_m * mas::pow(length, beta_m);
             //            return ret < variable(0.0) ? variable(0.0) : ret;
 
         }
@@ -184,9 +184,9 @@ namespace mas {
                 throw std::overflow_error("Divide by zero exception");
             }
 
-            variable logres = static_cast<double> (-1.0) * atl::log(double(std::sqrt(2 * M_PI)) * SD) - static_cast<double> (.5) * atl::pow((x - mean) / SD, static_cast<double> (2.0));
+            variable logres = static_cast<double> (-1.0) * mas::log(double(std::sqrt(2 * M_PI)) * SD) - static_cast<double> (.5) * mas::pow((x - mean) / SD, static_cast<double> (2.0));
             if (give_log)return logres;
-            else return atl::exp(logres);
+            else return mas::exp(logres);
         }
 
         static REAL_T PolynomialInterpolator(REAL_T x,
@@ -345,12 +345,23 @@ namespace mas {
             this->weight_functor->Evaluate(year, season, length, age, sex, ew_type, ret);
         }
 
+        /**
+         * Default weight at age functon.
+         * 
+         * \f$
+         *  waa = alpha * length^{beta}
+         * \f$
+         * @param length
+         * @param age
+         * @param sex
+         * @return 
+         */
         inline const variable Weight(
                 const variable& length,
                 const variable& age,
                 const int& sex) {
 
-            variable ret = sex == 0 ? alpha_f * atl::pow(length, beta_f) : alpha_m * atl::pow(length, beta_m);
+            variable ret = sex == 0 ? alpha_f * mas::pow(length, beta_f) : alpha_m * mas::pow(length, beta_m);
             return ret < variable(0.0) ? variable(0.0) : ret;
         }
 
@@ -462,8 +473,19 @@ namespace mas {
         variable k;
         variable l_inf;
 
+        /**
+         * Length at age.
+         * 
+         * \f$
+         * length\_at\_age = l\_inf*(1.0 - e^{(-k*(age - a\_min))})
+         * \f$
+         * 
+         * @param age
+         * @param sex
+         * @return length\_at\_age 
+         */
         virtual const variable Evaluate(const variable& age, const int& sex) {
-            variable ret = l_inf * (static_cast<REAL_T> (1.0) - atl::mfexp(-k * (age - this->a_min)));
+            variable ret = l_inf * (static_cast<REAL_T> (1.0) - mas::mfexp(-k * (age - this->a_min)));
             return ret < variable(0.0) ? variable(0.0) : ret;
         }
 
@@ -494,6 +516,7 @@ namespace mas {
             ss << "Von Bertalanffy Growth:\n";
             ss << "k = " << k << "\n";
             ss << "l_inf = " << l_inf << "\n";
+             ss << "a_min = " << this->a_min << "\n";
             return ss.str();
         }
     };
@@ -506,9 +529,22 @@ namespace mas {
         variable l_inf;
         variable c;
 
+        /**
+         * \f$
+         * 
+         * length\_at\_age = lmin + (lmax - lmin)*\frac{(1.0 -
+                    c^ {(age - a\_min)}))}{(1.0  - c^{(a\_max - a\_min)})}
+         * 
+         * \f$
+         * 
+         * @param age
+         * @param sex
+         * @return length\_at\_age 
+         */
         virtual const variable Evaluate(const variable& age, const int& sex) {
             variable ret = lmin + (lmax - lmin)*((static_cast<REAL_T> (1.0) -
-                    (atl::pow(c, age - this->a_min))) / (static_cast<REAL_T> (1.0) - atl::pow(c, this->a_max - this->a_min)));
+                    (mas::pow(c, age - this->a_min))) / (static_cast<REAL_T> (1.0) - mas::pow(c, this->a_max - this->a_min)));
+
             return ret < variable(0.0) ? variable(0.0) : ret;
         }
 
@@ -555,10 +591,20 @@ namespace mas {
         variable lmin;
         variable lmax;
 
+        /**
+         * \f$
+         * 
+         * length\_at\_age = ((lmin + (lmax - lmin)*\frac{(1.0- e^{(-alpha * (age - a\_min))})}{(1.0 - e^{(-alpha * (a\_max - a\_min))})})^{\farc{1.0}{beta}}
+         * 
+         * \f$
+         * @param age
+         * @param sex
+         * @return length\_at\_age
+         */
         virtual const variable Evaluate(const variable& age, const int& sex) {
-            variable ret = atl::pow((lmin + (lmax - lmin))*
-                    ((static_cast<REAL_T> (1.0) - atl::mfexp(-alpha * (age - this->a_min))) /
-                    (static_cast<REAL_T> (1.0) - atl::mfexp(-alpha * (this->a_max - this->a_min)))),
+            variable ret = mas::pow((lmin + (lmax - lmin))*
+                    ((static_cast<REAL_T> (1.0) - mas::mfexp(-alpha * (age - this->a_min))) /
+                    (static_cast<REAL_T> (1.0) - mas::mfexp(-alpha * (this->a_max - this->a_min)))),
                     static_cast<REAL_T> (1.0) / beta);
             return ret < variable(0.0) ? variable(0.0) : ret;
         }
@@ -606,10 +652,21 @@ namespace mas {
         variable lmin;
         variable lmax;
 
+        /**
+         * Length at age.
+         * 
+         * \f$
+         * length\_at\_age = lmin*e^{ln(\frac{lmax}{lmin}) * ((1.0 - e^{-alpha*(age - a\_min)})/(1.0 - e^{-alpha*(a\_max - a\_min)}))}
+         * \f$
+         * 
+         * @param age
+         * @param sex
+         * @return length\_at\_age
+         */
         virtual const variable Evaluate(const variable& age, const int& sex) {
-            variable ret = lmin * atl::mfexp(atl::log(lmax / lmin)*
-                    ((static_cast<REAL_T> (1.0) - atl::mfexp(-alpha * (age - this->a_min))) /
-                    (static_cast<REAL_T> (1.0) - atl::mfexp(-alpha * (this->a_max - this->a_min)))));
+            variable ret = lmin * mas::mfexp(mas::log(lmax / lmin)*
+                    ((static_cast<REAL_T> (1.0) - mas::mfexp(-alpha * (age - this->a_min))) /
+                    (static_cast<REAL_T> (1.0) - mas::mfexp(-alpha * (this->a_max - this->a_min)))));
             return ret < variable(0.0) ? variable(0.0) : ret;
         }
 
@@ -655,8 +712,18 @@ namespace mas {
         variable lmin;
         variable lmax;
 
+        /**
+         * \f$
+         * 
+         * length\_at\_age = ((lmin + (lmax - lmin)*\frac{(1.0- ( (age - a\_min)))}{(1.0 - ((a\_max - a\_min)))})^{\frac{1.0}{beta}}
+         * 
+         * \f$
+         * @param age
+         * @param sex
+         * @return length\_at\_age
+         */
         virtual const variable Evaluate(const variable& age, const int& sex) {
-            variable ret = atl::pow((lmin + (lmax - lmin))*
+            variable ret = mas::pow((lmin + (lmax - lmin))*
                     ((static_cast<REAL_T> (1.0) - (age - this->a_min)) /
                     (static_cast<REAL_T> (1.0) - (this->a_max - this->a_min))),
                     static_cast<REAL_T> (1.0) / beta);
@@ -708,8 +775,17 @@ namespace mas {
         variable lmin;
         variable lmax;
 
+        /**
+         * \f$
+         *  length\_at\_age =  lmin * e^{ln(\frac{lmax }{lmin})*\frac{(1.0- (age - a\_min))}{(1.0 - (a\_max - a\_min)))}}
+         * \f$
+         * 
+         * @param age
+         * @param sex
+         * @return length\_at\_age  
+         */
         virtual const variable Evaluate(const variable& age, const int& sex) {
-            variable ret = lmin * atl::mfexp(atl::log(lmax / lmin)*
+            variable ret = lmin * mas::mfexp(mas::log(lmax / lmin)*
                     ((static_cast<REAL_T> (1.0) - (age - this->a_min)) /
                     (static_cast<REAL_T> (1.0) - (this->a_max - this->a_min))));
             return ret < variable(0.0) ? variable(0.0) : ret;

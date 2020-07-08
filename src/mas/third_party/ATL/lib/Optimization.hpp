@@ -1182,7 +1182,7 @@ namespace atl {
                 T ld = cs_log_det(chol->L);
                 log_det = ld;
 
-                std::cout << ld << "\n";
+//                std::cout << ld << "\n";
                 //                exit(0);
 
                 for (int i = 0; i < PARAMETERS_SIZE; i++) {
@@ -1240,10 +1240,10 @@ namespace atl {
                         int error = cs_cholsol_x(0, hessian, re_dx.data(), chol, this->S_outer, this->x_scratch.data(), i);
                         trace += re_dx[i];
                     }
-                    std::cout << trace << "......\n";
+//                    std::cout << trace << "......\n";
                     derivatives_logdet[this->parameters_m[p]->info] = trace;
                 }
-                exit(0);
+//                exit(0);
 
 
 

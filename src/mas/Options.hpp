@@ -40,7 +40,8 @@ namespace mas {
         //minimizer options
         Minimizer minimizer = LBFGS;
         T tol = static_cast<T> (1e-4);
-        int min_iter = 5000;
+        int max_iter = 5000;
+        int max_ls = 50;
         int iprint = 10;
 #ifdef MAS_ENSEMBLE
         bool convergence_required = false;
@@ -78,7 +79,8 @@ namespace mas {
         std::cout << std::setw(35) << " " << std::left << "gradient_descent \n";
         std::cout << std::setw(35) << " " << std::left << "nelder_mead \n\n";
         std::cout << "-tol          [minimizer tolerance]\n";
-        std::cout << "-min_iter     [max iterations]\n";
+        std::cout << "-max_iter     [max iterations]\n";
+        std::cout << "-max_ls     [max line searches]\n";
         std::cout << "-iprint        [print interval]\n";
         std::cout << "-mcmc         [argument]\n";
         std::cout << std::setw(35) << " " << std::left << "nuts - No u turn sampler\n";
@@ -149,6 +151,14 @@ namespace mas {
 
             if (args[i] == "-ensemble_size" && args.size() > (i + 1)) {
                 options.esemble_size = util::StringToNumber<int>(args[i + 1]);
+            }
+
+            if (args[i] == "-max_iter" && args.size() > (i + 1)) {
+                options.max_iter = util::StringToNumber<int>(args[i + 1]);
+            }
+
+            if (args[i] == "-max_ls" && args.size() > (i + 1)) {
+                options.max_ls = util::StringToNumber<int>(args[i + 1]);
             }
         }
 

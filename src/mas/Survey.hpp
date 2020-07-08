@@ -33,37 +33,33 @@ namespace mas {
 
         typedef typename VariableTrait<REAL_T>::variable variable;
 
-        std::vector<variable> survey_biomass_total; //survey numbers at age
+        std::vector<variable> survey_biomass_total;
+        std::vector<variable> survey_abundance;
+        std::vector<variable> survey_numbers_at_age;
+        std::vector<variable> survey_biomass_at_age;
+        std::vector<variable> survey_proportion_at_age;
+        std::vector<variable> survey_biomass_proportion_at_age;
 
-        std::vector<variable> survey_biomass_total_males; //survey numbers at age
 
-        std::vector<variable> survey_biomass_total_females; //survey numbers at age
+        std::vector<variable> survey_biomass_total_males;
+        std::vector<variable> survey_abundance_males;
+        std::vector<variable> survey_numbers_at_age_males;
+        std::vector<variable> survey_biomass_at_age_males;
+        std::vector<variable> survey_proportion_at_age_males;
+        std::vector<variable> survey_biomass_proportion_at_age_males;
 
 
-        std::vector<variable> survey_numbers_at_age; //survey numbers at age
-        std::vector<variable> survey_biomass_at_age; //survey numbers at age
-        std::vector<variable> survey_proportion_at_age; //survey numbers at age
-        std::vector<variable> survey_biomass_proportion_at_age; //survey numbers at age
+        std::vector<variable> survey_biomass_total_females;
+        std::vector<variable> survey_abundance_females;
+        std::vector<variable> survey_numbers_at_age_females;
+        std::vector<variable> survey_biomass_at_age_females;
+        std::vector<variable> survey_proportion_at_age_females;
+        std::vector<variable> survey_biomass_proportion_at_age_females;
+
         std::vector<std::vector<variable>* > survey_numbers_at_age_both;
         std::vector<std::vector<variable>* > survey_biomass_at_age_both;
 
-        std::vector<variable> survey_numbers_at_age_males; //survey numbers at age
-        std::vector<variable> survey_biomass_at_age_males; //survey numbers at age
-        std::vector<variable> survey_proportion_at_age_males; //survey numbers at age
-        std::vector<variable> survey_biomass_proportion_at_age_males; //survey numbers at age
 
-
-        std::vector<variable> survey_numbers_at_age_females; //survey numbers at age
-        std::vector<variable> survey_biomass_at_age_females; //survey numbers at age
-        std::vector<variable> survey_proportion_at_age_females; //survey numbers at age
-        std::vector<variable> survey_biomass_proportion_at_age_females; //survey numbers at age
-
-
-
-        std::vector<variable> SN_diff2; //survey numbers at age
-        std::vector<variable> SN_Biomass_diff2; //survey numbers at age
-        std::vector<variable> SN_Proportion_diff2; //survey numbers at age
-        std::vector<variable> SN_Biomass_Proportion_diff2; //survey numbers at age
 
 
         std::string name;
@@ -120,8 +116,13 @@ namespace mas {
         int survey_biomass_likelihood_component_id = -999;
         std::shared_ptr<mas::NLLFunctor<REAL_T> > survey_biomass_likelihood_component;
 
-        REAL_T survey_biomass_chi_squared;
-        REAL_T survey_age_comp_chi_squared;
+        REAL_T chi_squared;
+        REAL_T g_test;
+        REAL_T rmse;
+        REAL_T rmsle;
+        REAL_T AIC;
+        REAL_T BIC;
+        
 
         std::vector<NLLComponent<REAL_T> > nll_components;
         variable nll;
@@ -131,32 +132,27 @@ namespace mas {
             this->seasons = seasons;
             this->ages = ages;
 
-         
+
+            survey_biomass_total.resize(years * seasons);
+            survey_abundance.resize(years * seasons);
             survey_numbers_at_age.resize(years * seasons * ages);
             survey_biomass_at_age.resize(years * seasons * ages);
             survey_proportion_at_age.resize(years * seasons * ages);
             survey_biomass_proportion_at_age.resize(years * seasons * ages);
 
-
-
+            survey_biomass_total_males.resize(years * seasons);
+            survey_abundance_males.resize(years * seasons);
             survey_numbers_at_age_males.resize(years * seasons * ages);
             survey_biomass_at_age_males.resize(years * seasons * ages);
             survey_proportion_at_age_males.resize(years * seasons * ages);
             survey_biomass_proportion_at_age_males.resize(years * seasons * ages);
 
+            survey_biomass_total_females.resize(years * seasons);
+            survey_abundance_females.resize(years * seasons);
             survey_numbers_at_age_females.resize(years * seasons * ages);
             survey_biomass_at_age_females.resize(years * seasons * ages);
             survey_proportion_at_age_females.resize(years * seasons * ages);
             survey_biomass_proportion_at_age_females.resize(years * seasons * ages);
-
-
-            SN_diff2.resize(years * seasons * ages);
-            SN_Biomass_diff2.resize(years * seasons * ages);
-            SN_Proportion_diff2.resize(years * seasons * ages);
-            SN_Biomass_Proportion_diff2.resize(years * seasons * ages);
-            survey_biomass_total.resize(years * seasons);
-            survey_biomass_total_males.resize(years * seasons);
-            survey_biomass_total_females.resize(years * seasons);
 
 
             this->survey_biomass_at_age_both.resize(2);
@@ -174,8 +170,8 @@ namespace mas {
 
             this->nll_component_values.resize(this->data_objects.size());
             std::stringstream ss;
-            //            ss << "survey_" << this->id << "_likelihood_component";
-            //            ss<<this->id;
+            ss << "_survey_" << this->id << "_likelihood_component";
+            //            ss << this->id;
             std::string tag = ss.str();
 
 
@@ -307,19 +303,20 @@ namespace mas {
         }
 
         inline void ComputeProportions() {
+            
             for (int y = 0; y < this->years; y++) {
                 if (this->active_years[y]) {
                     for (int s = 0; s < this->seasons; s++) {
-
+                        size_t sindex = y * this->seasons + s;
                         variable total_sn;
                         variable total_sn_males;
                         variable total_sn_females;
                         variable& total_sn_b = this->survey_biomass_total[y * this->seasons + s];
                         variable& total_sn_b_males = this->survey_biomass_total_males[y * this->seasons + s];
                         variable& total_sn_b_females = this->survey_biomass_total_females[y * this->seasons + s];
-                        total_sn_b = static_cast<REAL_T> (1e-5);
-                        total_sn_b_males = static_cast<REAL_T> (1e-5);
-                        total_sn_b_females = static_cast<REAL_T> (1e-5);
+                        total_sn_b = static_cast<REAL_T> (0.0);
+                        total_sn_b_males = static_cast<REAL_T> (0.0);
+                        total_sn_b_females = static_cast<REAL_T> (0.0);
 
                         size_t index = 0;
                         for (int a = 0; a <this->ages; a++) {
@@ -333,6 +330,9 @@ namespace mas {
                             total_sn_b_females += survey_biomass_at_age_females[index];
 
                         }
+                        survey_abundance[sindex] = total_sn;
+                        survey_abundance_males[sindex] = total_sn_males;
+                        survey_abundance_females[sindex] = total_sn_females;
 
 
                         for (int a = 0; a <this->ages; a++) {
@@ -384,16 +384,19 @@ namespace mas {
         }
 
         /**
-         * Pearson's chi-squared test on biomass and age comp.
+         * Pearson's chi-squared and g-test for nll components.
          */
-        REAL_T ComputeGoodnessOfFit() {
+        void ComputeGoodnessOfFit() {
 
-            REAL_T ret;
             for (int i = 0; i < this->nll_components.size(); i++) {
                 this->nll_components[i].Finalize();
-                ret += this->nll_components[i].goodness_of_fit;
+                this->chi_squared += this->nll_components[i].chi_square;
+                this->g_test += this->nll_components[i].g_test;
+                this->rmse += this->nll_components[i].rmse;
+                this->rmsle += this->nll_components[i].rmsle;
+                this->AIC+= this->nll_components[i].AIC;
+                this->BIC+= this->nll_components[i].BIC;     
             }
-            return ret;
         }
 
         inline void EvaluateBiomassComponent(int year, int season) {
@@ -403,8 +406,8 @@ namespace mas {
             REAL_T temp = this->survey_biomass_data->get(year, season);
             if (temp != this->survey_biomass_data->missing_value) {
                 this->survey_biomass_component +=
-                        (.5) * atl::pow((std::log(temp + o) -
-                        atl::log(this->survey_biomass_total[year * seasons + season] + o)
+                        (.5) * mas::pow((std::log(temp + o) -
+                        mas::log(this->survey_biomass_total[year * seasons + season] + o)
                         + (std::pow(this->CV, 2.0) / 2.0)) / this->CV, 2.0);
             }
         }
@@ -421,7 +424,7 @@ namespace mas {
                     REAL_T temp_data = this->survey_proportion_at_age_data->get(year, season, a);
                     o = this->survey_proportion_at_age_data->get_error(year, season, a);
                     sum -= temp_sample_size * temp_data *
-                            (atl::log(this->survey_proportion_at_age[index] + o) - std::log(temp_data + o));
+                            (mas::log(this->survey_proportion_at_age[index] + o) - std::log(temp_data + o));
                 }
             }
 

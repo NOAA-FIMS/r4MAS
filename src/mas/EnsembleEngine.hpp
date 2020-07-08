@@ -226,7 +226,7 @@ namespace mas {
                                 MPI_Recv(&m, 1, MPI_DOUBLE, status.MPI_SOURCE, 0, MPI_COMM_WORLD,
                                         MPI_STATUS_IGNORE);
                                 std::cout.precision(10);
-                                std::cout << std::setw(6) << status.MPI_SOURCE << " goodness of fit = "  << m << std::endl;
+                                std::cout << std::setw(6) << status.MPI_SOURCE << " goodness of fit = " << m << std::endl;
                                 this->accepted_models.push_back(std::pair<REAL_T, std::vector<int> >(m, this->current_running_models[i]));
                                 this->available_nodes.push(status.MPI_SOURCE);
                             }
@@ -425,6 +425,7 @@ namespace mas {
                             MPI_STATUS_IGNORE);
 
                     accepted_output.resize(length + 1024);
+                    std::fill(accepted_output.begin(), accepted_output.end(), ' ');
 
                     MPI_Recv((void*) &accepted_output[0], length + 1000000, MPI_CHAR, i, 0,
                             MPI_COMM_WORLD, MPI_STATUS_IGNORE);
@@ -442,7 +443,7 @@ namespace mas {
                 for (int i = 0; i < accepted_ensemble_outputs.size(); i++) {
                     ss << accepted_ensemble_outputs[i] << "";
                     if (i < accepted_ensemble_outputs.size() - 1) {
-                        ss << ","<<std::endl;
+                        ss << ",\n" << std::endl;
                     }
                 }
                 ss << "]\n}";
@@ -514,7 +515,8 @@ namespace mas {
                 fm.Run();
 
                 //return Pearson's chi-squared test
-                REAL_T gof = objective_function.mas_instance.ComputeGoodnessOfFit();
+                objective_function.mas_instance.ComputeGoodnessOfFit();
+                REAL_T gof = objective_function.mas_instance.chi_squared;
 
                 if (gof == gof) {
                     return gof;
@@ -566,13 +568,13 @@ namespace mas {
 
             //run the minimizer
             fm.Run();
-
-            objective_function.mas_instance.variance_covaiance = objective_function.GetVarianceCovariance();
-            objective_function.mas_instance.std_dev.Resize(objective_function.mas_instance.variance_covaiance.rows);
-            for (int i = 0; i < objective_function.mas_instance.std_dev.GetSize(); i++) {
-                objective_function.mas_instance.std_dev(i) =
-                        std::sqrt(objective_function.mas_instance.variance_covaiance(i, i));
-            }
+            objective_function.Finalize();
+//            objective_function.mas_instance.variance_covaiance = objective_function.GetVarianceCovariance();
+//            objective_function.mas_instance.std_dev.Resize(objective_function.mas_instance.variance_covaiance.rows);
+//            for (int i = 0; i < objective_function.mas_instance.std_dev.GetSize(); i++) {
+//                objective_function.mas_instance.std_dev(i) =
+//                        std::sqrt(objective_function.mas_instance.variance_covaiance(i, i));
+//            }
             mas::JSONOutputGenerator<REAL_T> out;
             return out.GenerateOutput(objective_function.mas_instance);
 

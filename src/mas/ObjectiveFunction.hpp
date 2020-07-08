@@ -28,7 +28,7 @@ namespace mas {
 
         std::string data_path = "";
         std::string config_path = "";
-        std::string ouput_path = "";
+        std::string ouput_path = "mas_output.json";
 
 
         typedef typename mas::VariableTrait<REAL_T>::variable variable;
@@ -46,16 +46,20 @@ namespace mas {
             }
         }
 
-        
-        virtual void Finalize() {
+        void SetVarianceCovariance() {
             mas_instance.variance_covaiance = this->GetVarianceCovariance();
-            //            std::cout << mas_instance.variance_covaiance;
             mas_instance.std_dev.Resize(mas_instance.variance_covaiance.GetRows());
             for (int i = 0; i < mas_instance.std_dev.GetSize(); i++) {
                 mas_instance.std_dev(i) = std::sqrt(mas_instance.variance_covaiance(i, i));
             }
 
-            mas_instance.Report();
+        }
+
+        virtual void Finalize() {
+           
+            this->SetVarianceCovariance();
+            mas_instance.Finalize();
+//            mas_instance.Report();
             mas::JSONOutputGenerator<REAL_T> json;
             std::ofstream output(this->ouput_path.data());
             output << json.GenerateOutput(mas_instance);
@@ -132,7 +136,7 @@ namespace mas {
             variable f;
             mas_instance.phase = this->phase_m;
             mas_instance.Run(f);
-            
+
             return f;
         }
 

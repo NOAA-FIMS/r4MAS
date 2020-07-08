@@ -114,15 +114,13 @@ namespace mas {
         typedef typename std::unordered_map<int, std::shared_ptr<mas::FishingMortality<REAL_T> > >::iterator delta_method_fishing_mortality_iterator;
 
 
+
+
+
+
+
         std::vector<variable> catch_biomass_total;
-        std::vector<variable> catch_biomass_total_males;
-        std::vector<variable> catch_biomass_total_females;
-
-
-
-        std::vector<variable> numbers_at_age;
-        std::vector<variable> numbers_total;
-        std::vector<variable> proportion_at_age;
+        std::vector<variable> catch_abundance;
         std::vector<variable> catch_proportion_at_age;
         std::vector<variable> catch_biomass_proportion_at_age;
         std::vector<variable> catch_at_age;
@@ -131,12 +129,12 @@ namespace mas {
         std::vector<variable> catch_biomass_at_age;
         std::vector<variable> catch_spawning_biomass_at_age;
 
-        std::vector<std::vector<variable>* > catch_numbers_at_age_both;
+        std::vector<std::vector<variable>* > catch_at_age_both;
         std::vector<std::vector<variable>* > catch_biomass_at_age_both;
 
-        std::vector<variable> numbers_at_age_males;
-        std::vector<variable> numbers_total_males;
-        std::vector<variable> proportion_at_age_males;
+
+        std::vector<variable> catch_biomass_total_males;
+        std::vector<variable> catch_abundance_males;
         std::vector<variable> catch_proportion_at_age_males;
         std::vector<variable> catch_biomass_proportion_at_age_males;
         std::vector<variable> catch_at_age_males;
@@ -145,9 +143,8 @@ namespace mas {
         std::vector<variable> catch_biomass_at_age_males;
         std::vector<variable> catch_spawning_biomass_at_age_males;
 
-        std::vector<variable> numbers_at_age_females;
-        std::vector<variable> numbers_total_females;
-        std::vector<variable> proportion_at_age_females;
+        std::vector<variable> catch_biomass_total_females;
+        std::vector<variable> catch_abundance_females;
         std::vector<variable> catch_proportion_at_age_females;
         std::vector<variable> catch_biomass_proportion_at_age_females;
         std::vector<variable> catch_at_age_females;
@@ -158,13 +155,6 @@ namespace mas {
         std::vector<variable> catch_biomass_at_age_females;
 
 
-        std::vector<variable> N_diff2;
-        std::vector<variable> N_Proportion_diff2;
-        std::vector<variable> C_Proportion_diff2;
-        std::vector<variable> C_Biomass_Proportion_diff2;
-        std::vector<variable> C_diff2;
-        std::vector<variable> C_Biomass_diff2;
-
         variable catch_biomass_component;
         variable fishery_age_comp_component;
         variable nll;
@@ -174,6 +164,15 @@ namespace mas {
         REAL_T catch_fraction_of_year = 0.5;
 
 
+        //goodness of fit
+        REAL_T chi_squared;
+        REAL_T g_test;
+        REAL_T rmse;
+        REAL_T rmsle;
+        REAL_T r_squared;
+        REAL_T AIC;
+        REAL_T BIC;
+
         std::vector<NLLComponent<REAL_T> > nll_components;
 
         void Initialize(size_t years, size_t seasons, size_t ages) {
@@ -182,47 +181,36 @@ namespace mas {
             this->seasons = seasons;
             this->ages = ages;
 
-
-            numbers_at_age.resize(years * seasons * ages);
+            catch_abundance.resize(years * seasons);
             catch_at_age.resize(years * seasons * ages);
             catch_biomass_at_age.resize(years * seasons * ages);
-            proportion_at_age.resize(years * seasons * ages);
             catch_proportion_at_age.resize(years * seasons * ages);
             catch_biomass_proportion_at_age.resize(years * seasons * ages);
             catch_spawning_biomass_at_age.resize(years * ages);
 
-
-            numbers_at_age_males.resize(years * seasons * ages);
+            catch_abundance_males.resize(years * seasons);
             catch_at_age_males.resize(years * seasons * ages);
             catch_biomass_at_age_males.resize(years * seasons * ages);
-            proportion_at_age_males.resize(years * seasons * ages);
             catch_proportion_at_age_males.resize(years * seasons * ages);
             catch_biomass_proportion_at_age_males.resize(years * seasons * ages);
             catch_spawning_biomass_at_age_males.resize(years * ages);
 
-            numbers_at_age_females.resize(years * seasons * ages);
+            catch_abundance_females.resize(years * seasons);
             catch_at_age_females.resize(years * seasons * ages);
             catch_biomass_at_age_females.resize(years * seasons * ages);
-            proportion_at_age_females.resize(years * seasons * ages);
             catch_proportion_at_age_females.resize(years * seasons * ages);
             catch_biomass_proportion_at_age_females.resize(years * seasons * ages);
             catch_spawning_biomass_at_age_females.resize(years * ages);
 
-            N_diff2.resize(years * seasons * ages);
-            C_diff2.resize(years * seasons * ages);
-            C_Biomass_diff2.resize(years * seasons * ages);
-            N_Proportion_diff2.resize(years * seasons * ages);
-            C_Proportion_diff2.resize(years * seasons * ages);
-            C_Biomass_Proportion_diff2.resize(years * seasons * ages);
             catch_biomass_total.resize(years * seasons);
             catch_biomass_total_males.resize(years * seasons);
             catch_biomass_total_females.resize(years * seasons);
 
             this->catch_biomass_at_age_both.resize(2);
-            this->catch_numbers_at_age_both.resize(2);
+            this->catch_at_age_both.resize(2);
 
-            this->catch_numbers_at_age_both[mas::FEMALE] = &(this->numbers_at_age_females);
-            this->catch_numbers_at_age_both[mas::MALE] = &(this->numbers_at_age_males);
+            this->catch_at_age_both[mas::FEMALE] = &(this->catch_at_age_females);
+            this->catch_at_age_both[mas::MALE] = &(this->catch_at_age_males);
 
             this->catch_biomass_at_age_both[mas::FEMALE] = &(this->catch_biomass_at_age_females);
             this->catch_biomass_at_age_both[mas::MALE] = &(this->catch_biomass_at_age_males);
@@ -233,8 +221,8 @@ namespace mas {
             this->active_years.resize(this->years, true);
             this->nll_component_values.resize(this->data_objects.size());
             std::stringstream ss;
-            //            ss << "fleet_" << this->id << "_likelihood_component";
-            //            ss<<this->id;
+            ss << "_fleet_" << this->id << "_likelihood_component";
+            //            ss << this->id;
             std::string tag = ss.str();
 
 
@@ -339,31 +327,28 @@ namespace mas {
             this->fishery_age_comp_chi_squared = 0.0;
             this->catch_biomass_chi_squared = 0.0;
 
-            for (int i = 0; i < this->numbers_at_age.size(); i++) {
-                mas::VariableTrait<REAL_T>::SetValue(numbers_at_age[i], static_cast<REAL_T> (0.0));
+            for (int i = 0; i < this->catch_at_age.size(); i++) {
                 mas::VariableTrait<REAL_T>::SetValue(catch_at_age[i], static_cast<REAL_T> (0.0));
                 mas::VariableTrait<REAL_T>::SetValue(catch_biomass_at_age[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(proportion_at_age[i], static_cast<REAL_T> (0.0));
                 mas::VariableTrait<REAL_T>::SetValue(catch_proportion_at_age[i], static_cast<REAL_T> (0.0));
                 mas::VariableTrait<REAL_T>::SetValue(catch_biomass_proportion_at_age[i], static_cast<REAL_T> (0.0));
 
-                mas::VariableTrait<REAL_T>::SetValue(numbers_at_age_males[i], static_cast<REAL_T> (0.0));
                 mas::VariableTrait<REAL_T>::SetValue(catch_at_age_males[i], static_cast<REAL_T> (0.0));
                 mas::VariableTrait<REAL_T>::SetValue(catch_biomass_at_age_males[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(proportion_at_age_males[i], static_cast<REAL_T> (0.0));
                 mas::VariableTrait<REAL_T>::SetValue(catch_proportion_at_age_males[i], static_cast<REAL_T> (0.0));
                 mas::VariableTrait<REAL_T>::SetValue(catch_biomass_proportion_at_age_males[i], static_cast<REAL_T> (0.0));
 
-                mas::VariableTrait<REAL_T>::SetValue(numbers_at_age_females[i], static_cast<REAL_T> (0.0));
                 mas::VariableTrait<REAL_T>::SetValue(catch_at_age_females[i], static_cast<REAL_T> (0.0));
                 mas::VariableTrait<REAL_T>::SetValue(catch_biomass_at_age_females[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(proportion_at_age_females[i], static_cast<REAL_T> (0.0));
                 mas::VariableTrait<REAL_T>::SetValue(catch_proportion_at_age_females[i], static_cast<REAL_T> (0.0));
                 mas::VariableTrait<REAL_T>::SetValue(catch_biomass_proportion_at_age_females[i], static_cast<REAL_T> (0.0));
             }
 
 
             for (int i = 0; i < this->catch_biomass_total.size(); i++) {
+                mas::VariableTrait<REAL_T>::SetValue(catch_abundance[i], static_cast<REAL_T> (0.0));
+                mas::VariableTrait<REAL_T>::SetValue(catch_abundance_males[i], static_cast<REAL_T> (0.0));
+                mas::VariableTrait<REAL_T>::SetValue(catch_abundance_females[i], static_cast<REAL_T> (0.0));
                 mas::VariableTrait<REAL_T>::SetValue(catch_biomass_total[i], static_cast<REAL_T> (0.0));
                 mas::VariableTrait<REAL_T>::SetValue(catch_biomass_total_males[i], static_cast<REAL_T> (0.0));
                 mas::VariableTrait<REAL_T>::SetValue(catch_biomass_total_females[i], static_cast<REAL_T> (0.0));
@@ -382,9 +367,7 @@ namespace mas {
                 if (this->active_years[y]) {
                     for (int s = 0; s < this->seasons; s++) {
 
-                        variable total_n;
-                        variable total_n_males;
-                        variable total_n_females;
+                        size_t sindex = y * this->seasons + s;
                         variable total_c;
                         variable total_c_males;
                         variable total_c_females;
@@ -398,10 +381,6 @@ namespace mas {
                         for (int a = 0; a <this->ages; a++) {
                             index = y * this->seasons * this->ages + (s * this->ages) + a;
 
-                            total_n += numbers_at_age[index];
-                            total_n_males += numbers_at_age_males[index];
-                            total_n_females += numbers_at_age_females[index];
-
                             total_c += catch_at_age[index];
                             total_c_males += catch_at_age_males[index];
                             total_c_females += catch_at_age_females[index];
@@ -410,13 +389,12 @@ namespace mas {
                             total_c_b_males += catch_biomass_at_age_males[index];
                             total_c_b_females += catch_biomass_at_age_females[index];
                         }
-                      
+                        catch_abundance[sindex] = total_c;
+                        catch_abundance_males[sindex] = total_c_males;
+                        catch_abundance_females[sindex] = total_c_females;
 
                         for (int a = 0; a <this->ages; a++) {
                             index = y * this->seasons * this->ages + (s) * this->ages + a;
-                            proportion_at_age[index] = numbers_at_age[index] / total_n;
-                            proportion_at_age_males[index] = numbers_at_age_males[index] / total_n_males;
-                            proportion_at_age_females[index] = numbers_at_age_females[index] / total_n_females;
 
                             catch_proportion_at_age[index] = catch_at_age[index] / total_c;
                             catch_proportion_at_age_males[index] = catch_at_age_males[index] / total_c_males;
@@ -439,7 +417,7 @@ namespace mas {
                 this->nll_component_values[nllc] = static_cast<REAL_T> (0.0);
                 this->nll_components[nllc].Evaluate(this->nll_component_values[nllc]);
                 this->nll += this->nll_component_values[nllc];
-//                std::cout<<this->nll_component_values[nllc].GetName()<<" = "<<this->nll_component_values[nllc].GetValue()<<"\n";
+                //                std::cout<<this->nll_component_values[nllc].GetName()<<" = "<<this->nll_component_values[nllc].GetValue()<<"\n";
             }
         }
 
@@ -454,16 +432,19 @@ namespace mas {
         }
 
         /**
-         * Pearson's chi-squared test on biomass and age comp.
+         * Pearson's chi-squared and g-test for nll components.
          */
-        REAL_T ComputeGoodnessOfFit() {
+        void ComputeGoodnessOfFit() {
 
-            REAL_T ret;
             for (int i = 0; i < this->nll_components.size(); i++) {
                 this->nll_components[i].Finalize();
-                ret += this->nll_components[i].goodness_of_fit;
+                this->chi_squared += this->nll_components[i].chi_square;
+                this->g_test += this->nll_components[i].g_test;
+                this->rmse += this->nll_components[i].rmse;
+                this->rmsle += this->nll_components[i].rmsle;
+                this->AIC+= this->nll_components[i].AIC;
+                this->BIC+= this->nll_components[i].BIC;            
             }
-            return ret;
         }
 
         inline void EvaluateBiomassComponent(int year, int season) {
@@ -472,8 +453,8 @@ namespace mas {
 
 
             if (temp != catch_biomass_data->missing_value) {
-                this->catch_biomass_component += .5 * atl::pow(std::log(temp + o) -
-                        atl::log(this->catch_biomass_total[year * seasons + season] + o), 2.0) / .05;
+                this->catch_biomass_component += .5 * mas::pow(std::log(temp + o) -
+                        mas::log(this->catch_biomass_total[year * seasons + season] + o), 2.0) / .05;
             }
         }
 
@@ -488,7 +469,7 @@ namespace mas {
                     o = catch_proportion_at_age_data->get_error(year, season, a);
                     size_t index = year * this->seasons * this->ages + (season) * this->ages + a;
                     this->fishery_age_comp_component -= temp_sample_size * temp_data *
-                            (atl::log(this->catch_proportion_at_age[index] + o) - std::log(temp_data + o));
+                            (mas::log(this->catch_proportion_at_age[index] + o) - std::log(temp_data + o));
                 }
             }
         }

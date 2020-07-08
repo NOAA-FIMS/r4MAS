@@ -43,7 +43,7 @@ namespace mas
 {
     // forward declaration
     template<class REAL_T>
-    struct AreaPopulationInfo;
+    struct Subpopulation;
 
 
     template<typename REAL_T>
@@ -51,7 +51,7 @@ namespace mas
     {
         typedef typename VariableTrait<REAL_T>::variable variable;
 
-        virtual const std::tuple<variable, variable, variable, variable> Evaluate(const int& year, const mas::AreaPopulationInfo<REAL_T>& api_males, const mas::AreaPopulationInfo<REAL_T>& api_females) = 0;
+        virtual const std::tuple<variable, variable, variable, variable> Evaluate(const int& year, const mas::Subpopulation<REAL_T>& api_males, const mas::Subpopulation<REAL_T>& api_females) = 0;
 
         virtual const std::string Name()
         {
@@ -73,7 +73,7 @@ namespace mas
 
         // find the fishing mortality F such that the ratio of spawning biomass at F to the unfished
         // equilibrium spawning biomass is spr_fraction
-        inline std::pair<variable, variable> CalculateFatSPRfraction(const variable& spr_fraction, const std::vector<variable>& fsh_sel, const mas::AreaPopulationInfo<REAL_T>& api)
+        inline std::pair<variable, variable> CalculateFatSPRfraction(const variable& spr_fraction, const std::vector<variable>& fsh_sel, const mas::Subpopulation<REAL_T>& api)
         {
             variable Fval  = 0.0;
             variable SBval = 0.0;
@@ -114,7 +114,7 @@ namespace mas
         }
 
         // calculate the equilibrium female spawning biomass at a specific fishing mortality
-        inline variable CalculateSBatF(const variable& trialF, const std::vector<variable>& fsh_sel, const mas::AreaPopulationInfo<REAL_T>& api)
+        inline variable CalculateSBatF(const variable& trialF, const std::vector<variable>& fsh_sel, const mas::Subpopulation<REAL_T>& api)
         {
             variable SBatF = 0.0;
 
@@ -145,7 +145,7 @@ namespace mas
         }
 
         // this function calculates ABC and OFL for year 'year' using the numbers-at-age at the beginning of the year
-        const std::tuple<variable, variable, variable, variable> Evaluate(const int& year, const mas::AreaPopulationInfo<REAL_T>& api_males, const mas::AreaPopulationInfo<REAL_T>& api_females)
+        const std::tuple<variable, variable, variable, variable> Evaluate(const int& year, const mas::Subpopulation<REAL_T>& api_males, const mas::Subpopulation<REAL_T>& api_females)
         {
             const REAL_T Tier3_alpha = static_cast<REAL_T> (0.05);
 
@@ -293,7 +293,7 @@ namespace mas
 
         variable F_ABC, ABC, F_OFL, OFL;
 
-        const std::tuple<variable, variable, variable, variable> Evaluate(const int& year, const mas::AreaPopulationInfo<REAL_T>& api_males, const mas::AreaPopulationInfo<REAL_T>& api_females)
+        const std::tuple<variable, variable, variable, variable> Evaluate(const int& year, const mas::Subpopulation<REAL_T>& api_males, const mas::Subpopulation<REAL_T>& api_females)
         {
             // initialize
             F_ABC = 0.0;

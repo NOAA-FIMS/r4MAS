@@ -32,7 +32,7 @@ namespace mas {
         T gamma_r10 = 10.900511;
 
         T pi = M_PI;
-        T gamma_c = 2.0 * atl::sqrt(M_E / pi);
+        T gamma_c = 2.0 * mas::sqrt(M_E / pi);
 
         T sum = 2.48574089138753565546e-5;
         sum += 1.05142378581721974210 / z;
@@ -46,7 +46,7 @@ namespace mas {
         sum += 4.63399473359905636708e-6 / (z + 8.0);
         sum += -2.71994908488607703910e-9 / (z + 9.0);
 
-        return atl::log(gamma_c) + (z - 0.5) * atl::log(z + gamma_r10 - 0.5) - (z - 0.5) + atl::log(sum);
+        return mas::log(gamma_c) + (z - 0.5) * mas::log(z + gamma_r10 - 0.5) - (z - 0.5) + mas::log(sum);
     }
 
     /**
@@ -109,14 +109,14 @@ namespace mas {
 
     template<typename T>
     const T GammaLn2(const T& z) {
-        return z * atl::log(z) - z - 0.5 *
+        return z * mas::log(z) - z - 0.5 *
                 (z / 2.0 * M_PI) + 1.0 / 12.0 * z - 1.0 /
-                (360.0 * atl::pow(z, 3.0)) + 1.0 / (1260.0 * atl::pow(z, 5.0));
+                (360.0 * mas::pow(z, 3.0)) + 1.0 / (1260.0 * mas::pow(z, 5.0));
     }
 
     template<typename T>
     const T st_lgamma(const T& x) {
-        return atl::log(atl::fabs(atl::sqrt(2.0 * M_PI / x) * atl::pow((x / M_E), x)));
+        return mas::log(mas::fabs(mas::sqrt(2.0 * M_PI / x) * mas::pow((x / M_E), x)));
     }
 
     enum NLL_Functor_Type {
@@ -135,7 +135,7 @@ namespace mas {
         size_t years;
         size_t seasons;
         size_t ages;
-        REAL_T neff;
+        variable neff;
         REAL_T CV = .2;
         REAL_T epsilon = static_cast<REAL_T> (1e-8);
 
@@ -185,28 +185,42 @@ namespace mas {
             //
             //
             size_t i, j, k;
-            REAL_T obs, se;
+            REAL_T obs, se, se2, cv;
             this->years = observed->imax;
             this->seasons = observed->jmax;
             this->ages = observed->kmax;
             this->neff = static_cast<REAL_T> (0.0);
             variable nll = static_cast<REAL_T> (0.0);
             variable expected;
+
+            variable nll1;
+            variable nll2;
             switch (observed->dimensions) {
                 case 2:
+
                     for (i = 0; i < this->years; i++) {
                         for (j = 0; j < this->seasons; j++) {
                             size_t index = i * this->seasons + j;
                             expected = predicted[index];
-                            
+
                             REAL_T obs = observed->get(i, j);
                             if (obs != observed->missing_value) {
-                                se = observed->get_error(i, j);
-                                nll += this->lambda->get(i, j) *(std::log(se) + (0.5 * SQUARE(atl::log((obs / expected)) / se) + 0.5 * se));
+                                // likely_ind(ind) += log(index_sigma(ind, i));
+                                // likely_ind(ind) += 0.5 * square(log(index_obs(ind, i)) - log(index_pred(ind, i))) / index_sigma2(ind, i);
+                                cv = observed->get_error(i, j);
+                                se2 = std::log(cv * cv + 1.0);
+                                se = std::sqrt(se2) / std::sqrt(std::log(M_E));
+                                nll1 += this->lambda->get(i, j) * std::log(se);
+//                                nll2 += this->lambda->get(i, j) * SQUARE(std::log(obs)- mas::log(expected))/se2;
+                                nll2 += this->lambda->get(i, j) * SQUARE((mas::log((obs / expected)) / se) + 0.5 * se);
+//                                nll+=((obs-expected)*(obs-expected));
+                                //                                nll +=  *(std::log(se) + (0.5 * ));
+                                //                                nll += this->lambda->get(i, j) *(std::log(se) + (0.5 * SQUARE(std::log(obs) - mas::log(expected)) / se2) + 0.5 * se);
                             }
                         }
-                        
+
                     }
+                    nll = nll1 + 0.5 * nll2;
                     break;
                 case 3:
 
@@ -228,23 +242,22 @@ namespace mas {
             //                        REAL_T obs = observed->get(i, j, a);
             //
             //                        if (obs != observed->missing_value) {
-            //                            nll += this->lambda->get(i, j, a) *(0.5 * SQUARE((std::log(obs) - atl::log(predicted[index]))) / sigma); 
+            //                            nll += this->lambda->get(i, j, a) *(0.5 * SQUARE((std::log(obs) - mas::log(predicted[index]))) / sigma); 
             //                        }
             //                    }
             //                }
             //            }
 
-            //            nll *= static_cast<REAL_T> (-1.0);
+            //nll *= static_cast<REAL_T> (-1.0);
 
             return nll;
         }
 
         virtual std::string ToString() {
 
-            return "Lognormal";
+            return "lognormal";
         }
     };
-
 
     template<typename REAL_T>
     struct DirichletMultinomial : mas::NLLFunctor<REAL_T> {
@@ -283,12 +296,13 @@ namespace mas {
 
                     for (size_t a = 0; a < this->ages; a++) {
 
-                        REAL_T o = observed->get_error(i, j, a);
+
                         size_t index = i * this->seasons * this->ages + j * this->ages + a;
                         //                        temp1 += mas::lgamma_<variable>(static_cast<REAL_T> (N) * (observed->get(i, j, a) + o) + this->beta * (predicted[index] + o));
                         //                        temp2 -= mas::lgamma_<variable>(this->beta * (predicted[index] + o));
                         REAL_T obs = observed->get(i, j, a);
                         if (obs != observed->missing_value) {
+                            REAL_T o = observed->get_error(i, j, a);
                             nll -= (mas::lgamma_<variable>(static_cast<REAL_T> (N) * (obs + o) + this->beta * (predicted[index] + o)) -
                                     mas::lgamma_<variable>(this->beta * (predicted[index] + o)));
                         }
@@ -304,11 +318,10 @@ namespace mas {
 
         virtual std::string ToString() {
 
-            return "DirichletMultinomial";
+            return "dirichlet_multinomial";
         }
     };
-    
-       
+
     template<typename REAL_T>
     struct DirichletMultinomialRobust : mas::NLLFunctor<REAL_T> {
         typedef typename VariableTrait<REAL_T>::variable variable;
@@ -375,11 +388,10 @@ namespace mas {
 
         virtual std::string ToString() {
 
-            return "DirichletMultinomialRobust";
+            return "dirichlet_multinomial_robust";
         }
     };
-    
-    
+
     template<typename REAL_T>
     struct Multinomial : mas::NLLFunctor<REAL_T> {
         typedef typename VariableTrait<REAL_T>::variable variable;
@@ -395,7 +407,6 @@ namespace mas {
         virtual variable Evaluate(const std::shared_ptr<DataObject<REAL_T> >& observed,
                 const std::vector<variable>& predicted,
                 size_t N) {
-
             this->years = observed->imax;
             this->seasons = observed->jmax;
             this->ages = observed->kmax;
@@ -403,43 +414,51 @@ namespace mas {
             variable nll = static_cast<REAL_T> (0.0);
             this->neff = static_cast<REAL_T> (0.0);
             for (size_t i = 0; i < this->years; i++) {
-                for (size_t j = 0; j < this->seasons; j++) {
 
+                for (size_t j = 0; j < this->seasons; j++) {
                     variable temp_sum = 0.0;
-                    REAL_T temp1 = static_cast<REAL_T> (0.0);
-                    REAL_T temp2 = static_cast<REAL_T> (0.0);
+                    variable temp1 = static_cast<REAL_T> (0.0);
+                    variable temp2 = static_cast<REAL_T> (0.0);
+
+                    variable temp3 = static_cast<REAL_T> (0.0);
+
+                    for (size_t a = 0; a < this->ages; a++) {
+                        size_t index = i * this->seasons * this->ages + j * this->ages + a;
+                        temp3 += (predicted[index]);
+                    }
 
                     for (size_t a = 0; a < this->ages; a++) {
                         REAL_T obs = observed->get(i, j, a);
+
                         if (obs != observed->missing_value) {
-                            REAL_T o = observed->get_error(i, j, a);
-
+                            //                            REAL_T o = observed->get_error(i, j, a) * obs;
                             size_t index = i * this->seasons * this->ages + j * this->ages + a;
+                            variable P_pred = (predicted[index]) / temp3;
+                            temp_sum += this->lambda->get(i, j, a) *((obs) * mas::log(predicted[index]));
 
-                            temp_sum += this->lambda->get(i, j, a) * ((obs) * atl::log(predicted[index]));
-                            //effective sample size
-                            temp1 += predicted[index].GetValue()*(1.0 - predicted[index].GetValue());
-                            temp2 += std::pow((observed->get(i, j, a) - predicted[index].GetValue()), 2.0);
+                            temp1 += P_pred * (1.0 - P_pred);
+                            temp2 += std::pow((observed->get(i, j, a) - P_pred), 2.0);
                         }
                     }
                     if (observed->get_sample_size(i, j) != observed->missing_value) {
-                        nll += static_cast<REAL_T> (-1.0) * static_cast<REAL_T> (observed->get_sample_size(i, j)) * temp_sum;
+
+                        nll += static_cast<REAL_T> (observed->get_sample_size(i, j)) * temp_sum;
                     }
+
+
                     this->neff += temp1 / temp2;
 
                 }
             }
-
+            nll *= static_cast<REAL_T> (-1.0);
             return nll;
         }
 
         virtual std::string ToString() {
 
-            return "Multinomial";
+            return "multinomial";
         }
     };
-    
-     
 
     template<typename REAL_T>
     struct MultinomialRobust : mas::NLLFunctor<REAL_T> {
@@ -461,11 +480,11 @@ namespace mas {
             this->years = observed->imax;
             this->seasons = observed->jmax;
             this->ages = observed->kmax;
-          
+
             variable nll = static_cast<REAL_T> (0.0);
             this->neff = static_cast<REAL_T> (0.0);
             for (size_t i = 0; i < this->years; i++) {
-                
+
                 for (size_t j = 0; j < this->seasons; j++) {
                     variable temp_sum = 0.0;
                     REAL_T temp1 = static_cast<REAL_T> (0.0);
@@ -481,10 +500,10 @@ namespace mas {
                     for (size_t a = 0; a < this->ages; a++) {
                         REAL_T obs = observed->get(i, j, a);
                         if (obs != observed->missing_value) {
-//                            REAL_T o = observed->get_error(i, j, a) * obs;
+                            //                            REAL_T o = observed->get_error(i, j, a) * obs;
                             size_t index = i * this->seasons * this->ages + j * this->ages + a;
                             variable P_pred = (predicted[index] + this->epsilon) / temp3;
-                            temp_sum += this->lambda->get(i, j, a) *((obs) * atl::log(P_pred));
+                            temp_sum += this->lambda->get(i, j, a) *((obs) * mas::log(P_pred));
 
                             temp1 += P_pred.GetValue()*(1.0 - P_pred.GetValue());
                             temp2 += std::pow((observed->get(i, j, a) - P_pred.GetValue()) + epsilon, 2.0);
@@ -505,7 +524,7 @@ namespace mas {
 
         virtual std::string ToString() {
 
-            return "MultinomialRobust";
+            return "multinomial_robust";
         }
     };
 
@@ -519,7 +538,14 @@ namespace mas {
         static bool record_residuals;
         std::vector<REAL_T> residuals;
         size_t years, seasons, ages;
-        REAL_T goodness_of_fit = 0.0;
+        REAL_T chi_square = 0.0;
+        REAL_T g_test = 0.0;
+        REAL_T rmse = 0.0;
+        REAL_T rmsle = 0.0;
+        REAL_T r_squared = 0.0;
+        REAL_T AIC = 0.0; //Akaike’s Information Criterion.
+        REAL_T BIC = 0.0; //Bayesian Information Criterion
+        static int k; //number of parameters
 
         NLLComponent(std::vector<variable>* estimated,
                 std::shared_ptr<DataObject<REAL_T> > observed,
@@ -560,10 +586,16 @@ namespace mas {
 
         void Finalize() {
             this->residuals.resize(estimated->size());
-            this->goodness_of_fit = 0.0;
+            this->chi_square = 0.0;
             this->years = observed->imax;
             this->seasons = observed->jmax;
             this->ages = observed->kmax;
+            REAL_T n = 0.0;
+            REAL_T sum_X = 0, sum_Y = 0, sum_XY = 0;
+            REAL_T squareSum_X = 0, squareSum_Y = 0;
+            REAL_T residual_sum_sqr = 0.0;
+
+
             for (size_t i = 0; i < this->years; i++) {
                 for (size_t j = 0; j < this->seasons; j++) {
                     for (size_t a = 0; a < this->ages; a++) {
@@ -572,25 +604,59 @@ namespace mas {
                         REAL_T obs = observed->get(i, j, a);
 
                         if (obs != observed->missing_value) {
+                            n++;
                             residuals[index] = obs - estimated->at(index).GetValue();
-                            goodness_of_fit += std::sqrt(std::pow(residuals[index], 2.0));
+                            residual_sum_sqr += std::pow(residuals[index], 2.0);
+                            chi_square += (std::pow(residuals[index], 2.0)) / estimated->at(index).GetValue();
+                            g_test += obs * std::log(obs / estimated->at(index).GetValue());
+                            rmse += std::pow(estimated->at(index).GetValue() - obs, 2.0);
+                            rmsle += std::pow(std::log(obs + 1.0) - std::log(estimated->at(index).GetValue() + 1.0), 2.0);
+
+                            // sum of elements of array X. 
+                            sum_X = sum_X + estimated->at(index).GetValue();
+
+                            // sum of elements of array Y. 
+                            sum_Y = sum_Y + obs;
+
+                            // sum of X[i] * Y[i]. 
+                            sum_XY = sum_XY + estimated->at(index).GetValue() * obs;
+
+                            // sum of square of array elements. 
+                            squareSum_X = squareSum_X + estimated->at(index).GetValue() * estimated->at(index).GetValue();
+                            squareSum_Y = squareSum_Y + obs * obs;
+
                         } else {
                             residuals[index] = observed->missing_value;
                         }
                     }
                 }
             }
+
+            this->AIC = n * std::log(residual_sum_sqr / n) + mas::NLLComponent<REAL_T>::k * 2;
+            this->BIC = n * std::log(residual_sum_sqr / n) + mas::NLLComponent<REAL_T>::k * std::log(n);
+
+            g_test *= 2.0;
+            rmse = std::sqrt((1.0 / n) * rmse);
+            rmsle = std::sqrt((1.0 / n) * rmsle);
+
+            r_squared = (n * sum_XY - sum_X * sum_Y)
+                    / std::sqrt((n * squareSum_X - sum_X * sum_X)
+                    * (n * squareSum_Y - sum_Y * sum_Y));
+
         }
 
 
     };
 
     template<typename REAL_T>
+    int mas::NLLComponent<REAL_T>::k = 0;
+
+    template<typename REAL_T>
     bool mas::NLLComponent<REAL_T>::record_residuals = false;
 
     template<typename REAL_T>
     std::ostream& operator<<(std::ostream& out, mas::NLLComponent<REAL_T>& nll) {
-        out << "GOF: " << nll.goodness_of_fit << "\nResiduals:\n";
+        out << "GOF: " << nll.chi_square << "\nResiduals:\n";
         int years = nll.observed->imax;
         int seasons = nll.observed->jmax;
         int ages = nll.observed->kmax;
@@ -619,7 +685,7 @@ namespace mas {
 
     template<typename REAL_T>
     std::stringstream& operator<<(std::stringstream& out, mas::NLLComponent<REAL_T>& nll) {
-        out << "GOF: " << nll.goodness_of_fit << "\nResiduals:\n";
+        out << "GOF: " << nll.chi_square << "\nResiduals:\n";
         int years = nll.observed->imax;
         int seasons = nll.observed->jmax;
         int ages = nll.observed->kmax;

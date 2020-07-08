@@ -135,7 +135,9 @@ namespace mas {
         typedef typename std::unordered_map<int, std::shared_ptr<mas::Survey<REAL_T> > >::iterator survey_model_iterator;
         typedef typename std::unordered_map<int, std::shared_ptr<mas::NLLFunctor<REAL_T> > >::iterator likelihood_components_iterator;
 
-
+        rapidjson::Document config_document;
+        rapidjson::Document data_document;
+        
         std::vector<EnsembleUnit> ensemble_units;
 
         Information() {
@@ -171,11 +173,11 @@ namespace mas {
         }
 
         void ParseConfig(const std::stringstream& ss) {
-            rapidjson::Document document;
+
             INFO_DEBUG;
-            document.Parse(ss.str().c_str());
+            config_document.Parse(ss.str().c_str());
             INFO_DEBUG;
-            this->ParseConfig(document);
+            this->ParseConfig(config_document);
         }
 
         void ParseConfig(rapidjson::Document& document) {
@@ -190,16 +192,16 @@ namespace mas {
 
                 if (std::string((*mit).name.GetString()) == "extended_plus_group") {
                     INFO_DEBUG;
-                    mas::AreaPopulationInfo<REAL_T>::length_weight_key_carryout = static_cast<uint32_t> ((*mit).value.GetInt());
+                    mas::Subpopulation<REAL_T>::length_weight_key_carryout = static_cast<uint32_t> ((*mit).value.GetInt());
                 }
 
 #warning should these be here or in the population definition
-                if (std::string((*mit).name.GetString()) == "catch_fraction_of_year") {
+                if (std::string((*mit).name.GetString()) == "catch_season_offset") {
                     INFO_DEBUG;
                     this->catch_fraction_of_year = static_cast<REAL_T> ((*mit).value.GetDouble());
                 }
 
-                if (std::string((*mit).name.GetString()) == "survey_fraction_of_year") {
+                if (std::string((*mit).name.GetString()) == "survey_season_offset") {
                     INFO_DEBUG;
                     this->survey_fraction_of_year = static_cast<REAL_T> ((*mit).value.GetDouble());
                 }
@@ -2287,7 +2289,7 @@ namespace mas {
                                 lambda = (*pm).value.GetDouble();
                             }
                             l->lambdas.push_back(lambda);
-                            std::cout<<"lambda size = "<<l->lambdas.size()<<std::endl;
+                            std::cout << "lambda size = " << l->lambdas.size() << std::endl;
                         }
 
                     }
@@ -2347,7 +2349,7 @@ namespace mas {
                                 lambda = (*pm).value.GetDouble();
                             }
                             l->lambdas.push_back(lambda);
-                            std::cout<<"lambda size = "<<l->lambdas.size()<<std::endl;
+                            std::cout << "lambda size = " << l->lambdas.size() << std::endl;
 
                         }
 
@@ -8237,9 +8239,9 @@ namespace mas {
 
         void ParseData(const std::stringstream & ss) {
             INFO_DEBUG
-            rapidjson::Document document;
-            document.Parse(ss.str().c_str());
-            this->ParseData(document);
+//            rapidjson::Document document;
+            data_document.Parse(ss.str().c_str());
+            this->ParseData(data_document);
         }
 
         void ParseData(rapidjson::Document& document) {
@@ -8828,11 +8830,11 @@ namespace mas {
 
                     }
 #warning remove this
-                    if (data_object->observation_error.size() != data_object->data.size()) {
-                        std::cout << "Data Error: Observation error and data size mismatch for data object \"" << data_object->name << "\".\n";
-                        mas_log << "Data Error: Observation error and data size mismatch for data object \"" << data_object->name << "\".\n";
-                        this->valid_configuration = false;
-                    }
+//                    if (data_object->observation_error.size() != data_object->data.size()) {
+//                        std::cout << "Data Error: Observation error and data size mismatch for data object \"" << data_object->name << "\".\n";
+//                        mas_log << "Data Error: Observation error and data size mismatch for data object \"" << data_object->name << "\".\n";
+//                        this->valid_configuration = false;
+//                    }
 
                     data_object->Validate();
                     data_dictionary[data_object->id].push_back(data_object);
@@ -9044,7 +9046,7 @@ namespace mas {
                     population->areas_list.push_back((*ait).second);
 
                     std::cout << "Adding pop/area info for males...." << std::flush;
-                    mas::AreaPopulationInfo<REAL_T>& male_pop_info = population->males[(*ait).second->id];
+                    mas::Subpopulation<REAL_T>& male_pop_info = population->males[(*ait).second->id];
                     male_pop_info.sex = mas::MALE;
                     male_pop_info.natal_area = population->natal_area;
                     male_pop_info.natal_population = population;
@@ -9053,6 +9055,7 @@ namespace mas {
                     male_pop_info.catch_season_offset = this->catch_fraction_of_year;
                     male_pop_info.survey_season_offset = this->survey_fraction_of_year;
                     male_pop_info.spawning_season_offset = this->spawning_season_offset;
+                    
 
                     //                    male_pop_info.maturity_vector = population->maturity_models[male_pop_info.area->id][0];
                     //                    if (male_pop_info.maturity_vector.size() == 0 || male_pop_info.maturity_vector.size() < this->ages.size()) {
@@ -9093,7 +9096,7 @@ namespace mas {
 
                     std::cout << "Done\n" << std::flush;
                     std::cout << "Adding pop/area info for females...." << std::flush;
-                    mas::AreaPopulationInfo<REAL_T>& female_pop_info = population->females[(*ait).second->id];
+                    mas::Subpopulation<REAL_T>& female_pop_info = population->females[(*ait).second->id];
                     female_pop_info.sex = mas::FEMALE;
                     female_pop_info.natal_area = population->natal_area;
                     female_pop_info.natal_population = population;
@@ -9868,9 +9871,11 @@ namespace mas {
             if (!this->valid_configuration) {
                 std::cout << "Configuration Error:  Invalid model configuration. See mas.log for errors.\n";
                 mas_log << "Configuration Error:  Invalid model configuration. See mas.log for errors.\n";
-               
+
             }
 
+            mas::NLLComponent<REAL_T>::k = this->estimated_parameters.size();
+            
         }
 
         std::unordered_map<int, std::shared_ptr<mas::Population<REAL_T> > >& GetPopulations() {

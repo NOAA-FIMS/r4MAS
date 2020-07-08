@@ -78,9 +78,9 @@ namespace mas {
                 if (this->estimated_phase[i] <= phase) {
                     variable p = *this->estimated_parameters[i];
                     if (p > 0.0) {
-                        ret +=  (atl::log(sigma) + 0.5 * SELX_SQUARE(std::log(this->initial_parameter_values[i]) - atl::log(p)) / sigma2);
+                        ret +=  (mas::log(sigma) + 0.5 * SELX_SQUARE(std::log(this->initial_parameter_values[i]) - mas::log(p)) / sigma2);
                     } else {
-                        std::cout << "Warning:  cannot do prior in log space for parm with min <= 0.0\n";
+//                        std::cout << "Warning:  cannot do prior in log space for parm with min <= 0.0\n";
                     }
                 }
             }
@@ -102,11 +102,11 @@ namespace mas {
          * @return 
          */
         virtual const variable Evaluate(const variable& a) {
-            return static_cast<REAL_T> (1.0) / (static_cast<REAL_T> (1.0) + atl::exp(-1.0 * (a - a50) / s));
+            return static_cast<REAL_T> (1.0) / (static_cast<REAL_T> (1.0) + mas::exp(-1.0 * (a - a50) / s));
         }
 
         virtual const variable Evaluate(const std::vector<variable>& ages, size_t index) {
-            return static_cast<REAL_T> (1.0) / (static_cast<REAL_T> (1.0) + atl::exp(-1.0 * (ages[index] - a50) / s));
+            return static_cast<REAL_T> (1.0) / (static_cast<REAL_T> (1.0) + mas::exp(-1.0 * (ages[index] - a50) / s));
         }
 
         virtual const std::string ToJSONString() {
@@ -150,19 +150,19 @@ namespace mas {
         virtual const variable Evaluate(const variable& a) {
             return (static_cast<REAL_T> (1.0) /
                     (static_cast<REAL_T> (1.0) +
-                    atl::mfexp(-beta_asc * (a - alpha_asc)))) *
+                    mas::mfexp(-beta_asc * (a - alpha_asc)))) *
                     (static_cast<REAL_T> (1.0) - (static_cast<REAL_T> (1.0) /
                     (static_cast<REAL_T> (1.0) +
-                    atl::mfexp(-beta_desc * (a - alpha_desc)))));
+                    mas::mfexp(-beta_desc * (a - alpha_desc)))));
         }
 
         virtual const variable Evaluate(const std::vector<variable>& ages, size_t index) {
             return (static_cast<REAL_T> (1.0) /
                     (static_cast<REAL_T> (1.0) +
-                    atl::mfexp(-beta_asc * (ages[index] - alpha_asc)))) *
+                    mas::mfexp(-beta_asc * (ages[index] - alpha_asc)))) *
                     (static_cast<REAL_T> (1.0) - (static_cast<REAL_T> (1.0) /
                     (static_cast<REAL_T> (1.0) +
-                    atl::mfexp(-beta_desc * (ages[index] - alpha_desc)))));
+                    mas::mfexp(-beta_desc * (ages[index] - alpha_desc)))));
         }
 
         virtual const std::string ToJSONString() {
@@ -221,7 +221,7 @@ namespace mas {
     //         * @return 
     //         */
     //        virtual const variable Evaluate(const variable& a) {
-    //            return static_cast<REAL_T> (1.0) / (static_cast<REAL_T> (1.0) + atl::mfexp(-1.0 * (a - a50) / s));
+    //            return static_cast<REAL_T> (1.0) / (static_cast<REAL_T> (1.0) + mas::mfexp(-1.0 * (a - a50) / s));
     //        }
     //
     //        virtual const std::string ToJSONString() {
@@ -251,7 +251,7 @@ namespace mas {
         std::vector<variable> w;
 
         inline const variable Distance(const variable& a) {
-            return atl::pow((centroid - a)*(centroid - a), 0.5);
+            return mas::pow((centroid - a)*(centroid - a), 0.5);
         }
 
         /**
@@ -260,7 +260,7 @@ namespace mas {
          * @return 
          */
         virtual const variable Evaluate(const variable& a) {
-            return atl::mfexp(-1.0 * atl::pow(this->epsilon * Distance(a), 2.0));
+            return mas::mfexp(-1.0 * mas::pow(this->epsilon * Distance(a), 2.0));
         }
 
         virtual const variable Evaluate(const std::vector<variable>& ages, size_t index) {
@@ -305,7 +305,7 @@ namespace mas {
         std::vector<variable> w;
 
         inline const variable Distance(const variable& a) {
-            return atl::pow((centroid - a)*(centroid - a), 0.5);
+            return mas::pow((centroid - a)*(centroid - a), 0.5);
         }
 
         /**
@@ -314,7 +314,7 @@ namespace mas {
          * @return 
          */
         virtual const variable Evaluate(const variable& a) {
-            return 1.0 / (1.0 + atl::pow(this->epsilon * Distance(a), 2.0));
+            return 1.0 / (1.0 + mas::pow(this->epsilon * Distance(a), 2.0));
         }
 
         virtual const variable Evaluate(const std::vector<variable>& ages, size_t index) {

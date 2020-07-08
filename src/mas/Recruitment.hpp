@@ -33,6 +33,7 @@
 #ifndef RECRUITMENT_HPP
 #define RECRUITMENT_HPP
 #include "Common.hpp"
+#define SQUARE(x) ((x)*(x))
 namespace mas {
 
     template<typename REAL_T>
@@ -97,14 +98,17 @@ namespace mas {
         }
 
         variable LikelihoodComponent() {
-            variable likelihood = atl::log(this->sigma_r);
+            variable likelihood; // = mas::log(this->sigma_r);
             variable norm2 = 0.0;
-
+            variable nll1;
+            variable nll2;
             for (int i = 0; i < this->recruitment_deviations.size(); i++) {
-                norm2 += (this->recruitment_deviations[i] + 1e-5) * (this->recruitment_deviations[i] + 1e-5);
+                nll1 += mas::log(this->sigma_r);
+                nll2 += SQUARE((this->recruitment_deviations[i] / this->sigma_r) + 0.5 * this->sigma_r);
+                //                norm2 += (this->recruitment_deviations[i] + 1e-5) * (this->recruitment_deviations[i] + 1e-5);
 
             }
-            likelihood += norm2 / (2.0 * this->sigma_r * this->sigma_r);
+            likelihood = nll1 + 0.5 * nll2; //+= norm2 / (2.0 * this->sigma_r * this->sigma_r);
             return likelihood;
         }
 
@@ -130,7 +134,7 @@ namespace mas {
 
         const variable Evaluate(const int& pop_id, const int& area_id, const variable& s) {
 
-            return alpha * s * atl::mfexp(static_cast<REAL_T> (-1.0) * beta * s) * atl::mfexp(-0.5 * this->sigma_r * this->sigma_r);
+            return alpha * s * mas::mfexp(static_cast<REAL_T> (-1.0) * beta * s) * mas::mfexp(-0.5 * this->sigma_r * this->sigma_r);
         }
 
         virtual const REAL_T GetAlpha() {
@@ -189,10 +193,10 @@ namespace mas {
          */
         const variable Evaluate(const int& pop_id, const int& area_id, const variable& s) {
             return ((this->R0 * this->SB0[pop_id][area_id]) /
-                    this->SB0[pop_id][area_id])*atl::mfexp(this->h * (1.0 - s /
-                    this->SB0[pop_id][area_id])) * atl::mfexp(-0.5 * this->sigma_r * this->sigma_r);
-            //            return (s / phi0) * atl::mfexp(A * (static_cast<REAL_T> (1.0)
-            //                    - (s / (phi0 * atl::exp(this->R0)))));
+                    this->SB0[pop_id][area_id])*mas::mfexp(this->h * (1.0 - s /
+                    this->SB0[pop_id][area_id])) * mas::mfexp(-0.5 * this->sigma_r * this->sigma_r);
+            //            return (s / phi0) * mas::mfexp(A * (static_cast<REAL_T> (1.0)
+            //                    - (s / (phi0 * mas::exp(this->R0)))));
         }
 
         virtual const REAL_T CalculateEquilibriumSpawningBiomass(REAL_T spawing_biomass_per_recruit) {
@@ -236,8 +240,10 @@ namespace mas {
          * @return
          */
         const variable Evaluate(const int& pop_id, const int& area_id, const variable& sb) {
-            alpha = 4.0 * this->h * atl::mfexp(this->log_R0) / (5.0 * this->h - 1.0);
+            variable bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
+            alpha = /*bc */ 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
             beta = (this->SB0[pop_id][area_id] * (1.0 - this->h)) / (5.0 * this->h - 1.0);
+
             return (alpha * sb) / (beta + sb);
         }
 
@@ -299,9 +305,10 @@ namespace mas {
             //                    (s * (static_cast<REAL_T> (5.0) * h
             //                    - static_cast<REAL_T> (1.0))));
             variable rr; // = (sigma_r*4.0 * R0 * h * s) / ((S0 * (1.0 - h)) + (s * (5.0 * h - 1.0)));
-            //            variable log_r0 = atl::log(this->R0);
-            rr = 4.0 * (this->h * atl::exp(this->log_R0) * s / (this->SB0[pop_id][area_id]*(1.0 - this->h) +
-                    s * (5.0 * this->h - 1.0))); // * atl::mfexp(-0.5 * this->sigma_r * this->sigma_r);
+            //            variable log_r0 = mas::log(this->R0);
+            variable bc = 0.5 * this->sigma_r * this->sigma_r;
+            rr = /*bc */ 4.0 * (this->h * mas::exp(this->log_R0) * s / (this->SB0[pop_id][area_id]*(1.0 - this->h) +
+                    s * (5.0 * this->h - 1.0))); // * mas::mfexp(-0.5 * this->sigma_r * this->sigma_r);
             //            std::cout << rr << "\n";
             return rr;
         }
@@ -342,13 +349,13 @@ namespace mas {
          * @return
          */
         const variable Evaluate(const int& pop_id, const int& area_id, const variable& sb) {
-            //            variable s_c = atl::pow(s, c);
+            //            variable s_c = mas::pow(s, c);
 
-            alpha = 4.0 * this->h * sb; //atl::exp(this->log_R0) / (5.0 * this->h - 1.0);
-            beta = sb * (1.0 - this->h) + sb * (5.0 * this->h - 1.0); //atl::exp(this->log_R0)  * (1.0 - this->h ) / (5.0 * this->h  - 1.0);
+            alpha = 4.0 * this->h * sb; //mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
+            beta = sb * (1.0 - this->h) + sb * (5.0 * this->h - 1.0); //mas::exp(this->log_R0)  * (1.0 - this->h ) / (5.0 * this->h  - 1.0);
             //            return (alpha * s_c) / (beta + s_c);
             //            return (alpha * s - beta) / s;
-            return (alpha / beta)* atl::exp(-0.5 * atl::pow(this->sigma_r, 2.0)); ///(alpha*s)/(beta + s);
+            return (alpha / beta)* mas::exp(-0.5 * mas::pow(this->sigma_r, 2.0)); ///(alpha*s)/(beta + s);
         }
 
         virtual const REAL_T CalculateEquilibriumSpawningBiomass(REAL_T spawing_biomass_per_recruit) {
@@ -388,7 +395,7 @@ namespace mas {
         variable c;
 
         const variable Evaluate(const int& pop_id, const int& area_id, const variable& s) {
-            return (alpha * s) / (static_cast<REAL_T> (1.0) + atl::pow((s / beta), c));
+            return (alpha * s) / (static_cast<REAL_T> (1.0) + mas::pow((s / beta), c));
         }
 
         virtual const std::string ToJSONString() {
@@ -424,7 +431,7 @@ namespace mas {
         variable c;
 
         const variable Evaluate(const int& pop_id, const int& area_id, const variable& s) {
-            return (alpha * s) * atl::pow((static_cast<REAL_T> (1.0) - beta * c * s), static_cast<REAL_T> (1.0) / c);
+            return (alpha * s) * mas::pow((static_cast<REAL_T> (1.0) - beta * c * s), static_cast<REAL_T> (1.0) / c);
         }
 
         virtual const std::string ToJSONString() {
