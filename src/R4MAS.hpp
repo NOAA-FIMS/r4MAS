@@ -25,6 +25,8 @@
 #include <RcppCommon.h>
 #include <Rcpp.h>
 
+#define  Rcout std::cout 
+
 using namespace Rcpp;
 
 /**
@@ -214,6 +216,18 @@ public:
     a50(other.a50), slope(other.slope), id(other.id) {
     }
 
+    double Evaluate(double a) {
+        mas::VariableTrait<double>::variable A;
+        mas::VariableTrait<double>::variable ret;
+        mas::VariableTrait<double>::SetValue(A, a);
+        std::shared_ptr<mas::LogisticSel<double> > sel = std::make_shared<mas::LogisticSel<double> >();
+        mas::LogisticSel<double>* selex = sel.get();
+        selex->a50 = this->a50.value;
+        selex->s = this->slope.value;
+        ret = selex->Evaluate(A);
+        return mas::VariableTrait<double>::Value(ret);
+    }
+
     virtual void AddToMAS(mas::Information<double>& info) {
         std::shared_ptr<mas::LogisticSel<double> > sel = std::make_shared<mas::LogisticSel<double> >();
         mas::VariableTrait<double>::SetValue(sel->a50, a50.value);
@@ -330,8 +344,23 @@ public:
     id(other.id), alpha_asc(other.alpha_asc), beta_asc(other.beta_asc), alpha_desc(other.alpha_desc), beta_desc(other.beta_desc) {
     }
 
+    double Evaluate(double a) {
+        mas::VariableTrait<double>::variable A;
+        mas::VariableTrait<double>::variable ret;
+        mas::VariableTrait<double>::SetValue(A, a);
+        std::shared_ptr<mas::DoubleLogisticSel<double> > sel = std::make_shared<mas::DoubleLogisticSel<double> >();
+        mas::DoubleLogisticSel<double>* selex = sel.get();
+        selex->alpha_asc = this->alpha_asc.value;
+        selex->alpha_desc = this->alpha_desc.value;
+        selex->beta_asc = this->beta_asc.value;
+        selex->beta_desc = this->beta_desc.value;
+        ret = selex->Evaluate(A);
+        return mas::VariableTrait<double>::Value(ret);
+    }
+
     virtual void AddToMAS(mas::Information<double>& info) {
         std::shared_ptr<mas::DoubleLogisticSel<double> > sel = std::make_shared<mas::DoubleLogisticSel<double> >();
+
         mas::DoubleLogisticSel<double>* selex = sel.get();
 
         mas::VariableTrait<double>::SetValue(selex->alpha_asc, this->alpha_asc.value);
@@ -496,6 +525,20 @@ public:
         this->id = SelectivityBase::id_g++;
         AgeBasedSelectivity::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
+    }
+
+    double Evaluate(double a) {
+        mas::VariableTrait<double>::variable A;
+        mas::VariableTrait<double>::variable ret;
+        mas::VariableTrait<double>::SetValue(A, a);
+        std::shared_ptr<mas::AgeBased<double> > sel = std::make_shared<mas::AgeBased<double> > ();
+        mas::AgeBased<double>* selex = sel.get();
+        for (int i = 0; i < this->values.size(); i++) {
+            selex->w.push_back(this->values[i]);
+        }
+
+        ret = selex->Evaluate(A);
+        return mas::VariableTrait<double>::Value(ret);
     }
 
     virtual void AddToMAS(mas::Information<double>& info) {
@@ -876,6 +919,23 @@ public:
         this->deviations = values;
     }
 
+    double Evaluate(double SB0, double sb) {
+        typedef typename mas::VariableTrait<double>::variable variable;
+        variable ret;
+        variable SB0_;
+        variable sb_;
+        mas::VariableTrait<double>::SetValue(SB0_, SB0);
+        mas::VariableTrait<double>::SetValue(sb_, sb);
+        std::shared_ptr<mas::Ricker<double> > rec = std::make_shared<mas::Ricker<double> >();
+        mas::Ricker<double>* r = rec.get();
+        r->R0 = this->R0.value;
+        r->log_R0 = std::log(this->R0.value);
+        r->alpha = this->alpha.value;
+        r->beta = this->beta.value;
+        ret = r->Evaluate(SB0_, sb_);
+        return mas::VariableTrait<double>::Value(ret);
+    }
+
     virtual void AddToMAS(mas::Information<double>& info) {
         typedef typename mas::VariableTrait<double>::variable variable;
 
@@ -1097,6 +1157,22 @@ public:
         this->deviations = values;
     }
 
+    double Evaluate(double SB0, double sb) {
+        typedef typename mas::VariableTrait<double>::variable variable;
+        variable ret;
+        variable SB0_;
+        variable sb_;
+        mas::VariableTrait<double>::SetValue(SB0_, SB0);
+        mas::VariableTrait<double>::SetValue(sb_, sb);
+        std::shared_ptr<mas::BevertonHolt<double> > rec = std::make_shared<mas::BevertonHolt<double> >();
+        mas::BevertonHolt<double>* r = rec.get();
+        r->R0 = this->R0.value;
+        r->h = this->h.value;
+        r->sigma_r = this->sigma_r.value;
+        ret = r->Evaluate(SB0_, sb_);
+        return mas::VariableTrait<double>::Value(ret);
+    }
+
     virtual void AddToMAS(mas::Information<double>& info) {
         typedef typename mas::VariableTrait<double>::variable variable;
 
@@ -1301,6 +1377,22 @@ public:
     void SetDeviations(Rcpp::NumericVector values) {
 
         this->deviations = values;
+    }
+
+    double Evaluate(double SB0, double sb) {
+        typedef typename mas::VariableTrait<double>::variable variable;
+        variable ret;
+        variable SB0_;
+        variable sb_;
+        mas::VariableTrait<double>::SetValue(SB0_, SB0);
+        mas::VariableTrait<double>::SetValue(sb_, sb);
+        std::shared_ptr<mas::BevertonHolt<double> > rec = std::make_shared<mas::BevertonHolt<double> >();
+        mas::BevertonHolt<double>* r = rec.get();
+        r->R0 = this->R0.value;
+        r->h = this->h.value;
+        r->sigma_r = this->sigma_r.value;
+        ret = r->Evaluate(SB0_, sb_);
+        return mas::VariableTrait<double>::Value(ret);
     }
 
     virtual void AddToMAS(mas::Information<double>& info) {
@@ -4804,11 +4896,11 @@ public:
     int nseasons;
     int nages;
     int max_line_searches = 50;
-    int max_iterations = 5000;
+    int max_iterations = 1000;
     double tolerance = 1e-4;
-    double spawning_season_offset = 1.0;
-    double catch_season_offset = 1.0;
-    double survey_season_offset = 1.0;
+    double spawning_season_offset = 0.0;
+    double catch_season_offset = 0.0;
+    double survey_season_offset = 0.0;
     double extended_plus_group = 0;
     Rcpp::NumericVector ages;
 
@@ -4843,6 +4935,7 @@ public:
     }
 
     void Run() {
+        
         mas = std::make_shared<mas::MASObjectiveFunction<double > >();
         if (this->nages == 0) {
             std::cout << "MAS error: nages = 0\n";
@@ -4906,7 +4999,7 @@ public:
             min.max_iterations = this->max_iterations;
             min.SetObjectiveFunction(mas.get());
             min.Run();
-            mas->mas_instance.Finalize();
+            mas->Finalize();
         } else {
 
             std::cout << "MAS Error: Invalid Model Configuration, see mas.log\n";
