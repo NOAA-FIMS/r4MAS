@@ -50,6 +50,10 @@ namespace mas {
         static void SetValue(variable& var, const REAL_T& value) {
             var.SetValue(value);
         }
+        
+        static REAL_T Value(const variable& var){
+            return var.GetValue();
+        }
 
         static void SetMinBoundary(variable& var, const REAL_T& value) {
             var.SetMinBoundary(value);
