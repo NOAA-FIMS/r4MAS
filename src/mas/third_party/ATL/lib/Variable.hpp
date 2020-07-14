@@ -138,9 +138,9 @@ namespace atl {
 
         virtual REAL_T External2Internal(REAL_T val, REAL_T min_, REAL_T max_)const {
             if (val == min_) {
-                val += std::numeric_limits<REAL_T>::epsilon();
+                val += static_cast<REAL_T>(1e-8);
             } else if (val == max_) {
-                val -= std::numeric_limits<REAL_T>::epsilon();
+                val -= static_cast<REAL_T>(1e-8);
             }
 
             REAL_T p = ((val) - min_) / (max_ - min_);
@@ -1228,7 +1228,7 @@ namespace atl {
     bool Variable<REAL_T>::show = false;
 
     template<typename REAL_T>
-    std::shared_ptr<ParameterTransformation<REAL_T> > Variable<REAL_T>::default_transformation(new atl::LogitParameterTransformation<REAL_T>());
+    std::shared_ptr<ParameterTransformation<REAL_T> > Variable<REAL_T>::default_transformation(new atl::SinParameterTransformation<REAL_T>());
 
     template<typename REAL_T>
     std::ostream& operator<<(std::ostream& out, const Variable<REAL_T>& v) {
