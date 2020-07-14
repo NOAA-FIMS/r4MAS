@@ -1159,7 +1159,7 @@ namespace mas {
             return ret;
         }
 
-        void CalculateMSY(REAL_T maxF = 1.0, REAL_T step = 0.0001) {
+        void CalculateMSY(REAL_T maxF = 1.0, REAL_T step = 0.01) {
 
             bool recording = mas::VariableTrait<REAL_T>::IsRecording();
 
@@ -1279,9 +1279,9 @@ namespace mas {
             REAL_T F35_dum = min(fabs(spr_ratio - 0.35));
             REAL_T F40_dum = min(fabs(spr_ratio - 0.4));
             size_t F01_out;
-            size_t F30_out;
-            size_t F35_out;
-            size_t F40_out;
+            size_t F30_out = 0;
+            size_t F35_out = 0;
+            size_t F40_out= 0;
             //            std::cout << "F30_dum " << F30_dum << "\n";
             //            std::cout << "F35_dum " << F35_dum << "\n";
             //            std::cout << "F40_dum " << F40_dum << "\n";
@@ -1344,25 +1344,25 @@ namespace mas {
 
             //            std::cout<<std::scientific;
 //
-//            std::cout << "\n\nFmax: " << maxF << "\n";
-//            std::cout << "Step: " << step << "\n";
-//            std::cout << "\n\nF_msy: " << F[max_index] << "\n";
-//            std::cout << "F30: " << F[F30_out] << "\n";
-//            std::cout << "F35: " << F[F35_out] << "\n";
-//            std::cout << "F40: " << F[F40_out] << "\n";
-//            REAL_T spr_msy_out = spr[max_index];
-//            std::cout << "spr_msy: " << spr[max_index] << "\n";
-//            std::cout << "SR_msy: " << spr_msy_out / spr_F0 << "\n";
-//            //            std::cout << "D_msy_out" << D_eq[max_index] << "\n";
-//            std::cout << "R_msy: " << R_eq[max_index] << "\n";
-//            std::cout << "SSB_msy: " << S_eq[max_index] << "\n";
-//            std::cout << "B_msy: " << B_eq[max_index] << "\n";
-//            std::cout << "E_msy: " << E_eq[max_index] << "\n";
-//            std::cout << "R0: " << this->R0 << "\n";
-//            std::cout << "S0: " << this->S0 << "\n";
-//            std::cout << "E_msy: " << E_eq[max_index] << "\n";
-//            std::cout << "Alpha: " << this->recruitment_model->GetAlpha() << "\n";
-//            std::cout << "Beta: " << this->recruitment_model->GetBeta() << "\n\n";
+            std::cout << "\n\nFmax: " << maxF << "\n";
+            std::cout << "Step: " << step << "\n";
+            std::cout << "\n\nF_msy: " << F[max_index] << "\n";
+            std::cout << "F30: " << F[F30_out] << "\n";
+            std::cout << "F35: " << F[F35_out] << "\n";
+            std::cout << "F40: " << F[F40_out] << "\n";
+            REAL_T spr_msy_out = spr[max_index];
+            std::cout << "spr_msy: " << spr[max_index] << "\n";
+            std::cout << "SR_msy: " << spr_msy_out / spr_F0 << "\n";
+            //            std::cout << "D_msy_out" << D_eq[max_index] << "\n";
+            std::cout << "R_msy: " << R_eq[max_index] << "\n";
+            std::cout << "SSB_msy: " << S_eq[max_index] << "\n";
+            std::cout << "B_msy: " << B_eq[max_index] << "\n";
+            std::cout << "E_msy: " << E_eq[max_index] << "\n";
+            std::cout << "R0: " << this->R0 << "\n";
+            std::cout << "S0: " << this->S0 << "\n";
+            std::cout << "E_msy: " << E_eq[max_index] << "\n";
+            std::cout << "Alpha: " << this->recruitment_model->GetAlpha() << "\n";
+            std::cout << "Beta: " << this->recruitment_model->GetBeta() << "\n\n";
 
             mas::VariableTrait<REAL_T>::SetRecording(recording);
 
