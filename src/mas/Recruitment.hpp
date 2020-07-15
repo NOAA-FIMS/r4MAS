@@ -55,6 +55,15 @@ namespace mas {
 
         virtual const variable Evaluate(const int& pop_id, const int& area_id, const variable& s) = 0;
 
+        /**
+         * Used for unit testing.
+         * 
+         * @param SB0
+         * @param s
+         * @return 
+         */
+        virtual const variable Evaluate(const variable& SB0, const variable& s) = 0;
+
         //        virtual const variable GetR0() = 0;
 
         virtual const REAL_T GetAlpha() {
@@ -137,6 +146,17 @@ namespace mas {
             return alpha * s * mas::mfexp(static_cast<REAL_T> (-1.0) * beta * s) * mas::mfexp(-0.5 * this->sigma_r * this->sigma_r);
         }
 
+        /**
+         * Used for unit testing.
+         * 
+         * @param SB0
+         * @param s
+         * @return 
+         */
+        virtual const variable Evaluate(const variable& SB0, const variable& s) {
+            return alpha * s * mas::mfexp(static_cast<REAL_T> (-1.0) * beta * s) * mas::mfexp(-0.5 * this->sigma_r * this->sigma_r);
+        }
+
         virtual const REAL_T GetAlpha() {
             return this->alpha.GetValue();
         }
@@ -199,6 +219,19 @@ namespace mas {
             //                    - (s / (phi0 * mas::exp(this->R0)))));
         }
 
+        /**
+         * Used for unit testing.
+         * 
+         * @param SB0
+         * @param s
+         * @return 
+         */
+        virtual const variable Evaluate(const variable& SB0, const variable& s) {
+            return ((this->R0 * SB0) /
+                    SB0)*mas::mfexp(this->h * (1.0 - s /
+                    SB0)) * mas::mfexp(-0.5 * this->sigma_r * this->sigma_r);
+        }
+
         virtual const REAL_T CalculateEquilibriumSpawningBiomass(REAL_T spawing_biomass_per_recruit) {
             return 0.0;
         }
@@ -243,6 +276,21 @@ namespace mas {
             variable bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
             alpha = /*bc */ 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
             beta = (this->SB0[pop_id][area_id] * (1.0 - this->h)) / (5.0 * this->h - 1.0);
+
+            return (alpha * sb) / (beta + sb);
+        }
+
+        /**
+         * Used for unit testing.
+         * 
+         * @param SB0
+         * @param s
+         * @return 
+         */
+        virtual const variable Evaluate(const variable& SB0, const variable& sb) {
+            variable bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
+            alpha = /*bc */ 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
+            beta = (SB0 * (1.0 - this->h)) / (5.0 * this->h - 1.0);
 
             return (alpha * sb) / (beta + sb);
         }
@@ -313,6 +361,22 @@ namespace mas {
             return rr;
         }
 
+        /**
+         * Used for unit testing.
+         * 
+         * @param SB0
+         * @param s
+         * @return 
+         */
+        virtual const variable Evaluate(const variable& SB0, const variable& s) {
+            variable rr;
+            variable bc = 0.5 * this->sigma_r * this->sigma_r;
+            rr = /*bc */ 4.0 * (this->h * mas::exp(this->log_R0) * s / (SB0 * (1.0 - this->h) +
+                    s * (5.0 * this->h - 1.0)));
+
+            return rr;
+        }
+
         virtual const std::string ToJSONString() {
             std::stringstream ss;
             ss << "\"recruitment\": {\n";
@@ -351,6 +415,21 @@ namespace mas {
         const variable Evaluate(const int& pop_id, const int& area_id, const variable& sb) {
             //            variable s_c = mas::pow(s, c);
 
+            alpha = 4.0 * this->h * sb; //mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
+            beta = sb * (1.0 - this->h) + sb * (5.0 * this->h - 1.0); //mas::exp(this->log_R0)  * (1.0 - this->h ) / (5.0 * this->h  - 1.0);
+            //            return (alpha * s_c) / (beta + s_c);
+            //            return (alpha * s - beta) / s;
+            return (alpha / beta)* mas::exp(-0.5 * mas::pow(this->sigma_r, 2.0)); ///(alpha*s)/(beta + s);
+        }
+
+        /**
+         * Used for unit testing.
+         * 
+         * @param SB0
+         * @param s
+         * @return 
+         */
+        virtual const variable Evaluate(const variable& SB0, const variable& sb) {
             alpha = 4.0 * this->h * sb; //mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
             beta = sb * (1.0 - this->h) + sb * (5.0 * this->h - 1.0); //mas::exp(this->log_R0)  * (1.0 - this->h ) / (5.0 * this->h  - 1.0);
             //            return (alpha * s_c) / (beta + s_c);
@@ -398,6 +477,18 @@ namespace mas {
             return (alpha * s) / (static_cast<REAL_T> (1.0) + mas::pow((s / beta), c));
         }
 
+        /**
+         * Used for unit testing.
+         * 
+         * @param SB0
+         * @param s
+         * @return 
+         */
+        virtual const variable Evaluate(const variable& SB0, const variable& s) {
+            return (alpha * s) / (static_cast<REAL_T> (1.0) + mas::pow((s / beta), c));
+
+        }
+
         virtual const std::string ToJSONString() {
             std::stringstream ss;
             ss.setf(std::ios::fixed, std::ios::floatfield);
@@ -431,6 +522,17 @@ namespace mas {
         variable c;
 
         const variable Evaluate(const int& pop_id, const int& area_id, const variable& s) {
+            return (alpha * s) * mas::pow((static_cast<REAL_T> (1.0) - beta * c * s), static_cast<REAL_T> (1.0) / c);
+        }
+
+        /**
+         * Used for unit testing.
+         * 
+         * @param SB0
+         * @param s
+         * @return 
+         */
+        virtual const variable Evaluate(const variable& SB0, const variable& s) {
             return (alpha * s) * mas::pow((static_cast<REAL_T> (1.0) - beta * c * s), static_cast<REAL_T> (1.0) / c);
         }
 
