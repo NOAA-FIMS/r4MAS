@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * RMAS is a r interface for the Meta-population Assessment System.
  */
 
 /* 
@@ -17,9 +15,9 @@
 #include <cstdlib>
 #include <iostream>
 
-#include "mas/MAS.hpp"
-#include "mas/Options.hpp"
-#include "mas/ObjectiveFunction.hpp"
+#include "../mas/MAS.hpp"
+#include "../mas/Options.hpp"
+#include "../mas/ObjectiveFunction.hpp"
 
 
 #include <RcppCommon.h>
@@ -1690,6 +1688,15 @@ public:
         this-> has_emprical_weight = true;
     }
 
+    double Evaluate(const double& age, const int& sex) {
+        std::shared_ptr<mas::VonBertalanffy<double> > vb = std::make_shared<mas::VonBertalanffy<double> >();
+        mas::VonBertalanffy<double>* g = vb.get();
+        mas::VariableTrait<double>::variable a;
+        mas::VariableTrait<double>::SetValue(a, age);
+        mas::VariableTrait<double>::variable ret = g->Evaluate(a, sex);
+        return mas::VariableTrait<double>::Value(ret);
+    }
+
     virtual void AddToMAS(mas::Information<double>& info) {
         std::shared_ptr<mas::VonBertalanffy<double> > vb = std::make_shared<mas::VonBertalanffy<double> >();
         mas::VonBertalanffy<double>* g = vb.get();
@@ -2296,6 +2303,15 @@ public:
 
         this->weight_at_survey_males = data;
         this-> has_emprical_weight = true;
+    }
+
+    double Evaluate(const double& age, const int& sex) {
+        std::shared_ptr<mas::VonBertalanffyModified<double> > vb = std::make_shared<mas::VonBertalanffyModified<double> >();
+        mas::VonBertalanffyModified<double>* g = vb.get();
+        mas::VariableTrait<double>::variable a;
+        mas::VariableTrait<double>::SetValue(a, age);
+        mas::VariableTrait<double>::variable ret = g->Evaluate(a, sex);
+        return mas::VariableTrait<double>::Value(ret);
     }
 
     virtual void AddToMAS(mas::Information<double>& info) {
@@ -4897,6 +4913,7 @@ public:
     int nages;
     int max_line_searches = 50;
     int max_iterations = 1000;
+    int print_interval = 10;
     double tolerance = 1e-4;
     double spawning_season_offset = 0.0;
     double catch_season_offset = 0.0;
@@ -4935,7 +4952,7 @@ public:
     }
 
     void Run() {
-        
+
         mas = std::make_shared<mas::MASObjectiveFunction<double > >();
         if (this->nages == 0) {
             std::cout << "MAS error: nages = 0\n";
@@ -4997,6 +5014,7 @@ public:
             min.max_line_searches = this->max_line_searches;
             min.SetTolerance(this->tolerance);
             min.max_iterations = this->max_iterations;
+            min.print_interval = this->print_interval;
             min.SetObjectiveFunction(mas.get());
             min.Run();
             mas->Finalize();
@@ -5414,6 +5432,7 @@ RCPP_MODULE(rmas) {
             .field("nages", &MASModel::nages)
             .field("ages", &MASModel::ages)
             .field("max_line_searches", &MASModel::max_line_searches)
+            .field("print_interval", &MASModel::print_interval)
             .field("tolerance", &MASModel::tolerance)
             .field("max_iterations", &MASModel::max_iterations)
             .field("catch_season_offset", &MASModel::catch_season_offset)
