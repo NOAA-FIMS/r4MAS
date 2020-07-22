@@ -62,6 +62,8 @@ public:
     value(value) {
     }
 
+    virtual ~Parameter() {
+    }
 
 };
 
@@ -78,6 +80,9 @@ public:
     typedef typename mas::VariableTrait<double>::variable variable;
 
     static std::vector<MASSubModel*> submodels;
+
+    virtual ~MASSubModel() {
+    }
 
     virtual void AddToMAS(mas::Information<double>& info) {
 
@@ -191,7 +196,12 @@ SexType GetSexType(std::string sex) {
 class SelectivityBase : public MASSubModel {
 protected:
 
+   
     static int id_g;
+    
+public:
+     virtual ~SelectivityBase() {
+    }
 };
 
 int SelectivityBase::id_g = 1;
@@ -212,6 +222,9 @@ public:
 
     LogisticSelectivity(const LogisticSelectivity& other) :
     a50(other.a50), slope(other.slope), id(other.id) {
+    }
+
+    virtual ~LogisticSelectivity() {
     }
 
     double Evaluate(double a) {
@@ -340,6 +353,9 @@ public:
 
     DoubleLogisticSelectivity(const DoubleLogisticSelectivity& other) :
     id(other.id), alpha_asc(other.alpha_asc), beta_asc(other.beta_asc), alpha_desc(other.alpha_desc), beta_desc(other.beta_desc) {
+    }
+
+    virtual ~DoubleLogisticSelectivity() {
     }
 
     double Evaluate(double a) {
@@ -525,6 +541,9 @@ public:
         MASSubModel::submodels.push_back(this);
     }
 
+    virtual ~AgeBasedSelectivity() {
+    }
+
     double Evaluate(double a) {
         mas::VariableTrait<double>::variable A;
         mas::VariableTrait<double>::variable ret;
@@ -648,6 +667,9 @@ public:
         std::cout << "Fishing Mortaility copy constructor";
     }
 
+    virtual ~FishingMortality() {
+    }
+
     void SetValues(Rcpp::NumericVector values) {
 
         this->values = values;
@@ -762,6 +784,9 @@ public:
 
     }
 
+    virtual ~NaturalMortality() {
+    }
+
     void SetValues(Rcpp::NumericVector values) {
 
         this->values = values;
@@ -861,6 +886,9 @@ public:
         InitialDeviations::initialized_models[this->id] = this;
     }
 
+    virtual ~InitialDeviations() {
+    }
+
     void SetValues(Rcpp::NumericVector values) {
 
         this->values = values;
@@ -883,6 +911,9 @@ protected:
     static int id_g;
 
 public:
+
+    virtual ~RecruitmentBase() {
+    }
     Parameter sigma_r;
 
 };
@@ -910,6 +941,9 @@ public:
         RickerRecruitment::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
 
+    }
+
+    virtual ~RickerRecruitment() {
     }
 
     void SetDeviations(Rcpp::NumericVector values) {
@@ -1150,6 +1184,9 @@ public:
         MASSubModel::submodels.push_back(this);
     }
 
+    virtual ~BevertonHoltRecruitment() {
+    }
+
     void SetDeviations(Rcpp::NumericVector values) {
 
         this->deviations = values;
@@ -1372,6 +1409,9 @@ public:
         MASSubModel::submodels.push_back(this);
     }
 
+    virtual ~BevertonHoltRecruitmentAlt() {
+    }
+
     void SetDeviations(Rcpp::NumericVector values) {
 
         this->deviations = values;
@@ -1580,6 +1620,10 @@ class GrowthBase : public MASSubModel {
 protected:
 
     static int id_g;
+public:
+
+    virtual ~GrowthBase() {
+    }
 };
 int GrowthBase::id_g = 1;
 
@@ -1610,6 +1654,9 @@ public:
         this->id = GrowthBase::id_g++;
         VonBertalanffy::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
+    }
+
+    virtual ~VonBertalanffy() {
     }
 
     void SetUndifferentiatedWeightAtSeasonStart(Rcpp::NumericVector data) {
@@ -2227,6 +2274,9 @@ public:
         this->id = GrowthBase::id_g++;
         VonBertalanffyModified::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
+    }
+
+    virtual ~VonBertalanffyModified() {
     }
 
     void SetUndifferentiatedWeightAtSeasonStart(Rcpp::NumericVector data) {
@@ -2892,6 +2942,9 @@ public:
         MASSubModel::submodels.push_back(this);
     }
 
+    virtual ~Area() {
+    }
+
     virtual void AddToMAS(mas::Information<double>& info) {
 
         std::shared_ptr<mas::Area<double> > area = std::make_shared<mas::Area<double> >();
@@ -2942,6 +2995,9 @@ public:
         this->id = Movement::id_g++;
         Movement::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
+    }
+
+    virtual ~Movement() {
     }
 
     virtual void AddToMAS(mas::Information<double>& info) {
@@ -3059,6 +3115,8 @@ public:
         Maturity::initialized_models[this->id] = this;
     }
 
+    virtual ~Maturity() {
+    }
 
     static std::map<int, Maturity*> initialized_models;
     typedef typename std::map<int, Maturity*>::iterator model_iterator;
@@ -3095,6 +3153,9 @@ public:
         this->id = Population::id_g++;
         Population::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
+    }
+
+    virtual ~Population() {
     }
 
     void SetGrowth(int id) {
@@ -3502,6 +3563,10 @@ public:
     int id_;
     static std::vector<NLLBase* > nll_submodels;
     typedef typename std::vector<NLLBase* >::iterator nll_iterator;
+
+    virtual ~NLLBase() {
+
+    }
 };
 int NLLBase::id_g = 1;
 std::vector<NLLBase* > NLLBase::nll_submodels;
@@ -3520,6 +3585,9 @@ public:
         Lognormal::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
         NLLBase::nll_submodels.push_back(this);
+    }
+
+    virtual ~Lognormal() {
     }
 
     void SetLambdaValues(Rcpp::NumericVector lambdas, Rcpp::IntegerVector lambda_dimensions) {
@@ -3617,6 +3685,9 @@ public:
         DirichletMultinomial::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
         NLLBase::nll_submodels.push_back(this);
+    }
+
+    virtual ~DirichletMultinomial() {
     }
 
     void SetLambdaValues(Rcpp::NumericVector lambdas, Rcpp::IntegerVector lambda_dimensions) {
@@ -3728,6 +3799,9 @@ public:
         NLLBase::nll_submodels.push_back(this);
     }
 
+    virtual ~DirichletMultinomialRobust() {
+    }
+
     void SetLambdaValues(Rcpp::NumericVector lambdas, Rcpp::IntegerVector lambda_dimensions) {
 
         this->lambdas = lambdas;
@@ -3837,6 +3911,9 @@ public:
         NLLBase::nll_submodels.push_back(this);
     }
 
+    virtual ~Multinomial() {
+    }
+
     void SetLambdaValues(Rcpp::NumericVector lambdas, Rcpp::IntegerVector lambda_dimensions) {
 
         this->lambdas = lambdas;
@@ -3934,6 +4011,9 @@ public:
         NLLBase::nll_submodels.push_back(this);
     }
 
+    virtual ~MultinomialRobust() {
+    }
+
     void SetLambdaValues(Rcpp::NumericVector lambdas, Rcpp::IntegerVector lambda_dimensions) {
 
         this->lambdas = lambdas;
@@ -4023,6 +4103,9 @@ public:
         IndexData::initialized_models[this->id] = this;
     }
 
+    virtual ~IndexData() {
+    }
+
     MASObjectType sub_model_type = DATAOBJECT;
     int id;
     Rcpp::NumericVector data;
@@ -4049,6 +4132,9 @@ public:
 
         this->id = AgeCompData::id_g++;
         AgeCompData::initialized_models[this->id] = this;
+    }
+
+    virtual ~AgeCompData() {
     }
 
     MASObjectType sub_model_type = DATAOBJECT;
@@ -4080,6 +4166,9 @@ public:
         this->id = LengthCompData::id_g++;
         LengthCompData::initialized_models[this->id] = this;
 
+    }
+
+    virtual ~LengthCompData() {
     }
 
     MASObjectType sub_model_type = DATAOBJECT;
@@ -4131,6 +4220,9 @@ public:
         this->id = Fleet::id_g++;
         Fleet::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
+    }
+
+    virtual ~Fleet() {
     }
 
     void AddIndexData(int id, std::string sex) {
@@ -4520,6 +4612,9 @@ public:
         this->id = Survey::id_g++;
         Survey::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
+    }
+
+    virtual ~Survey() {
     }
 
     void AddIndexData(int id, std::string sex) {
@@ -4921,6 +5016,13 @@ public:
     double extended_plus_group = 0;
     Rcpp::NumericVector ages;
 
+    
+    
+    virtual ~MASModel(){
+        
+    }
+    
+    
     int GetNAges() const {
 
         return nages;
