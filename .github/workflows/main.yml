@@ -20,6 +20,4 @@ jobs:
           remotes::install_github("nmfs-fish-tools/RMAS")
           library(RMAS)
         shell: Rscript {0}
-      - name: Check
-        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
-        shell: Rscript {0}
+     
