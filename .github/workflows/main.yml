@@ -16,8 +16,9 @@ jobs:
       - uses: r-lib/actions/setup-r@master
       - name: Install dependencies
         run: |
-          install.packages(c("remotes", "rcmdcheck"))
-          remotes::install_deps(dependencies = TRUE)
+          install.packages("remotes")
+          remotes::install_github("nmfs-fish-tools/RMAS")
+          library(RMAS)
         shell: Rscript {0}
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
