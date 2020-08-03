@@ -1,4 +1,4 @@
 CXX_STD = CXX14
-CXX14FLAGS=-O3 -W
+CXXFLAGS=-O3 -W
 CXX14 = $(BINPREF)g++   -m$(WIN) -std=c++1y -W
-CXX11FLAGS=-O3 -W
+
