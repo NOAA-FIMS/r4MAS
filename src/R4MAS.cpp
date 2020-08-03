@@ -11,4 +11,6 @@
  * Created on January 23, 2020, 9:03 AM
  */
 
+#pragma GCC diagnostic push
+
 #include "R4MAS.hpp"
