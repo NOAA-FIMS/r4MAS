@@ -10,6 +10,5 @@
  * 
  * Created on January 23, 2020, 9:03 AM
  */
-#pragma warning(push, 0)  
 
 #include "R4MAS.hpp"
