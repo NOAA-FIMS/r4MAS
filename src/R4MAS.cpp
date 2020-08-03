@@ -10,7 +10,6 @@
  * 
  * Created on January 23, 2020, 9:03 AM
  */
-
-#pragma GCC diagnostic push
+#pragma warning(push, 0)  
 
 #include "R4MAS.hpp"
