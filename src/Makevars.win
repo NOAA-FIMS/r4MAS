@@ -1,4 +1,4 @@
 CXX_STD = CXX14
-CXX14FLAGS=-O3 -Wno-unused-variable -Wno-unused-function
-CXX14 = $(BINPREF)g++ -w  -m$(WIN) -std=c++1y -w
-CXX11FLAGS=-O3 -Wno-unused-variable -Wno-unused-function
+CXX14FLAGS=-O3 -W
+CXX14 = $(BINPREF)g++ -w  -m$(WIN) -std=c++1y -W
+CXX11FLAGS=-O3 -W
