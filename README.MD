@@ -3,7 +3,7 @@
 # RMAS - R interface to the Metapopulation Assessment System
 
 **************
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/nmfs-fish-tools/RMAS) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2787/badge)](https://bestpractices.coreinfrastructure.org/projects/2787)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/nmfs-fish-tools/RMAS) 
 ![R-CMD-check](https://github.com/nmfs-fish-tools/RMAS/workflows/R-CMD-check/badge.svg)
 
 **************
