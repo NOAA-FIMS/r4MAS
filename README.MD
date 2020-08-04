@@ -14,7 +14,9 @@ This tool is supported by the NOAA Fisheries Integrated Toolbox. More informatio
 # Getting started
 
 ## Installation instructions
-Since this package contains C++ files, you will need to ensure you have a C++ compiler installed. You can install a C++ compiler here, please make sure it is C++14 or more recent.
+Since this package contains C++ files, you will need to ensure you have a C++ compiler installed. You can install a C++ compiler [here](https://clang.llvm.org/), please make sure it is C++14 or more recent.
+
+You will also need to have the `Rcpp` package installed. 
 
 Please install and load `RMAS` from Github using the `remotes` package as follows:
 ```
@@ -23,7 +25,7 @@ remotes::install_github("nmfs-fish-tools/RMAS")
 library(RMAS)
 ```
 
-**Windows users**: If you receive errors related to C++ when loading RMAS, it could be because your R installation uses the default Makevars.win file. To update your Makevars.win file, please run the following code in your R terminal:
+**Windows users**: Please ensure you have [Rtools](https://cran.r-project.org/bin/windows/Rtools/). If you receive errors related to C++ when loading RMAS, it could be because your R installation uses the default Makevars.win file. To update your Makevars.win file, please run the following code in your R terminal:
 
 ```
 dotR <- file.path(Sys.getenv("HOME"), ".R")
