@@ -1,5 +1,4 @@
 CXX_STD = CXX14
 PKG_CXXFLAGS = -O3 -w -ftrack-macro-expansion=0
-BINPREF ?= c:/Rtools/mingw_64/bin/
 CXX14 = $(BINPREF)g++ -w  -m$(WIN) -std=c++1y -W
 CXX11FLAGS=-O3 -W
