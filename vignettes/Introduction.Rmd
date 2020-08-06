@@ -167,7 +167,7 @@ for (y in 0:(nyears))
 
 population$AddNaturalMortality(natural_mortality$id,area1$id,"undifferentiated")
 population$AddMaturity(maturity$id,area1$id, "undifferentiated")
-population$AddRecruitment(recruitment$id,area1$id)
+population$AddRecruitment(recruitment$id,1,area1$id)
 population$SetInitialDeviations(initial_deviations$id, area1$id, "undifferentiated")
 population$SetGrowth(growth$id)
 ```
@@ -268,6 +268,10 @@ json_output <- jsonlite::read_json(json_loc)
 years <- json_output$nyears
 ages <- json_output$nages
 popdy <- json_output$population_dynamics
+
+
+survey_biomass_f <- (popdy$surveys[[1]]$females$survey_biomass$values)
+
 
 #View the estimated values
 popdy$fleet$undifferentiated

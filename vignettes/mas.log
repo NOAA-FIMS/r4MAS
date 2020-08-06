@@ -33,41 +33,41 @@ Growth:
 NLL Component:
 
 Selectivity:
-logistic_selectivity_a50_2						1						2
-logistic_selectivity_slope_2						0.3						2
 logistic_selectivity_a50_1						1.5						2
 logistic_selectivity_slope_1						1.5						0
+logistic_selectivity_a50_2						1						2
+logistic_selectivity_slope_2						0.3						2
 
 Movement:
 
 Natural Mortality:
+fishing_mortality[29][0]_1						0.3						1
+fishing_mortality[20][0]_1						0.3						1
+fishing_mortality[26][0]_1						0.3						1
+fishing_mortality[12][0]_1						0.3						1
 fishing_mortality[4][0]_1						0.3						1
+fishing_mortality[21][0]_1						0.3						1
+fishing_mortality[13][0]_1						0.3						1
+fishing_mortality[25][0]_1						0.3						1
+fishing_mortality[22][0]_1						0.3						1
+fishing_mortality[3][0]_1						0.3						1
+fishing_mortality[5][0]_1						0.3						1
 fishing_mortality[6][0]_1						0.3						1
-fishing_mortality[7][0]_1						0.3						1
+fishing_mortality[8][0]_1						0.3						1
+fishing_mortality[15][0]_1						0.3						1
 fishing_mortality[9][0]_1						0.3						1
 fishing_mortality[11][0]_1						0.3						1
-fishing_mortality[5][0]_1						0.3						1
 fishing_mortality[16][0]_1						0.3						1
-fishing_mortality[2][0]_1						0.3						1
-fishing_mortality[12][0]_1						0.3						1
-fishing_mortality[13][0]_1						0.3						1
+fishing_mortality[19][0]_1						0.3						1
 fishing_mortality[14][0]_1						0.3						1
-fishing_mortality[15][0]_1						0.3						1
+fishing_mortality[17][0]_1						0.3						1
 fishing_mortality[1][0]_1						0.3						1
-fishing_mortality[3][0]_1						0.3						1
-fishing_mortality[8][0]_1						0.3						1
+fishing_mortality[2][0]_1						0.3						1
+fishing_mortality[7][0]_1						0.3						1
+fishing_mortality[23][0]_1						0.3						1
+fishing_mortality[24][0]_1						0.3						1
+fishing_mortality[0][0]_1						0.3						1
 fishing_mortality[10][0]_1						0.3						1
 fishing_mortality[18][0]_1						0.3						1
-fishing_mortality[17][0]_1						0.3						1
-fishing_mortality[19][0]_1						0.3						1
-fishing_mortality[0][0]_1						0.3						1
-fishing_mortality[22][0]_1						0.3						1
-fishing_mortality[24][0]_1						0.3						1
-fishing_mortality[25][0]_1						0.3						1
-fishing_mortality[23][0]_1						0.3						1
-fishing_mortality[20][0]_1						0.3						1
-fishing_mortality[21][0]_1						0.3						1
 fishing_mortality[27][0]_1						0.3						1
-fishing_mortality[29][0]_1						0.3						1
-fishing_mortality[26][0]_1						0.3						1
-fishing_mortality[28][0]_1						0.3						1
+fishing_mortality[28][0]_1						0.3						
