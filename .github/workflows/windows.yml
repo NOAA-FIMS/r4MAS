@@ -6,38 +6,17 @@ on:
     branches:
       - master
 
-name: windows-test
+name: R-CMD-check
 
 jobs:
-  windows-test:
+  R-CMD-check:
     runs-on: windows-latest
-
     steps:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@master
-        with:
-          r-version: '4.0'
-
       - name: Install dependencies
         run: |
-          install.packages(c("processx", "remotes", "rcmdcheck", "devtools"), type="binary")
-          remotes::install_deps(dependencies = TRUE)
-          dotR <- file.path(Sys.getenv("HOME"), ".R")
-          if (!file.exists(dotR))
-            dir.create(dotR)
-          M <- file.path(dotR, "Makevars.win")
-          if (!file.exists(M))
-            file.create(M)
-          cat("\nCXX14FLAGS=-O3 -w",
-              "CXX14 = $(BINPREF)g++ -m$(WIN) -std=c++1y",
-              "CXX11FLAGS=-O3 -w",
-              file = M, sep = "\n", append = TRUE)
-        shell: Rscript {0}
-
-      - name: Install RMAS
-        run: |
+          install.packages("remotes")
           remotes::install_github("nmfs-fish-tools/RMAS")
           library(RMAS)
         shell: Rscript {0}
-
-      
