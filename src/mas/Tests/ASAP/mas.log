@@ -1,4 +1,4 @@
-MAS Run: Mon Mar  2 10:25:32 2020
+MAS Run: Fri Aug 28 13:05:04 2020
 
 Configuration Warning: Recruitment model "Beverton-Holt" does not define "rho". Model will use the default value of 0 and "rho" will not be estimated.
 Configuration Warning: Recruitment model "Beverton-Holt" does not define "sigma_r". Model will use the default value of 1 and "alpha" will not be estimated.
@@ -13,7 +13,12 @@ Configuration Warning: No "sigma" defined for selectivity model "5". Default is 
 Configuration Warning: No "sigma" defined for selectivity model "6". Default is set to 0.5.
 Configuration Warning: No "sigma" defined for selectivity model "7". Default is set to 0.5.
 Configuration Warning: Population has no Harvest Control Rule selected
+Data Warning: Data Object has no "missing_values" specified.
+Data Warning: Data Object has no "missing_values" specified.
+Data Warning: Data Object has no "missing_values" specified.
+Data Warning: Data Object has no "missing_values" specified.
 Data Warning: Data Object has no "name" specified.
+Data Warning: Data Object has no "missing_values" specified.
 Data Warning: Data Object has no "name" specified.
 survey_q_2						0.0001						1
 survey_q_1						0.0001						1
@@ -23,7 +28,6 @@ Estimated Parameters						Initial Value						Phase
 
 Recruitment:
 beverton_holt_log_R0_1						9.90349						1
-beverton_holt_h_1						0.7						2
 recruitment_deviations[0]_1						0						1
 recruitment_deviations[1]_1						0						1
 recruitment_deviations[2]_1						0						1
@@ -78,3 +82,23 @@ fishing_mortality[15][0]_1						0.3						1
 fishing_mortality[16][0]_1						0.3						1
 fishing_mortality[18][0]_1						0.3						1
 fishing_mortality[19][0]_1						0.3						1
+idevsf_1_a_1						0						1
+idevsf_1_a_1						0						1
+idevsf_1_a_1						0						1
+idevsf_1_a_1						0						1
+idevsf_1_a_1						0						1
+idevsf_1_a_1						0						1
+idevsf_1_a_1						0						1
+idevsf_1_a_1						0						1
+idevsf_1_a_1						0						1
+idevsf_1_a_1						0						1
+idevsm_1_a_1						0						1
+idevsm_1_a_1						0						1
+idevsm_1_a_1						0						1
+idevsm_1_a_1						0						1
+idevsm_1_a_1						0						1
+idevsm_1_a_1						0						1
+idevsm_1_a_1						0						1
+idevsm_1_a_1						0						1
+idevsm_1_a_1						0						1
+idevsm_1_a_1						0						1

@@ -1,6 +1,3 @@
-no need for recruitment_type natal, or meta in population definition 
-
 where to put fractional year value in the config file?
-
 spawning biomass uses Z, not a pre-horizon Z
-
+Should Z be the average or sum over all fleets?

@@ -21,6 +21,7 @@ namespace mas {
     struct MaximumSustainableYield {
         REAL_T spr_F0;
         REAL_T Fmax;
+        REAL_T msy;
         REAL_T F_msy;
         REAL_T spr_msy_out; // = spr[max_index];
         REAL_T spr_msy;

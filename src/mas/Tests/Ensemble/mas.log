@@ -68,8 +68,6 @@ double_logistic_selectivity_alpha_asc_5						3						1
 double_logistic_selectivity_beta_asc_5						0.25						2
 double_logistic_selectivity_alpha_desc_5						3						1
 double_logistic_selectivity_beta_desc_5						0.25						2
-logistic_selectivity_a50_1						3						2
-logistic_selectivity_s_1						1						2
 
 Movement:
 
@@ -94,9 +92,7 @@ fishing_mortality[15][0]_1						1						1
 fishing_mortality[16][0]_1						1						1
 fishing_mortality[18][0]_1						1						1
 fishing_mortality[19][0]_1						1						1
-_1						1						1
-fishing_mortality[10][0]_1						1						1
-fishing_mortality[11][0]_1						1						1
+ing_mortality[11][0]_1						1						1
 fishing_mortality[12][0]_1						1						1
 fishing_mortality[13][0]_1						1						1
 fishing_mortality[14][0]_1						1						1
@@ -134,11 +130,7 @@ recruitment_deviations[2]_1						0						1
 recruitment_deviations[3]_1						0						1
 recruitment_deviations[4]_1						0						1
 recruitment_deviations[5]_1						0						1
-recruitment_deviations[6]_1						0						1
-recruitment_deviations[7]_1						0						1
-recruitment_deviations[8]_1						0						1
-recruitment_deviations[9]_1						0						1
-recruitment_deviations[10]_1						0						1
+reecruitment_deviations[10]_1						0						1
 recruitment_deviations[11]_1						0						1
 recruitment_deviations[12]_1						0						1
 recruitment_deviations[13]_1						0						1
@@ -148,25 +140,12 @@ recruitment_deviations[16]_1						0						1
 recruitment_deviations[17]_1						0						1
 recruitment_deviations[18]_1						0						1
 recruitment_deviations[19]_1						0						1
-beverton_holt_log_R0_1						9.90349						1
-beverton_holt_h_1						0.7						2
 
 Growth:
 
 NLL Component:
 
 Selectivity:
-gaussian_selectivity_w[0]_7						0.01						1
-gaussian_selectivity_w[1]_7						0.01						1
-gaussian_selectivity_w[2]_7						0.02						1
-gaussian_selectivity_w[3]_7						0.4						1
-gaussian_selectivity_w[4]_7						0.9						1
-gaussian_selectivity_w[5]_7						1						1
-gaussian_selectivity_w[6]_7						1						1
-gaussian_selectivity_w[7]_7						1						1
-gaussian_selectivity_w[8]_7						1						1
-gaussian_selectivity_w[9]_7						1						1
-gaussian_epsilon_7						1						2
 inv_quad_epsilon_6						1						2
 inv_quad_selectivity_w[0]_6						0.01						1
 inv_quad_selectivity_w[1]_6						0.01						1
@@ -182,30 +161,45 @@ inv_quad_selectivity_w[9]_6						1						1
 Movement:
 
 Natural Mortality:
-fishing_mortality[0][0]_1						1						1
+fishing_mortality[7][0]_1						1						1
+fishing_mortality[9][0]_1						1						1
+fishing_mortality[5][0]_1						1						1
 fishing_mortality[1][0]_1						1						1
-fishing_mortality[4][0]_1						1						1
-fishing_mortality[14][0]_1						1						1
-fishing_mortality[17][0]_1						1						1
-fishing_mortality[13][0]_1						1						1
+fishing_mortality[3][0]_1						1						1
 fishing_mortality[2][0]_1						1						1
-fishing_mortality[15][0]_1						1						1
+fishing_mortality[4][0]_1						1						1
+fishing_mortality[0][0]_1						1						1
+fishing_mortality[16][0]_1						1						1
+fishing_mortality[8][0]_1						1						1
+fishing_mortality[10][0]_1						1						1
+fishing_mortality[11][0]_1						1						1
 fishing_mortality[12][0]_1						1						1
+fishing_mortality[13][0]_1						1						1
+fishing_mortality[19][0]_1						1						1
+fishing_mortality[18][0]_1						1						1
+fishing_mortality[17][0]_1						1						1
+fishing_mortality[14][0]_1						1						1
+fishing_mortality[15][0]_1						1						1
+fishing_mortality[6][0]_1						1						1
+ing_mortality[11][0]_1						1						1
+fishing_mortality[12][0]_1						1						1
+fishing_mortality[13][0]_1						1						1
+fishing_mortality[14][0]_1						1						1
+fishing_mortality[15][0]_1						1						1
 fishing_mortality[16][0]_1						1						1
 fishing_mortality[18][0]_1						1						1
-fishing_mortality[5][0]_1						1						1
-fishing_mortality[6][0]_1						1						1
 fishing_mortality[19][0]_1						1						1
-fishing_mortality[7][0]_1						1						1
-fishing_mortality[8][0]_1						1						1
+rtality[7][0]_1						1						1
+fishing_mortality[6][0]_1						1						1
+fishing_mortality[5][0]_1						1						1
+fishing_mortality[17][0]_1						1						1
 fishing_mortality[9][0]_1						1						1
-fishing_mortality[11][0]_1						1						1
+fishing_mortality[4][0]_1						1						1
 fishing_mortality[3][0]_1						1						1
-fishing_mortality[10][0]_1						1						1
-timated.
-Configuration Warning: Recruitment model "Beverton-Holt" does not define "sigma_r". Model will use the default value of 1 and "alpha" will not be estimated.
-Configuration Warning: Recruitment model "Beverton-Holt" does not define "sigma_r". Model will use the default value of 1 and "beta" will not be estimated.
-Configuration Warning: Recruitment model "Von Bertalannfy Modified" does not define "c". Model will use the default value of 0 and "c" will not be estimated.
+fishing_mortality[2][0]_1						1						1
+fishing_mortality[1][0]_1						1						1
+fishing_mortality[0][0]_1						1						1
+ration Warning: Recruitment model "Von Bertalannfy Modified" does not define "c". Model will use the default value of 0 and "c" will not be estimated.
 Configuration Warning: Growth model "Von Bertalannfy Modified" does not define "alpha_m". Model will use the default value of 0.000025 and "alpha_m" will not be estimated.
 Configuration Warning: Recruitment model "Von Bertalannfy Modified" does not define "l_inf". Model will use the default value of 0 and "l_inf" will not be estimated.
 Configuration Warning: No "sigma" defined for selectivity model "1". Default is set to 0.5.
@@ -215,7 +209,29 @@ Configuration Warning: No "sigma" defined for selectivity model "4". Default is 
 Configuration Warning: No "sigma" defined for selectivity model "5". Default is set to 0.5.
 Configuration Warning: No "sigma" defined for selectivity model "6". Default is set to 0.5.
 Configuration Warning: No "sigma" defined for selectivity model "7". Default is set to 0.5.
-Configu		1
+Configuration Warning: Population has no Harvest Control Rule selected
+Data Warning: Data Object has no "name" specified.
+Data Warning: Data Object has no "name" specified.
+Data Warning: Data Object has no "name" specified.
+survey_q_2						0.0001						1
+survey_q_1						0.0001						1
+
+
+Estimated Parameters						Initial Value						Phase
+
+Recruitment:
+recruitment_deviations[0]_1						0						1
+recruitment_deviations[1]_1						0						1
+recruitment_deviations[2]_1						0										1
+survey_q_1						0.0001						1
+
+
+Estimated Parameters						Initial Value						Phase
+
+Recruitment:
+recruitment_deviations[0]_1						0						1
+recruitment_deviations[1]_1						0						1
+recruitment_deviations[2]_1						0						1
 recruitment_deviations[3]_1						0						1
 recruitment_deviations[4]_1						0						1
 recruitment_deviations[5]_1						0						1
@@ -241,53 +257,49 @@ Growth:
 NLL Component:
 
 Selectivity:
-gaussian_epsilon_7						1						2
-gaussian_selectivity_w[0]_7						0.01						1
-gaussian_selectivity_w[1]_7						0.01						1
-gaussian_selectivity_w[2]_7						0.02						1
-gaussian_selectivity_w[3]_7						0.4						1
-gaussian_selectivity_w[4]_7						0.9						1
-gaussian_selectivity_w[5]_7						1						1
-gaussian_selectivity_w[6]_7						1						1
-gaussian_selectivity_w[7]_7						1						1
-gaussian_selectivity_w[8]_7						1						1
-gaussian_selectivity_w[9]_7						1						1
+inv_quad_epsilon_6						1						2
+inv_quad_selectivity_w[0]_6						0.01						1
+inv_quad_selectivity_w[1]_6						0.01						1
+inv_quad_selectivity_w[2]_6						0.02						1
+inv_quad_selectivity_w[3]_6						0.4						1
+inv_quad_selectivity_w[4]_6						0.9						1
+inv_quad_selectivity_w[5]_6						1						1
+inv_quad_selectivity_w[6]_6						1						1
+inv_quad_selectivity_w[7]_6						1						1
+inv_quad_selectivity_w[8]_6						1						1
+inv_quad_selectivity_w[9]_6						1						1
+double_logistic_selectivity_alpha_asc_5						3						1
+double_logistic_selectivity_beta_asc_5						0.25						2
+double_logistic_selectivity_alpha_desc_5						3						1
+double_logistic_selectivity_beta_desc_5						0.25						2
 
 Movement:
 
 Natural Mortality:
-fishing_mortality[5][0]_1						1						1
-fishing_mortality[3][0]_1						1						1
-fishing_mortality[2][0]_1						1						1
-fishing_mortality[4][0]_1						1						1
 fishing_mortality[11][0]_1						1						1
-fishing_mortality[12][0]_1						1						1
+fishing_mortality[3][0]_1						1						1
+fishing_mortality[0][0]_1						1						1
+fishing_mortality[1][0]_1						1						1
 fishing_mortality[13][0]_1						1						1
+fishing_mortality[2][0]_1						1						1
+fishing_mortality[17][0]_1						1						1
 fishing_mortality[14][0]_1						1						1
+fishing_mortality[18][0]_1						1						1
+fishing_mortality[5][0]_1						1						1
+fishing_mortality[7][0]_1						1						1
+fishing_mortality[12][0]_1						1						1
+fishing_mortality[19][0]_1						1						1
+fishing_mortality[10][0]_1						1						1
+fishing_mortality[8][0]_1						1						1
+fishing_mortality[4][0]_1						1						1
+fishing_mortality[9][0]_1						1						1
+fishing_mortality[6][0]_1						1						1
 fishing_mortality[16][0]_1						1						1
 fishing_mortality[15][0]_1						1						1
-fishing_mortality[17][0]_1						1						1
+
 fishing_mortality[18][0]_1						1						1
-fishing_mortality[19][0]_1						1						1
-fishing_mortality[6][0]_1						1						1
-fishing_mortality[9][0]_1						1						1
-fishing_mortality[8][0]_1						1						1
-fishing_mortality[0][0]_1						1						1
-fishing_mortality[1][0]_1						1						1
 fishing_mortality[10][0]_1						1						1
-fishing_mortality[7][0]_1						1						1
-][0]_1						1						1
-fishing_mortality[10][0]_1						1						1
-fishing_mortality[16][0]_1						1						1
 fishing_mortality[13][0]_1						1						1
-fishing_mortality[14][0]_1						1						1
-fishing_mortality[19][0]_1						1						1
-fishing_mortality[17][0]_1						1						1
-fishing_mortality[5][0]_1						1						1
-			1
-hing_mortality[14][0]_1						1						1
-fishing_mortality[16][0]_1						1						1
+fishing_mortality[4][0]_1						1						1
 fishing_mortality[6][0]_1						1						1
 fishing_mortality[9][0]_1						1						1
-fishing_mortality[1][0]_1						1						1
-fishing_mortality[0][0]_1						1						1

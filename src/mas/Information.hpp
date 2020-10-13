@@ -32,6 +32,7 @@
 
 #ifndef MAS_INFORMATION_HPP
 #define MAS_INFORMATION_HPP
+
 #include "Common.hpp"
 #include "Area.hpp"
 #include "Population.hpp"
@@ -104,9 +105,9 @@ namespace mas {
         std::unordered_map<int, std::shared_ptr<mas::Population<REAL_T> > > populations;
         std::unordered_map<int, std::shared_ptr<mas::FishingMortality<REAL_T> > > fishing_mortality_models;
         std::unordered_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > > selectivity_models;
+        
         std::unordered_map<int, std::shared_ptr<mas::Fleet<REAL_T> > > fleets;
 
-        // NOTE:  why isn't survey_models similar to fleets?
         std::unordered_map<int, std::shared_ptr<mas::Survey<REAL_T> > > survey_models;
 
         // per population
@@ -389,7 +390,7 @@ namespace mas {
                     lambda_data->kmax = (*lit).value.GetInt();
                 }
 
-                lit = (*rit).value.FindMember("values");
+                lit = (*rit).value.FindMember("value");
                 if (lit != (*rit).value.MemberEnd()) {
                     if ((*lit).value.IsArray()) {
                         rapidjson::Value& v = (*lit).value;
@@ -622,15 +623,7 @@ namespace mas {
                 model->CV = (*rit).value.GetDouble();
             }
 
-            //            rit = (*survey_model).value.FindMember("population");
-            //            if (rit == (*survey_model).value.MemberEnd()) {
-            //                std::cout << "Configuration Error: Survey is required to have a population identifier\n";
-            //                mas::mas_log << "Configuration Error: Survey is required to have a population identifier\n";
-            //                this->valid_configuration = false;
-            //            } else {
-            //                model->population = (*rit).value.GetInt();
-            //            }
-
+          
             rit = (*survey_model).value.FindMember("selectivity");
 
             if (rit != (*survey_model).value.MemberEnd()) {
@@ -902,7 +895,7 @@ namespace mas {
                     phase = (*vit).value.GetInt();
                 }
 
-                vit = (*pit).value.FindMember("values");
+                vit = (*pit).value.FindMember("value");
 
                 if (vit == (*pit).value.MemberEnd()) {
                     std::cout << "Configuration Error: Fishing Mortality model supplied no values\n";
@@ -1001,7 +994,7 @@ namespace mas {
             model->id = model_id;
 
             rapidjson::Document::MemberIterator pit = (*mortality_model).value.FindMember("parameters");
-            rapidjson::Document::MemberIterator mvit = (*pit).value.FindMember("values");
+            rapidjson::Document::MemberIterator mvit = (*pit).value.FindMember("value");
             if ((*mvit).value.IsArray()) {
                 //                        model->male_mortality.resize((*mvit).value.Size());
                 rapidjson::Value& v = (*mvit).value;
@@ -1618,7 +1611,7 @@ namespace mas {
                             area = (*mit).value.GetInt();
                         }
 
-                        mit = v.FindMember("values");
+                        mit = v.FindMember("value");
                         if (mit == v.MemberEnd()) {
                             std::cout << "Configuration Error: Population maturity models must define a value vector.\n";
                             mas::mas_log << "Configuration Error: Population maturity models must define a value vector.\n";
@@ -1806,7 +1799,7 @@ namespace mas {
                                 }
                                 std::vector<variable>& init_deviations = model->initial_deviations_males[area].second;
                                 model->initial_deviations_males[area].first = estimated;
-                                nit = entry.FindMember("values");
+                                nit = entry.FindMember("value");
 
                                 if (nit != entry.MemberEnd()) {
                                     rapidjson::Value& values = (*nit).value;
@@ -1853,7 +1846,7 @@ namespace mas {
                                 }
                                 std::vector<variable>& init_deviations = model->initial_deviations_females[area].second;
                                 model->initial_deviations_females[area].first = estimated;
-                                nit = entry.FindMember("values");
+                                nit = entry.FindMember("value");
 
                                 if (nit != entry.MemberEnd()) {
                                     rapidjson::Value& values = (*nit).value;
@@ -1898,7 +1891,7 @@ namespace mas {
                                 model->initial_deviations_males[area].first = estimated;
                                 std::vector<variable>& init_deviationsf = model->initial_deviations_females[area].second;
                                 model->initial_deviations_females[area].first = estimated;
-                                nit = entry.FindMember("values");
+                                nit = entry.FindMember("value");
 
                                 if (nit != entry.MemberEnd()) {
                                     rapidjson::Value& values = (*nit).value;
@@ -2762,7 +2755,7 @@ namespace mas {
                     bool estimated = false;
                     int phase = 1;
                     //1. Get initial value if there is one.
-                    rapidjson::Document::MemberIterator pm = (*ppit).value.FindMember("values");
+                    rapidjson::Document::MemberIterator pm = (*ppit).value.FindMember("value");
 
                     if (pm == (*ppit).value.MemberEnd()) {
                         std::cout << "Configuration Warning: Selectivity model \"Gaussian RBF\" does not provide a initial values for vector \"w\".\n";
@@ -2988,7 +2981,7 @@ namespace mas {
                     bool estimated = false;
                     int phase = 1;
                     //1. Get initial value if there is one.
-                    rapidjson::Document::MemberIterator pm = (*ppit).value.FindMember("values");
+                    rapidjson::Document::MemberIterator pm = (*ppit).value.FindMember("value");
 
                     if (pm == (*ppit).value.MemberEnd()) {
                         std::cout << "Configuration Warning: Selectivity model \"Inverse Quadratic  RBF\" does not provide a initial values for vector \"w\".\n";
@@ -3091,7 +3084,7 @@ namespace mas {
                     bool estimated = false;
                     int phase = 1;
                     //1. Get initial value if there is one.
-                    rapidjson::Document::MemberIterator pm = (*ppit).value.FindMember("values");
+                    rapidjson::Document::MemberIterator pm = (*ppit).value.FindMember("value");
 
                     if (pm == (*ppit).value.MemberEnd()) {
                         std::cout << "Configuration Warning: Selectivity model \"Age Based\" does not provide a initial values for vector \"s\".\n";
@@ -6149,7 +6142,7 @@ namespace mas {
 
 
 
-                            t_it = v[ii].FindMember("values");
+                            t_it = v[ii].FindMember("value");
 
                             if ((*t_it).value.IsArray()) {
                                 rapidjson::Value& v = (*t_it).value;
@@ -8110,7 +8103,7 @@ namespace mas {
                     mas_log << "Configuration Error: Recruitment model \"" << model_id << "\" has no deviation definition.\n";
                     this->valid_configuration = false;
                 } else {
-                    rapidjson::Document::MemberIterator vit = (*rdevs_it).value.FindMember("values");
+                    rapidjson::Document::MemberIterator vit = (*rdevs_it).value.FindMember("value");
 
                     if (!(*vit).value.IsArray()) {
                         std::cout << "Configuration Error: Recruitment model \"" << model_id << "\" deviations must be a vector.\n";
@@ -8419,7 +8412,7 @@ namespace mas {
                     //                    data_object->data.resize(years * seasons*ages, data_object->missing_value);
 
                     int counter = 0;
-                    mit = (*dit).value.FindMember("values");
+                    mit = (*dit).value.FindMember("value");
                     if (mit != (*dit).value.MemberEnd()) {
                         if ((*mit).value.IsArray()) {
                             int i, j, k;

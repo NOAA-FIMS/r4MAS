@@ -417,7 +417,6 @@ namespace mas {
                 this->nll_component_values[nllc] = static_cast<REAL_T> (0.0);
                 this->nll_components[nllc].Evaluate(this->nll_component_values[nllc]);
                 this->nll += this->nll_component_values[nllc];
-                //                std::cout<<this->nll_component_values[nllc].GetName()<<" = "<<this->nll_component_values[nllc].GetValue()<<"\n";
             }
         }
 
@@ -461,7 +460,6 @@ namespace mas {
         inline void EvaluateAgeCompComponent(int year, int season) {
             REAL_T o = .001;
 #warning hardcoded fishery age comp sample size
-            // REAL_T temp_sample_size = this->catch_proportion_at_age_data_N->get(year, season);
             REAL_T temp_sample_size = static_cast<REAL_T> (25.0);
             if (temp_sample_size != this->catch_proportion_at_age_data->missing_value) {
                 for (int a = 0; a <this->ages; a++) {

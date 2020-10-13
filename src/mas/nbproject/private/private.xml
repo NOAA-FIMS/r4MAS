@@ -9,51 +9,33 @@
             <url>Information.hpp</url>
             <bookmark id="1">
                 <name/>
-                <line>8087</line>
+                <line>8090</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/Growth.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/third_party/ATL/lib/Multiply.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/third_party/ATL/lib/Cosh.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/Fleet.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/third_party/ATL/lib/support/cs_sparse.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/main.cpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/Survey.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/third_party/ATL/lib/Utilities/flat_set.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/third_party/ATL/lib/DynamicExpression.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/third_party/ATL/lib/Variable.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/Population.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/third_party/ATL/lib/ThreadPool.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/ObjectiveFunction.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/Common.hpp</file>
+            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Makefile</file>
+            <file>file:/Users/mattadmin/NetBeansProjects/MAS/main.cpp</file>
+            <file>file:/Users/mattadmin/NetBeansProjects/MAS/EnsembleEngine.hpp</file>
+            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Selectivity.hpp</file>
+            <file>file:/Users/mattadmin/NetBeansProjects/MAS/MAS.hpp</file>
+            <file>file:/Users/mattadmin/NetBeansProjects/MAS/NLLComponents.hpp</file>
+            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Survey.hpp</file>
+            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Information.hpp</file>
+            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Mortality.hpp</file>
+            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Area.hpp</file>
+            <file>file:/Users/mattadmin/NetBeansProjects/MAS/ObjectiveFunction.hpp</file>
+            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Growth.hpp</file>
+            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Movement.hpp</file>
+            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Fleet.hpp</file>
+            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Output.hpp</file>
+            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Options.hpp</file>
+            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Common.hpp</file>
+            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Recruitment.hpp</file>
             <file>file:/Users/mattadmin/NetBeansProjects/mas/third_party/rapidjson/allocators.h</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/Recruitment.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/third_party/ATL/lib/Divide.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/third_party/ATL/lib/Optimization.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/third_party/ATL/lib/Exp.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/third_party/ATL/lib/Utilities/flat_map.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/Movement.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/NLLComponents.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/Options.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/Output.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/third_party/ATL/lib/Tape.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/Area.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/third_party/ATL/lib/Expression.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/third_party/ATL/lib/third_party/hat-trie-master/include/tsl/htrie_set.h</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/Selectivity.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/Makefile</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/third_party/ATL/lib/Tan.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/third_party/ATL/lib/Pow.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/third_party/ATL/lib/VariableInfo.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/Information.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/third_party/ATL/lib/Makefile</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/third_party/ATL/lib/Add.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/MAS.hpp</file>
+            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Population.hpp</file>
         </group>
     </open-files>
 </project-private>

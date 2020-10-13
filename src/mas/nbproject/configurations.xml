@@ -754,7 +754,10 @@
         </logicalFolder>
         <logicalFolder name="third_party" displayName="third_party" projectFiles="true">
           <itemPath>third_party/ATL/lib/third_party/HashContainers.hpp</itemPath>
+          <itemPath>third_party/ATL/lib/third_party/flat_hash_map/bytell_hash_map.hpp</itemPath>
+          <itemPath>third_party/ATL/lib/third_party/flat_hash_map/flat_hash_map.hpp</itemPath>
           <itemPath>third_party/ATL/lib/third_party/get_numericalsolvers.sh</itemPath>
+          <itemPath>third_party/ATL/lib/third_party/flat_hash_map/unordered_map.hpp</itemPath>
         </logicalFolder>
         <logicalFolder name="Utilities" displayName="Utilities" projectFiles="true">
           <logicalFolder name="IO" displayName="IO" projectFiles="true">
@@ -975,6 +978,7 @@
     <itemPath>HarvestControlRule.hpp</itemPath>
     <itemPath>Information.hpp</itemPath>
     <itemPath>MAS.hpp</itemPath>
+    <itemPath>docs/MAS_SDD.pdf</itemPath>
     <itemPath>Makefile</itemPath>
     <itemPath>MakefileEnesemble</itemPath>
     <itemPath>Mortality.hpp</itemPath>
@@ -989,6 +993,7 @@
     <itemPath>poc/empirical_growth.json</itemPath>
     <itemPath>Tests/HakeCaseStudy/empirical_growth_model.json</itemPath>
     <itemPath>mas_cas31.json</itemPath>
+    <itemPath>notes.txt</itemPath>
     <itemPath>Tests/HakeCaseStudy/scratch</itemPath>
   </logicalFolder>
   <sourceRootList>
@@ -1323,6 +1328,8 @@
       </item>
       <item path="Tests/NLL/results.txt" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="docs/MAS_SDD.pdf" ex="false" tool="3" flavor2="0">
+      </item>
       <folder path="TestFiles">
         <linkerTool>
           <linkerDynSerch>
@@ -1337,6 +1344,8 @@
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="mas_cas31.json" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="notes.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="poc/empirical_growth.json" ex="false" tool="3" flavor2="0">
       </item>
@@ -5242,6 +5251,21 @@
             flavor2="0">
       </item>
       <item path="third_party/ATL/lib/third_party/SparseCholesky.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="third_party/ATL/lib/third_party/flat_hash_map/bytell_hash_map.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="third_party/ATL/lib/third_party/flat_hash_map/flat_hash_map.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="third_party/ATL/lib/third_party/flat_hash_map/unordered_map.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -5588,6 +5612,8 @@
       </item>
       <item path="Tests/NLL/results.txt" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="docs/MAS_SDD.pdf" ex="false" tool="3" flavor2="0">
+      </item>
       <folder path="TestFiles">
         <linkerTool>
           <linkerDynSerch>
@@ -5602,6 +5628,8 @@
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="mas_cas31.json" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="notes.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="poc/empirical_growth.json" ex="false" tool="3" flavor2="0">
       </item>
@@ -9507,6 +9535,21 @@
             flavor2="0">
       </item>
       <item path="third_party/ATL/lib/third_party/SparseCholesky.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="third_party/ATL/lib/third_party/flat_hash_map/bytell_hash_map.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="third_party/ATL/lib/third_party/flat_hash_map/flat_hash_map.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="third_party/ATL/lib/third_party/flat_hash_map/unordered_map.hpp"
             ex="false"
             tool="3"
             flavor2="0">

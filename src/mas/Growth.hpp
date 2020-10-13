@@ -954,11 +954,7 @@ namespace mas {
                 const int& id,
                 const EMPIRICAL_DATA_TYPE& ew_type) {
 
-            //            if (ew_type <= MEAN_WEIGHT_AT_AGE_SEASON_START) {
-            //                return this->weight_at_age_data[ew_type][sex].empirical_data_at_age->(year, season, (int) age);
-            //            } else {
-            //                return this->weight_at_age_data[ew_type][sex].empirical_data_at_age->(year, 0, (int) age);
-            //            }
+           
         }
     };
 

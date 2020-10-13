@@ -2093,6 +2093,7 @@ namespace atl {
             //            atl::Variable<T> fx;
 
             for (ls = 0; ls < this->max_line_searches; ++ls) {
+             
 
                 if (((this->outer_iteration + ls) % this->print_interval) == 0) {
                     this->Print();
@@ -2282,7 +2283,7 @@ namespace atl {
                             this->parameters_m[j]->GetInternalValue()) * this->gradient[j];
                 }
 
-                if ((i % this->print_interval) == 0 || i == 0) {
+                if ((i % this->print_interval) == 0 ) {
                     std::cout << "Iteration " << i << "\n";
                     std::cout << "Phase = " << this->phase_m << "\n";
 
