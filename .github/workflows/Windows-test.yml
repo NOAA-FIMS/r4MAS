@@ -1,12 +1,12 @@
-on: [workflow_dispatch]
-#  push:
-#    branches:
-#      - master
-#  pull_request:
-#    branches:
-#      - master
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
-name: windows-test
+name: Windows-test
 
 jobs:
   windows-test:
@@ -34,7 +34,7 @@ jobs:
               file = M, sep = "\n", append = TRUE)
         shell: Rscript {0}
 
-      - name: Install RMAS
+      - name: Install and run RMAS
         run: |
           remotes::install_github("nmfs-fish-tools/RMAS")
           library(RMAS)
