@@ -5076,6 +5076,7 @@ public:
 
         mas->mas_instance.info.nyears = this->nyears;
         mas->mas_instance.info.nseasons = this->nseasons;
+        std::cout<<"integer check: "<< mas->mas_instance.info.nyears<<"  "<<mas->mas_instance.info.nseasons<<"\n";
         mas->mas_instance.info.spawning_season_offset = this->spawning_season_offset;
         mas->mas_instance.info.survey_fraction_of_year = this->survey_season_offset;
         mas->mas_instance.info.catch_fraction_of_year = this->catch_season_offset;
@@ -5554,5 +5555,5 @@ RCPP_MODULE(rmas) {
 }
 
 
-#endif /* R4MAS_HPP */ 
+#endif /* R4MAS_HPP */
 
