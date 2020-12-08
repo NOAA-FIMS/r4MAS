@@ -5554,5 +5554,5 @@ RCPP_MODULE(rmas) {
 }
 
 
-#endif /* R4MAS_HPP */
+#endif /* R4MAS_HPP */ 
 
