@@ -3361,7 +3361,7 @@ public:
          * Recruitment
          */
         for (int i = 0; i < this->recruitment.size(); i++) {
-            pop->recruitment_ids[recruitment[i].second] = this->recruitment[i].first;
+            pop->recruitment_ids[recruitment[i].third] = this->recruitment[i].first;
         }
 
 
