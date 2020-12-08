@@ -4303,8 +4303,8 @@ public:
 
             for (int i = 0; i < this->fishing_nortality.size(); i++) {
                 int sseason = this->fishing_nortality[i].second;
-                int sid = this->selectivity[i].first;
-                int sarea = this->selectivity[i].third;
+                int sid = this->fishing_nortality[i].first;
+                int sarea = this->fishing_nortality[i].third;
                 f->season_area_fishing_mortality_ids[sseason][sarea] = sid;
                 f->area_season_fishing_mortality_ids[sarea][sseason] = sid;
             }
