@@ -3382,11 +3382,11 @@ public:
          */
 
         for (int i = 0; i < this->natural_mortality_males.size(); i++) {
-            pop->male_natural_mortality_ids[recruitment[i].second] = this->natural_mortality_males[i].first;
+            pop->male_natural_mortality_ids[this->natural_mortality_males[i].second] = this->natural_mortality_males[i].first;
         }
         for (int i = 0; i < this->natural_mortality_females.size(); i++) {
 
-            pop->female_natural_mortality_ids[recruitment[i].second] = this->natural_mortality_females[i].first;
+            pop->female_natural_mortality_ids[this->natural_mortality_females[i].second] = this->natural_mortality_females[i].first;
         }
 
         info.populations[this->id] = population;
