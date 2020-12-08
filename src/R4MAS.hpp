@@ -681,7 +681,9 @@ public:
         m->fishing_mortality_type = mas::ESTIMATED;
         fm->id = this->id;
         if (this->values.size() != info.nyears * info.nseasons) {
-            std::cout << "MAS Error: FishingMortality vector not equal to (nyears*nseasons)\n";
+            std::cout << "MAS Error: FishingMortality vector not equal to (nyears*nseasons)...";
+            std::cout<<this->values.size() <<"!="<< (info.nyears * info.nseasons)<<"\n";
+        
             info.valid_configuration = false;
             return;
         }
