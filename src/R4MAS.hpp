@@ -5088,7 +5088,7 @@ public:
         mas::GrowthBase<double>::ages_to_intrpolate.clear();
         for (int i = 0; i < nages; i++) {
             mas->mas_instance.info.ages[i] = variable(this->ages[i]);
-
+            std::cout<<mas->mas_instance.info.ages[i] <<"  ";
             mas->mas_instance.info.ages_real[i] = (this->ages[i]);
             mas::GrowthBase<double>::ages.push_back(this->ages[i]);
             mas::GrowthBase<double>::ages_to_intrpolate.insert(this->ages[i]);
@@ -5098,6 +5098,7 @@ public:
 
         }
 
+        std::cout<<"\n\n";
         for (int i = 0; i < NLLBase::nll_submodels.size(); i++) {
             NLLBase::nll_submodels[i]->AddToMAS(mas->mas_instance.info);
         }
