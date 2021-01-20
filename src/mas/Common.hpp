@@ -24,6 +24,9 @@
 #include <map>
 #include <utility>
 #include <tuple>
+#include <chrono>
+#include <random>
+#include <cmath>
 
 namespace mas {
 
@@ -50,8 +53,8 @@ namespace mas {
         static void SetValue(variable& var, const REAL_T& value) {
             var.SetValue(value);
         }
-        
-        static REAL_T Value(const variable& var){
+
+        static REAL_T Value(const variable& var) {
             return var.GetValue();
         }
 
@@ -688,6 +691,59 @@ namespace mas {
         T result;
         return (ss >> result) ? result : 0;
     }
+
+
+    unsigned seed_g = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator_g(seed_g);
+
+    int rbinomial(double p, unsigned int n) {
+
+
+        std::binomial_distribution<int> distribution(n, p);
+
+        int ret = distribution(generator_g);
+        return ret;
+
+    }
+
+    std::vector<int> rmultinom(int size, const std::vector<double>& prob) {
+        // meaning of n, size, prob as in ?rmultinom
+        // opposite of sample() - n=number of draws
+        double pp;
+        int ii;
+        int probsize = prob.size();
+        // Return object
+        std::vector<int> draws(probsize);
+        if (size < 0) throw std::range_error("Invalid size");
+        long double p_tot = 0.;
+        p_tot = std::accumulate(prob.begin(), prob.end(), p_tot);
+        if (std::fabs((double) (p_tot - 1.)) > 1e-7) {
+            throw std::range_error("Probabilities don't sum to 1.");
+        }
+
+        // do as rbinom
+        if (size == 0) {
+            return draws;
+        }
+        //rmultinom(size, REAL(prob), k, &INTEGER(ans)[ik]);
+        // for each slot
+        for (ii = 0; ii < probsize - 1; ii++) { /* (p_tot, n) are for "remaining binomial" */
+            if (prob[ii]) {
+                pp = prob[ii] / p_tot;
+                // >= 1; > 1 happens because of rounding 
+                draws[ii] = ((pp < 1.) ? (int) mas::rbinomial(pp, size) : size);
+                size -= draws[ii];
+            } // else { ret[ii] = 0; }
+            // all done
+            if (size <= 0) return draws;
+            // i.e. p_tot = sum(prob[(k+1):K]) 
+            p_tot -= prob[ii];
+        }
+        // the rest go here
+        draws[probsize - 1] = size;
+        return draws;
+    }
+
 
 }
 

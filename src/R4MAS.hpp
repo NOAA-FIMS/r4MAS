@@ -196,11 +196,12 @@ SexType GetSexType(std::string sex) {
 class SelectivityBase : public MASSubModel {
 protected:
 
-   
+
     static int id_g;
-    
+
 public:
-     virtual ~SelectivityBase() {
+
+    virtual ~SelectivityBase() {
     }
 };
 
@@ -682,8 +683,8 @@ public:
         fm->id = this->id;
         if (this->values.size() != info.nyears * info.nseasons) {
             std::cout << "MAS Error: FishingMortality vector not equal to (nyears*nseasons)...";
-            std::cout<<this->values.size() <<"!="<< (info.nyears * info.nseasons)<<"\n";
-        
+            std::cout << this->values.size() << "!=" << (info.nyears * info.nseasons) << "\n";
+
             info.valid_configuration = false;
             return;
         }
@@ -5018,13 +5019,10 @@ public:
     double extended_plus_group = 0;
     Rcpp::NumericVector ages;
 
-    
-    
-    virtual ~MASModel(){
-        
+    virtual ~MASModel() {
+
     }
-    
-    
+
     int GetNAges() const {
 
         return nages;
@@ -5076,7 +5074,7 @@ public:
 
         mas->mas_instance.info.nyears = this->nyears;
         mas->mas_instance.info.nseasons = this->nseasons;
-        std::cout<<"integer check: "<< mas->mas_instance.info.nyears<<"  "<<mas->mas_instance.info.nseasons<<"\n";
+        std::cout << "integer check: " << mas->mas_instance.info.nyears << "  " << mas->mas_instance.info.nseasons << "\n";
         mas->mas_instance.info.spawning_season_offset = this->spawning_season_offset;
         mas->mas_instance.info.survey_fraction_of_year = this->survey_season_offset;
         mas->mas_instance.info.catch_fraction_of_year = this->catch_season_offset;
@@ -5088,7 +5086,7 @@ public:
         mas::GrowthBase<double>::ages_to_intrpolate.clear();
         for (int i = 0; i < nages; i++) {
             mas->mas_instance.info.ages[i] = variable(this->ages[i]);
-            std::cout<<mas->mas_instance.info.ages[i] <<"  ";
+            std::cout << mas->mas_instance.info.ages[i] << "  ";
             mas->mas_instance.info.ages_real[i] = (this->ages[i]);
             mas::GrowthBase<double>::ages.push_back(this->ages[i]);
             mas::GrowthBase<double>::ages_to_intrpolate.insert(this->ages[i]);
@@ -5098,7 +5096,7 @@ public:
 
         }
 
-        std::cout<<"\n\n";
+        std::cout << "\n\n";
         for (int i = 0; i < NLLBase::nll_submodels.size(); i++) {
             NLLBase::nll_submodels[i]->AddToMAS(mas->mas_instance.info);
         }
@@ -5129,6 +5127,66 @@ public:
             std::cout << "MAS Error: Invalid Model Configuration, see mas.log\n";
         }
 
+
+    }
+
+    void RunOM() {
+
+        mas = std::make_shared<mas::MASObjectiveFunction<double > >();
+        if (this->nages == 0) {
+            std::cout << "MAS error: nages = 0\n";
+            return;
+        }
+        if (this->nyears == 0) {
+            std::cout << "MAS error: nyears = 0\n";
+            return;
+        }
+
+        if (this->extended_plus_group == 0) {
+            std::cout << "MAS error: extended_plus_group = 0\n";
+            return;
+        } else {
+            mas::Subpopulation<double>::length_weight_key_carryout = this->extended_plus_group;
+        }
+
+        mas->mas_instance.info.nyears = this->nyears;
+        mas->mas_instance.info.nseasons = this->nseasons;
+        std::cout << "integer check: " << mas->mas_instance.info.nyears << "  " << mas->mas_instance.info.nseasons << "\n";
+        mas->mas_instance.info.spawning_season_offset = this->spawning_season_offset;
+        mas->mas_instance.info.survey_fraction_of_year = this->survey_season_offset;
+        mas->mas_instance.info.catch_fraction_of_year = this->catch_season_offset;
+
+        typedef typename mas::VariableTrait<double>::variable variable;
+        mas->mas_instance.info.ages.resize(this->nages);
+        mas->mas_instance.info.ages_real.resize(this->nages);
+        mas::GrowthBase<double>::ages.clear();
+        mas::GrowthBase<double>::ages_to_intrpolate.clear();
+        for (int i = 0; i < nages; i++) {
+            mas->mas_instance.info.ages[i] = variable(this->ages[i]);
+
+            mas->mas_instance.info.ages_real[i] = (this->ages[i]);
+            mas::GrowthBase<double>::ages.push_back(this->ages[i]);
+            mas::GrowthBase<double>::ages_to_intrpolate.insert(this->ages[i]);
+            mas::GrowthBase<double>::ages_to_intrpolate.insert(this->ages[i] + this->catch_season_offset);
+            mas::GrowthBase<double>::ages_to_intrpolate.insert(this->ages[i] + this->survey_season_offset);
+            mas::GrowthBase<double>::ages_to_intrpolate.insert(this->ages[i] + this->spawning_season_offset);
+
+        }
+
+        for (int i = 0; i < NLLBase::nll_submodels.size(); i++) {
+            NLLBase::nll_submodels[i]->AddToMAS(mas->mas_instance.info);
+        }
+
+        for (int i = 0; i < MASSubModel::submodels.size(); i++) {
+            MASSubModel::submodels[i]->AddToMAS(mas->mas_instance.info);
+        }
+
+
+
+        mas->mas_instance.info.CreateModel();
+        mas->Initialize();
+
+        mas->RunOperatingModel();
 
     }
 
@@ -5549,6 +5607,7 @@ RCPP_MODULE(rmas) {
             .method("AddSurvey", &MASModel::AddSurvey)
             .method("AddPopulation", &MASModel::AddPopulation)
             .method("Run", &MASModel::Run)
+            .method("RunOperatingModel", &MASModel::RunOM)
             .method("GetOutput", &MASModel::GetOuptput)
             .method("GetJSONConfig", &MASModel::GetJSONConfig)
             .method("GetJSONData", &MASModel::GetJSONData)
@@ -5558,3 +5617,4 @@ RCPP_MODULE(rmas) {
 
 #endif /* R4MAS_HPP */
 
+sigma

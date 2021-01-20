@@ -34,7 +34,7 @@
 #define MAS_FLEET_HPP
 
 #include <unordered_set>
-
+#include <random>
 #include "Common.hpp"
 #include "Selectivity.hpp"
 #include "Area.hpp"
@@ -159,6 +159,7 @@ namespace mas {
         variable fishery_age_comp_component;
         variable nll;
         REAL_T CV = .05;
+        REAL_T sample_size = 200; //for operating model runs
         REAL_T catch_biomass_chi_squared;
         REAL_T fishery_age_comp_chi_squared;
         REAL_T catch_fraction_of_year = 0.5;
@@ -420,6 +421,81 @@ namespace mas {
             }
         }
 
+        void ApplyOperatingModelError() {
+            this->catch_biomass_data =
+                    std::make_shared<mas::DataObject<REAL_T> >();
+            this->catch_biomass_data->sex_type = mas::UNDIFFERENTIATED;
+            this->catch_biomass_data->id = this->id;
+            this->catch_biomass_data->dimensions = 2;
+            this->catch_biomass_data->imax = this->years;
+            this->catch_biomass_data->jmax - this->seasons;
+            this->catch_biomass_data->data.resize(this->years*this->seasons);
+            this->catch_biomass_data->observation_error.resize(this->years*this->seasons);
+
+            this->catch_proportion_at_age_data =
+                    std::make_shared<mas::DataObject<REAL_T> >();
+            this->catch_proportion_at_age_data->sex_type = mas::UNDIFFERENTIATED;
+            this->catch_proportion_at_age_data->id = this->id;
+            this->catch_proportion_at_age_data->dimensions = 3;
+            this->catch_proportion_at_age_data->imax = this->years;
+            this->catch_proportion_at_age_data->jmax = this->seasons;
+            this->catch_proportion_at_age_data->kmax = this->ages;
+            this->catch_proportion_at_age_data->data.resize(this->years*this->seasons*this->ages);
+            this->catch_proportion_at_age_data->sample_size.resize(this->years*this->seasons);
+            
+            
+            REAL_T sd = std::sqrt(1 + std::pow(this->CV, 2.0));
+
+            std::default_random_engine generator;
+            std::normal_distribution<double> distribution(0.0, sd);
+            //fill in observed data 
+            for (int y = 0; y < this->years; y++) {
+                for (int s = 0; s < this->seasons; s++) {
+                    
+                    this->catch_biomass_data->get(y, s) =
+                            this->catch_biomass_total[y * this->seasons + s].GetValue();
+
+                    this->catch_biomass_data->get_error(y, s) =
+                            this->catch_biomass_data->get(y, s) *
+                            std::exp(distribution(generator));
+
+                    REAL_T total_c = 0.0;
+                    std::vector<REAL_T> probs(this->ages);
+
+                    for (int a = 0; a < this->ages; a++) {
+                       size_t index = y * this->seasons * this->ages + (s * this->ages) + a;
+                        total_c += catch_at_age[index].GetValue();
+                        //                        this->catch_proportion_at_age_data->get(y, s, a) =
+                        //                                this->catch_proportion_at_age[y * this->seasons * this->ages +
+                        //                                s * this->ages + a];
+                    }
+
+                    for (int a = 0; a < this->ages; a++) {
+                        size_t index = y * this->seasons * this->ages + (s * this->ages) + a;
+                        probs[a] = this->catch_at_age[index].GetValue() / total_c;
+                    }
+
+                    std::default_random_engine generator;
+                    std::uniform_int_distribution<int> distribution(140, 300);
+
+                    this->catch_proportion_at_age_data->sample_size[y*this->seasons + s] =
+                           distribution(generator);
+                    std::vector<int> ret =  mas::rmultinom(this->catch_proportion_at_age_data->sample_size[y*s + s], probs);
+                    for (int a = 0; a < this->ages; a++) {
+
+                        this->catch_proportion_at_age_data->get(y, s, a) =
+                                (REAL_T)ret[a]/ 
+                                this->catch_proportion_at_age_data->sample_size[y*this->seasons + s];
+                    }
+
+
+
+                }
+            }
+
+
+        }
+
         std::string NLLComponentsToString() {
             std::stringstream ss;
             ss << "Fleet: " << this->id << std::endl;
@@ -441,8 +517,8 @@ namespace mas {
                 this->g_test += this->nll_components[i].g_test;
                 this->rmse += this->nll_components[i].rmse;
                 this->rmsle += this->nll_components[i].rmsle;
-                this->AIC+= this->nll_components[i].AIC;
-                this->BIC+= this->nll_components[i].BIC;            
+                this->AIC += this->nll_components[i].AIC;
+                this->BIC += this->nll_components[i].BIC;
             }
         }
 

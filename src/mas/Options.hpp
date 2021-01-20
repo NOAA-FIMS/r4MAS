@@ -20,7 +20,6 @@
 
 namespace mas {
 
-    
     enum Minimizer {
         LBFGS,
         LBFGS2,
@@ -57,6 +56,7 @@ namespace mas {
         std::string data = "NA";
         std::string output = "mas_report.json";
         std::string output_directory = "NA";
+        bool operating_model = false;
 
 
     };
@@ -138,6 +138,10 @@ namespace mas {
                 }
             }
 
+            if (args[i] == "-operating_model") {
+                options.operating_model = true;
+            }
+
             if (args[i] == "-config" && args.size() > (i + 1)) {
                 options.config = args[i + 1];
             }
@@ -161,8 +165,8 @@ namespace mas {
             if (args[i] == "-max_ls" && args.size() > (i + 1)) {
                 options.max_ls = util::StringToNumber<int>(args[i + 1]);
             }
-            
-             if (args[i] == "-iprint" && args.size() > (i + 1)) {
+
+            if (args[i] == "-iprint" && args.size() > (i + 1)) {
                 options.iprint = util::StringToNumber<int>(args[i + 1]);
             }
         }

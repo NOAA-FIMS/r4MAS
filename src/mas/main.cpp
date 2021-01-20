@@ -27,7 +27,7 @@ void forward() {
     for (int i = 0; i < atl::Variable<REAL_T>::tape.stack_current; i++) {
         atl::StackEntry<REAL_T>& entry = atl::Variable<REAL_T>::tape.stack[i];
         entry.w->value = 0.0;
-        
+
     }
     for (int i = 0; i < atl::Variable<REAL_T>::tape.stack_current; i++) {
         atl::StackEntry<REAL_T>& entry = atl::Variable<REAL_T>::tape.stack[i];
@@ -60,11 +60,15 @@ void Run(const mas::Options<REAL_T>& options) {
         fm.print_interval = options.iprint;
         //set the objective function
         fm.SetObjectiveFunction(&objective_function);
-        
-        //run the minimizer
-        fm.Run();
 
-        objective_function.Finalize();
+        if (options.operating_model == true) {
+            objective_function.mas_instance.RunOperationalModel();
+        } else {
+            //run the minimizer
+            fm.Run();
+            objective_function.Finalize();
+        }
+
     }
 #else
 

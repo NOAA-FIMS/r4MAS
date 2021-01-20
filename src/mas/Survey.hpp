@@ -373,6 +373,84 @@ namespace mas {
             }
         }
 
+               void ApplyOperatingModelError() {
+            this->survey_biomass_data =
+                    std::make_shared<mas::DataObject<REAL_T> >();
+            this->survey_biomass_data->sex_type = mas::UNDIFFERENTIATED;
+            this->survey_biomass_data->id = this->id;
+            this->survey_biomass_data->dimensions = 2;
+            this->survey_biomass_data->imax = this->years;
+            this->survey_biomass_data->jmax - this->seasons;
+            this->survey_biomass_data->data.resize(this->years*this->seasons);
+            this->survey_biomass_data->observation_error.resize(this->years*this->seasons);
+
+            this->survey_proportion_at_age_data =
+                    std::make_shared<mas::DataObject<REAL_T> >();
+            this->survey_proportion_at_age_data->sex_type = mas::UNDIFFERENTIATED;
+            this->survey_proportion_at_age_data->id = this->id;
+            this->survey_proportion_at_age_data->dimensions = 3;
+            this->survey_proportion_at_age_data->imax = this->years;
+            this->survey_proportion_at_age_data->jmax = this->seasons;
+            this->survey_proportion_at_age_data->kmax = this->ages;
+            this->survey_proportion_at_age_data->data.resize(this->years*this->seasons*this->ages);
+            this->survey_proportion_at_age_data->sample_size.resize(this->years*this->seasons);
+            
+            
+            REAL_T sd = std::sqrt(1 + std::pow(this->CV, 2.0));
+
+            std::default_random_engine generator;
+            std::normal_distribution<double> distribution(0.0, sd);
+            //fill in observed data 
+            for (int y = 0; y < this->years; y++) {
+                for (int s = 0; s < this->seasons; s++) {
+                    
+                    this->survey_biomass_data->get(y, s) =
+                            this->survey_biomass_total[y * this->seasons + s].GetValue();
+
+                    this->survey_biomass_data->get_error(y, s) =
+                            this->survey_biomass_data->get(y, s) *
+                            std::exp(distribution(generator));
+
+                    REAL_T total_c = 0.0;
+                    std::vector<REAL_T> probs(this->ages);
+
+                    for (int a = 0; a < this->ages; a++) {
+                       size_t index = y * this->seasons * this->ages + (s * this->ages) + a;
+                        total_c += survey_numbers_at_age[index].GetValue();
+                        //                        this->survey_proportion_at_age_data->get(y, s, a) =
+                        //                                this->survey_proportion_at_age[y * this->seasons * this->ages +
+                        //                                s * this->ages + a];
+                    }
+
+                    for (int a = 0; a < this->ages; a++) {
+                        size_t index = y * this->seasons * this->ages + (s * this->ages) + a;
+                        probs[a] = this->survey_numbers_at_age[index].GetValue() / total_c;
+                    }
+
+                    std::default_random_engine generator;
+                    std::uniform_int_distribution<int> distribution(140, 300);
+
+                    this->survey_proportion_at_age_data->sample_size[y*this->seasons + s] =
+                           distribution(generator);
+                    std::vector<int> ret =  mas::rmultinom(this->survey_proportion_at_age_data->sample_size[y*s + s], probs);
+                    for (int a = 0; a < this->ages; a++) {
+
+                        this->survey_proportion_at_age_data->get(y, s, a) =
+                                (REAL_T)ret[a]/ 
+                                this->survey_proportion_at_age_data->sample_size[y*this->seasons + s];
+                    }
+
+
+
+                }
+            }
+
+
+        }
+
+        
+        
+        
         std::string NLLComponentsToString() {
             std::stringstream ss;
             ss << "Survey: " << this->id << std::endl;

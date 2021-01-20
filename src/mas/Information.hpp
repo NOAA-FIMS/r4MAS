@@ -105,7 +105,7 @@ namespace mas {
         std::unordered_map<int, std::shared_ptr<mas::Population<REAL_T> > > populations;
         std::unordered_map<int, std::shared_ptr<mas::FishingMortality<REAL_T> > > fishing_mortality_models;
         std::unordered_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > > selectivity_models;
-        
+
         std::unordered_map<int, std::shared_ptr<mas::Fleet<REAL_T> > > fleets;
 
         std::unordered_map<int, std::shared_ptr<mas::Survey<REAL_T> > > survey_models;
@@ -138,7 +138,7 @@ namespace mas {
 
         rapidjson::Document config_document;
         rapidjson::Document data_document;
-        
+
         std::vector<EnsembleUnit> ensemble_units;
 
         Information() {
@@ -623,7 +623,7 @@ namespace mas {
                 model->CV = (*rit).value.GetDouble();
             }
 
-          
+
             rit = (*survey_model).value.FindMember("selectivity");
 
             if (rit != (*survey_model).value.MemberEnd()) {
@@ -8232,7 +8232,7 @@ namespace mas {
 
         void ParseData(const std::stringstream & ss) {
             INFO_DEBUG
-//            rapidjson::Document document;
+            //            rapidjson::Document document;
             data_document.Parse(ss.str().c_str());
             this->ParseData(data_document);
         }
@@ -8823,11 +8823,11 @@ namespace mas {
 
                     }
 #warning remove this
-//                    if (data_object->observation_error.size() != data_object->data.size()) {
-//                        std::cout << "Data Error: Observation error and data size mismatch for data object \"" << data_object->name << "\".\n";
-//                        mas_log << "Data Error: Observation error and data size mismatch for data object \"" << data_object->name << "\".\n";
-//                        this->valid_configuration = false;
-//                    }
+                    //                    if (data_object->observation_error.size() != data_object->data.size()) {
+                    //                        std::cout << "Data Error: Observation error and data size mismatch for data object \"" << data_object->name << "\".\n";
+                    //                        mas_log << "Data Error: Observation error and data size mismatch for data object \"" << data_object->name << "\".\n";
+                    //                        this->valid_configuration = false;
+                    //                    }
 
                     data_object->Validate();
                     data_dictionary[data_object->id].push_back(data_object);
@@ -8961,6 +8961,255 @@ namespace mas {
             }
         }
 
+        void CreateOperationalModel() {
+            int uid = 0;
+            area_iterator it;
+            for (it = this->areas.begin(); it != this->areas.end(); ++it) {
+
+                mas::Area<REAL_T>* area = (*it).second.get();
+
+                area->Initialize(nyears, nseasons, ages.size());
+
+                /*
+
+                growth_model_iterator git = this->growth_models.find(area->growth_model_id);
+                if (git == this->growth_models.end()) {
+                    std::cout << "Configuration Error: Growth model " << area->growth_model_id << " has not been defined.\n";
+                    mas_log << "Configuration Error: Growth model " << area->growth_model_id << " has not been defined.\n";
+                    this->valid_configuration = false;
+                } else {
+                    area->growth_model = (*git).second;
+                }
+
+                recruitment_model_iterator rit = this->recruitment_models.find(area->recruitment_model_id);
+                if (rit == this->recruitment_models.end()) {
+                    std::cout << "Configuration Error: Recruitment model " << area->recruitment_model_id << " has not been defined.\n";
+                    mas_log << "Configuration Error: Recruitment model " << area->recruitment_model_id << " has not been defined.\n";
+                    this->valid_configuration = false;
+
+                } else {
+                    area->recruitment_model = (*rit).second;
+                }
+
+                natural_mortality_model_iterator mit = this->natural_mortality_models.find(area->mortality_model_id);
+                if (mit == this->natural_mortality_models.end()) {
+                    std::cout << "Configuration Error: Mortality model " << area->mortality_model_id << " has not been defined.\n";
+                    mas_log << "Configuration Error: Mortality model " << area->mortality_model_id << " has not been defined.\n";
+                    this->valid_configuration = false;
+                } else {
+                    area->mortality_model = (*mit).second;
+                }
+
+                 */
+
+            }
+
+
+            population_iterator pit;
+            INFO_DEBUG
+            for (pit = this->populations.begin(); pit != this->populations.end(); ++pit) {
+
+
+                mas::Population<REAL_T>* population = (*pit).second.get();
+                population->ages = this->ages.size();
+                population->years = this->nyears;
+                population->seasons = this->nseasons;
+
+                //                population->initial_population_males.resize(this->ages.size());
+                //                population->initial_population_females.resize(this->ages.size());
+                //                if (population->initial_population_males.size() < this->ages.size()) {
+                //                    std::cout << "Configuration Error: Initial population vector size of "<<population->initial_population_males.size()<<" for population " << population->natal_area_id << " not equal to declared ages of size " << this->ages.size() << ".\n";
+                //                    mas_log << "Configuration Error: Initial population vector size for population " << population->natal_area_id << " not equal to declared ages of size " << this->ages.size() << ".\n";
+                //                    this->valid_configuration = false;
+                //                }
+
+                area_iterator ait; // = this->areas.find(population->natal_area_id);
+                //
+                //                if (ait != this->areas.end()) {
+                //                    population->natal_area = (*ait).second;
+                //                } else {
+                //                    std::cout << "Configuration Error: Natal area " << population->natal_area_id << " has not been defined.\n";
+                //                    mas_log << "Configuration Error: Natal area " << population->natal_area_id << " has not been defined.\n";
+                //                    this->valid_configuration = false;
+                //                }
+                INFO_DEBUG
+                for (ait = this->areas.begin(); ait != this->areas.end(); ++ait) {
+
+                    population->areas_list.push_back((*ait).second);
+
+                    std::cout << "Adding pop/area info for males...." << std::flush;
+                    mas::Subpopulation<REAL_T>& male_pop_info = population->males[(*ait).second->id];
+                    male_pop_info.sex = mas::MALE;
+                    male_pop_info.natal_area = population->natal_area;
+                    male_pop_info.natal_population = population;
+                    male_pop_info.area = (*ait).second;
+                    male_pop_info.uid = uid++;
+                    male_pop_info.catch_season_offset = this->catch_fraction_of_year;
+                    male_pop_info.survey_season_offset = this->survey_fraction_of_year;
+                    male_pop_info.spawning_season_offset = this->spawning_season_offset;
+
+
+                    //                    male_pop_info.maturity_vector = population->maturity_models[male_pop_info.area->id][0];
+                    //                    if (male_pop_info.maturity_vector.size() == 0 || male_pop_info.maturity_vector.size() < this->ages.size()) {
+                    //                        std::cout << "Configuration Error: Maturity vector for population " << population->id << " has wrong size.\n";
+                    //                        std::cout << "Configuration Error: Maturity vector for population " << population->id << " has wrong size.\n";
+                    //                        this->valid_configuration = false;
+                    //                    }
+                    growth_model_iterator git = this->growth_models.find(population->growth_id);
+                    if (git != this->growth_models.end()) {
+                        male_pop_info.growth_model = this->growth_models[population->growth_id];
+                        male_pop_info.growth_model->used = true;
+                    } else {
+                        std::cout << "Configuration Error: Growth for population " << population->id << " has not been defined.\n";
+                        mas_log << "Configuration Error: Growth for population " << population->id << " has not been defined.\n";
+                        this->valid_configuration = false;
+                    }
+
+
+                    typename mas::Population<REAL_T>::male_natural_mortality_ids_iterator mit;
+                    mit = population->male_natural_mortality_ids.find(male_pop_info.area->id);
+
+                    if (mit != population->male_natural_mortality_ids.end()) {
+                        male_pop_info.natural_mortality_model = this->natural_mortality_models[(*mit).second];
+                        male_pop_info.natural_mortality_model->used = true;
+                    } else {
+                        std::cout << "Configuration Error: Male natural mortality for population " << population->id << " in area " << male_pop_info.area->id << " has not been defined.\n";
+                        mas_log << "Configuration Error: Male natural mortality for population " << population->id << " in area " << male_pop_info.area->id << " has not been defined.\n";
+                        this->valid_configuration = false;
+                    }
+
+
+                    male_pop_info.id = population->id;
+                    male_pop_info.years = this->nyears;
+                    male_pop_info.seasons = this->nseasons;
+                    male_pop_info.ages = this->ages;
+                    male_pop_info.males = true;
+                    //                    male_pop_info.Initialize();
+
+                    std::cout << "Done\n" << std::flush;
+                    std::cout << "Adding pop/area info for females...." << std::flush;
+                    mas::Subpopulation<REAL_T>& female_pop_info = population->females[(*ait).second->id];
+                    female_pop_info.sex = mas::FEMALE;
+                    female_pop_info.natal_area = population->natal_area;
+                    female_pop_info.natal_population = population;
+                    female_pop_info.area = (*ait).second;
+                    female_pop_info.uid = uid++;
+                    female_pop_info.catch_season_offset = this->catch_fraction_of_year;
+                    female_pop_info.survey_season_offset = this->survey_fraction_of_year;
+                    female_pop_info.spawning_season_offset = this->spawning_season_offset;
+                    //                    female_pop_info.maturity_vector = population->maturity_models[female_pop_info.area->id][1];
+                    //                    if (female_pop_info.maturity_vector.size() == 0 || female_pop_info.maturity_vector.size() < this->ages.size()) {
+                    //                        std::cout << "Configuration Error: Maturity vector for population " << population->id << " has wrong size.\n";
+                    //                        std::cout << "Configuration Error: Maturity vector for population " << population->id << " has wrong size.\n";
+                    //                        this->valid_configuration = false;
+                    //                    }
+                    if (git != this->growth_models.end()) {
+                        female_pop_info.growth_model = this->growth_models[population->growth_id];
+                        female_pop_info.growth_model->used = true;
+                    } else {
+                        std::cout << "Configuration Error: Growth for population " << population->id << " has not been defined.\n";
+                        mas_log << "Configuration Error: Growth for population " << population->id << " has not been defined.\n";
+                        this->valid_configuration = false;
+                    }
+
+                    typename mas::Population<REAL_T>::female_natural_mortality_ids_iterator fit;
+                    fit = population->female_natural_mortality_ids.find(female_pop_info.area->id);
+
+                    if (fit != population->female_natural_mortality_ids.end()) {
+                        female_pop_info.natural_mortality_model = this->natural_mortality_models[(*fit).second];
+                        female_pop_info.natural_mortality_model->used = true;
+                    } else {
+                        std::cout << "Configuration Error: Female natural mortality for population " << population->id << " in area " << male_pop_info.area->id << " has not been defined.\n";
+                        mas_log << "Configuration Error: Female natural mortality for population " << population->id << " in area " << male_pop_info.area->id << " has not been defined.\n";
+                        this->valid_configuration = false;
+                    }
+
+
+                    female_pop_info.id = population->id;
+                    female_pop_info.years = this->nyears;
+                    female_pop_info.seasons = this->nseasons;
+                    female_pop_info.ages = this->ages;
+                    female_pop_info.males = false;
+
+
+                    typename mas::Population<REAL_T>::recruitment_ids_iterator rit;
+                    rit = population->recruitment_ids.find(female_pop_info.area->id);
+
+                    if (rit != population->recruitment_ids.end()) {
+                        male_pop_info.recruitment_model = this->recruitment_models[(*rit).second];
+                        male_pop_info.recruitment_model->used = true;
+                        female_pop_info.recruitment_model = this->recruitment_models[(*rit).second];
+                        female_pop_info.recruitment_model->used = true;
+                    } else {
+                        std::cout << "Configuration Warning: Recruitment for population " << population->id << " in area " << female_pop_info.area->id << " has not been defined.\n";
+                        std::cout << "Configuration Warning: Recruitment for population " << population->id << " in area " << female_pop_info.area->id << " has not been defined.\n";
+                        this->valid_configuration = false;
+                    }
+                    std::cout << "Done\n" << std::flush;
+                    //                    female_pop_info.Initialize();
+                }
+
+                INFO_DEBUG
+
+                        //                movement_model_iterator move_it = this->movement_models.find(population->movement_model_id);
+                        //                if (move_it != this->movement_models.end()) {
+                        //                    population->movement_model = (*move_it).second;
+                        //                } else {
+                        //                    std::cout << "Configuration Error:  Movement model " << population->movement_model_id << " has not been defined.\n";
+                        //                    mas_log << "Configuration Error:  Movement model " << population->movement_model_id << " has not been defined.\n";
+                        //                }
+
+                        typename mas::Population<REAL_T>::movement_model_id_iterator mmit;
+                for (mmit = population->movement_models_ids.begin(); mmit != population->movement_models_ids.end(); ++mmit) {
+
+                    int year = (*mmit).first;
+                    int model = (*mmit).second;
+
+                    movement_model_iterator mm = this->movement_models.find(model);
+                    if (mm != this->movement_models.end()) {
+                        population->movement_models[year] = (*mm).second;
+                        population->movement_models[year]->used = true;
+                    } else {
+                        std::cout << "Configuration Error:  Movement model " << model << " has not been defined.\n";
+                        mas_log << "Configuration Error:  Movement model " << model << " has not been defined.\n";
+                        this->valid_configuration = false;
+                    }
+
+
+                }
+
+            }
+            INFO_DEBUG
+            for (pit = this->populations.begin(); pit != this->populations.end(); ++pit) {
+
+                typename Population<REAL_T>::season_area_id_iterator sait;
+                for (sait = (*pit).second->area_season_recruitment_ids.begin(); sait != (*pit).second->area_season_recruitment_ids.end(); ++sait) {
+                    int area = (*sait).first;
+                    typename std::unordered_map<int, int>::iterator it;
+                    for (it = (*sait).second.begin(); it != (*sait).second.end(); ++it) {
+                        int season = (*it).first;
+                        int id = (*it).second;
+                        (*pit).second->area_season_recruitment[area][season] = this->recruitment_models[id];
+                        (*pit).second->area_season_recruitment[area][season]->used = true;
+                        (*pit).second->season_area_recruitment[season][area] = this->recruitment_models[id];
+                        (*pit).second->season_area_recruitment[season][area]->used = true;
+                    }
+
+
+                }
+
+                fleet_iterator fit;
+                for (fit = this->fleets.begin(); fit != this->fleets.end(); ++fit) {
+
+                    (*pit).second->active_fleets.insert((*fit).second->id);
+                }
+
+
+                //                (*pit).second->Initialize();
+            }
+
+        }
+
         void CreateModel() {
             INFO_DEBUG
                     int uid = 0;
@@ -9048,7 +9297,7 @@ namespace mas {
                     male_pop_info.catch_season_offset = this->catch_fraction_of_year;
                     male_pop_info.survey_season_offset = this->survey_fraction_of_year;
                     male_pop_info.spawning_season_offset = this->spawning_season_offset;
-                    
+
 
                     //                    male_pop_info.maturity_vector = population->maturity_models[male_pop_info.area->id][0];
                     //                    if (male_pop_info.maturity_vector.size() == 0 || male_pop_info.maturity_vector.size() < this->ages.size()) {
@@ -9868,7 +10117,7 @@ namespace mas {
             }
 
             mas::NLLComponent<REAL_T>::k = this->estimated_parameters.size();
-            
+
         }
 
         std::unordered_map<int, std::shared_ptr<mas::Population<REAL_T> > >& GetPopulations() {
