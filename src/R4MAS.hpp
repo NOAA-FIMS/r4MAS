@@ -5186,7 +5186,7 @@ public:
         mas->mas_instance.info.CreateModel();
         mas->Initialize();
 
-        mas->RunOperatingModel();
+        mas->mas_instance.RunOperatingModel();
 
     }
 
