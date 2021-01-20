@@ -2856,10 +2856,10 @@ namespace mas {
                     /******************************************
                      * Settle moved fish
                      *****************************************/
-                    //                    for (int d = 0; d < areas_list.size(); d++) {
-                    //                        males[areas_list[d]->id].SettleMovedFish(y, s);
-                    //                        females[areas_list[d]->id].SettleMovedFish(y, s);
-                    //                    }//end season
+                                       for (int d = 0; d < areas_list.size(); d++) {
+                                            males[areas_list[d]->id].SettleMovedFish(y, s);
+                                            females[areas_list[d]->id].SettleMovedFish(y, s);
+                                        }//end season
                 }//end year
 
             }

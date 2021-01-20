@@ -681,7 +681,9 @@ public:
         m->fishing_mortality_type = mas::ESTIMATED;
         fm->id = this->id;
         if (this->values.size() != info.nyears * info.nseasons) {
-            std::cout << "MAS Error: FishingMortality vector not equal to (nyears*nseasons)\n";
+            std::cout << "MAS Error: FishingMortality vector not equal to (nyears*nseasons)...";
+            std::cout<<this->values.size() <<"!="<< (info.nyears * info.nseasons)<<"\n";
+        
             info.valid_configuration = false;
             return;
         }
@@ -3361,7 +3363,7 @@ public:
          * Recruitment
          */
         for (int i = 0; i < this->recruitment.size(); i++) {
-            pop->recruitment_ids[recruitment[i].second] = this->recruitment[i].first;
+            pop->recruitment_ids[recruitment[i].third] = this->recruitment[i].first;
         }
 
 
@@ -4303,8 +4305,8 @@ public:
 
             for (int i = 0; i < this->fishing_nortality.size(); i++) {
                 int sseason = this->fishing_nortality[i].second;
-                int sid = this->selectivity[i].first;
-                int sarea = this->selectivity[i].third;
+                int sid = this->fishing_nortality[i].first;
+                int sarea = this->fishing_nortality[i].third;
                 f->season_area_fishing_mortality_ids[sseason][sarea] = sid;
                 f->area_season_fishing_mortality_ids[sarea][sseason] = sid;
             }
@@ -5074,6 +5076,7 @@ public:
 
         mas->mas_instance.info.nyears = this->nyears;
         mas->mas_instance.info.nseasons = this->nseasons;
+        std::cout<<"integer check: "<< mas->mas_instance.info.nyears<<"  "<<mas->mas_instance.info.nseasons<<"\n";
         mas->mas_instance.info.spawning_season_offset = this->spawning_season_offset;
         mas->mas_instance.info.survey_fraction_of_year = this->survey_season_offset;
         mas->mas_instance.info.catch_fraction_of_year = this->catch_season_offset;
@@ -5085,7 +5088,7 @@ public:
         mas::GrowthBase<double>::ages_to_intrpolate.clear();
         for (int i = 0; i < nages; i++) {
             mas->mas_instance.info.ages[i] = variable(this->ages[i]);
-
+            std::cout<<mas->mas_instance.info.ages[i] <<"  ";
             mas->mas_instance.info.ages_real[i] = (this->ages[i]);
             mas::GrowthBase<double>::ages.push_back(this->ages[i]);
             mas::GrowthBase<double>::ages_to_intrpolate.insert(this->ages[i]);
@@ -5095,6 +5098,7 @@ public:
 
         }
 
+        std::cout<<"\n\n";
         for (int i = 0; i < NLLBase::nll_submodels.size(); i++) {
             NLLBase::nll_submodels[i]->AddToMAS(mas->mas_instance.info);
         }

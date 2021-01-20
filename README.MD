@@ -4,6 +4,7 @@
 
 **************
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/nmfs-fish-tools/RMAS) 
+![R-CMD-check](https://github.com/nmfs-fish-tools/RMAS/workflows/R-CMD-check/badge.svg)
 ![macOS-test](https://github.com/nmfs-fish-tools/RMAS/workflows/macOS-test/badge.svg)
 ![Windows-test](https://github.com/nmfs-fish-tools/RMAS/workflows/Windows-test/badge.svg)
 
