@@ -5616,5 +5616,3 @@ RCPP_MODULE(rmas) {
 
 
 #endif /* R4MAS_HPP */
-
-sigma
