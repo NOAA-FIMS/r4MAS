@@ -4992,7 +4992,7 @@ class MASModel {
     std::set<int> fleets;
     std::set<int> surveys;
     std::set<int> populations;
-    
+
     //data produced from the operating model
     std::vector<std::shared_ptr<IndexData> > om_index_data;
     std::vector<std::shared_ptr<AgeCompData> > om_age_comp_data;
@@ -5192,7 +5192,7 @@ public:
 
 
         mas->mas_instance.RunOperationalModel();
-        
+
         //transfer derived values from MAS to RMAS
         Fleet::model_iterator it;
         std::shared_ptr<IndexData> fleet_index_data;
@@ -5203,23 +5203,17 @@ public:
 
             int id = (*it).second->id;
             std::shared_ptr<mas::DataObject<double> > data =
-                    mas->mas_instance.info.fleets[id];
+                    mas->mas_instance.info.fleets[id]->catch_biomass_data;
 
+            f->AddIndexData(data->id, "undifferentiated");
+            fleet_index_data = std::make_shared<IndexData>();
+            fleet_index_data->id = data->id;
+            fleet_index_data->data = data->data;
+            fleet_index_data->error = data->observation_error;
+            fleet_index_data->sex = "undifferentiated";
+            this->om_index_data.push_back(fleet_index_data);
+            IndexData::initialized_models[fleet_index_data->id] = fleet_index_data.get();
 
-            switch (data->type) {
-
-                case mas::CATCH_BIOMASS:
-                    f->AddIndexData(data->id, "undifferentiated");
-                    fleet_index_data = std::make_shared<IndexData>();
-                    fleet_index_data->id = data->id;
-                    fleet_index_data->data = data->data;
-                    fleet_index_data->error = data->observation_error;
-                    fleet_index_data->sex = "undifferentiated";
-                    this->om_index_data.push_back(fleet_index_data);
-                    IndexData::initialized_models[fleet_index_data->id] = fleet_index_data.get();
-                    break;
-                    
-            }
         }
 
 
