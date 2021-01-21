@@ -5189,6 +5189,7 @@ public:
         mas->mas_instance.info.CreateModel();
         mas->Initialize();
 
+<<<<<<< HEAD
         mas->mas_instance.RunOperationalModel();
         
         //transfer derived values from MAS to RMAS
@@ -5219,6 +5220,9 @@ public:
                     
             }
         }
+=======
+         mas->mas_instance.RunOperationalModel();
+>>>>>>> master
 
     }
 
