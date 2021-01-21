@@ -4199,9 +4199,7 @@ protected:
 
 
 
-    std::vector<std::pair<SexType, int> > index_data;
-    std::vector<std::pair<SexType, int> > age_comp_data;
-    std::vector<std::pair<SexType, int> > length_comp_data;
+
     //    int index_data;
     //    int age_comp_data;
     //    int length_comp_data;
@@ -4213,6 +4211,9 @@ protected:
 
     std::vector<triple<int, int, int> > fishing_nortality; //id, season, area
     std::vector<triple<int, int, int> > selectivity; //id, season, area
+    std::vector<std::pair<SexType, int> > index_data;
+    std::vector<std::pair<SexType, int> > age_comp_data;
+    std::vector<std::pair<SexType, int> > length_comp_data;
 public:
     int used = false;
     double catch_fraction_of_year = 1.0;
@@ -4991,7 +4992,9 @@ class MASModel {
     std::set<int> fleets;
     std::set<int> surveys;
     std::set<int> populations;
-
+    //data produced from the operating model
+    std::vector<std::shared_ptr<IndexData> > om_index_data;
+    std::vector<std::shared_ptr<AgeCompData> > om_index_data;
 
 private:
 
@@ -5187,6 +5190,35 @@ public:
         mas->Initialize();
 
         mas->mas_instance.RunOperationalModel();
+        
+        //transfer derived values from MAS to RMAS
+        Fleet::model_iterator it;
+        std::shared_ptr<IndexData> fleet_index_data;
+        std::shared_ptr<AgeCompData> fleet_age_comp_data;
+        for (it = Fleet::initialized_models.begin(); it != Fleet::submodels.end();
+                ++it) {
+            Fleet* f = (*it).second;
+
+            int id = (*it).second->id;
+            std::shared_ptr<mas::DataObject<double> > data =
+                    mas->mas_instance->fleets[id];
+
+
+            switch (data->type) {
+
+                case mas::CATCH_BIOMASS:
+                    f->AddIndexData(data->id, "undifferentiated");
+                    fleet_index_data = std::make_shared<IndexData();
+                    fleet_index_data->id = data->id;
+                    fleet_index_data->data = data->data;
+                    fleet_index_data->error = data->observation_error;
+                    fleet_index_data->sex = "undifferentiated";
+                    this->om_index_data.push_back(fleet_index_data);
+                    IndexData::initialized_models[fleet_index_data->id] = fleet_index_data;
+                    break;
+                    
+            }
+        }
 
     }
 
