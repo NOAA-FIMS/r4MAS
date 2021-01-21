@@ -5209,13 +5209,13 @@ public:
 
                 case mas::CATCH_BIOMASS:
                     f->AddIndexData(data->id, "undifferentiated");
-                    fleet_index_data = std::make_shared<IndexData();
+                    fleet_index_data = std::make_shared<IndexData>();
                     fleet_index_data->id = data->id;
                     fleet_index_data->data = data->data;
                     fleet_index_data->error = data->observation_error;
                     fleet_index_data->sex = "undifferentiated";
                     this->om_index_data.push_back(fleet_index_data);
-                    IndexData::initialized_models[fleet_index_data->id] = fleet_index_data;
+                    IndexData::initialized_models[fleet_index_data->id] = fleet_index_data.data();
                     break;
                     
             }
