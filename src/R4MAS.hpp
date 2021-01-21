@@ -5195,12 +5195,13 @@ public:
 
         //transfer derived values from MAS to RMAS
         Fleet::model_iterator it;
-        std::shared_ptr<IndexData> fleet_index_data;
-        std::shared_ptr<AgeCompData> fleet_age_comp_data;
+
         for (it = Fleet::initialized_models.begin(); it != Fleet::initialized_models.end();
                 ++it) {
             Fleet* f = (*it).second;
 
+            std::shared_ptr<IndexData> fleet_index_data;
+            std::shared_ptr<AgeCompData> fleet_age_comp_data;
             int id = (*it).second->id;
             std::shared_ptr<mas::DataObject<double> > data =
                     mas->mas_instance.info.fleets[id]->catch_biomass_data;
