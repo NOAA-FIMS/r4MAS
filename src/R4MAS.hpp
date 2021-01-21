@@ -4100,10 +4100,12 @@ class IndexData {
     static int id_g;
 public:
 
-    IndexData() {
+    IndexData(bool add_to_list = true) {
 
-        this->id = IndexData::id_g++;
-        IndexData::initialized_models[this->id] = this;
+        if (add_to_list) {
+            this->id = IndexData::id_g++;
+            IndexData::initialized_models[this->id] = this;
+        }
     }
 
     virtual ~IndexData() {
@@ -4131,10 +4133,12 @@ class AgeCompData {
     static int id_g;
 public:
 
-    AgeCompData() {
+    AgeCompData(bool add_to_list = true) {
 
-        this->id = AgeCompData::id_g++;
-        AgeCompData::initialized_models[this->id] = this;
+        if (add_to_list) {
+            this->id = AgeCompData::id_g++;
+            AgeCompData::initialized_models[this->id] = this;
+        }
     }
 
     virtual ~AgeCompData() {
@@ -5206,16 +5210,15 @@ public:
             std::shared_ptr<IndexData> fleet_index_data;
             std::shared_ptr<AgeCompData> fleet_age_comp_data;
 
-            //remove from initialized list to prevent id corruption
-            IndexData::initialized_models.erase(fleet_index_data->id);
-            AgeCompData::initialized_models.erase(fleet_age_comp_data->id);
+          
+            
 
             int id = (*it).second->id;
             std::shared_ptr<mas::DataObject<double> > data =
                     mas->mas_instance.info.fleets[id]->catch_biomass_data;
 
 
-            fleet_index_data = std::make_shared<IndexData>();
+            fleet_index_data = std::make_shared<IndexData>(false);
             fleet_index_data->id = data->id;
             fleet_index_data->data = data->data;
             fleet_index_data->error = data->observation_error;
@@ -5230,7 +5233,7 @@ public:
 
 
 
-            fleet_age_comp_data = std::make_shared<AgeCompData>();
+            fleet_age_comp_data = std::make_shared<AgeCompData>(false);
             fleet_age_comp_data->id = data2->id;
             fleet_age_comp_data->data = data2->data;
             fleet_age_comp_data->sample_size = data2->sample_size;
