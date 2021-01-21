@@ -5208,7 +5208,7 @@ public:
 
             //remove from initialized list to prevent id corruption
             IndexData::initialized_models.erase(fleet_index_data->id);
-            AgeCompData::initialized_models.erase_fleet_age_comp_data->id);
+            AgeCompData::initialized_models.erase(fleet_age_comp_data->id);
 
             int id = (*it).second->id;
             std::shared_ptr<mas::DataObject<double> > data =
