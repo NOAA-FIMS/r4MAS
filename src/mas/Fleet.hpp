@@ -429,8 +429,8 @@ namespace mas {
             this->catch_biomass_data->dimensions = 2;
             this->catch_biomass_data->imax = this->years;
             this->catch_biomass_data->jmax - this->seasons;
-            this->catch_biomass_data->data.resize(this->years*this->seasons);
-            this->catch_biomass_data->observation_error.resize(this->years*this->seasons);
+            this->catch_biomass_data->data.resize(this->years * this->seasons);
+            this->catch_biomass_data->observation_error.resize(this->years * this->seasons);
 
             this->catch_proportion_at_age_data =
                     std::make_shared<mas::DataObject<REAL_T> >();
@@ -440,11 +440,11 @@ namespace mas {
             this->catch_proportion_at_age_data->imax = this->years;
             this->catch_proportion_at_age_data->jmax = this->seasons;
             this->catch_proportion_at_age_data->kmax = this->ages;
-            this->catch_proportion_at_age_data->data.resize(this->years*this->seasons*this->ages);
-            this->catch_proportion_at_age_data->sample_size.resize(this->years*this->seasons);
-            
-            
-            
+            this->catch_proportion_at_age_data->data.resize(this->years * this->seasons * this->ages);
+            this->catch_proportion_at_age_data->sample_size.resize(this->years * this->seasons);
+
+
+
             REAL_T sd = std::sqrt(std::log(1 + std::pow(this->CV, 2.0)));
 
             std::default_random_engine generator;
@@ -452,19 +452,19 @@ namespace mas {
             //fill in observed data 
             for (int y = 0; y < this->years; y++) {
                 for (int s = 0; s < this->seasons; s++) {
-                    
+
                     this->catch_biomass_data->get(y, s) =
-                            this->catch_biomass_total[y * this->seasons + s].GetValue();
+                            this->catch_biomass_total[y * this->seasons + s].GetValue()
+                            *std::exp(distribution(generator));
+                    
 
-                    this->catch_biomass_data->get_error(y, s) =
-                            this->catch_biomass_data->get(y, s) *
-                            std::exp(distribution(generator));
-
+                    this->catch_biomass_data->get_error(y, s) = this->CV;
+                    
                     REAL_T total_c = 0.0;
                     std::vector<REAL_T> probs(this->ages);
 
                     for (int a = 0; a < this->ages; a++) {
-                       size_t index = y * this->seasons * this->ages + (s * this->ages) + a;
+                        size_t index = y * this->seasons * this->ages + (s * this->ages) + a;
                         total_c += catch_at_age[index].GetValue();
                         //                        this->catch_proportion_at_age_data->get(y, s, a) =
                         //                                this->catch_proportion_at_age[y * this->seasons * this->ages +
@@ -479,14 +479,14 @@ namespace mas {
                     std::default_random_engine generator;
                     std::uniform_int_distribution<int> distribution(140, 300);
 
-                    this->catch_proportion_at_age_data->sample_size[y*this->seasons + s] =
-                           distribution(generator);
-                    std::vector<int> ret =  mas::rmultinom(this->catch_proportion_at_age_data->sample_size[y*s + s], probs);
+                    this->catch_proportion_at_age_data->sample_size[y * this->seasons + s] =
+                            distribution(generator);
+                    std::vector<int> ret = mas::rmultinom(this->catch_proportion_at_age_data->sample_size[y * s + s], probs);
                     for (int a = 0; a < this->ages; a++) {
 
                         this->catch_proportion_at_age_data->get(y, s, a) =
-                                (REAL_T)ret[a]/ 
-                                this->catch_proportion_at_age_data->sample_size[y*this->seasons + s];
+                                (REAL_T) ret[a] /
+                                this->catch_proportion_at_age_data->sample_size[y * this->seasons + s];
                     }
 
 
