@@ -5202,6 +5202,7 @@ public:
 
             std::shared_ptr<IndexData> fleet_index_data;
             std::shared_ptr<AgeCompData> fleet_age_comp_data;
+
             int id = (*it).second->id;
             std::shared_ptr<mas::DataObject<double> > data =
                     mas->mas_instance.info.fleets[id]->catch_biomass_data;
@@ -5214,6 +5215,18 @@ public:
             fleet_index_data->sex = "undifferentiated";
             this->om_index_data.push_back(fleet_index_data);
             IndexData::initialized_models[fleet_index_data->id] = fleet_index_data.get();
+
+            std::shared_ptr<mas::DataObject<double> > data2 =
+                    mas->mas_instance.info.fleets[id]->catch_proportion_at_age_data;
+
+            f->AddIndexData(data2->id, "undifferentiated");
+            fleet_age_comp_data = std::make_shared<AgeCompData>();
+            fleet_age_comp_data->id = data2->id;
+            fleet_age_comp_data->data = data2->data;
+            fleet_age_comp_data->error = data2->sample_size;
+            fleet_age_comp_data->sex = "undifferentiated";
+            this->om_age_comp_data.push_back(fleet_age_comp_data);
+            AgeCompData::initialized_models[fleet_age_comp_data->id] = fleet_age_comp_data.get();
 
         }
 
