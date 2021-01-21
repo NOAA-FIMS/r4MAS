@@ -4992,6 +4992,7 @@ class MASModel {
     std::set<int> fleets;
     std::set<int> surveys;
     std::set<int> populations;
+    
     //data produced from the operating model
     std::vector<std::shared_ptr<IndexData> > om_index_data;
     std::vector<std::shared_ptr<AgeCompData> > om_age_comp_data;
