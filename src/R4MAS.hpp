@@ -5196,7 +5196,7 @@ public:
         Fleet::model_iterator it;
         std::shared_ptr<IndexData> fleet_index_data;
         std::shared_ptr<AgeCompData> fleet_age_comp_data;
-        for (it = Fleet::initialized_models.begin(); it != Fleet::submodels.end();
+        for (it = Fleet::initialized_models.begin(); it != Fleet::initialized_models.end();
                 ++it) {
             Fleet* f = (*it).second;
 
