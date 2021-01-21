@@ -5223,7 +5223,7 @@ public:
             fleet_age_comp_data = std::make_shared<AgeCompData>();
             fleet_age_comp_data->id = data2->id;
             fleet_age_comp_data->data = data2->data;
-            fleet_age_comp_data->error = data2->sample_size;
+            fleet_age_comp_data->sample_size = data2->sample_size;
             fleet_age_comp_data->sex = "undifferentiated";
             this->om_age_comp_data.push_back(fleet_age_comp_data);
             AgeCompData::initialized_models[fleet_age_comp_data->id] = fleet_age_comp_data.get();
