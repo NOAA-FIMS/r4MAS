@@ -5219,7 +5219,7 @@ public:
             std::shared_ptr<mas::DataObject<double> > data2 =
                     mas->mas_instance.info.fleets[id]->catch_proportion_at_age_data;
 
-            f->AddIndexData(data2->id, "undifferentiated");
+            f->AddAgeCompData(data2->id, "undifferentiated");
             fleet_age_comp_data = std::make_shared<AgeCompData>();
             fleet_age_comp_data->id = data2->id;
             fleet_age_comp_data->data = data2->data;
