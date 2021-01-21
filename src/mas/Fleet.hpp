@@ -444,6 +444,7 @@ namespace mas {
             this->catch_proportion_at_age_data->sample_size.resize(this->years*this->seasons);
             
             
+            
             REAL_T sd = std::sqrt(std::log(1 + std::pow(this->CV, 2.0)));
 
             std::default_random_engine generator;
@@ -456,7 +457,7 @@ namespace mas {
                             this->catch_biomass_total[y * this->seasons + s].GetValue();
 
                     this->catch_biomass_data->get_error(y, s) =
-                            this->catch_abundance[y*this->seasons+s].GetValue() *
+                            this->catch_biomass_data->get(y, s) *
                             std::exp(distribution(generator));
 
                     REAL_T total_c = 0.0;
