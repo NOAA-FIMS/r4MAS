@@ -5202,7 +5202,7 @@ public:
 
             int id = (*it).second->id;
             std::shared_ptr<mas::DataObject<double> > data =
-                    mas->mas_instance->fleets[id];
+                    mas->mas_instance.fleets[id];
 
 
             switch (data->type) {
@@ -5215,7 +5215,7 @@ public:
                     fleet_index_data->error = data->observation_error;
                     fleet_index_data->sex = "undifferentiated";
                     this->om_index_data.push_back(fleet_index_data);
-                    IndexData::initialized_models[fleet_index_data->id] = fleet_index_data.data();
+                    IndexData::initialized_models[fleet_index_data->id] = fleet_index_data.get();
                     break;
                     
             }
