@@ -444,7 +444,7 @@ namespace mas {
             this->catch_proportion_at_age_data->sample_size.resize(this->years*this->seasons);
             
             
-            REAL_T sd = std::sqrt(1 + std::pow(this->CV, 2.0));
+            REAL_T sd = std::sqrt(std::log(1 + std::pow(this->CV, 2.0)));
 
             std::default_random_engine generator;
             std::normal_distribution<double> distribution(0.0, sd);
