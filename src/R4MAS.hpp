@@ -4454,7 +4454,8 @@ public:
     virtual void DataToJSON(rapidjson::Document& document, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
         rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
 
-        for (int i = 0; i < this->index_data.size(); i++) {
+         std::cout<<"index data size = "<<this->index_data.size()<<std::endl;
+        for (int i = 0; i < this->index_data.size(); i++) { 
             rapidjson::Value index_data(rapidjson::kObjectType);
             index_data.AddMember("data_object_type", "catch_biomass", allocator);
             index_data.AddMember("name", "catch_biomass", allocator);
@@ -4476,6 +4477,7 @@ public:
             rapidjson::Value vals(rapidjson::kArrayType);
             rapidjson::Value error_vals(rapidjson::kArrayType);
             IndexData::model_iterator dit = IndexData::initialized_models.find(this->index_data[i].second);
+            
             if (dit != IndexData::initialized_models.end()) {
 
                 double missing_values = (*dit).second->missing_values;
@@ -4494,7 +4496,8 @@ public:
             }
 
         }
-
+ 
+        std::cout<<"age comp data size = "<<this->age_comp_data.size()<<std::endl;
         rapidjson::Value age_comp_data(rapidjson::kObjectType);
         for (int i = 0; i < this->age_comp_data.size(); i++) {
             rapidjson::Value age_comp_data(rapidjson::kObjectType);
@@ -5220,6 +5223,7 @@ public:
             std::shared_ptr<mas::DataObject<double> > data2 =
                     mas->mas_instance.info.fleets[id]->catch_proportion_at_age_data;
 
+            
 
             fleet_age_comp_data = std::make_shared<AgeCompData>();
             fleet_age_comp_data->id = data2->id;
