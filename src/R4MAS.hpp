@@ -5213,7 +5213,7 @@ public:
 
 
 
-            int id = (*it).second->id;
+            int id = f->id;
             std::shared_ptr<mas::DataObject<double> > data =
                     mas->mas_instance.info.fleets[id]->catch_biomass_data;
 
