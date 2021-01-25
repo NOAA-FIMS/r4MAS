@@ -5257,7 +5257,7 @@ public:
 
             int id = s->id;
             std::shared_ptr<mas::DataObject<double> > data =
-                    mas->mas_instance.info.surveys[id]->catch_biomass_data;
+                    mas->mas_instance.info.survey_models[id]->survey_biomass_data;
 
 
             survey_index_data = std::make_shared<IndexData>(false);
@@ -5271,7 +5271,7 @@ public:
             s->AddIndexData(data->id, "undifferentiated");
 
             std::shared_ptr<mas::DataObject<double> > data2 =
-                    mas->mas_instance.info.surveys[id]->survey_proportion_at_age_data;
+                    mas->mas_instance.info.survey_models[id]->survey_proportion_at_age_data;
 
 
 
