@@ -4460,7 +4460,6 @@ public:
 
         rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
 
-        std::cout << "index data size = " << this->index_data.size() << std::endl;
         for (int i = 0; i < this->index_data.size(); i++) {
             rapidjson::Value index_data(rapidjson::kObjectType);
             index_data.AddMember("data_object_type", "catch_biomass", allocator);
@@ -4503,7 +4502,6 @@ public:
 
         }
 
-        std::cout << "age comp data size = " << this->age_comp_data.size() << std::endl;
         rapidjson::Value age_comp_data(rapidjson::kObjectType);
         for (int i = 0; i < this->age_comp_data.size(); i++) {
             rapidjson::Value age_comp_data(rapidjson::kObjectType);
@@ -5246,6 +5244,47 @@ public:
             f->AddAgeCompData(data2->id, "undifferentiated");
         }
 
+        Survey::model_iterator sit;
+        for(sit = Survey::initialized_models.begin(); sit != Survey::initialized_models.end(); ++sit){
+            
+            Survey* s = (*sit).second;
+            
+            std::shared_ptr<IndexData> survey_index_data;
+            std::shared_ptr<AgeCompData> survey_age_comp_data;
+
+
+
+
+            int id = s->id;
+            std::shared_ptr<mas::DataObject<double> > data =
+                    mas->mas_instance.info.fleets[id]->catch_biomass_data;
+
+
+            survey_index_data = std::make_shared<IndexData>(false);
+            survey_index_data->id = data->id;
+            survey_index_data->data = data->data;
+            survey_index_data->error = data->observation_error;
+            survey_index_data->sex = "undifferentiated";
+            this->om_index_data.push_back(survey_index_data);
+            IndexData::initialized_models[survey_index_data->id] = survey_index_data.get();
+            //add back to initialized list
+            s->AddIndexData(data->id, "undifferentiated");
+
+            std::shared_ptr<mas::DataObject<double> > data2 =
+                    mas->mas_instance.info.fleets[id]->survey_proportion_at_age_data;
+
+
+
+            survey_age_comp_data = std::make_shared<AgeCompData>(false);
+            survey_age_comp_data->id = data2->id;
+            survey_age_comp_data->data = data2->data;
+            survey_age_comp_data->sample_size = data2->sample_size;
+            survey_age_comp_data->sex = "undifferentiated";
+            this->om_age_comp_data.push_back(survey_age_comp_data);
+            AgeCompData::initialized_models[survey_age_comp_data->id] = survey_age_comp_data.get();
+            //add back to initialized list
+            s->AddAgeCompData(data2->id, "undifferentiated");
+        }
 
     }
 
@@ -5286,7 +5325,6 @@ public:
         rapidjson::Document document;
         document.SetObject();
         int nareas = Area::initialized_models.size();
-        std::cout << "fleet submodel size = " << Fleet::submodels.size() << "\n";
         Fleet::model_iterator fit;
         for (fit = Fleet::initialized_models.begin(); fit != Fleet::initialized_models.end(); ++fit) {
             (*fit).second->DataToJSON(document, nyears, nseasons, nages, nareas);
@@ -5296,14 +5334,7 @@ public:
         for (sit = Survey::initialized_models.begin(); sit != Survey::initialized_models.end(); ++fit) {
             (*sit).second->DataToJSON(document, nyears, nseasons, nages, nareas);
         }
-        //        for (int i = 0; i < Fleet::submodels.size(); i++) {
-        //            Fleet::submodels[i]->DataToJSON(document, nyears, nseasons, nages, nareas);
-        //        }
-        //
-        //        
-        //        for (int i = 0; i < Survey::submodels.size(); i++) {
-        //            Survey::submodels[i]->DataToJSON(document, nyears, nseasons, nages, nareas);
-        //        }
+       
 
         rapidjson::StringBuffer buffer;
         rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
