@@ -5287,13 +5287,23 @@ public:
         document.SetObject();
         int nareas = Area::initialized_models.size();
         std::cout<<"fleet submodel size = "<<Fleet::submodels.size()<<"\n";
-        for (int i = 0; i < Fleet::submodels.size(); i++) {
-            Fleet::submodels[i]->DataToJSON(document, nyears, nseasons, nages, nareas);
+        Fleet::initialized_models::iterator fit;
+        for(fit = Fleet::initialized_models.begin(); fit != Fleet::initialized_models.end(); ++fit){
+            (*fit).second->DataToJSON(document, nyears, nseasons, nages, nareas);
         }
-
-        for (int i = 0; i < Survey::submodels.size(); i++) {
-            Survey::submodels[i]->DataToJSON(document, nyears, nseasons, nages, nareas);
+        
+         Survey::initialized_models::iterator sit;
+        for(sit = Survey::initialized_models.begin(); sit != Survey::initialized_models.end(); ++fit){
+            (*sit).second->DataToJSON(document, nyears, nseasons, nages, nareas);
         }
+//        for (int i = 0; i < Fleet::submodels.size(); i++) {
+//            Fleet::submodels[i]->DataToJSON(document, nyears, nseasons, nages, nareas);
+//        }
+//
+//        
+//        for (int i = 0; i < Survey::submodels.size(); i++) {
+//            Survey::submodels[i]->DataToJSON(document, nyears, nseasons, nages, nareas);
+//        }
 
         rapidjson::StringBuffer buffer;
         rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
