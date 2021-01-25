@@ -4456,6 +4456,8 @@ public:
     }
 
     virtual void DataToJSON(rapidjson::Document& document, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+       
+        
         rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
 
         std::cout << "index data size = " << this->index_data.size() << std::endl;
@@ -5284,6 +5286,7 @@ public:
         rapidjson::Document document;
         document.SetObject();
         int nareas = Area::initialized_models.size();
+        std::cout<<"fleet submodel size = "<<Fleet::submodels.size()<<"\n";
         for (int i = 0; i < Fleet::submodels.size(); i++) {
             Fleet::submodels[i]->DataToJSON(document, nyears, nseasons, nages, nareas);
         }
