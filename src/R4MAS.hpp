@@ -5329,12 +5329,14 @@ public:
         document.SetObject();
         int nareas = Area::initialized_models.size();
         Fleet::model_iterator fit;
-        for (fit = Fleet::initialized_models.begin(); fit != Fleet::initialized_models.end(); ++fit) {
+        for (fit = Fleet::initialized_models.begin(); 
+                fit != Fleet::initialized_models.end(); ++fit) {
             (*fit).second->DataToJSON(document, nyears, nseasons, nages, nareas);
         }
 
         Survey::model_iterator sit;
-        for (sit = Survey::initialized_models.begin(); sit != Survey::initialized_models.end(); ++fit) {
+        for (sit = Survey::initialized_models.begin(); 
+                sit != Survey::initialized_models.end(); ++sit) {
             (*sit).second->DataToJSON(document, nyears, nseasons, nages, nareas);
         }
        
@@ -5342,7 +5344,6 @@ public:
         rapidjson::StringBuffer buffer;
         rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
         document.Accept(writer);
-        std::cout << buffer.GetString();
         return buffer.GetString();
 
     }
