@@ -5218,13 +5218,13 @@ public:
                     mas->mas_instance.info.fleets[id]->catch_biomass_data;
 
 
-            fleet_index_data = std::make_shared<IndexData>(false);
+            fleet_index_data = std::make_shared<IndexData>();
             fleet_index_data->id = data->id;
             fleet_index_data->data = data->data;
             fleet_index_data->error = data->observation_error;
             fleet_index_data->sex = "undifferentiated";
             this->om_index_data.push_back(fleet_index_data);
-            IndexData::initialized_models[fleet_index_data->id] = fleet_index_data.get();
+//            IndexData::initialized_models[fleet_index_data->id] = fleet_index_data.get();
             //add back to initialized list
             f->AddIndexData(data->id, "undifferentiated");
 
@@ -5233,19 +5233,22 @@ public:
 
 
 
-            fleet_age_comp_data = std::make_shared<AgeCompData>(false);
+            fleet_age_comp_data = std::make_shared<AgeCompData>();
             fleet_age_comp_data->id = data2->id;
             fleet_age_comp_data->data = data2->data;
             fleet_age_comp_data->sample_size = data2->sample_size;
             fleet_age_comp_data->sex = "undifferentiated";
             this->om_age_comp_data.push_back(fleet_age_comp_data);
-            AgeCompData::initialized_models[fleet_age_comp_data->id] = fleet_age_comp_data.get();
+//            AgeCompData::initialized_models[fleet_age_comp_data->id] = fleet_age_comp_data.get();
             //add back to initialized list
             f->AddAgeCompData(data2->id, "undifferentiated");
         }
 
         Survey::model_iterator sit;
-        for(sit = Survey::initialized_models.begin(); sit != Survey::initialized_models.end(); ++sit){
+        for(sit = Survey::initialized_models.begin(); 
+                sit != Survey::initialized_models.end(); ++sit){
+            
+            std::cout<<"here"<<std::endl;
             
             Survey* s = (*sit).second;
             
@@ -5260,13 +5263,13 @@ public:
                     mas->mas_instance.info.survey_models[id]->survey_biomass_data;
 
 
-            survey_index_data = std::make_shared<IndexData>(false);
+            survey_index_data = std::make_shared<IndexData>();
             survey_index_data->id = data->id;
             survey_index_data->data = data->data;
             survey_index_data->error = data->observation_error;
             survey_index_data->sex = "undifferentiated";
             this->om_index_data.push_back(survey_index_data);
-            IndexData::initialized_models[survey_index_data->id] = survey_index_data.get();
+//            IndexData::initialized_models[survey_index_data->id] = survey_index_data.get();
             //add back to initialized list
             s->AddIndexData(data->id, "undifferentiated");
 
@@ -5275,13 +5278,13 @@ public:
 
 
 
-            survey_age_comp_data = std::make_shared<AgeCompData>(false);
+            survey_age_comp_data = std::make_shared<AgeCompData>();
             survey_age_comp_data->id = data2->id;
             survey_age_comp_data->data = data2->data;
             survey_age_comp_data->sample_size = data2->sample_size;
             survey_age_comp_data->sex = "undifferentiated";
             this->om_age_comp_data.push_back(survey_age_comp_data);
-            AgeCompData::initialized_models[survey_age_comp_data->id] = survey_age_comp_data.get();
+//            AgeCompData::initialized_models[survey_age_comp_data->id] = survey_age_comp_data.get();
             //add back to initialized list
             s->AddAgeCompData(data2->id, "undifferentiated");
         }
