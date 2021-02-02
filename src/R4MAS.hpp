@@ -2,7 +2,7 @@
  * RMAS is a r interface for the Meta-population Assessment System.
  */
 
-/* 
+/*
  * File:   R4MAS.hpp
  * Author: mattadmin
  *
@@ -23,7 +23,7 @@
 #include <RcppCommon.h>
 #include <Rcpp.h>
 
-#define  Rcout std::cout 
+#define  Rcout std::cout
 
 using namespace Rcpp;
 
@@ -197,10 +197,10 @@ class SelectivityBase : public MASSubModel {
 protected:
 
 
-    static int id_g;
+
 
 public:
-
+    static int id_g;
     virtual ~SelectivityBase() {
     }
 };
@@ -210,7 +210,7 @@ int SelectivityBase::id_g = 1;
 class LogisticSelectivity : public SelectivityBase {
 public:
 
-    Parameter a50; //age of 50% selectivity 
+    Parameter a50; //age of 50% selectivity
     Parameter slope; //the rate of increase in selectivity at a50
     int id;
 
@@ -644,9 +644,10 @@ std::map<int, AgeBasedSelectivity*> AgeBasedSelectivity::initialized_models;
  * Mortality
  */
 class FishingMortality : public MASSubModel {
-    static int id_g;
+
 
 public:
+    static int id_g;
     int id;
     Rcpp::NumericVector values;
     bool estimate = false;
@@ -768,10 +769,11 @@ std::map<int, FishingMortality*> FishingMortality::initialized_models;
 int FishingMortality::id_g = 1;
 
 class NaturalMortality : public MASSubModel {
-    static int id_g;
+
 
 
 public:
+    static int id_g;
     int id;
     Rcpp::NumericVector values;
     bool estimate = false;
@@ -875,9 +877,10 @@ std::map<int, NaturalMortality*> NaturalMortality::initialized_models;
 int NaturalMortality::id_g = 1;
 
 class InitialDeviations {
-    static int id_g;
+
 
 public:
+    static int id_g;
     int id;
     Rcpp::NumericVector values;
     bool estimate = false;
@@ -911,10 +914,10 @@ int InitialDeviations::id_g = 1;
 class RecruitmentBase : public MASSubModel {
 protected:
 
-    static int id_g;
+
 
 public:
-
+    static int id_g;
     virtual ~RecruitmentBase() {
     }
     Parameter sigma_r;
@@ -1622,9 +1625,9 @@ std::map<int, BevertonHoltRecruitmentAlt*> BevertonHoltRecruitmentAlt::initializ
 class GrowthBase : public MASSubModel {
 protected:
 
-    static int id_g;
-public:
 
+public:
+    static int id_g;
     virtual ~GrowthBase() {
     }
 };
@@ -2981,10 +2984,11 @@ int Area::id_g = 1;
 class Movement : public MASSubModel {
 protected:
 
-    static int id_g;
+
 
 
 public:
+    static int id_g;
     int id;
     Rcpp::NumericVector connectivity_males;
     Rcpp::NumericVector connectivity_females;
@@ -3107,8 +3111,9 @@ std::map<int, Movement*> Movement::initialized_models;
 int Movement::id_g = 1;
 
 class Maturity {
-    static int id_g;
+
 public:
+    static int id_g;
     int id;
     Rcpp::NumericVector values;
 
@@ -3130,6 +3135,7 @@ int Maturity::id_g = 1;
 
 class Population : public MASSubModel {
 protected:
+public:
 
     static int id_g;
     std::vector<std::pair<int, int > > movement; //id, year, connectivity
@@ -4097,9 +4103,9 @@ public:
 std::map<int, MultinomialRobust*> MultinomialRobust::initialized_models;
 
 class IndexData {
-    static int id_g;
-public:
 
+public:
+    static int id_g;
     IndexData(bool add_to_list = true) {
 
         if (add_to_list) {
@@ -4130,9 +4136,9 @@ std::map<int, IndexData*> IndexData::initialized_models;
 int IndexData::id_g = 1;
 
 class AgeCompData {
-    static int id_g;
-public:
 
+public:
+    static int id_g;
     AgeCompData(bool add_to_list = true) {
 
         if (add_to_list) {
@@ -4163,11 +4169,9 @@ std::map<int, AgeCompData*> AgeCompData::initialized_models;
 int AgeCompData::id_g = 1;
 
 class LengthCompData {
-public:
 
+public:
     static int id_g;
-public:
-
     LengthCompData() {
 
         this->id = LengthCompData::id_g++;
@@ -4198,6 +4202,7 @@ int LengthCompData::id_g = 1;
 
 class Fleet : public MASSubModel {
 protected:
+public:
 
     static int id_g;
 
@@ -4596,6 +4601,7 @@ std::map<int, Fleet*> Fleet::initialized_models;
 int Fleet::id_g = 1;
 
 class Survey : public MASSubModel {
+public:
 
     enum Sex {
         MALE = 0,
@@ -5245,13 +5251,13 @@ public:
         }
 
         Survey::model_iterator sit;
-        for(sit = Survey::initialized_models.begin(); 
+        for(sit = Survey::initialized_models.begin();
                 sit != Survey::initialized_models.end(); ++sit){
-            
+
             std::cout<<"here"<<std::endl;
-            
+
             Survey* s = (*sit).second;
-            
+
             std::shared_ptr<IndexData> survey_index_data;
             std::shared_ptr<AgeCompData> survey_age_comp_data;
 
@@ -5329,17 +5335,17 @@ public:
         document.SetObject();
         int nareas = Area::initialized_models.size();
         Fleet::model_iterator fit;
-        for (fit = Fleet::initialized_models.begin(); 
+        for (fit = Fleet::initialized_models.begin();
                 fit != Fleet::initialized_models.end(); ++fit) {
             (*fit).second->DataToJSON(document, nyears, nseasons, nages, nareas);
         }
 
         Survey::model_iterator sit;
-        for (sit = Survey::initialized_models.begin(); 
+        for (sit = Survey::initialized_models.begin();
                 sit != Survey::initialized_models.end(); ++sit) {
             (*sit).second->DataToJSON(document, nyears, nseasons, nages, nareas);
         }
-       
+
 
         rapidjson::StringBuffer buffer;
         rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
@@ -5389,6 +5395,62 @@ public:
     }
 
     void Reset() {
+        LogisticSelectivity::id_g = 1;
+        LogisticSelectivity::initialized_models.clear();
+
+        DoubleLogisticSelectivity::id_g = 1;
+        DoubleLogisticSelectivity::initialized_models.clear();
+
+        AgeBasedSelectivity::id_g = 1;
+        AgeBasedSelectivity::initialized_models.clear();
+
+        FishingMortality::id_g = 1;
+        FishingMortality::initialized_models.clear();
+
+        NaturalMortality::id_g = 1;
+        NaturalMortality::initialized_models.clear();
+
+        InitialDeviations::id_g = 1;
+        InitialDeviations::initialized_models.clear();
+
+        RickerRecruitment::id_g = 1;
+        RickerRecruitment::initialized_models.clear();
+
+        BevertonHoltRecruitment::id_g = 1;
+        BevertonHoltRecruitment::initialized_models.clear();
+
+        VonBertalanffy::id_g = 1;
+        VonBertalanffy::initialized_models.clear();
+
+        VonBertalanffyModified::id_g = 1;
+        VonBertalanffyModified::initialized_models.clear();
+
+        Area::id_g = 1;
+        Area::initialized_models.clear();
+
+        Movement::id_g = 1;
+        Movement::initialized_models.clear();
+
+        Maturity::id_g = 1;
+        Maturity::initialized_models.clear();
+
+        Population::id_g = 1;
+        Population::initialized_models.clear();
+
+        IndexData::id_g = 1;
+        IndexData::initialized_models.clear();
+
+        AgeCompData::id_g = 1;
+        AgeCompData::initialized_models.clear();
+
+        LengthCompData::id_g = 1;
+        LengthCompData::initialized_models.clear();
+
+        Fleet::id_g = 1;
+        Fleet::initialized_models.clear();
+
+        Survey::id_g = 1;
+        Survey::initialized_models.clear();
 
         NLLBase::nll_submodels.clear();
         MASSubModel::submodels.clear();
