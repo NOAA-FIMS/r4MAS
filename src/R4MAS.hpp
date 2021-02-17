@@ -318,7 +318,7 @@ public:
         document.AddMember("selectivity", selectivity, allocator);
     }
 
-    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::kArrayType& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
         rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
         rapidjson::Value selectivity(rapidjson::kObjectType);
         rapidjson::Value parameters(rapidjson::kObjectType);
@@ -561,7 +561,7 @@ public:
         document.AddMember("selectivity", selectivity, allocator);
     }
 
-    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::kArrayType& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
         rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
         rapidjson::Value selectivity(rapidjson::kObjectType);
         rapidjson::Value parameters(rapidjson::kObjectType);
@@ -752,7 +752,7 @@ public:
         document.AddMember("selectivity", selectivity, allocator);
     }
 
-    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::kArrayType& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
         rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
         rapidjson::Value selectivity(rapidjson::kObjectType);
         rapidjson::Value parameters(rapidjson::kObjectType);
@@ -912,7 +912,7 @@ public:
         document.AddMember("fishing_mortality", fishing_mort, allocator);
     }
 
-    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::kArrayType& fm, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& fm, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
         rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
         rapidjson::Value fishing_mort(rapidjson::kObjectType);
         rapidjson::Value parameters(rapidjson::kObjectType);
@@ -1040,7 +1040,7 @@ public:
         document.AddMember("natural_mortality", natural_mort, allocator);
     }
 
-    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::kArrayType& nm, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& nm, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
         rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
         rapidjson::Value natural_mort(rapidjson::kObjectType);
         rapidjson::Value parameters(rapidjson::kObjectType);
@@ -1098,7 +1098,7 @@ public:
         this->values = values;
     }
 
-    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::kArrayType& init_devs, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& init_devs, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
         rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
         rapidjson::Value initial_devs(rapidjson::kObjectType);
         rapidjson::Value parameters(rapidjson::kObjectType);
@@ -3781,7 +3781,7 @@ public:
         document.AddMember("population", population, allocator);
     }
 
-    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::kArrayType& pops, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& pops, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
         rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
         rapidjson::Value population(rapidjson::kObjectType);
         population.AddMember("id", this->id, allocator);
