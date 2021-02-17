@@ -201,6 +201,7 @@ protected:
 
 public:
     static int id_g;
+
     virtual ~SelectivityBase() {
     }
 };
@@ -315,6 +316,48 @@ public:
         parameters.AddMember("s", s, allocator);
         selectivity.AddMember("parameters", parameters, allocator);
         document.AddMember("selectivity", selectivity, allocator);
+    }
+
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::kArrayType& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value selectivity(rapidjson::kObjectType);
+        rapidjson::Value parameters(rapidjson::kObjectType);
+        selectivity.AddMember("model", "logistic", allocator);
+        selectivity.AddMember("id", this->id, allocator);
+        rapidjson::Value a50(rapidjson::kObjectType);
+        a50.AddMember("value", this->a50.value, allocator);
+        if (this->a50.estimated) {
+            a50.AddMember("estimated", "true", allocator);
+            a50.AddMember("min", this->a50.min, allocator);
+            a50.AddMember("max", this->a50.max, allocator);
+            a50.AddMember("phase", this->a50.phase, allocator);
+        } else {
+            a50.AddMember("estimated", "false", allocator);
+            a50.AddMember("min", this->a50.min, allocator);
+            a50.AddMember("max", this->a50.max, allocator);
+            a50.AddMember("phase", this->a50.phase, allocator);
+        }
+
+        parameters.AddMember("a50", a50, allocator);
+
+        rapidjson::Value s(rapidjson::kObjectType);
+        s.AddMember("value", this->slope.value, allocator);
+        if (this->slope.estimated) {
+
+            s.AddMember("estimated", "true", allocator);
+            s.AddMember("min", this->slope.min, allocator);
+            s.AddMember("max", this->slope.max, allocator);
+            s.AddMember("phase", this->slope.phase, allocator);
+        } else {
+            s.AddMember("estimated", "false", allocator);
+            s.AddMember("min", this->slope.min, allocator);
+            s.AddMember("max", this->slope.max, allocator);
+            s.AddMember("phase", this->slope.phase, allocator);
+        }
+
+        parameters.AddMember("s", s, allocator);
+        selectivity.AddMember("parameters", parameters, allocator);
+        selex.PushBack(selectivity, allocator);
     }
 
     void ExtractFromMAS(mas::Information<double>& info) {
@@ -518,6 +561,82 @@ public:
         document.AddMember("selectivity", selectivity, allocator);
     }
 
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::kArrayType& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value selectivity(rapidjson::kObjectType);
+        rapidjson::Value parameters(rapidjson::kObjectType);
+        selectivity.AddMember("model", "double_logistic", allocator);
+        selectivity.AddMember("id", this->id, allocator);
+        rapidjson::Value alpha_asc(rapidjson::kObjectType);
+        alpha_asc.AddMember("value", this->alpha_asc.value, allocator);
+        if (this->alpha_asc.estimated) {
+            alpha_asc.AddMember("estimated", "true", allocator);
+            alpha_asc.AddMember("min", this->alpha_asc.min, allocator);
+            alpha_asc.AddMember("max", this->alpha_asc.max, allocator);
+            alpha_asc.AddMember("phase", this->alpha_asc.phase, allocator);
+        } else {
+            alpha_asc.AddMember("estimated", "false", allocator);
+            alpha_asc.AddMember("min", this->alpha_asc.min, allocator);
+            alpha_asc.AddMember("max", this->alpha_asc.max, allocator);
+            alpha_asc.AddMember("phase", this->alpha_asc.phase, allocator);
+        }
+
+        parameters.AddMember("alpha_asc", alpha_asc, allocator);
+
+        rapidjson::Value beta_asc(rapidjson::kObjectType);
+        beta_asc.AddMember("value", this->beta_asc.value, allocator);
+        if (this->beta_asc.estimated) {
+
+            beta_asc.AddMember("estimated", "true", allocator);
+            beta_asc.AddMember("min", this->beta_asc.min, allocator);
+            beta_asc.AddMember("max", this->beta_asc.max, allocator);
+            beta_asc.AddMember("phase", this->beta_asc.phase, allocator);
+        } else {
+
+            beta_asc.AddMember("estimated", "false", allocator);
+            beta_asc.AddMember("min", this->beta_asc.min, allocator);
+            beta_asc.AddMember("max", this->beta_asc.max, allocator);
+            beta_asc.AddMember("phase", this->beta_asc.phase, allocator);
+        }
+
+        parameters.AddMember("beta_asc", beta_asc, allocator);
+
+        rapidjson::Value alpha_desc(rapidjson::kObjectType);
+        alpha_desc.AddMember("value", this->alpha_desc.value, allocator);
+        if (this->alpha_desc.estimated) {
+            alpha_asc.AddMember("estimated", "true", allocator);
+            alpha_asc.AddMember("min", this->alpha_desc.min, allocator);
+            alpha_asc.AddMember("max", this->alpha_desc.max, allocator);
+            alpha_asc.AddMember("phase", this->alpha_desc.phase, allocator);
+        } else {
+            alpha_asc.AddMember("estimated", "false", allocator);
+            alpha_asc.AddMember("min", this->alpha_desc.min, allocator);
+            alpha_asc.AddMember("max", this->alpha_desc.max, allocator);
+            alpha_asc.AddMember("phase", this->alpha_desc.phase, allocator);
+        }
+
+        parameters.AddMember("alpha_desc", alpha_desc, allocator);
+
+        rapidjson::Value beta_desc(rapidjson::kObjectType);
+        beta_desc.AddMember("value", this->beta_desc.value, allocator);
+        if (this->beta_desc.estimated) {
+
+            beta_desc.AddMember("estimated", "true", allocator);
+            beta_desc.AddMember("min", this->beta_desc.min, allocator);
+            beta_desc.AddMember("max", this->beta_desc.max, allocator);
+            beta_desc.AddMember("phase", this->beta_desc.phase, allocator);
+        } else {
+
+            beta_desc.AddMember("estimated", "false", allocator);
+            beta_desc.AddMember("min", this->beta_desc.min, allocator);
+            beta_desc.AddMember("max", this->beta_desc.max, allocator);
+            beta_desc.AddMember("phase", this->beta_desc.phase, allocator);
+        }
+
+        parameters.AddMember("beta_desc", beta_desc, allocator);
+        selectivity.AddMember("parameters", parameters, allocator);
+        selex.PushBack(selectivity, allocator);
+    }
 
     static std::map<int, DoubleLogisticSelectivity*> initialized_models;
     typedef typename std::map<int, DoubleLogisticSelectivity*>::iterator model_iterator;
@@ -633,6 +752,40 @@ public:
         document.AddMember("selectivity", selectivity, allocator);
     }
 
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::kArrayType& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value selectivity(rapidjson::kObjectType);
+        rapidjson::Value parameters(rapidjson::kObjectType);
+        selectivity.AddMember("model", "age_based", allocator);
+        selectivity.AddMember("id", this->id, allocator);
+        rapidjson::Value s(rapidjson::kObjectType);
+        rapidjson::Value vals(rapidjson::kArrayType);
+        rapidjson::Value min(rapidjson::kArrayType);
+        rapidjson::Value max(rapidjson::kArrayType);
+        for (int i = 0; i < values.size(); i++) {
+            vals.PushBack(this->values[i], allocator);
+            min.PushBack(this->min, allocator);
+            max.PushBack(this->max, allocator);
+        }
+        s.AddMember("values", vals, allocator);
+        s.AddMember("min", min, allocator);
+        s.AddMember("max", max, allocator);
+        if (this->estimated) {
+            s.AddMember("estimated", "true", allocator);
+            s.AddMember("min", this->min, allocator);
+            s.AddMember("max", this->max, allocator);
+            s.AddMember("phase", this->phase, allocator);
+        } else {
+            s.AddMember("estimated", "false", allocator);
+            s.AddMember("min", this->min, allocator);
+            s.AddMember("max", this->max, allocator);
+            s.AddMember("phase", this->phase, allocator);
+        }
+
+        parameters.AddMember("s", s, allocator);
+        selectivity.AddMember("parameters", parameters, allocator);
+        selex.PushBack(selectivity, allocator);
+    }
 
     static std::map<int, AgeBasedSelectivity*> initialized_models;
     typedef typename std::map<int, AgeBasedSelectivity*>::iterator model_iterator;
@@ -644,8 +797,6 @@ std::map<int, AgeBasedSelectivity*> AgeBasedSelectivity::initialized_models;
  * Mortality
  */
 class FishingMortality : public MASSubModel {
-
-
 public:
     static int id_g;
     int id;
@@ -761,6 +912,30 @@ public:
         document.AddMember("fishing_mortality", fishing_mort, allocator);
     }
 
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::kArrayType& fm, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value fishing_mort(rapidjson::kObjectType);
+        rapidjson::Value parameters(rapidjson::kObjectType);
+        rapidjson::Value vals(rapidjson::kArrayType);
+        for (int i = 0; i < this->values.size(); i++) {
+            rapidjson::Value entry(rapidjson::kArrayType);
+            entry.PushBack(this->values[i], allocator);
+            vals.PushBack(entry, allocator);
+        }
+        fishing_mort.AddMember("id", this->id, allocator);
+        if (this->estimate) {
+            parameters.AddMember("estimated", "true", allocator);
+        } else {
+            parameters.AddMember("estimated", "false", allocator);
+        }
+        parameters.AddMember("phase", this->phase, allocator);
+        parameters.AddMember("min", this->min, allocator);
+        parameters.AddMember("max", this->max, allocator);
+        parameters.AddMember("values", vals, allocator);
+        fishing_mort.AddMember("parameters", parameters, allocator);
+        fm.PushBack(fishing_mort, allocator);
+    }
+
     static std::map<int, FishingMortality*> initialized_models;
     typedef typename std::map<int, FishingMortality*>::iterator model_iterator;
 };
@@ -769,9 +944,6 @@ std::map<int, FishingMortality*> FishingMortality::initialized_models;
 int FishingMortality::id_g = 1;
 
 class NaturalMortality : public MASSubModel {
-
-
-
 public:
     static int id_g;
     int id;
@@ -868,6 +1040,33 @@ public:
         document.AddMember("natural_mortality", natural_mort, allocator);
     }
 
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::kArrayType& nm, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value natural_mort(rapidjson::kObjectType);
+        rapidjson::Value parameters(rapidjson::kObjectType);
+        rapidjson::Value vals(rapidjson::kArrayType);
+        rapidjson::Value min(rapidjson::kArrayType);
+        rapidjson::Value max(rapidjson::kArrayType);
+        for (int i = 0; i < this->values.size(); i++) {
+            vals.PushBack(this->values[i], allocator);
+            min.PushBack(this->min, allocator);
+            max.PushBack(this->max, allocator);
+        }
+        natural_mort.AddMember("id", this->id, allocator);
+        if (this->estimate) {
+            parameters.AddMember("estimated", "true", allocator);
+        } else {
+            parameters.AddMember("estimated", "false", allocator);
+        }
+        parameters.AddMember("phase", this->phase, allocator);
+        parameters.AddMember("values", vals, allocator);
+        parameters.AddMember("min", min, allocator);
+        parameters.AddMember("max", max, allocator);
+
+        natural_mort.AddMember("parameters", parameters, allocator);
+        nm.PushBack(natural_mort, allocator);
+    }
+
 
     static std::map<int, NaturalMortality*> initialized_models;
     typedef typename std::map<int, NaturalMortality*>::iterator model_iterator;
@@ -877,17 +1076,16 @@ std::map<int, NaturalMortality*> NaturalMortality::initialized_models;
 int NaturalMortality::id_g = 1;
 
 class InitialDeviations {
-
-
 public:
     static int id_g;
     int id;
     Rcpp::NumericVector values;
     bool estimate = false;
     int phase = 1;
+    double min = std::numeric_limits<double>::min();
+    double max = std::numeric_limits<double>::max();
 
     InitialDeviations() {
-
         this->id = InitialDeviations::id_g++;
         InitialDeviations::initialized_models[this->id] = this;
     }
@@ -898,6 +1096,34 @@ public:
     void SetValues(Rcpp::NumericVector values) {
 
         this->values = values;
+    }
+
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::kArrayType& init_devs, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value initial_devs(rapidjson::kObjectType);
+        rapidjson::Value parameters(rapidjson::kObjectType);
+        rapidjson::Value vals(rapidjson::kArrayType);
+        rapidjson::Value min(rapidjson::kArrayType);
+        rapidjson::Value max(rapidjson::kArrayType);
+        for (int i = 0; i < this->values.size(); i++) {
+            vals.PushBack(this->values[i], allocator);
+            min.PushBack(this->min, allocator);
+            max.PushBack(this->max, allocator);
+        }
+        initial_devs.AddMember("id", this->id, allocator);
+        if (this->estimate) {
+            parameters.AddMember("estimated", "true", allocator);
+        } else {
+            parameters.AddMember("estimated", "false", allocator);
+        }
+        parameters.AddMember("phase", this->phase, allocator);
+        parameters.AddMember("values", vals, allocator);
+        parameters.AddMember("min", min, allocator);
+        parameters.AddMember("max", max, allocator);
+
+        initial_devs.AddMember("parameters", parameters, allocator);
+        init_devs.PushBack(initial_devs, allocator);
+
     }
 
 
@@ -918,6 +1144,7 @@ protected:
 
 public:
     static int id_g;
+
     virtual ~RecruitmentBase() {
     }
     Parameter sigma_r;
@@ -1628,6 +1855,7 @@ protected:
 
 public:
     static int id_g;
+
     virtual ~GrowthBase() {
     }
 };
@@ -3111,7 +3339,6 @@ std::map<int, Movement*> Movement::initialized_models;
 int Movement::id_g = 1;
 
 class Maturity {
-
 public:
     static int id_g;
     int id;
@@ -3554,6 +3781,155 @@ public:
         document.AddMember("population", population, allocator);
     }
 
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::kArrayType& pops, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value population(rapidjson::kObjectType);
+        population.AddMember("id", this->id, allocator);
+        population.AddMember("sex_ratio", this->sex_ratio, allocator);
+
+
+        rapidjson::Value movement(rapidjson::kArrayType);
+        for (int i = 0; i < this->movement.size(); i++) {
+
+            rapidjson::Value movement_entry(rapidjson::kObjectType);
+            movement_entry.AddMember("year", this->movement[i].second, allocator);
+            movement_entry.AddMember("id", this->movement[i].first, allocator);
+            movement.PushBack(movement_entry, allocator);
+        }
+
+        population.AddMember("movement", movement, allocator);
+
+        rapidjson::Value maturity(rapidjson::kArrayType);
+        //females
+        maturity_iterator mit;
+        for (mit = this->maturity_females.begin(); mit != this->maturity_females.end(); ++mit) {
+            rapidjson::Value maturity_entry(rapidjson::kObjectType);
+            maturity_entry.AddMember("sex", "females", allocator);
+            maturity_entry.AddMember("area", (*mit).first, allocator);
+
+            Maturity::model_iterator it = Maturity::initialized_models.find((*mit).second);
+            if (it != Maturity::initialized_models.end()) {
+                Rcpp::NumericVector& values = (*it).second->values;
+                rapidjson::Value vals(rapidjson::kArrayType);
+                for (int i = 0; i < values.size(); i++) {
+                    vals.PushBack(values[i], allocator);
+                }
+                maturity_entry.AddMember("values", vals, allocator);
+            }
+            maturity.PushBack(maturity_entry, allocator);
+        }
+
+        for (mit = this->maturity_males.begin(); mit != this->maturity_males.end(); ++mit) {
+            rapidjson::Value maturity_entry(rapidjson::kObjectType);
+            maturity_entry.AddMember("sex", "females", allocator);
+            maturity_entry.AddMember("area", (*mit).first, allocator);
+
+            Maturity::model_iterator it = Maturity::initialized_models.find((*mit).second);
+            if (it != Maturity::initialized_models.end()) {
+                Rcpp::NumericVector& values = (*it).second->values;
+                rapidjson::Value vals(rapidjson::kArrayType);
+                for (int i = 0; i < values.size(); i++) {
+                    vals.PushBack(values[i], allocator);
+                }
+                maturity_entry.AddMember("values", vals, allocator);
+            }
+            maturity.PushBack(maturity_entry, allocator);
+        }
+        population.AddMember("maturity", maturity, allocator);
+
+        rapidjson::Value parameters(rapidjson::kObjectType);
+        rapidjson::Value natural_mortality(rapidjson::kArrayType);
+        //females
+        for (int i = 0; i < this->natural_mortality_females.size(); i++) {
+            rapidjson::Value natural_mortality_entry(rapidjson::kObjectType);
+            natural_mortality_entry.AddMember("sex", "female", allocator);
+            natural_mortality_entry.AddMember("id", natural_mortality_females[i].first, allocator);
+            natural_mortality_entry.AddMember("area", natural_mortality_females[i].second, allocator);
+            natural_mortality.PushBack(natural_mortality_entry, allocator);
+        }
+        //males
+        for (int i = 0; i < this->natural_mortality_males.size(); i++) {
+            rapidjson::Value natural_mortality_entry(rapidjson::kObjectType);
+            natural_mortality_entry.AddMember("sex", "male", allocator);
+            natural_mortality_entry.AddMember("id", natural_mortality_males[i].first, allocator);
+            natural_mortality_entry.AddMember("area", natural_mortality_males[i].second, allocator);
+            natural_mortality.PushBack(natural_mortality_entry, allocator);
+        }
+
+        parameters.AddMember("natural_mortality", natural_mortality, allocator);
+
+        rapidjson::Value recruitment(rapidjson::kArrayType);
+        for (int i = 0; i < this->recruitment.size(); i++) {
+            rapidjson::Value recruitment_entry(rapidjson::kObjectType);
+            recruitment_entry.AddMember("id", this->recruitment[i].first, allocator);
+            recruitment_entry.AddMember("season", this->recruitment[i].second, allocator);
+            recruitment_entry.AddMember("area", this->recruitment[i].third, allocator);
+            recruitment.PushBack(recruitment_entry, allocator);
+        }
+        parameters.AddMember("recruitment", recruitment, allocator);
+
+        rapidjson::Value growth(rapidjson::kObjectType);
+        growth.AddMember("id", this->growth, allocator);
+        parameters.AddMember("growth", growth, allocator);
+
+        rapidjson::Value initial_deviations(rapidjson::kArrayType);
+        deviations_iterator idit;
+        for (idit = this->intial_deviations_females.begin(); idit != this->intial_deviations_females.end(); ++idit) {
+            rapidjson::Value initial_devs_female(rapidjson::kObjectType);
+            initial_devs_female.AddMember("sex", "female", allocator);
+            initial_devs_female.AddMember("area", (*idit).first, allocator);
+
+            InitialDeviations::model_iterator it = InitialDeviations::initialized_models.find((*idit).second);
+            if (it != InitialDeviations::initialized_models.end()) {
+                InitialDeviations* idevs = it->second;
+                if (idevs->estimate == true) {
+                    initial_devs_female.AddMember("estimated", "true", allocator);
+                } else {
+                    initial_devs_female.AddMember("estimated", "false", allocator);
+                }
+                initial_devs_female.AddMember("random_effect", "false", allocator);
+                initial_devs_female.AddMember("id", idevs->id, allocator);
+                initial_devs_female.AddMember("phase", idevs->phase, allocator);
+                rapidjson::Value vals(rapidjson::kArrayType);
+                for (int i = 0; i < idevs->values.size(); i++) {
+                    vals.PushBack(idevs->values[i], allocator);
+                }
+                initial_devs_female.AddMember("values", vals, allocator);
+            }
+            initial_deviations.PushBack(initial_devs_female, allocator);
+        }
+
+        for (idit = this->intial_deviations_males.begin(); idit != this->intial_deviations_males.end(); ++idit) {
+            rapidjson::Value initial_devs_male(rapidjson::kObjectType);
+            initial_devs_male.AddMember("sex", "male", allocator);
+            initial_devs_male.AddMember("area", (*idit).first, allocator);
+
+            InitialDeviations::model_iterator it = InitialDeviations::initialized_models.find((*idit).second);
+            if (it != InitialDeviations::initialized_models.end()) {
+                InitialDeviations* idevs = it->second;
+                if (idevs->estimate == true) {
+                    initial_devs_male.AddMember("estimated", "true", allocator);
+                } else {
+                    initial_devs_male.AddMember("estimated", "false", allocator);
+                }
+                initial_devs_male.AddMember("random_effect", "false", allocator);
+                initial_devs_male.AddMember("id", idevs->id, allocator);
+                initial_devs_male.AddMember("phase", idevs->phase, allocator);
+                rapidjson::Value vals(rapidjson::kArrayType);
+                for (int i = 0; i < idevs->values.size(); i++) {
+                    vals.PushBack(idevs->values[i], allocator);
+                }
+                initial_devs_male.AddMember("values", vals, allocator);
+            }
+            initial_deviations.PushBack(initial_devs_male, allocator);
+        }
+        parameters.AddMember("initial_deviations", initial_deviations, allocator);
+
+
+        population.AddMember("parameters", parameters, allocator);
+        pops.PushBack(population, allocator);
+    }
+
     static std::map<int, Population*> initialized_models;
     typedef typename std::map<int, Population*>::iterator model_iterator;
 };
@@ -3584,6 +3960,7 @@ class Lognormal : public NLLBase {
     Rcpp::NumericVector lambdas;
     Rcpp::IntegerVector lambda_dimensions;
     bool has_lambdas = false;
+    bool use_bias_correction = true;
 public:
     int id;
 
@@ -3610,6 +3987,7 @@ public:
         std::shared_ptr < mas::DataObject<double > > lambda_data(new mas::DataObject<double>());
         std::shared_ptr<mas::Lognormal<double> > ln = std::make_shared<mas::Lognormal<double> >();
         mas::Lognormal<double>* nll = ln.get();
+        ln->use_bias_correction = this->use_bias_correction;
         nll->lambda = lambda_data;
         nll->id = this->id;
         if (this->has_lambdas) {
@@ -4103,9 +4481,9 @@ public:
 std::map<int, MultinomialRobust*> MultinomialRobust::initialized_models;
 
 class IndexData {
-
 public:
     static int id_g;
+
     IndexData(bool add_to_list = true) {
 
         if (add_to_list) {
@@ -4136,9 +4514,9 @@ std::map<int, IndexData*> IndexData::initialized_models;
 int IndexData::id_g = 1;
 
 class AgeCompData {
-
 public:
     static int id_g;
+
     AgeCompData(bool add_to_list = true) {
 
         if (add_to_list) {
@@ -4169,9 +4547,9 @@ std::map<int, AgeCompData*> AgeCompData::initialized_models;
 int AgeCompData::id_g = 1;
 
 class LengthCompData {
-
 public:
     static int id_g;
+
     LengthCompData() {
 
         this->id = LengthCompData::id_g++;
@@ -5225,12 +5603,12 @@ public:
 
 
             fleet_index_data = std::make_shared<IndexData>();
-//            fleet_index_data->id = data->id;
+            //            fleet_index_data->id = data->id;
             fleet_index_data->data = data->data;
             fleet_index_data->error = data->observation_error;
             fleet_index_data->sex = "undifferentiated";
             this->om_index_data.push_back(fleet_index_data);
-//            IndexData::initialized_models[fleet_index_data->id] = fleet_index_data.get();
+            //            IndexData::initialized_models[fleet_index_data->id] = fleet_index_data.get();
             //add back to initialized list
             f->AddIndexData(fleet_index_data->id, "undifferentiated");
 
@@ -5240,21 +5618,21 @@ public:
 
 
             fleet_age_comp_data = std::make_shared<AgeCompData>();
-//            fleet_age_comp_data->id = data2->id;
+            //            fleet_age_comp_data->id = data2->id;
             fleet_age_comp_data->data = data2->data;
             fleet_age_comp_data->sample_size = data2->sample_size;
             fleet_age_comp_data->sex = "undifferentiated";
             this->om_age_comp_data.push_back(fleet_age_comp_data);
-//            AgeCompData::initialized_models[fleet_age_comp_data->id] = fleet_age_comp_data.get();
+            //            AgeCompData::initialized_models[fleet_age_comp_data->id] = fleet_age_comp_data.get();
             //add back to initialized list
             f->AddAgeCompData(fleet_age_comp_data->id, "undifferentiated");
         }
 
         Survey::model_iterator sit;
-        for(sit = Survey::initialized_models.begin();
-                sit != Survey::initialized_models.end(); ++sit){
+        for (sit = Survey::initialized_models.begin();
+                sit != Survey::initialized_models.end(); ++sit) {
 
-            std::cout<<"here"<<std::endl;
+            std::cout << "here" << std::endl;
 
             Survey* s = (*sit).second;
 
@@ -5270,12 +5648,12 @@ public:
 
 
             survey_index_data = std::make_shared<IndexData>();
-//            survey_index_data->id = data->id;
+            //            survey_index_data->id = data->id;
             survey_index_data->data = data->data;
             survey_index_data->error = data->observation_error;
             survey_index_data->sex = "undifferentiated";
             this->om_index_data.push_back(survey_index_data);
-//            IndexData::initialized_models[survey_index_data->id] = survey_index_data.get();
+            //            IndexData::initialized_models[survey_index_data->id] = survey_index_data.get();
             //add back to initialized list
             s->AddIndexData(survey_index_data->id, "undifferentiated");
 
@@ -5285,12 +5663,12 @@ public:
 
 
             survey_age_comp_data = std::make_shared<AgeCompData>();
-//            survey_age_comp_data->id = data2->id;
+            //            survey_age_comp_data->id = data2->id;
             survey_age_comp_data->data = data2->data;
             survey_age_comp_data->sample_size = data2->sample_size;
             survey_age_comp_data->sex = "undifferentiated";
             this->om_age_comp_data.push_back(survey_age_comp_data);
-//            AgeCompData::initialized_models[survey_age_comp_data->id] = survey_age_comp_data.get();
+            //            AgeCompData::initialized_models[survey_age_comp_data->id] = survey_age_comp_data.get();
             //add back to initialized list
             s->AddAgeCompData(survey_age_comp_data->id, "undifferentiated");
         }
@@ -5679,6 +6057,7 @@ RCPP_MODULE(rmas) {
     class_<Lognormal>("Lognormal")
             .constructor()
             .field("id", &Lognormal::id)
+            .field("use_bias_correction", &Lognormal::use_bias_correction)
             .method("SetLambdaValues", &Lognormal::SetLambdaValues)
             ;
     class_<DirichletMultinomial>("DirichletMultinomial")

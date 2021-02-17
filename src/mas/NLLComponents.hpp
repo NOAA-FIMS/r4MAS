@@ -171,6 +171,7 @@ namespace mas {
         typedef typename VariableTrait<REAL_T>::variable variable;
         NLL_Functor_Type functor_type = LOGNORMAL;
         variable sigma = 0.2;
+        bool use_bias_correction = true;
 
         Lognormal() {
         }
@@ -198,29 +199,47 @@ namespace mas {
             switch (observed->dimensions) {
                 case 2:
 
-                    for (i = 0; i < this->years; i++) {
-                        for (j = 0; j < this->seasons; j++) {
-                            size_t index = i * this->seasons + j;
-                            expected = predicted[index];
+                    if (this->use_bias_correction) {
+                        for (i = 0; i < this->years; i++) {
+                            for (j = 0; j < this->seasons; j++) {
+                                size_t index = i * this->seasons + j;
+                                expected = predicted[index];
 
-                            REAL_T obs = observed->get(i, j);
-                            if (obs != observed->missing_value) {
-                                // likely_ind(ind) += log(index_sigma(ind, i));
-                                // likely_ind(ind) += 0.5 * square(log(index_obs(ind, i)) - log(index_pred(ind, i))) / index_sigma2(ind, i);
-                                cv = observed->get_error(i, j);
-                                se2 = std::log(cv * cv + 1.0);
-                                se = std::sqrt(se2) / std::sqrt(std::log(M_E));
-                                nll1 += this->lambda->get(i, j) * std::log(se);
-//                                nll2 += this->lambda->get(i, j) * SQUARE(std::log(obs)- mas::log(expected))/se2;
-                                nll2 += this->lambda->get(i, j) * SQUARE((mas::log((obs / expected)) / se) + 0.5 * se);
-//                                nll+=((obs-expected)*(obs-expected));
-                                //                                nll +=  *(std::log(se) + (0.5 * ));
-                                //                                nll += this->lambda->get(i, j) *(std::log(se) + (0.5 * SQUARE(std::log(obs) - mas::log(expected)) / se2) + 0.5 * se);
+                                REAL_T obs = observed->get(i, j);
+                                if (obs != observed->missing_value) {
+                                    // likely_ind(ind) += log(index_sigma(ind, i));
+                                    // likely_ind(ind) += 0.5 * square(log(index_obs(ind, i)) - log(index_pred(ind, i))) / index_sigma2(ind, i);
+                                    cv = observed->get_error(i, j);
+                                    se2 = std::log(cv * cv + 1.0);
+                                    se = std::sqrt(se2) / std::sqrt(std::log(M_E));
+                                    nll1 += this->lambda->get(i, j) * std::log(se);
+                                    nll2 += this->lambda->get(i, j) * SQUARE((mas::log((obs / expected)) / se) + 0.5 * se);
+                                }
                             }
-                        }
 
+                        }
+                    } else {
+                        for (i = 0; i < this->years; i++) {
+                            for (j = 0; j < this->seasons; j++) {
+                                size_t index = i * this->seasons + j;
+                                expected = predicted[index];
+
+                                REAL_T obs = observed->get(i, j);
+                                if (obs != observed->missing_value) {
+                                    // likely_ind(ind) += log(index_sigma(ind, i));
+                                    // likely_ind(ind) += 0.5 * square(log(index_obs(ind, i)) - log(index_pred(ind, i))) / index_sigma2(ind, i);
+                                    cv = observed->get_error(i, j);
+                                    se2 = std::log(cv * cv + 1.0);
+                                    se = std::sqrt(se2) / std::sqrt(std::log(M_E));
+                                    nll1 += this->lambda->get(i, j) * std::log(se);
+                                    nll2 += this->lambda->get(i, j) * SQUARE(mas::log((obs / expected))) / se2;
+                                }
+                            }
+
+                        }
                     }
                     nll = nll1 + 0.5 * nll2;
+
                     break;
                 case 3:
 
