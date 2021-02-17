@@ -3960,9 +3960,9 @@ class Lognormal : public NLLBase {
     Rcpp::NumericVector lambdas;
     Rcpp::IntegerVector lambda_dimensions;
     bool has_lambdas = false;
-    bool use_bias_correction = true;
 public:
     int id;
+    bool use_bias_correction = true;
 
     Lognormal() {
 
