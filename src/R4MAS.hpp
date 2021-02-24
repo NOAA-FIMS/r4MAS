@@ -1389,6 +1389,105 @@ public:
         document.AddMember("recruitment", recruitment, allocator);
     }
 
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& rec, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value recruitment(rapidjson::kObjectType);
+        rapidjson::Value parameters(rapidjson::kObjectType);
+
+        recruitment.AddMember("id", this->id, allocator);
+        recruitment.AddMember("model", "ricker", allocator);
+
+        rapidjson::Value R0(rapidjson::kObjectType);
+        R0.AddMember("value", this->R0.value, allocator);
+        if (this->R0.estimated) {
+            R0.AddMember("estimated", "true", allocator);
+            R0.AddMember("min", this->R0.min, allocator);
+            R0.AddMember("max", this->R0.max, allocator);
+            R0.AddMember("phase", this->R0.phase, allocator);
+
+        } else {
+            R0.AddMember("estimated", "false", allocator);
+            R0.AddMember("min", this->R0.min, allocator);
+            R0.AddMember("max", this->R0.max, allocator);
+            R0.AddMember("phase", this->R0.phase, allocator);
+        }
+        parameters.AddMember("R0", R0, allocator);
+
+        rapidjson::Value alpha(rapidjson::kObjectType);
+        alpha.AddMember("value", this->alpha.value, allocator);
+        if (this->alpha.estimated) {
+            alpha.AddMember("estimated", "true", allocator);
+            alpha.AddMember("min", this->alpha.min, allocator);
+            alpha.AddMember("max", this->alpha.max, allocator);
+            alpha.AddMember("phase", this->alpha.phase, allocator);
+
+        } else {
+            alpha.AddMember("estimated", "false", allocator);
+            alpha.AddMember("min", this->alpha.min, allocator);
+            alpha.AddMember("max", this->alpha.max, allocator);
+            alpha.AddMember("phase", this->alpha.phase, allocator);
+        }
+        parameters.AddMember("alpha", alpha, allocator);
+
+        rapidjson::Value beta(rapidjson::kObjectType);
+        beta.AddMember("value", this->beta.value, allocator);
+        if (this->beta.estimated) {
+            beta.AddMember("estimated", "true", allocator);
+            beta.AddMember("min", this->beta.min, allocator);
+            beta.AddMember("max", this->beta.max, allocator);
+            beta.AddMember("phase", this->beta.phase, allocator);
+
+        } else {
+            beta.AddMember("estimated", "false", allocator);
+            beta.AddMember("min", this->beta.min, allocator);
+            beta.AddMember("max", this->beta.max, allocator);
+            beta.AddMember("phase", this->beta.phase, allocator);
+        }
+        parameters.AddMember("beta", beta, allocator);
+
+        rapidjson::Value sigma_r(rapidjson::kObjectType);
+        sigma_r.AddMember("value", this->sigma_r.value, allocator);
+        if (this->sigma_r.estimated) {
+            sigma_r.AddMember("estimated", "true", allocator);
+            sigma_r.AddMember("min", this->sigma_r.min, allocator);
+            sigma_r.AddMember("max", this->sigma_r.max, allocator);
+            sigma_r.AddMember("phase", this->sigma_r.phase, allocator);
+
+        } else {
+            sigma_r.AddMember("estimated", "false", allocator);
+            sigma_r.AddMember("min", this->sigma_r.min, allocator);
+            sigma_r.AddMember("max", this->sigma_r.max, allocator);
+            sigma_r.AddMember("phase", this->sigma_r.phase, allocator);
+        }
+        parameters.AddMember("sigma_r", sigma_r, allocator);
+
+        rapidjson::Value rec_devs(rapidjson::kObjectType);
+        rapidjson::Value vals(rapidjson::kObjectType);
+        for (int i = 0; i < this->deviations.size(); i++) {
+            vals.PushBack(this->deviations[i], allocator);
+        }
+        if (this->constrained_deviations) {
+            rec_devs.AddMember("constrained", "true", allocator);
+        } else {
+            rec_devs.AddMember("constrained", "false", allocator);
+        }
+        rec_devs.AddMember("random_effect", "false", allocator);
+        if (this->estimate_deviations) {
+            rec_devs.AddMember("estimated", "true", allocator);
+        } else {
+            rec_devs.AddMember("estimated", "false", allocator);
+        }
+        rec_devs.AddMember("min", this->deviations_min, allocator);
+        rec_devs.AddMember("max", this->deviations_max, allocator);
+        rec_devs.AddMember("phase", this->deviation_phase, allocator);
+        rec_devs.AddMember("values", vals, allocator);
+        parameters.AddMember("recruitment_deviations", rec_devs, allocator);
+        recruitment.AddMember("parameters", parameters, allocator);
+        rec.PushBack(recruitment, allocator);
+
+    }
+
 
     static std::map<int, RickerRecruitment*> initialized_models;
     typedef typename std::map<int, RickerRecruitment*>::iterator model_iterator;
@@ -1615,6 +1714,88 @@ public:
         document.AddMember("recruitment", recruitment, allocator);
     }
 
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& rec, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value recruitment(rapidjson::kObjectType);
+        rapidjson::Value parameters(rapidjson::kObjectType);
+
+        recruitment.AddMember("id", this->id, allocator);
+        recruitment.AddMember("model", "beverton_holt", allocator);
+
+        rapidjson::Value R0(rapidjson::kObjectType);
+        R0.AddMember("value", this->R0.value, allocator);
+        if (this->R0.estimated) {
+            R0.AddMember("estimated", "true", allocator);
+            R0.AddMember("min", this->R0.min, allocator);
+            R0.AddMember("max", this->R0.max, allocator);
+            R0.AddMember("phase", this->R0.phase, allocator);
+
+        } else {
+            R0.AddMember("estimated", "false", allocator);
+            R0.AddMember("min", this->R0.min, allocator);
+            R0.AddMember("max", this->R0.max, allocator);
+            R0.AddMember("phase", this->R0.phase, allocator);
+        }
+        parameters.AddMember("R0", R0, allocator);
+
+        rapidjson::Value h(rapidjson::kObjectType);
+        h.AddMember("value", this->h.value, allocator);
+        if (this->h.estimated) {
+            h.AddMember("estimated", "true", allocator);
+            h.AddMember("min", this->h.min, allocator);
+            h.AddMember("max", this->h.max, allocator);
+            h.AddMember("phase", this->h.phase, allocator);
+
+        } else {
+            h.AddMember("estimated", "false", allocator);
+            h.AddMember("min", this->h.min, allocator);
+            h.AddMember("max", this->h.max, allocator);
+            h.AddMember("phase", this->h.phase, allocator);
+        }
+        parameters.AddMember("h", h, allocator);
+
+        rapidjson::Value sigma_r(rapidjson::kObjectType);
+        sigma_r.AddMember("value", this->sigma_r.value, allocator);
+        if (this->sigma_r.estimated) {
+            sigma_r.AddMember("estimated", "true", allocator);
+            sigma_r.AddMember("min", this->sigma_r.min, allocator);
+            sigma_r.AddMember("max", this->sigma_r.max, allocator);
+            sigma_r.AddMember("phase", this->sigma_r.phase, allocator);
+
+        } else {
+            sigma_r.AddMember("estimated", "false", allocator);
+            sigma_r.AddMember("min", this->sigma_r.min, allocator);
+            sigma_r.AddMember("max", this->sigma_r.max, allocator);
+            sigma_r.AddMember("phase", this->sigma_r.phase, allocator);
+        }
+        parameters.AddMember("sigma_r", sigma_r, allocator);
+
+        rapidjson::Value rec_devs(rapidjson::kObjectType);
+        rapidjson::Value vals(rapidjson::kArrayType);
+        for (int i = 0; i < this->deviations.size(); i++) {
+            vals.PushBack(this->deviations[i], allocator);
+        }
+        if (this->constrained_deviations) {
+            rec_devs.AddMember("constrained", "true", allocator);
+        } else {
+            rec_devs.AddMember("constrained", "false", allocator);
+        }
+        rec_devs.AddMember("random_effect", "false", allocator);
+        if (this->estimate_deviations) {
+            rec_devs.AddMember("estimated", "true", allocator);
+        } else {
+            rec_devs.AddMember("estimated", "false", allocator);
+        }
+        rec_devs.AddMember("min", this->deviations_min, allocator);
+        rec_devs.AddMember("max", this->deviations_max, allocator);
+        rec_devs.AddMember("phase", this->deviation_phase, allocator);
+        rec_devs.AddMember("values", vals, allocator);
+        parameters.AddMember("recruitment_deviations", rec_devs, allocator);
+        recruitment.AddMember("parameters", parameters, allocator);
+        rec.PushBack(recruitment, allocator);
+    }
+
     static std::map<int, BevertonHoltRecruitment*> initialized_models;
     typedef typename std::map<int, BevertonHoltRecruitment*>::iterator model_iterator;
 };
@@ -1838,6 +2019,87 @@ public:
         parameters.AddMember("recruitment_deviations", rec_devs, allocator);
         recruitment.AddMember("parameters", parameters, allocator);
         document.AddMember("recruitment", recruitment, allocator);
+    }
+
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& rec, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value recruitment(rapidjson::kObjectType);
+        rapidjson::Value parameters(rapidjson::kObjectType);
+
+        recruitment.AddMember("id", this->id, allocator);
+        recruitment.AddMember("model", "beverton_holt", allocator);
+
+        rapidjson::Value R0(rapidjson::kObjectType);
+        R0.AddMember("value", this->R0.value, allocator);
+        if (this->R0.estimated) {
+            R0.AddMember("estimated", "true", allocator);
+            R0.AddMember("min", this->R0.min, allocator);
+            R0.AddMember("max", this->R0.max, allocator);
+            R0.AddMember("phase", this->R0.phase, allocator);
+
+        } else {
+            R0.AddMember("estimated", "false", allocator);
+            R0.AddMember("min", this->R0.min, allocator);
+            R0.AddMember("max", this->R0.max, allocator);
+            R0.AddMember("phase", this->R0.phase, allocator);
+        }
+        parameters.AddMember("R0", R0, allocator);
+
+        rapidjson::Value h(rapidjson::kObjectType);
+        h.AddMember("value", this->h.value, allocator);
+        if (this->h.estimated) {
+            h.AddMember("estimated", "true", allocator);
+            h.AddMember("min", this->h.min, allocator);
+            h.AddMember("max", this->h.max, allocator);
+            h.AddMember("phase", this->h.phase, allocator);
+
+        } else {
+            h.AddMember("estimated", "false", allocator);
+            h.AddMember("min", this->h.min, allocator);
+            h.AddMember("max", this->h.max, allocator);
+            h.AddMember("phase", this->h.phase, allocator);
+        }
+        parameters.AddMember("h", h, allocator);
+
+        rapidjson::Value sigma_r(rapidjson::kObjectType);
+        sigma_r.AddMember("value", this->sigma_r.value, allocator);
+        if (this->sigma_r.estimated) {
+            sigma_r.AddMember("estimated", "true", allocator);
+            sigma_r.AddMember("min", this->sigma_r.min, allocator);
+            sigma_r.AddMember("max", this->sigma_r.max, allocator);
+            sigma_r.AddMember("phase", this->sigma_r.phase, allocator);
+
+        } else {
+            sigma_r.AddMember("estimated", "false", allocator);
+            sigma_r.AddMember("min", this->sigma_r.min, allocator);
+            sigma_r.AddMember("max", this->sigma_r.max, allocator);
+            sigma_r.AddMember("phase", this->sigma_r.phase, allocator);
+        }
+        parameters.AddMember("sigma_r", sigma_r, allocator);
+
+        rapidjson::Value rec_devs(rapidjson::kObjectType);
+        rapidjson::Value vals(rapidjson::kArrayType);
+        for (int i = 0; i < this->deviations.size(); i++) {
+            vals.PushBack(this->deviations[i], allocator);
+        }
+        if (this->constrained_deviations) {
+            rec_devs.AddMember("constrained", "true", allocator);
+        } else {
+            rec_devs.AddMember("constrained", "false", allocator);
+        }
+        rec_devs.AddMember("random_effect", "false", allocator);
+        if (this->estimate_deviations) {
+            rec_devs.AddMember("estimated", "true", allocator);
+        } else {
+            rec_devs.AddMember("estimated", "false", allocator);
+        }
+        rec_devs.AddMember("min", this->deviations_min, allocator);
+        rec_devs.AddMember("max", this->deviations_max, allocator);
+        rec_devs.AddMember("phase", this->deviation_phase, allocator);
+        rec_devs.AddMember("values", vals, allocator);
+        parameters.AddMember("recruitment_deviations", rec_devs, allocator);
+        recruitment.AddMember("parameters", parameters, allocator);
+        rec.PushBack(recruitment, allocator);
     }
 
     static std::map<int, BevertonHoltRecruitmentAlt*> initialized_models;
@@ -2471,6 +2733,230 @@ public:
         }
 
         document.AddMember("growth", growth, allocator);
+    }
+
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& grth, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value growth(rapidjson::kObjectType);
+        rapidjson::Value parameters(rapidjson::kObjectType);
+
+        growth.AddMember("id", this->id, allocator);
+        growth.AddMember("model", "von_bertalanffy", allocator);
+
+
+        //amin
+        rapidjson::Value amin(rapidjson::kObjectType);
+        amin.AddMember("value", this->a_min.value, allocator);
+        if (this->a_min.estimated) {
+            amin.AddMember("estimated", "true", allocator);
+        } else {
+            amin.AddMember("estimated", "false", allocator);
+        }
+        amin.AddMember("min", this->a_min.min, allocator);
+        amin.AddMember("min", this->a_min.max, allocator);
+        amin.AddMember("phase", this->a_min.phase, allocator);
+        parameters.AddMember("amin", amin, allocator);
+
+        //amax
+        rapidjson::Value amax(rapidjson::kObjectType);
+        amax.AddMember("value", this->a_max.value, allocator);
+        if (this->a_max.estimated) {
+            amax.AddMember("estimated", "true", allocator);
+        } else {
+            amax.AddMember("estimated", "false", allocator);
+        }
+        amax.AddMember("min", this->a_max.min, allocator);
+        amax.AddMember("min", this->a_max.max, allocator);
+        amax.AddMember("phase", this->a_max.phase, allocator);
+        parameters.AddMember("amax", amax, allocator);
+
+        //k
+        rapidjson::Value k(rapidjson::kObjectType);
+        k.AddMember("value", this->k.value, allocator);
+        if (this->k.estimated) {
+            k.AddMember("estimated", "true", allocator);
+        } else {
+            k.AddMember("estimated", "false", allocator);
+        }
+        k.AddMember("min", this->k.min, allocator);
+        k.AddMember("min", this->k.max, allocator);
+        k.AddMember("phase", this->k.phase, allocator);
+        parameters.AddMember("k", k, allocator);
+
+        //linf
+        rapidjson::Value linf(rapidjson::kObjectType);
+        linf.AddMember("value", this->l_inf.value, allocator);
+        if (this->l_inf.estimated) {
+            linf.AddMember("estimated", "true", allocator);
+        } else {
+            linf.AddMember("estimated", "false", allocator);
+        }
+        linf.AddMember("min", this->l_inf.min, allocator);
+        linf.AddMember("min", this->l_inf.max, allocator);
+        linf.AddMember("phase", this->l_inf.phase, allocator);
+        parameters.AddMember("linf", linf, allocator);
+
+        //alpha f
+        rapidjson::Value alpha_f(rapidjson::kObjectType);
+        alpha_f.AddMember("value", this->alpha_f.value, allocator);
+        if (this->alpha_f.estimated) {
+            alpha_f.AddMember("estimated", "true", allocator);
+        } else {
+            alpha_f.AddMember("estimated", "false", allocator);
+        }
+        alpha_f.AddMember("min", this->alpha_f.min, allocator);
+        alpha_f.AddMember("min", this->alpha_f.max, allocator);
+        alpha_f.AddMember("phase", this->alpha_f.phase, allocator);
+        parameters.AddMember("alpha_f", alpha_f, allocator);
+
+        //alpha m
+        rapidjson::Value alpha_m(rapidjson::kObjectType);
+        alpha_m.AddMember("value", this->alpha_m.value, allocator);
+        if (this->alpha_m.estimated) {
+            alpha_m.AddMember("estimated", "true", allocator);
+        } else {
+            alpha_m.AddMember("estimated", "false", allocator);
+        }
+        alpha_m.AddMember("min", this->alpha_m.min, allocator);
+        alpha_m.AddMember("min", this->alpha_m.max, allocator);
+        alpha_m.AddMember("phase", this->alpha_m.phase, allocator);
+        parameters.AddMember("alpha_m", alpha_m, allocator);
+
+
+        //beta f
+        rapidjson::Value beta_f(rapidjson::kObjectType);
+        beta_f.AddMember("value", this->beta_f.value, allocator);
+        if (this->beta_f.estimated) {
+            beta_f.AddMember("estimated", "true", allocator);
+        } else {
+            beta_f.AddMember("estimated", "false", allocator);
+        }
+        beta_f.AddMember("min", this->beta_f.min, allocator);
+        beta_f.AddMember("min", this->beta_f.max, allocator);
+        beta_f.AddMember("phase", this->beta_f.phase, allocator);
+        parameters.AddMember("beta_f", beta_f, allocator);
+
+        //beta m
+        rapidjson::Value beta_m(rapidjson::kObjectType);
+        beta_m.AddMember("value", this->beta_m.value, allocator);
+        if (this->a_max.estimated) {
+            beta_m.AddMember("estimated", "true", allocator);
+        } else {
+            beta_m.AddMember("estimated", "false", allocator);
+        }
+        beta_m.AddMember("min", this->beta_m.min, allocator);
+        beta_m.AddMember("min", this->beta_m.max, allocator);
+        beta_m.AddMember("phase", this->beta_m.phase, allocator);
+        parameters.AddMember("beta_m", beta_m, allocator);
+
+        growth.AddMember("parameters", parameters, allocator);
+
+        //empirical weight at age
+        if (this->has_emprical_weight) {
+            rapidjson::Value empirical_weight_at_age(rapidjson::kArrayType);
+
+            if (this->weight_at_catch_females.size() != 0) {
+                rapidjson::Value ewa(rapidjson::kObjectType);
+                rapidjson::Value values(rapidjson::kArrayType);
+                MASSubModel::GenerateArrayObject(document, values, this->weight_at_catch_females, 3, nyears, nseasons, nages);
+                ewa.AddMember("data_object_type", "catch_empirical_weight_at_age", allocator);
+                ewa.AddMember("sex", "females", allocator);
+                ewa.AddMember("units", "KG", allocator);
+                ewa.AddMember("missing_values", "-999", allocator);
+                ewa.AddMember("values", values, allocator);
+                empirical_weight_at_age.PushBack(ewa, allocator);
+            }
+
+            if (this->weight_at_catch_males.size() != 0) {
+                rapidjson::Value ewa(rapidjson::kObjectType);
+                rapidjson::Value values(rapidjson::kArrayType);
+                MASSubModel::GenerateArrayObject(document, values, this->weight_at_catch_males, 3, nyears, nseasons, nages);
+                ewa.AddMember("data_object_type", "catch_empirical_weight_at_age", allocator);
+                ewa.AddMember("sex", "males", allocator);
+                ewa.AddMember("units", "KG", allocator);
+                ewa.AddMember("missing_values", "-999", allocator);
+                ewa.AddMember("values", values, allocator);
+                empirical_weight_at_age.PushBack(ewa, allocator);
+            }
+
+            if (this->weight_at_survey_females.size() != 0) {
+                rapidjson::Value ewa(rapidjson::kObjectType);
+                rapidjson::Value values(rapidjson::kArrayType);
+                MASSubModel::GenerateArrayObject(document, values, this->weight_at_survey_females, 3, nyears, nseasons, nages);
+                ewa.AddMember("data_object_type", "survey_empirical_weight_at_age", allocator);
+                ewa.AddMember("sex", "females", allocator);
+                ewa.AddMember("units", "KG", allocator);
+                ewa.AddMember("missing_values", "-999", allocator);
+                ewa.AddMember("values", values, allocator);
+                empirical_weight_at_age.PushBack(ewa, allocator);
+            }
+
+            if (this->weight_at_survey_males.size() != 0) {
+                rapidjson::Value ewa(rapidjson::kObjectType);
+                rapidjson::Value values(rapidjson::kArrayType);
+                MASSubModel::GenerateArrayObject(document, values, this->weight_at_survey_males, 3, nyears, nseasons, nages);
+                ewa.AddMember("data_object_type", "survey_empirical_weight_at_age", allocator);
+                ewa.AddMember("sex", "males", allocator);
+                ewa.AddMember("units", "KG", allocator);
+                ewa.AddMember("missing_values", "-999", allocator);
+                ewa.AddMember("values", values, allocator);
+                empirical_weight_at_age.PushBack(ewa, allocator);
+            }
+
+
+            if (this->weight_at_season_start_females.size() != 0) {
+                rapidjson::Value ewa(rapidjson::kObjectType);
+                rapidjson::Value values(rapidjson::kArrayType);
+                MASSubModel::GenerateArrayObject(document, values, this->weight_at_season_start_females, 2, nyears, nages, nages);
+                ewa.AddMember("data_object_type", "empirical_weight_at_age_season_start", allocator);
+                ewa.AddMember("sex", "females", allocator);
+                ewa.AddMember("units", "KG", allocator);
+                ewa.AddMember("missing_values", "-999", allocator);
+                ewa.AddMember("values", values, allocator);
+                empirical_weight_at_age.PushBack(ewa, allocator);
+            }
+
+            if (this->weight_at_season_start_males.size() != 0) {
+                rapidjson::Value ewa(rapidjson::kObjectType);
+                rapidjson::Value values(rapidjson::kArrayType);
+                MASSubModel::GenerateArrayObject(document, values, this->weight_at_season_start_males, 2, nyears, nages, nages);
+                ewa.AddMember("data_object_type", "empirical_weight_at_age_season_start", allocator);
+                ewa.AddMember("sex", "males", allocator);
+                ewa.AddMember("units", "KG", allocator);
+                ewa.AddMember("missing_values", "-999", allocator);
+                ewa.AddMember("values", values, allocator);
+                empirical_weight_at_age.PushBack(ewa, allocator);
+            }
+
+            if (this->weight_at_spawning_females.size() != 0) {
+                rapidjson::Value ewa(rapidjson::kObjectType);
+                rapidjson::Value values(rapidjson::kArrayType);
+                MASSubModel::GenerateArrayObject(document, values, this->weight_at_spawning_females, 2, nyears, nages, nages);
+                ewa.AddMember("data_object_type", "empirical_weight_at_age_spawning", allocator);
+                ewa.AddMember("sex", "females", allocator);
+                ewa.AddMember("units", "KG", allocator);
+                ewa.AddMember("missing_values", "-999", allocator);
+                ewa.AddMember("values", values, allocator);
+                empirical_weight_at_age.PushBack(ewa, allocator);
+            }
+
+            if (this->weight_at_spawning_males.size() != 0) {
+                rapidjson::Value ewa(rapidjson::kObjectType);
+                rapidjson::Value values(rapidjson::kArrayType);
+                MASSubModel::GenerateArrayObject(document, values, this->weight_at_spawning_males, 2, nyears, nages, nages);
+                ewa.AddMember("data_object_type", "empirical_weight_at_age_spawning", allocator);
+                ewa.AddMember("sex", "males", allocator);
+                ewa.AddMember("units", "KG", allocator);
+                ewa.AddMember("missing_values", "-999", allocator);
+                ewa.AddMember("values", values, allocator);
+                empirical_weight_at_age.PushBack(ewa, allocator);
+            }
+            growth.AddMember("empirical_weight_at_age", empirical_weight_at_age, allocator);
+
+        }
+
+        grth.PushBack(growth, allocator);
     }
 
     static std::map<int, VonBertalanffy*> initialized_models;
@@ -3153,6 +3639,267 @@ public:
         document.AddMember("growth", growth, allocator);
     }
 
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& grth, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value growth(rapidjson::kObjectType);
+        rapidjson::Value parameters(rapidjson::kObjectType);
+
+        growth.AddMember("id", this->id, allocator);
+        growth.AddMember("model", "von_bertalanffy_modified", allocator);
+        /*
+            Parameter a_min;
+            Parameter a_max;
+            Parameter alpha_f = 0.000025;
+            Parameter alpha_m = 0.000025;
+            Parameter beta_f = 3.0;
+            Parameter beta_m = 3.0;
+            Parameter lmin;
+            Parameter lmax;
+            Parameter l_inf;
+            Parameter c;
+         */
+
+        //amin
+        rapidjson::Value amin(rapidjson::kObjectType);
+        amin.AddMember("value", this->a_min.value, allocator);
+        if (this->a_min.estimated) {
+            amin.AddMember("estimated", "true", allocator);
+        } else {
+            amin.AddMember("estimated", "false", allocator);
+        }
+        amin.AddMember("min", this->a_min.min, allocator);
+        amin.AddMember("min", this->a_min.max, allocator);
+        amin.AddMember("phase", this->a_min.phase, allocator);
+        parameters.AddMember("amin", amin, allocator);
+
+        //amax
+        rapidjson::Value amax(rapidjson::kObjectType);
+        amax.AddMember("value", this->a_max.value, allocator);
+        if (this->a_max.estimated) {
+            amax.AddMember("estimated", "true", allocator);
+        } else {
+            amax.AddMember("estimated", "false", allocator);
+        }
+        amax.AddMember("min", this->a_max.min, allocator);
+        amax.AddMember("min", this->a_max.max, allocator);
+        amax.AddMember("phase", this->a_max.phase, allocator);
+        parameters.AddMember("amax", amax, allocator);
+
+        //lmin
+        rapidjson::Value lmin(rapidjson::kObjectType);
+        lmin.AddMember("value", this->lmin.value, allocator);
+        if (this->lmin.estimated) {
+            lmin.AddMember("estimated", "true", allocator);
+        } else {
+            lmin.AddMember("estimated", "false", allocator);
+        }
+        lmin.AddMember("min", this->lmin.min, allocator);
+        lmin.AddMember("min", this->lmin.max, allocator);
+        lmin.AddMember("phase", this->lmin.phase, allocator);
+        parameters.AddMember("lmin", lmin, allocator);
+
+        //lmax
+        rapidjson::Value lmax(rapidjson::kObjectType);
+        lmax.AddMember("value", this->lmax.value, allocator);
+        if (this->lmax.estimated) {
+            lmax.AddMember("estimated", "true", allocator);
+        } else {
+            lmax.AddMember("estimated", "false", allocator);
+        }
+        lmax.AddMember("min", this->lmax.min, allocator);
+        lmax.AddMember("min", this->lmax.max, allocator);
+        lmax.AddMember("phase", this->lmax.phase, allocator);
+        parameters.AddMember("lmax", lmax, allocator);
+
+        //c
+        rapidjson::Value c(rapidjson::kObjectType);
+        c.AddMember("value", this->c.value, allocator);
+        if (this->c.estimated) {
+            c.AddMember("estimated", "true", allocator);
+        } else {
+            c.AddMember("estimated", "false", allocator);
+        }
+        c.AddMember("min", this->c.min, allocator);
+        c.AddMember("min", this->c.max, allocator);
+        c.AddMember("phase", this->c.phase, allocator);
+        parameters.AddMember("c", c, allocator);
+
+        //alpha f
+        rapidjson::Value alpha_f(rapidjson::kObjectType);
+        alpha_f.AddMember("value", this->alpha_f.value, allocator);
+        if (this->alpha_f.estimated) {
+            alpha_f.AddMember("estimated", "true", allocator);
+        } else {
+            alpha_f.AddMember("estimated", "false", allocator);
+        }
+        alpha_f.AddMember("min", this->alpha_f.min, allocator);
+        alpha_f.AddMember("min", this->alpha_f.max, allocator);
+        alpha_f.AddMember("phase", this->alpha_f.phase, allocator);
+        parameters.AddMember("alpha_f", alpha_f, allocator);
+
+        //alpha m
+        rapidjson::Value alpha_m(rapidjson::kObjectType);
+        alpha_m.AddMember("value", this->alpha_m.value, allocator);
+        if (this->alpha_m.estimated) {
+            alpha_m.AddMember("estimated", "true", allocator);
+        } else {
+            alpha_m.AddMember("estimated", "false", allocator);
+        }
+        alpha_m.AddMember("min", this->alpha_m.min, allocator);
+        alpha_m.AddMember("min", this->alpha_m.max, allocator);
+        alpha_m.AddMember("phase", this->alpha_m.phase, allocator);
+        parameters.AddMember("alpha_m", alpha_m, allocator);
+
+        //beta f
+        rapidjson::Value beta_f(rapidjson::kObjectType);
+        beta_f.AddMember("value", this->beta_f.value, allocator);
+        if (this->beta_f.estimated) {
+            beta_f.AddMember("estimated", "true", allocator);
+        } else {
+            beta_f.AddMember("estimated", "false", allocator);
+        }
+        beta_f.AddMember("min", this->beta_f.min, allocator);
+        beta_f.AddMember("min", this->beta_f.max, allocator);
+        beta_f.AddMember("phase", this->beta_f.phase, allocator);
+        parameters.AddMember("beta_f", beta_f, allocator);
+
+        //beta m
+        rapidjson::Value beta_m(rapidjson::kObjectType);
+        beta_m.AddMember("value", this->beta_m.value, allocator);
+        if (this->a_max.estimated) {
+            beta_m.AddMember("estimated", "true", allocator);
+        } else {
+            beta_m.AddMember("estimated", "false", allocator);
+        }
+        beta_m.AddMember("min", this->beta_m.min, allocator);
+        beta_m.AddMember("min", this->beta_m.max, allocator);
+        beta_m.AddMember("phase", this->beta_m.phase, allocator);
+        parameters.AddMember("beta_m", beta_m, allocator);
+
+
+        //linf
+        rapidjson::Value linf(rapidjson::kObjectType);
+        linf.AddMember("value", this->l_inf.value, allocator);
+        if (this->l_inf.estimated) {
+            linf.AddMember("estimated", "true", allocator);
+        } else {
+            linf.AddMember("estimated", "false", allocator);
+        }
+        linf.AddMember("min", this->l_inf.min, allocator);
+        linf.AddMember("min", this->l_inf.max, allocator);
+        linf.AddMember("phase", this->l_inf.phase, allocator);
+        parameters.AddMember("linf", linf, allocator);
+
+        growth.AddMember("parameters", parameters, allocator);
+
+
+        //empirical weight at age
+        if (this->has_emprical_weight) {
+            rapidjson::Value empirical_weight_at_age(rapidjson::kArrayType);
+
+            if (this->weight_at_catch_females.size() != 0) {
+                rapidjson::Value ewa(rapidjson::kObjectType);
+                rapidjson::Value values(rapidjson::kArrayType);
+                MASSubModel::GenerateArrayObject(document, values, this->weight_at_catch_females, 3, nyears, nseasons, nages);
+                ewa.AddMember("data_object_type", "catch_empirical_weight_at_age", allocator);
+                ewa.AddMember("sex", "females", allocator);
+                ewa.AddMember("units", "KG", allocator);
+                ewa.AddMember("missing_values", "-999", allocator);
+                ewa.AddMember("values", values, allocator);
+                empirical_weight_at_age.PushBack(ewa, allocator);
+            }
+
+            if (this->weight_at_catch_males.size() != 0) {
+                rapidjson::Value ewa(rapidjson::kObjectType);
+                rapidjson::Value values(rapidjson::kArrayType);
+                MASSubModel::GenerateArrayObject(document, values, this->weight_at_catch_males, 3, nyears, nseasons, nages);
+                ewa.AddMember("data_object_type", "catch_empirical_weight_at_age", allocator);
+                ewa.AddMember("sex", "males", allocator);
+                ewa.AddMember("units", "KG", allocator);
+                ewa.AddMember("missing_values", "-999", allocator);
+                ewa.AddMember("values", values, allocator);
+                empirical_weight_at_age.PushBack(ewa, allocator);
+            }
+
+            if (this->weight_at_survey_females.size() != 0) {
+                rapidjson::Value ewa(rapidjson::kObjectType);
+                rapidjson::Value values(rapidjson::kArrayType);
+                MASSubModel::GenerateArrayObject(document, values, this->weight_at_survey_females, 3, nyears, nseasons, nages);
+                ewa.AddMember("data_object_type", "survey_empirical_weight_at_age", allocator);
+                ewa.AddMember("sex", "females", allocator);
+                ewa.AddMember("units", "KG", allocator);
+                ewa.AddMember("missing_values", "-999", allocator);
+                ewa.AddMember("values", values, allocator);
+                empirical_weight_at_age.PushBack(ewa, allocator);
+            }
+
+            if (this->weight_at_survey_males.size() != 0) {
+                rapidjson::Value ewa(rapidjson::kObjectType);
+                rapidjson::Value values(rapidjson::kArrayType);
+                MASSubModel::GenerateArrayObject(document, values, this->weight_at_survey_males, 3, nyears, nseasons, nages);
+                ewa.AddMember("data_object_type", "survey_empirical_weight_at_age", allocator);
+                ewa.AddMember("sex", "males", allocator);
+                ewa.AddMember("units", "KG", allocator);
+                ewa.AddMember("missing_values", "-999", allocator);
+                ewa.AddMember("values", values, allocator);
+                empirical_weight_at_age.PushBack(ewa, allocator);
+            }
+
+
+            if (this->weight_at_season_start_females.size() != 0) {
+                rapidjson::Value ewa(rapidjson::kObjectType);
+                rapidjson::Value values(rapidjson::kArrayType);
+                MASSubModel::GenerateArrayObject(document, values, this->weight_at_season_start_females, 2, nyears, nages, nages);
+                ewa.AddMember("data_object_type", "empirical_weight_at_age_season_start", allocator);
+                ewa.AddMember("sex", "females", allocator);
+                ewa.AddMember("units", "KG", allocator);
+                ewa.AddMember("missing_values", "-999", allocator);
+                ewa.AddMember("values", values, allocator);
+                empirical_weight_at_age.PushBack(ewa, allocator);
+            }
+
+            if (this->weight_at_season_start_males.size() != 0) {
+                rapidjson::Value ewa(rapidjson::kObjectType);
+                rapidjson::Value values(rapidjson::kArrayType);
+                MASSubModel::GenerateArrayObject(document, values, this->weight_at_season_start_males, 2, nyears, nages, nages);
+                ewa.AddMember("data_object_type", "empirical_weight_at_age_season_start", allocator);
+                ewa.AddMember("sex", "males", allocator);
+                ewa.AddMember("units", "KG", allocator);
+                ewa.AddMember("missing_values", "-999", allocator);
+                ewa.AddMember("values", values, allocator);
+                empirical_weight_at_age.PushBack(ewa, allocator);
+            }
+
+            if (this->weight_at_spawning_females.size() != 0) {
+                rapidjson::Value ewa(rapidjson::kObjectType);
+                rapidjson::Value values(rapidjson::kArrayType);
+                MASSubModel::GenerateArrayObject(document, values, this->weight_at_spawning_females, 2, nyears, nages, nages);
+                ewa.AddMember("data_object_type", "empirical_weight_at_age_spawning", allocator);
+                ewa.AddMember("sex", "females", allocator);
+                ewa.AddMember("units", "KG", allocator);
+                ewa.AddMember("missing_values", "-999", allocator);
+                ewa.AddMember("values", values, allocator);
+                empirical_weight_at_age.PushBack(ewa, allocator);
+            }
+
+            if (this->weight_at_spawning_males.size() != 0) {
+                rapidjson::Value ewa(rapidjson::kObjectType);
+                rapidjson::Value values(rapidjson::kArrayType);
+                MASSubModel::GenerateArrayObject(document, values, this->weight_at_spawning_males, 2, nyears, nages, nages);
+                ewa.AddMember("data_object_type", "empirical_weight_at_age_spawning", allocator);
+                ewa.AddMember("sex", "males", allocator);
+                ewa.AddMember("units", "KG", allocator);
+                ewa.AddMember("missing_values", "-999", allocator);
+                ewa.AddMember("values", values, allocator);
+                empirical_weight_at_age.PushBack(ewa, allocator);
+            }
+            growth.AddMember("empirical_weight_at_age", empirical_weight_at_age, allocator);
+
+        }
+        grth.PushBack(growth, allocator);
+
+    }
+
     static std::map<int, VonBertalanffyModified*> initialized_models;
     typedef typename std::map<int, VonBertalanffyModified*>::iterator model_iterator;
 };
@@ -3193,6 +3940,14 @@ public:
 
         area.AddMember("id", this->id, allocator);
         document.AddMember("area", area, allocator);
+    }
+
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& a, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value area(rapidjson::kObjectType);
+
+        area.AddMember("id", this->id, allocator);
+        a.PushBack(area, allocator);
     }
 
     static std::map<int, Area*> initialized_models;
@@ -3330,6 +4085,40 @@ public:
 
     }
 
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& move, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value movement(rapidjson::kObjectType);
+
+        movement.AddMember("id", this->id, allocator);
+        if (this->estimate_movement) {
+            movement.AddMember("estimated", "true", allocator);
+        } else {
+            movement.AddMember("estimated", "false", allocator);
+        }
+
+        rapidjson::Value recruits(rapidjson::kArrayType);
+        rapidjson::Value females(rapidjson::kArrayType);
+        rapidjson::Value males(rapidjson::kArrayType);
+        if (this->connectivity_recruits.size() != nseasons * nareas) {
+            std::cout << "MAS Warning: Movement connectivity matrix for recruits vector not equal to " << nseasons * nareas << "." << std::endl;
+        }
+        MASSubModel::GenerateArrayObject(document, recruits, this->connectivity_recruits, 3, 1, nseasons, nareas);
+        movement.AddMember("recruits", recruits, allocator);
+        if (this->connectivity_females.size() != nseasons * nareas) {
+            std::cout << "MAS Warning: Movement connectivity matrix for females vector not equal to " << nseasons * nareas << "." << std::endl;
+        }
+        MASSubModel::GenerateArrayObject(document, females, this->connectivity_females, 3, 1, nseasons, nareas);
+        movement.AddMember("female", females, allocator);
+
+        if (this->connectivity_males.size() != nseasons * nareas) {
+            std::cout << "MAS Warning: Movement connectivity matrix for males vector not equal to " << nseasons * nareas << "." << std::endl;
+        }
+        MASSubModel::GenerateArrayObject(document, males, this->connectivity_males, 3, 1, nseasons, nareas);
+        movement.AddMember("male", males, allocator);
+        move.PushBack(movement, allocator);
+    }
+
     static std::map<int, Movement*> initialized_models;
     typedef typename std::map<int, Movement*>::iterator model_iterator;
 };
@@ -3351,6 +4140,9 @@ public:
     }
 
     virtual ~Maturity() {
+    }
+
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
     }
 
     static std::map<int, Maturity*> initialized_models;
@@ -4050,6 +4842,9 @@ public:
         document.AddMember("likelihood_component", likelihood, allocator);
     }
 
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+    }
+
     static std::map<int, Lognormal*> initialized_models;
     typedef typename std::map<int, Lognormal*>::iterator model_iterator;
 };
@@ -4156,6 +4951,9 @@ public:
             }
         }
         document.AddMember("likelihood_component", likelihood, allocator);
+    }
+
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
     }
 
     void ExtractFromMAS(mas::Information<double>& info) {
@@ -4275,6 +5073,9 @@ public:
         document.AddMember("likelihood_component", likelihood, allocator);
     }
 
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+    }
+
     static std::map<int, DirichletMultinomialRobust*> initialized_models;
     typedef typename std::map<int, DirichletMultinomialRobust*>::iterator model_iterator;
 };
@@ -4373,6 +5174,9 @@ public:
             }
         }
         document.AddMember("likelihood_component", likelihood, allocator);
+    }
+
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
     }
 
     static std::map<int, Multinomial*> initialized_models;
@@ -4474,6 +5278,9 @@ public:
         document.AddMember("likelihood_component", likelihood, allocator);
     }
 
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+    }
+
     static std::map<int, MultinomialRobust*> initialized_models;
     typedef typename std::map<int, MultinomialRobust*>::iterator model_iterator;
 };
@@ -4504,6 +5311,9 @@ public:
 
     virtual void ToJSON(rapidjson::Document& document, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
 
+    }
+
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
     }
 
     static std::map<int, IndexData*> initialized_models;
@@ -4539,6 +5349,9 @@ public:
 
     }
 
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+    }
+
     static std::map<int, AgeCompData*> initialized_models;
     typedef typename std::map<int, AgeCompData*>::iterator model_iterator;
 };
@@ -4569,6 +5382,9 @@ public:
 
     virtual void ToJSON(rapidjson::Document& document, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
 
+    }
+
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
     }
 
     static std::map<int, LengthCompData*> initialized_models;
@@ -4971,6 +5787,9 @@ public:
         document.AddMember("fleet", fleet, allocator);
     }
 
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+    }
+
     static std::map<int, Fleet*> initialized_models;
     typedef typename std::map<int, Fleet*>::iterator model_iterator;
 };
@@ -5369,6 +6188,9 @@ public:
             }
 
         }
+    }
+
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
     }
 
     static std::map<int, Survey*> initialized_models;
