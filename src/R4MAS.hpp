@@ -6997,7 +6997,7 @@ public:
         typename Area::model_iterator ait;
 
         for (ait = Area::initialized_models.begin(); ait != Area::initialized_models.end(); ++ait) {
-            (*ait).second->AddToEmInputs(document, areas, this->nyears, this->nseasons, this->nages, nareas);
+            (*ait).second->AddToEMInputs(document, areas, this->nyears, this->nseasons, this->nages, nareas);
         }
         document.AddMember("areas", areas, allocator);
 
