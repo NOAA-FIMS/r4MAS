@@ -5949,9 +5949,8 @@ public:
 
         fleet.AddMember("likelihood_components", likelihood, allocator);
 
-        rapidjson::Value data(rapidjson::kArrayType);
+        rapidjson::Value jdata(rapidjson::kArrayType);
 
-        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
 
         for (int i = 0; i < this->index_data.size(); i++) {
             rapidjson::Value index_data(rapidjson::kObjectType);
@@ -5988,7 +5987,7 @@ public:
                 Rcpp::NumericVector& error = (*dit).second->error;
                 MASSubModel::GenerateArrayObject(document, error_vals, error, 2, nyears, nseasons, nages);
                 index_data.AddMember("observation_error", error_vals, allocator);
-                data.PushBack(index_data, allocator);
+                jdata.PushBack(index_data, allocator);
             } else {
                 std::cout << "MAS Warning: Unable to locate index data \"" << this->index_data[i].second << "\".\n";
             }
@@ -6030,14 +6029,14 @@ public:
                 Rcpp::NumericVector& sample_size = (*dit).second->sample_size;
                 MASSubModel::GenerateArrayObject(document, sample_size_vals, sample_size, 2, nyears, nseasons, nages);
                 age_comp_data.AddMember("sample_size", sample_size_vals, allocator);
-                data.PushBack(age_comp_data, allocator);
+                jdata.PushBack(age_comp_data, allocator);
             } else {
                 std::cout << "MAS Warning: Unable to locate age composition data \"" << this->age_comp_data[i].second << "\".\n";
             }
 
         }
 
-        fleet.AddMember("data", data, allocator);
+        fleet.AddMember("data", jdata, allocator);
 
         flt.PushBack(fleet, allocator);
     }
@@ -6487,7 +6486,7 @@ public:
 
         survey.AddMember("likelihood_components", likelihood, allocator);
 
-        rapidjson::Value data(rapidjson::kArrayType);
+        rapidjson::Value jdata(rapidjson::kArrayType);
 
         for (int i = 0; i < this->index_data.size(); i++) {
             rapidjson::Value index_data(rapidjson::kObjectType);
@@ -6524,7 +6523,7 @@ public:
                 Rcpp::NumericVector& error = (*dit).second->error;
                 MASSubModel::GenerateArrayObject(document, error_vals, error, 2, nyears, nseasons, nages);
                 index_data.AddMember("observation_error", error_vals, allocator);
-                data.PushBack(index_data, allocator);
+                jdata.PushBack(index_data, allocator);
             } else {
                 std::cout << "MAS Warning: Unable to locate index data \"" << this->index_data[i].second << "\".\n";
             }
@@ -6566,14 +6565,14 @@ public:
                 Rcpp::NumericVector& sample_size = (*dit).second->sample_size;
                 MASSubModel::GenerateArrayObject(document, sample_size_vals, sample_size, 2, nyears, nseasons, nages);
                 age_comp_data.AddMember("sample_size", sample_size_vals, allocator);
-                data.PushBack(age_comp_data, allocator);
+                jdata.PushBack(age_comp_data, allocator);
             } else {
                 std::cout << "MAS Warning: Unable to locate age composition data \"" << this->age_comp_data[i].second << "\".\n";
             }
 
         }
 
-        srvy.AddMember("data", data, allocator);
+        srvy.AddMember("data", jdata, allocator);
         srvy.PushBack(survey, allocator);
     }
 
