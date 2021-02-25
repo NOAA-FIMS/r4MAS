@@ -6994,7 +6994,7 @@ public:
         size_t nareas = Area::initialized_models.size();
 
         rapidjson::Value areas(rapidjson::kArrayType);
-        typename Area::initialized_models::iterator ait;
+        typename Area::model_iterator ait;
 
         for (ait = Area::initialized_models.begin(); ait != Area::initialized_models.end(); ++ait) {
             (*ait).second->AddToEmInputs(document, areas, this->nyears, this->nseasons, this->nages, nareas);
