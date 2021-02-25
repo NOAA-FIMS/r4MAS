@@ -4142,7 +4142,19 @@ public:
     virtual ~Maturity() {
     }
 
-    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& mat, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value maturity(rapidjson::kObjectType);
+
+        maturity.AddMember("id", this->id, allocator);
+        rapidjson::Value values(rapidjson::kArrayType);
+
+        for (int i = 0; i < this->values.size(); i++) {
+            values.PushBack(this->values[i], allocator);
+        }
+
+        maturity.AddMember("values", values, allocator);
+        mat.PushBack(maturity, allocator);
     }
 
     static std::map<int, Maturity*> initialized_models;
@@ -4842,7 +4854,24 @@ public:
         document.AddMember("likelihood_component", likelihood, allocator);
     }
 
-    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& nll, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value likelihood(rapidjson::kObjectType);
+        likelihood.AddMember("id", this->id, allocator);
+        likelihood.AddMember("model", "lognormal", allocator);
+
+        if (this->lambdas.size()) {
+            if (this->lambda_dimensions.size() == 2) {
+                rapidjson::Value lambdas(rapidjson::kObjectType);
+                rapidjson::Value vals(rapidjson::kArrayType);
+                MASSubModel::GenerateArrayObject(document, vals, this->lambdas, 2, this->lambda_dimensions[0], this->lambda_dimensions[1], this->lambda_dimensions[2]);
+                lambdas.AddMember("values", vals, allocator);
+                likelihood.AddMember("lambdas", lambdas, allocator);
+            } else {
+                std::cout << "MAS Warning: Incorrect dimensions for \"lognormal\" \"lambdas\" entry.\n";
+            }
+        }
+        nll.PushBack(likelihood, allocator);
     }
 
     static std::map<int, Lognormal*> initialized_models;
@@ -4953,7 +4982,36 @@ public:
         document.AddMember("likelihood_component", likelihood, allocator);
     }
 
-    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& nll, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value likelihood(rapidjson::kObjectType);
+        likelihood.AddMember("id", this->id, allocator);
+        likelihood.AddMember("model", "dirichlet_multinomial", allocator);
+        rapidjson::Value parameters(rapidjson::kObjectType);
+        rapidjson::Value beta(rapidjson::kObjectType);
+        beta.AddMember("value", this->beta.value, allocator);
+        if (this->beta.estimated) {
+            beta.AddMember("estimated", "true", allocator);
+        } else {
+            beta.AddMember("estimated", "false", allocator);
+        }
+        beta.AddMember("min", this->beta.min, allocator);
+        beta.AddMember("max", this->beta.max, allocator);
+        beta.AddMember("phase", this->beta.phase, allocator);
+        parameters.AddMember("beta", beta, allocator);
+        likelihood.AddMember("parameters", parameters, allocator);
+        if (this->lambdas.size()) {
+            if (this->lambda_dimensions.size() == 3) {
+                rapidjson::Value lambdas(rapidjson::kObjectType);
+                rapidjson::Value vals(rapidjson::kArrayType);
+                MASSubModel::GenerateArrayObject(document, vals, this->lambdas, 3, this->lambda_dimensions[0], this->lambda_dimensions[1], this->lambda_dimensions[2]);
+                lambdas.AddMember("values", vals, allocator);
+                likelihood.AddMember("lambdas", lambdas, allocator);
+            } else {
+                std::cout << "MAS Warning: Incorrect dimensions for \"dirichlet_multinomial\" \"lambdas\" entry.\n";
+            }
+        }
+        nll.PushBack(likelihood, allocator);
     }
 
     void ExtractFromMAS(mas::Information<double>& info) {
@@ -5073,7 +5131,36 @@ public:
         document.AddMember("likelihood_component", likelihood, allocator);
     }
 
-    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& nll, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value likelihood(rapidjson::kObjectType);
+        likelihood.AddMember("id", this->id, allocator);
+        likelihood.AddMember("model", "dirichlet_multinomial_robust", allocator);
+        rapidjson::Value parameters(rapidjson::kObjectType);
+        rapidjson::Value beta(rapidjson::kObjectType);
+        beta.AddMember("value", this->beta.value, allocator);
+        if (this->beta.estimated) {
+            beta.AddMember("estimated", "true", allocator);
+        } else {
+            beta.AddMember("estimated", "false", allocator);
+        }
+        beta.AddMember("min", this->beta.min, allocator);
+        beta.AddMember("max", this->beta.max, allocator);
+        beta.AddMember("phase", this->beta.phase, allocator);
+        parameters.AddMember("beta", beta, allocator);
+        likelihood.AddMember("parameters", parameters, allocator);
+        if (this->lambdas.size()) {
+            if (this->lambda_dimensions.size() == 3) {
+                rapidjson::Value lambdas(rapidjson::kObjectType);
+                rapidjson::Value vals(rapidjson::kArrayType);
+                MASSubModel::GenerateArrayObject(document, vals, this->lambdas, 3, this->lambda_dimensions[0], this->lambda_dimensions[1], this->lambda_dimensions[2]);
+                lambdas.AddMember("values", vals, allocator);
+                likelihood.AddMember("lambdas", lambdas, allocator);
+            } else {
+                std::cout << "MAS Warning: Incorrect dimensions for \"dirichlet_multinomial_robust\" \"lambdas\" entry.\n";
+            }
+        }
+        nll.PushBack(likelihood, allocator);
     }
 
     static std::map<int, DirichletMultinomialRobust*> initialized_models;
@@ -5176,7 +5263,24 @@ public:
         document.AddMember("likelihood_component", likelihood, allocator);
     }
 
-    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& nll, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value likelihood(rapidjson::kObjectType);
+        likelihood.AddMember("id", this->id, allocator);
+        likelihood.AddMember("model", "multinomial", allocator);
+
+        if (this->lambdas.size()) {
+            if (this->lambda_dimensions.size() == 3) {
+                rapidjson::Value lambdas(rapidjson::kObjectType);
+                rapidjson::Value vals(rapidjson::kArrayType);
+                MASSubModel::GenerateArrayObject(document, vals, this->lambdas, 3, this->lambda_dimensions[0], this->lambda_dimensions[1], this->lambda_dimensions[2]);
+                lambdas.AddMember("values", vals, allocator);
+                likelihood.AddMember("lambdas", lambdas, allocator);
+            } else {
+                std::cout << "MAS Warning: Incorrect dimensions for \"multinomial\" \"lambdas\" entry.\n";
+            }
+        }
+        nll.PushBack(likelihood, allocator);
     }
 
     static std::map<int, Multinomial*> initialized_models;
@@ -5278,7 +5382,24 @@ public:
         document.AddMember("likelihood_component", likelihood, allocator);
     }
 
-    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& nll, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value likelihood(rapidjson::kObjectType);
+        likelihood.AddMember("id", this->id, allocator);
+        likelihood.AddMember("model", "multinomial_robust", allocator);
+
+        if (this->lambdas.size()) {
+            if (this->lambda_dimensions.size() == 3) {
+                rapidjson::Value lambdas(rapidjson::kObjectType);
+                rapidjson::Value vals(rapidjson::kArrayType);
+                MASSubModel::GenerateArrayObject(document, vals, this->lambdas, 3, this->lambda_dimensions[0], this->lambda_dimensions[1], this->lambda_dimensions[2]);
+                lambdas.AddMember("values", vals, allocator);
+                likelihood.AddMember("lambdas", lambdas, allocator);
+            } else {
+                std::cout << "MAS Warning: Incorrect dimensions for \"multinomial_robust\" \"lambdas\" entry.\n";
+            }
+        }
+        nll.PushBack(likelihood, allocator);
     }
 
     static std::map<int, MultinomialRobust*> initialized_models;
@@ -5787,7 +5908,138 @@ public:
         document.AddMember("fleet", fleet, allocator);
     }
 
-    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& flt, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value fleet(rapidjson::kObjectType);
+        fleet.AddMember("id", this->id, allocator);
+        rapidjson::Value fishing_mortality(rapidjson::kArrayType);
+        //id, season, area
+        for (int i = 0; i < this->fishing_nortality.size(); i++) {
+            rapidjson::Value fm_entry(rapidjson::kObjectType);
+            fm_entry.AddMember("id", this->fishing_nortality[i].first, allocator);
+            fm_entry.AddMember("season", this->fishing_nortality[i].second, allocator);
+            fm_entry.AddMember("area", this->fishing_nortality[i].third, allocator);
+            fishing_mortality.PushBack(fm_entry, allocator);
+        }
+
+        fleet.AddMember("fishing_mortality", fishing_mortality, allocator);
+
+        rapidjson::Value selectivity(rapidjson::kArrayType);
+        //id, season, area
+        for (int i = 0; i < this->selectivity.size(); i++) {
+            rapidjson::Value selex_entry(rapidjson::kObjectType);
+            selex_entry.AddMember("id", this->selectivity[i].first, allocator);
+            selex_entry.AddMember("season", this->selectivity[i].second, allocator);
+            selex_entry.AddMember("area", this->selectivity[i].third, allocator);
+            selectivity.PushBack(selex_entry, allocator);
+        }
+
+        fleet.AddMember("selectivity", selectivity, allocator);
+
+        rapidjson::Value likelihood(rapidjson::kArrayType);
+        rapidjson::Value index(rapidjson::kObjectType);
+        index.AddMember("id", this->index_nll_id, allocator);
+        index.AddMember("component", "biomass_comp", allocator);
+        likelihood.PushBack(index, allocator);
+
+        rapidjson::Value age_comp(rapidjson::kObjectType);
+        age_comp.AddMember("id", this->age_comp_nll_id, allocator);
+        age_comp.AddMember("component", "age_comp", allocator);
+        likelihood.PushBack(age_comp, allocator);
+
+        fleet.AddMember("likelihood_components", likelihood, allocator);
+
+        rapidjson::Value data(rapidjson::kArrayType);
+
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+
+        for (int i = 0; i < this->index_data.size(); i++) {
+            rapidjson::Value index_data(rapidjson::kObjectType);
+            index_data.AddMember("data_object_type", "catch_biomass", allocator);
+            index_data.AddMember("name", "catch_biomass", allocator);
+            index_data.AddMember("id", this->id, allocator);
+            index_data.AddMember("units", "MT", allocator);
+            switch (this->index_data[i].first) {
+                case FEMALE:
+                    index_data.AddMember("sex", "female", allocator);
+                    break;
+                case MALE:
+                    index_data.AddMember("sex", "male", allocator);
+                    break;
+                case UNDIFFERENTIATED:
+                    index_data.AddMember("sex", "undifferentiated", allocator);
+                    break;
+                default:
+                    std::cout << "MAS Warning: Unknown sex type for index data.\n";
+            }
+            rapidjson::Value vals(rapidjson::kArrayType);
+            rapidjson::Value error_vals(rapidjson::kArrayType);
+            IndexData::model_iterator dit = IndexData::initialized_models.find(this->index_data[i].second);
+
+            if (dit != IndexData::initialized_models.end()) {
+
+                double missing_values = (*dit).second->missing_values;
+                index_data.AddMember("missing_values", missing_values, allocator);
+
+                Rcpp::NumericVector& data = (*dit).second->data;
+                MASSubModel::GenerateArrayObject(document, vals, data, 2, nyears, nseasons, nages);
+                index_data.AddMember("values", vals, allocator);
+
+                Rcpp::NumericVector& error = (*dit).second->error;
+                MASSubModel::GenerateArrayObject(document, error_vals, error, 2, nyears, nseasons, nages);
+                index_data.AddMember("observation_error", error_vals, allocator);
+                data.PushBack(index_data, allocator);
+            } else {
+                std::cout << "MAS Warning: Unable to locate index data \"" << this->index_data[i].second << "\".\n";
+            }
+
+        }
+
+        rapidjson::Value age_comp_data(rapidjson::kObjectType);
+        for (int i = 0; i < this->age_comp_data.size(); i++) {
+            rapidjson::Value age_comp_data(rapidjson::kObjectType);
+            age_comp_data.AddMember("data_object_type", "catch_proportion_at_age", allocator);
+            age_comp_data.AddMember("name", "catch_proportion_at_age", allocator);
+            age_comp_data.AddMember("id", this->id, allocator);
+            age_comp_data.AddMember("units", "NA", allocator);
+            switch (this->age_comp_data[i].first) {
+                case FEMALE:
+                    age_comp_data.AddMember("sex", "female", allocator);
+                    break;
+                case MALE:
+                    age_comp_data.AddMember("sex", "male", allocator);
+                    break;
+                case UNDIFFERENTIATED:
+                    age_comp_data.AddMember("sex", "undifferentiated", allocator);
+                    break;
+                default:
+                    std::cout << "MAS Warning: Unknown sex type for index data.\n";
+            }
+            rapidjson::Value vals(rapidjson::kArrayType);
+            rapidjson::Value sample_size_vals(rapidjson::kArrayType);
+            AgeCompData::model_iterator dit = AgeCompData::initialized_models.find(this->age_comp_data[i].second);
+            if (dit != AgeCompData::initialized_models.end()) {
+
+                double missing_values = (*dit).second->missing_values;
+                age_comp_data.AddMember("missing_values", missing_values, allocator);
+
+                Rcpp::NumericVector& data = (*dit).second->data;
+                MASSubModel::GenerateArrayObject(document, vals, data, 3, nyears, nseasons, nages);
+                age_comp_data.AddMember("values", vals, allocator);
+
+                Rcpp::NumericVector& sample_size = (*dit).second->sample_size;
+                MASSubModel::GenerateArrayObject(document, sample_size_vals, sample_size, 2, nyears, nseasons, nages);
+                age_comp_data.AddMember("sample_size", sample_size_vals, allocator);
+                data.PushBack(age_comp_data, allocator);
+            } else {
+                std::cout << "MAS Warning: Unable to locate age composition data \"" << this->age_comp_data[i].second << "\".\n";
+            }
+
+        }
+
+        fleet.AddMember("data", data, allocator);
+
+        flt.PushBack(fleet, allocator);
     }
 
     static std::map<int, Fleet*> initialized_models;
@@ -6190,7 +6442,139 @@ public:
         }
     }
 
-    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& selex, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+    virtual void AddToEMInputs(rapidjson::Document& document, rapidjson::Value& srvy, size_t nyears, size_t nseasons, size_t nages, size_t nareas) {
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        rapidjson::Value survey(rapidjson::kObjectType);
+        survey.AddMember("id", this->id, allocator);
+
+        rapidjson::Value parameters(rapidjson::kObjectType);
+        rapidjson::Value q(rapidjson::kObjectType);
+        q.AddMember("value", this->q.value, allocator);
+        q.AddMember("min", this->q.min, allocator);
+        q.AddMember("max", this->q.max, allocator);
+        q.AddMember("phase", this->q.phase, allocator);
+        if (this->q.estimated) {
+            q.AddMember("estimated", "true", allocator);
+        } else {
+            q.AddMember("estimated", "false", allocator);
+        }
+        parameters.AddMember("q", q, allocator);
+        survey.AddMember("parameters", parameters, allocator);
+
+
+        rapidjson::Value selectivity(rapidjson::kArrayType);
+        //id, season, area
+        for (int i = 0; i < this->selectivity.size(); i++) {
+            rapidjson::Value selex_entry(rapidjson::kObjectType);
+            selex_entry.AddMember("id", this->selectivity[i].first, allocator);
+            selex_entry.AddMember("season", this->selectivity[i].second, allocator);
+            selex_entry.AddMember("area", this->selectivity[i].third, allocator);
+            selectivity.PushBack(selex_entry, allocator);
+        }
+
+        survey.AddMember("selectivity", selectivity, allocator);
+
+        rapidjson::Value likelihood(rapidjson::kArrayType);
+        rapidjson::Value index(rapidjson::kObjectType);
+        index.AddMember("id", this->index_nll_id, allocator);
+        index.AddMember("component", "biomass_comp", allocator);
+        likelihood.PushBack(index, allocator);
+
+        rapidjson::Value age_comp(rapidjson::kObjectType);
+        age_comp.AddMember("id", this->age_comp_nll_id, allocator);
+        age_comp.AddMember("component", "age_comp", allocator);
+        likelihood.PushBack(age_comp, allocator);
+
+        survey.AddMember("likelihood_components", likelihood, allocator);
+
+        rapidjson::Value data(rapidjson::kArrayType);
+
+        for (int i = 0; i < this->index_data.size(); i++) {
+            rapidjson::Value index_data(rapidjson::kObjectType);
+            index_data.AddMember("data_object_type", "survey_biomass", allocator);
+            index_data.AddMember("name", "survey_biomass", allocator);
+            index_data.AddMember("id", this->id, allocator);
+            index_data.AddMember("units", "MT", allocator);
+            switch (this->index_data[i].first) {
+                case FEMALE:
+                    index_data.AddMember("sex", "female", allocator);
+                    break;
+                case MALE:
+                    index_data.AddMember("sex", "male", allocator);
+                    break;
+                case UNDIFFERENTIATED:
+                    index_data.AddMember("sex", "undifferentiated", allocator);
+                    break;
+                default:
+                    std::cout << "MAS Warning: Unknown sex type for index data.\n";
+            }
+            rapidjson::Value vals(rapidjson::kArrayType);
+            rapidjson::Value error_vals(rapidjson::kArrayType);
+            IndexData::model_iterator dit = IndexData::initialized_models.find(this->index_data[i].second);
+
+            if (dit != IndexData::initialized_models.end()) {
+
+                double missing_values = (*dit).second->missing_values;
+                index_data.AddMember("missing_values", missing_values, allocator);
+
+                Rcpp::NumericVector& data = (*dit).second->data;
+                MASSubModel::GenerateArrayObject(document, vals, data, 2, nyears, nseasons, nages);
+                index_data.AddMember("values", vals, allocator);
+
+                Rcpp::NumericVector& error = (*dit).second->error;
+                MASSubModel::GenerateArrayObject(document, error_vals, error, 2, nyears, nseasons, nages);
+                index_data.AddMember("observation_error", error_vals, allocator);
+                data.PushBack(index_data, allocator);
+            } else {
+                std::cout << "MAS Warning: Unable to locate index data \"" << this->index_data[i].second << "\".\n";
+            }
+
+        }
+
+        rapidjson::Value age_comp_data(rapidjson::kObjectType);
+        for (int i = 0; i < this->age_comp_data.size(); i++) {
+            rapidjson::Value age_comp_data(rapidjson::kObjectType);
+            age_comp_data.AddMember("data_object_type", "survey_proportion_at_age", allocator);
+            age_comp_data.AddMember("name", "survey_proportion_at_age", allocator);
+            age_comp_data.AddMember("id", this->id, allocator);
+            age_comp_data.AddMember("units", "NA", allocator);
+            switch (this->age_comp_data[i].first) {
+                case FEMALE:
+                    age_comp_data.AddMember("sex", "female", allocator);
+                    break;
+                case MALE:
+                    age_comp_data.AddMember("sex", "male", allocator);
+                    break;
+                case UNDIFFERENTIATED:
+                    age_comp_data.AddMember("sex", "undifferentiated", allocator);
+                    break;
+                default:
+                    std::cout << "MAS Warning: Unknown sex type for index data.\n";
+            }
+            rapidjson::Value vals(rapidjson::kArrayType);
+            rapidjson::Value sample_size_vals(rapidjson::kArrayType);
+            AgeCompData::model_iterator dit = AgeCompData::initialized_models.find(this->age_comp_data[i].second);
+            if (dit != AgeCompData::initialized_models.end()) {
+
+                double missing_values = (*dit).second->missing_values;
+                age_comp_data.AddMember("missing_values", missing_values, allocator);
+
+                Rcpp::NumericVector& data = (*dit).second->data;
+                MASSubModel::GenerateArrayObject(document, vals, data, 3, nyears, nseasons, nages);
+                age_comp_data.AddMember("values", vals, allocator);
+
+                Rcpp::NumericVector& sample_size = (*dit).second->sample_size;
+                MASSubModel::GenerateArrayObject(document, sample_size_vals, sample_size, 2, nyears, nseasons, nages);
+                age_comp_data.AddMember("sample_size", sample_size_vals, allocator);
+                data.PushBack(age_comp_data, allocator);
+            } else {
+                std::cout << "MAS Warning: Unable to locate age composition data \"" << this->age_comp_data[i].second << "\".\n";
+            }
+
+        }
+
+        srvy.AddMember("data", data, allocator);
+        srvy.PushBack(survey, allocator);
     }
 
     static std::map<int, Survey*> initialized_models;
@@ -6579,6 +6963,57 @@ public:
                 MASSubModel::submodels[i]->ToJSON(document, nyears, nseasons, nages, nareas);
             }
         }
+
+        rapidjson::StringBuffer buffer;
+        rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
+        document.Accept(writer);
+        std::cout << buffer.GetString();
+        return buffer.GetString();
+
+    }
+
+    std::string GetEMInputs() {
+        rapidjson::Document document;
+        document.SetObject();
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+
+        document.AddMember("years", this->nyears, allocator);
+        document.AddMember("seasons", this->nseasons, allocator);
+        document.AddMember("spawning_season_offset", this->spawning_season_offset, allocator);
+        document.AddMember("catch_season_offset", this->catch_season_offset, allocator);
+        document.AddMember("survey_season_offset", this->survey_season_offset, allocator);
+        document.AddMember("extended_plus_group", static_cast<int> (this->extended_plus_group), allocator);
+
+        rapidjson::Value agev(rapidjson::kArrayType);
+        for (int i = 0; i < this->ages.size(); i++) {
+            agev.PushBack(this->ages[i], allocator);
+        }
+        document.AddMember("ages", agev, allocator);
+
+
+
+        size_t nareas = Area::initialized_models.size();
+
+        rapidjson::Value areas(rapidjson::kArrayType);
+        typename Area::initialized_models::iterator ait;
+
+        for (ait = Area::initialized_models.begin(); ait != Area::initialized_models.end(); ++ait) {
+            (*ait).second->AddToEmInputs(document, areas, this->nyears, this->nseasons, this->nages, nareas);
+        }
+        document.AddMember("areas", areas, allocator);
+
+
+        rapidjson::Value recruitment(rapidjson::kArrayType);
+        rapidjson::Value growth(rapidjson::kArrayType);
+        rapidjson::Value maturity(rapidjson::kArrayType);
+        rapidjson::Value mortality(rapidjson::kArrayType);
+        rapidjson::Value initial_deviations(rapidjson::kArrayType);
+        rapidjson::Value movement(rapidjson::kArrayType);
+
+        rapidjson::Value selectivity(rapidjson::kArrayType);
+        rapidjson::Value fishing_mortality(rapidjson::kArrayType);
+        rapidjson::Value fleets(rapidjson::kArrayType);
+        rapidjson::Value surveys(rapidjson::kArrayType);
 
         rapidjson::StringBuffer buffer;
         rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
