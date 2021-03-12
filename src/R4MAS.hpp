@@ -701,10 +701,8 @@ public:
                     std::cout << "Vector estimate_age not 0 or values.size(). Resizing and setting all values to 1!\n";
                 }
 
-
-                this->estimate_age.resize(this->values.size());
                 for (int i = 0; i < this->values.size(); i++) {
-                    this->estimate_age[i] = 1;
+                    this->estimate_age.push_back(1);
                 }
             }
             for (int i = 0; i < this->values.size(); i++) {
