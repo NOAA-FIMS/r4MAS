@@ -648,6 +648,7 @@ class AgeBasedSelectivity : public SelectivityBase {
 public:
 
     Rcpp::NumericVector values;
+    Rcpp::InegerVector estimate_age;
     double min = std::numeric_limits<double>::min();
     double max = std::numeric_limits<double>::max();
     bool estimated = false;
@@ -692,12 +693,28 @@ public:
         for (int i = 0; i < this->values.size(); i++) {
             selex->w.push_back(this->values[i]);
         }
+
         if (this->estimated) {
+            if (this->estimate_age.size() != this->values.size() || this->estimate_age.size() == 0) {
+
+                if (this->estimate_age.size() > 0) {
+                    std::cout << "Vector estimate_age not 0 or values.size(). Resizing and setting all values to 1!\n";
+                }
+
+
+                this->estimate_age.resize(this->values.size());
+                for (int i = 0; i < this->values.size(); i++) {
+                    this->estimate_age[i] = 1;
+                }
+            }
             for (int i = 0; i < this->values.size(); i++) {
 
                 std::stringstream ss;
                 ss << "age_base_selectivity[" << i << "]_" << this->id;
-                selex->Register(selex->w[i], this->phase);
+                selex->w[i].SetName(ss.str());
+                if (this->estimate_age[i]) {
+                    selex->Register(selex->w[i], this->phase);
+                }
             }
         }
         info.selectivity_models[selex->id] = sel;
@@ -7000,20 +7017,20 @@ public:
             (*ait).second->AddToEMInputs(document, areas, this->nyears, this->nseasons, this->nages, nareas);
         }
         document.AddMember("areas", areas, allocator);
-        
-//        rapidjson::Value recruitment(rapidjson::kArrayType);
-//        typename RecruitmentBase::model_iterator rit;
-//
-//        for (rit = RecruitmentBase::initialized_models.begin(); rit != RecruitmentBase::initialized_models.end(); ++rit) {
-//            (*rit).second->AddToEMInputs(document, recruitment, this->nyears, this->nseasons, this->nages, nareas);
-//        }
-//        document.AddMember("recruitment", recruitment, allocator);
-//
-//        rapidjson::Value growth(rapidjson::kArrayType);
-//        
-//        typename GrowthBase::
-        
-        
+
+        //        rapidjson::Value recruitment(rapidjson::kArrayType);
+        //        typename RecruitmentBase::model_iterator rit;
+        //
+        //        for (rit = RecruitmentBase::initialized_models.begin(); rit != RecruitmentBase::initialized_models.end(); ++rit) {
+        //            (*rit).second->AddToEMInputs(document, recruitment, this->nyears, this->nseasons, this->nages, nareas);
+        //        }
+        //        document.AddMember("recruitment", recruitment, allocator);
+        //
+        //        rapidjson::Value growth(rapidjson::kArrayType);
+        //        
+        //        typename GrowthBase::
+
+
         rapidjson::Value maturity(rapidjson::kArrayType);
         rapidjson::Value mortality(rapidjson::kArrayType);
         rapidjson::Value initial_deviations(rapidjson::kArrayType);
@@ -7150,6 +7167,7 @@ RCPP_MODULE(rmas) {
     class_<AgeBasedSelectivity>("AgeBasedSelectivity")
             .constructor()
             .field("values", &AgeBasedSelectivity::values)
+            .field("estimate_age", &AgeBasedSelectivity::estimate_age)
             .field("id", &AgeBasedSelectivity::id)
             .field("estimated", &AgeBasedSelectivity::estimated)
             .field("phase", &AgeBasedSelectivity::phase)
