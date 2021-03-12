@@ -648,7 +648,7 @@ class AgeBasedSelectivity : public SelectivityBase {
 public:
 
     Rcpp::NumericVector values;
-    Rcpp::InegerVector estimate_age;
+    Rcpp::IntegerVector estimate_age;
     double min = std::numeric_limits<double>::min();
     double max = std::numeric_limits<double>::max();
     bool estimated = false;
@@ -698,7 +698,9 @@ public:
             if (this->estimate_age.size() != this->values.size() || this->estimate_age.size() == 0) {
 
                 if (this->estimate_age.size() > 0) {
-                    std::cout << "Vector estimate_age not 0 or values.size(). Resizing and setting all values to 1!\n";
+                    std::cout << "Warning: Vector \"estimate_age\" for age based "
+                            "selectivity model \""<<this->id<<"\" not 0 or "
+                            "values.size(). Resizing and setting all values to 1.\n";
                 }
 
                 for (int i = 0; i < this->values.size(); i++) {
