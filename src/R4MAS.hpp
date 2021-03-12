@@ -7001,17 +7001,17 @@ public:
         }
         document.AddMember("areas", areas, allocator);
         
-        rapidjson::Value recruitment(rapidjson::kArrayType);
-        typename RecruitmentBase::model_iterator rit;
-
-        for (rit = RecruitmentBase::initialized_models.begin(); rit != RecruitmentBase::initialized_models.end(); ++rit) {
-            (*rit).second->AddToEMInputs(document, recruitment, this->nyears, this->nseasons, this->nages, nareas);
-        }
-        document.AddMember("recruitment", recruitment, allocator);
-
-        rapidjson::Value growth(rapidjson::kArrayType);
-        
-        typename GrowthBase::
+//        rapidjson::Value recruitment(rapidjson::kArrayType);
+//        typename RecruitmentBase::model_iterator rit;
+//
+//        for (rit = RecruitmentBase::initialized_models.begin(); rit != RecruitmentBase::initialized_models.end(); ++rit) {
+//            (*rit).second->AddToEMInputs(document, recruitment, this->nyears, this->nseasons, this->nages, nareas);
+//        }
+//        document.AddMember("recruitment", recruitment, allocator);
+//
+//        rapidjson::Value growth(rapidjson::kArrayType);
+//        
+//        typename GrowthBase::
         
         
         rapidjson::Value maturity(rapidjson::kArrayType);
