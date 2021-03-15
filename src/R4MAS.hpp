@@ -701,6 +701,9 @@ public:
                     std::cout << "Warning: Vector \"estimate_age\" for age based "
                             "selectivity model \"" << this->id << "\" not 0 or "
                             "values.size(). Resizing and setting all values to 1.\n";
+                     mas::mas_log << "Warning: Vector \"estimate_age\" for age based "
+                            "selectivity model \"" << this->id << "\" not 0 or "
+                            "values.size(). Resizing and setting all values to 1.\n";
                 }
 
                 for (int i = 0; i < this->values.size(); i++) {
