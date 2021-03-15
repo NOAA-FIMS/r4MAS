@@ -699,7 +699,7 @@ public:
 
                 if (this->estimate_age.size() > 0) {
                     std::cout << "Warning: Vector \"estimate_age\" for age based "
-                            "selectivity model \""<<this->id<<"\" not 0 or "
+                            "selectivity model \"" << this->id << "\" not 0 or "
                             "values.size(). Resizing and setting all values to 1.\n";
                 }
 
@@ -712,7 +712,7 @@ public:
                 std::stringstream ss;
                 ss << "age_base_selectivity[" << i << "]_" << this->id;
                 selex->w[i].SetName(ss.str());
-                if (this->estimate_age[i]) {
+                if (this->estimate_age[i] > 0) {
                     selex->Register(selex->w[i], this->phase);
                 }
             }
