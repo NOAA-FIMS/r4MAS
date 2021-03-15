@@ -274,7 +274,7 @@ namespace mas {
          */
         const variable Evaluate(const int& pop_id, const int& area_id, const variable& sb) {
             variable bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
-            alpha = bc * 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
+            alpha = /*bc */ 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
             beta = (this->SB0[pop_id][area_id] * (1.0 - this->h)) / (5.0 * this->h - 1.0);
 
             return (alpha * sb) / (beta + sb);
