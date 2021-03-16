@@ -7248,6 +7248,7 @@ RCPP_MODULE(rmas) {
             ;
 
 
+    
     class_<BevertonHoltRecruitmentAlt>("BevertonHoltRecruitmentAlt")
             .constructor()
             .method("SetDeviations", &BevertonHoltRecruitmentAlt::SetDeviations)
