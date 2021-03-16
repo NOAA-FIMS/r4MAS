@@ -276,8 +276,10 @@ namespace mas {
             variable bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
             alpha = /*bc */ 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
             beta = (this->SB0[pop_id][area_id] * (1.0 - this->h)) / (5.0 * this->h - 1.0);
+            
+          return  ( 4.0*h*mas::exp(this->log_R0)*sb) / (this->SB0[pop_id][area_id]*(1.0 - h)+ sb*5.0*h-1.0);
 
-            return (alpha * sb) / (beta + sb);
+//            return (alpha * sb) / (beta + sb);
         }
 
         /**
