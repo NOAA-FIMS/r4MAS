@@ -1165,7 +1165,7 @@ protected:
 
 public:
     static int id_g;
-    bool use_bias_correction = false;
+
 
     virtual ~RecruitmentBase() {
     }
@@ -1530,7 +1530,8 @@ public:
     Parameter R0;
     Parameter h;
     Parameter sigma_r;
-
+    bool use_bias_correction = false;
+    
     BevertonHoltRecruitment() {
 
         this->id = RecruitmentBase::id_g++;
@@ -1838,7 +1839,8 @@ public:
     Parameter R0;
     Parameter h;
     Parameter sigma_r;
-
+    bool use_bias_correction = false;
+    
     BevertonHoltRecruitmentAlt() {
 
         this->id = RecruitmentBase::id_g++;
