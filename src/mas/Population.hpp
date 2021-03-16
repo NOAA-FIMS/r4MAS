@@ -1068,6 +1068,7 @@ namespace mas {
                             mas::exp(static_cast<REAL_T> (-0.5) *
                             mas::pow(this->recruitment_model->sigma_r, static_cast<REAL_T> (2.0)) +
                             this->recruitment_model->recruitment_deviations[year * seasons + (season - 1)]);
+                    this->recruitment[year * seasons + (season - 1)] *= this->sex_fraction_value;
                 } else {
 
                     std::cout << "recruitment model not found!!!\n";
