@@ -274,9 +274,9 @@ namespace mas {
 
         virtual void PrepareChild() {
             if (this->use_bias_correction) {
-                bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
+                this->bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
             } else {
-                bc = 1.0;
+                this->bc = 1.0;
             }
         }
 
@@ -361,9 +361,9 @@ namespace mas {
 
         virtual void PrepareChild() {
             if (this->use_bias_correction) {
-                bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
+                this->bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
             } else {
-                bc = 1.0;
+                this->bc = 1.0;
             }
         }
 
