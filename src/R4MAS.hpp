@@ -7247,8 +7247,6 @@ RCPP_MODULE(rmas) {
             .field("id", &BevertonHoltRecruitment::id)
             ;
 
-
-    
     class_<BevertonHoltRecruitmentAlt>("BevertonHoltRecruitmentAlt")
             .constructor()
             .method("SetDeviations", &BevertonHoltRecruitmentAlt::SetDeviations)
