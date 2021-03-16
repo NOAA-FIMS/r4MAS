@@ -1062,7 +1062,7 @@ namespace mas {
             } else {
                 if (season == this->spawning_season) {
                     //previous year spawning biomass
-                    variable sb = this->sb_per_recruit[year];//this->spawning_stock_biomass[(year - 1) * seasons + (season - 1)];
+                    variable sb = this->sb_per_recruit[year]; //this->spawning_stock_biomass[(year - 1) * seasons + (season - 1)];
 
                     this->recruitment[year * seasons + (season - 1)] =
                             static_cast<REAL_T> (this->sex_fraction_value) * this->recruitment_model->Evaluate(this->id, this->area->id, sb) *
@@ -2576,10 +2576,10 @@ namespace mas {
             for (int a = 0; a < areas_list.size(); a++) {
                 males[areas_list[a]->id].Initialize();
                 females[areas_list[a]->id].Initialize();
-                
-                 males[areas_list[a]->id].CalculateUnfishedSpawningBiomassPerRecruit()
+
+                males[areas_list[a]->id].CalculateUnfishedSpawningBiomassPerRecruit();
                 females[areas_list[a]->id].CalculateUnfishedSpawningBiomassPerRecruit();
-                
+
                 std::vector<REAL_T>& mv = this->maturity_models[areas_list[a]->id][mas::MALE];
                 if (mv.size() != this->ages) {
                     mv.resize(this->ages, REAL_T(.5));
