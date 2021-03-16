@@ -1061,7 +1061,7 @@ namespace mas {
             } else {
                 if (season == this->spawning_season) {
                     //previous year spawning biomass
-                    variable sb = 7.25;//his->spawning_stock_biomass[(year - 1) * seasons + (season - 1)];
+                    variable sb = this->spawning_stock_biomass[(year - 1) * seasons + (season - 1)];
 
                     this->recruitment[year * seasons + (season - 1)] =
                             static_cast<REAL_T> (this->sex_fraction_value) * this->recruitment_model->Evaluate(this->id, this->area->id, sb) *
