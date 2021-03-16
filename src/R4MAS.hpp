@@ -7252,7 +7252,7 @@ RCPP_MODULE(rmas) {
             .constructor()
             .method("SetDeviations", &BevertonHoltRecruitmentAlt::SetDeviations)
             .field("R0", &BevertonHoltRecruitmentAlt::R0)
-            .field("use_bias_correction", &BevertonHoltRecruitment::use_bias_correction)
+            .field("use_bias_correction", &BevertonHoltRecruitmentAlt::use_bias_correction)
             .field("sigma_r", &BevertonHoltRecruitmentAlt::sigma_r)
             .field("h", &BevertonHoltRecruitmentAlt::h)
             .field("constrained_deviations", &BevertonHoltRecruitmentAlt::constrained_deviations)
