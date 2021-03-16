@@ -695,22 +695,22 @@ public:
         }
 
         if (this->estimated) {
-//            if (this->estimate_age.size() != this->values.size() || this->estimate_age.size() == 0) {
-//
-//                if (this->estimate_age.size() > 0) {
-//                    std::cout << "Warning: Vector \"estimate_age\" for age based "
-//                            "selectivity model \"" << this->id << "\" not 0 or "
-//                            "values.size(). Resizing and setting all values to 1.\n";
-//                     mas::mas_log << "Warning: Vector \"estimate_age\" for age based "
-//                            "selectivity model \"" << this->id << "\" not 0 or "
-//                            "values.size(). Resizing and setting all values to 1.\n";
-//                }
-//
-//                for (int i = 0; i < this->values.size(); i++) {
-//                    this->estimate_age.push_back(1);
-//                }
-//            }
-//            
+            if (this->estimate_age.size() != this->values.size() || this->estimate_age.size() == 0) {
+
+                if (this->estimate_age.size() > 0) {
+                    std::cout << "Warning: Vector \"estimate_age\" for age based "
+                            "selectivity model \"" << this->id << "\" not 0 or "
+                            "values.size(). Resizing and setting all values to 1.\n";
+                     mas::mas_log << "Warning: Vector \"estimate_age\" for age based "
+                            "selectivity model \"" << this->id << "\" not 0 or "
+                            "values.size(). Resizing and setting all values to 1.\n";
+                }
+
+                for (int i = 0; i < this->values.size(); i++) {
+                    this->estimate_age.push_back(1);
+                }
+            }
+            
             for (int i = 0; i < this->values.size(); i++) {
 
                 std::stringstream ss;
