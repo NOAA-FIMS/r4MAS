@@ -701,7 +701,7 @@ public:
                     std::cout << "Warning: Vector \"estimate_age\" for age based "
                             "selectivity model \"" << this->id << "\" not 0 or "
                             "values.size(). Resizing and setting all values to 1.\n";
-                     mas::mas_log << "Warning: Vector \"estimate_age\" for age based "
+                    mas::mas_log << "Warning: Vector \"estimate_age\" for age based "
                             "selectivity model \"" << this->id << "\" not 0 or "
                             "values.size(). Resizing and setting all values to 1.\n";
                 }
@@ -710,7 +710,7 @@ public:
                     this->estimate_age.push_back(1);
                 }
             }
-            
+
             for (int i = 0; i < this->values.size(); i++) {
 
                 std::stringstream ss;
@@ -1165,6 +1165,7 @@ protected:
 
 public:
     static int id_g;
+    bool use_bias_correction = false;
 
     virtual ~RecruitmentBase() {
     }
@@ -1571,6 +1572,7 @@ public:
         r->R0 = this->R0.value;
         r->log_R0 = std::log(this->R0.value);
 
+        r->use_bias_correction = this->use_bias_correction;
 
         if (this->R0.estimated) {
             std::stringstream ss;
@@ -1877,6 +1879,7 @@ public:
 
         r->R0 = this->R0.value;
         r->log_R0 = std::log(this->R0.value);
+        r->use_bias_correction = this->use_bias_correction;
 
 
         if (this->R0.estimated) {
@@ -7231,6 +7234,7 @@ RCPP_MODULE(rmas) {
             .constructor()
             .method("SetDeviations", &BevertonHoltRecruitment::SetDeviations)
             .field("R0", &BevertonHoltRecruitment::R0)
+            .field("use_bias_correction", &BevertonHoltRecruitment::use_bias_correction)
             .field("sigma_r", &BevertonHoltRecruitment::sigma_r)
             .field("h", &BevertonHoltRecruitment::h)
             .field("constrained_deviations", &BevertonHoltRecruitment::constrained_deviations)
@@ -7246,6 +7250,7 @@ RCPP_MODULE(rmas) {
             .constructor()
             .method("SetDeviations", &BevertonHoltRecruitmentAlt::SetDeviations)
             .field("R0", &BevertonHoltRecruitmentAlt::R0)
+            .field("use_bias_correction", &BevertonHoltRecruitment::use_bias_correction)
             .field("sigma_r", &BevertonHoltRecruitmentAlt::sigma_r)
             .field("h", &BevertonHoltRecruitmentAlt::h)
             .field("constrained_deviations", &BevertonHoltRecruitmentAlt::constrained_deviations)

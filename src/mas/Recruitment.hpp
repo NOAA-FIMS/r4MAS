@@ -44,7 +44,8 @@ namespace mas {
         variable h; // steepness
         variable sigma_r; // recruitment standard deviation
         variable rho; // correlation coefficient
-
+        bool use_bias_correction = false;
+        variable bc = 1.0;
         std::unordered_map<int, std::unordered_map<int, variable> > SB0; // unfished equilibrium female spawning biomass, by population and area
         variable phi0; // unfished equilibrium spawning biomass per recruit, SB0 / R0
 
@@ -132,6 +133,11 @@ namespace mas {
                     this->recruitment_deviations[i] -= sum / static_cast<REAL_T> (this->recruitment_deviations.size());
                 }
             }
+            this->PrepareChild();
+        }
+
+        virtual void PrepareChild() {
+
         }
     };
 
@@ -266,6 +272,14 @@ namespace mas {
         variable alpha; //maximum recruitment
         variable beta; //the stock level needed to produce the half of maximum recruitment
 
+        virtual void PrepareChild() {
+            if (this->use_bias_correction) {
+                bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
+            } else {
+                bc = 1.0;
+            }
+        }
+
         /**
          * Beverton-Holt Spawn-Recruit relationship
          *
@@ -273,13 +287,16 @@ namespace mas {
          * @return
          */
         const variable Evaluate(const int& pop_id, const int& area_id, const variable& sb) {
-            variable bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
-            alpha = /*bc */ 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
-            beta = (this->SB0[pop_id][area_id] * (1.0 - this->h)) / (5.0 * this->h - 1.0);
-            
-          return  ( 4.0*this->h*mas::exp(this->log_R0)*sb) / (this->SB0[pop_id][area_id]*(1.0 - this->h)+ sb*5.0*this->h-1.0);
+            if (this->use_bias_correction) {
 
-//            return (alpha * sb) / (beta + sb);
+            }
+            //            variable bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
+            alpha = bc * 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
+            beta = (this->SB0[pop_id][area_id] * (1.0 - this->h)) / (5.0 * this->h - 1.0);
+
+            return ( 4.0 * this->h * mas::exp(this->log_R0) * sb) / (this->SB0[pop_id][area_id]*(1.0 - this->h) + sb * 5.0 * this->h - 1.0);
+
+            //            return (alpha * sb) / (beta + sb);
         }
 
         /**
@@ -290,8 +307,8 @@ namespace mas {
          * @return 
          */
         virtual const variable Evaluate(const variable& SB0, const variable& sb) {
-            variable bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
-            alpha = /*bc */ 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
+            //            variable bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
+            alpha = bc * 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
             beta = (SB0 * (1.0 - this->h)) / (5.0 * this->h - 1.0);
 
             return (alpha * sb) / (beta + sb);
@@ -342,6 +359,14 @@ namespace mas {
     struct BevertonHoltAlt : RecruitmentBase<REAL_T> {
         typedef typename VariableTrait<REAL_T>::variable variable;
 
+        virtual void PrepareChild() {
+            if (this->use_bias_correction) {
+                bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
+            } else {
+                bc = 1.0;
+            }
+        }
+
         /**
          * Alternative Beverton-Holt S-R relationship
          *
@@ -356,8 +381,8 @@ namespace mas {
             //                    - static_cast<REAL_T> (1.0))));
             variable rr; // = (sigma_r*4.0 * R0 * h * s) / ((S0 * (1.0 - h)) + (s * (5.0 * h - 1.0)));
             //            variable log_r0 = mas::log(this->R0);
-            variable bc = 0.5 * this->sigma_r * this->sigma_r;
-            rr = /*bc */ 4.0 * (this->h * mas::exp(this->log_R0) * s / (this->SB0[pop_id][area_id]*(1.0 - this->h) +
+//            variable bc= 0.5 * this->sigma_r * this->sigma_r;
+            rr = bc *4.0 * (this->h * mas::exp(this->log_R0) * s / (this->SB0[pop_id][area_id]*(1.0 - this->h) +
                     s * (5.0 * this->h - 1.0))); // * mas::mfexp(-0.5 * this->sigma_r * this->sigma_r);
             //            std::cout << rr << "\n";
             return rr;
@@ -372,8 +397,8 @@ namespace mas {
          */
         virtual const variable Evaluate(const variable& SB0, const variable& s) {
             variable rr;
-            variable bc = 0.5 * this->sigma_r * this->sigma_r;
-            rr = /*bc */ 4.0 * (this->h * mas::exp(this->log_R0) * s / (SB0 * (1.0 - this->h) +
+//            variable bc = 0.5 * this->sigma_r * this->sigma_r;
+            rr = bc * 4.0 * (this->h * mas::exp(this->log_R0) * s / (SB0 * (1.0 - this->h) +
                     s * (5.0 * this->h - 1.0)));
 
             return rr;
