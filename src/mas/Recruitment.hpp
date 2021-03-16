@@ -291,7 +291,7 @@ namespace mas {
 
             }
             //            variable bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
-            alpha = bc * 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
+            alpha = this->bc * 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
             beta = (this->SB0[pop_id][area_id] * (1.0 - this->h)) / (5.0 * this->h - 1.0);
 
             return ( 4.0 * this->h * mas::exp(this->log_R0) * sb) / (this->SB0[pop_id][area_id]*(1.0 - this->h) + sb * 5.0 * this->h - 1.0);
@@ -308,7 +308,7 @@ namespace mas {
          */
         virtual const variable Evaluate(const variable& SB0, const variable& sb) {
             //            variable bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
-            alpha = bc * 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
+            alpha = this->bc * 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
             beta = (SB0 * (1.0 - this->h)) / (5.0 * this->h - 1.0);
 
             return (alpha * sb) / (beta + sb);
@@ -382,7 +382,7 @@ namespace mas {
             variable rr; // = (sigma_r*4.0 * R0 * h * s) / ((S0 * (1.0 - h)) + (s * (5.0 * h - 1.0)));
             //            variable log_r0 = mas::log(this->R0);
 //            variable bc= 0.5 * this->sigma_r * this->sigma_r;
-            rr = bc *4.0 * (this->h * mas::exp(this->log_R0) * s / (this->SB0[pop_id][area_id]*(1.0 - this->h) +
+            rr = this->bc *4.0 * (this->h * mas::exp(this->log_R0) * s / (this->SB0[pop_id][area_id]*(1.0 - this->h) +
                     s * (5.0 * this->h - 1.0))); // * mas::mfexp(-0.5 * this->sigma_r * this->sigma_r);
             //            std::cout << rr << "\n";
             return rr;
@@ -398,7 +398,7 @@ namespace mas {
         virtual const variable Evaluate(const variable& SB0, const variable& s) {
             variable rr;
 //            variable bc = 0.5 * this->sigma_r * this->sigma_r;
-            rr = bc * 4.0 * (this->h * mas::exp(this->log_R0) * s / (SB0 * (1.0 - this->h) +
+            rr = this->bc * 4.0 * (this->h * mas::exp(this->log_R0) * s / (SB0 * (1.0 - this->h) +
                     s * (5.0 * this->h - 1.0)));
 
             return rr;
