@@ -99,7 +99,7 @@ namespace mas {
         std::vector<variable> SB_target;
         variable avgR;
 
-
+        std::vector<variable > sb_per_recruit;
         variable SB0; // derived variable, retrieve from the recruitment functor at finalize
 
         std::vector<variable> initial_numbers;
@@ -250,6 +250,7 @@ namespace mas {
             catch_biomass_total.resize(years * seasons);
             expected_N.resize(years * seasons * ages.size());
             N_proj.resize(seasons * ages.size());
+            this->sb_per_recruit.resize(this->years);
         }
 
         inline void Reset() {
@@ -411,7 +412,7 @@ namespace mas {
         inline REAL_T CalculateUnfishedSpawningBiomassPerRecruit() {
 
 
-            std::vector<variable > sb_per_recruit(this->years);
+            //            std::vector<variable > sb_per_recruit(this->years);
             std::vector<variable > s_per_recruit(this->years);
             for (int y = 0; y < this->years; y++) {
 
@@ -1061,7 +1062,7 @@ namespace mas {
             } else {
                 if (season == this->spawning_season) {
                     //previous year spawning biomass
-                    variable sb = this->spawning_stock_biomass[(year - 1) * seasons + (season - 1)];
+                    variable sb = this->sb_per_recruit[year];//this->spawning_stock_biomass[(year - 1) * seasons + (season - 1)];
 
                     this->recruitment[year * seasons + (season - 1)] =
                             static_cast<REAL_T> (this->sex_fraction_value) * this->recruitment_model->Evaluate(this->id, this->area->id, sb) *
@@ -1201,7 +1202,7 @@ namespace mas {
             std::valarray<REAL_T> SSB_eq(F.size());
 
             REAL_T spr_F0 = 0.0;
-       
+
 
             std::vector<REAL_T> N0(this->ages.size(), 1.0);
             for (int iage = 1; iage < nages; iage++) {
@@ -1210,7 +1211,7 @@ namespace mas {
             N0[nages - 1] = N0[nages - 2] * std::exp(-1.0 * M[nages - 2].GetValue()) / (1.0 - std::exp(-1.0 * M[nages - 1].GetValue()));
 
 
-            
+
             std::valarray<REAL_T> reprod(nages);
             std::valarray<REAL_T> selL(nages);
             std::valarray<REAL_T> selZ(nages);
@@ -1246,9 +1247,9 @@ namespace mas {
 
                 std::valarray<REAL_T> N_age(nages);
                 std::valarray<REAL_T> N_age_spawn(nages);
-                
+
                 N_age[0] = 1.0;
-                
+
                 for (int iage = 1; iage < nages; iage++) {
                     N_age[iage] = N_age[iage - 1] * std::exp(-1.0 * Z_age[iage - 1]);
                 }
@@ -1269,9 +1270,9 @@ namespace mas {
                 //                                                R_eq[i] = (R0 / ((5.0 * steep - 1.0) * spr[i]))*
                 //                                                        (BC * 4.0 * steep * spr[i] - spr_F0 * (1.0 - steep));
                 R_eq[i] = this->recruitment_model->CalculateEquilibriumRecruitment(
-                        this->recruitment_model->CalculateEquilibriumSpawningBiomass(spr[i]));//*1000*this->sex_fraction_value;
+                        this->recruitment_model->CalculateEquilibriumSpawningBiomass(spr[i])); //*1000*this->sex_fraction_value;
 
-                
+
 
                 if (R_eq[i] < 0.0000001) {
                     R_eq[i] = 0.0000001;
@@ -1349,15 +1350,15 @@ namespace mas {
 
                     SSB_msy_out = SSB_eq[i];
                     B_msy_out = B_eq[i] * this->sex_fraction_value;
-                    R_msy_out = R_eq[i]*1000.0* this->sex_fraction_value;
+                    R_msy_out = R_eq[i]*1000.0 * this->sex_fraction_value;
                     msy_knum_out = L_eq_knum[i];
                     F_msy_out = F[i];
                     spr_msy_out = spr[i];
                     index_m = i;
                 }
             }
-            
-            this->msy.msy = msy_mt_out*this->sex_fraction_value;
+
+            this->msy.msy = msy_mt_out * this->sex_fraction_value;
             this->msy.spr_F0 = spr_F0;
             this->msy.F_msy = F_msy_out;
             this->msy.spr_msy = spr[index_m];
@@ -1391,7 +1392,7 @@ namespace mas {
             this->msy.B_F40_msy = B_eq[F40_out];
             this->msy.E_F40_msy = E_eq[F40_out];
 
-                      std::cout<<std::scientific;
+            std::cout << std::scientific;
             //
             std::cout << "\n\nFmax: " << maxF << "\n";
             std::cout << "Step: " << step << "\n";
@@ -2575,6 +2576,10 @@ namespace mas {
             for (int a = 0; a < areas_list.size(); a++) {
                 males[areas_list[a]->id].Initialize();
                 females[areas_list[a]->id].Initialize();
+                
+                 males[areas_list[a]->id].CalculateUnfishedSpawningBiomassPerRecruit()
+                females[areas_list[a]->id].CalculateUnfishedSpawningBiomassPerRecruit();
+                
                 std::vector<REAL_T>& mv = this->maturity_models[areas_list[a]->id][mas::MALE];
                 if (mv.size() != this->ages) {
                     mv.resize(this->ages, REAL_T(.5));
@@ -2856,10 +2861,10 @@ namespace mas {
                     /******************************************
                      * Settle moved fish
                      *****************************************/
-                                       for (int d = 0; d < areas_list.size(); d++) {
-                                            males[areas_list[d]->id].SettleMovedFish(y, s);
-                                            females[areas_list[d]->id].SettleMovedFish(y, s);
-                                        }//end season
+                    //                    for (int d = 0; d < areas_list.size(); d++) {
+                    //                        males[areas_list[d]->id].SettleMovedFish(y, s);
+                    //                        females[areas_list[d]->id].SettleMovedFish(y, s);
+                    //                    }//end season
                 }//end year
 
             }
