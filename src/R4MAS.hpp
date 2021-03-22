@@ -6736,7 +6736,7 @@ public:
         mas->mas_instance.info.CreateModel();
         mas->Initialize();
 
-
+        try{
 
         if (mas->mas_instance.info.valid_configuration == true) {
             atl::LBFGS<double> min;
@@ -6752,7 +6752,9 @@ public:
 
             std::cout << "MAS Error: Invalid Model Configuration, see mas.log\n";
         }
-
+        }catch(...){
+            
+        }
 
     }
 
@@ -7417,7 +7419,7 @@ RCPP_MODULE(rmas) {
             .field("values", &AgeCompData::data)
             .field("sample_size", &AgeCompData::sample_size)
             .field("sex", &AgeCompData::sex)
-            .field("missing_value", &AgeCompData::missing_values)
+            .field("missing_values", &AgeCompData::missing_values)
             ;
     class_<LengthCompData>("LengthCompData")
             .constructor()
@@ -7425,7 +7427,7 @@ RCPP_MODULE(rmas) {
             .field("values", &LengthCompData::data)
             .field("sample_size", &LengthCompData::sample_size)
             .field("sex", &LengthCompData::sex)
-            .field("missing_value", &LengthCompData::missing_values)
+            .field("missing_values", &LengthCompData::missing_values)
             ;
 
 
