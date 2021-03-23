@@ -45,7 +45,7 @@ namespace mas {
         variable sigma_r; // recruitment standard deviation
         variable rho; // correlation coefficient
         bool use_bias_correction = false;
-        variable bc = 1.0;
+        variable bias_correction = 1.0;
         std::unordered_map<int, std::unordered_map<int, variable> > SB0; // unfished equilibrium female spawning biomass, by population and area
         variable phi0; // unfished equilibrium spawning biomass per recruit, SB0 / R0
 
@@ -73,6 +73,10 @@ namespace mas {
 
         virtual const REAL_T GetBeta() {
             return 0.0;
+        }
+        
+        virtual variable GetBiasCorrection(){
+            return this->bias_correction;
         }
 
         virtual const REAL_T CalculateEquilibriumSpawningBiomass(REAL_T spawing_biomass_per_recruit) {
@@ -274,9 +278,9 @@ namespace mas {
 
         virtual void PrepareChild() {
             if (this->use_bias_correction) {
-                this->bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
+                this->bias_correction = 0.5 * this->sigma_r * this->sigma_r; //bias correction
             } else {
-                this->bc = 1.0;
+                this->bias_correction = 1.0;
             }
         }
 
@@ -291,7 +295,7 @@ namespace mas {
 
             }
             //            variable bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
-            alpha = this->bc * 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
+            alpha = this->bias_correction * 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
             beta = (this->SB0[pop_id][area_id] * (1.0 - this->h)) / (5.0 * this->h - 1.0);
 
             return ( 4.0 * this->h * mas::exp(this->log_R0) * sb) / (this->SB0[pop_id][area_id]*(1.0 - this->h) + sb * 5.0 * this->h - 1.0);
@@ -308,7 +312,7 @@ namespace mas {
          */
         virtual const variable Evaluate(const variable& SB0, const variable& sb) {
             //            variable bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
-            alpha = this->bc * 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
+            alpha = this->bias_correction * 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
             beta = (SB0 * (1.0 - this->h)) / (5.0 * this->h - 1.0);
 
             return (alpha * sb) / (beta + sb);
@@ -361,9 +365,9 @@ namespace mas {
 
         virtual void PrepareChild() {
             if (this->use_bias_correction) {
-                this->bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
+                this->bias_correction = 0.5 * this->sigma_r * this->sigma_r; //bias correction
             } else {
-                this->bc = 1.0;
+                this->bias_correction = 1.0;
             }
         }
 
@@ -382,7 +386,7 @@ namespace mas {
             variable rr; // = (sigma_r*4.0 * R0 * h * s) / ((S0 * (1.0 - h)) + (s * (5.0 * h - 1.0)));
             //            variable log_r0 = mas::log(this->R0);
 //            variable bc= 0.5 * this->sigma_r * this->sigma_r;
-            rr = this->bc *4.0 * (this->h * mas::exp(this->log_R0) * s / (this->SB0[pop_id][area_id]*(1.0 - this->h) +
+            rr = this->bias_correction *4.0 * (this->h * mas::exp(this->log_R0) * s / (this->SB0[pop_id][area_id]*(1.0 - this->h) +
                     s * (5.0 * this->h - 1.0))); // * mas::mfexp(-0.5 * this->sigma_r * this->sigma_r);
             //            std::cout << rr << "\n";
             return rr;
@@ -398,7 +402,7 @@ namespace mas {
         virtual const variable Evaluate(const variable& SB0, const variable& s) {
             variable rr;
 //            variable bc = 0.5 * this->sigma_r * this->sigma_r;
-            rr = this->bc * 4.0 * (this->h * mas::exp(this->log_R0) * s / (SB0 * (1.0 - this->h) +
+            rr = this->bias_correction * 4.0 * (this->h * mas::exp(this->log_R0) * s / (SB0 * (1.0 - this->h) +
                     s * (5.0 * this->h - 1.0)));
 
             return rr;
