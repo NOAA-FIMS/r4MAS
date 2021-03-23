@@ -1166,7 +1166,6 @@ protected:
 public:
     static int id_g;
 
-
     virtual ~RecruitmentBase() {
     }
     Parameter sigma_r;
@@ -1531,7 +1530,7 @@ public:
     Parameter h;
     Parameter sigma_r;
     bool use_bias_correction = false;
-    
+
     BevertonHoltRecruitment() {
 
         this->id = RecruitmentBase::id_g++;
@@ -1840,7 +1839,7 @@ public:
     Parameter h;
     Parameter sigma_r;
     bool use_bias_correction = false;
-    
+
     BevertonHoltRecruitmentAlt() {
 
         this->id = RecruitmentBase::id_g++;
@@ -6736,24 +6735,24 @@ public:
         mas->mas_instance.info.CreateModel();
         mas->Initialize();
 
-        try{
+        try {
 
-        if (mas->mas_instance.info.valid_configuration == true) {
-            atl::LBFGS<double> min;
-            min.SetPrintWidth(2);
-            min.max_line_searches = this->max_line_searches;
-            min.SetTolerance(this->tolerance);
-            min.max_iterations = this->max_iterations;
-            min.print_interval = this->print_interval;
-            min.SetObjectiveFunction(mas.get());
-            min.Run();
-            mas->Finalize();
-        } else {
+            if (mas->mas_instance.info.valid_configuration == true) {
+                atl::LBFGS<double> min;
+                min.SetPrintWidth(2);
+                min.max_line_searches = this->max_line_searches;
+                min.SetTolerance(this->tolerance);
+                min.max_iterations = this->max_iterations;
+                min.print_interval = this->print_interval;
+                min.SetObjectiveFunction(mas.get());
+                min.Run();
+                mas->Finalize();
+            } else {
 
-            std::cout << "MAS Error: Invalid Model Configuration, see mas.log\n";
-        }
-        }catch(...){
-            
+                std::cout << "MAS Error: Invalid Model Configuration, see mas.log\n";
+            }
+        } catch (...) {
+
         }
 
     }
@@ -7225,6 +7224,7 @@ RCPP_MODULE(rmas) {
             .constructor()
             .method("SetDeviations", &RickerRecruitment::SetDeviations)
             .field("R0", &RickerRecruitment::R0)
+            .method("Evaluate", &RickerRecruitment::Evaluate)
             .field("alpha", &RickerRecruitment::alpha)
             .field("constrained_deviations", &RickerRecruitment::constrained_deviations)
             .field("estimate_deviations", &RickerRecruitment::estimate_deviations)
@@ -7237,6 +7237,7 @@ RCPP_MODULE(rmas) {
     class_<BevertonHoltRecruitment>("BevertonHoltRecruitment")
             .constructor()
             .method("SetDeviations", &BevertonHoltRecruitment::SetDeviations)
+            .method("Evaluate", &BevertonHoltRecruitment::Evaluate)
             .field("R0", &BevertonHoltRecruitment::R0)
             .field("use_bias_correction", &BevertonHoltRecruitment::use_bias_correction)
             .field("sigma_r", &BevertonHoltRecruitment::sigma_r)
@@ -7252,6 +7253,7 @@ RCPP_MODULE(rmas) {
     class_<BevertonHoltRecruitmentAlt>("BevertonHoltRecruitmentAlt")
             .constructor()
             .method("SetDeviations", &BevertonHoltRecruitmentAlt::SetDeviations)
+            .method("Evaluate", &BevertonHoltRecruitmentAlt::Evaluate)
             .field("R0", &BevertonHoltRecruitmentAlt::R0)
             .field("use_bias_correction", &BevertonHoltRecruitmentAlt::use_bias_correction)
             .field("sigma_r", &BevertonHoltRecruitmentAlt::sigma_r)
