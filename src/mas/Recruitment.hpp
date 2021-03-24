@@ -47,6 +47,7 @@ namespace mas {
         variable rho; // correlation coefficient
         bool use_bias_correction = false;
         variable bias_correction = 1.0;
+        
         std::unordered_map<int, std::unordered_map<int, variable> > SB0; // unfished equilibrium female spawning biomass, by population and area
         variable phi0; // unfished equilibrium spawning biomass per recruit, SB0 / R0
 
