@@ -1065,7 +1065,8 @@ namespace mas {
 
                     this->recruitment[year * seasons + (season - 1)] =
                             static_cast<REAL_T> (this->sex_fraction_value) * this->recruitment_model->Evaluate(this->id, this->area->id, sb) *
-                            mas::exp(this->recruitment_model->bias_correction +
+                            mas::exp(static_cast<REAL_T> (-0.5) *
+                            mas::pow(this->recruitment_model->sigma_r, static_cast<REAL_T> (2.0)) +
                             this->recruitment_model->recruitment_deviations[year * seasons + (season - 1)]);
                     
                 } else {
