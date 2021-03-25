@@ -6816,6 +6816,8 @@ public:
 
         mas->mas_instance.RunOperationalModel();
 
+         mas->Finalize();
+        
         //transfer derived values from MAS to RMAS
         Fleet::model_iterator it;
 
@@ -6934,6 +6936,7 @@ public:
     }
 
     std::string GetOuptput() {
+       
         mas::JSONOutputGenerator<double> json;
         mas->SetVarianceCovariance();
 
