@@ -1555,6 +1555,7 @@ public:
         mas::VariableTrait<double>::SetValue(sb_, sb);
         std::shared_ptr<mas::BevertonHolt<double> > rec = std::make_shared<mas::BevertonHolt<double> >();
         mas::BevertonHolt<double>* r = rec.get();
+        r->log_R0 = std::log(this->R0.value);
         r->R0 = this->R0.value;
         r->h = this->h.value;
         r->sigma_r = this->sigma_r.value;

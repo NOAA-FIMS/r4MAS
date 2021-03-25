@@ -318,8 +318,9 @@ namespace mas {
             //            variable bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
             alpha =  4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
             beta = (SB0 * (1.0 - this->h)) / (5.0 * this->h - 1.0);
-
-            return (alpha * sb) / (beta + sb);
+//
+//            return (alpha * sb) / (beta + sb);
+            return ( 4.0 * this->h * mas::exp(this->log_R0) * sb) / (SB0*(1.0 - this->h) + sb * (5.0 * this->h - 1.0));
         }
 
         virtual const REAL_T GetAlpha() {
