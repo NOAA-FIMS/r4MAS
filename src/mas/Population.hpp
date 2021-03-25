@@ -1112,7 +1112,7 @@ namespace mas {
                             mas::exp(static_cast<REAL_T> (-1.0) *
                             Z[index2]);
                     this->biomass_at_age[index1] = this->numbers_at_age[index1] * this->weight_at_season_start[index1];
-std::cout<< Z[index2]<<"*\n";
+
                 }
                 //current year plus group index
                 size_t index1 = year * this->seasons * this->ages.size() + (season - 1) * this->ages.size() + this->ages.size() - 1;

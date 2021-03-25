@@ -457,7 +457,7 @@ namespace mas {
                             this->catch_biomass_total[y * this->seasons + s].GetValue()
                             *std::exp(distribution(generator));
                     
-                    std::cout<<this->catch_biomass_total[y * this->seasons + s].GetValue()<<" --\n";
+             
                     this->catch_biomass_data->get_error(y, s) = this->CV;
                     
                     REAL_T total_c = 0.0;
