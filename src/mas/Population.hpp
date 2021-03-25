@@ -1090,9 +1090,7 @@ namespace mas {
 
             if (year == 0 && season == 1) {
                 for (int a = 0; a < ages.size(); a++) {
-                    this->numbers_at_age[a] = this->initial_numbers[a];
-                    std::cout<<this->initial_numbers[a]<<"**";
-                    
+                    this->numbers_at_age[a] = this->initial_numbers[a]; 
                 }
             } else {
                 int y = year;
@@ -1107,11 +1105,12 @@ namespace mas {
 
                     //previous year/age group index
                     size_t index2 = y * this->seasons * this->ages.size() + (s - 1) * this->ages.size() + a - 1;
-
+                   
                     this->numbers_at_age[index1] =
                             this->numbers_at_age[index2] *
                             mas::exp(static_cast<REAL_T> (-1.0) *
                             Z[index2]);
+                     std::cout<<this->numbers_at_age[index1]<<"**";
                     this->biomass_at_age[index1] = this->numbers_at_age[index1] * this->weight_at_season_start[index1];
 
                 }
