@@ -1091,6 +1091,7 @@ namespace mas {
             if (year == 0 && season == 1) {
                 for (int a = 0; a < ages.size(); a++) {
                     this->numbers_at_age[a] = this->initial_numbers[a];
+                    std::cout<<this->initial_numbers[a]<<"**";
                 }
             } else {
                 int y = year;
