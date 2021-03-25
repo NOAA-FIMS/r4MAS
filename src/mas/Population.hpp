@@ -1110,7 +1110,7 @@ namespace mas {
                             this->numbers_at_age[index2] *
                             mas::exp(static_cast<REAL_T> (-1.0) *
                             Z[index2]);
-                     std::cout<< Z[index2]<<" ** ";
+                     std::cout<< numbers_at_age[index2]<<" ** ";
                     this->biomass_at_age[index1] = this->numbers_at_age[index1] * this->weight_at_season_start[index1];
 
                 }
