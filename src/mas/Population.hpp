@@ -2809,7 +2809,7 @@ std::cout<< this->numbers_at_age[index1]<<"*\n";
                 for (int s = 1; s <= this->seasons; s++) {
                     for (int area = 0; area < areas_list.size(); area++) {
 
-                        std::cout<<y<< " "<<s <<" "area<<"\n";
+                        std::cout<<y<< " "<<s <<" "<<area<<"\n";
                         /******************************************
                          * Mortality
                          *****************************************/
