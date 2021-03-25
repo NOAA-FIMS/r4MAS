@@ -33,7 +33,7 @@ test_that(
 test_that(
   "BevertonHoltAltRecruitment test", {
     # Load module
-    # r4mas <- Rcpp::Module("rmas", dyn.load(dll_path))
+    r4mas <- Rcpp::Module("rmas", dyn.load(dll_path))
 
     # Set up recruitment
     recruitment <- new(r4mas$BevertonHoltRecruitmentAlt)
@@ -58,7 +58,7 @@ test_that(
 test_that(
   "RickerRecruitment test", {
     # Load module
-    # r4mas <- Rcpp::Module("rmas", dyn.load(dll_path))
+    r4mas <- Rcpp::Module("rmas", dyn.load(dll_path))
 
     # Set up recruitment
     recruitment <- new(r4mas$RickerRecruitment)
