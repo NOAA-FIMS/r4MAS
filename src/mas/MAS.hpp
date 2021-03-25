@@ -301,7 +301,7 @@ namespace mas {
             for (fit = info.fleets.begin(); fit != info.fleets.end(); ++fit) {
                 (*fit).second->ComputeProportions();
                 (*fit).second->ApplyOperatingModelError();
-                std::cout<<(*fit).second->catch_biomass_data<<"\n";
+                
                 info.data.push_back((*fit).second->catch_biomass_data);
                 info.data.push_back((*fit).second->catch_proportion_at_age_data);
                 info.data_dictionary[(*fit).second->id].push_back((*fit).second->catch_biomass_data);
