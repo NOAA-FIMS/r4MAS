@@ -1496,6 +1496,7 @@ namespace mas {
          */
         inline void CalculateSpawningBiomass(int year, int season) {
 
+            
             if (season == this->spawning_season) {
                 variable sb = static_cast<REAL_T> (0.0);
 
