@@ -47,7 +47,7 @@ namespace mas {
         variable rho; // correlation coefficient
         bool use_bias_correction = false;
         variable bias_correction = 0.0;
-        
+
         std::unordered_map<int, std::unordered_map<int, variable> > SB0; // unfished equilibrium female spawning biomass, by population and area
         variable phi0; // unfished equilibrium spawning biomass per recruit, SB0 / R0
 
@@ -299,12 +299,12 @@ namespace mas {
 
             }
             //            variable bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
-            alpha =  4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
+            alpha = 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
             beta = (this->SB0[pop_id][area_id] * (1.0 - this->h)) / (5.0 * this->h - 1.0);
 
-            return ( 4.0 * this->h * mas::exp(this->log_R0) * sb) / (this->SB0[pop_id][area_id]*(1.0 - this->h) + sb * (5.0 * this->h - 1.0));
+//            return ( 4.0 * this->h * mas::exp(this->log_R0) * sb) / (this->SB0[pop_id][area_id]*(1.0 - this->h) + sb * (5.0 * this->h - 1.0));
 
-            //            return (alpha * sb) / (beta + sb);
+            return (alpha * sb) / (beta + sb);
         }
 
         /**
@@ -316,11 +316,11 @@ namespace mas {
          */
         virtual const variable Evaluate(const variable& SB0, const variable& sb) {
             //            variable bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
-            alpha =  4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
+            alpha = 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
             beta = (SB0 * (1.0 - this->h)) / (5.0 * this->h - 1.0);
-//
-//            return (alpha * sb) / (beta + sb);
-            return ( 4.0 * this->h * mas::exp(this->log_R0) * sb) / (SB0*(1.0 - this->h) + sb * (5.0 * this->h - 1.0));
+            //
+            //            return (alpha * sb) / (beta + sb);
+            return ( 4.0 * this->h * mas::exp(this->log_R0) * sb) / (SB0 * (1.0 - this->h) + sb * (5.0 * this->h - 1.0));
         }
 
         virtual const REAL_T GetAlpha() {
@@ -399,7 +399,7 @@ namespace mas {
         virtual const variable Evaluate(const variable& SB0, const variable& s) {
             variable rr;
             //            variable bc = 0.5 * this->sigma_r * this->sigma_r;
-            rr =  4.0 * (this->h * mas::exp(this->log_R0) * s / (SB0 * (1.0 - this->h) +
+            rr = 4.0 * (this->h * mas::exp(this->log_R0) * s / (SB0 * (1.0 - this->h) +
                     s * (5.0 * this->h - 1.0)));
 
             return rr;
