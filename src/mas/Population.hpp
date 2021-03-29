@@ -2809,6 +2809,7 @@ namespace mas {
                 for (int s = 1; s <= this->seasons; s++) {
                     for (int area = 0; area < areas_list.size(); area++) {
 
+
                         /******************************************
                          * Mortality
                          *****************************************/
