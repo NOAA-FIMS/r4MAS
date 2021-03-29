@@ -1508,8 +1508,8 @@ namespace mas {
                             mas::exp(static_cast<REAL_T> (-1.0) * this->spawning_season_offset * Z[index]);
 
                     this->spawning_numbers_at_age[index] =
-                            this->equilibrium_to_survival_at_spawning[index] *
-                            this->numbers_at_age[index];
+                            (this->equilibrium_to_survival_at_spawning[index] *
+                            this->numbers_at_age[index])/1000.0;
 
 
                     sb += this->fecundity_at_age[index] * this->spawning_numbers_at_age[index];
@@ -2808,6 +2808,7 @@ namespace mas {
             for (y = 0; y < this->years; y++) {
                 for (int s = 1; s <= this->seasons; s++) {
                     for (int area = 0; area < areas_list.size(); area++) {
+
 
                         /******************************************
                          * Mortality
