@@ -1496,7 +1496,6 @@ namespace mas {
          */
         inline void CalculateSpawningBiomass(int year, int season) {
 
-            
             if (season == this->spawning_season) {
                 variable sb = static_cast<REAL_T> (0.0);
 
@@ -1509,8 +1508,8 @@ namespace mas {
                             mas::exp(static_cast<REAL_T> (-1.0) * this->spawning_season_offset * Z[index]);
 
                     this->spawning_numbers_at_age[index] =
-                            (this->equilibrium_to_survival_at_spawning[index] *
-                            this->numbers_at_age[index])/1000.0;
+                            this->equilibrium_to_survival_at_spawning[index] *
+                            this->numbers_at_age[index];
 
 
                     sb += this->fecundity_at_age[index] * this->spawning_numbers_at_age[index];
