@@ -655,26 +655,28 @@ namespace mas {
                 this->initial_equilibrium_numbers[a] = this->initial_equilibrium_numbers[a - 1] *
                         mas::exp(static_cast<REAL_T> (-1.0) * (this->M[a - 1]));
             }
-//            variable m = this->M[a - 1];
-//            variable sum;
-//            for (a = this->ages.size(); a < this->initial_equilibrium_numbers.size(); a++) {
-//                this->initial_equilibrium_numbers[a] = this->initial_equilibrium_numbers[a - 1] * mas::exp(static_cast<REAL_T> (-1.0) * (m));
-//                sum += this->initial_equilibrium_numbers[a];
-//            }
-//
-//            this->initial_equilibrium_numbers[ this->ages.size() - 1] += sum +
-//                    (this->initial_equilibrium_numbers[this->initial_equilibrium_numbers.size() - 1] * mas::exp(static_cast<REAL_T> (-1.0) * (m))) /
-//                    (1.0 - mas::exp(static_cast<REAL_T> (-1.0) * (m)));
+            variable m = this->M[a - 1];
+            variable sum;
+            for (a = this->ages.size(); a < this->initial_equilibrium_numbers.size(); a++) {
+                this->initial_equilibrium_numbers[a] = this->initial_equilibrium_numbers[a - 1] * mas::exp(static_cast<REAL_T> (-1.0) * (m));
+                sum += this->initial_equilibrium_numbers[a];
+            }
+
+            this->initial_equilibrium_numbers[ this->ages.size() - 1] += sum +
+                    (this->initial_equilibrium_numbers[this->initial_equilibrium_numbers.size() - 1] * mas::exp(static_cast<REAL_T> (-1.0) * (m))) /
+                    (1.0 - mas::exp(static_cast<REAL_T> (-1.0) * (m)));
         }
 
         void CalculateInitialNumbers() {
             //            variable sigma_r = this->recruitment_model->sigma_r;
             int a;
             for (a = 0; a < this->ages.size(); a++) {
-                this->initial_numbers[a] = (mas::exp(static_cast<REAL_T> (-1.0) *
-                        this->M[a] - this->initialF) * this->initial_equilibrium_numbers[a] *
-                        mas::exp(initial_deviations[a] - static_cast<REAL_T> (0.5)
-                        /* mas::pow(sigma_r, static_cast<REAL_T> (2.0))*/));
+                this->initial_numbers[a] = this->initial_equilibrium_numbers[a] ;
+                
+//                (mas::exp(static_cast<REAL_T> (-1.0) *
+//                        this->M[a] - this->initialF) * this->initial_equilibrium_numbers[a] *
+//                        mas::exp(initial_deviations[a] - static_cast<REAL_T> (0.5)
+//                        /* mas::pow(sigma_r, static_cast<REAL_T> (2.0))*/));
             }
 
             //            /*
