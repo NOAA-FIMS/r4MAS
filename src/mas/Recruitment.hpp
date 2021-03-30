@@ -304,7 +304,7 @@ namespace mas {
 
             return ( 4.0 * this->h * mas::exp(this->log_R0) * sb) / (this->SB0[pop_id][area_id]*(1.0 - this->h) + sb * (5.0 * this->h - 1.0));
 
-            return (alpha * sb) / (beta + sb);
+//            return (alpha * sb) / (beta + sb);
         }
 
         /**
