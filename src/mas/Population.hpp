@@ -655,16 +655,16 @@ namespace mas {
                 this->initial_equilibrium_numbers[a] = this->initial_equilibrium_numbers[a - 1] *
                         mas::exp(static_cast<REAL_T> (-1.0) * (this->M[a - 1]));
             }
-            variable m = this->M[a - 1];
-            variable sum;
-            for (a = this->ages.size(); a < this->initial_equilibrium_numbers.size(); a++) {
-                this->initial_equilibrium_numbers[a] = this->initial_equilibrium_numbers[a - 1] * mas::exp(static_cast<REAL_T> (-1.0) * (m));
-                sum += this->initial_equilibrium_numbers[a];
-            }
-
-            this->initial_equilibrium_numbers[ this->ages.size() - 1] += sum +
-                    (this->initial_equilibrium_numbers[this->initial_equilibrium_numbers.size() - 1] * mas::exp(static_cast<REAL_T> (-1.0) * (m))) /
-                    (1.0 - mas::exp(static_cast<REAL_T> (-1.0) * (m)));
+//            variable m = this->M[a - 1];
+//            variable sum;
+//            for (a = this->ages.size(); a < this->initial_equilibrium_numbers.size(); a++) {
+//                this->initial_equilibrium_numbers[a] = this->initial_equilibrium_numbers[a - 1] * mas::exp(static_cast<REAL_T> (-1.0) * (m));
+//                sum += this->initial_equilibrium_numbers[a];
+//            }
+//
+//            this->initial_equilibrium_numbers[ this->ages.size() - 1] += sum +
+//                    (this->initial_equilibrium_numbers[this->initial_equilibrium_numbers.size() - 1] * mas::exp(static_cast<REAL_T> (-1.0) * (m))) /
+//                    (1.0 - mas::exp(static_cast<REAL_T> (-1.0) * (m)));
         }
 
         void CalculateInitialNumbers() {
@@ -1511,6 +1511,7 @@ namespace mas {
                     this->spawning_numbers_at_age[index] =
                             this->equilibrium_to_survival_at_spawning[index] *
                             this->numbers_at_age[index];
+
 
                     sb += this->fecundity_at_age[index] * this->spawning_numbers_at_age[index];
 
