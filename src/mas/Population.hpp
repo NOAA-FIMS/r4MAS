@@ -670,7 +670,8 @@ namespace mas {
         void CalculateInitialNumbers() {
             //            variable sigma_r = this->recruitment_model->sigma_r;
             int a;
-            for (a = 0; a < this->ages.size(); a++) {
+            this->initial_numbers[0] = this->sex_fraction_value*this->R0;
+            for (a = 1; a < this->ages.size(); a++) {
                 this->initial_numbers[a] = (mas::exp(static_cast<REAL_T> (-1.0) *
                         this->M[a] - this->initialF) * this->initial_equilibrium_numbers[a] *
                         mas::exp(initial_deviations[a] - static_cast<REAL_T> (0.5)
