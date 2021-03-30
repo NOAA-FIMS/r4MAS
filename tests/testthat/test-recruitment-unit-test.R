@@ -1,10 +1,11 @@
 
-# Test RMAS: recruitment-unit-testing -------------------------------------------------------------------
+# Test RMAS: recruitment-unit-test -------------------------------------------------------------------
 # Fix recruitment settings in RMAS and run recruitment module
 # Compare MAS outputs with expect true values
 
 test_that(
-  "BevertonHoltRecruitment test", {
+  "BevertonHoltRecruitment test",
+  {
     test_path <- file.path(test_example_path, "unit_tests")
     source(file.path(test_path, "recruitment.R"))
 
@@ -23,15 +24,18 @@ test_that(
     recruitment$estimate_deviations <- FALSE
     recruitment$SetDeviations(deviations)
     recruitment$use_bias_correction <- FALSE
-    mas_recruitment <- recruitment$Evaluate(SB0=SB0, sb=ssb)
+    mas_recruitment <- recruitment$Evaluate(SB0 = SB0, sb = ssb)
 
-    expect_equal(object = mas_recruitment,
-                 expected = expect_BevertonHolt)
+    expect_equal(
+      object = mas_recruitment,
+      expected = expect_BevertonHolt
+    )
   }
 )
 
 test_that(
-  "BevertonHoltAltRecruitment test", {
+  "BevertonHoltAltRecruitment test",
+  {
     # Load module
     r4mas <- Rcpp::Module("rmas", dyn.load(dll_path))
 
@@ -47,16 +51,18 @@ test_that(
     recruitment$estimate_deviations <- FALSE
     recruitment$SetDeviations(deviations)
     recruitment$use_bias_correction <- FALSE
-    mas_recruitment <- recruitment$Evaluate(SB0=SB0, sb=ssb)
+    mas_recruitment <- recruitment$Evaluate(SB0 = SB0, sb = ssb)
 
-    expect_equal(object = mas_recruitment,
-                 expected = expect_BevertonHoltAlt)
-
+    expect_equal(
+      object = mas_recruitment,
+      expected = expect_BevertonHoltAlt
+    )
   }
 )
 
 test_that(
-  "RickerRecruitment test", {
+  "RickerRecruitment test",
+  {
     # Load module
     r4mas <- Rcpp::Module("rmas", dyn.load(dll_path))
 
@@ -72,10 +78,11 @@ test_that(
     recruitment$estimate_deviations <- FALSE
     recruitment$SetDeviations(deviations)
     recruitment$use_bias_correction <- FALSE
-    mas_recruitment <- recruitment$Evaluate(SB0=SB0, s=ssb)
+    mas_recruitment <- recruitment$Evaluate(SB0 = SB0, s = ssb)
 
-    expect_equal(object = mas_recruitment,
-                 expected = expect_Ricker)
-
+    expect_equal(
+      object = mas_recruitment,
+      expected = expect_Ricker
+    )
   }
 )

@@ -1,32 +1,34 @@
-# Test RMAS: check model outputs -------------------------------------------------------------------
+
+# Test RMAS: single species without recruitment bias correction case test  -------------------------------------------------------------------
 # Initialize RMAS module, input data, and model settings
 # Run MAS model
 # Compare MAS model outputs with true values from model comparison OM
 
 test_that(
-  "External OM test: singlespecies with bias correction in recruitment",{
+  "External OM test: singlespecies without bias correction in recruitment",
+  {
 
     # Load module
     r4mas <- Rcpp::Module("rmas", dyn.load(dll_path))
     test_path <- file.path(test_example_path, "externalom_example")
-    load(file.path(test_path, "singlespecies_biascorrection.RData"))
+    load(file.path(test_path, "singlespecies.RData"))
 
     # General settings
-    nyears=om_input$nyr
-    nseasons=1
-    nages=om_input$nages
-    ages = om_input$ages
+    nyears <- om_input$nyr
+    nseasons <- 1
+    nages <- om_input$nages
+    ages <- om_input$ages
 
-    #Define area
-    area1=new(r4mas$Area)
-    area1$name="area1"
+    # Define area
+    area1 <- new(r4mas$Area)
+    area1$name <- "area1"
 
-    #Recruitment
+    # Recruitment
     recruitment <- new(r4mas$BevertonHoltRecruitment)
-    recruitment$R0$value <- om_input$mean_R0 / 1000
+    recruitment$R0$value <- om_input$R0 / 1000
     recruitment$R0$estimated <- TRUE
     recruitment$R0$phase <- 1
-    recruitment$h$value <- om_input$mean_h
+    recruitment$h$value <- om_input$h
     recruitment$h$estimated <- FALSE
     recruitment$h$phase <- 3
     recruitment$h$min <- 0.2001
@@ -42,9 +44,9 @@ test_that(
     recruitment$deviations_max <- 15.0
     recruitment$deviation_phase <- 1
     recruitment$SetDeviations(om_input$logR.resid)
-    recruitment$use_bias_correction <- TRUE
+    recruitment$use_bias_correction <- FALSE
 
-    #Growth
+    # Growth
     growth <- new(r4mas$VonBertalanffyModified)
     empirical_weight <- rep(om_input$W.kg, times = om_input$nyr)
     survey_empirical_weight <- replicate(nages * nyears, 1.0)
@@ -62,28 +64,28 @@ test_that(
     growth$beta_f$value <- 2.9624
     growth$beta_m$value <- 2.9624
 
-    #Maturity
+    # Maturity
     maturity <- new(r4mas$Maturity)
     maturity$values <- om_input$mat.age
 
-    #Natural Mortality
+    # Natural Mortality
     natural_mortality <- new(r4mas$NaturalMortality)
     natural_mortality$SetValues(om_input$M.age)
 
-    #Define Movement (only 1 area in this model)
+    # Define Movement (only 1 area in this model)
     movement <- new(r4mas$Movement)
     movement$connectivity_females <- c(1.0)
     movement$connectivity_males <- c(1.0)
     movement$connectivity_recruits <- c(1.0)
 
-    #Initial Deviations
+    # Initial Deviations
     initial_deviations <- new(r4mas$InitialDeviations)
     initial_deviations$values <- rep(0.1, times = om_input$nages)
     initial_deviations$estimate <- TRUE
     initial_deviations$phase <- 1
 
     population <- new(r4mas$Population)
-    for (y in 0:(nyears))
+    for (y in 1:(nyears))
     {
       population$AddMovement(movement$id, y)
     }
@@ -95,7 +97,7 @@ test_that(
     population$SetGrowth(growth$id)
     population$sex_ratio <- 0.5
 
-    #Fishing Mortality
+    # Fishing Mortality
     fishing_mortality <- new(r4mas$FishingMortality)
     fishing_mortality$estimate <- TRUE
     fishing_mortality$phase <- 1
@@ -103,7 +105,7 @@ test_that(
     fishing_mortality$max <- 4
     fishing_mortality$SetValues(om_output$f)
 
-    #Selectivity Model
+    # Selectivity Model
     fleet_selectivity <- new(r4mas$LogisticSelectivity)
     fleet_selectivity$a50$value <- om_input$sel_fleet$fleet1$A50.sel
     fleet_selectivity$a50$estimated <- TRUE
@@ -130,7 +132,7 @@ test_that(
     survey_selectivity$slope$min <- 0
     survey_selectivity$slope$max <- max(om_input$ages)
 
-    #Index data
+    # Index data
     catch_index <- new(r4mas$IndexData)
     catch_index$values <- em_input$L.obs$fleet1
     catch_index$error <- rep(em_input$cv.L$fleet1, times = om_input$nyr)
@@ -140,7 +142,7 @@ test_that(
     survey_index$error <- rep(em_input$cv.survey$survey1, times = om_input$nyr)
 
 
-    #Age Comp Data
+    # Age Comp Data
     catch_comp <- new(r4mas$AgeCompData)
     catch_comp$values <- as.vector(t(em_input$L.age.obs$fleet1))
     catch_comp$sample_size <- rep(em_input$n.L$fleet1, nyears * nseasons)
@@ -158,7 +160,7 @@ test_that(
     survey_index_comp_nll$use_bias_correction <- FALSE
     survey_age_comp_nll <- new(r4mas$Multinomial)
 
-    #Fleet
+    # Fleet
     fleet <- new(r4mas$Fleet)
     fleet$AddAgeCompData(catch_comp$id, "undifferentiated")
     fleet$AddIndexData(catch_index$id, "undifferentiated")
@@ -168,7 +170,7 @@ test_that(
     fleet$AddFishingMortality(fishing_mortality$id, 1, area1$id)
 
 
-    #Survey
+    # Survey
     survey <- new(r4mas$Survey)
     survey$AddAgeCompData(survey_comp$id, "undifferentiated")
     survey$AddIndexData(survey_index$id, "undifferentiated")
@@ -181,7 +183,7 @@ test_that(
     survey$q$estimated <- TRUE
     survey$q$phase <- 1
 
-    #Build the MAS model
+    # Build the MAS model
     mas_model <- new(r4mas$MASModel)
     mas_model$nyears <- nyears
     mas_model$nseasons <- nseasons
@@ -198,24 +200,25 @@ test_that(
     mas_model$Run()
 
     write(mas_model$GetOutput(),
-          file=file.path(test_path, "test_output.json"))
+      file = file.path(test_path, "test_output.json")
+    )
 
     mas_model$Reset()
 
-    #Read output
+    # Read output
     args <- commandArgs(trailingOnly = TRUE)
     args <- "test_output.json"
     json_output <- read_json(file.path(test_path, args[1]))
-    popdy<-json_output$population_dynamics
+    popdy <- json_output$population_dynamics
     pop <- popdy$populations[[1]]
-    flt<-popdy$fleets[[1]]
-    srvy<-popdy$surveys[[1]]
+    flt <- popdy$fleets[[1]]
+    srvy <- popdy$surveys[[1]]
 
     om <- list(
       "biomass" = om_output$biomass.mt,
-      "abundance" = om_output$abundance/1000,
+      "abundance" = om_output$abundance / 1000,
       "ssb" = om_output$SSB,
-      "recruit" = om_output$N.age[,1]/1000,
+      "recruit" = om_output$N.age[, 1] / 1000,
       "Ftot" = apply(om_output$FAA, 1, max),
       "landing" = om_output$L.mt$fleet1,
       "survey" = om_output$survey_index$survey1
@@ -231,12 +234,12 @@ test_that(
       "survey" = unlist(srvy$undifferentiated$survey_biomass$values)
     )
 
-    # check if relative error of MAS is less than 0.2
-    for(i in 1:length(mas)){
+    # Check if relative error between MAS and OM is less than 0.1
+    for (i in 1:length(mas)) {
       x <- mas[[i]]
       y <- om[[i]]
-      for(j in 1:length(x)){
-        expect_lt(abs(x[j] - y[j])/y[j], 0.1)
+      for (j in 1:length(x)) {
+        expect_lt(abs(x[j] - y[j]) / y[j], 0.1)
       }
     }
   }
