@@ -646,8 +646,8 @@ namespace mas {
             //are both size 3*ages.size()
 
 
-            this->R0 = this->sex_fraction_value * mas::mfexp(this->recruitment_model->log_R0);
-            this->initial_equilibrium_numbers[0] = this->sex_fraction_value * mas::mfexp(this->recruitment_model->log_R0);
+            this->R0 = this->sex_fraction_value * mas::exp(this->recruitment_model->log_R0);
+            this->initial_equilibrium_numbers[0] = this->sex_fraction_value * mas::exp(this->recruitment_model->log_R0);
 
          
             int a;
