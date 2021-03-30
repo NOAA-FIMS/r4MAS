@@ -649,6 +649,7 @@ namespace mas {
             this->R0 = this->sex_fraction_value * mas::mfexp(this->recruitment_model->log_R0);
             this->initial_equilibrium_numbers[0] = this->R0;
 
+            std::cout<<"\n\nR0 = "<<this->R0<<"\n\n\n";
             int a;
             for (a = 1; a < this->ages.size(); a++) {
                 this->initial_equilibrium_numbers[a] = this->initial_equilibrium_numbers[a - 1] *
