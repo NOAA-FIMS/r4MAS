@@ -1512,8 +1512,7 @@ namespace mas {
                             this->equilibrium_to_survival_at_spawning[index] *
                             this->numbers_at_age[index];
 
-
-                    sb += this->fecundity_at_age[index] * this->numbers_at_age[index];//this->spawning_numbers_at_age[index];
+                    sb += this->fecundity_at_age[index] * this->spawning_numbers_at_age[index];
 
                 }
 
