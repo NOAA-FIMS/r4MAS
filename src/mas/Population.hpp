@@ -215,7 +215,7 @@ namespace mas {
             emigrant_recruits.resize(years * seasons);
             abundance.resize(years * seasons);
             initial_numbers.resize(this->ages.size()*3);
-            initial_equilibrium_numbers.resize(this->ages.size()*3);
+            initial_equilibrium_numbers.resize(this->ages.size());
             // these are all (fixed or estimated) PARAMETERS
 #warning hard coded vector initialS
             initialS.resize(this->ages.size(), 1.0); //fixed
@@ -1517,7 +1517,7 @@ namespace mas {
 
                 }
 
-                this->spawning_stock_biomass[year * this->seasons + (season - 1)] = sb*0.5;
+                this->spawning_stock_biomass[year * this->seasons + (season - 1)] = sb;
 
             } else {
 
