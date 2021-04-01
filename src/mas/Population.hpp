@@ -649,7 +649,7 @@ namespace mas {
             this->R0 = this->sex_fraction_value * mas::exp(this->recruitment_model->log_R0);
             this->initial_equilibrium_numbers[0] = this->sex_fraction_value * mas::exp(this->recruitment_model->log_R0);
 
-         
+
             int a;
             for (a = 1; a < this->ages.size(); a++) {
                 this->initial_equilibrium_numbers[a] = this->initial_equilibrium_numbers[a - 1] *
@@ -1008,6 +1008,7 @@ namespace mas {
                 Z[index] = static_cast<REAL_T> (0.0);
                 F[index] = static_cast<REAL_T> (0.0);
                 S[index] = static_cast<REAL_T> (0.0);
+                sum_selectivity[index] = static_cast<REAL_T> (0.0);
 
                 for (int f = 0; f < fleets.size(); f++) {
 
@@ -1066,9 +1067,9 @@ namespace mas {
 
                     this->recruitment[year * seasons + (season - 1)] =
                             static_cast<REAL_T> (this->sex_fraction_value) * this->recruitment_model->Evaluate(this->id, this->area->id, sb) *
-                            mas::exp(this->recruitment_model->bias_correction +//either 0.0 or -0.5*sigma_r^2
+                            mas::exp(this->recruitment_model->bias_correction + //either 0.0 or -0.5*sigma_r^2
                             this->recruitment_model->recruitment_deviations[year * seasons + (season - 1)]);
-                    
+
                 } else {
 
                     std::cout << "recruitment model not found!!!\n";
@@ -1091,7 +1092,7 @@ namespace mas {
 
             if (year == 0 && season == 1) {
                 for (int a = 0; a < ages.size(); a++) {
-                    this->numbers_at_age[a] = this->initial_numbers[a]; 
+                    this->numbers_at_age[a] = this->initial_numbers[a];
                 }
             } else {
                 int y = year;
@@ -1106,7 +1107,7 @@ namespace mas {
 
                     //previous year/age group index
                     size_t index2 = y * this->seasons * this->ages.size() + (s - 1) * this->ages.size() + a - 1;
-                   
+
                     this->numbers_at_age[index1] =
                             this->numbers_at_age[index2] *
                             mas::exp(static_cast<REAL_T> (-1.0) *
@@ -1202,7 +1203,7 @@ namespace mas {
             std::valarray<REAL_T> SSB_eq(F.size());
 
             REAL_T spr_F0 = 0.0;
-       
+
 
             std::vector<REAL_T> N0(this->ages.size(), 1.0);
             for (int iage = 1; iage < nages; iage++) {
@@ -1211,7 +1212,7 @@ namespace mas {
             N0[nages - 1] = N0[nages - 2] * std::exp(-1.0 * M[nages - 2].GetValue()) / (1.0 - std::exp(-1.0 * M[nages - 1].GetValue()));
 
 
-            
+
             std::valarray<REAL_T> reprod(nages);
             std::valarray<REAL_T> selL(nages);
             std::valarray<REAL_T> selZ(nages);
@@ -1247,9 +1248,9 @@ namespace mas {
 
                 std::valarray<REAL_T> N_age(nages);
                 std::valarray<REAL_T> N_age_spawn(nages);
-                
+
                 N_age[0] = 1.0;
-                
+
                 for (int iage = 1; iage < nages; iage++) {
                     N_age[iage] = N_age[iage - 1] * std::exp(-1.0 * Z_age[iage - 1]);
                 }
@@ -1270,9 +1271,9 @@ namespace mas {
                 //                                                R_eq[i] = (R0 / ((5.0 * steep - 1.0) * spr[i]))*
                 //                                                        (BC * 4.0 * steep * spr[i] - spr_F0 * (1.0 - steep));
                 R_eq[i] = this->recruitment_model->CalculateEquilibriumRecruitment(
-                        this->recruitment_model->CalculateEquilibriumSpawningBiomass(spr[i]));//*1000*this->sex_fraction_value;
+                        this->recruitment_model->CalculateEquilibriumSpawningBiomass(spr[i])); //*1000*this->sex_fraction_value;
 
-                
+
 
                 if (R_eq[i] < 0.0000001) {
                     R_eq[i] = 0.0000001;
@@ -1350,15 +1351,15 @@ namespace mas {
 
                     SSB_msy_out = SSB_eq[i];
                     B_msy_out = B_eq[i] * this->sex_fraction_value;
-                    R_msy_out = R_eq[i]*1000.0* this->sex_fraction_value;
+                    R_msy_out = R_eq[i]*1000.0 * this->sex_fraction_value;
                     msy_knum_out = L_eq_knum[i];
                     F_msy_out = F[i];
                     spr_msy_out = spr[i];
                     index_m = i;
                 }
             }
-            
-            this->msy.msy = msy_mt_out*this->sex_fraction_value;
+
+            this->msy.msy = msy_mt_out * this->sex_fraction_value;
             this->msy.spr_F0 = spr_F0;
             this->msy.F_msy = F_msy_out;
             this->msy.spr_msy = spr[index_m];
@@ -1392,7 +1393,7 @@ namespace mas {
             this->msy.B_F40_msy = B_eq[F40_out];
             this->msy.E_F40_msy = E_eq[F40_out];
 
-                      std::cout<<std::scientific;
+            std::cout << std::scientific;
             //
             std::cout << "\n\nFmax: " << maxF << "\n";
             std::cout << "Step: " << step << "\n";
@@ -2858,10 +2859,10 @@ namespace mas {
                     /******************************************
                      * Settle moved fish
                      *****************************************/
-                                       for (int d = 0; d < areas_list.size(); d++) {
-                                            males[areas_list[d]->id].SettleMovedFish(y, s);
-                                            females[areas_list[d]->id].SettleMovedFish(y, s);
-                                        }//end season
+                    for (int d = 0; d < areas_list.size(); d++) {
+                        males[areas_list[d]->id].SettleMovedFish(y, s);
+                        females[areas_list[d]->id].SettleMovedFish(y, s);
+                    }//end season
                 }//end year
 
             }
