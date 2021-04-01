@@ -1855,7 +1855,7 @@ namespace mas {
                                         for (int i = 0; i < values.Size(); i++) {
 
                                             VariableTrait<REAL_T>::SetValue(init_deviations[i], static_cast<REAL_T> (values[i].GetDouble()));
-                                            if (estimated) {
+                                            if (estimated && i > 0) {
                                                 std::stringstream ss;
                                                 ss << "idevsf_" << model->id << "_a_" << area;
                                                 VariableTrait<REAL_T>::SetName(init_deviations[i], ss.str());

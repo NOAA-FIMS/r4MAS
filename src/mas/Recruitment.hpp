@@ -46,6 +46,7 @@ namespace mas {
         variable sigma_r; // recruitment standard deviation
         variable rho; // correlation coefficient
         bool use_bias_correction = false;
+        
         variable bias_correction = 0.0;
 
         std::unordered_map<int, std::unordered_map<int, variable> > SB0; // unfished equilibrium female spawning biomass, by population and area
@@ -129,8 +130,11 @@ namespace mas {
         }
 
         void Prepare() {
+           
+
             if (estimating_recruitment_deviations && recruitment_deviations_constrained) {
                 variable sum = static_cast<REAL_T> (0.0);
+
                 for (int i = 0; i < this->recruitment_deviations.size(); i++) {
                     sum += this->recruitment_deviations[i];
                 }
@@ -282,7 +286,7 @@ namespace mas {
 
         virtual void PrepareChild() {
             if (this->use_bias_correction) {
-                this->bias_correction = 0.5 * this->sigma_r * this->sigma_r; //bias correction
+                this->bias_correction = -0.5 * this->sigma_r * this->sigma_r; //bias correction
             } else {
                 this->bias_correction = 1.0;
             }
@@ -304,7 +308,7 @@ namespace mas {
 
             return ( 4.0 * this->h * mas::exp(this->log_R0) * sb) / (this->SB0[pop_id][area_id]*(1.0 - this->h) + sb * (5.0 * this->h - 1.0));
 
-//            return (alpha * sb) / (beta + sb);
+            //            return (alpha * sb) / (beta + sb);
         }
 
         /**
