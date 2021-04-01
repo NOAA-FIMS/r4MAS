@@ -214,8 +214,8 @@ namespace mas {
             immigrant_recruits.resize(years * seasons);
             emigrant_recruits.resize(years * seasons);
             abundance.resize(years * seasons);
-            initial_numbers.resize(this->ages.size());
-            initial_equilibrium_numbers.resize(this->ages.size());
+            initial_numbers.resize(this->ages.size()*3);
+            initial_equilibrium_numbers.resize(this->ages.size()*3);
             // these are all (fixed or estimated) PARAMETERS
 #warning hard coded vector initialS
             initialS.resize(this->ages.size(), 1.0); //fixed
