@@ -24,7 +24,6 @@ test_that(
 
     # Recruitment
     recruitment <- new(r4mas$BevertonHoltRecruitment)
-    # recruitment <- new(r4mas$BevertonHoltRecruitmentAlt)
     recruitment$R0$value <- om_input$R0 / 1000
     recruitment$R0$estimated <- FALSE
     recruitment$R0$phase <- 1
@@ -66,7 +65,7 @@ test_that(
 
     # Maturity
     maturity <- new(r4mas$Maturity)
-    maturity$values <- om_input$mat.age
+    maturity$values <- om_input$mat.age * 0.5
 
     # Natural Mortality
     natural_mortality <- new(r4mas$NaturalMortality)
@@ -80,7 +79,7 @@ test_that(
 
     # Initial Deviations
     initial_deviations <- new(r4mas$InitialDeviations)
-    initial_deviations$values <- rep(0, times = om_input$nages)
+    initial_deviations$values <- rep(0.0, times = om_input$nages)
     initial_deviations$estimate <- TRUE
     initial_deviations$phase <- 1
 
@@ -210,10 +209,13 @@ test_that(
     flt <- popdy$fleets[[1]]
     srvy <- popdy$surveys[[1]]
 
-    # check if recruitment (with consideration of recruitment deviations) from RMAS equals to recruitment from OM
-    expect_equal(
-      object = unlist(pop$undifferentiated$recruits$values),
-      expected = om_output$N.age[, 1] / 1000
-    )
+    # Check if relative error in recruitment between MAS and OM is less than 0.15
+
+    object <- unlist(pop$undifferentiated$recruits$values)
+    expect <- om_output$N.age[, 1] / 1000
+
+    for (i in 1:length(object)) {
+      expect_lt(abs(object[i] - expect[i]) / expect[i], 0.15)
+    }
   }
 )
