@@ -28,8 +28,9 @@ test_that(
 
     expect_equal(
       object = mas_recruitment,
-      expected = expect_BevertonHolt
-    )
+      expected = expect_BevertonHolt,
+      tolerance = 1
+    ) # <1
   }
 )
 
@@ -55,7 +56,9 @@ test_that(
 
     expect_equal(
       object = mas_recruitment,
-      expected = expect_BevertonHoltAlt
-    )
+      expected = expect_BevertonHoltAlt,
+      tolerance = 1
+    ) # <1
   }
 )
+
