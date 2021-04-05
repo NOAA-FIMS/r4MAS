@@ -214,6 +214,20 @@ test_that(
     flt <- popdy$fleets[[1]]
     srvy <- popdy$surveys[[1]]
 
+    parameter <- unlist(json_output$estimated_parameters$parameters)
+    parameter_table <- as.data.frame(matrix(parameter, ncol = 3, byrow = TRUE))
+    colnames(parameter_table) <- c(
+      "Parameter",
+      "Value",
+      "Gradient"
+    )
+    parameter_table$Value <- round(as.numeric(parameter_table$Value),
+      digits = 6
+    )
+    parameter_table$Gradient <- round(as.numeric(parameter_table$Gradient),
+      digits = 6
+    )
+
     om <- list(
       "biomass" = om_output$biomass.mt,
       "abundance" = om_output$abundance / 1000,
@@ -221,7 +235,12 @@ test_that(
       "recruit" = om_output$N.age[, 1] / 1000,
       "Ftot" = apply(om_output$FAA, 1, max),
       "landing" = om_output$L.mt$fleet1,
-      "survey" = om_output$survey_index$survey1
+      "survey" = om_output$survey_index$survey1,
+      "r0" = om_input$R0 / 1000,
+      "q" = om_output$survey_q,
+      "selexparm_fleet" = om_input$sel_fleet,
+      "selexparm_survey" = om_input$sel_survey,
+      "recruit_deviation" = om_input$logR.resid
     )
 
     mas <- list(
@@ -231,15 +250,61 @@ test_that(
       "recruit" = unlist(pop$undifferentiated$recruits$values),
       "Ftot" = unlist(pop$undifferentiated$fishing_mortality$values),
       "landing" = unlist(flt$undifferentiated$catch_biomass$values),
-      "survey" = unlist(srvy$undifferentiated$survey_biomass$values)
+      "survey" = unlist(srvy$undifferentiated$survey_biomass$values),
+      "r0" = exp(parameter_table$Value[parameter_table$Parameter == "log_R0_1"]),
+      "q" = list(parameter_table$Value[parameter_table$Parameter == "q_1"] / 1000),
+      selexparm_fleet = list(
+        "a50" = parameter_table$Value[parameter_table$Parameter == "logistic_selectivity_a50_1"],
+        "slope" = parameter_table$Value[parameter_table$Parameter == "logistic_selectivity_slope_1"]
+      ),
+      selexparm_survey = list(
+        "a50" = parameter_table$Value[parameter_table$Parameter == "logistic_selectivity_a50_2"],
+        "slope" = parameter_table$Value[parameter_table$Parameter == "logistic_selectivity_slope_2"]
+      )
     )
 
-    # Check if relative error between MAS and OM is less than 0.15
-    for (i in 1:length(mas)) {
-      x <- mas[[i]]
-      y <- om[[i]]
+    # Check if relative errors of key variables are less than 0.15
+    var <- c(
+      "biomass", "abundance", "ssb", "recruit", "Ftot",
+      "landing", "survey"
+    )
+    for (i in 1:length(var)) {
+      x <- mas[[var[i]]]
+      y <- om[[var[i]]]
       for (j in 1:length(x)) {
-        expect_lt(abs(x[j] - y[j]) / y[j], 0.15)
+        expect_lt(abs(x[j] - y[j]) / y[j], 0.15) # <15%
+      }
+    }
+
+    # Check if relative errors of key paramters are less than 0.1 (R0: 2%)
+    summary_table <- matrix(c(
+      om$r0, mas$r0,
+      om$q$survey1, mas$q[[1]],
+      om$selexparm_fleet$fleet1$A50.sel1, mas$selexparm_fleet$a50,
+      om$selexparm_fleet$fleet1$slope.sel1, 1 / mas$selexparm_fleet$slope,
+      om$selexparm_survey$survey1$A50.sel1, mas$selexparm_survey$a50,
+      om$selexparm_survey$survey1$slope.sel1, 1 / mas$selexparm_survey$slope
+    ),
+    ncol = 2, byrow = TRUE
+    )
+    summary_table <- as.data.frame(summary_table)
+    colnames(summary_table) <- c("OM", "MAS")
+    rownames(summary_table) <- c(
+      "R0", "q",
+      "Fleet selectivity A50",
+      "Fleet selectivity slope",
+      "Survey selectivity A50",
+      "Survey selectivity slope"
+    )
+
+    for (i in 1:nrow(summary_table)) {
+      x <- summary_table$MAS[i]
+      y <- summary_table$OM[i]
+
+      if (rownames(summary_table)[i] == "R0") {
+        expect_lt(abs(x - y) / y, 0.02) # <2%
+      } else {
+        expect_equal(x, y, tolerance = 0.1) # <0.1
       }
     }
   }
