@@ -209,13 +209,17 @@ test_that(
     flt <- popdy$fleets[[1]]
     srvy <- popdy$surveys[[1]]
 
-    # Check if relative error in recruitment between MAS and OM is less than 0.15
+    # Check if relative error in recruitment between MAS and OM is less than 0.15 in year 1 and less than 2% from year 2
 
     object <- unlist(pop$undifferentiated$recruits$values)
     expect <- om_output$N.age[, 1] / 1000
 
-    for (i in 1:length(object)) {
-      expect_lt(abs(object[i] - expect[i]) / expect[i], 0.15)
+    # Recruitment in year 1
+    expect_lt(abs(object[1] - expect[1]) / expect[1], 0.15) # <15%
+
+    # Recruitment from year 2
+    for (i in 2:length(object)) {
+      expect_lt(abs(object[i] - expect[i]) / expect[i], 0.01) # <1%
     }
   }
 )
