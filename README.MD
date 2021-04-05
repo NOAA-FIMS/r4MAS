@@ -4,9 +4,7 @@
 
 **************
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/nmfs-fish-tools/RMAS) 
-![R-CMD-check](https://github.com/nmfs-fish-tools/RMAS/workflows/R-CMD-check/badge.svg)
-![macOS-test](https://github.com/nmfs-fish-tools/RMAS/workflows/macOS-test/badge.svg)
-![Windows-test](https://github.com/nmfs-fish-tools/RMAS/workflows/Windows-test/badge.svg)
+[![R-CMD-check and release](https://github.com/nmfs-fish-tools/RMAS/actions/workflows/R-CMD-check-and-Release.yml/badge.svg)](https://github.com/nmfs-fish-tools/RMAS/actions/workflows/R-CMD-check-and-Release.yml)
 
 **************
 The Metapopulation Assessment System (MAS) is a modular tool for creating and fitting fisheries stock assessment models. The R interface to MAS (RMAS) allows users to build and run MAS models directly using the `R` language. It also includes functions to help translate between MAS and other stock assessment software and to plot outputs of MAS models, including estimates of key biological and observation parameters and derived quantities such as biological reference points, estimated biomass, and estimated numbers-at-age.
