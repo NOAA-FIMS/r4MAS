@@ -20,6 +20,8 @@
 #include "third_party/ATL/ATL.hpp"
 #endif
 
+#define MAS_ALMOST_EQUAL(x,y)(std::abs(x-y)<0.01*std::max(std::abs(x),std::abs(y)))
+
 #include <vector>
 #include <map>
 #include <utility>

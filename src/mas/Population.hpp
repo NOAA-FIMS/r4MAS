@@ -1301,7 +1301,7 @@ namespace mas {
             }
 
             int max_index = 0;
-            REAL_T max = static_cast<REAL_T>(-1.0);//std::numeric_limits<REAL_T>::min();
+            REAL_T max = static_cast<REAL_T>(2.22507e-306);//std::numeric_limits<REAL_T>::min();
             spr_ratio = spr / spr_F0;
             REAL_T F01_dum = min(fabs(spr_ratio - 0.001));
             REAL_T F30_dum = min(fabs(spr_ratio - 0.3));
