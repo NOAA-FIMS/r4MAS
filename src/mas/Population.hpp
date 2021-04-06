@@ -1271,7 +1271,7 @@ namespace mas {
                 //                                                        (BC * 4.0 * steep * spr[i] - spr_F0 * (1.0 - steep));
                 R_eq[i] = this->recruitment_model->CalculateEquilibriumRecruitment(
                         this->recruitment_model->CalculateEquilibriumSpawningBiomass(spr[i])); //*1000*this->sex_fraction_value;
-                std::cout<<"R_eq["<<i<<"] = "<<R_eq[i]<<"\n";
+                std::cout<<"spr["<<i<<"] = "<<spr[i]<<"\n";
 
 
                 if (R_eq[i] < 0.0000001) {
