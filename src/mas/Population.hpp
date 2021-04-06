@@ -1338,6 +1338,7 @@ namespace mas {
                     F40_out = i;
                 }
             }
+            
             REAL_T msy_mt_out = max; //msy in whole weight 
             REAL_T SSB_msy_out;
             REAL_T B_msy_out;
