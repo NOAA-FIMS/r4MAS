@@ -3,7 +3,7 @@ on: [workflow_dispatch]
 name: MacOS-msy-check
 
 jobs:
-  windows-test:
+  mac-test:
     runs-on: macos-latest
 
     steps:
