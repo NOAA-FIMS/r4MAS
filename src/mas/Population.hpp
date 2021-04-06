@@ -1317,6 +1317,7 @@ namespace mas {
 
             for (int i = 0; i < L_eq.size(); i++) {
 
+                std::cout<<L_eq[i]<<" >= "<<max<<std::endl;
                 if (L_eq[i] >= max) {
                     max = L_eq[i];
                     max_index = i;
