@@ -1271,7 +1271,7 @@ namespace mas {
                 //                                                        (BC * 4.0 * steep * spr[i] - spr_F0 * (1.0 - steep));
                 R_eq[i] = this->recruitment_model->CalculateEquilibriumRecruitment(
                         this->recruitment_model->CalculateEquilibriumSpawningBiomass(spr[i])); //*1000*this->sex_fraction_value;
-
+                std::cout<<"R_eq["<<i<<"] = "<<R_eq[i]<<"\n";
 
 
                 if (R_eq[i] < 0.0000001) {
@@ -1288,7 +1288,7 @@ namespace mas {
 
                 for (int iage = 0; iage < nages; iage++) {
                     L_age[iage] = N_age[iage]*
-                            (FL_age[iage] / Z_age[iage])*(1. - std::exp(-1.0 * Z_age[iage]));
+                            (FL_age[iage] / Z_age[iage])*(1.0 - std::exp(-1.0 * Z_age[iage]));
                     //                            D_age[iage] = N_age[iage]*
                     //                                              (FD_age[iage] / Z_age[iage])*(1. - exp(-1.0 * Z_age[iage]))
                 }
