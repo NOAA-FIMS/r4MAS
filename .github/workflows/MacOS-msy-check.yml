@@ -1,6 +1,6 @@
 on: [workflow_dispatch]
 
-name: Windows-msy-check
+name: MacOS-msy-check
 
 jobs:
   windows-test:
