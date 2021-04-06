@@ -1317,7 +1317,6 @@ namespace mas {
 
             for (int i = 0; i < L_eq.size(); i++) {
 
-                std::cout<<L_eq[i]<<" >= "<<max<<std::endl;
                 if (L_eq[i] >= max) {
                     max = L_eq[i];
                     max_index = i;
@@ -1338,7 +1337,6 @@ namespace mas {
                     F40_out = i;
                 }
             }
-            
             REAL_T msy_mt_out = max; //msy in whole weight 
             REAL_T SSB_msy_out;
             REAL_T B_msy_out;
