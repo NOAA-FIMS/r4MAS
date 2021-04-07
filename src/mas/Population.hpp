@@ -1255,12 +1255,12 @@ namespace mas {
                     N_age[iage] = N_age[iage - 1] * std::exp(-1.0 * Z_age[iage - 1]);
                     std::cout << N_age[iage] << " ";
                 }
-                std::cout << "\n";
+
                 //last age is pooled
                 N_age[nages - 1] = N_age[nages - 2] * std::exp(-1.0 * Z_age[nages - 2]) /
                         (1.0 - std::exp(-1.0 * Z_age[nages - 1]));
-
-
+                std::cout << N_age[nages - 1] << " ";
+                std::cout << "\n";
                 N_age_spawn = (N_age *
                         std::exp((-1.0 * Z_age * this->spawning_season_offset.GetValue())));
 
