@@ -1299,9 +1299,9 @@ namespace mas {
                 SSB_eq[i] = sum((N_age_spawn * reprod));
                 std::valarray<REAL_T> L_eg_aa = L_age * wgt;
                 for(int ZZ =0; ZZ<L_eg_aa.size();ZZ++){
-                    std::cout<<L_eg_aa[ZZ]<<" ";
+                    std::cout<<L_eg_aa[ZZ]<<" = ("<<L_age[ZZ]<<"*"<<wgt[ZZ]<<")\n";
                 }
-                std::endl;
+                std::cout<<std::endl;
                 
                 L_eq[i] = sum(L_age * wgt);
                 E_eq[i] = sum(L_age) / sum(N_age);
