@@ -1300,7 +1300,7 @@ namespace mas {
                 L_eq[i] = sum(L_age * wgt);
                 E_eq[i] = sum(L_age) / sum(N_age);
                 L_eq_knum[i] = (sum(L_age) / 1000.0);
-                std::cout << L_eq[iage] << " ";
+                std::cout << L_eq[i] << " ";
 
             }
             std::cout << std::endl;
