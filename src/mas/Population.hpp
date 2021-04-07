@@ -1134,7 +1134,7 @@ namespace mas {
         }
 
         REAL_T sum(const std::valarray<REAL_T>& val) {
-            REAL_T ret;
+            REAL_T ret = 0.0;
             for (int i = 0; i < val.size(); i++) {
                 ret += val[i];
             }
@@ -1299,7 +1299,7 @@ namespace mas {
                 SSB_eq[i] = sum((N_age_spawn * reprod));
                 std::valarray<REAL_T> L_eg_aa = L_age * wgt;
                 for(int ZZ =0; ZZ<L_eg_aa.size();ZZ++){
-                    std::cout<<L_eg_aa[ZZ]<<" = ("<<L_age[ZZ]<<"*"<<wgt[ZZ]<<")\n";
+                    std::cout<<L_eg_aa[ZZ]<<" = ("<<L_age[ZZ]<<"*"<<wgt[ZZ]<<") = "<<(L_age[ZZ]*wgt[ZZ])<<"\n";
                 }
                 std::cout<<std::endl;
                 
