@@ -1306,7 +1306,6 @@ namespace mas {
                 for (int iage = 0; iage < nages; iage++) {
                     L_age[iage] = N_age[iage]*
                             (FL_age[iage] / Z_age[iage])*(1.0 - std::exp(-1.0 * Z_age[iage]));
-                    std::cout << N_age[iage] << " " << FL_age[iage] << " " << Z_age[iage] << " \n";
                     //                            D_age[iage] = N_age[iage]*
                     //                                              (FD_age[iage] / Z_age[iage])*(1. - exp(-1.0 * Z_age[iage]))
                 }
@@ -1320,7 +1319,6 @@ namespace mas {
                 L_eq_knum[i] = (sum(L_age) / 1000.0);
 
             }
-            std::cout << std::endl;
             int max_index = 0;
             REAL_T max = 1e-18; //std::numeric_limits<REAL_T>::min();
             spr_ratio = spr / spr_F0;
@@ -1338,13 +1336,10 @@ namespace mas {
 
             for (int i = 0; i < L_eq.size(); i++) {
 
-                std::cout << L_eq[i] << " >= " << max;
                 if (L_eq[i] >= max) {
                     max = L_eq[i];
                     max_index = i;
-                    std::cout << "*";
                 }
-                std::cout << std::endl;
 
                 //                if (std::fabs(spr_ratio[i] - 0.001) == F01_dum) {
                 //                    F01_out = F[i];
