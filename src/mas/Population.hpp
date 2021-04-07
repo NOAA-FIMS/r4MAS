@@ -1273,7 +1273,7 @@ namespace mas {
                     std::cout<<N_age[ZZ]<<" * "<<reprod[ZZ]<<" ";
                 }
                 std::cout<<"\nspr->"<<sp<<"\n";
-                spr[i] = sum(N_age * reprod);
+                spr[i] = sp;//sum(N_age * reprod);
                 //                                                R_eq[i] = (R0 / ((5.0 * steep - 1.0) * spr[i]))*
                 //                                                        (BC * 4.0 * steep * spr[i] - spr_F0 * (1.0 - steep));
                 R_eq[i] = this->recruitment_model->CalculateEquilibriumRecruitment(
