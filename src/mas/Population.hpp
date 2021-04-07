@@ -1286,11 +1286,11 @@ namespace mas {
                 S_eq[i] = sum(N_age * reprod);
                 B_eq[i] = sum(N_age * wgt);
 
-                std::cout << "L_age: ";
+                std::cout << "FL_age: ";
                 for (int iage = 0; iage < nages; iage++) {
                     L_age[iage] = N_age[iage]*
                             (FL_age[iage] / Z_age[iage])*(1.0 - std::exp(-1.0 * Z_age[iage]));
-                    std::cout << L_age[iage] << " ";
+                    std::cout << FL_age[iage] << " ";
                     //                            D_age[iage] = N_age[iage]*
                     //                                              (FD_age[iage] / Z_age[iage])*(1. - exp(-1.0 * Z_age[iage]))
                 }
