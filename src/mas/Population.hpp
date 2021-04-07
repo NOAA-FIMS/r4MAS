@@ -1141,6 +1141,22 @@ namespace mas {
             return ret;
         }
 
+        REAL_T sum_product(const std::valarray<REAL_T>& x, const std::valarray<REAL_T>& y) {
+            REAL_T ret = 0.0;
+            for (int i = 0; i < val.size(); i++) {
+                ret += x[i] * y[i];
+            }
+            return ret;
+        }
+
+        REAL_T sum_quitient(const std::valarray<REAL_T>& x, const std::valarray<REAL_T>& y) {
+            REAL_T ret = 0.0;
+            for (int i = 0; i < val.size(); i++) {
+                ret += x[i] / y[i];
+            }
+            return ret;
+        }
+
         REAL_T min(const std::valarray<REAL_T>& val) {
             REAL_T ret = std::numeric_limits<REAL_T>::max();
             for (int i = 0; i < val.size(); i++) {
@@ -1237,7 +1253,7 @@ namespace mas {
             std::valarray<REAL_T> D_age(nages); //#dead discards at age
             std::valarray<REAL_T> F_age(nages); //#F at age
             std::valarray<REAL_T> Z_age(nages); //#Z at age
-      
+
             // BEGIN ALGORITHM
             for (int i = 0; i < F.size(); i++) {
 
@@ -1266,7 +1282,7 @@ namespace mas {
                         Z_age[nages - 1] * this->spawning_season_offset.GetValue())))) / (1.0 - std::exp(-1. * Z_age[nages - 1]));
 
 
-                spr[i] = sum(N_age * reprod);
+                spr[i] = sum_product(N_age, reprod);
                 //                                                R_eq[i] = (R0 / ((5.0 * steep - 1.0) * spr[i]))*
                 //                                                        (BC * 4.0 * steep * spr[i] - spr_F0 * (1.0 - steep));
                 R_eq[i] = this->recruitment_model->CalculateEquilibriumRecruitment(
@@ -1283,23 +1299,23 @@ namespace mas {
 
 
 
-                S_eq[i] = sum(N_age * reprod);
-                B_eq[i] = sum(N_age * wgt);
+                S_eq[i] = sum_product(N_age, reprod);
+                B_eq[i] = sum_product(N_age, wgt);
 
 
                 for (int iage = 0; iage < nages; iage++) {
                     L_age[iage] = N_age[iage]*
                             (FL_age[iage] / Z_age[iage])*(1.0 - std::exp(-1.0 * Z_age[iage]));
-                    std::cout<<N_age[iage]<<" "<<FL_age[iage]<<" "<<Z_age[iage]<<" \n";
+                    std::cout << N_age[iage] << " " << FL_age[iage] << " " << Z_age[iage] << " \n";
                     //                            D_age[iage] = N_age[iage]*
                     //                                              (FD_age[iage] / Z_age[iage])*(1. - exp(-1.0 * Z_age[iage]))
                 }
 
-              
-                SSB_eq[i] = sum((N_age_spawn * reprod));
-              
-                
-                L_eq[i] = sum(L_age * wgt);
+
+                SSB_eq[i] = sum_product(N_age_spawn , reprod));
+
+
+                L_eq[i] = sum_product(L_age , wgt);
                 E_eq[i] = sum(L_age) / sum(N_age);
                 L_eq_knum[i] = (sum(L_age) / 1000.0);
 
