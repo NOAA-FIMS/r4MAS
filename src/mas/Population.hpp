@@ -1224,6 +1224,7 @@ namespace mas {
 
                 //is this ssb_unfished?
                 reprod[a] = this->weight_at_spawning[index].GetValue() * (this->maturity[a] * this->sex_fraction_value);
+                std::cout << reprod[a] << "-";
                 spr_F0 += N0[a] * reprod[a];
                 selL[a] = this->sum_selectivity[index].GetValue();
                 selZ[a] = this->sum_selectivity[index].GetValue();
@@ -1231,7 +1232,7 @@ namespace mas {
                 wgt[a] = this->weight_at_catch_time[index].GetValue();
             }
 
-
+            std::cout << std::endl;
 
             std::valarray<REAL_T> L_age(nages); //#landings at age
             std::valarray<REAL_T> D_age(nages); //#dead discards at age
@@ -1252,9 +1253,9 @@ namespace mas {
 
                 for (int iage = 1; iage < nages; iage++) {
                     N_age[iage] = N_age[iage - 1] * std::exp(-1.0 * Z_age[iage - 1]);
-                    std::cout<<N_age[iage]<<" ";
+                    std::cout << N_age[iage] << " ";
                 }
-                std::cout<<"\n";
+                std::cout << "\n";
                 //last age is pooled
                 N_age[nages - 1] = N_age[nages - 2] * std::exp(-1.0 * Z_age[nages - 2]) /
                         (1.0 - std::exp(-1.0 * Z_age[nages - 1]));
@@ -1272,7 +1273,7 @@ namespace mas {
                 //                                                        (BC * 4.0 * steep * spr[i] - spr_F0 * (1.0 - steep));
                 R_eq[i] = this->recruitment_model->CalculateEquilibriumRecruitment(
                         this->recruitment_model->CalculateEquilibriumSpawningBiomass(spr[i])); //*1000*this->sex_fraction_value;
-                std::cout<<"spr["<<i<<"] = "<<spr[i]<<"\n";
+                std::cout << "spr[" << i << "] = " << spr[i] << "\n";
 
 
                 if (R_eq[i] < 0.0000001) {
@@ -1302,7 +1303,7 @@ namespace mas {
             }
 
             int max_index = 0;
-            REAL_T max = 1e-18;//std::numeric_limits<REAL_T>::min();
+            REAL_T max = 1e-18; //std::numeric_limits<REAL_T>::min();
             spr_ratio = spr / spr_F0;
             REAL_T F01_dum = min(fabs(spr_ratio - 0.001));
             REAL_T F30_dum = min(fabs(spr_ratio - 0.3));
