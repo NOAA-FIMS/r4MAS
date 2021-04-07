@@ -1312,7 +1312,7 @@ namespace mas {
                 }
 
 
-                SSB_eq[i] = sum_product(N_age_spawn , reprod));
+                SSB_eq[i] = sum_product(N_age_spawn , reprod);
 
 
                 L_eq[i] = sum_product(L_age , wgt);
