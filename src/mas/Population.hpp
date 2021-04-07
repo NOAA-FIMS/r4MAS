@@ -1286,24 +1286,24 @@ namespace mas {
                 S_eq[i] = sum(N_age * reprod);
                 B_eq[i] = sum(N_age * wgt);
 
-                std::cout << "Z_age: ";
+                std::cout << "L_eq: ";
                 for (int iage = 0; iage < nages; iage++) {
                     L_age[iage] = N_age[iage]*
                             (FL_age[iage] / Z_age[iage])*(1.0 - std::exp(-1.0 * Z_age[iage]));
-                    std::cout << Z_age[iage] << " ";
+
                     //                            D_age[iage] = N_age[iage]*
                     //                                              (FD_age[iage] / Z_age[iage])*(1. - exp(-1.0 * Z_age[iage]))
                 }
-                std::cout << std::endl;
-                
+
+
                 SSB_eq[i] = sum((N_age_spawn * reprod));
                 L_eq[i] = sum(L_age * wgt);
                 E_eq[i] = sum(L_age) / sum(N_age);
                 L_eq_knum[i] = (sum(L_age) / 1000.0);
-
+                std::cout << L_eq[iage] << " ";
 
             }
-
+            std::cout << std::endl;
             int max_index = 0;
             REAL_T max = 1e-18; //std::numeric_limits<REAL_T>::min();
             spr_ratio = spr / spr_F0;
