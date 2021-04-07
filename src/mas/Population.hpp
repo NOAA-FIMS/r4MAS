@@ -1267,7 +1267,12 @@ namespace mas {
                 N_age_spawn[nages - 1] = (N_age_spawn[nages - 2]*(std::exp(-1. * (Z_age[nages - 2]*(1.0 - this->spawning_season_offset.GetValue()) +
                         Z_age[nages - 1] * this->spawning_season_offset.GetValue())))) / (1.0 - std::exp(-1. * Z_age[nages - 1]));
 
-
+                REAL_T sp =0;
+                for(int ZZ = 0; ZZ< reprod.size(); ZZ++){
+                    sp+=N_age[ZZ]*reprod[ZZ];
+                    std::cout<<N_age[ZZ]<<" * "<<reprod[ZZ]<<" ";
+                }
+                std::cout<<"\nspr->"<<sp<<"\n";
                 spr[i] = sum(N_age * reprod);
                 //                                                R_eq[i] = (R0 / ((5.0 * steep - 1.0) * spr[i]))*
                 //                                                        (BC * 4.0 * steep * spr[i] - spr_F0 * (1.0 - steep));
