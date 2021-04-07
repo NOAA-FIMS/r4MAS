@@ -1237,7 +1237,7 @@ namespace mas {
             std::valarray<REAL_T> D_age(nages); //#dead discards at age
             std::valarray<REAL_T> F_age(nages); //#F at age
             std::valarray<REAL_T> Z_age(nages); //#Z at age
-            std::cout << "L_eq: ";
+      
             // BEGIN ALGORITHM
             for (int i = 0; i < F.size(); i++) {
 
@@ -1290,23 +1290,18 @@ namespace mas {
                 for (int iage = 0; iage < nages; iage++) {
                     L_age[iage] = N_age[iage]*
                             (FL_age[iage] / Z_age[iage])*(1.0 - std::exp(-1.0 * Z_age[iage]));
-
+                    std::cout<<N_age[iage]<<" "<<FL_age[iage]<<" "<<Z_age[iage]<<" \n";
                     //                            D_age[iage] = N_age[iage]*
                     //                                              (FD_age[iage] / Z_age[iage])*(1. - exp(-1.0 * Z_age[iage]))
                 }
 
-
+              
                 SSB_eq[i] = sum((N_age_spawn * reprod));
-                std::valarray<REAL_T> L_eg_aa = L_age * wgt;
-                for(int ZZ =0; ZZ<L_eg_aa.size();ZZ++){
-                    std::cout<<L_eg_aa[ZZ]<<" = ("<<L_age[ZZ]<<"*"<<wgt[ZZ]<<") = "<<(L_age[ZZ]*wgt[ZZ])<<"\n";
-                }
-                std::cout<<std::endl;
+              
                 
                 L_eq[i] = sum(L_age * wgt);
                 E_eq[i] = sum(L_age) / sum(N_age);
                 L_eq_knum[i] = (sum(L_age) / 1000.0);
-                std::cout << L_eq[i] << " ";
 
             }
             std::cout << std::endl;
