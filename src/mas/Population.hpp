@@ -1224,7 +1224,6 @@ namespace mas {
 
                 //is this ssb_unfished?
                 reprod[a] = this->weight_at_spawning[index].GetValue() * (this->maturity[a] * this->sex_fraction_value);
-                std::cout << reprod[a] << "-";
                 spr_F0 += N0[a] * reprod[a];
                 selL[a] = this->sum_selectivity[index].GetValue();
                 selZ[a] = this->sum_selectivity[index].GetValue();
@@ -1232,7 +1231,7 @@ namespace mas {
                 wgt[a] = this->weight_at_catch_time[index].GetValue();
             }
 
-            std::cout << std::endl;
+
 
             std::valarray<REAL_T> L_age(nages); //#landings at age
             std::valarray<REAL_T> D_age(nages); //#dead discards at age
@@ -1253,32 +1252,26 @@ namespace mas {
 
                 for (int iage = 1; iage < nages; iage++) {
                     N_age[iage] = N_age[iage - 1] * std::exp(-1.0 * Z_age[iage - 1]);
-                    std::cout << N_age[iage] << " ";
                 }
 
                 //last age is pooled
                 N_age[nages - 1] = N_age[nages - 2] * std::exp(-1.0 * Z_age[nages - 2]) /
                         (1.0 - std::exp(-1.0 * Z_age[nages - 1]));
-                std::cout << N_age[nages - 1] << " ";
-                std::cout << "\n";
+
+
                 N_age_spawn = (N_age *
                         std::exp((-1.0 * Z_age * this->spawning_season_offset.GetValue())));
 
                 N_age_spawn[nages - 1] = (N_age_spawn[nages - 2]*(std::exp(-1. * (Z_age[nages - 2]*(1.0 - this->spawning_season_offset.GetValue()) +
                         Z_age[nages - 1] * this->spawning_season_offset.GetValue())))) / (1.0 - std::exp(-1. * Z_age[nages - 1]));
 
-                REAL_T sp =0;
-                for(int ZZ = 0; ZZ< reprod.size(); ZZ++){
-                    sp+=N_age[ZZ]*reprod[ZZ];
-                    std::cout<<N_age[ZZ]<<" * "<<reprod[ZZ]<<" ";
-                }
-                std::cout<<"\nspr->"<<sp<<"\n";
-                spr[i] = sp;//sum(N_age * reprod);
+
+                spr[i] = sum(N_age * reprod);
                 //                                                R_eq[i] = (R0 / ((5.0 * steep - 1.0) * spr[i]))*
                 //                                                        (BC * 4.0 * steep * spr[i] - spr_F0 * (1.0 - steep));
                 R_eq[i] = this->recruitment_model->CalculateEquilibriumRecruitment(
                         this->recruitment_model->CalculateEquilibriumSpawningBiomass(spr[i])); //*1000*this->sex_fraction_value;
-                std::cout << "spr[" << i << "] = " << spr[i] << "\n";
+
 
 
                 if (R_eq[i] < 0.0000001) {
@@ -1293,12 +1286,16 @@ namespace mas {
                 S_eq[i] = sum(N_age * reprod);
                 B_eq[i] = sum(N_age * wgt);
 
+                std::cout << "L_age: ";
                 for (int iage = 0; iage < nages; iage++) {
                     L_age[iage] = N_age[iage]*
                             (FL_age[iage] / Z_age[iage])*(1.0 - std::exp(-1.0 * Z_age[iage]));
+                    std::cout << L_age[iage] << " ";
                     //                            D_age[iage] = N_age[iage]*
                     //                                              (FD_age[iage] / Z_age[iage])*(1. - exp(-1.0 * Z_age[iage]))
                 }
+                std::cout << std::endl;
+                
                 SSB_eq[i] = sum((N_age_spawn * reprod));
                 L_eq[i] = sum(L_age * wgt);
                 E_eq[i] = sum(L_age) / sum(N_age);
