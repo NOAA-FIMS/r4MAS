@@ -1237,7 +1237,7 @@ namespace mas {
             std::valarray<REAL_T> D_age(nages); //#dead discards at age
             std::valarray<REAL_T> F_age(nages); //#F at age
             std::valarray<REAL_T> Z_age(nages); //#Z at age
-
+            std::cout << "L_eq: ";
             // BEGIN ALGORITHM
             for (int i = 0; i < F.size(); i++) {
 
@@ -1286,7 +1286,7 @@ namespace mas {
                 S_eq[i] = sum(N_age * reprod);
                 B_eq[i] = sum(N_age * wgt);
 
-                std::cout << "L_eq: ";
+
                 for (int iage = 0; iage < nages; iage++) {
                     L_age[iage] = N_age[iage]*
                             (FL_age[iage] / Z_age[iage])*(1.0 - std::exp(-1.0 * Z_age[iage]));
