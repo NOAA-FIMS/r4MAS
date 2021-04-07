@@ -1143,7 +1143,7 @@ namespace mas {
 
         REAL_T sum_product(const std::valarray<REAL_T>& x, const std::valarray<REAL_T>& y) {
             REAL_T ret = 0.0;
-            for (int i = 0; i < val.size(); i++) {
+            for (int i = 0; i < y.size(); i++) {
                 ret += x[i] * y[i];
             }
             return ret;
@@ -1151,7 +1151,7 @@ namespace mas {
 
         REAL_T sum_quitient(const std::valarray<REAL_T>& x, const std::valarray<REAL_T>& y) {
             REAL_T ret = 0.0;
-            for (int i = 0; i < val.size(); i++) {
+            for (int i = 0; i < x.size(); i++) {
                 ret += x[i] / y[i];
             }
             return ret;
