@@ -1242,7 +1242,7 @@ namespace mas {
                 reprod[a] = this->weight_at_spawning[index].GetValue() * (this->maturity[a] * this->sex_fraction_value);
                 spr_F0 += N0[a] * reprod[a];
                 selL[a] = this->sum_selectivity[index].GetValue();
-                selZ[a] = this->sum_selectivity[index].GetValue();
+                selZ[a] = this->sum_of_Z;//_selectivity[index].GetValue();
                 M_age[a] = this->M[a].GetValue();
                 wgt[a] = this->weight_at_catch_time[index].GetValue();
             }
