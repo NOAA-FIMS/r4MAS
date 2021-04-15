@@ -1,0 +1,31 @@
+on: [workflow_dispatch]
+
+name: MacOS-msy-check
+
+jobs:
+  mac-test:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: r-lib/actions/setup-r@master
+        with:
+          r-version: 'release'
+
+      - name: Install dependencies
+        run: |
+          install.packages(c("processx", "remotes", "rcmdcheck", "devtools"), type="binary")
+          remotes::install_deps(dependencies = TRUE)
+        shell: Rscript {0}
+
+      - name: Install and run RMAS
+        run: |
+          remotes::install_github("nmfs-fish-tools/r4MAS")
+          library(r4MAS)
+          library(Rcpp)
+          library(jsonlite)
+          r4mas <- Rcpp::Module("rmas", PACKAGE="r4MAS")
+          
+          # Define area
+          area1 <- new(r4mas$Area)
+          area1$name <- "area1"
