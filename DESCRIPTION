@@ -1,4 +1,4 @@
-Package: RMAS
+Package: r4MAS
 Type: Package
 Title: Read and Write Input and Output for MAS Model
 Version: 0.1.0
