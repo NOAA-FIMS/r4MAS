@@ -39,4 +39,4 @@ jobs:
           # Define area
           area1 <- new(r4mas$Area)
           area1$name <- "area1"
-         shell: Rscript {0}
+          shell: Rscript {0}
