@@ -13,32 +13,32 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This package allows you to build and run a Metapopulation Assessment System (MAS) stock assessment model directly from R. It also includes functions to inter-translate between different assessment platforms. In this vignette, we detail how to set up a MAS model and run it from R using dummy data included in the package. It is straightforward to replace this with your own data.
 
-The first step is to ensure you have `Rcpp`, the R package that allows calling of C++ code directly from R, and `jsonlite`, the R package that facilitates reading input and output files from JSON format. Right now, the `RMAS` package is only available on Github so you need to install it with the `remotes` package (this package is included in `devtools` if you have already installed that.)
+The first step is to ensure you have `Rcpp`, the R package that allows calling of C++ code directly from R, and `jsonlite`, the R package that facilitates reading input and output files from JSON format. Right now, the `r4MAS` package is only available on Github so you need to install it with the `remotes` package (this package is included in `devtools` if you have already installed that.)
 
 ```{r setup_pkgs, eval= FALSE}
 ##install.packages("Rcpp")
 ##install.packages("jsonlite")
 ##install.packages("remotes")
 
-remotes::install_github("nmfs-fish-tools/RMAS")
+remotes::install_github("nmfs-fish-tools/r4MAS")
 
 ```
 
 
-Next, you will need to load the .dll included in the RMAS package.
+Next, you will need to load the .dll included in the r4MAS package.
 
 ```{r dll_load, echo = FALSE}
 require(Rcpp)
-require(RMAS)
-d <- system.file(package = "RMAS")
+require(r4MAS)
+d <- system.file(package = "r4MAS")
 r4mas <-
-  Module("rmas", dyn.load(paste(d,"/libs/x64/RMAS", .Platform$dynlib.ext, sep = "")))
+  Module("rmas", dyn.load(paste(d,"/libs/x64/r4MAS", .Platform$dynlib.ext, sep = "")))
 ```
 
 
 ## Setting model specifications
 
-Next, we define model scalars, such as the number of years of the model, the number of seasons, and the vector of ages. For this example, we will use the test data created by `rmas::write_test_data()`, but this can be replaced by user input data later on in the script.
+Next, we define model scalars, such as the number of years of the model, the number of seasons, and the vector of ages. For this example, we will use the test data created by `r4mas::write_test_data()`, but this can be replaced by user input data later on in the script.
 
 ```{r model_config, echo=FALSE}
 
@@ -51,7 +51,7 @@ nages <- length(ages)
 input_data <- write_test_data(nyears = nyears)
 ```
 
-RMAS uses classes to parallel the object-oriented structure of MAS. In R, model classes are initiralized using the `new()` command. For each model component, the associated class is initialized and then its attributes are populated. To view available attributes for each class, use the `show()` function as shown below. 
+r4MAS uses classes to parallel the object-oriented structure of MAS. In R, model classes are initiralized using the `new()` command. For each model component, the associated class is initialized and then its attributes are populated. To view available attributes for each class, use the `show()` function as shown below. 
 
 ```{r}
 #View attributes and methods associated with each class
