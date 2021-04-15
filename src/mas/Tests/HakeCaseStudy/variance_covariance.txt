@@ -1,7 +1,0 @@
-
-Variance-Covariance Matrix for the Estimated Parameters
-Parameter            Name                                    Value               StdDev              1                   2                   
-1                    logistic_selectivity_a50_1              0.903361            6.97691             48.6773             -6.45758            
-2                    logistic_selectivity_s_1                0.0395295           1                   -6.45758            1                   
-
-
