@@ -7,12 +7,12 @@ Here we present an example of how a modular stock assessment software architectu
 
 # Setup
 
-Before running this notebook, you will need to ensure you have a C++ compiler and `Rcpp` installed. Then, try to install the `RMAS` package from Github and load it. If you have trouble, it could be because of a problem with your C++ compiler - see the [Readme](https://github.com/nmfs-fish-tools/RMAS#installation-instructions) for a potential fix.
+Before running this notebook, you will need to ensure you have a C++ compiler and `Rcpp` installed. Then, try to install the `r4MAS` package from Github and load it. If you have trouble, it could be because of a problem with your C++ compiler - see the [Readme](https://github.com/nmfs-fish-tools/r4MAS#installation-instructions) for a potential fix.
 
 ```{r}
 require(Rcpp)
-#remotes::install_github("nmfs-fish-tools/RMAS")
-devtools::load_all(".")
+remotes::install_github("nmfs-fish-tools/r4MAS")
+
 ```
 
 # Create model
