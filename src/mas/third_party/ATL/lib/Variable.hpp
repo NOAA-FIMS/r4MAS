@@ -648,6 +648,11 @@ namespace atl {
                             entry.min_id = std::min((*it)->id, entry.min_id);
                             entry.max_id = std::max((*it)->id, entry.max_id);
                             entry.first[i] = exp.EvaluateFirstDerivative((*it)->id);
+                             if(entry.first[i] != entry.first[i]){
+                                
+                                std::cout<<std::cout<<exp.ToExpressionTemplateString()<<"\n";
+                                exit(-1);
+                            }
                             i++;
                         }
                         break;
