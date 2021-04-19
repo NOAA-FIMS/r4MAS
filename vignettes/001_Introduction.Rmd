@@ -30,15 +30,25 @@ Next, you will need to load the .dll included in the r4MAS package.
 ```{r dll_load, echo = FALSE}
 require(Rcpp)
 require(r4MAS)
-d <- system.file(package = "r4MAS")
-r4mas <-
-  Module("rmas", dyn.load(paste(d,"/libs/x64/r4MAS", .Platform$dynlib.ext, sep = "")))
+# Option 1
+r4mas <- Rcpp::Module("rmas", PACKAGE="r4MAS")
+# Option 2
+libs_path <- system.file("libs", package="r4MAS")
+dll_name <- paste("r4MAS", .Platform$dynlib.ext, sep="")
+
+if(.Platform$OS.type == "windows") {
+  dll_path <- file.path(libs_path, .Platform$r_arch, dll_name)
+} else {
+  dll_path <- file.path(libs_path, dll_name)
+}
+
+r4mas <- Rcpp::Module("rmas", dyn.load(dll_path))
 ```
 
 
 ## Setting model specifications
 
-Next, we define model scalars, such as the number of years of the model, the number of seasons, and the vector of ages. For this example, we will use the test data created by `r4mas::write_test_data()`, but this can be replaced by user input data later on in the script.
+Next, we define model scalars, such as the number of years of the model, the number of seasons, and the vector of ages. For this example, we will use the test data created by `rmas::write_test_data()`, but this can be replaced by user input data later on in the script.
 
 ```{r model_config, echo=FALSE}
 
@@ -253,7 +263,9 @@ mas_model$AddPopulation(population$id)
 
 mas_model$Run()
 
-write(mas_model$GetOutput(), file="mas_s2_output.json")
+write(mas_model$GetOutput(), 
+      file=file.path(system.file("extdata", package="r4MAS"),
+                  "mas_s2_output.json"))
 ```
 
 ## Read in model output
@@ -262,7 +274,8 @@ We use the `jsonlite` package to read in model output. This creates a list in yo
 
 ```{r}
 require(jsonlite)
-json_loc <- paste(d,"/extdata/mas_s2_output.json", sep="")
+json_loc <- file.path(system.file("extdata", package="r4MAS"),
+                  "mas_s2_output.json")
 json_output <- jsonlite::read_json(json_loc)
 
 years <- json_output$nyears

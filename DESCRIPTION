@@ -19,3 +19,5 @@ LinkingTo:
     Rcpp
 Suggests: 
     testthat (>= 2.1.0)
+URL: https://nmfs-fish-tools.github.io/r4MAS/, https://github.com/nmfs-fish-tools/r4MAS
+BugReports: https://github.com/nmfs-fish-tools/r4MAS/issues 
