@@ -7129,6 +7129,7 @@ public:
         Survey::id_g = 1;
         Survey::initialized_models.clear();
 
+        NLLBase::id_g = 1;
         NLLBase::nll_submodels.clear();
         MASSubModel::submodels.clear();
     }
