@@ -651,7 +651,7 @@ namespace atl {
                              if(entry.first[i] != entry.first[i]){
                                 
                                 std::cout<<exp.ToExpressionTemplateString()<<"\n";
-                                throw  std::invalid_argument("nan");
+                                kill(getpid(), SIGSEGV);
                             }
                             i++;
                         }
