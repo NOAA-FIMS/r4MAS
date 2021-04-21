@@ -651,7 +651,7 @@ namespace atl {
                              if(entry.first[i] != entry.first[i]){
                                 
                                 std::cout<<exp.ToExpressionTemplateString()<<"\n";
-                                kill(getpid(), SIGSEGV);
+                                *(int*)0 = 0;
                             }
                             i++;
                         }
