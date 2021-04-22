@@ -12,6 +12,9 @@ r4mas <- Rcpp::Module("rmas", PACKAGE = "r4MAS")
 nareas <- length(om_input)
 area_id <- 1:nareas
 
+npopulations <- length(om_input)
+population_id <- 1:npopulations
+
 nyears <- vector(mode = "list", length = nareas)
 nyears <- lapply(
   seq_along(area_id),
@@ -104,17 +107,26 @@ growth <- lapply(
   }
 )
 
+# maturity <- vector(mode = "list", length = nareas)
+# maturity <- lapply(
+#   seq_along(area_id),
+#   function(x) {
+#     temp <- new(r4mas$Maturity)
+#
+#     temp$values <- om_input[[x]]$mat.age * 0.5
+#
+#     maturity[[x]] <- temp
+#   }
+# )
+
 maturity <- vector(mode = "list", length = nareas)
-maturity <- lapply(
-  seq_along(area_id),
-  function(x) {
-    temp <- new(r4mas$Maturity)
+for (x in 1:length(maturity)){
+  temp <- new(r4mas$Maturity)
 
-    temp$values <- om_input[[x]]$mat.age * 0.5
+  temp$values <- om_input[[x]]$mat.age
 
-    maturity[[x]] <- temp
-  }
-)
+  maturity[[x]] <- temp
+}
 
 natural_mortality <- vector(mode = "list", length = nareas)
 natural_mortality <- lapply(
@@ -160,7 +172,7 @@ initial_deviations <- lapply(
 
 population <- vector(mode = "list", length = nareas)
 population <- lapply(
-  seq_along(area_id),
+  seq_along(population_id),
   function(x) {
     temp <- new(r4mas$Population)
 
@@ -168,16 +180,19 @@ population <- lapply(
       temp$AddMovement(movement[[x]]$id, y)
     }
 
-    temp$AddNaturalMortality(natural_mortality[[x]]$id, areas[[x]]$id, "undifferentiated")
-    temp$AddMaturity(maturity[[x]]$id, areas[[x]]$id, "undifferentiated")
-    temp$AddRecruitment(recruitment[[x]]$id, 1, areas[[x]]$id)
-    temp$SetInitialDeviations(initial_deviations[[x]]$id, areas[[x]]$id, "undifferentiated")
-    temp$SetGrowth(growth[[x]]$id)
-    temp$sex_ratio <- 0.5
+    for(a in 1:nareas){
+      temp$AddNaturalMortality(natural_mortality[[a]]$id, areas[[a]]$id, "undifferentiated")
+      temp$AddMaturity(maturity[[a]]$id, areas[[a]]$id, "undifferentiated")
+      temp$AddRecruitment(recruitment[[a]]$id, 1, areas[[a]]$id)
+      temp$SetInitialDeviations(initial_deviations[[a]]$id, areas[[a]]$id, "undifferentiated")
+      temp$SetGrowth(growth[[a]]$id)
+      temp$sex_ratio <- 0.5
+    }
 
     population[[x]] <- temp
   }
 )
+
 
 
 catch_index <- vector(mode = "list", length = nareas)
@@ -318,7 +333,7 @@ survey_index_comp_nll <- lapply(
 
     temp$use_bias_correction <- FALSE
 
-    fleet_age_comp_nll[[x]] <- temp
+    survey_index_comp_nll[[x]] <- temp
   }
 )
 
@@ -367,7 +382,7 @@ survey <- lapply(
     # Catchability settings
     temp$q$value <- em_input[[x]]$survey_q$survey1
     temp$q$min <- 0
-    temp$q$max <- 10
+    temp$q$max <- 1
     temp$q$estimated <- TRUE
     temp$q$phase <- 1
 
@@ -396,14 +411,111 @@ for (i in 1:length(survey)){
   mas_model$AddSurvey(survey[[i]]$id)
 }
 
+mas_model$max_iterations <- 0
+mas_model$max_line_searches <- 1
 # Run MAS
 mas_model$Run()
 # Write MAS outputs to a json file
 write(mas_model$GetOutput(),
-  file = file.path(om_path, "mas_output.json")
+      file = file.path(om_path, "mas_output.json")
 )
 # Reset MAS for next run
 mas_model$Reset()
-# Import MAS output
-mas_output <- jsonlite::read_json(file.path(om_path, "mas_output.json"))
 
+om <- vector(mode="list", length=length(population))
+for (i in seq_along(population_id)){
+  om[[i]]$biomass <- om_output$stocks[[i]]$biomass.mt
+  om[[i]]$abundance <- om_output$stocks[[i]]$abundance / 1000
+  om[[i]]$ssb <- om_output$stocks[[i]]$SSB
+  om[[i]]$recruit <- om_output$stocks[[i]]$N.age[, 1] / 1000
+  om[[i]]$f <- apply(om_output$stocks[[i]]$FAA, 1, max)
+  om[[i]]$landing <- om_output$stocks[[i]]$L.mt$fleet1
+  om[[i]]$survey <- om_output$stocks[[i]]$survey_index$survey1
+  om[[i]]$msy <- om_output$stocks[[i]]$msy$msy
+  om[[i]]$fmsy <- round(om_output$stocks[[i]]$msy$Fmsy, digits = 3)
+  om[[i]]$ssbmsy <- om_output$stocks[[i]]$msy$SSBmsy
+  om[[i]]$fratio <- om[[i]]$f / om[[i]]$fmsy
+  om[[i]]$ssbratio <- om[[i]]$ssb / om[[i]]$ssbmsy
+  om[[i]]$agecomp <- apply(om_output$stocks[[i]]$N.age / 1000, 1, function(x) x / sum(x))
+  om[[i]]$r0 <- om_input[[i]]$R0 / 1000
+  om[[i]]$q <- om_output$stocks[[i]]$survey_q
+  om[[i]]$selexparm_fleet <- om_input[[i]]$sel_fleet
+  om[[i]]$selexparm_survey <- om_input[[i]]$sel_survey
+  om[[i]]$recruit_deviation <- om_input[[i]]$logR.resid
+}
+
+mas_output <- jsonlite::read_json(file.path(om_path, "mas_output.json"))
+parameter <- unlist(mas_output$estimated_parameters$parameters)
+parameter_table <- as.data.frame(matrix(parameter, ncol = 3, byrow = TRUE))
+colnames(parameter_table) <- c(
+  "Parameter",
+  "Value",
+  "Gradient"
+)
+parameter_table$Value <- round(as.numeric(parameter_table$Value),
+                               digits = 6
+)
+parameter_table$Gradient <- round(as.numeric(parameter_table$Gradient),
+                                  digits = 6
+)
+
+popdy <- mas_output$population_dynamics
+mas <- vector(mode="list", length=length(population))
+
+for (i in seq_along(population_id)){
+
+  pop <- popdy$populations[[i]]
+  flt <- popdy$fleets[[i]]
+  srvy <- popdy$surveys[[i]]
+
+  mas[[i]]$biomass <- unlist(pop$undifferentiated$biomass$values)
+  mas[[i]]$abundance <- unlist(pop$undifferentiated$abundance$values)
+  mas[[i]]$ssb <- unlist(pop$undifferentiated$spawning_stock_biomass$values)
+  mas[[i]]$recruit <- unlist(pop$undifferentiated$recruits$values)
+  mas[[i]]$f <- unlist(pop$undifferentiated$fishing_mortality$values)
+  mas[[i]]$landing <- unlist(flt$undifferentiated$catch_biomass$values)
+  mas[[i]]$survey <- unlist(srvy$undifferentiated$survey_biomass$values)
+  mas[[i]]$agecomp <- apply(
+    matrix(unlist(pop$undifferentiated$numbers_at_age$values),
+           nrow = popdy$nyears,
+           ncol = popdy$nages,
+           byrow = T
+    ),
+    1,
+    function(x) x / sum(x)
+  )
+}
+
+for (p in seq_along(population_id)){
+  par(mfrow = c(4, 2), mar = c(3, 3, 0, 0))
+  var <- c(
+    "biomass", "abundance", "ssb", "recruit", "f",
+    "landing", "survey"
+  )
+  ylab <- c(
+    "B (mt)", "A (1000 fish)",
+    "SSB (mt)", "R (1000 fish)",
+    "F", "L (mt)", "SI (scaled)"
+  )
+  for (i in 1:length(var)) {
+    ylim <- range(om[[p]][[var[i]]], mas[[p]][[var[i]]])
+    plot(om_input[[p]]$year, om[[p]][[var[i]]],
+         xlab = "", ylab = "",
+         ylim = ylim, pch = 19
+    )
+    lines(om_input[[p]]$year, mas[[p]][[var[i]]],
+          col = "deepskyblue3", lty = 1
+    )
+    mtext("Year", side = 1, line = 2, cex = 0.7)
+    mtext(ylab[i], side = 2, line = 2, cex = 0.7)
+  }
+  plot.new()
+  legend("center",
+         c("OM", "MAS"),
+         pch = c(19, NA),
+         lty = c(NA, 1),
+         col = c("black", "deepskyblue3"),
+         bty = "n"
+  )
+
+}
