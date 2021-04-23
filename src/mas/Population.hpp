@@ -2472,17 +2472,17 @@ namespace mas {
                         Subpopulation<REAL_T>& male_info_to = this->males[(j + 1)];
                         Subpopulation<REAL_T>& female_info_to = this->females[(j + 1)];
                         if (i != j) {
-                            variable tempm = rercruit_fractions[i][j] * male_info_from.recruitment[year * this->seasons + (season - 1)];
-                            variable tempf = rercruit_fractions[i][j] * female_info_from.recruitment[year * this->seasons + (season - 1)];
-
-                            //                            male_info_to.redistributed_recruits[year * this->seasons + (season - 1)] += tempm;
-
-                            male_info_to.immigrant_recruits[year * this->seasons + (season - 1)] += tempm;
-                            male_info_from.emigrant_recruits[year * this->seasons + (season - 1)] += tempm;
-
-                            //                            female_info_to.redistributed_recruits[year * this->seasons + (season - 1)] += tempf;
-                            female_info_to.immigrant_recruits[year * this->seasons + (season - 1)] += tempf;
-                            female_info_from.emigrant_recruits[year * this->seasons + (season - 1)] += tempf;
+//                            variable tempm = rercruit_fractions[i][j] * male_info_from.recruitment[year * this->seasons + (season - 1)];
+//                            variable tempf = rercruit_fractions[i][j] * female_info_from.recruitment[year * this->seasons + (season - 1)];
+//
+//                            //                            male_info_to.redistributed_recruits[year * this->seasons + (season - 1)] += tempm;
+//
+//                            male_info_to.immigrant_recruits[year * this->seasons + (season - 1)] += tempm;
+//                            male_info_from.emigrant_recruits[year * this->seasons + (season - 1)] += tempm;
+//
+//                            //                            female_info_to.redistributed_recruits[year * this->seasons + (season - 1)] += tempf;
+//                            female_info_to.immigrant_recruits[year * this->seasons + (season - 1)] += tempf;
+//                            female_info_from.emigrant_recruits[year * this->seasons + (season - 1)] += tempf;
 
                             for (int a = 0; a < this->ages; a++) {
 
