@@ -1468,9 +1468,13 @@ namespace mas {
 
                 index = year * this->seasons * this->ages.size() + (season - 1) * this->ages.size() + a;
                 this->numbers_at_age[index] += this->imigrants[index];
+                this->imigrants[index] = 0.0;
                 this->biomass_at_age[index] += this->imigrants_biomass[index];
+                this->imigrants_biomass[index] = 0.0;
                 this->numbers_at_age[index] -= this->emigrants[index];
+                this->emigrants[index] = 0.0;
                 this->biomass_at_age[index] -= this->emigrants_biomass[index];
+                 this->emigrants_biomass[index] = 0.0;
 
             }
         }
