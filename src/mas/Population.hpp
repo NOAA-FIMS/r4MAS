@@ -2478,25 +2478,25 @@ namespace mas {
                                 // will need sex-specific Z at some point
                                 size_t index = year * this->seasons * this->ages + (season - 1) * this->ages + a;
                                 // move survivors only
-                                variable emigrantsm = male_fractions[i][j] * male_info_from.numbers_at_age[index] *
-                                        mas::exp(static_cast<REAL_T> (-1.0) * male_info_from.Z[index]);
+                                variable emigrantsm = male_fractions[i][j] * male_info_from.numbers_at_age[index];// *
+                                       // mas::exp(static_cast<REAL_T> (-1.0) * male_info_from.Z[index]);
 
                                 male_info_from.emigrants[index] += emigrantsm;
                                 male_info_from.emigrants_biomass[index] += emigrantsm * male_info_from.weight_at_season_start[index];
 
-                                variable imigrantsm = male_fractions[i][j] * male_info_from.numbers_at_age[index] *
-                                        mas::exp(static_cast<REAL_T> (-1.0) * male_info_from.Z[index]);
+                                variable imigrantsm = male_fractions[i][j] * male_info_from.numbers_at_age[index];// *
+                                    //    mas::exp(static_cast<REAL_T> (-1.0) * male_info_from.Z[index]);
 
                                 male_info_to.imigrants[index] += imigrantsm;
                                 male_info_to.imigrants_biomass[index] += imigrantsm * male_info_from.weight_at_season_start[index];
 
-                                variable emigrantsf = female_fractions[i][j] * female_info_from.numbers_at_age[index] *
-                                        mas::exp(static_cast<REAL_T> (-1.0) * female_info_from.Z[index]);
+                                variable emigrantsf = female_fractions[i][j] * female_info_from.numbers_at_age[index];// *
+                                     //   mas::exp(static_cast<REAL_T> (-1.0) * female_info_from.Z[index]);
 
                                 female_info_from.emigrants[index] += emigrantsf;
 
-                                variable imigrantsf = female_fractions[i][j] * female_info_from.numbers_at_age[index] *
-                                        mas::exp(static_cast<REAL_T> (-1.0) * female_info_from.Z[index]);
+                                variable imigrantsf = female_fractions[i][j] * female_info_from.numbers_at_age[index];// *
+                                      //  mas::exp(static_cast<REAL_T> (-1.0) * female_info_from.Z[index]);
 
                                 female_info_to.imigrants[index] += imigrantsf;
                                 female_info_to.imigrants_biomass[index] += imigrantsf * female_info_from.weight_at_season_start[index];
