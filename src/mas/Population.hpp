@@ -2453,6 +2453,7 @@ namespace mas {
         inline void MoveFish(int year, int season) {
             int y = year;
             int s = season;
+            std::cout<<year<<", "season<<"\n";
             //            IncrementTime(y, s);
             movement_model_iterator it = this->movement_models.find(year + 1);
             if (it != this->movement_models.end()) {
@@ -2492,7 +2493,7 @@ namespace mas {
                                 // move survivors only
                                 variable emigrantsm = male_fractions[i][j] * male_info_from.numbers_at_age[index]; // *
                                 // mas::exp(static_cast<REAL_T> (-1.0) * male_info_from.Z[index]);
-
+                                mas_log<<"moving "<<emigrantsm<<" males\n";
                                 male_info_from.emigrants[index] += emigrantsm;
                                 male_info_from.emigrants_biomass[index] += emigrantsm * male_info_from.weight_at_season_start[index];
 
@@ -2505,6 +2506,7 @@ namespace mas {
                                 variable emigrantsf = female_fractions[i][j] * female_info_from.numbers_at_age[index]; // *
                                 //   mas::exp(static_cast<REAL_T> (-1.0) * female_info_from.Z[index]);
 
+                                 mas_log<<"moving "<<emigrantsf<<" females\n";
                                 female_info_from.emigrants[index] += emigrantsf;
 
                                 variable imigrantsf = female_fractions[i][j] * female_info_from.numbers_at_age[index]; // *
