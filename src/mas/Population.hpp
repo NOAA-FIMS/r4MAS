@@ -1472,12 +1472,6 @@ namespace mas {
                 this->numbers_at_age[index] -= this->emigrants[index];
                 this->biomass_at_age[index] -= this->emigrants_biomass[index];
 
-                if (this->numbers_at_age[index] < 0) {
-                    std::cout << this->id << " " << (this->numbers_at_age[index] + this->emigrants[index]).GetValue() << "-= " << this->emigrants[index];
-                    std::cout << " = " << this->numbers_at_age[index];
-
-                }
-
             }
         }
 
