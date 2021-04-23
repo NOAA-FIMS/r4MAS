@@ -1474,7 +1474,7 @@ namespace mas {
                 this->numbers_at_age[index] -= this->emigrants[index];
                 this->emigrants[index] = 0.0;
                 this->biomass_at_age[index] -= this->emigrants_biomass[index];
-                 this->emigrants_biomass[index] = 0.0;
+                this->emigrants_biomass[index] = 0.0;
 
             }
         }
@@ -2487,11 +2487,12 @@ namespace mas {
                             for (int a = 0; a < this->ages; a++) {
 
                                 // will need sex-specific Z at some point
+
                                 size_t index = year * this->seasons * this->ages + (season - 1) * this->ages + a;
                                 // move survivors only
                                 variable emigrantsm = male_fractions[i][j] * male_info_from.numbers_at_age[index]; // *
                                 // mas::exp(static_cast<REAL_T> (-1.0) * male_info_from.Z[index]);
-                                mas_log << male_fractions[i][j] << "  * " << male_info_from.numbers_at_age[index]
+                                mas_log << a << " " << male_fractions[i][j] << "  * " << male_info_from.numbers_at_age[index]
                                         << " => moving " << emigrantsm << " males from " << areas_list[i]->id << " to " << areas_list[j]->id << "\n";
                                 male_info_from.emigrants[index] += emigrantsm;
                                 male_info_from.emigrants_biomass[index] += emigrantsm * male_info_from.weight_at_season_start[index];
@@ -2505,7 +2506,7 @@ namespace mas {
                                 variable emigrantsf = female_fractions[i][j] * female_info_from.numbers_at_age[index]; // *
                                 //   mas::exp(static_cast<REAL_T> (-1.0) * female_info_from.Z[index]);
 
-                                mas_log << female_fractions[i][j] << "  * " << female_info_from.numbers_at_age[index]
+                                mas_log << a << " " << female_fractions[i][j] << "  * " << female_info_from.numbers_at_age[index]
                                         << " => moving " << emigrantsf << " females from " << areas_list[i]->id << " to " << areas_list[j]->id << "\n";
                                 female_info_from.emigrants[index] += emigrantsf;
 
