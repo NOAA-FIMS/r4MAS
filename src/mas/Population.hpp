@@ -2487,7 +2487,8 @@ namespace mas {
                                 // move survivors only
                                 variable emigrantsm = male_fractions[i][j] * male_info_from.numbers_at_age[index]; // *
                                 // mas::exp(static_cast<REAL_T> (-1.0) * male_info_from.Z[index]);
-                                mas_log << "moving " << emigrantsm << " males\n";
+                                mas_log << male_fractions[i][j] << "  * " << male_info_from.numbers_at_age[index]
+                                        << " => moving " << emigrantsm << " males from " << areas_list[i]->id << " to " << areas_list[j]->id << "\n";
                                 male_info_from.emigrants[index] += emigrantsm;
                                 male_info_from.emigrants_biomass[index] += emigrantsm * male_info_from.weight_at_season_start[index];
 
@@ -2500,7 +2501,8 @@ namespace mas {
                                 variable emigrantsf = female_fractions[i][j] * female_info_from.numbers_at_age[index]; // *
                                 //   mas::exp(static_cast<REAL_T> (-1.0) * female_info_from.Z[index]);
 
-                                mas_log << "moving " << emigrantsf << " females\n";
+                                mas_log << female_fractions[i][j] << "  * " << female_info_from.numbers_at_age[index]
+                                        << " => moving " << emigrantsf << " females from " << areas_list[i]->id << " to " << areas_list[j]->id << "\n";
                                 female_info_from.emigrants[index] += emigrantsf;
 
                                 variable imigrantsf = female_fractions[i][j] * female_info_from.numbers_at_age[index]; // *
