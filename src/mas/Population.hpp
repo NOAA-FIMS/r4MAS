@@ -2472,17 +2472,17 @@ namespace mas {
                         Subpopulation<REAL_T>& male_info_to = this->males[areas_list[j]->id];
                         Subpopulation<REAL_T>& female_info_to = this->females[areas_list[j]->id];
                         if (i != j) {
-//                            variable tempm = rercruit_fractions[i][j] * male_info_from.recruitment[year * this->seasons + (season - 1)];
-//                            variable tempf = rercruit_fractions[i][j] * female_info_from.recruitment[year * this->seasons + (season - 1)];
-//
-//                            //                            male_info_to.redistributed_recruits[year * this->seasons + (season - 1)] += tempm;
-//
-//                            male_info_to.immigrant_recruits[year * this->seasons + (season - 1)] += tempm;
-//                            male_info_from.emigrant_recruits[year * this->seasons + (season - 1)] += tempm;
-//
-//                            //                            female_info_to.redistributed_recruits[year * this->seasons + (season - 1)] += tempf;
-//                            female_info_to.immigrant_recruits[year * this->seasons + (season - 1)] += tempf;
-//                            female_info_from.emigrant_recruits[year * this->seasons + (season - 1)] += tempf;
+                            variable tempm = rercruit_fractions[i][j] * male_info_from.recruitment[year * this->seasons + (season - 1)];
+                            variable tempf = rercruit_fractions[i][j] * female_info_from.recruitment[year * this->seasons + (season - 1)];
+
+                            //                            male_info_to.redistributed_recruits[year * this->seasons + (season - 1)] += tempm;
+
+                            male_info_to.immigrant_recruits[year * this->seasons + (season - 1)] += tempm;
+                            male_info_from.emigrant_recruits[year * this->seasons + (season - 1)] += tempm;
+
+                            //                            female_info_to.redistributed_recruits[year * this->seasons + (season - 1)] += tempf;
+                            female_info_to.immigrant_recruits[year * this->seasons + (season - 1)] += tempf;
+                            female_info_from.emigrant_recruits[year * this->seasons + (season - 1)] += tempf;
 
                             for (int a = 0; a < this->ages; a++) {
 
@@ -2490,28 +2490,28 @@ namespace mas {
 
                                 size_t index = year * this->seasons * this->ages + (season - 1) * this->ages + a;
                                 // move survivors only
-                                variable emigrantsm = male_fractions[i][j] * male_info_from.numbers_at_age[index]; // *
-                                // mas::exp(static_cast<REAL_T> (-1.0) * male_info_from.Z[index]);
+                                variable emigrantsm = male_fractions[i][j] * male_info_from.numbers_at_age[index] *
+                                        mas::exp(static_cast<REAL_T> (-1.0) * male_info_from.Z[index]);
                                 mas_log << a << " " << male_fractions[i][j] << "  * " << male_info_from.numbers_at_age[index]
                                         << " => moving " << emigrantsm << " males from " << areas_list[i]->id << " to " << areas_list[j]->id << "\n";
                                 male_info_from.emigrants[index] += emigrantsm;
                                 male_info_from.emigrants_biomass[index] += emigrantsm * male_info_from.weight_at_season_start[index];
 
-                                variable imigrantsm = male_fractions[i][j] * male_info_from.numbers_at_age[index]; // *
-                                //    mas::exp(static_cast<REAL_T> (-1.0) * male_info_from.Z[index]);
+                                variable imigrantsm = male_fractions[i][j] * male_info_from.numbers_at_age[index]  *
+                                    mas::exp(static_cast<REAL_T> (-1.0) * male_info_from.Z[index]);
 
                                 male_info_to.imigrants[index] += imigrantsm;
                                 male_info_to.imigrants_biomass[index] += imigrantsm * male_info_from.weight_at_season_start[index];
 
-                                variable emigrantsf = female_fractions[i][j] * female_info_from.numbers_at_age[index]; // *
-                                //   mas::exp(static_cast<REAL_T> (-1.0) * female_info_from.Z[index]);
+                                variable emigrantsf = female_fractions[i][j] * female_info_from.numbers_at_age[index] *
+                                   mas::exp(static_cast<REAL_T> (-1.0) * female_info_from.Z[index]);
 
                                 mas_log << a << " " << female_fractions[i][j] << "  * " << female_info_from.numbers_at_age[index]
                                         << " => moving " << emigrantsf << " females from " << areas_list[i]->id << " to " << areas_list[j]->id << "\n";
                                 female_info_from.emigrants[index] += emigrantsf;
 
-                                variable imigrantsf = female_fractions[i][j] * female_info_from.numbers_at_age[index]; // *
-                                //  mas::exp(static_cast<REAL_T> (-1.0) * female_info_from.Z[index]);
+                                variable imigrantsf = female_fractions[i][j] * female_info_from.numbers_at_age[index] *
+                                  mas::exp(static_cast<REAL_T> (-1.0) * female_info_from.Z[index]);
 
                                 female_info_to.imigrants[index] += imigrantsf;
                                 female_info_to.imigrants_biomass[index] += imigrantsf * female_info_from.weight_at_season_start[index];
