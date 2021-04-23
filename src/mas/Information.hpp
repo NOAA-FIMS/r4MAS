@@ -9922,6 +9922,8 @@ namespace mas {
             for (mit = this->movement_models.begin(); mit != this->movement_models.end(); ++mit) {
                 typename mas::ModelObject<REAL_T>::estimable_parameter_iterator it;
                 if ((*mit).second->used) {
+                    mas_log << (*mit).second->ToJSONString() << "\n\n";
+
                     for (it = (*mit).second->estimated_parameters_map.begin(); it != (*mit).second->estimated_parameters_map.end(); ++it) {
                         mas_log << (*it).first->GetName() << "\t\t\t\t\t\t" << (*it).first->GetValue() << "\t\t\t\t\t\t" << (*it).second << "\n";
                         this->Register(*(*it).first, (*it).second);
