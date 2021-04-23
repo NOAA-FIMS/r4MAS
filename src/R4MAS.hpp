@@ -4050,6 +4050,7 @@ public:
                         m->female_connectivity[s][i][j] = variable(this->connectivity_females[k]);
                         m->recruit_connectivity[s][i][j] = variable(this->connectivity_recruits[k]);
                     }
+                    k++;
                 }
             }
             info.movement_models[m->id] = movement;
