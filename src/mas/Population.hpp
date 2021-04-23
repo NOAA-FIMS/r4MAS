@@ -2466,11 +2466,11 @@ namespace mas {
                 for (int i = 0; i < male_fractions.size(); i++) {
 
                     Subpopulation<REAL_T>& male_info_from = this->males[areas_list[i]->id];
-                    Subpopulation<REAL_T>& female_info_from = this->females[areas_list[i]->id]];
+                    Subpopulation<REAL_T>& female_info_from = this->females[areas_list[i]->id];
 
                     for (int j = 0; j < male_fractions.size(); j++) {
 
-                        Subpopulation<REAL_T>& male_info_to = this->males[areas_list[j]->id]];
+                        Subpopulation<REAL_T>& male_info_to = this->males[areas_list[j]->id];
                         Subpopulation<REAL_T>& female_info_to = this->females[areas_list[j]->id];
                         if (i != j) {
                             variable tempm = rercruit_fractions[i][j] * male_info_from.recruitment[year * this->seasons + (season - 1)];
