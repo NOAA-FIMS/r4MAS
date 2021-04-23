@@ -2453,7 +2453,7 @@ namespace mas {
         inline void MoveFish(int year, int season) {
             int y = year;
             int s = season;
-            std::cout<<year<<", "season<<"\n";
+            std::cout<<year<<", "<<season<<"\n";
             //            IncrementTime(y, s);
             movement_model_iterator it = this->movement_models.find(year + 1);
             if (it != this->movement_models.end()) {
