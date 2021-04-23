@@ -119,9 +119,9 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>ASAP Case Study</h1>
             
-            <h4 class="date">Updated on 04/18/2021</h4>
+            <h4 class="date">Updated on 04/23/2021</h4>
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/nmfs-fish-tools/r4MAS/blob/master/../../vignettes/003_ASAPCaseStudy.Rmd"><code>../../vignettes/003_ASAPCaseStudy.Rmd</code></a></small>
       <div class="hidden name"><code>003_ASAPCaseStudy.Rmd</code></div>
 
     </div>
@@ -135,12 +135,10 @@
 <code class="sourceCode R"><span class="co"># remotes::install_github("nmfs-fish-tools/r4MAS")</span>
 <span class="co"># remotes::install_github("Bai-Li-NOAA/DMAS")</span>
 
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">r4MAS</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://nmfs-fish-tools.github.io/r4MAS/">r4MAS</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.rcpp.org">Rcpp</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://arxiv.org/abs/1403.2805">jsonlite</a></span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning: package 'jsonlite' was built under R version 4.0.4</code></pre>
-<div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">DMAS</span><span class="op">)</span></code></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://arxiv.org/abs/1403.2805">jsonlite</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">DMAS</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="read-asap-input-file" class="section level2">
 <h2 class="hasAnchor">
@@ -521,82 +519,82 @@
                                 digits <span class="op">=</span> <span class="fl">6</span><span class="op">)</span>
 
 <span class="va">parameter_table</span></code></pre></div>
-<pre><code>##                       Parameter     Value  Gradient
-## 1                           q_1  0.116953  0.000004
-## 2                      log_R0_1  6.304157 -0.000166
-## 3                            h1  0.628782 -0.000082
-## 4   recruitment_deviations[0]_1 -0.153742  0.000000
-## 5   recruitment_deviations[1]_1 -0.013644 -0.000004
-## 6   recruitment_deviations[2]_1 -0.587478 -0.000002
-## 7   recruitment_deviations[3]_1 -0.266428 -0.000004
-## 8   recruitment_deviations[4]_1 -1.064237 -0.000002
-## 9   recruitment_deviations[5]_1  1.581619 -0.000030
-## 10  recruitment_deviations[6]_1  0.085563 -0.000008
-## 11  recruitment_deviations[7]_1 -0.276108 -0.000006
-## 12  recruitment_deviations[8]_1  0.320946 -0.000014
-## 13  recruitment_deviations[9]_1 -1.397771 -0.000003
-## 14 recruitment_deviations[10]_1  0.498388 -0.000026
-## 15 recruitment_deviations[11]_1 -0.048273 -0.000016
-## 16 recruitment_deviations[12]_1 -0.111577 -0.000013
-## 17 recruitment_deviations[13]_1 -0.024511 -0.000011
-## 18 recruitment_deviations[14]_1  0.060617 -0.000009
-## 19 recruitment_deviations[15]_1 -0.838250 -0.000003
-## 20 recruitment_deviations[16]_1  0.476187 -0.000007
-## 21 recruitment_deviations[17]_1 -0.251978 -0.000001
-## 22 recruitment_deviations[18]_1 -0.274415  0.000000
-## 23 recruitment_deviations[19]_1 -0.789756  0.000000
-## 24   logistic_selectivity_a50_2  3.272510  0.000000
-## 25 logistic_selectivity_slope_2  0.645383  0.000000
-## 26    age_base_selectivity[0]_1  0.155401  0.000045
-## 27    age_base_selectivity[1]_1  0.349246  0.000030
-## 28    age_base_selectivity[2]_1  0.611602  0.000009
-## 29    age_base_selectivity[3]_1  0.874064 -0.000008
-## 30    age_base_selectivity[4]_1  0.939501 -0.000007
-## 31    age_base_selectivity[5]_1  0.920853 -0.000010
-## 32    age_base_selectivity[6]_1  0.986428 -0.000005
-## 33    age_base_selectivity[7]_1  0.920674 -0.000006
-## 34    age_base_selectivity[8]_1  0.982335 -0.000006
-## 35    age_base_selectivity[9]_1  1.140224 -0.000007
-## 36    fishing_mortality[0][0]_1  0.014860 -0.000754
-## 37    fishing_mortality[2][0]_1  0.103232 -0.000007
-## 38    fishing_mortality[1][0]_1  0.073815 -0.000072
-## 39    fishing_mortality[9][0]_1  0.413116  0.000020
-## 40   fishing_mortality[10][0]_1  0.572280  0.000022
-## 41   fishing_mortality[15][0]_1  0.080979 -0.000229
-## 42   fishing_mortality[18][0]_1  0.100469 -0.000047
-## 43   fishing_mortality[12][0]_1  0.503683  0.000027
-## 44    fishing_mortality[3][0]_1  0.127174  0.000013
-## 45   fishing_mortality[19][0]_1  0.066944 -0.000232
-## 46    fishing_mortality[7][0]_1  0.268220  0.000004
-## 47   fishing_mortality[17][0]_1  0.032112 -0.000467
-## 48   fishing_mortality[11][0]_1  0.587323  0.000028
-## 49    fishing_mortality[6][0]_1  0.360588  0.000022
-## 50    fishing_mortality[8][0]_1  0.353108  0.000026
-## 51   fishing_mortality[13][0]_1  0.098915 -0.000085
-## 52   fishing_mortality[14][0]_1  0.134154 -0.000041
-## 53    fishing_mortality[5][0]_1  0.144072 -0.000004
-## 54   fishing_mortality[16][0]_1  0.076425 -0.000087
-## 55    fishing_mortality[4][0]_1  0.089214 -0.000023
-## 56    f_initial_deviations[0]_1  0.936185 -0.000002
-## 57    f_initial_deviations[1]_1  1.327705 -0.000003
-## 58    f_initial_deviations[2]_1  0.760718 -0.000002
-## 59    f_initial_deviations[3]_1  1.470442 -0.000004
-## 60    f_initial_deviations[4]_1  1.582217 -0.000004
-## 61    f_initial_deviations[5]_1  1.478340 -0.000003
-## 62    f_initial_deviations[6]_1 -0.112961 -0.000001
-## 63    f_initial_deviations[7]_1  1.858590 -0.000003
-## 64    f_initial_deviations[8]_1  0.988909 -0.000001
-## 65    f_initial_deviations[9]_1  0.387673 -0.000002
-## 66    m_initial_deviations[0]_1  0.936185 -0.000002
-## 67    m_initial_deviations[1]_1  1.327705 -0.000003
-## 68    m_initial_deviations[2]_1  0.760718 -0.000002
-## 69    m_initial_deviations[3]_1  1.470442 -0.000004
-## 70    m_initial_deviations[4]_1  1.582217 -0.000004
-## 71    m_initial_deviations[5]_1  1.478340 -0.000003
-## 72    m_initial_deviations[6]_1 -0.112961 -0.000001
-## 73    m_initial_deviations[7]_1  1.858590 -0.000003
-## 74    m_initial_deviations[8]_1  0.988909 -0.000001
-## 75    m_initial_deviations[9]_1  0.387673 -0.000002</code></pre>
+<pre><code>##                       Parameter     Value Gradient
+## 1                           q_1  0.116953  7.0e-06
+## 2                      log_R0_1  6.304157 -6.0e-06
+## 3                            h1  0.628782  4.0e-06
+## 4   recruitment_deviations[0]_1 -0.153742  0.0e+00
+## 5   recruitment_deviations[1]_1 -0.013644 -1.0e-06
+## 6   recruitment_deviations[2]_1 -0.587478  0.0e+00
+## 7   recruitment_deviations[3]_1 -0.266428  0.0e+00
+## 8   recruitment_deviations[4]_1 -1.064237  0.0e+00
+## 9   recruitment_deviations[5]_1  1.581619  3.0e-06
+## 10  recruitment_deviations[6]_1  0.085563  0.0e+00
+## 11  recruitment_deviations[7]_1 -0.276108 -1.0e-06
+## 12  recruitment_deviations[8]_1  0.320946  1.0e-06
+## 13  recruitment_deviations[9]_1 -1.397771  1.0e-06
+## 14 recruitment_deviations[10]_1  0.498388  1.0e-06
+## 15 recruitment_deviations[11]_1 -0.048273  0.0e+00
+## 16 recruitment_deviations[12]_1 -0.111577 -1.0e-06
+## 17 recruitment_deviations[13]_1 -0.024511 -1.0e-06
+## 18 recruitment_deviations[14]_1  0.060617  2.0e-06
+## 19 recruitment_deviations[15]_1 -0.838250  1.0e-06
+## 20 recruitment_deviations[16]_1  0.476187  1.0e-06
+## 21 recruitment_deviations[17]_1 -0.251978  0.0e+00
+## 22 recruitment_deviations[18]_1 -0.274415  0.0e+00
+## 23 recruitment_deviations[19]_1 -0.789756  0.0e+00
+## 24   logistic_selectivity_a50_2  3.272510 -1.0e-06
+## 25 logistic_selectivity_slope_2  0.645383  1.0e-06
+## 26    age_base_selectivity[0]_1  0.155401  1.0e-06
+## 27    age_base_selectivity[1]_1  0.349246 -1.0e-06
+## 28    age_base_selectivity[2]_1  0.611602 -2.0e-06
+## 29    age_base_selectivity[3]_1  0.874064  3.0e-06
+## 30    age_base_selectivity[4]_1  0.939501 -5.0e-06
+## 31    age_base_selectivity[5]_1  0.920853 -5.0e-06
+## 32    age_base_selectivity[6]_1  0.986428  1.0e-06
+## 33    age_base_selectivity[7]_1  0.920674 -1.0e-06
+## 34    age_base_selectivity[8]_1  0.982335  0.0e+00
+## 35    age_base_selectivity[9]_1  1.140224 -2.0e-06
+## 36    fishing_mortality[0][0]_1  0.014860 -1.4e-05
+## 37    fishing_mortality[1][0]_1  0.073815 -2.7e-05
+## 38    fishing_mortality[2][0]_1  0.103232 -5.0e-06
+## 39   fishing_mortality[13][0]_1  0.098915  1.0e-05
+## 40   fishing_mortality[15][0]_1  0.080979 -2.3e-05
+## 41   fishing_mortality[17][0]_1  0.032112 -1.9e-05
+## 42   fishing_mortality[19][0]_1  0.066944  4.3e-05
+## 43    fishing_mortality[3][0]_1  0.127174 -2.5e-05
+## 44    fishing_mortality[5][0]_1  0.144072 -3.4e-05
+## 45    fishing_mortality[6][0]_1  0.360588 -6.0e-06
+## 46    fishing_mortality[9][0]_1  0.413116 -1.2e-05
+## 47    fishing_mortality[4][0]_1  0.089214 -5.0e-06
+## 48   fishing_mortality[12][0]_1  0.503683 -1.0e-06
+## 49   fishing_mortality[16][0]_1  0.076425 -4.6e-05
+## 50   fishing_mortality[11][0]_1  0.587323  1.9e-05
+## 51    fishing_mortality[7][0]_1  0.268220  1.1e-05
+## 52   fishing_mortality[14][0]_1  0.134154 -3.4e-05
+## 53   fishing_mortality[10][0]_1  0.572280 -1.7e-05
+## 54    fishing_mortality[8][0]_1  0.353108  1.4e-05
+## 55   fishing_mortality[18][0]_1  0.100469  5.7e-05
+## 56    f_initial_deviations[0]_1  0.936185  0.0e+00
+## 57    f_initial_deviations[1]_1  1.327705 -1.0e-06
+## 58    f_initial_deviations[2]_1  0.760718 -1.0e-06
+## 59    f_initial_deviations[3]_1  1.470442 -1.0e-06
+## 60    f_initial_deviations[4]_1  1.582217 -1.0e-06
+## 61    f_initial_deviations[5]_1  1.478340 -1.0e-06
+## 62    f_initial_deviations[6]_1 -0.112961  0.0e+00
+## 63    f_initial_deviations[7]_1  1.858590 -1.0e-06
+## 64    f_initial_deviations[8]_1  0.988910  0.0e+00
+## 65    f_initial_deviations[9]_1  0.387673  0.0e+00
+## 66    m_initial_deviations[0]_1  0.936185  0.0e+00
+## 67    m_initial_deviations[1]_1  1.327705 -1.0e-06
+## 68    m_initial_deviations[2]_1  0.760718 -1.0e-06
+## 69    m_initial_deviations[3]_1  1.470442 -1.0e-06
+## 70    m_initial_deviations[4]_1  1.582217 -1.0e-06
+## 71    m_initial_deviations[5]_1  1.478340 -1.0e-06
+## 72    m_initial_deviations[6]_1 -0.112961  0.0e+00
+## 73    m_initial_deviations[7]_1  1.858590 -1.0e-06
+## 74    m_initial_deviations[8]_1  0.988910  0.0e+00
+## 75    m_initial_deviations[9]_1  0.387673  0.0e+00</code></pre>
 <div class="sourceCode"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">popdy</span><span class="op">&lt;-</span><span class="va">mas_output</span><span class="op">$</span><span class="va">population_dynamics</span>
 <span class="va">pop</span><span class="op">&lt;-</span><span class="va">popdy</span><span class="op">$</span><span class="va">populations</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>

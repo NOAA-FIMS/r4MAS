@@ -121,13 +121,13 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#readme" class="anchor"></a>README</h1></div>
 </div>
-<div id="rmas---r-interface-to-the-metapopulation-assessment-system" class="section level1">
+<div id="r4mas---r-interface-to-the-metapopulation-assessment-system" class="section level1">
 <h1 class="hasAnchor">
-<a href="#rmas---r-interface-to-the-metapopulation-assessment-system" class="anchor"></a>RMAS - R interface to the Metapopulation Assessment System</h1>
+<a href="#r4mas---r-interface-to-the-metapopulation-assessment-system" class="anchor"></a>r4MAS - R interface to the Metapopulation Assessment System</h1>
 <hr>
 <hr>
-<p>The Metapopulation Assessment System (MAS) is a modular tool for creating and fitting fisheries stock assessment models. The R interface to MAS (RMAS) allows users to build and run MAS models directly using the <code>R</code> language. It also includes functions to help translate between MAS and other stock assessment software and to plot outputs of MAS models, including estimates of key biological and observation parameters and derived quantities such as biological reference points, estimated biomass, and estimated numbers-at-age.</p>
-<p>This tool is supported by the NOAA Fisheries Integrated Toolbox. More information can be found on the toolbox <a href="https://nmfs-fish-tools.github.io/RMAS/">landing page</a></p>
+<p>The Metapopulation Assessment System (MAS) is a modular tool for creating and fitting fisheries stock assessment models. The R interface to MAS (r4MAS) allows users to build and run MAS models directly using the <code>R</code> language. It also includes functions to help translate between MAS and other stock assessment software and to plot outputs of MAS models, including estimates of key biological and observation parameters and derived quantities such as biological reference points, estimated biomass, and estimated numbers-at-age.</p>
+<p>This tool is supported by the NOAA Fisheries Integrated Toolbox. More information can be found on the toolbox <a href="https://nmfs-fish-tools.github.io/r4MAS/">landing page</a></p>
 </div>
 <div id="getting-started" class="section level1">
 <h1 class="hasAnchor">
@@ -137,11 +137,11 @@
 <a href="#installation-instructions" class="anchor"></a>Installation instructions</h2>
 <p>Since this package contains C++ files, you will need to ensure you have a C++ compiler installed. You can install a C++ compiler <a href="https://clang.llvm.org/">here</a>, please make sure it is C++14 or more recent.</p>
 <p>You will also need to have the <code>Rcpp</code> package installed.</p>
-<p>Please install and load <code>RMAS</code> from Github using the <code>remotes</code> package as follows:</p>
+<p>Please install and load <code>r4MAS</code> from Github using the <code>remotes</code> package as follows:</p>
 <pre><code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("remotes")
-remotes::install_github("nmfs-fish-tools/RMAS")
-library(RMAS)</a></code></pre>
-<p><strong>Windows users</strong>: Please ensure you have <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a>. If you receive errors related to C++ when loading RMAS, it could be because your R installation uses the default Makevars.win file. To update your Makevars.win file, please run the following code in your R terminal:</p>
+remotes::install_github("nmfs-fish-tools/r4MAS")
+library(r4MAS)</a></code></pre>
+<p><strong>Windows users</strong>: Please ensure you have <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a>. If you receive errors related to C++ when loading r4MAS, it could be because your R installation uses the default Makevars.win file. To update your Makevars.win file, please run the following code in your R terminal:</p>
 <pre><code>dotR &lt;- file.path(Sys.getenv("HOME"), ".R")
 if (!file.exists(dotR)) 
   dir.create(dotR)
@@ -152,12 +152,12 @@ cat("\nCXX14FLAGS=-O3 -Wno-unused-variable -Wno-unused-function",
     "CXX14 = $(BINPREF)g++ -m$(WIN) -std=c++1y",
     "CXX11FLAGS=-O3 -Wno-unused-variable -Wno-unused-function",
     file = M, sep = "\n", append = TRUE)</code></pre>
-<p>To get notifications about <code>RMAS</code>, you can watch this GitHub project.</p>
+<p>To get notifications about <code>r4MAS</code>, you can watch this GitHub project.</p>
 </div>
 <div id="creating-a-model" class="section level2">
 <h2 class="hasAnchor">
 <a href="#creating-a-model" class="anchor"></a>Creating a model</h2>
-<p>Once you’ve installed the package and have confirmed you can load it, we recommend starting with the introductory <a href="vignettes/Introduction.Rmd">vignette</a> to see an example of building and running a simple model within RMAS. The <a href="R/write_test_data.R">write_test_data()</a> function will generate simple dummy input data. You can replace these dummy data with your own data.</p>
+<p>Once you’ve installed the package and have confirmed you can load it, we recommend starting with the introductory <a href="vignettes/001_Introduction.Rmd">vignette</a> to see an example of building and running a simple model within r4MAS. The <a href="R/write_test_data.R">write_test_data()</a> function will generate simple dummy input data. You can replace these dummy data with your own data.</p>
 </div>
 <div id="disclaimer" class="section level2">
 <h2 class="hasAnchor">
@@ -174,7 +174,16 @@ cat("\nCXX14FLAGS=-O3 -Wno-unused-variable -Wno-unused-function",
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="license">
+    <div class="links">
+<h2>Links</h2>
+<ul class="list-unstyled">
+<li>Browse source code at <br><a href="https://github.com/nmfs-fish-tools/r4MAS/">https://​github.com/​nmfs-fish-tools/​r4MAS/​</a>
+</li>
+<li>Report a bug at <br><a href="https://github.com/nmfs-fish-tools/r4MAS/issues%20">https://​github.com/​nmfs-fish-tools/​r4MAS/​issues </a>
+</li>
+</ul>
+</div>
+<div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
@@ -190,7 +199,7 @@ cat("\nCXX14FLAGS=-O3 -Wno-unused-variable -Wno-unused-function",
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/nmfs-fish-tools/RMAS/actions/workflows/R-CMD-check-and-Release.yml"><img src="https://github.com/nmfs-fish-tools/RMAS/actions/workflows/R-CMD-check-and-Release.yml/badge.svg" alt="R-CMD-check and release"></a></li>
+<li><a href="https://github.com/nmfs-fish-tools/r4MAS/actions/workflows/R-CMD-check-and-Release.yml"><img src="https://github.com/nmfs-fish-tools/r4MAS/actions/workflows/R-CMD-check-and-Release.yml/badge.svg" alt="R-CMD-check and release"></a></li>
 </ul>
 </div>
 </div>
