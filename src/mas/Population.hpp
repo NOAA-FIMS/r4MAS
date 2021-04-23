@@ -1471,6 +1471,7 @@ namespace mas {
                 this->biomass_at_age[index] += this->imigrants_biomass[index];
                 this->numbers_at_age[index] -= this->emigrants[index];
                 this->biomass_at_age[index] -= this->emigrants_biomass[index];
+                
                 if (this->numbers_at_age[index] < 0) {
                     std::cout << this->id << " " << (this->numbers_at_age[index] + this->emigrants[index]).GetValue() << "-= " << this->emigrants[index];
                     std::cout << " = " << this->numbers_at_age[index];
@@ -2464,25 +2465,25 @@ namespace mas {
                 //should be square
                 for (int i = 0; i < male_fractions.size(); i++) {
 
-                    Subpopulation<REAL_T>& male_info_from = this->males[(i + 1)];
-                    Subpopulation<REAL_T>& female_info_from = this->females[(i + 1)];
+                    Subpopulation<REAL_T>& male_info_from = this->males[areas_list[i]->id];
+                    Subpopulation<REAL_T>& female_info_from = this->females[areas_list[i]->id]];
 
                     for (int j = 0; j < male_fractions.size(); j++) {
 
-                        Subpopulation<REAL_T>& male_info_to = this->males[(j + 1)];
-                        Subpopulation<REAL_T>& female_info_to = this->females[(j + 1)];
+                        Subpopulation<REAL_T>& male_info_to = this->males[areas_list[j]->id]];
+                        Subpopulation<REAL_T>& female_info_to = this->females[areas_list[j]->id];
                         if (i != j) {
-//                            variable tempm = rercruit_fractions[i][j] * male_info_from.recruitment[year * this->seasons + (season - 1)];
-//                            variable tempf = rercruit_fractions[i][j] * female_info_from.recruitment[year * this->seasons + (season - 1)];
-//
-//                            //                            male_info_to.redistributed_recruits[year * this->seasons + (season - 1)] += tempm;
-//
-//                            male_info_to.immigrant_recruits[year * this->seasons + (season - 1)] += tempm;
-//                            male_info_from.emigrant_recruits[year * this->seasons + (season - 1)] += tempm;
-//
-//                            //                            female_info_to.redistributed_recruits[year * this->seasons + (season - 1)] += tempf;
-//                            female_info_to.immigrant_recruits[year * this->seasons + (season - 1)] += tempf;
-//                            female_info_from.emigrant_recruits[year * this->seasons + (season - 1)] += tempf;
+                            variable tempm = rercruit_fractions[i][j] * male_info_from.recruitment[year * this->seasons + (season - 1)];
+                            variable tempf = rercruit_fractions[i][j] * female_info_from.recruitment[year * this->seasons + (season - 1)];
+
+                            //                            male_info_to.redistributed_recruits[year * this->seasons + (season - 1)] += tempm;
+
+                            male_info_to.immigrant_recruits[year * this->seasons + (season - 1)] += tempm;
+                            male_info_from.emigrant_recruits[year * this->seasons + (season - 1)] += tempm;
+
+                            //                            female_info_to.redistributed_recruits[year * this->seasons + (season - 1)] += tempf;
+                            female_info_to.immigrant_recruits[year * this->seasons + (season - 1)] += tempf;
+                            female_info_from.emigrant_recruits[year * this->seasons + (season - 1)] += tempf;
 
                             for (int a = 0; a < this->ages; a++) {
 
