@@ -1464,18 +1464,18 @@ namespace mas {
             this->recruitment[index] -= this->emigrant_recruits[index];
 #warning need to add imigrant and emigrant recruitment biomass here
 
-            for (a = 1; a < ages.size(); a++) {
+            for (a = 0; a < ages.size(); a++) {
 
                 index = year * this->seasons * this->ages.size() + (season - 1) * this->ages.size() + a;
                 this->numbers_at_age[index] += this->imigrants[index];
                 this->biomass_at_age[index] += this->imigrants_biomass[index];
                 this->numbers_at_age[index] -= this->emigrants[index];
                 this->biomass_at_age[index] -= this->emigrants_biomass[index];
-//                if (this->numbers_at_age[index] < 0) {
-//                    std::cout << this->id << " " << this->numbers_at_age[index] + this->emigrants[index] << "-= " << this->emigrants[index];
-//                    std::cout << " = " << this->numbers_at_age[index];
-//                    exit(0);
-//                }
+                if (this->numbers_at_age[index] < 0) {
+                    std::cout << this->id << " " << (this->numbers_at_age[index] + this->emigrants[index]) << "-= " << this->emigrants[index];
+                    std::cout << " = " << this->numbers_at_age[index];
+
+                }
 
             }
         }
@@ -2463,12 +2463,12 @@ namespace mas {
 
                 //should be square
                 for (int i = 0; i < male_fractions.size(); i++) {
-                    
+
                     Subpopulation<REAL_T>& male_info_from = this->males[(i + 1)];
                     Subpopulation<REAL_T>& female_info_from = this->females[(i + 1)];
-                    
+
                     for (int j = 0; j < male_fractions.size(); j++) {
-                        
+
                         Subpopulation<REAL_T>& male_info_to = this->males[(j + 1)];
                         Subpopulation<REAL_T>& female_info_to = this->females[(j + 1)];
                         if (i != j) {
