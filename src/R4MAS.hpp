@@ -4045,12 +4045,12 @@ public:
                     m->female_connectivity[s][i].resize(Area::id_g - 1);
                     m->recruit_connectivity[s][i].resize(Area::id_g - 1);
                     for (int j = 0; j < Area::id_g - 1; j++) {
-
+                        k = (i*(Area::id_g - 1)) +j;
                         m->male_connectivity[s][i][j] = variable(this->connectivity_males[k]);
                         m->female_connectivity[s][i][j] = variable(this->connectivity_females[k]);
                         m->recruit_connectivity[s][i][j] = variable(this->connectivity_recruits[k]);
                     }
-                    k++;
+                    
                 }
             }
             info.movement_models[m->id] = movement;
