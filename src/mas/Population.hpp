@@ -2472,14 +2472,17 @@ namespace mas {
                         Subpopulation<REAL_T>& male_info_to = this->males[(j + 1)];
                         Subpopulation<REAL_T>& female_info_to = this->females[(j + 1)];
                         if (i != j) {
-//                            variable tempm = rercruit_fractions[i][j] * male_info_from.recruitment[year * this->seasons + (season - 1)];
-//                            variable tempf = rercruit_fractions[i][j] * female_info_from.recruitment[year * this->seasons + (season - 1)];
-//                            male_info_to.redistributed_recruits[year * this->seasons + (season - 1)] += tempm;
-//                            male_info_to.immigrant_recruits[year * this->seasons + (season - 1)] += tempm;
-//                            male_info_from.emigrant_recruits[year * this->seasons + (season - 1)] += tempm;
-//                            female_info_to.redistributed_recruits[year * this->seasons + (season - 1)] += tempf;
-//                            female_info_to.immigrant_recruits[year * this->seasons + (season - 1)] += tempf;
-//                            female_info_from.emigrant_recruits[year * this->seasons + (season - 1)] += tempf;
+                            variable tempm = rercruit_fractions[i][j] * male_info_from.recruitment[year * this->seasons + (season - 1)];
+                            variable tempf = rercruit_fractions[i][j] * female_info_from.recruitment[year * this->seasons + (season - 1)];
+
+                            //                            male_info_to.redistributed_recruits[year * this->seasons + (season - 1)] += tempm;
+
+                            male_info_to.immigrant_recruits[year * this->seasons + (season - 1)] += tempm;
+                            male_info_from.emigrant_recruits[year * this->seasons + (season - 1)] += tempm;
+
+                            //                            female_info_to.redistributed_recruits[year * this->seasons + (season - 1)] += tempf;
+                            female_info_to.immigrant_recruits[year * this->seasons + (season - 1)] += tempf;
+                            female_info_from.emigrant_recruits[year * this->seasons + (season - 1)] += tempf;
 
                             for (int a = 0; a < this->ages; a++) {
 
@@ -2509,7 +2512,6 @@ namespace mas {
                                 female_info_to.imigrants[index] += imigrantsf;
                                 female_info_to.imigrants_biomass[index] += imigrantsf * female_info_from.weight_at_season_start[index];
 
-#warning need to move biomass also
                             }
                         }
                     }
@@ -2865,7 +2867,9 @@ namespace mas {
                         /******************************************
                          * Apply Movement
                          *****************************************/
-                        this->MoveFish(y, s);
+                        if (area == 0) {
+                            this->MoveFish(y, s);
+                        }
 
                         /******************************************
                          * Catch Numbers at Age
@@ -2888,21 +2892,21 @@ namespace mas {
                     for (int d = 0; d < areas_list.size(); d++) {
                         males[areas_list[d]->id].SettleMovedFish(y, s);
                         females[areas_list[d]->id].SettleMovedFish(y, s);
-                    }//end season
-                }//end year
+                    }
+                } //end season
 
-            }
+            }//end year
 
             //plus year
 
-            for (int area = 0; area < areas_list.size(); area++) {
-
-                /******************************************
-                 * Numbers at Age at year end plus one
-                 *****************************************/
-                males[areas_list[area]->id].CalculateNumbersAtAgeEndYearPlusOne();
-                females[areas_list[area]->id].CalculateNumbersAtAgeEndYearPlusOne();
-            }
+            //            for (int area = 0; area < areas_list.size(); area++) {
+            //
+            //                /******************************************
+            //                 * Numbers at Age at year end plus one
+            //                 *****************************************/
+            //                males[areas_list[area]->id].CalculateNumbersAtAgeEndYearPlusOne();
+            //                females[areas_list[area]->id].CalculateNumbersAtAgeEndYearPlusOne();
+            //            }
 
 
         }
