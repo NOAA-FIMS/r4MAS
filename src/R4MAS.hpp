@@ -4045,12 +4045,17 @@ public:
                     m->female_connectivity[s][i].resize(Area::id_g - 1);
                     m->recruit_connectivity[s][i].resize(Area::id_g - 1);
                     for (int j = 0; j < Area::id_g - 1; j++) {
-                        k = (i*(Area::id_g - 1)) +j;
+                        k = (i * (Area::id_g - 1)) + j;
                         m->male_connectivity[s][i][j] = variable(this->connectivity_males[k]);
                         m->female_connectivity[s][i][j] = variable(this->connectivity_females[k]);
                         m->recruit_connectivity[s][i][j] = variable(this->connectivity_recruits[k]);
+                        if (this->estimate_movement) {
+                            m->Register(m->male_connectivity[s][i][j]);
+                            m->Register(m->female_connectivity[s][i][j]);
+                            m->Register(m->recruit_connectivity[s][i][j]);
+                        }
                     }
-                    
+
                 }
             }
             info.movement_models[m->id] = movement;
@@ -6820,8 +6825,8 @@ public:
 
         mas->mas_instance.RunOperationalModel();
 
-         mas->Finalize();
-        
+        mas->Finalize();
+
         //transfer derived values from MAS to RMAS
         Fleet::model_iterator it;
 
@@ -6940,7 +6945,7 @@ public:
     }
 
     std::string GetOuptput() {
-       
+
         mas::JSONOutputGenerator<double> json;
         mas->SetVarianceCovariance();
 
