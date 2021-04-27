@@ -30,7 +30,6 @@
 #include "Utilities/flat_set.hpp"
 //#include "third_party/flat_hash_map/bytell_hash_map.hpp"
 #include "Utilities/flat_map.hpp"
-#include "third_party/sparsepp/sparsepp/spp.h"
 
 namespace atl {
 
@@ -80,10 +79,10 @@ namespace atl {
         vi_storage pushed_ids;
         std::vector<VariableInfoPtr > id_list;
         std::vector<REAL_T> first;
-#warning use  spp::sparse_hash_map here?????
+#warning use std::unordered_map here?????
         std::vector<REAL_T> second;
         std::vector<REAL_T> third;
-         spp::sparse_hash_map<uint32_t, std::vector<REAL_T> > taylor_coeff;
+        std::unordered_map<uint32_t, std::vector<REAL_T> > taylor_coeff;
 
         StackEntry() {
 
@@ -267,9 +266,9 @@ namespace atl {
     struct ForwardModeDerivativeInfo {
         uint32_t id;
         typename atl::StackEntry<REAL_T>::vi_storage ids;
-        typedef typename  spp::sparse_hash_map<uint32_t, REAL_T > first_order_container;
-        typedef typename  spp::sparse_hash_map<uint32_t, first_order_container > second_order_container;
-        typedef typename  spp::sparse_hash_map<uint32_t, second_order_container > third_order_container;
+        typedef typename std::unordered_map<uint32_t, REAL_T > first_order_container;
+        typedef typename std::unordered_map<uint32_t, first_order_container > second_order_container;
+        typedef typename std::unordered_map<uint32_t, second_order_container > third_order_container;
 
         first_order_container first_order_derivtives;
         second_order_container second_order_derivtives;
@@ -293,7 +292,7 @@ namespace atl {
     public:
         typedef typename std::shared_ptr<VariableInfo<REAL_T> > VariableInfoPtr;
         //first-order storage
-        typedef  spp::sparse_hash_map<uint32_t,
+        typedef std::unordered_map<uint32_t,
         REAL_T,
         std::hash<uint32_t>,
         std::equal_to<uint32_t>,
@@ -305,7 +304,7 @@ namespace atl {
         typedef typename first_order_container::iterator first_order_iterator;
 
         //second-order storage
-        typedef  spp::sparse_hash_map<uint32_t,
+        typedef std::unordered_map<uint32_t,
         first_order_container,
         std::hash<uint32_t>,
         std::equal_to<uint32_t>,
@@ -314,7 +313,7 @@ namespace atl {
         typedef typename second_order_container::iterator second_order_iterator;
 
         //third-order storage
-        typedef  spp::sparse_hash_map<uint32_t,
+        typedef std::unordered_map<uint32_t,
         second_order_container,
         std::hash<uint32_t>,
         std::equal_to<uint32_t>,
@@ -322,7 +321,7 @@ namespace atl {
         third_order_container third_order_derivatives;
         typedef typename third_order_container::iterator third_order_iterator;
 
-        //        typedef  spp::sparse_hash_map<uint32_t,
+        //        typedef std::unordered_map<uint32_t,
         //        second_order_container,
         //        std::hash<uint32_t>,
         //        std::equal_to<uint32_t>,
@@ -330,15 +329,15 @@ namespace atl {
         //        fourth_order_container third_order_derivatives;
         //        typedef typename fourth_order_container::iterator fourth_order_iterator;
 
-        typename  spp::sparse_hash_map<uint32_t, typename atl::StackEntry<REAL_T>::vi_storage> forward_dependencies; //ids used in forward mode derivatives
+        typename std::unordered_map<uint32_t, typename atl::StackEntry<REAL_T>::vi_storage> forward_dependencies; //ids used in forward mode derivatives
 
-         spp::sparse_hash_map<uint32_t, std::vector<REAL_T> > taylor_coeff;
+        std::unordered_map<uint32_t, std::vector<REAL_T> > taylor_coeff;
         int taylor_order = 1;
 
         bool recording = true;
         DerivativeTraceLevel derivative_trace_level = FIRST_ORDER_REVERSE;
         //forward mode derivative info
-         spp::sparse_hash_map<uint32_t, ForwardModeDerivativeInfo<REAL_T> > forward_mode_derivative_info;
+        std::unordered_map<uint32_t, ForwardModeDerivativeInfo<REAL_T> > forward_mode_derivative_info;
 
 
         std::vector<StackEntry<REAL_T>, atl::clfallocator<StackEntry<REAL_T> > > stack;
@@ -719,7 +718,7 @@ namespace atl {
             }
         }
 
-        inline void PushLive( spp::sparse_hash_map<uint32_t, typename atl::StackEntry<REAL_T>::vi_storage >& live_set,
+        inline void PushLive(std::unordered_map<uint32_t, typename atl::StackEntry<REAL_T>::vi_storage >& live_set,
                 typename atl::StackEntry<REAL_T>::VariableInfoPtr a,
                 typename atl::StackEntry<REAL_T>::VariableInfoPtr b) {
             if (a->count > 1 && (b->id != a->id) && a->is_nl) {
@@ -763,7 +762,7 @@ namespace atl {
                 VariableInfoPtr vj;
                 VariableInfoPtr vk;
 
-                 spp::sparse_hash_map<uint32_t, typename atl::StackEntry<REAL_T>::vi_storage > live_sets;
+                std::unordered_map<uint32_t, typename atl::StackEntry<REAL_T>::vi_storage > live_sets;
 
 
                 for (int i = (stack_current - 1); i >= 0; i--) {
@@ -895,7 +894,7 @@ namespace atl {
 
             if (recording) {
 
-                //                 spp::sparse_hash_map<uint32_t, typename StackEntry<REAL_T>::vi_storage > dmap;
+                //                std::unordered_map<uint32_t, typename StackEntry<REAL_T>::vi_storage > dmap;
                 //                for (int i = 0; i < this->stack_current; i++) {
                 //                    typename StackEntry<REAL_T>::vi_iterator it;
                 //                    typename StackEntry<REAL_T>::vi_storage& ids_ = dmap[stack[i].w->id];
@@ -929,7 +928,7 @@ namespace atl {
                 REAL_T d3 = 0.0;
                 REAL_T pjk = 0.0;
 
-                 spp::sparse_hash_map<uint32_t, typename atl::StackEntry<REAL_T>::vi_storage > live_sets;
+                std::unordered_map<uint32_t, typename atl::StackEntry<REAL_T>::vi_storage > live_sets;
 
 
                 for (int i = (stack_current - 1); i >= 0; i--) {
@@ -1341,7 +1340,7 @@ namespace atl {
     //
     //
     //            for (int j = 1; j <= order; j++) {
-    //                 spp::sparse_hash_map<uint32_t, typename atl::StackEntry<REAL_T>::VariableInfoPtr > mapped_var_info;
+    //                std::unordered_map<uint32_t, typename atl::StackEntry<REAL_T>::VariableInfoPtr > mapped_var_info;
     //                typename atl::StackEntry<REAL_T>::vi_iterator it;
     //                for (it = dependents.begin(); it != dependents.end(); ++it) {
     //                    mapped_var_info[(*it)->id] =
