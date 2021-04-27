@@ -421,25 +421,25 @@ namespace mas {
                         size_t index = y * this->seasons * this->ages.size() + (s) * this->ages.size() + a;
 
                         sb_per_recruit[y] += ntemp0 * (this->weight_at_spawning[index] * this->M[a]) *
-                                mas::mfexp(-1.0 * this->spawning_season_offset * M[a]);
+                                mas::exp(-1.0 * this->spawning_season_offset * M[a]);
 
                         s_per_recruit[y] += ntemp0 * (this->fecundity_at_age[index] * this->M[a]) *
-                                mas::mfexp(-1.0 * this->spawning_season_offset * M[a]);
+                                mas::exp(-1.0 * this->spawning_season_offset * M[a]);
 
-                        ntemp0 *= mas::mfexp(-1.0 * this->spawning_season_offset * M[a]);
+                        ntemp0 *= mas::exp(-1.0 * this->spawning_season_offset * M[a]);
 
                     }
 
 
                     size_t plus_group = this->ages.size() - 1;
                     size_t index = y * this->seasons * this->ages.size() + (s) * this->ages.size() + plus_group;
-                    ntemp0 /= (1.0 - mas::mfexp(-1.0 * M[plus_group]));
+                    ntemp0 /= (1.0 - mas::exp(-1.0 * M[plus_group]));
 
                     sb_per_recruit[y] += ntemp0 * (this->weight_at_spawning[index] * this->M[this->ages.size() - 1])
-                            * mas::mfexp(-1.0 * this->spawning_season_offset * M[plus_group]);
+                            * mas::exp(-1.0 * this->spawning_season_offset * M[plus_group]);
 
                     s_per_recruit[y] += ntemp0 * (this->fecundity_at_age[index] * this->M[this->ages.size() - 1])
-                            * mas::mfexp(-1.0 * this->spawning_season_offset * M[plus_group]);
+                            * mas::exp(-1.0 * this->spawning_season_offset * M[plus_group]);
 
                 }
             }
