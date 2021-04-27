@@ -74,7 +74,7 @@ namespace mas {
     template<typename REAL_T>
     struct EmpricalDataStructure {
         std::shared_ptr<mas::DataObject<REAL_T> > empirical_data_at_age;
-        std::unordered_map<int, std::unordered_map<int, std::unordered_map<REAL_T, REAL_T> > > interpolated_data_at_age;
+        flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > > interpolated_data_at_age;
     };
 
     template <typename REAL_T>
@@ -210,7 +210,7 @@ namespace mas {
         }
 
         static void Do2DInterpolation(int id, const std::shared_ptr<mas::DataObject<REAL_T> > & data,
-                std::unordered_map<int, std::unordered_map<int, std::unordered_map<REAL_T, REAL_T> > >& results) {
+                flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > >& results) {
 
             size_t years = data->imax;
             size_t ages = data->kmax;
@@ -233,7 +233,7 @@ namespace mas {
         }
 
         static void Do2DInterpolation(const std::shared_ptr<mas::DataObject<REAL_T> > & data,
-                std::unordered_map<int, std::unordered_map<int, std::unordered_map<REAL_T, REAL_T> > >& results) {
+                flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > >& results) {
 
             size_t years = data->imax;
             size_t ages = data->kmax;
@@ -256,7 +256,7 @@ namespace mas {
         }
 
         static void Do3DInterpolation(int id, const std::shared_ptr<mas::DataObject<REAL_T> > & data,
-                std::unordered_map<int, std::unordered_map<int, std::unordered_map<int, std::unordered_map<REAL_T, REAL_T> > > >& results) {
+                flat_map<int, flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > > >& results) {
 
             size_t years = data->imax;
             size_t seasons = data->jmax;
@@ -284,7 +284,7 @@ namespace mas {
         }
 
         static void Do3DInterpolation(const std::shared_ptr<mas::DataObject<REAL_T> > & data,
-                std::unordered_map<int, std::unordered_map<int, std::unordered_map<REAL_T, REAL_T> > >& results) {
+                flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > >& results) {
             GROWTH_DEBUG
             size_t years = data->imax;
             size_t seasons = data->jmax;
@@ -373,20 +373,20 @@ namespace mas {
             return "GrowthBase";
         }
 
-        static void Show3InterpolatedValues(std::unordered_map<int, std::unordered_map<int, std::unordered_map<int, std::unordered_map<REAL_T, REAL_T> > > >& results) {
+        static void Show3InterpolatedValues(flat_map<int, flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > > >& results) {
 
-            typename std::unordered_map<int,
-                    std::unordered_map<int,
-                    std::unordered_map<int,
-                    std::unordered_map<REAL_T, REAL_T> > > >::iterator fit;
-            typename std::unordered_map<int,
-                    std::unordered_map<int,
-                    std::unordered_map<REAL_T, REAL_T> > >::iterator yit;
+            typename flat_map<int,
+                    flat_map<int,
+                    flat_map<int,
+                    flat_map<REAL_T, REAL_T> > > >::iterator fit;
+            typename flat_map<int,
+                    flat_map<int,
+                    flat_map<REAL_T, REAL_T> > >::iterator yit;
 
-            typename std::unordered_map<int,
-                    std::unordered_map<REAL_T, REAL_T> >::iterator sit;
+            typename flat_map<int,
+                    flat_map<REAL_T, REAL_T> >::iterator sit;
 
-            typename std::unordered_map<REAL_T, REAL_T>::iterator ait;
+            typename flat_map<REAL_T, REAL_T>::iterator ait;
 
             for (fit = results.begin(); fit != results.end(); ++fit) {
                 std::cout << "ID: " << (*fit).first << "\n";
@@ -415,57 +415,57 @@ namespace mas {
     //  
     //
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_age_female_fleet;
+    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_age_female_fleet;
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_age_male_fleet;
+    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_age_male_fleet;
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_female_fleet;
+    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_female_fleet;
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_male_fleet;
+    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_male_fleet;
     //
     //
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_age_female_survey;
+    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_age_female_survey;
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_age_male_survey;
+    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_age_male_survey;
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_female_survey;
+    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_female_survey;
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_male_survey;
+    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_male_survey;
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_female;
+    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_female;
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_male;
+    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_male;
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_season_start_female;
+    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_season_start_female;
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_season_start_male;
+    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_season_start_male;
     //
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::unordered_map<int, std::unordered_map<int, std::unordered_map<REAL_T, REAL_T> > > > mas::GrowthBase<REAL_T>::interpolated_empirical_weight_at_age_female_fleet;
+    //    flat_map<int, flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > > > mas::GrowthBase<REAL_T>::interpolated_empirical_weight_at_age_female_fleet;
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::unordered_map<int, std::unordered_map<int, std::unordered_map<REAL_T, REAL_T> > > > mas::GrowthBase<REAL_T>::interpolated_empirical_weight_at_age_male_fleet;
+    //    flat_map<int, flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > > > mas::GrowthBase<REAL_T>::interpolated_empirical_weight_at_age_male_fleet;
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::unordered_map<int, std::unordered_map<int, std::unordered_map<REAL_T, REAL_T> > > > mas::GrowthBase<REAL_T>::interpolated_empirical_weight_at_age_female_survey;
+    //    flat_map<int, flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > > > mas::GrowthBase<REAL_T>::interpolated_empirical_weight_at_age_female_survey;
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::unordered_map<int, std::unordered_map<int, std::unordered_map<REAL_T, REAL_T> > > > mas::GrowthBase<REAL_T>::interpolated_empirical_weight_at_age_male_survey;
+    //    flat_map<int, flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > > > mas::GrowthBase<REAL_T>::interpolated_empirical_weight_at_age_male_survey;
     //
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::unordered_map<int, std::unordered_map<REAL_T, REAL_T> > > mas::GrowthBase<REAL_T>::interpolated_empirical_weight_at_spawning_female_fleet;
+    //    flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > > mas::GrowthBase<REAL_T>::interpolated_empirical_weight_at_spawning_female_fleet;
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::unordered_map<int, std::unordered_map<REAL_T, REAL_T> > > mas::GrowthBase<REAL_T>::interpolated_empirical_weight_at_spawning_female_survey;
+    //    flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > > mas::GrowthBase<REAL_T>::interpolated_empirical_weight_at_spawning_female_survey;
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::unordered_map<int, std::unordered_map<REAL_T, REAL_T> > > mas::GrowthBase<REAL_T>::interpolated_empirical_weight_at_spawning_male_fleet;
+    //    flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > > mas::GrowthBase<REAL_T>::interpolated_empirical_weight_at_spawning_male_fleet;
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::unordered_map<int, std::unordered_map<REAL_T, REAL_T> > > mas::GrowthBase<REAL_T>::interpolated_empirical_weight_at_spawning_male_survey;
+    //    flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > > mas::GrowthBase<REAL_T>::interpolated_empirical_weight_at_spawning_male_survey;
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::unordered_map<int, std::unordered_map<REAL_T, REAL_T> > > mas::GrowthBase<REAL_T>::interpolated_weight_at_spawning_female;
+    //    flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > > mas::GrowthBase<REAL_T>::interpolated_weight_at_spawning_female;
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::unordered_map<int, std::unordered_map<REAL_T, REAL_T> > > mas::GrowthBase<REAL_T>::interpolated_weight_at_spawning_male;
+    //    flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > > mas::GrowthBase<REAL_T>::interpolated_weight_at_spawning_male;
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::unordered_map<int, std::unordered_map<REAL_T, REAL_T> > > mas::GrowthBase<REAL_T>::interpolated_weight_at_season_start_female;
+    //    flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > > mas::GrowthBase<REAL_T>::interpolated_weight_at_season_start_female;
     //    template<typename REAL_T>
-    //    std::unordered_map<int, std::unordered_map<int, std::unordered_map<REAL_T, REAL_T> > > mas::GrowthBase<REAL_T>::interpolated_weight_at_season_start_male;
+    //    flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > > mas::GrowthBase<REAL_T>::interpolated_weight_at_season_start_male;
 
     template<typename REAL_T>
     struct VonBertalanffy : GrowthBase<REAL_T> {

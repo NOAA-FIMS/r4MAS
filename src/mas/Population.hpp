@@ -1625,12 +1625,13 @@ namespace mas {
         inline void CalculateSurveyNumbersAtAge(int year, int season) {
             std::vector< std::shared_ptr<Survey<REAL_T> > >& surveys = this->area->seasonal_survey_operations[season];
 
+            
             REAL_T total_SI = static_cast<REAL_T> (0.0);
             size_t index2 = year * this->seasons + (season - 1);
             for (int a = 0; a < this->ages.size(); a++) {
                 size_t index = year * this->seasons * this->ages.size() + (season - 1) * this->ages.size() + a;
 
-                variable weight = this->weight_at_survey_time[index];
+//                variable weight = this->weight_at_survey_time[index];
                 for (int s = 0; s < surveys.size(); s++) {
 
                     // NOTE:  the survey has a catchability (q) associated with it
@@ -1641,19 +1642,19 @@ namespace mas {
                     this->survey_numbers_at_age[index] += saa;
                     surveys[s]->survey_numbers_at_age[index] += saa;
 
-                    this->survey_index_at_age[index] += saa * weight;
-                    total_SI += saa.GetValue() * weight.GetValue();
-                    surveys[s]->survey_biomass_at_age[index] += saa * weight;
+                    this->survey_index_at_age[index] += saa * this->weight_at_survey_time[index];
+                    total_SI += saa.GetValue() * this->weight_at_survey_time[index].GetValue();
+                    surveys[s]->survey_biomass_at_age[index] += saa * this->weight_at_survey_time[index];
 
 
 
                     if (this->males) {
                         surveys[s]->survey_numbers_at_age_males[index] += saa;
-                        surveys[s]->survey_biomass_at_age_males[index] += saa * weight;
+                        surveys[s]->survey_biomass_at_age_males[index] += saa * this->weight_at_survey_time[index];
                     } else {
 
                         surveys[s]->survey_numbers_at_age_females[index] += saa;
-                        surveys[s]->survey_biomass_at_age_females[index] += saa * weight;
+                        surveys[s]->survey_biomass_at_age_females[index] += saa * this->weight_at_survey_time[index];
                     }
                 }
             }
