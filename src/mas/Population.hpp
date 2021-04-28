@@ -69,7 +69,7 @@ namespace mas {
         std::vector<REAL_T> maturity; // should be the same across areas, same length as ages
         // these PARAMETERS can be fixed or estimated; should be in model config
 #warning hard coded value initialF
-        variable initialF = static_cast<REAL_T> (1e-5);
+        variable initialF = static_cast<REAL_T> (0.0);
         std::vector<variable> initialS;
         std::vector<variable> M;
         std::vector<variable> F; // this PARAMETER vector is shared between males and females
@@ -1625,13 +1625,13 @@ namespace mas {
         inline void CalculateSurveyNumbersAtAge(int year, int season) {
             std::vector< std::shared_ptr<Survey<REAL_T> > >& surveys = this->area->seasonal_survey_operations[season];
 
-
+            
             REAL_T total_SI = static_cast<REAL_T> (0.0);
             size_t index2 = year * this->seasons + (season - 1);
             for (int a = 0; a < this->ages.size(); a++) {
                 size_t index = year * this->seasons * this->ages.size() + (season - 1) * this->ages.size() + a;
 
-                //                variable weight = this->weight_at_survey_time[index];
+//                variable weight = this->weight_at_survey_time[index];
                 for (int s = 0; s < surveys.size(); s++) {
 
                     // NOTE:  the survey has a catchability (q) associated with it
@@ -2498,8 +2498,8 @@ namespace mas {
                                 male_info_from.emigrants[index] += moving_males;
                                 male_info_from.emigrants_biomass[index] += moving_males * male_info_from.weight_at_season_start[index];
 
-                                //                                variable imigrantsm = male_fractions[i][j] * male_info_from.numbers_at_age[index] *
-                                //                                        mas::exp(static_cast<REAL_T> (-1.0) * male_info_from.Z[index]);
+//                                variable imigrantsm = male_fractions[i][j] * male_info_from.numbers_at_age[index] *
+//                                        mas::exp(static_cast<REAL_T> (-1.0) * male_info_from.Z[index]);
 
                                 male_info_to.imigrants[index] += moving_males;
                                 male_info_to.imigrants_biomass[index] += moving_males * male_info_from.weight_at_season_start[index];
@@ -2510,8 +2510,8 @@ namespace mas {
                                 female_info_from.emigrants[index] += moving_females;
                                 female_info_from.emigrants_biomass[index] += moving_females * female_info_from.weight_at_season_start[index];
 
-                                //                                variable imigrantsf = female_fractions[i][j] * female_info_from.numbers_at_age[index] *
-                                //                                        mas::exp(static_cast<REAL_T> (-1.0) * female_info_from.Z[index]);
+//                                variable imigrantsf = female_fractions[i][j] * female_info_from.numbers_at_age[index] *
+//                                        mas::exp(static_cast<REAL_T> (-1.0) * female_info_from.Z[index]);
 
                                 female_info_to.imigrants[index] += moving_females;
                                 female_info_to.imigrants_biomass[index] += moving_females * female_info_from.weight_at_season_start[index];
@@ -2590,8 +2590,8 @@ namespace mas {
                 males[areas_list[a]->id].S0 = females[areas_list[a]->id].S0;
 
 
-                //                females[areas_list[a]->id].FCalc();
-                //                males[areas_list[a]->id].FCalc(); // = females[areas_list[a]->id].initialF;///.GetValue();
+                females[areas_list[a]->id].FCalc();
+                males[areas_list[a]->id].FCalc(); // = females[areas_list[a]->id].initialF;///.GetValue();
 
                 females[areas_list[a]->id].CalculateInitialNumbers();
                 males[areas_list[a]->id].CalculateInitialNumbers();
@@ -2607,9 +2607,6 @@ namespace mas {
                 }
             }
             for (int a = 0; a < areas_list.size(); a++) {
-
-
-
                 males[areas_list[a]->id].Initialize();
                 females[areas_list[a]->id].Initialize();
                 std::vector<REAL_T>& mv = this->maturity_models[areas_list[a]->id][mas::MALE];
@@ -2638,20 +2635,6 @@ namespace mas {
 
                     females[areas_list[a]->id].seasonal_recruitment_models[(*it).first] = (*it).second;
                 }
-
-                std::stringstream ss;
-                ss << "initial_f_females_" << females[areas_list[a]->id].id;
-                females[areas_list[a]->id].initialF.SetName(ss.str());
-                females[areas_list[a]->id].initialF.SetMinBoundary(1e-5);
-                females[areas_list[a]->id].initialF.SetMaxBoundary(1.0);
-                this->Register(females[areas_list[a]->id].initialF, 1);
-                ss.str("");
-                ss << "initial_f_males_" << males[areas_list[a]->id].id;
-                males[areas_list[a]->id].initialF.SetName(ss.str());
-                males[areas_list[a]->id].initialF.SetMinBoundary(1e-5);
-                males[areas_list[a]->id].initialF.SetMaxBoundary(1.0);
-                this->Register(males[areas_list[a]->id].initialF, 1);
-
             }
             maturity_models_iterator mit;
 
