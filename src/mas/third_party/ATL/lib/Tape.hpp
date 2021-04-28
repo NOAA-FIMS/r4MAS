@@ -40,6 +40,7 @@ namespace atl {
         THIRD_ORDER_REVERSE,
         UTPM_REVERSE,
         DYNAMIC_RECORD,
+        DYNAMIC_RECORD_NO_DERIVATIVES,
         FIRST_ORDER_FORWARD,
         SECOND_ORDER_FORWARD,
         THIRD_ORDER_FORWARD,
@@ -660,6 +661,7 @@ namespace atl {
                 for (it = entry.ids.begin(); it != entry.ids.end(); ++it) {
                     entry.min_id = std::min((*it)->id, entry.min_id);
                     entry.max_id = std::max((*it)->id, entry.max_id);
+                    entry.first[index++] = entry.exp->DifferentiatedBy((*it));
                 }
 
                 REAL_T v = entry.exp->GetValue();

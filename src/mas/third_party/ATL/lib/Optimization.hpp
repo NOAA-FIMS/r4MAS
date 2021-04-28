@@ -176,7 +176,7 @@ namespace atl {
 
             //2. do numeric factorization
             if (S != NULL) {
-                    ret.factor = cs_chol<Type>(ret.A, S);
+                ret.factor = cs_chol<Type>(ret.A, S);
                 if (ret.factor == NULL) {
                     std::cout << "Cholesky factorization error. " << std::endl;
                 }
@@ -721,64 +721,64 @@ namespace atl {
 
             atl::Variable<T>::tape.AccumulateSecondOrder();
 
-//            for (int i = 0; i < this->parameters_m.size(); i++) {
-//                for (int j = 0; j < this->parameters_m.size(); j++) {
-//                    T dxx = atl::Variable<T>::tape.Value(this->parameters_m[i]->info->id,
-//                            this->parameters_m[j]->info->id);
-//                    if (dxx != dxx) {//this is a big hack
-//                        dxx = std::numeric_limits<T>::min();
-//                    }
-//                    if (dxx != static_cast<T> (0.0)) {
-//                        cs_entry<T>(RHessian, i, j, dxx);
-//                    }
-//                }
-//            }
-//
-//            struct cs_sparse<T> *hessian = cs_compress<T>(RHessian);
-//            SparseCholesky<T> sparse_cholesky;
-//
-//            SCResult<T> ret = sparse_cholesky.Analyze(hessian);
-//
-//            csi p, j, m, n, nzmax, nz, *Ap, *Ai;
-//            T* Ax;
-//            n = ret.A_inv->n;
-//            Ap = ret.A_inv->p;
-//            Ai = ret.A_inv->i;
-//            Ax = ret.A_inv->x;
-//
-//            atl::RealMatrix<T> inverse_hess(this->parameters_m.size(), this->parameters_m.size());
-//
-//            for (int j = 0; j < n; j++) {
-//                for (int k = Ap [j]; k < Ap [j + 1]; k++) {
-//                    inverse_hess(Ai[k], j) = Ax[k];
-//                }
-//            }
-//
-//            cs_spfree(RHessian);
-//            cs_spfree(hessian);
-//
-//            std::vector<T> se(this->parameters_m.size());
-//            for (int i = 0; i < this->parameters_m.size(); i++) {
-//                se[i] = std::sqrt(inverse_hess(i, i));
-//            }
-//
-//
-//
-//            atl::RealMatrix<T> outer_product(this->parameters_m.size(), this->parameters_m.size());
-//            for (size_t i = 0; i < this->parameters_m.size(); i++) {
-//                for (size_t j = 0; j < this->parameters_m.size(); j++) {
-//                    outer_product(i, j) = se[i] * se[j];
-//                }
-//            }
-//
-//
-//
+            //            for (int i = 0; i < this->parameters_m.size(); i++) {
+            //                for (int j = 0; j < this->parameters_m.size(); j++) {
+            //                    T dxx = atl::Variable<T>::tape.Value(this->parameters_m[i]->info->id,
+            //                            this->parameters_m[j]->info->id);
+            //                    if (dxx != dxx) {//this is a big hack
+            //                        dxx = std::numeric_limits<T>::min();
+            //                    }
+            //                    if (dxx != static_cast<T> (0.0)) {
+            //                        cs_entry<T>(RHessian, i, j, dxx);
+            //                    }
+            //                }
+            //            }
+            //
+            //            struct cs_sparse<T> *hessian = cs_compress<T>(RHessian);
+            //            SparseCholesky<T> sparse_cholesky;
+            //
+            //            SCResult<T> ret = sparse_cholesky.Analyze(hessian);
+            //
+            //            csi p, j, m, n, nzmax, nz, *Ap, *Ai;
+            //            T* Ax;
+            //            n = ret.A_inv->n;
+            //            Ap = ret.A_inv->p;
+            //            Ai = ret.A_inv->i;
+            //            Ax = ret.A_inv->x;
+            //
+            //            atl::RealMatrix<T> inverse_hess(this->parameters_m.size(), this->parameters_m.size());
+            //
+            //            for (int j = 0; j < n; j++) {
+            //                for (int k = Ap [j]; k < Ap [j + 1]; k++) {
+            //                    inverse_hess(Ai[k], j) = Ax[k];
+            //                }
+            //            }
+            //
+            //            cs_spfree(RHessian);
+            //            cs_spfree(hessian);
+            //
+            //            std::vector<T> se(this->parameters_m.size());
+            //            for (int i = 0; i < this->parameters_m.size(); i++) {
+            //                se[i] = std::sqrt(inverse_hess(i, i));
+            //            }
+            //
+            //
+            //
+            //            atl::RealMatrix<T> outer_product(this->parameters_m.size(), this->parameters_m.size());
+            //            for (size_t i = 0; i < this->parameters_m.size(); i++) {
+            //                for (size_t j = 0; j < this->parameters_m.size(); j++) {
+            //                    outer_product(i, j) = se[i] * se[j];
+            //                }
+            //            }
+            //
+            //
+            //
             atl::RealMatrix<T> ret_m(this->parameters_m.size(), this->parameters_m.size());
-//            for (size_t i = 0; i < this->parameters_m.size(); i++) {
-//                for (size_t j = 0; j < this->parameters_m.size(); j++) {
-//                    ret_m(i, j) = inverse_hess(i, j) * outer_product(i, j);
-//                }
-//            }
+            //            for (size_t i = 0; i < this->parameters_m.size(); i++) {
+            //                for (size_t j = 0; j < this->parameters_m.size(); j++) {
+            //                    ret_m(i, j) = inverse_hess(i, j) * outer_product(i, j);
+            //                }
+            //            }
             return ret_m;
 
             //            atl::Matrix<T> inverse_hess = atl::Matrix<T>::Identity(hess.Size(0));
@@ -1006,7 +1006,9 @@ namespace atl {
 
         void CallObjectiveFunction(atl::Variable<T>& f) {
             atl::Variable<T>::tape.Reset();
-            if (this->random_variables_m.size() > 0) {//this is a laplace problem
+            if(atl::Variable<T>::tape.derivative_trace_level == atl::DYNAMIC_RECORD){
+                atl::Variable<T>::tape.DynamicForward();
+            } else if (this->random_variables_m.size() > 0) {//this is a laplace problem
                 this->EvaluateLaplace(f);
             } else {
                 this->CallInnerObjectiveFunction(f);
@@ -1182,7 +1184,7 @@ namespace atl {
                 T ld = cs_log_det(chol->L);
                 log_det = ld;
 
-//                std::cout << ld << "\n";
+                //                std::cout << ld << "\n";
                 //                exit(0);
 
                 for (int i = 0; i < PARAMETERS_SIZE; i++) {
@@ -1240,10 +1242,10 @@ namespace atl {
                         int error = cs_cholsol_x(0, hessian, re_dx.data(), chol, this->S_outer, this->x_scratch.data(), i);
                         trace += re_dx[i];
                     }
-//                    std::cout << trace << "......\n";
+                    //                    std::cout << trace << "......\n";
                     derivatives_logdet[this->parameters_m[p]->info] = trace;
                 }
-//                exit(0);
+                //                exit(0);
 
 
 
@@ -1570,7 +1572,7 @@ namespace atl {
             }
         }
 
-        void ComputeGradient(std::vector<atl::Variable<T>* >&p,
+        virtual void ComputeGradient(std::vector<atl::Variable<T>* >&p,
                 std::valarray<T>&g, T & maxgc) {
             g.resize(p.size());
             atl::Variable<T>::tape.AccumulateFirstOrder();
@@ -1638,7 +1640,7 @@ namespace atl {
 
             std::cout << "|\n" << ' ' << std::string((print_width * (name_width + 1 + value_width + 1 + grad_width + 1)), '-') << "\n";
             std::cout << "\n\n";
-//            exit(0);
+            //            exit(0);
         }
 
         virtual bool Evaluate() = 0;
@@ -2093,7 +2095,7 @@ namespace atl {
             //            atl::Variable<T> fx;
 
             for (ls = 0; ls < this->max_line_searches; ++ls) {
-             
+
 
                 if (((this->outer_iteration + ls) % this->print_interval) == 0) {
                     this->Print();
@@ -2127,6 +2129,127 @@ namespace atl {
                     atl::Variable<T>::SetRecording(true);
                     atl::Variable<T>::tape.Reset();
                     atl::Variable<T>::tape.derivative_trace_level = atl::FIRST_ORDER_REVERSE;
+                    if (inner) {
+                        this->CallInnerObjectiveFunction(fx);
+                    } else {
+                        this->CallObjectiveFunction(fx);
+                    }
+
+                    this->ComputeGradient(parameters, ng, maxgc);
+
+                    if ((this->outer_iteration % this->print_interval) == 0) {
+                        gradient = ng;
+                        std::cout << io::GREEN << "Line Search Update.\n" << io::DEFAULT;
+                        this->Print();
+                    }
+
+                    atl::Variable<T>::tape.Reset();
+                    if (down || (-1.0 * Dot(z, ng) >= 0.9 * descent)) { // Second Wolfe condition
+                        x = nx;
+                        gradient = ng;
+                        function_value = fx.GetValue();
+                        return true;
+                    } else {
+                        atl::Variable<T>::SetRecording(false);
+                        step *= 10.0; //2.0; //10.0;
+                    }
+                } else {
+                    step /= 10.0; //*= .5; ///
+                    down = true;
+                }
+            }
+
+            for (size_t j = 0; j < nops; j++) {
+                parameters[j]->SetValue(best[j]);
+            }
+
+            return false;
+
+        }
+
+        bool line_search_dynamic(std::vector<atl::Variable<T>* >& parameters,
+                atl::Variable<T>& fx,
+                T& function_value,
+                std::valarray<T>& x,
+                std::valarray<T>& best,
+                std::valarray<T>& z,
+                std::valarray<T>& gradient,
+                std::valarray<T>& wg,
+                T& maxgc, int& i) {
+            T descent = 0;
+
+            int nops = parameters.size();
+            std::valarray<T> nwg(nops);
+            std::valarray<T> ng(nops);
+
+            for (size_t j = 0; j < nops; j++) {
+                descent += z[j] * wg[j];
+            }//end for
+
+            T norm_g = this->norm(gradient);
+            T relative_tolerance = this->tolerance * std::max<T > (T(1.0), norm_g);
+
+            descent *= T(-1.0); // * Dot(z, g);
+            if ((descent > T(-0.00000001) * relative_tolerance /* tolerance relative_tolerance*/)) {
+                z = wg + .001;
+                if (!inner) {
+                    this->max_iterations -= i;
+                    i = 0;
+                }
+                descent = -1.0 * Dot(z, wg);
+            }//end if
+
+            T step = i ? 1.0 : (1.0 / norm_g);
+
+            if (step != step) {
+                step = 1.0;
+            }
+
+            bool down = false;
+
+            int ls;
+
+
+
+
+            for (int j = 0; j < parameters.size(); j++) {
+                best[j] = parameters[j]->GetValue();
+            }
+
+            //            atl::Variable<T> fx;
+
+            for (ls = 0; ls < this->max_line_searches; ++ls) {
+
+
+                if (((this->outer_iteration + ls) % this->print_interval) == 0) {
+                    this->Print();
+                }
+
+                // Tentative solution, gradient and loss
+                std::valarray<T> nx = x - step * z;
+
+                for (size_t j = 0; j < nops; j++) {
+
+                    if (nx[j] != nx[j]) {
+                    }
+                    parameters[j]->UpdateValue(nx[j]);
+                }
+
+                //line_search:
+                atl::Variable<T>::SetRecording(false);
+                this->CallObjectiveFunction(fx);
+                //                atl::Variable<T>::tape.Reset();
+                if (fx.GetValue() <= function_value + tolerance * T(10e-4) * step * descent) { // First Wolfe condition
+
+                    for (size_t j = 0; j < nops; j++) {
+                        best[j] = parameters[j]->GetInternalValue();
+                    }
+
+
+                    atl::Variable<T>::SetRecording(true);
+                    atl::Variable<T>::tape.derivative_trace_level = atl::DYNAMIC_RECORD;
+                    atl::Variable<T>::tape.Reset();
+
                     if (inner) {
                         this->CallInnerObjectiveFunction(fx);
                     } else {
@@ -2283,7 +2406,7 @@ namespace atl {
                             this->parameters_m[j]->GetInternalValue()) * this->gradient[j];
                 }
 
-                if ((i % this->print_interval) == 0 ) {
+                if ((i % this->print_interval) == 0) {
                     std::cout << "Iteration " << i << "\n";
                     std::cout << "Phase = " << this->phase_m << "\n";
 
@@ -2369,6 +2492,214 @@ namespace atl {
             std::cout << "Outer Max iterations!";
 
             return false;
+        }
+    private:
+
+        /**
+         * Compute the dot product of two vectors.
+         * @param a
+         * @param b
+         * @return 
+         */
+        const T Dot(const std::valarray<T> &a, const std::valarray<T> &b) {
+            T ret = 0;
+            for (size_t i = 0; i < a.size(); i++) {
+
+                ret += a[i] * b[i];
+            }
+            return ret;
+        }
+
+        /**
+         * returns the a column of a matrix as a std::valarray.
+         * @param matrix
+         * @param column
+         * @return 
+         */
+        const std::valarray<T> Column(std::valarray<std::valarray<T> > &matrix, size_t column, size_t length) {
+
+            std::valarray<T> ret(length);
+
+            for (int i = 0; i < ret.size(); i++) {
+
+                ret[i] = matrix[i][column];
+            }
+            return ret;
+        }
+
+
+    };
+
+    template<typename T>
+    class LBFGSDynamic : public atl::OptimizationRoutine<T> {
+    public:
+
+        virtual bool Evaluate() {
+            atl::Variable<T>::tape.derivative_trace_level = atl::DYNAMIC_RECORD;
+            atl::Variable<T>::SetRecording(true);
+            atl::Variable<T>::tape.Reset();
+            int nops = this->parameters_m.size();
+            bool has_random_effects = false;
+            if (this->random_variables_m.size()) {
+                has_random_effects = true;
+            }
+
+            atl::Variable<T> pen;
+
+            this->x.resize(nops);
+            this->best.resize(nops);
+            this->gradient.resize(nops);
+
+            for (int i = 0; i < nops; i++) {
+                if (this->parameters_m[i]->IsBounded()) {
+                    this->x[i] = this->parameters_m[i]->GetInternalValue();
+                } else {
+                    this->x[i] = this->parameters_m[i]->GetValue();
+                }
+                this->gradient[i] = 0;
+            }
+            //
+            //
+            std::valarray<T> wg(nops);
+            std::valarray<T> nwg(nops);
+            std::valarray<T> ng(nops);
+
+
+            //initial evaluation
+            atl::Variable<T> fx(0.0);
+            this->CallObjectiveFunction(fx);
+            this->function_value = fx.GetValue();
+            //
+            //Historical evaluations
+            std::valarray<T> px(nops);
+            std::valarray<T> pg(nops);
+            std::valarray<std::valarray<T> > dxs(std::valarray<T > (this->max_history), nops);
+            std::valarray<std::valarray<T> > dgs(std::valarray<T > (this->max_history), nops);
+            //search direction
+            std::valarray<T> z(nops);
+
+            this->ComputeGradient(this->parameters_m, this->gradient, this->maxgc);
+
+            atl::Variable<T>::tape.Reset();
+
+
+
+            std::valarray<T> p(this->max_history);
+            std::valarray<T>a(this->max_history);
+            int no_progress_count = 0;
+            int i;
+            for (int iteration = 0; iteration < this->max_iterations; iteration++) {
+                i = iteration;
+                this->outer_iteration = iteration;
+                for (int j = 0; j < nops; j++) {
+                    wg[j] = this->parameters_m[j]->GetScaledGradient(
+                            this->parameters_m[j]->GetInternalValue()) * this->gradient[j];
+                }
+
+                if ((i % this->print_interval) == 0) {
+                    std::cout << "Iteration " << i << "\n";
+                    std::cout << "Phase = " << this->phase_m << "\n";
+
+                    this->Print();
+                }
+
+                if (this->maxgc < this->tolerance) {
+                    std::cout << "Iteration " << i << "\n";
+                    std::cout << "Phase = " << this->phase_m << "\n";
+
+                    this->Print();
+                    return true;
+                }
+
+                z = wg;
+
+                if (i > 0 && this->max_history > 0) {
+
+                    size_t h = std::min<size_t > (i, this->max_history);
+                    size_t end = (i - 1) % h;
+
+                    //update histories
+                    for (size_t r = 0; r < nops; r++) {
+                        dxs[r][end] = this->parameters_m[r]->GetInternalValue() - px[r];
+                        dgs[r][end] = wg[r] - pg[r];
+                    }
+
+
+
+                    for (size_t j = 0; j < h; ++j) {
+                        const size_t k = (end - j + h) % h;
+                        p[k] = 1.0 / this->Dot(this->Column(dxs, k, this->parameters_m.size()), this->Column(dgs, k, this->parameters_m.size()));
+
+                        a[k] = p[k] * this->Dot(this->Column(dxs, k, this->parameters_m.size()), z);
+                        z -= a[k] * this->Column(dgs, k, this->parameters_m.size());
+                    }
+                    // Scaling of initial Hessian (identity matrix)
+                    z *= this->Dot(this->Column(dxs, end, this->parameters_m.size()), this->Column(dgs, end, this->parameters_m.size())) / this->Dot(this->Column(dgs, end, this->parameters_m.size()), Column(dgs, end, this->parameters_m.size()));
+
+                    for (size_t j = 0; j < h; ++j) {
+                        const size_t k = (end + j + 1) % h;
+                        const T b = p[k] * Dot(this->Column(dgs, k, this->parameters_m.size()), z);
+                        z += this->Column(dxs, k, this->parameters_m.size()) * (a[k] - b);
+                    }
+
+                }//end if(i>0)
+
+                for (size_t j = 0; j < nops; j++) {
+                    px[j] = this->parameters_m[j]->GetInternalValue();
+                    this->x[j] = px[j];
+                    pg[j] = wg[j];
+
+
+                }//end for
+
+
+
+                T fv = this->function_value;
+                if (!this->line_search(this->parameters_m,
+                        fx,
+                        this->function_value,
+                        this->x,
+                        this->best,
+                        z,
+                        this->gradient,
+                        wg,
+                        this->maxgc,
+                        iteration, false)) {
+                    std::cout << "Outer Max line searches (" << this->max_line_searches << ").";
+                    this->Print();
+                    return false;
+
+                }
+                if ((fv - this->function_value) == 0.0 && no_progress_count == 5) {
+                    std::cout << "Not progressing...bailing out!\n";
+                    return false;
+                } else {
+                    no_progress_count++;
+                }
+
+            }
+
+            std::cout << "Outer Max iterations!";
+
+            return false;
+        }
+
+        virtual void ComputeGradient(std::vector<atl::Variable<T>* >&p,
+                std::valarray<T>&g, T & maxgc) {
+            g.resize(p.size());
+            atl::Variable<T>::tape.DynamicReverse(atl::Variable<T>::tape.first_order_derivatives);
+
+            for (int i = 0; i < g.size(); i++) {
+                g[i] = atl::Variable<T>::tape.Value(p[i]->info->id);
+                if (i == 0) {
+                    maxgc = std::fabs(g[i]);
+                } else {
+                    if (std::fabs(g[i]) > maxgc) {
+
+                        maxgc = std::fabs(g[i]);
+                    }
+                }
+            }
         }
     private:
 

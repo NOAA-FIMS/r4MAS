@@ -4327,6 +4327,7 @@ public:
         std::shared_ptr<mas::Population<double> > population = std::make_shared<mas::Population<double> >();
         mas::Population<double>* pop = population.get();
 
+        
         pop->id = this->id;
         pop->female_fraction_value = this->sex_ratio;
         pop->growth_id = this->growth;
