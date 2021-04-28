@@ -9,6 +9,10 @@ load(file.path(om_path, "metapopulation.RData"))
 # Load r4MAS module
 r4mas <- Rcpp::Module("rmas", PACKAGE = "r4MAS")
 
+om_p <- c(1, 2, 3)
+# mas_p <- c(1, 2, 3)
+mas_p <- c(2, 3, 1)
+
 nareas <- length(om_input)
 area_id <- 1:nareas
 
@@ -123,7 +127,7 @@ maturity <- vector(mode = "list", length = nareas)
 for (x in 1:length(maturity)){
   temp <- new(r4mas$Maturity)
 
-  temp$values <- om_input[[x]]$mat.age
+  temp$values <- om_input[[x]]$mat.age * 0.5
 
   maturity[[x]] <- temp
 }
@@ -150,7 +154,7 @@ movement <- lapply(
     seasonal_movement<-c(rep(as.vector(movement_matrix), nseasons[[x]]))
     temp$connectivity_females<-seasonal_movement
     temp$connectivity_males<-seasonal_movement
-    temp$connectivity_recruits<-rep(1, length(seasonal_movement))
+    temp$connectivity_recruits<-rep(0.0, length(seasonal_movement))
 
     movement[[x]] <- temp
   }
@@ -162,7 +166,7 @@ initial_deviations <- lapply(
   function(x) {
     temp <- new(r4mas$InitialDeviations)
 
-    temp$values <- rep(0.0, times = om_input[[x]]$nages)
+    temp$values <- rep(0.1, times = om_input[[x]]$nages)
     temp$estimate <- TRUE
     temp$phase <- 2
 
@@ -411,8 +415,8 @@ for (i in 1:length(survey)){
   mas_model$AddSurvey(survey[[i]]$id)
 }
 
-mas_model$max_iterations <- 0
-mas_model$max_line_searches <- 1
+# mas_model$max_iterations <- 0
+mas_model$max_line_searches <- 100
 # Run MAS
 mas_model$Run()
 # Write MAS outputs to a json file
@@ -498,12 +502,12 @@ for (p in seq_along(population_id)){
     "F", "L (mt)", "SI (scaled)"
   )
   for (i in 1:length(var)) {
-    ylim <- range(om[[p]][[var[i]]], mas[[p]][[var[i]]])
-    plot(om_input[[p]]$year, om[[p]][[var[i]]],
+    ylim <- range(om[[om_p[p]]][[var[i]]], mas[[mas_p[p]]][[var[i]]])
+    plot(om_input[[om_p[p]]]$year, om[[om_p[p]]][[var[i]]],
          xlab = "", ylab = "",
          ylim = ylim, pch = 19
     )
-    lines(om_input[[p]]$year, mas[[p]][[var[i]]],
+    lines(om_input[[om_p[p]]]$year, mas[[mas_p[p]]][[var[i]]],
           col = "deepskyblue3", lty = 1
     )
     mtext("Year", side = 1, line = 2, cex = 0.7)
