@@ -10003,7 +10003,6 @@ namespace mas {
             INFO_DEBUG
             for (pit = this->populations.begin(); pit != this->populations.end(); ++pit) {
                 (*pit).second->Initialize();
-                (*pit).second->RegisterInitialF();
                 typename mas::ModelObject<REAL_T>::estimable_parameter_iterator it;
                 for (it = (*pit).second->estimated_parameters_map.begin(); it != (*pit).second->estimated_parameters_map.end(); ++it) {
                     mas_log << (*it).first->GetName() << "\t\t\t\t\t\t" << (*it).first->GetValue() << "\t\t\t\t\t\t" << (*it).second << "\n";
