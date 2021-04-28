@@ -1,10 +1,35 @@
+---
+title: "Metapopulation Case Study"
+date: "Updated on `r format(Sys.time(), '%m/%d/%Y')`"
+output: 
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.width = 10, fig.height = 10)
+```
+
+## Install and library packages
+```{r}
+
+# remotes::install_github("nmfs-fish-tools/r4MAS")
+
 library(r4MAS)
 library(Rcpp)
 library(jsonlite)
 
+```
+
+## Read input data
+```{r}
 data_path <- system.file("extdata", package = "r4MAS")
 om_path <- file.path(data_path, "externalom_example")
 load(file.path(om_path, "metapopulation.RData"))
+```
+
+## Convert spatial OM input to MAS input
+```{r}
 
 # Load r4MAS module
 r4mas <- Rcpp::Module("rmas", PACKAGE = "r4MAS")
@@ -84,7 +109,7 @@ recruitment <- lapply(
     temp$deviations_max <- 15.0
     temp$deviation_phase <- 2
     temp$SetDeviations(om_input[[x]]$logR.resid)
-    temp$use_bias_correction <- TRUE
+    temp$use_bias_correction <- FALSE
 
     recruitment[[x]] <- temp
   }
@@ -106,18 +131,6 @@ growth <- lapply(
     growth[[x]] <- temp
   }
 )
-
-# maturity <- vector(mode = "list", length = nareas)
-# maturity <- lapply(
-#   seq_along(area_id),
-#   function(x) {
-#     temp <- new(r4mas$Maturity)
-#
-#     temp$values <- om_input[[x]]$mat.age * 0.5
-#
-#     maturity[[x]] <- temp
-#   }
-# )
 
 maturity <- vector(mode = "list", length = nareas)
 for (x in 1:length(maturity)){
@@ -411,8 +424,8 @@ for (i in 1:length(survey)){
   mas_model$AddSurvey(survey[[i]]$id)
 }
 
-# mas_model$max_iterations <- 0
 mas_model$max_line_searches <- 500
+
 # Run MAS
 mas_model$Run()
 # Write MAS outputs to a json file
@@ -422,6 +435,10 @@ write(mas_model$GetOutput(),
 # Reset MAS for next run
 mas_model$Reset()
 
+```
+
+## Aggregate output and compare estimates with "true" values
+```{r}
 om <- vector(mode="list", length=length(population))
 for (i in seq_along(population_id)){
   om[[i]]$biomass <- om_output$stocks[[i]]$biomass.mt
@@ -520,3 +537,7 @@ for (p in seq_along(population_id)){
   )
 
 }
+
+
+```
+

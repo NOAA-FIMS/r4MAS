@@ -138,7 +138,7 @@ initial_deviations <- vector(mode = "list", length = nareas)
 for (x in seq_along(area_id)){
   temp <- new(r4mas$InitialDeviations)
 
-  temp$values <- rep(0.0, times = om_input[[x]]$nages)
+  temp$values <- rep(0.1, times = om_input[[x]]$nages)
   temp$estimate <- TRUE
   temp$phase <- 2
 
@@ -404,14 +404,14 @@ for (i in seq_along(population_id)){
   flt <- popdy$fleets[[i]]
   srvy <- popdy$surveys[[i]]
 
-  mas[[i]]$biomass <- unlist(pop$undifferentiated$biomass$values)
-  mas[[i]]$abundance <- unlist(pop$undifferentiated$abundance$values)
-  mas[[i]]$ssb <- unlist(pop$undifferentiated$spawning_stock_biomass$values)
-  mas[[i]]$recruit <- unlist(pop$undifferentiated$recruits$values)
-  mas[[i]]$f <- unlist(pop$undifferentiated$fishing_mortality$values)
-  mas[[i]]$landing <- unlist(flt$undifferentiated$catch_biomass$values)
-  mas[[i]]$survey <- unlist(srvy$undifferentiated$survey_biomass$values)
-  mas[[i]]$agecomp <- apply(
+  mas[[pop$id]]$biomass <- unlist(pop$undifferentiated$biomass$values)
+  mas[[pop$id]]$abundance <- unlist(pop$undifferentiated$abundance$values)
+  mas[[pop$id]]$ssb <- unlist(pop$undifferentiated$spawning_stock_biomass$values)
+  mas[[pop$id]]$recruit <- unlist(pop$undifferentiated$recruits$values)
+  mas[[pop$id]]$f <- unlist(pop$undifferentiated$fishing_mortality$values)
+  mas[[pop$id]]$landing <- unlist(flt$undifferentiated$catch_biomass$values)
+  mas[[pop$id]]$survey <- unlist(srvy$undifferentiated$survey_biomass$values)
+  mas[[pop$id]]$agecomp <- apply(
     matrix(unlist(pop$undifferentiated$numbers_at_age$values),
            nrow = popdy$nyears,
            ncol = popdy$nages,

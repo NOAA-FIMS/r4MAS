@@ -45,6 +45,8 @@ navbar:
         href: articles/003_ASAPCaseStudy.html
       - text: SS Case Study
         href: articles/004_SSCaseStudy.html
+      - text: Metapopulation Case Study
+        href: articles/005_MetapopulationCaseStudy.html
       - text: MAS Demo Notebook
         href: articles/Architecture.html
       - text: PlottingMASoutput
