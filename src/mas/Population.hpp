@@ -2642,11 +2642,11 @@ namespace mas {
                 std::stringstream ss;
                 ss << "initial_f_females_" << females[areas_list[d]->id].id;
                 females[areas_list[d]->id].initialF.SetName(ss.str());
-                this->Register(females[areas_list[d]->id].initialF, 1);
+                this->Register(females[areas_list[a]->id].initialF, 1);
                 ss.str("");
                 ss << "initial_f_males_" << males[areas_list[d]->id].id;
                 males[areas_list[d]->id].initialF.SetName(ss.str());
-                this->Register(males[areas_list[d]->id].initialF, 1);
+                this->Register(males[areas_list[a]->id].initialF, 1);
 
             }
             maturity_models_iterator mit;
