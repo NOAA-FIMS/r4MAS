@@ -934,8 +934,7 @@ namespace mas {
             for (int f = 0; f < fleets.size(); f++) {
 
                 if (fleets[f]->catch_biomass_data.get() != NULL) {
-                    //                        std::shared_ptr<mas::FishingMortality<REAL_T> >& fm =
-                    //                                fleets[f]->season_area_fishing_mortality[1][this->area->id];
+            
                     REAL_T Epsilon = 0.0001;
                     REAL_T LowerBound = 0.0;
                     REAL_T UpperBound = 10.0;
