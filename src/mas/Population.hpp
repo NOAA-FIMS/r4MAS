@@ -2413,20 +2413,6 @@ namespace mas {
             }
         }
 
-        void RegisterInitialF() {
-            for (int d = 0; d < areas_list.size(); d++) {
-
-                std::stringstream ss;
-                ss << "initial_f_females_" << females[areas_list[d]->id].id;
-                females[areas_list[d]->id].initialF.SetName(ss.str());
-                this->Register(females[areas_list[d]->id].initialF, 1);
-                ss.str("");
-                ss << "initial_f_males_" << males[areas_list[d]->id].id;
-                males[areas_list[d]->id].initialF.SetName(ss.str());
-                this->Register(males[areas_list[d]->id].initialF, 1);
-            }
-        }
-
         void Prepare() {
             //            survey_numbers_at_age.resize(0);
             //            survey_numbers_at_age.resize(years * seasons * ages, static_cast<REAL_T> (0.0));
@@ -2621,6 +2607,9 @@ namespace mas {
                 }
             }
             for (int a = 0; a < areas_list.size(); a++) {
+
+
+
                 males[areas_list[a]->id].Initialize();
                 females[areas_list[a]->id].Initialize();
                 std::vector<REAL_T>& mv = this->maturity_models[areas_list[a]->id][mas::MALE];
@@ -2649,6 +2638,16 @@ namespace mas {
 
                     females[areas_list[a]->id].seasonal_recruitment_models[(*it).first] = (*it).second;
                 }
+
+                std::stringstream ss;
+                ss << "initial_f_females_" << females[areas_list[d]->id].id;
+                females[areas_list[d]->id].initialF.SetName(ss.str());
+                this->Register(females[areas_list[d]->id].initialF, 1);
+                ss.str("");
+                ss << "initial_f_males_" << males[areas_list[d]->id].id;
+                males[areas_list[d]->id].initialF.SetName(ss.str());
+                this->Register(males[areas_list[d]->id].initialF, 1);
+
             }
             maturity_models_iterator mit;
 
