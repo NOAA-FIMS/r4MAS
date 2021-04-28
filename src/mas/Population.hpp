@@ -2410,12 +2410,18 @@ namespace mas {
                 females[areas_list[d]->id].natal_area = this->natal_area;
                 females[areas_list[d]->id].males = false;
                 females[areas_list[d]->id].Initialize();
+            }
+        }
+
+        void RegisterInitialF() {
+            for (int d = 0; d < areas_list.size(); d++) {
+
                 std::stringstream ss;
-                ss<<"initial_f_females_"<<females[areas_list[d]->id].id;
+                ss << "initial_f_females_" << females[areas_list[d]->id].id;
                 females[areas_list[d]->id].initialF.SetName(ss.str());
                 this->Register(females[areas_list[d]->id].initialF, 1);
                 ss.str("");
-                ss<<"initial_f_males_"<<males[areas_list[d]->id].id;
+                ss << "initial_f_males_" << males[areas_list[d]->id].id;
                 males[areas_list[d]->id].initialF.SetName(ss.str());
                 this->Register(males[areas_list[d]->id].initialF, 1);
             }
@@ -2598,8 +2604,8 @@ namespace mas {
                 males[areas_list[a]->id].S0 = females[areas_list[a]->id].S0;
 
 
-//                females[areas_list[a]->id].FCalc();
-//                males[areas_list[a]->id].FCalc(); // = females[areas_list[a]->id].initialF;///.GetValue();
+                //                females[areas_list[a]->id].FCalc();
+                //                males[areas_list[a]->id].FCalc(); // = females[areas_list[a]->id].initialF;///.GetValue();
 
                 females[areas_list[a]->id].CalculateInitialNumbers();
                 males[areas_list[a]->id].CalculateInitialNumbers();
