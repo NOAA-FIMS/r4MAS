@@ -2642,10 +2642,14 @@ namespace mas {
                 std::stringstream ss;
                 ss << "initial_f_females_" << females[areas_list[a]->id].id;
                 females[areas_list[a]->id].initialF.SetName(ss.str());
+                females[areas_list[a]->id].initialF.SetMinBoundary(1e-5);
+                females[areas_list[a]->id].initialF.SetMaxBoundary(1.0);
                 this->Register(females[areas_list[a]->id].initialF, 1);
                 ss.str("");
                 ss << "initial_f_males_" << males[areas_list[a]->id].id;
                 males[areas_list[a]->id].initialF.SetName(ss.str());
+                males[areas_list[a]->id].initialF.SetMinBoundary(1e-5);
+                males[areas_list[a]->id].initialF.SetMaxBoundary(1.0);
                 this->Register(males[areas_list[a]->id].initialF, 1);
 
             }
