@@ -69,7 +69,7 @@ namespace mas {
         std::vector<REAL_T> maturity; // should be the same across areas, same length as ages
         // these PARAMETERS can be fixed or estimated; should be in model config
 #warning hard coded value initialF
-        variable initialF = static_cast<REAL_T> (0.0);
+        variable initialF = static_cast<REAL_T> (1e-5);
         std::vector<variable> initialS;
         std::vector<variable> M;
         std::vector<variable> F; // this PARAMETER vector is shared between males and females
@@ -2410,7 +2410,13 @@ namespace mas {
                 females[areas_list[d]->id].natal_area = this->natal_area;
                 females[areas_list[d]->id].males = false;
                 females[areas_list[d]->id].Initialize();
+                std::stringstream ss;
+                ss<<"initial_f_females_"<<females[areas_list[d]->id].id;
+                females[areas_list[d]->id].initialF.SetName(ss.str());
                 this->Register(females[areas_list[d]->id].initialF, 1);
+                ss("");
+                ss<<"initial_f_males_"<<males[areas_list[d]->id].id;
+                males[areas_list[d]->id].initialF.SetName(ss.str());
                 this->Register(males[areas_list[d]->id].initialF, 1);
             }
         }
