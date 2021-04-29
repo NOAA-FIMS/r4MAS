@@ -39,6 +39,10 @@ jobs:
           om_path <- file.path(data_path, "externalom_example")
           load(file.path(om_path, "metapopulation.RData"))
 
+          print(data_path)
+          print(om_path)
+          summary(om_input[[1]])
+
           # Load r4MAS module
           r4mas <- Rcpp::Module("rmas", PACKAGE = "r4MAS")
 
