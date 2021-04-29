@@ -34,6 +34,11 @@ jobs:
           library(r4MAS)
           library(Rcpp)
           library(jsonlite)
+
+          data_path <- system.file("extdata", package = "r4MAS")
+          om_path <- file.path(data_path, "externalom_example")
+          load(file.path(om_path, "metapopulation.RData"))
+
           # Load r4MAS module
           r4mas <- Rcpp::Module("rmas", PACKAGE = "r4MAS")
 
