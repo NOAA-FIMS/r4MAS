@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -58,56 +60,29 @@
   </a>
 </li>
 <li>
-  <a href="https://github.com/nmfs-fish-tools/RMAS/">
+  <a href="https://github.com/nmfs-fish-tools/RMAS/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
     Source Code
   </a>
 </li>
 <li>
-  <a href="https://github.com/nmfs-fish-tools/RMAS/issues/">
+  <a href="https://github.com/nmfs-fish-tools/RMAS/issues/" class="external-link">
     <span class="fas fa-question-circle fa-lg"></span>
      
     Issues
   </a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-file-contract fa-lg"></span>
-     
-    Vignettes
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
+      </ul>
+<ul class="nav navbar-nav navbar-right">
 <li>
-      <a href="../articles/001_Introduction.html">Introduction</a>
-    </li>
-    <li>
-      <a href="../articles/002_ModelComparisonProjectExample.html">Model Comparison Project Example</a>
-    </li>
-    <li>
-      <a href="../articles/003_ASAPCaseStudy.html">ASAP Case Study</a>
-    </li>
-    <li>
-      <a href="../articles/004_SSCaseStudy.html">SS Case Study</a>
-    </li>
-    <li>
-      <a href="../articles/005_MetapopulationCaseStudy.html">Metapopulation Case Study</a>
-    </li>
-    <li>
-      <a href="../articles/Architecture.html">MAS Demo Notebook</a>
-    </li>
-    <li>
-      <a href="../articles/CreatingInputJson.html">PlottingMASoutput</a>
-    </li>
-    <li>
-      <a href="../articles/UserManual.html">Meta-population Assessmsnt System User Manual</a>
-    </li>
-  </ul>
+  <a href="https://github.com/nmfs-fish-tools/RMAS/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+    Source Code
+  </a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -123,7 +98,7 @@
       <h1 data-toc-skip>Introduction</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/nmfs-fish-tools/r4MAS/blob/master/vignettes/001_Introduction.Rmd"><code>vignettes/001_Introduction.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/nmfs-fish-tools/r4MAS/blob/master/../../vignettes/001_Introduction.Rmd" class="external-link"><code>../../vignettes/001_Introduction.Rmd</code></a></small>
       <div class="hidden name"><code>001_Introduction.Rmd</code></div>
 
     </div>
@@ -135,12 +110,12 @@
 <a href="#overview" class="anchor"></a>Overview</h2>
 <p>This package allows you to build and run a Metapopulation Assessment System (MAS) stock assessment model directly from R. It also includes functions to inter-translate between different assessment platforms. In this vignette, we detail how to set up a MAS model and run it from R using dummy data included in the package. It is straightforward to replace this with your own data.</p>
 <p>The first step is to ensure you have <code>Rcpp</code>, the R package that allows calling of C++ code directly from R, and <code>jsonlite</code>, the R package that facilitates reading input and output files from JSON format. Right now, the <code>r4MAS</code> package is only available on Github so you need to install it with the <code>remotes</code> package (this package is included in <code>devtools</code> if you have already installed that.)</p>
-<div class="sourceCode"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">##install.packages("Rcpp")</span>
 <span class="co">##install.packages("jsonlite")</span>
 <span class="co">##install.packages("remotes")</span>
 
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"nmfs-fish-tools/r4MAS"</span><span class="op">)</span></code></pre></div>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"nmfs-fish-tools/r4MAS"</span><span class="op">)</span></code></pre></div>
 <p>Next, you will need to load the .dll included in the r4MAS package.</p>
 <pre><code>## Loading required package: Rcpp</code></pre>
 <pre><code>## Loading required package: r4MAS</code></pre>
@@ -150,19 +125,19 @@
 <a href="#setting-model-specifications" class="anchor"></a>Setting model specifications</h2>
 <p>Next, we define model scalars, such as the number of years of the model, the number of seasons, and the vector of ages. For this example, we will use the test data created by <code>rmas::write_test_data()</code>, but this can be replaced by user input data later on in the script.</p>
 <p>r4MAS uses classes to parallel the object-oriented structure of MAS. In R, model classes are initiralized using the <code>new()</code> command. For each model component, the associated class is initialized and then its attributes are populated. To view available attributes for each class, use the <code>show()</code> function as shown below.</p>
-<div class="sourceCode"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#View attributes and methods associated with each class</span>
 <span class="fu">show</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Area</span><span class="op">)</span></code></pre></div>
-<pre><code>## C++ class 'Area' &lt;000000001624b320&gt;
+<pre><code>## C++ class 'Area' &lt;0x7f8f85e087d0&gt;
 ## Constructors:
 ##     Area()
 ## 
 ## Fields: 
 ##     int id
-##     std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; name
+##     std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; name
 ## 
 ## Methods: no methods exposed by this class</code></pre>
-<div class="sourceCode"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#define area</span>
 <span class="va">area1</span><span class="op">&lt;-</span><span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Area</span><span class="op">)</span>
 <span class="va">area1</span><span class="op">$</span><span class="va">name</span><span class="op">&lt;-</span><span class="st">"area1"</span></code></pre></div>
@@ -170,20 +145,20 @@
 <div id="setting-parameter-values" class="section level2">
 <h2 class="hasAnchor">
 <a href="#setting-parameter-values" class="anchor"></a>Setting parameter values</h2>
-<p>Next, we populate the parameter constructors for each different set of parameters: recruitment, growth, maturity, mortality, and movement. For functions with several parameters (e.g. the Beverton-Holt recruitment function), the <code><a href="../reference/create_par_section.html">create_par_section()</a></code> function exists. This takes a number of arguments: the type of section, the associated object created for that function, then a series of vectors of length equivalent to the number of parameters. These vectors denote the name, lower bound, upper bound, units, phase, and value for each parameter. If any parameter doesn't have one of these attributes, you can use an NA in the vector. Or, if one of the attributes is not defined for all attributes (e.g. units in this case), you can pass a single NA for that attribute or leave the argument blank.</p>
-<div class="sourceCode"><pre class="downlit sourceCode r">
+<p>Next, we populate the parameter constructors for each different set of parameters: recruitment, growth, maturity, mortality, and movement. For functions with several parameters (e.g. the Beverton-Holt recruitment function), the <code><a href="../reference/create_par_section.html">create_par_section()</a></code> function exists. This takes a number of arguments: the type of section, the associated object created for that function, then a series of vectors of length equivalent to the number of parameters. These vectors denote the name, lower bound, upper bound, units, phase, and value for each parameter. If any parameter doesn’t have one of these attributes, you can use an NA in the vector. Or, if one of the attributes is not defined for all attributes (e.g. units in this case), you can pass a single NA for that attribute or leave the argument blank.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Recruitment</span>
 <span class="va">recruitment</span><span class="op">&lt;-</span><span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">BevertonHoltRecruitment</span><span class="op">)</span>
 
-<span class="va">devs_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0.0</span>,<span class="fl">22</span><span class="op">)</span><span class="op">)</span>
-<span class="va">recruitment</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_par_section.html">create_par_section</a></span><span class="op">(</span>section_type <span class="op">=</span> <span class="st">"recruitment"</span>, section_type_object <span class="op">=</span> <span class="va">recruitment</span>, par_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"R0"</span>,<span class="st">"h"</span>,<span class="st">"sigma_r"</span>,<span class="st">"recdevs"</span><span class="op">)</span>,
-                   par_lo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">0.2001</span>,<span class="cn">NA</span>,<span class="op">-</span><span class="fl">15</span><span class="op">)</span>, par_hi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">1.0</span>,<span class="cn">NA</span>,<span class="fl">15</span><span class="op">)</span>, par_units <span class="op">=</span> <span class="cn">NA</span>, par_phase <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">2</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>, par_value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1000</span>,<span class="fl">0.75</span>,<span class="fl">0.55</span>, <span class="cn">NA</span><span class="op">)</span>, 
+<span class="va">devs_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.0</span>,<span class="fl">22</span><span class="op">)</span><span class="op">)</span>
+<span class="va">recruitment</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_par_section.html">create_par_section</a></span><span class="op">(</span>section_type <span class="op">=</span> <span class="st">"recruitment"</span>, section_type_object <span class="op">=</span> <span class="va">recruitment</span>, par_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"R0"</span>,<span class="st">"h"</span>,<span class="st">"sigma_r"</span>,<span class="st">"recdevs"</span><span class="op">)</span>,
+                   par_lo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">0.2001</span>,<span class="cn">NA</span>,<span class="op">-</span><span class="fl">15</span><span class="op">)</span>, par_hi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">1.0</span>,<span class="cn">NA</span>,<span class="fl">15</span><span class="op">)</span>, par_units <span class="op">=</span> <span class="cn">NA</span>, par_phase <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">2</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>, par_value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1000</span>,<span class="fl">0.75</span>,<span class="fl">0.55</span>, <span class="cn">NA</span><span class="op">)</span>, 
                    rec_devs<span class="op">=</span><span class="va">devs_list</span><span class="op">)</span>
 
 
 <span class="co">#Initial Deviations</span>
 <span class="va">initial_deviations</span><span class="op">&lt;-</span><span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">InitialDeviations</span><span class="op">)</span>
-<span class="va">initial_deviations</span><span class="op">$</span><span class="va">values</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0.0</span>,<span class="va">nages</span><span class="op">)</span>
+<span class="va">initial_deviations</span><span class="op">$</span><span class="va">values</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.0</span>,<span class="va">nages</span><span class="op">)</span>
 <span class="va">initial_deviations</span><span class="op">$</span><span class="va">estimate</span><span class="op">&lt;-</span><span class="cn">FALSE</span>
 <span class="va">initial_deviations</span><span class="op">$</span><span class="va">phase</span><span class="op">&lt;-</span><span class="fl">1</span>
 
@@ -196,12 +171,12 @@
 <span class="va">growth</span><span class="op">$</span><span class="fu">SetUndifferentiatedWeightAtSeasonStart</span><span class="op">(</span><span class="va">empirical_weight</span><span class="op">)</span>
 <span class="va">growth</span><span class="op">$</span><span class="fu">SetUndifferentiatedWeightAtSpawning</span><span class="op">(</span><span class="va">empirical_weight</span><span class="op">)</span>
 <span class="va">growth</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_par_section.html">create_par_section</a></span><span class="op">(</span>section_type<span class="op">=</span><span class="st">"growth"</span>, section_type_object <span class="op">=</span> <span class="va">growth</span>, 
-                             par_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a_min"</span>,<span class="st">"a_max"</span>,<span class="st">"c"</span>,<span class="st">"lmin"</span>,<span class="st">"lmax"</span>,<span class="st">"alpha_f"</span>,<span class="st">"alpha_m"</span>,<span class="st">"beta_f"</span>,<span class="st">"beta_m"</span><span class="op">)</span>,
-                             par_value<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.01</span>,<span class="fl">10.0</span>,<span class="fl">0.3</span>,<span class="fl">5</span>,<span class="fl">50</span>,<span class="fl">2.5E-5</span>,<span class="fl">2.5E-5</span>,<span class="fl">2.9624</span>,<span class="fl">2.9624</span><span class="op">)</span><span class="op">)</span>
+                             par_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a_min"</span>,<span class="st">"a_max"</span>,<span class="st">"c"</span>,<span class="st">"lmin"</span>,<span class="st">"lmax"</span>,<span class="st">"alpha_f"</span>,<span class="st">"alpha_m"</span>,<span class="st">"beta_f"</span>,<span class="st">"beta_m"</span><span class="op">)</span>,
+                             par_value<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.01</span>,<span class="fl">10.0</span>,<span class="fl">0.3</span>,<span class="fl">5</span>,<span class="fl">50</span>,<span class="fl">2.5E-5</span>,<span class="fl">2.5E-5</span>,<span class="fl">2.9624</span>,<span class="fl">2.9624</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co">#Maturity</span>
 <span class="va">maturity</span><span class="op">&lt;-</span><span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Maturity</span><span class="op">)</span>
-<span class="va">maturity</span><span class="op">$</span><span class="va">values</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.011488685</span>,
+<span class="va">maturity</span><span class="op">$</span><span class="va">values</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.011488685</span>,
                    <span class="fl">0.16041065</span>,
                    <span class="fl">0.45232527</span>,
                    <span class="fl">0.497389935</span>,
@@ -216,46 +191,46 @@
 
 <span class="co">#Natural Mortality</span>
 <span class="va">natural_mortality</span><span class="op">&lt;-</span><span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">NaturalMortality</span><span class="op">)</span>
-<span class="va">natural_mortality</span><span class="op">$</span><span class="fu">SetValues</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0.2</span>,<span class="va">nages</span><span class="op">)</span><span class="op">)</span>
+<span class="va">natural_mortality</span><span class="op">$</span><span class="fu">SetValues</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.2</span>,<span class="va">nages</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#need to add reset button to static variable so you can run again</span>
 
 <span class="co">#define Movement (only 1 area in this model)</span>
 <span class="va">movement</span><span class="op">&lt;-</span><span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Movement</span><span class="op">)</span>
-<span class="va">movement</span><span class="op">$</span><span class="va">connectivity_females</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.0</span><span class="op">)</span>
-<span class="va">movement</span><span class="op">$</span><span class="va">connectivity_males</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.0</span><span class="op">)</span>
-<span class="va">movement</span><span class="op">$</span><span class="va">connectivity_recruits</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.0</span><span class="op">)</span></code></pre></div>
-<p>Next we define the functions related to fishing, i.e. fishing mortality and selectivity.</p>
-<div class="sourceCode"><pre class="downlit sourceCode r">
+<span class="va">movement</span><span class="op">$</span><span class="va">connectivity_females</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.0</span><span class="op">)</span>
+<span class="va">movement</span><span class="op">$</span><span class="va">connectivity_males</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.0</span><span class="op">)</span>
+<span class="va">movement</span><span class="op">$</span><span class="va">connectivity_recruits</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.0</span><span class="op">)</span></code></pre></div>
+<p>Next we define the functions related to fishing, i.e. fishing mortality and selectivity.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Fishing Mortality</span>
 <span class="va">fishing_mortality</span><span class="op">&lt;-</span><span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">FishingMortality</span><span class="op">)</span>
 <span class="va">fishing_mortality</span><span class="op">$</span><span class="va">estimate</span><span class="op">&lt;-</span><span class="cn">TRUE</span>
 <span class="va">fishing_mortality</span><span class="op">$</span><span class="va">phase</span><span class="op">&lt;-</span><span class="fl">1</span>
 <span class="va">fishing_mortality</span><span class="op">$</span><span class="va">min</span><span class="op">&lt;-</span><span class="fl">1e-8</span>
 <span class="va">fishing_mortality</span><span class="op">$</span><span class="va">max</span><span class="op">&lt;-</span><span class="fl">30</span>
-<span class="va">fishing_mortality</span><span class="op">$</span><span class="fu">SetValues</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0.3</span>,<span class="fl">30</span><span class="op">)</span><span class="op">)</span>
+<span class="va">fishing_mortality</span><span class="op">$</span><span class="fu">SetValues</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.3</span>,<span class="fl">30</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co">#Selectivity Model</span>
 <span class="va">fleet_selectivity</span><span class="op">&lt;-</span><span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">LogisticSelectivity</span><span class="op">)</span>
-<span class="va">fleet_selectivity</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_par_section.html">create_par_section</a></span><span class="op">(</span><span class="st">"selectivity"</span>,<span class="va">fleet_selectivity</span>, par_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a50"</span>,<span class="st">"slope"</span><span class="op">)</span>,
-                                        par_lo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.0</span>,<span class="fl">0.0001</span><span class="op">)</span>, par_hi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10.0</span>,<span class="fl">5.0</span><span class="op">)</span>, par_phase <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0.5</span><span class="op">)</span>,
-                                        par_value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.5</span>,<span class="fl">1.5</span><span class="op">)</span><span class="op">)</span>
+<span class="va">fleet_selectivity</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_par_section.html">create_par_section</a></span><span class="op">(</span><span class="st">"selectivity"</span>,<span class="va">fleet_selectivity</span>, par_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a50"</span>,<span class="st">"slope"</span><span class="op">)</span>,
+                                        par_lo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.0</span>,<span class="fl">0.0001</span><span class="op">)</span>, par_hi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10.0</span>,<span class="fl">5.0</span><span class="op">)</span>, par_phase <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0.5</span><span class="op">)</span>,
+                                        par_value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.5</span>,<span class="fl">1.5</span><span class="op">)</span><span class="op">)</span>
 
 
 <span class="va">survey_selectivity</span><span class="op">&lt;-</span><span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">LogisticSelectivity</span><span class="op">)</span>
-<span class="va">survey_selectivity</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_par_section.html">create_par_section</a></span><span class="op">(</span><span class="st">"selectivity"</span>,<span class="va">survey_selectivity</span>, par_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a50"</span>,<span class="st">"slope"</span><span class="op">)</span>,
-                                        par_lo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.0</span>,<span class="fl">0.0001</span><span class="op">)</span>, par_hi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10.0</span>,<span class="fl">5.0</span><span class="op">)</span>, par_phase <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span>,
-                                        par_value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.0</span>,<span class="fl">0.3</span><span class="op">)</span><span class="op">)</span>
+<span class="va">survey_selectivity</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_par_section.html">create_par_section</a></span><span class="op">(</span><span class="st">"selectivity"</span>,<span class="va">survey_selectivity</span>, par_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a50"</span>,<span class="st">"slope"</span><span class="op">)</span>,
+                                        par_lo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.0</span>,<span class="fl">0.0001</span><span class="op">)</span>, par_hi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10.0</span>,<span class="fl">5.0</span><span class="op">)</span>, par_phase <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span>,
+                                        par_value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.0</span>,<span class="fl">0.3</span><span class="op">)</span><span class="op">)</span>
 
 
 <span class="va">survey2_selectivity</span><span class="op">&lt;-</span><span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">AgeBasedSelectivity</span><span class="op">)</span>
 <span class="va">survey2_selectivity</span><span class="op">$</span><span class="va">estimated</span><span class="op">&lt;-</span><span class="cn">FALSE</span>
-<span class="va">survey2_selectivity</span><span class="op">$</span><span class="va">values</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.0</span>,<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0.0</span>,<span class="va">nages</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="va">survey2_selectivity</span><span class="op">$</span><span class="va">values</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.0</span>,<span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.0</span>,<span class="va">nages</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="creating-the-population" class="section level2">
 <h2 class="hasAnchor">
 <a href="#creating-the-population" class="anchor"></a>Creating the population</h2>
 <p>Now that the classes for parameter values and movement have been created, you can create a population class and add the relevant classes.</p>
-<div class="sourceCode"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">population</span><span class="op">&lt;-</span><span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Population</span><span class="op">)</span>
 
 <span class="kw">for</span> <span class="op">(</span><span class="va">y</span> <span class="kw">in</span> <span class="fl">0</span><span class="op">:</span><span class="op">(</span><span class="va">nyears</span><span class="op">)</span><span class="op">)</span>
@@ -273,7 +248,7 @@
 <h2 class="hasAnchor">
 <a href="#adding-data-to-the-model" class="anchor"></a>Adding data to the model</h2>
 <p>Next, use the data classes (<code>IndexData</code> and <code>AgeCompData</code>) to add values, error, and sample sizes for each data set. Indices and error values are the same length as the number of years, <code>{r} nyears</code>. Age comp data are passed as a vector of length <code>nages</code> x <code>nyears</code>. The <code>sample_size</code> vectors should be of length <code>nyears</code>.</p>
-<div class="sourceCode"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Index data</span>
 <span class="va">catch_index</span><span class="op">&lt;-</span><span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">IndexData</span><span class="op">)</span>
 <span class="va">catch_index</span><span class="op">$</span><span class="va">values</span> <span class="op">&lt;-</span> <span class="va">input_data</span><span class="op">$</span><span class="va">catch_index</span><span class="op">$</span><span class="va">values</span>
@@ -299,7 +274,7 @@
 <h2 class="hasAnchor">
 <a href="#defining-fleets" class="anchor"></a>Defining fleets</h2>
 <p>To make each fishing fleet, you can use the <code>make_fleet()</code> function. This takes the fishery data associated with that fleet, the selectivity associated with that fleet, the area, and fishing mortality parameters and returns an <code>r4mas</code> fleet object.</p>
-<div class="sourceCode"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#NLL models</span>
 <span class="va">fleet_index_comp_nll</span><span class="op">&lt;-</span><span class="va">survey_index_comp_nll</span> <span class="op">&lt;-</span> <span class="va">survey2_index_comp_nll</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Lognormal</span><span class="op">)</span>
 <span class="va">fleet_age_comp_nll</span><span class="op">&lt;-</span><span class="va">survey_age_comp_nll</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">MultinomialRobust</span><span class="op">)</span>
@@ -325,7 +300,7 @@
 <h2 class="hasAnchor">
 <a href="#build-and-run-the-model-and-write-output" class="anchor"></a>Build and run the model and write output</h2>
 <p>Finally, we create a <code>MASModel</code> object and add the relevant model configuration parameters, fleets, surveys, and populations to the model object. We call the <code>Run()</code> method to run the model and then write the output to a .json file.</p>
-<div class="sourceCode"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#build the MAS model</span>
 <span class="va">mas_model</span><span class="op">&lt;-</span><span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">MASModel</span><span class="op">)</span>
 <span class="va">mas_model</span><span class="op">$</span><span class="va">nyears</span><span class="op">&lt;-</span><span class="va">nyears</span>
@@ -347,21 +322,21 @@
 
 <span class="va">mas_model</span><span class="op">$</span><span class="fu">Run</span><span class="op">(</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/write.html">write</a></span><span class="op">(</span><span class="va">mas_model</span><span class="op">$</span><span class="fu">GetOutput</span><span class="op">(</span><span class="op">)</span>, 
-      file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package<span class="op">=</span><span class="st">"r4MAS"</span><span class="op">)</span>,
+<span class="fu"><a href="https://rdrr.io/r/base/write.html" class="external-link">write</a></span><span class="op">(</span><span class="va">mas_model</span><span class="op">$</span><span class="fu">GetOutput</span><span class="op">(</span><span class="op">)</span>, 
+      file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package<span class="op">=</span><span class="st">"r4MAS"</span><span class="op">)</span>,
                   <span class="st">"mas_s2_output.json"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="read-in-model-output" class="section level2">
 <h2 class="hasAnchor">
 <a href="#read-in-model-output" class="anchor"></a>Read in model output</h2>
 <p>We use the <code>jsonlite</code> package to read in model output. This creates a list in your R environment with the associated output values and estimates.</p>
-<div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://arxiv.org/abs/1403.2805">jsonlite</a></span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://arxiv.org/abs/1403.2805" class="external-link">jsonlite</a></span><span class="op">)</span></code></pre></div>
 <pre><code>## Loading required package: jsonlite</code></pre>
-<div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">json_loc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package<span class="op">=</span><span class="st">"r4MAS"</span><span class="op">)</span>,
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">json_loc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package<span class="op">=</span><span class="st">"r4MAS"</span><span class="op">)</span>,
                   <span class="st">"mas_s2_output.json"</span><span class="op">)</span>
-<span class="va">json_output</span> <span class="op">&lt;-</span> <span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jsonlite/man/read_json.html">read_json</a></span><span class="op">(</span><span class="va">json_loc</span><span class="op">)</span>
+<span class="va">json_output</span> <span class="op">&lt;-</span> <span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jsonlite/man/read_json.html" class="external-link">read_json</a></span><span class="op">(</span><span class="va">json_loc</span><span class="op">)</span>
 
 <span class="va">years</span> <span class="op">&lt;-</span> <span class="va">json_output</span><span class="op">$</span><span class="va">nyears</span>
 <span class="va">ages</span> <span class="op">&lt;-</span> <span class="va">json_output</span><span class="op">$</span><span class="va">nages</span>
@@ -374,7 +349,7 @@
 <span class="co">#View the estimated values</span>
 <span class="va">popdy</span><span class="op">$</span><span class="va">fleet</span><span class="op">$</span><span class="va">undifferentiated</span></code></pre></div>
 <pre><code>## NULL</code></pre>
-<div class="sourceCode"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#popdy$survey$undifferentiated</span></code></pre></div>
 </div>
   </div>
@@ -390,11 +365,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Christine Stawitz.</p>
+  <p></p>
+<p>Developed by Christine Stawitz.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>
@@ -402,6 +379,8 @@
 
   
 
+
+  
 
   </body>
 </html>
