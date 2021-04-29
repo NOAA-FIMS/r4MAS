@@ -77,9 +77,9 @@ areas <- lapply(
   seq_along(area_id),
   function(x) {
     temp <- new(r4mas$Area)
-
+    
     temp$name <- paste("area", x, sep="")
-
+    
     areas[[x]] <- temp
   }
 )
@@ -89,7 +89,7 @@ recruitment <- lapply(
   seq_along(area_id),
   function(x) {
     temp <- new(r4mas$BevertonHoltRecruitment)
-
+    
     temp$R0$value <- om_input[[x]]$R0 / 1000
     temp$R0$estimated <- TRUE
     temp$R0$phase <- 1
@@ -110,7 +110,7 @@ recruitment <- lapply(
     temp$deviation_phase <- 2
     temp$SetDeviations(om_input[[x]]$logR.resid)
     temp$use_bias_correction <- FALSE
-
+    
     recruitment[[x]] <- temp
   }
 )
@@ -120,24 +120,26 @@ growth <- lapply(
   seq_along(area_id),
   function(x) {
     temp <- new(r4mas$VonBertalanffy)
-
+    
     empirical_weight <- rep(om_input[[x]]$W.kg, times = om_input[[x]]$nyr)
     survey_empirical_weight <- replicate(om_input[[x]]$nages * om_input[[x]]$nyr, 1.0)
     temp$SetUndifferentiatedCatchWeight(empirical_weight)
     temp$SetUndifferentiatedWeightAtSeasonStart(empirical_weight)
     temp$SetUndifferentiatedWeightAtSpawning(empirical_weight)
     temp$SetUndifferentiatedSurveyWeight(survey_empirical_weight)
-
+    
     growth[[x]] <- temp
   }
 )
 
+
+
 maturity <- vector(mode = "list", length = nareas)
 for (x in 1:length(maturity)){
   temp <- new(r4mas$Maturity)
-
-  temp$values <- om_input[[x]]$mat.age * 0.5
-
+  
+  temp$values <- om_input[[x]]$mat.age*0.5
+  
   maturity[[x]] <- temp
 }
 
@@ -146,9 +148,9 @@ natural_mortality <- lapply(
   seq_along(area_id),
   function(x) {
     temp <- new(r4mas$NaturalMortality)
-
+    
     temp$SetValues(om_input[[x]]$M.age)
-
+    
     natural_mortality[[x]] <- temp
   }
 )
@@ -158,13 +160,13 @@ movement <- lapply(
   seq_along(area_id),
   function(x) {
     temp <- new(r4mas$Movement)
-
+    
     movement_matrix <- om_input[[x]]$movement_matrix[[1]] # time-invariant movement
     seasonal_movement<-c(rep(as.vector(movement_matrix), nseasons[[x]]))
     temp$connectivity_females<-seasonal_movement
     temp$connectivity_males<-seasonal_movement
     temp$connectivity_recruits<-rep(0.0, length(seasonal_movement))
-
+    
     movement[[x]] <- temp
   }
 )
@@ -174,11 +176,11 @@ initial_deviations <- lapply(
   seq_along(area_id),
   function(x) {
     temp <- new(r4mas$InitialDeviations)
-
-    temp$values <- rep(0.1, times = om_input[[x]]$nages)
+    
+    temp$values <- rep(0.0, times = om_input[[x]]$nages)
     temp$estimate <- TRUE
     temp$phase <- 2
-
+    
     initial_deviations[[x]] <- temp
   }
 )
@@ -188,11 +190,11 @@ population <- lapply(
   seq_along(population_id),
   function(x) {
     temp <- new(r4mas$Population)
-
+    
     for (y in 1:nyears[[x]]) {
       temp$AddMovement(movement[[x]]$id, y)
     }
-
+    
     for(a in 1:nareas){
       temp$AddNaturalMortality(natural_mortality[[a]]$id, areas[[a]]$id, "undifferentiated")
       temp$AddMaturity(maturity[[a]]$id, areas[[a]]$id, "undifferentiated")
@@ -201,7 +203,7 @@ population <- lapply(
       temp$SetGrowth(growth[[a]]$id)
       temp$sex_ratio <- 0.5
     }
-
+    
     population[[x]] <- temp
   }
 )
@@ -213,10 +215,10 @@ catch_index <- lapply(
   seq_along(area_id),
   function(x) {
     temp <- new(r4mas$IndexData)
-
+    
     temp$values <- em_input[[x]]$L.obs$fleet1
     temp$error <- rep(em_input[[x]]$cv.L$fleet1, times = om_input[[x]]$nyr)
-
+    
     catch_index[[x]] <- temp
   }
 )
@@ -226,10 +228,10 @@ catch_comp <- lapply(
   seq_along(area_id),
   function(x) {
     temp <- new(r4mas$AgeCompData)
-
+    
     temp$values <- as.vector(t(em_input[[x]]$L.age.obs$fleet1))
     temp$sample_size <- rep(em_input[[x]]$n.L$fleet1, nyears[[x]] * nseasons[[x]])
-
+    
     catch_comp[[x]] <- temp
   }
 )
@@ -239,9 +241,9 @@ fleet_index_comp_nll <- lapply(
   seq_along(area_id),
   function(x) {
     temp <- new(r4mas$Lognormal)
-
+    
     temp$use_bias_correction <- FALSE
-
+    
     fleet_index_comp_nll[[x]] <- temp
   }
 )
@@ -251,7 +253,7 @@ fleet_age_comp_nll <- lapply(
   seq_along(area_id),
   function(x) {
     temp <- new(r4mas$Multinomial)
-
+    
     fleet_age_comp_nll[[x]] <- temp
   }
 )
@@ -262,7 +264,7 @@ fleet_selectivity <- lapply(
   seq_along(area_id),
   function(x) {
     temp <- new(r4mas$LogisticSelectivity)
-
+    
     temp$a50$value <- om_input[[x]]$sel_fleet$fleet1$A50.sel
     temp$a50$estimated <- TRUE
     temp$a50$phase <- 2
@@ -273,7 +275,7 @@ fleet_selectivity <- lapply(
     temp$slope$phase <- 2
     temp$slope$min <- 0.0001
     temp$slope$max <- 5
-
+    
     fleet_selectivity[[x]] <- temp
   }
 )
@@ -283,13 +285,13 @@ fishing_mortality <- lapply(
   seq_along(area_id),
   function(x) {
     temp <- new(r4mas$FishingMortality)
-
+    
     temp$estimate <- TRUE
     temp$phase <- 1
     temp$min <- 0.0
     temp$max <- 4
     temp$SetValues(apply(om_output$stocks$stock1$FAA, 1, max))
-
+    
     fishing_mortality[[x]] <- temp
   }
 )
@@ -300,14 +302,14 @@ fleet <- lapply(
   seq_along(area_id),
   function(x) {
     temp <- new(r4mas$Fleet)
-
+    
     temp$AddIndexData(catch_index[[x]]$id, "undifferentiated")
     temp$AddAgeCompData(catch_comp[[x]]$id, "undifferentiated")
     temp$SetIndexNllComponent(fleet_index_comp_nll[[x]]$id)
     temp$SetAgeCompNllComponent(fleet_age_comp_nll[[x]]$id)
     temp$AddSelectivity(fleet_selectivity[[x]]$id, 1, areas[[x]]$id)
     temp$AddFishingMortality(fishing_mortality[[x]]$id, 1, areas[[x]]$id)
-
+    
     fleet[[x]] <- temp
   }
 )
@@ -317,10 +319,10 @@ survey_index <- lapply(
   seq_along(area_id),
   function(x) {
     temp <- new(r4mas$IndexData)
-
+    
     temp$values <- em_input[[x]]$survey.obs$survey1
     temp$error <- rep(em_input[[x]]$cv.survey$survey1, times = om_input[[x]]$nyr)
-
+    
     survey_index[[x]] <- temp
   }
 )
@@ -330,10 +332,10 @@ survey_comp <- lapply(
   seq_along(area_id),
   function(x) {
     temp <- new(r4mas$AgeCompData)
-
+    
     temp$values <- as.vector(t(em_input[[x]]$survey.age.obs$survey1))
     temp$sample_size <- rep(em_input[[x]]$n.survey$survey1, times = om_input[[x]]$nyr)
-
+    
     survey_comp[[x]] <- temp
   }
 )
@@ -343,9 +345,9 @@ survey_index_comp_nll <- lapply(
   seq_along(area_id),
   function(x) {
     temp <- new(r4mas$Lognormal)
-
+    
     temp$use_bias_correction <- FALSE
-
+    
     survey_index_comp_nll[[x]] <- temp
   }
 )
@@ -355,7 +357,7 @@ survey_age_comp_nll <- lapply(
   seq_along(area_id),
   function(x) {
     temp <- new(r4mas$Multinomial)
-
+    
     survey_age_comp_nll[[x]] <- temp
   }
 )
@@ -365,7 +367,7 @@ survey_selectivity <- lapply(
   seq_along(area_id),
   function(x) {
     temp <- new(r4mas$LogisticSelectivity)
-
+    
     temp$a50$value <- om_input[[x]]$sel_survey$survey1$A50.sel
     temp$a50$estimated <- TRUE
     temp$a50$phase <- 2
@@ -376,7 +378,7 @@ survey_selectivity <- lapply(
     temp$slope$phase <- 2
     temp$slope$min <- 0.0001
     temp$slope$max <- 5
-
+    
     survey_selectivity[[x]] <- temp
   }
 )
@@ -386,19 +388,19 @@ survey <- lapply(
   seq_along(area_id),
   function(x) {
     temp <- new(r4mas$Survey)
-
+    
     temp$AddIndexData(survey_index[[x]]$id, "undifferentiated")
     temp$AddAgeCompData(survey_comp[[x]]$id, "undifferentiated")
     temp$SetIndexNllComponent(survey_index_comp_nll[[x]]$id)
     temp$SetAgeCompNllComponent(survey_age_comp_nll[[x]]$id)
     temp$AddSelectivity(survey_selectivity[[x]]$id, 1, areas[[x]]$id)
     # Catchability settings
-    temp$q$value <- em_input[[x]]$survey_q$survey1 * 1000
+    temp$q$value <- em_input[[x]]$survey_q$survey1
     temp$q$min <- 0
     temp$q$max <- 1
     temp$q$estimated <- TRUE
     temp$q$phase <- 1
-
+    
     survey[[x]] <- temp
   }
 )
@@ -412,6 +414,7 @@ mas_model$ages <- ages[[1]]
 mas_model$catch_season_offset <- 0.0
 mas_model$spawning_season_offset <- 0.0
 mas_model$survey_season_offset <- 0.0
+
 for (i in 1:length(population)){
   mas_model$AddPopulation(population[[i]]$id)
 }
@@ -424,8 +427,7 @@ for (i in 1:length(survey)){
   mas_model$AddSurvey(survey[[i]]$id)
 }
 
-mas_model$max_line_searches <- 500
-
+mas_model$max_line_searches<-100
 # Run MAS
 mas_model$Run()
 # Write MAS outputs to a json file
