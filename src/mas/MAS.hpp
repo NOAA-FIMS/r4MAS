@@ -135,7 +135,9 @@ namespace mas {
             for (rit = info.recruitment_models.begin(); rit != info.recruitment_models.end(); rit++) {
                 (*rit).second->Prepare();
             }
-            //
+            
+            
+            //this is probably deprecated
             for (selex_it = info.selectivity_models.begin(); selex_it != info.selectivity_models.end(); selex_it++) {
                 (*selex_it).second->Update(this->info.ages);
             }
