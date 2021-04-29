@@ -14,6 +14,12 @@ jobs:
 
       - name: Install dependencies
         run: |
+          install.packages(c("processx", "remotes", "rcmdcheck", "devtools"), type="binary")
+          remotes::install_deps(dependencies = TRUE)
+        shell: Rscript {0}
+
+      - name: Install and run r4MAS
+        run: |
           remotes::install_github("nmfs-fish-tools/r4MAS")
           library(r4MAS)
           library(Rcpp)
