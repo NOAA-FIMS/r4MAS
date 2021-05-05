@@ -291,28 +291,28 @@ namespace mas {
 //                mas::VariableTrait<REAL_T>::SetValue(biomass_total[i], static_cast<REAL_T> (0.0));
 //                mas::VariableTrait<REAL_T>::SetValue(fishing_mortality_total[i], static_cast<REAL_T> (0.0));
             }
-            for (int i = 0; i < this->initial_numbers.size(); i++) {
-                mas::VariableTrait<REAL_T>::SetValue(initial_numbers[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(initial_equilibrium_numbers[i], static_cast<REAL_T> (0.0));
+//            for (int i = 0; i < this->initial_numbers.size(); i++) {
+//                mas::VariableTrait<REAL_T>::SetValue(initial_numbers[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(initial_equilibrium_numbers[i], static_cast<REAL_T> (0.0));
+//
+//            }
 
-            }
+//            for (int i = 0; i < this->sum_selectivity.size(); i++) {
+//                mas::VariableTrait<REAL_T>::SetValue(this->sum_selectivity[i], static_cast<REAL_T> (0.0));
+//            }
 
-            for (int i = 0; i < this->sum_selectivity.size(); i++) {
-                mas::VariableTrait<REAL_T>::SetValue(this->sum_selectivity[i], static_cast<REAL_T> (0.0));
-            }
-
-            for (int i = 0; i < this->length_at_spawning.size(); i++) {
-                mas::VariableTrait<REAL_T>::SetValue(weight_at_season_start[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(length_at_season_start[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(length_at_spawning[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(length_at_catch_time[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(length_at_survey_time[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(weight_at_spawning[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(weight_at_catch_time[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(weight_at_survey_time[i], static_cast<REAL_T> (0.0));
-            }
-            mas::VariableTrait<REAL_T>::SetValue(weight_at_season_start[this->length_at_spawning.size()], static_cast<REAL_T> (0.0));
-            mas::VariableTrait<REAL_T>::SetValue(length_at_season_start[this->length_at_spawning.size()], static_cast<REAL_T> (0.0));
+//            for (int i = 0; i < this->length_at_spawning.size(); i++) {
+//                mas::VariableTrait<REAL_T>::SetValue(weight_at_season_start[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(length_at_season_start[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(length_at_spawning[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(length_at_catch_time[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(length_at_survey_time[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(weight_at_spawning[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(weight_at_catch_time[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(weight_at_survey_time[i], static_cast<REAL_T> (0.0));
+//            }
+//            mas::VariableTrait<REAL_T>::SetValue(weight_at_season_start[this->length_at_spawning.size()], static_cast<REAL_T> (0.0));
+//            mas::VariableTrait<REAL_T>::SetValue(length_at_season_start[this->length_at_spawning.size()], static_cast<REAL_T> (0.0));
 //            std::unordered_set<int>::iterator fit;
 //            for (fit = this->active_fleets.begin(); fit != this->active_fleets.end(); ++fit) {
 //                std::fill(F_at_age[(*fit)].begin(), F_at_age[(*fit)].end(), static_cast<REAL_T> (0.0));
@@ -1008,7 +1008,8 @@ namespace mas {
                 F[index] = static_cast<REAL_T> (0.0);
                 S[index] = static_cast<REAL_T> (0.0);
                 P[index] = static_cast<REAL_T> (0.0);
-                this->sum_selectivity[index] = static_cast<REAL_T> (0.0);
+                sum_selectivity[index] = static_cast<REAL_T> (0.0);
+                
                 for (int f = 0; f < fleets.size(); f++) {
 
                     variable ff = fleets[f]->area_season_fishing_mortality[this->area->id][season]->Evaluate(year, (season - 1));
