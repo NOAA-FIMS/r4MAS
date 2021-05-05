@@ -257,45 +257,45 @@ namespace mas {
 
             std::fill(this->catch_biomass_total.begin(), this->catch_biomass_total.end(), static_cast<REAL_T> (0.0));
             std::fill(this->survey_biomass_total.begin(), this->survey_biomass_total.end(), static_cast<REAL_T> (0.0));
-            for (int i = 0; i < numbers_at_age.size(); i++) {
-                mas::VariableTrait<REAL_T>::SetValue(numbers_at_age[i], static_cast<REAL_T> (0.0));
-            }
+            //            for (int i = 0; i < numbers_at_age.size(); i++) {
+            //                mas::VariableTrait<REAL_T>::SetValue(numbers_at_age[i], static_cast<REAL_T> (0.0));
+            //            }
 
-            for (int i = 0; i < survey_numbers_at_age.size(); i++) {
-                mas::VariableTrait<REAL_T>::SetValue(emigrants[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(emigrants_biomass[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(imigrants[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(imigrants_biomass[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(growth[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(Z[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(F[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(P[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(S[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(biomass_at_age[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(survey_numbers_at_age[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(survey_index_at_age[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(catch_at_age[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(catch_biomass_at_age[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(expected_N[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(fecundity_at_age[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(equilibrium_to_survival_at_spawning[i], static_cast<REAL_T> (0.0));
-            }
+            //            for (int i = 0; i < survey_numbers_at_age.size(); i++) {
+            //                //                mas::VariableTrait<REAL_T>::SetValue(emigrants[i], static_cast<REAL_T> (0.0));
+            //                //                mas::VariableTrait<REAL_T>::SetValue(emigrants_biomass[i], static_cast<REAL_T> (0.0));
+            //                //                mas::VariableTrait<REAL_T>::SetValue(imigrants[i], static_cast<REAL_T> (0.0));
+            //                //                mas::VariableTrait<REAL_T>::SetValue(imigrants_biomass[i], static_cast<REAL_T> (0.0));
+            //                //                mas::VariableTrait<REAL_T>::SetValue(growth[i], static_cast<REAL_T> (0.0));
+            //                //                mas::VariableTrait<REAL_T>::SetValue(Z[i], static_cast<REAL_T> (0.0));
+            //                //                mas::VariableTrait<REAL_T>::SetValue(F[i], static_cast<REAL_T> (0.0));
+            //                //                mas::VariableTrait<REAL_T>::SetValue(P[i], static_cast<REAL_T> (0.0));
+            //                //                mas::VariableTrait<REAL_T>::SetValue(S[i], static_cast<REAL_T> (0.0));
+            //                //                mas::VariableTrait<REAL_T>::SetValue(biomass_at_age[i], static_cast<REAL_T> (0.0));
+            //                //                mas::VariableTrait<REAL_T>::SetValue(survey_numbers_at_age[i], static_cast<REAL_T> (0.0));
+            //                //                mas::VariableTrait<REAL_T>::SetValue(survey_index_at_age[i], static_cast<REAL_T> (0.0));
+            ////                mas::VariableTrait<REAL_T>::SetValue(catch_at_age[i], static_cast<REAL_T> (0.0));
+            ////                mas::VariableTrait<REAL_T>::SetValue(catch_biomass_at_age[i], static_cast<REAL_T> (0.0));
+            ////                mas::VariableTrait<REAL_T>::SetValue(expected_N[i], static_cast<REAL_T> (0.0));
+            ////                mas::VariableTrait<REAL_T>::SetValue(fecundity_at_age[i], static_cast<REAL_T> (0.0));
+            ////                mas::VariableTrait<REAL_T>::SetValue(equilibrium_to_survival_at_spawning[i], static_cast<REAL_T> (0.0));
+            //            }
 
-            for (int i = 0; i < recruitment.size(); i++) {
-                mas::VariableTrait<REAL_T>::SetValue(recruitment[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(redistributed_recruits[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(immigrant_recruits[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(emigrant_recruits[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(abundance[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(spawning_stock_biomass[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(biomass_total[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(fishing_mortality_total[i], static_cast<REAL_T> (0.0));
-            }
-            for (int i = 0; i < this->initial_numbers.size(); i++) {
-                mas::VariableTrait<REAL_T>::SetValue(initial_numbers[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(initial_equilibrium_numbers[i], static_cast<REAL_T> (0.0));
-
-            }
+            //            for (int i = 0; i < recruitment.size(); i++) {
+            ////                mas::VariableTrait<REAL_T>::SetValue(recruitment[i], static_cast<REAL_T> (0.0));
+            ////                mas::VariableTrait<REAL_T>::SetValue(redistributed_recruits[i], static_cast<REAL_T> (0.0));
+            ////                mas::VariableTrait<REAL_T>::SetValue(immigrant_recruits[i], static_cast<REAL_T> (0.0));
+            ////                mas::VariableTrait<REAL_T>::SetValue(emigrant_recruits[i], static_cast<REAL_T> (0.0));
+            ////                mas::VariableTrait<REAL_T>::SetValue(abundance[i], static_cast<REAL_T> (0.0));
+            ////                mas::VariableTrait<REAL_T>::SetValue(spawning_stock_biomass[i], static_cast<REAL_T> (0.0));
+            ////                mas::VariableTrait<REAL_T>::SetValue(biomass_total[i], static_cast<REAL_T> (0.0));
+            ////                mas::VariableTrait<REAL_T>::SetValue(fishing_mortality_total[i], static_cast<REAL_T> (0.0));
+            //            }
+            //            for (int i = 0; i < this->initial_numbers.size(); i++) {
+            ////                mas::VariableTrait<REAL_T>::SetValue(initial_numbers[i], static_cast<REAL_T> (0.0));
+            ////                mas::VariableTrait<REAL_T>::SetValue(initial_equilibrium_numbers[i], static_cast<REAL_T> (0.0));
+            //
+            //            }
 
             for (int i = 0; i < this->sum_selectivity.size(); i++) {
                 mas::VariableTrait<REAL_T>::SetValue(this->sum_selectivity[i], static_cast<REAL_T> (0.0));
@@ -934,7 +934,7 @@ namespace mas {
             for (int f = 0; f < fleets.size(); f++) {
 
                 if (fleets[f]->catch_biomass_data.get() != NULL) {
-            
+
                     REAL_T Epsilon = 0.0001;
                     REAL_T LowerBound = 0.0;
                     REAL_T UpperBound = 10.0;
@@ -1007,7 +1007,8 @@ namespace mas {
                 Z[index] = static_cast<REAL_T> (0.0);
                 F[index] = static_cast<REAL_T> (0.0);
                 S[index] = static_cast<REAL_T> (0.0);
-
+                P[index] = static_cast<REAL_T> (0.0);
+                this->sum_selectivity[index] = static_cast<REAL_T> (0.0);
                 for (int f = 0; f < fleets.size(); f++) {
 
                     variable ff = fleets[f]->area_season_fishing_mortality[this->area->id][season]->Evaluate(year, (season - 1));
@@ -1039,6 +1040,7 @@ namespace mas {
                 sum_of_Z += Z[index];
 
             }
+            this->fishing_mortality_total[year * this->seasons + (season - 1)] = 0.0;
             for (int f = 0; f < fleets.size(); f++) {
                 variable ff = fleets[f]->area_season_fishing_mortality[this->area->id][season]->Evaluate(year, (season - 1));
                 this->fishing_mortality_total[year * this->seasons + (season - 1)] += ff;
@@ -1460,7 +1462,9 @@ namespace mas {
             int a = 0;
             size_t index = year * this->seasons + (season - 1);
             this->recruitment[index] += this->immigrant_recruits[index];
+            this->immigrant_recruits[index] = 0.0;
             this->recruitment[index] -= this->emigrant_recruits[index];
+            this->emigrant_recruits[index] = 0.0;
 #warning need to add imigrant and emigrant recruitment biomass here
 
             for (a = 0; a < ages.size(); a++) {
@@ -1568,7 +1572,8 @@ namespace mas {
 
                 //dimension folded index(year,season,age)
                 size_t index = year * this->seasons * this->ages.size() + (season - 1) * this->ages.size() + a;
-
+                catch_at_age[index] = 0.0;
+                catch_biomass_at_age[index] = 0.0;
                 //loop through fleets operating in this area at this season
                 for (int f = 0; f < fleets.size(); f++) {
                     //fleet f at age for this area,year,season, age
@@ -1624,13 +1629,14 @@ namespace mas {
         inline void CalculateSurveyNumbersAtAge(int year, int season) {
             std::vector< std::shared_ptr<Survey<REAL_T> > >& surveys = this->area->seasonal_survey_operations[season];
 
-            
+
             REAL_T total_SI = static_cast<REAL_T> (0.0);
             size_t index2 = year * this->seasons + (season - 1);
             for (int a = 0; a < this->ages.size(); a++) {
                 size_t index = year * this->seasons * this->ages.size() + (season - 1) * this->ages.size() + a;
-
-//                variable weight = this->weight_at_survey_time[index];
+                this->survey_numbers_at_age[index] = 0.0;
+                this->survey_index_at_age[index] = 0.0;
+                //                variable weight = this->weight_at_survey_time[index];
                 for (int s = 0; s < surveys.size(); s++) {
 
                     // NOTE:  the survey has a catchability (q) associated with it
@@ -2421,12 +2427,12 @@ namespace mas {
             //            catch_numbers_at_age.resize(years * seasons * ages, static_cast<REAL_T> (0.0));
             //            catch_index_at_age.resize(0);
             //            catch_index_at_age.resize(years * seasons * ages, static_cast<REAL_T> (0.0));
-            
-//            for (int d = 0; d < males.size(); d++) {
-//
-//                males[areas_list[d]->id].Reset();
-//                females[areas_list[d]->id].Reset();
-//            }
+
+            for (int d = 0; d < males.size(); d++) {
+
+                males[areas_list[d]->id].Reset();
+                females[areas_list[d]->id].Reset();
+            }
         }
 
         inline void IncrementTime(int& y, int& s) {
@@ -2498,8 +2504,8 @@ namespace mas {
                                 male_info_from.emigrants[index] += moving_males;
                                 male_info_from.emigrants_biomass[index] += moving_males * male_info_from.weight_at_season_start[index];
 
-//                                variable imigrantsm = male_fractions[i][j] * male_info_from.numbers_at_age[index] *
-//                                        mas::exp(static_cast<REAL_T> (-1.0) * male_info_from.Z[index]);
+                                //                                variable imigrantsm = male_fractions[i][j] * male_info_from.numbers_at_age[index] *
+                                //                                        mas::exp(static_cast<REAL_T> (-1.0) * male_info_from.Z[index]);
 
                                 male_info_to.imigrants[index] += moving_males;
                                 male_info_to.imigrants_biomass[index] += moving_males * male_info_from.weight_at_season_start[index];
@@ -2510,8 +2516,8 @@ namespace mas {
                                 female_info_from.emigrants[index] += moving_females;
                                 female_info_from.emigrants_biomass[index] += moving_females * female_info_from.weight_at_season_start[index];
 
-//                                variable imigrantsf = female_fractions[i][j] * female_info_from.numbers_at_age[index] *
-//                                        mas::exp(static_cast<REAL_T> (-1.0) * female_info_from.Z[index]);
+                                //                                variable imigrantsf = female_fractions[i][j] * female_info_from.numbers_at_age[index] *
+                                //                                        mas::exp(static_cast<REAL_T> (-1.0) * female_info_from.Z[index]);
 
                                 female_info_to.imigrants[index] += moving_females;
                                 female_info_to.imigrants_biomass[index] += moving_females * female_info_from.weight_at_season_start[index];
