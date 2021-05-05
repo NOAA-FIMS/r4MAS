@@ -266,19 +266,19 @@ namespace mas {
 //                mas::VariableTrait<REAL_T>::SetValue(emigrants_biomass[i], static_cast<REAL_T> (0.0));
 //                mas::VariableTrait<REAL_T>::SetValue(imigrants[i], static_cast<REAL_T> (0.0));
 //                mas::VariableTrait<REAL_T>::SetValue(imigrants_biomass[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(growth[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(Z[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(F[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(P[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(S[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(biomass_at_age[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(survey_numbers_at_age[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(survey_index_at_age[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(catch_at_age[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(catch_biomass_at_age[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(expected_N[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(fecundity_at_age[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(equilibrium_to_survival_at_spawning[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(growth[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(Z[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(F[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(P[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(S[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(biomass_at_age[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(survey_numbers_at_age[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(survey_index_at_age[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(catch_at_age[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(catch_biomass_at_age[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(expected_N[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(fecundity_at_age[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(equilibrium_to_survival_at_spawning[i], static_cast<REAL_T> (0.0));
             }
 
             for (int i = 0; i < recruitment.size(); i++) {
