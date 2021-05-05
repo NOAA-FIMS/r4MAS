@@ -262,10 +262,10 @@ namespace mas {
 //            }
 
             for (int i = 0; i < survey_numbers_at_age.size(); i++) {
-                mas::VariableTrait<REAL_T>::SetValue(emigrants[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(emigrants_biomass[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(imigrants[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(imigrants_biomass[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(emigrants[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(emigrants_biomass[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(imigrants[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(imigrants_biomass[i], static_cast<REAL_T> (0.0));
                 mas::VariableTrait<REAL_T>::SetValue(growth[i], static_cast<REAL_T> (0.0));
                 mas::VariableTrait<REAL_T>::SetValue(Z[i], static_cast<REAL_T> (0.0));
                 mas::VariableTrait<REAL_T>::SetValue(F[i], static_cast<REAL_T> (0.0));
