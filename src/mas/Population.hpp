@@ -297,22 +297,22 @@ namespace mas {
 
             }
 
-            for (int i = 0; i < this->sum_selectivity.size(); i++) {
-                mas::VariableTrait<REAL_T>::SetValue(this->sum_selectivity[i], static_cast<REAL_T> (0.0));
-            }
+//            for (int i = 0; i < this->sum_selectivity.size(); i++) {
+//                mas::VariableTrait<REAL_T>::SetValue(this->sum_selectivity[i], static_cast<REAL_T> (0.0));
+//            }
 
-            for (int i = 0; i < this->length_at_spawning.size(); i++) {
-                mas::VariableTrait<REAL_T>::SetValue(weight_at_season_start[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(length_at_season_start[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(length_at_spawning[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(length_at_catch_time[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(length_at_survey_time[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(weight_at_spawning[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(weight_at_catch_time[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(weight_at_survey_time[i], static_cast<REAL_T> (0.0));
-            }
-            mas::VariableTrait<REAL_T>::SetValue(weight_at_season_start[this->length_at_spawning.size()], static_cast<REAL_T> (0.0));
-            mas::VariableTrait<REAL_T>::SetValue(length_at_season_start[this->length_at_spawning.size()], static_cast<REAL_T> (0.0));
+//            for (int i = 0; i < this->length_at_spawning.size(); i++) {
+//                mas::VariableTrait<REAL_T>::SetValue(weight_at_season_start[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(length_at_season_start[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(length_at_spawning[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(length_at_catch_time[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(length_at_survey_time[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(weight_at_spawning[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(weight_at_catch_time[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(weight_at_survey_time[i], static_cast<REAL_T> (0.0));
+//            }
+//            mas::VariableTrait<REAL_T>::SetValue(weight_at_season_start[this->length_at_spawning.size()], static_cast<REAL_T> (0.0));
+//            mas::VariableTrait<REAL_T>::SetValue(length_at_season_start[this->length_at_spawning.size()], static_cast<REAL_T> (0.0));
 //            std::unordered_set<int>::iterator fit;
 //            for (fit = this->active_fleets.begin(); fit != this->active_fleets.end(); ++fit) {
 //                std::fill(F_at_age[(*fit)].begin(), F_at_age[(*fit)].end(), static_cast<REAL_T> (0.0));
