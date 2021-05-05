@@ -280,6 +280,7 @@ namespace mas {
                 mas::VariableTrait<REAL_T>::SetValue(fecundity_at_age[i], static_cast<REAL_T> (0.0));
                 mas::VariableTrait<REAL_T>::SetValue(equilibrium_to_survival_at_spawning[i], static_cast<REAL_T> (0.0));
             }
+            
 
             for (int i = 0; i < recruitment.size(); i++) {
                 mas::VariableTrait<REAL_T>::SetValue(recruitment[i], static_cast<REAL_T> (0.0));
@@ -318,24 +319,24 @@ namespace mas {
                 std::fill(F_at_age[(*fit)].begin(), F_at_age[(*fit)].end(), static_cast<REAL_T> (0.0));
                 std::fill(Z_at_age[(*fit)].begin(), Z_at_age[(*fit)].end(), static_cast<REAL_T> (0.0));
             }
-            typename Area<REAL_T>::active_fleets_iterator af_it;
-            for (af_it = this->area->active_fleets.begin(); af_it != this->area->active_fleets.end(); ++af_it) {
-                std::vector<variable>& f_l = (*af_it)->f_at_age[this->area->id][this->id];
-                std::vector<variable>& z_l = (*af_it)->z_at_age[this->area->id][this->id];
-                std::fill(f_l.begin(), f_l.end(), static_cast<REAL_T> (0.0));
-                std::fill(z_l.begin(), z_l.end(), static_cast<REAL_T> (0.0));
-                if (this->sex == mas::MALE) {
-                    std::vector<variable>& f_m_l = (*af_it)->f_at_age_males[this->area->id][this->id];
-                    std::vector<variable>& z_m_l = (*af_it)->z_at_age_males[this->area->id][this->id];
-                    std::fill(f_m_l.begin(), f_m_l.end(), static_cast<REAL_T> (0.0));
-                    std::fill(z_m_l.begin(), z_m_l.end(), static_cast<REAL_T> (0.0));
-                } else {
-                    std::vector<variable>& f_f_l = (*af_it)->f_at_age_females[this->area->id][this->id];
-                    std::vector<variable>& z_f_l = (*af_it)->z_at_age_females[this->area->id][this->id];
-                    std::fill(f_f_l.begin(), f_f_l.end(), static_cast<REAL_T> (0.0));
-                    std::fill(z_f_l.begin(), z_f_l.end(), static_cast<REAL_T> (0.0));
-                }
-            }
+//            typename Area<REAL_T>::active_fleets_iterator af_it;
+//            for (af_it = this->area->active_fleets.begin(); af_it != this->area->active_fleets.end(); ++af_it) {
+//                std::vector<variable>& f_l = (*af_it)->f_at_age[this->area->id][this->id];
+//                std::vector<variable>& z_l = (*af_it)->z_at_age[this->area->id][this->id];
+//                std::fill(f_l.begin(), f_l.end(), static_cast<REAL_T> (0.0));
+//                std::fill(z_l.begin(), z_l.end(), static_cast<REAL_T> (0.0));
+//                if (this->sex == mas::MALE) {
+//                    std::vector<variable>& f_m_l = (*af_it)->f_at_age_males[this->area->id][this->id];
+//                    std::vector<variable>& z_m_l = (*af_it)->z_at_age_males[this->area->id][this->id];
+//                    std::fill(f_m_l.begin(), f_m_l.end(), static_cast<REAL_T> (0.0));
+//                    std::fill(z_m_l.begin(), z_m_l.end(), static_cast<REAL_T> (0.0));
+//                } else {
+//                    std::vector<variable>& f_f_l = (*af_it)->f_at_age_females[this->area->id][this->id];
+//                    std::vector<variable>& z_f_l = (*af_it)->z_at_age_females[this->area->id][this->id];
+//                    std::fill(f_f_l.begin(), f_f_l.end(), static_cast<REAL_T> (0.0));
+//                    std::fill(z_f_l.begin(), z_f_l.end(), static_cast<REAL_T> (0.0));
+//                }
+//            }
         }
 
         /**
