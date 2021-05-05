@@ -152,7 +152,7 @@ namespace mas {
             //            }
 
             /**
-             * Prepare Populations for evaluation. Resets runtime
+             * Prepare Populations for evaluation. Resets run time
              * information.
              */
             for (it = pops.begin(); it != pops.end(); ++it) {
