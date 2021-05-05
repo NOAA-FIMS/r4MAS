@@ -282,7 +282,7 @@ namespace mas {
 //            }
 
             for (int i = 0; i < recruitment.size(); i++) {
-//                mas::VariableTrait<REAL_T>::SetValue(recruitment[i], static_cast<REAL_T> (0.0));
+                mas::VariableTrait<REAL_T>::SetValue(recruitment[i], static_cast<REAL_T> (0.0));
 //                mas::VariableTrait<REAL_T>::SetValue(redistributed_recruits[i], static_cast<REAL_T> (0.0));
 //                mas::VariableTrait<REAL_T>::SetValue(immigrant_recruits[i], static_cast<REAL_T> (0.0));
 //                mas::VariableTrait<REAL_T>::SetValue(emigrant_recruits[i], static_cast<REAL_T> (0.0));
@@ -1057,7 +1057,7 @@ namespace mas {
          */
         inline void CalculateRecruitment(int year, int season) {
             //#warning add compiler hint here
-            this->recruitment[year * seasons + (season - 1)] = static_cast<REAL_T>(0.0);
+            
             if (year == 0 && season == 1) {
                 this->recruitment[year * seasons + (season - 1)] = this->initial_numbers[0]+
                         ((this->recruitment_model->recruitment_deviations[0]));
