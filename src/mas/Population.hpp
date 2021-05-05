@@ -2421,11 +2421,12 @@ namespace mas {
             //            catch_numbers_at_age.resize(years * seasons * ages, static_cast<REAL_T> (0.0));
             //            catch_index_at_age.resize(0);
             //            catch_index_at_age.resize(years * seasons * ages, static_cast<REAL_T> (0.0));
-            for (int d = 0; d < males.size(); d++) {
-
-                males[areas_list[d]->id].Reset();
-                females[areas_list[d]->id].Reset();
-            }
+            
+//            for (int d = 0; d < males.size(); d++) {
+//
+//                males[areas_list[d]->id].Reset();
+//                females[areas_list[d]->id].Reset();
+//            }
         }
 
         inline void IncrementTime(int& y, int& s) {
