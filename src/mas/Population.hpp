@@ -281,16 +281,16 @@ namespace mas {
 ////                mas::VariableTrait<REAL_T>::SetValue(equilibrium_to_survival_at_spawning[i], static_cast<REAL_T> (0.0));
 //            }
 
-            for (int i = 0; i < recruitment.size(); i++) {
-                mas::VariableTrait<REAL_T>::SetValue(recruitment[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(redistributed_recruits[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(immigrant_recruits[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(emigrant_recruits[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(abundance[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(spawning_stock_biomass[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(biomass_total[i], static_cast<REAL_T> (0.0));
-                mas::VariableTrait<REAL_T>::SetValue(fishing_mortality_total[i], static_cast<REAL_T> (0.0));
-            }
+//            for (int i = 0; i < recruitment.size(); i++) {
+//                mas::VariableTrait<REAL_T>::SetValue(recruitment[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(redistributed_recruits[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(immigrant_recruits[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(emigrant_recruits[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(abundance[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(spawning_stock_biomass[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(biomass_total[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(fishing_mortality_total[i], static_cast<REAL_T> (0.0));
+//            }
             for (int i = 0; i < this->initial_numbers.size(); i++) {
                 mas::VariableTrait<REAL_T>::SetValue(initial_numbers[i], static_cast<REAL_T> (0.0));
                 mas::VariableTrait<REAL_T>::SetValue(initial_equilibrium_numbers[i], static_cast<REAL_T> (0.0));
