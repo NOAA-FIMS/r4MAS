@@ -444,27 +444,6 @@ jobs:
           )
           # Reset MAS for next run
           mas_model$Reset()
-          om <- vector(mode="list", length=length(population))
-          for (i in seq_along(population_id)){
-            om[[i]]$biomass <- om_output$stocks[[i]]$biomass.mt
-            om[[i]]$abundance <- om_output$stocks[[i]]$abundance / 1000
-            om[[i]]$ssb <- om_output$stocks[[i]]$SSB
-            om[[i]]$recruit <- om_output$stocks[[i]]$N.age[, 1] / 1000
-            om[[i]]$f <- apply(om_output$stocks[[i]]$FAA, 1, max)
-            om[[i]]$landing <- om_output$stocks[[i]]$L.mt$fleet1
-            om[[i]]$survey <- om_output$stocks[[i]]$survey_index$survey1
-            om[[i]]$msy <- om_output$stocks[[i]]$msy$msy
-            om[[i]]$fmsy <- round(om_output$stocks[[i]]$msy$Fmsy, digits = 3)
-            om[[i]]$ssbmsy <- om_output$stocks[[i]]$msy$SSBmsy
-            om[[i]]$fratio <- om[[i]]$f / om[[i]]$fmsy
-            om[[i]]$ssbratio <- om[[i]]$ssb / om[[i]]$ssbmsy
-            om[[i]]$agecomp <- apply(om_output$stocks[[i]]$N.age / 1000, 1, function(x) x / sum(x))
-            om[[i]]$r0 <- om_input[[i]]$R0 / 1000
-            om[[i]]$q <- om_output$stocks[[i]]$survey_q
-            om[[i]]$selexparm_fleet <- om_input[[i]]$sel_fleet
-            om[[i]]$selexparm_survey <- om_input[[i]]$sel_survey
-            om[[i]]$recruit_deviation <- om_input[[i]]$logR.resid
-          }
 
           mas_output <- jsonlite::read_json(file.path(om_path, "mas_output.json"))
           parameter <- unlist(mas_output$estimated_parameters$parameters)
@@ -508,38 +487,30 @@ jobs:
             )
           }
 
-          for (p in seq_along(population_id)){
-            par(mfrow = c(4, 2), mar = c(3, 3, 0, 0))
-            var <- c(
-              "biomass", "abundance", "ssb", "recruit", "f",
-              "landing", "survey"
-            )
-            ylab <- c(
-              "B (mt)", "A (1000 fish)",
-              "SSB (mt)", "R (1000 fish)",
-              "F", "L (mt)", "SI (scaled)"
-            )
-            for (i in 1:length(var)) {
-              ylim <- range(om[[p]][[var[i]]], mas[[p]][[var[i]]])
-              plot(om_input[[p]]$year, om[[p]][[var[i]]],
-                   xlab = "", ylab = "",
-                   ylim = ylim, pch = 19
-              )
-              lines(om_input[[p]]$year, mas[[p]][[var[i]]],
-                    col = "deepskyblue3", lty = 1
-              )
-              mtext("Year", side = 1, line = 2, cex = 0.7)
-              mtext(ylab[i], side = 2, line = 2, cex = 0.7)
-            }
-            plot.new()
-            legend("center",
-                   c("OM", "MAS"),
-                   pch = c(19, NA),
-                   lty = c(NA, 1),
-                   col = c("black", "deepskyblue3"),
-                   bty = "n",
-                   title = paste("Area", p)
-            )
-
+          om <- vector(mode="list", length=length(population))
+          for (i in seq_along(population_id)){
+            om[[i]]$biomass <- om_output$stocks[[i]]$biomass.mt
+            om[[i]]$abundance <- om_output$stocks[[i]]$abundance / 1000
+            om[[i]]$ssb <- om_output$stocks[[i]]$SSB
+            om[[i]]$recruit <- om_output$stocks[[i]]$N.age[, 1] / 1000
+            om[[i]]$f <- apply(om_output$stocks[[i]]$FAA, 1, max)
+            om[[i]]$landing <- om_output$stocks[[i]]$L.mt$fleet1
+            om[[i]]$survey <- om_output$stocks[[i]]$survey_index$survey1
+            om[[i]]$msy <- om_output$stocks[[i]]$msy$msy
+            om[[i]]$fmsy <- round(om_output$stocks[[i]]$msy$Fmsy, digits = 3)
+            om[[i]]$ssbmsy <- om_output$stocks[[i]]$msy$SSBmsy
+            om[[i]]$fratio <- om[[i]]$f / om[[i]]$fmsy
+            om[[i]]$ssbratio <- om[[i]]$ssb / om[[i]]$ssbmsy
+            om[[i]]$agecomp <- apply(om_output$stocks[[i]]$N.age / 1000, 1, function(x) x / sum(x))
+            om[[i]]$r0 <- om_input[[i]]$R0 / 1000
+            om[[i]]$q <- om_output$stocks[[i]]$survey_q
+            om[[i]]$selexparm_fleet <- om_input[[i]]$sel_fleet
+            om[[i]]$selexparm_survey <- om_input[[i]]$sel_survey
+            om[[i]]$recruit_deviation <- om_input[[i]]$logR.resid
           }
+
+          print(mas[[1]]$biomass)
+          print(om[[1]]$biomass)
+
+
         shell: Rscript {0}

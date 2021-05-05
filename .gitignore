@@ -4,3 +4,7 @@
 /src/tetsmin/build/
 /src/tetsmin/dist/
 *.DS_Store
+*.log
+*.o
+*.so
+*.dll
