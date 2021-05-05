@@ -282,7 +282,7 @@ namespace mas {
 //            }
 
             for (int i = 0; i < recruitment.size(); i++) {
-                mas::VariableTrait<REAL_T>::SetValue(recruitment[i], static_cast<REAL_T> (0.0));
+//                mas::VariableTrait<REAL_T>::SetValue(recruitment[i], static_cast<REAL_T> (0.0));
 //                mas::VariableTrait<REAL_T>::SetValue(redistributed_recruits[i], static_cast<REAL_T> (0.0));
 //                mas::VariableTrait<REAL_T>::SetValue(immigrant_recruits[i], static_cast<REAL_T> (0.0));
 //                mas::VariableTrait<REAL_T>::SetValue(emigrant_recruits[i], static_cast<REAL_T> (0.0));
