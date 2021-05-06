@@ -17,7 +17,6 @@
 #include "Selectivity.hpp"
 #include "Area.hpp"
 #include "NLLComponents.hpp"
-#include "third_party/ATL/lib/third_party/flat_hash_map/bytell_hash_map.hpp"
 
 namespace mas {
 
@@ -82,25 +81,25 @@ namespace mas {
         std::vector<variable> nll_component_values;
 
         std::shared_ptr<mas::SelectivityBase<REAL_T> > selectivity;
-        ska::bytell_hash_map<int, ska::bytell_hash_map<int, int> > area_season_selectivity_ids;
-        ska::bytell_hash_map<int, ska::bytell_hash_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > > > area_season_selectivity;
+        std::unordered_map<int, std::unordered_map<int, int> > area_season_selectivity_ids;
+        std::unordered_map<int, std::unordered_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > > > area_season_selectivity;
 
-        ska::bytell_hash_map<int, ska::bytell_hash_map<int, int> > season_area_selectivity_ids;
-        ska::bytell_hash_map<int, ska::bytell_hash_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > > > season_area_selectivity;
+        std::unordered_map<int, std::unordered_map<int, int> > season_area_selectivity_ids;
+        std::unordered_map<int, std::unordered_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > > > season_area_selectivity;
 
-        ska::bytell_hash_map<int, ska::bytell_hash_map<int, REAL_T> > season_area_survey_fraction;
-        ska::bytell_hash_map<int, ska::bytell_hash_map<int, REAL_T> > area_season_survey_fraction;
+        std::unordered_map<int, std::unordered_map<int, REAL_T> > season_area_survey_fraction;
+        std::unordered_map<int, std::unordered_map<int, REAL_T> > area_season_survey_fraction;
 
 
-        ska::bytell_hash_map<int, ska::bytell_hash_map<int, std::shared_ptr<mas::Area< REAL_T> > > > seasonal_areas_of_operation;
+        std::unordered_map<int, std::unordered_map<int, std::shared_ptr<mas::Area< REAL_T> > > > seasonal_areas_of_operation;
 
-        typedef typename ska::bytell_hash_map<int, ska::bytell_hash_map<int, int> >::iterator season_area_selectivity_ids_iterator;
-        typedef typename ska::bytell_hash_map<int, ska::bytell_hash_map<int, int> >::const_iterator season_area_selectivity_ids_const_iterator;
-        typedef typename ska::bytell_hash_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > >::iterator area_sectivity_iterator;
-        typedef typename ska::bytell_hash_map<int, ska::bytell_hash_map<int, int> >::iterator season_area_id_iterator;
-        typedef typename ska::bytell_hash_map<int, int>::iterator area_id_iteraor;
-        typedef typename ska::bytell_hash_map<int, int>::iterator season_id_iteraor;
-        typedef typename ska::bytell_hash_map<int, ska::bytell_hash_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > > >::iterator season_area_selectivity_iterator;
+        typedef typename std::unordered_map<int, std::unordered_map<int, int> >::iterator season_area_selectivity_ids_iterator;
+        typedef typename std::unordered_map<int, std::unordered_map<int, int> >::const_iterator season_area_selectivity_ids_const_iterator;
+        typedef typename std::unordered_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > >::iterator area_sectivity_iterator;
+        typedef typename std::unordered_map<int, std::unordered_map<int, int> >::iterator season_area_id_iterator;
+        typedef typename std::unordered_map<int, int>::iterator area_id_iteraor;
+        typedef typename std::unordered_map<int, int>::iterator season_id_iteraor;
+        typedef typename std::unordered_map<int, std::unordered_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > > >::iterator season_area_selectivity_iterator;
 
         REAL_T survey_fraction_of_year = 0.75;
         REAL_T CV = .2;
@@ -124,7 +123,7 @@ namespace mas {
         REAL_T rmsle;
         REAL_T AIC;
         REAL_T BIC;
-
+        
 
         std::vector<NLLComponent<REAL_T> > nll_components;
         variable nll;
@@ -305,7 +304,7 @@ namespace mas {
         }
 
         inline void ComputeProportions() {
-
+            
             for (int y = 0; y < this->years; y++) {
                 if (this->active_years[y]) {
                     for (int s = 0; s < this->seasons; s++) {
@@ -375,7 +374,7 @@ namespace mas {
             }
         }
 
-        void ApplyOperatingModelError() {
+               void ApplyOperatingModelError() {
             this->survey_biomass_data =
                     std::make_shared<mas::DataObject<REAL_T> >();
             this->survey_biomass_data->sex_type = mas::UNDIFFERENTIATED;
@@ -383,8 +382,8 @@ namespace mas {
             this->survey_biomass_data->dimensions = 2;
             this->survey_biomass_data->imax = this->years;
             this->survey_biomass_data->jmax - this->seasons;
-            this->survey_biomass_data->data.resize(this->years * this->seasons);
-            this->survey_biomass_data->observation_error.resize(this->years * this->seasons);
+            this->survey_biomass_data->data.resize(this->years*this->seasons);
+            this->survey_biomass_data->observation_error.resize(this->years*this->seasons);
 
             this->survey_proportion_at_age_data =
                     std::make_shared<mas::DataObject<REAL_T> >();
@@ -394,10 +393,10 @@ namespace mas {
             this->survey_proportion_at_age_data->imax = this->years;
             this->survey_proportion_at_age_data->jmax = this->seasons;
             this->survey_proportion_at_age_data->kmax = this->ages;
-            this->survey_proportion_at_age_data->data.resize(this->years * this->seasons * this->ages);
-            this->survey_proportion_at_age_data->sample_size.resize(this->years * this->seasons);
-
-
+            this->survey_proportion_at_age_data->data.resize(this->years*this->seasons*this->ages);
+            this->survey_proportion_at_age_data->sample_size.resize(this->years*this->seasons);
+            
+            
             REAL_T sd = std::sqrt(1 + std::pow(this->CV, 2.0));
 
             std::default_random_engine generator;
@@ -405,7 +404,7 @@ namespace mas {
             //fill in observed data 
             for (int y = 0; y < this->years; y++) {
                 for (int s = 0; s < this->seasons; s++) {
-
+                    
                     this->survey_biomass_data->get(y, s) =
                             this->survey_biomass_total[y * this->seasons + s].GetValue();
 
@@ -417,7 +416,7 @@ namespace mas {
                     std::vector<REAL_T> probs(this->ages);
 
                     for (int a = 0; a < this->ages; a++) {
-                        size_t index = y * this->seasons * this->ages + (s * this->ages) + a;
+                       size_t index = y * this->seasons * this->ages + (s * this->ages) + a;
                         total_c += survey_numbers_at_age[index].GetValue();
                         //                        this->survey_proportion_at_age_data->get(y, s, a) =
                         //                                this->survey_proportion_at_age[y * this->seasons * this->ages +
@@ -432,14 +431,14 @@ namespace mas {
                     std::default_random_engine generator;
                     std::uniform_int_distribution<int> distribution(140, 300);
 
-                    this->survey_proportion_at_age_data->sample_size[y * this->seasons + s] =
-                            distribution(generator);
-                    std::vector<int> ret = mas::rmultinom(this->survey_proportion_at_age_data->sample_size[y * s + s], probs);
+                    this->survey_proportion_at_age_data->sample_size[y*this->seasons + s] =
+                           distribution(generator);
+                    std::vector<int> ret =  mas::rmultinom(this->survey_proportion_at_age_data->sample_size[y*s + s], probs);
                     for (int a = 0; a < this->ages; a++) {
 
                         this->survey_proportion_at_age_data->get(y, s, a) =
-                                (REAL_T) ret[a] /
-                                this->survey_proportion_at_age_data->sample_size[y * this->seasons + s];
+                                (REAL_T)ret[a]/ 
+                                this->survey_proportion_at_age_data->sample_size[y*this->seasons + s];
                     }
 
 
@@ -450,6 +449,9 @@ namespace mas {
 
         }
 
+        
+        
+        
         std::string NLLComponentsToString() {
             std::stringstream ss;
             ss << "Survey: " << this->id << std::endl;
@@ -471,8 +473,8 @@ namespace mas {
                 this->g_test += this->nll_components[i].g_test;
                 this->rmse += this->nll_components[i].rmse;
                 this->rmsle += this->nll_components[i].rmsle;
-                this->AIC += this->nll_components[i].AIC;
-                this->BIC += this->nll_components[i].BIC;
+                this->AIC+= this->nll_components[i].AIC;
+                this->BIC+= this->nll_components[i].BIC;     
             }
         }
 
@@ -514,7 +516,7 @@ namespace mas {
     std::ostream& operator<<(std::ostream& out, const mas::Survey<REAL_T>& survey) {
 
         typename mas::Survey<REAL_T>::season_area_selectivity_ids_const_iterator sait;
-        typename ska::bytell_hash_map<int, int>::const_iterator iit;
+        typename std::unordered_map<int, int>::const_iterator iit;
 
         out << std::fixed;
         out << "Survey\n";

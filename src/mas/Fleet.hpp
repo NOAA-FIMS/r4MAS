@@ -39,7 +39,7 @@
 #include "Selectivity.hpp"
 #include "Area.hpp"
 #include "NLLComponents.hpp"
-#include "third_party/ATL/lib/third_party/flat_hash_map/bytell_hash_map.hpp"
+
 
 namespace mas {
 
@@ -84,34 +84,34 @@ namespace mas {
         std::shared_ptr<mas::NLLFunctor<REAL_T> > fishery_biomass_index_likelihood_component;
 
         std::unordered_set<int> operational_areas;
-         ska::bytell_hash_map<int,  ska::bytell_hash_map<int, int> > season_area_selectivity_ids;
-         ska::bytell_hash_map<int,  ska::bytell_hash_map<int, std::vector<int> > > season_area_selectivity_ensemble_ids;
-         ska::bytell_hash_map<int,  ska::bytell_hash_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > > > season_area_selectivity;
+        std::unordered_map<int, std::unordered_map<int, int> > season_area_selectivity_ids;
+        std::unordered_map<int, std::unordered_map<int, std::vector<int> > > season_area_selectivity_ensemble_ids;
+        std::unordered_map<int, std::unordered_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > > > season_area_selectivity;
 
-         ska::bytell_hash_map<int,  ska::bytell_hash_map<int, int> > area_season_selectivity_ids;
-         ska::bytell_hash_map<int,  ska::bytell_hash_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > > > area_season_selectivity;
+        std::unordered_map<int, std::unordered_map<int, int> > area_season_selectivity_ids;
+        std::unordered_map<int, std::unordered_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > > > area_season_selectivity;
 
-         ska::bytell_hash_map<int,  ska::bytell_hash_map<int, REAL_T> > season_area_catch_fraction;
-         ska::bytell_hash_map<int,  ska::bytell_hash_map<int, REAL_T> > area_season_catch_fraction;
-
-
-         ska::bytell_hash_map<int,  ska::bytell_hash_map<int, int> > area_season_fishing_mortality_ids;
-         ska::bytell_hash_map<int,  ska::bytell_hash_map<int, std::shared_ptr<mas::FishingMortality<REAL_T> > > > area_season_fishing_mortality;
-
-         ska::bytell_hash_map<int,  ska::bytell_hash_map<int, int> > season_area_fishing_mortality_ids;
-         ska::bytell_hash_map<int,  ska::bytell_hash_map<int, std::vector<int> > > season_area_fishing_mortality_ensemble_ids;
-         ska::bytell_hash_map<int,  ska::bytell_hash_map<int, std::shared_ptr<mas::FishingMortality<REAL_T> > > > season_area_fishing_mortality;
+        std::unordered_map<int, std::unordered_map<int, REAL_T> > season_area_catch_fraction;
+        std::unordered_map<int, std::unordered_map<int, REAL_T> > area_season_catch_fraction;
 
 
-        typedef typename  ska::bytell_hash_map<int,  ska::bytell_hash_map<int, int> >::iterator season_area_selectivity_ids_iterator;
-        typedef typename  ska::bytell_hash_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > >::iterator area_sectivity_iterator;
-        typedef typename  ska::bytell_hash_map<int,  ska::bytell_hash_map<int, int> >::iterator season_area_id_iterator;
-        typedef typename  ska::bytell_hash_map<int, int>::iterator area_id_iterator;
-        typedef typename  ska::bytell_hash_map<int, int>::iterator season_id_iterator;
-        typedef typename  ska::bytell_hash_map<int,  ska::bytell_hash_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > > >::iterator season_area_selectivity_iterator;
-        typedef typename  ska::bytell_hash_map<int,  ska::bytell_hash_map<int, std::shared_ptr<mas::FishingMortality<REAL_T> > > >::iterator season_area_fishing_mortality_iterator;
-        typedef typename  ska::bytell_hash_map<int, std::shared_ptr<mas::FishingMortality<REAL_T> > >::iterator area_fishing_mortality_iterator;
-        typedef typename  ska::bytell_hash_map<int, std::shared_ptr<mas::FishingMortality<REAL_T> > >::iterator delta_method_fishing_mortality_iterator;
+        std::unordered_map<int, std::unordered_map<int, int> > area_season_fishing_mortality_ids;
+        std::unordered_map<int, std::unordered_map<int, std::shared_ptr<mas::FishingMortality<REAL_T> > > > area_season_fishing_mortality;
+
+        std::unordered_map<int, std::unordered_map<int, int> > season_area_fishing_mortality_ids;
+        std::unordered_map<int, std::unordered_map<int, std::vector<int> > > season_area_fishing_mortality_ensemble_ids;
+        std::unordered_map<int, std::unordered_map<int, std::shared_ptr<mas::FishingMortality<REAL_T> > > > season_area_fishing_mortality;
+
+
+        typedef typename std::unordered_map<int, std::unordered_map<int, int> >::iterator season_area_selectivity_ids_iterator;
+        typedef typename std::unordered_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > >::iterator area_sectivity_iterator;
+        typedef typename std::unordered_map<int, std::unordered_map<int, int> >::iterator season_area_id_iterator;
+        typedef typename std::unordered_map<int, int>::iterator area_id_iterator;
+        typedef typename std::unordered_map<int, int>::iterator season_id_iterator;
+        typedef typename std::unordered_map<int, std::unordered_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > > >::iterator season_area_selectivity_iterator;
+        typedef typename std::unordered_map<int, std::unordered_map<int, std::shared_ptr<mas::FishingMortality<REAL_T> > > >::iterator season_area_fishing_mortality_iterator;
+        typedef typename std::unordered_map<int, std::shared_ptr<mas::FishingMortality<REAL_T> > >::iterator area_fishing_mortality_iterator;
+        typedef typename std::unordered_map<int, std::shared_ptr<mas::FishingMortality<REAL_T> > >::iterator delta_method_fishing_mortality_iterator;
 
 
 
@@ -124,8 +124,8 @@ namespace mas {
         std::vector<variable> catch_proportion_at_age;
         std::vector<variable> catch_biomass_proportion_at_age;
         std::vector<variable> catch_at_age;
-         ska::bytell_hash_map<int,  ska::bytell_hash_map<int, std::vector<variable> > > f_at_age; //area, population indexed
-         ska::bytell_hash_map<int,  ska::bytell_hash_map<int, std::vector<variable> > > z_at_age; //area, population indexed
+        std::unordered_map<int, std::unordered_map<int, std::vector<variable> > > f_at_age; //area, population indexed
+        std::unordered_map<int, std::unordered_map<int, std::vector<variable> > > z_at_age; //area, population indexed
         std::vector<variable> catch_biomass_at_age;
         std::vector<variable> catch_spawning_biomass_at_age;
 
@@ -138,8 +138,8 @@ namespace mas {
         std::vector<variable> catch_proportion_at_age_males;
         std::vector<variable> catch_biomass_proportion_at_age_males;
         std::vector<variable> catch_at_age_males;
-         ska::bytell_hash_map<int,  ska::bytell_hash_map<int, std::vector<variable> > > f_at_age_males; //area, population indexed
-         ska::bytell_hash_map<int,  ska::bytell_hash_map<int, std::vector<variable> > > z_at_age_males; //area, population indexed
+        std::unordered_map<int, std::unordered_map<int, std::vector<variable> > > f_at_age_males; //area, population indexed
+        std::unordered_map<int, std::unordered_map<int, std::vector<variable> > > z_at_age_males; //area, population indexed
         std::vector<variable> catch_biomass_at_age_males;
         std::vector<variable> catch_spawning_biomass_at_age_males;
 
@@ -150,8 +150,8 @@ namespace mas {
         std::vector<variable> catch_at_age_females;
         std::vector<variable> catch_spawning_biomass_at_age_females;
 
-         ska::bytell_hash_map<int,  ska::bytell_hash_map<int, std::vector<variable> > > f_at_age_females; //area, population indexed
-         ska::bytell_hash_map<int,  ska::bytell_hash_map<int, std::vector<variable> > > z_at_age_females; //area, population indexed
+        std::unordered_map<int, std::unordered_map<int, std::vector<variable> > > f_at_age_females; //area, population indexed
+        std::unordered_map<int, std::unordered_map<int, std::vector<variable> > > z_at_age_females; //area, population indexed
         std::vector<variable> catch_biomass_at_age_females;
 
 
@@ -560,7 +560,7 @@ namespace mas {
             ss << "\"fishing_mortality\" : [\n";
             for (it = this->area_season_fishing_mortality_ids.begin(); it != this->area_season_fishing_mortality_ids.end(); ++it) {
                 ss << "{\n";
-                typename  ska::bytell_hash_map<int, int>::iterator jt;
+                typename std::unordered_map<int, int>::iterator jt;
                 int area = (*it).first;
                 for (jt = (*it).second.begin(); jt != (*it).second.end(); ++jt) {
                     ss << "\"id\" : " << (*jt).second << ",\n";
@@ -579,7 +579,7 @@ namespace mas {
             ss << "\"selectivity\" : [\n";
             for (it = this->area_season_selectivity_ids.begin(); it != this->area_season_selectivity_ids.end(); ++it) {
                 ss << "{\n";
-                typename  ska::bytell_hash_map<int, int>::iterator jt;
+                typename std::unordered_map<int, int>::iterator jt;
                 int area = (*it).first;
                 for (jt = (*it).second.begin(); jt != (*it).second.end(); ++jt) {
                     ss << "\"id\" : " << (*jt).second << ",\n";
