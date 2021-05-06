@@ -314,11 +314,11 @@ namespace mas {
             }
             mas::VariableTrait<REAL_T>::SetValue(weight_at_season_start[this->length_at_spawning.size()], static_cast<REAL_T> (0.0));
             mas::VariableTrait<REAL_T>::SetValue(length_at_season_start[this->length_at_spawning.size()], static_cast<REAL_T> (0.0));
-//            std::unordered_set<int>::iterator fit;
-//            for (fit = this->active_fleets.begin(); fit != this->active_fleets.end(); ++fit) {
-//                std::fill(F_at_age[(*fit)].begin(), F_at_age[(*fit)].end(), static_cast<REAL_T> (0.0));
-//                std::fill(Z_at_age[(*fit)].begin(), Z_at_age[(*fit)].end(), static_cast<REAL_T> (0.0));
-//            }
+            std::unordered_set<int>::iterator fit;
+            for (fit = this->active_fleets.begin(); fit != this->active_fleets.end(); ++fit) {
+                std::fill(F_at_age[(*fit)].begin(), F_at_age[(*fit)].end(), static_cast<REAL_T> (0.0));
+                std::fill(Z_at_age[(*fit)].begin(), Z_at_age[(*fit)].end(), static_cast<REAL_T> (0.0));
+            }
 //            typename Area<REAL_T>::active_fleets_iterator af_it;
 //            for (af_it = this->area->active_fleets.begin(); af_it != this->area->active_fleets.end(); ++af_it) {
 //                std::vector<variable>& f_l = (*af_it)->f_at_age[this->area->id][this->id];
