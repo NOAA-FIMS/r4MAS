@@ -39,7 +39,6 @@
 #include "Selectivity.hpp"
 #include "Fleet.hpp"
 #include "Survey.hpp"
-#include "third_party/ATL/lib/third_party/flat_hash_map/bytell_hash_map.hpp"
 
 namespace mas {
 
@@ -130,15 +129,15 @@ namespace mas {
 
 
 
-         ska::bytell_hash_map<int, std::vector< std::shared_ptr<Fleet<REAL_T> > > > seasonal_fleet_operations;
-         ska::bytell_hash_map<int, std::vector< std::shared_ptr<Survey<REAL_T> > > > seasonal_survey_operations;
+        std::map<int, std::vector< std::shared_ptr<Fleet<REAL_T> > > > seasonal_fleet_operations;
+        std::map<int, std::vector< std::shared_ptr<Survey<REAL_T> > > > seasonal_survey_operations;
         std::set<std::shared_ptr<Fleet<REAL_T> > > active_fleets; //set of fleets that may be operational in this area
         typedef typename std::set<std::shared_ptr<Fleet<REAL_T> > >::iterator active_fleets_iterator;
-        typedef typename  ska::bytell_hash_map<int, std::vector< std::shared_ptr<Fleet<REAL_T> > > >::iterator seasonal_fleet_operations_iterator;
+        typedef typename std::map<int, std::vector< std::shared_ptr<Fleet<REAL_T> > > >::iterator seasonal_fleet_operations_iterator;
 
-         ska::bytell_hash_map<int,  ska::bytell_hash_map<int, std::shared_ptr<mas::Survey<REAL_T> > > > survey_models; //population, season keyed
-        typedef typename  ska::bytell_hash_map<int,  ska::bytell_hash_map<int, std::shared_ptr<mas::Survey<REAL_T> > > > ::iterator survey_model_iterator;
-        typedef typename  ska::bytell_hash_map<int, std::shared_ptr<mas::Survey<REAL_T> > >::iterator survey_season_iterator;
+        std::map<int, std::map<int, std::shared_ptr<mas::Survey<REAL_T> > > > survey_models; //population, season keyed
+        typedef typename std::map<int, std::map<int, std::shared_ptr<mas::Survey<REAL_T> > > > ::iterator survey_model_iterator;
+        typedef typename std::map<int, std::shared_ptr<mas::Survey<REAL_T> > >::iterator survey_season_iterator;
 
         std::vector<std::shared_ptr<DataObject<REAL_T> > > survey_biomass_data;
         std::vector<std::shared_ptr<DataObject<REAL_T> > > survey_proportion_data_N;
