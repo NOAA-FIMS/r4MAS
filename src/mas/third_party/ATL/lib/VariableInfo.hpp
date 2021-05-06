@@ -220,7 +220,7 @@ namespace atl {
     };
 
     template<typename REAL_T>
-    util::MemoryPool<VariableInfo<REAL_T> > VariableInfo<REAL_T>::memory_pool = new util::MemoryPool<VariableInfo<REAL_T> >(1000000);
+    util::MemoryPool<VariableInfo<REAL_T> >* VariableInfo<REAL_T>::memory_pool = new util::MemoryPool<VariableInfo<REAL_T> >(1000000);
     
     
     template<typename REAL_T>
