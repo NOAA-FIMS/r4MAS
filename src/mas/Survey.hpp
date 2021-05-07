@@ -117,13 +117,16 @@ namespace mas {
         int survey_biomass_likelihood_component_id = -999;
         std::shared_ptr<mas::NLLFunctor<REAL_T> > survey_biomass_likelihood_component;
 
+        int survey_abundance_likelihood_component_id = -999;
+        std::shared_ptr<mas::NLLFunctor<REAL_T> > survey_abundance_likelihood_component;
+
         REAL_T chi_squared;
         REAL_T g_test;
         REAL_T rmse;
         REAL_T rmsle;
         REAL_T AIC;
         REAL_T BIC;
-        
+
 
         std::vector<NLLComponent<REAL_T> > nll_components;
         variable nll;
@@ -223,7 +226,43 @@ namespace mas {
 
 
                         break;
-                    case mas::SURVEY_PROPORTION_AT_AGE_N:
+                    case mas::SURVEY_ABUNDANCE:
+                        switch (data_objects[i]->sex_type) {
+
+                            case mas::FEMALE:
+                                ss.str("");
+                                ss << "survey_index_female" << tag;
+                                nll_component_values[i] = variable();
+                                nll_component_values[i].SetName(ss.str());
+                                this->nll_components.push_back(mas::NLLComponent<REAL_T>(&survey_abundance_females,
+                                        this->data_objects[i],
+                                        this->survey_abundance_likelihood_component));
+
+                                break;
+
+                            case mas::MALE:
+                                ss.str("");
+                                ss << "survey_index_male" << tag;
+                                nll_component_values[i] = variable();
+                                nll_component_values[i].SetName(ss.str());
+                                this->nll_components.push_back(mas::NLLComponent<REAL_T>(&survey_abundance_males,
+                                        this->data_objects[i],
+                                        this->survey_abundance_likelihood_component));
+
+                                break;
+
+                            case mas::UNDIFFERENTIATED:
+                                ss.str("");
+                                ss << "survey_index_undifferentiated" << tag;
+                                nll_component_values[i] = variable();
+                                nll_component_values[i].SetName(ss.str());
+                                this->nll_components.push_back(mas::NLLComponent<REAL_T>(&survey_abundance,
+                                        this->data_objects[i],
+                                        this->survey_abundance_likelihood_component));
+                                break;
+
+
+                        }
                         break;
                     case mas::SURVEY_PROPORTION_AT_AGE:
                         //                        for (int ay = 0; ay < this->active_years.size(); ay++) {
@@ -238,7 +277,7 @@ namespace mas {
                                 nll_component_values[i].SetName(ss.str());
                                 this->nll_components.push_back(mas::NLLComponent<REAL_T>(&survey_proportion_at_age_females,
                                         this->data_objects[i],
-                                        this->survey_age_comp_likelihood_component));
+                                        survey_age_comp_likelihood_component));
                                 break;
                             case mas::MALE:
                                 ss.str("");
@@ -304,7 +343,7 @@ namespace mas {
         }
 
         inline void ComputeProportions() {
-            
+
             for (int y = 0; y < this->years; y++) {
                 if (this->active_years[y]) {
                     for (int s = 0; s < this->seasons; s++) {
@@ -374,7 +413,7 @@ namespace mas {
             }
         }
 
-               void ApplyOperatingModelError() {
+        void ApplyOperatingModelError() {
             this->survey_biomass_data =
                     std::make_shared<mas::DataObject<REAL_T> >();
             this->survey_biomass_data->sex_type = mas::UNDIFFERENTIATED;
@@ -382,8 +421,8 @@ namespace mas {
             this->survey_biomass_data->dimensions = 2;
             this->survey_biomass_data->imax = this->years;
             this->survey_biomass_data->jmax - this->seasons;
-            this->survey_biomass_data->data.resize(this->years*this->seasons);
-            this->survey_biomass_data->observation_error.resize(this->years*this->seasons);
+            this->survey_biomass_data->data.resize(this->years * this->seasons);
+            this->survey_biomass_data->observation_error.resize(this->years * this->seasons);
 
             this->survey_proportion_at_age_data =
                     std::make_shared<mas::DataObject<REAL_T> >();
@@ -393,10 +432,10 @@ namespace mas {
             this->survey_proportion_at_age_data->imax = this->years;
             this->survey_proportion_at_age_data->jmax = this->seasons;
             this->survey_proportion_at_age_data->kmax = this->ages;
-            this->survey_proportion_at_age_data->data.resize(this->years*this->seasons*this->ages);
-            this->survey_proportion_at_age_data->sample_size.resize(this->years*this->seasons);
-            
-            
+            this->survey_proportion_at_age_data->data.resize(this->years * this->seasons * this->ages);
+            this->survey_proportion_at_age_data->sample_size.resize(this->years * this->seasons);
+
+
             REAL_T sd = std::sqrt(1 + std::pow(this->CV, 2.0));
 
             std::default_random_engine generator;
@@ -404,7 +443,7 @@ namespace mas {
             //fill in observed data 
             for (int y = 0; y < this->years; y++) {
                 for (int s = 0; s < this->seasons; s++) {
-                    
+
                     this->survey_biomass_data->get(y, s) =
                             this->survey_biomass_total[y * this->seasons + s].GetValue();
 
@@ -416,7 +455,7 @@ namespace mas {
                     std::vector<REAL_T> probs(this->ages);
 
                     for (int a = 0; a < this->ages; a++) {
-                       size_t index = y * this->seasons * this->ages + (s * this->ages) + a;
+                        size_t index = y * this->seasons * this->ages + (s * this->ages) + a;
                         total_c += survey_numbers_at_age[index].GetValue();
                         //                        this->survey_proportion_at_age_data->get(y, s, a) =
                         //                                this->survey_proportion_at_age[y * this->seasons * this->ages +
@@ -431,14 +470,14 @@ namespace mas {
                     std::default_random_engine generator;
                     std::uniform_int_distribution<int> distribution(140, 300);
 
-                    this->survey_proportion_at_age_data->sample_size[y*this->seasons + s] =
-                           distribution(generator);
-                    std::vector<int> ret =  mas::rmultinom(this->survey_proportion_at_age_data->sample_size[y*s + s], probs);
+                    this->survey_proportion_at_age_data->sample_size[y * this->seasons + s] =
+                            distribution(generator);
+                    std::vector<int> ret = mas::rmultinom(this->survey_proportion_at_age_data->sample_size[y * s + s], probs);
                     for (int a = 0; a < this->ages; a++) {
 
                         this->survey_proportion_at_age_data->get(y, s, a) =
-                                (REAL_T)ret[a]/ 
-                                this->survey_proportion_at_age_data->sample_size[y*this->seasons + s];
+                                (REAL_T) ret[a] /
+                                this->survey_proportion_at_age_data->sample_size[y * this->seasons + s];
                     }
 
 
@@ -449,9 +488,6 @@ namespace mas {
 
         }
 
-        
-        
-        
         std::string NLLComponentsToString() {
             std::stringstream ss;
             ss << "Survey: " << this->id << std::endl;
@@ -473,8 +509,8 @@ namespace mas {
                 this->g_test += this->nll_components[i].g_test;
                 this->rmse += this->nll_components[i].rmse;
                 this->rmsle += this->nll_components[i].rmsle;
-                this->AIC+= this->nll_components[i].AIC;
-                this->BIC+= this->nll_components[i].BIC;     
+                this->AIC += this->nll_components[i].AIC;
+                this->BIC += this->nll_components[i].BIC;
             }
         }
 

@@ -4053,7 +4053,7 @@ public:
                             m->Register(m->male_connectivity[s][i][j]);
                             m->Register(m->female_connectivity[s][i][j]);
                             m->Register(m->recruit_connectivity[s][i][j]);
-                            
+
                         }
                     }
 
@@ -4327,7 +4327,7 @@ public:
         std::shared_ptr<mas::Population<double> > population = std::make_shared<mas::Population<double> >();
         mas::Population<double>* pop = population.get();
 
-        
+
         pop->id = this->id;
         pop->female_fraction_value = this->sex_ratio;
         pop->growth_id = this->growth;
@@ -5560,6 +5560,7 @@ public:
 
 
 
+
     //    int index_data;
     //    int age_comp_data;
     //    int length_comp_data;
@@ -5578,6 +5579,7 @@ public:
     int used = false;
     double catch_fraction_of_year = 1.0;
     int id;
+    std::string name;
 
     Fleet() {
 
@@ -6094,6 +6096,7 @@ public:
     };
 
     static int id_g;
+    
     std::vector<std::pair<SexType, int> > index_data;
     std::vector<std::pair<SexType, int> > age_comp_data;
     std::vector<std::pair<SexType, int> > length_comp_data;
@@ -6105,6 +6108,7 @@ public:
 public:
     bool used = false;
     int id;
+    std::string name;
     Parameter q;
     double survey_fraction_of_year = 1.0;
 
@@ -7395,6 +7399,7 @@ RCPP_MODULE(rmas) {
     class_<Fleet>("Fleet")
             .constructor()
             .field("id", &Fleet::id)
+            .field("name", &Fleet::name)
             .field("catch_fraction_of_year", &Fleet::catch_fraction_of_year)
             .method("AddFishingMortality", &Fleet::AddFishingMortality)
             .method("AddSelectivity", &Fleet::AddSelectivity)
@@ -7409,6 +7414,7 @@ RCPP_MODULE(rmas) {
     class_<Survey>("Survey")
             .constructor()
             .field("id", &Survey::id)
+            .field("name", &Survey::name)
             .field("survey_fraction_of_year", &Survey::survey_fraction_of_year)
             .field("q", &Survey::q)
             .method("AddSelectivity", &Survey::AddSelectivity)

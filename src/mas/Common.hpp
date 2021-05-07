@@ -285,7 +285,7 @@ namespace mas {
 
     enum DataObjectType {
         CATCH_BIOMASS = 0,
-        CATCH_PROPORTION_AT_AGE_N,
+        CATCH_ABUNDANCE,
         CATCH_PROPORTION_AT_AGE,
         CATCH_PROPORTION_AT_LENGTH_N,
         CATCH_PROPORTION_AT_LENGTH,
@@ -295,7 +295,7 @@ namespace mas {
         CATCH_DISCARD_AT_AGE,
         CATCH_DISCARD_WEIGHT_AT_AGE,
         SURVEY_BIOMASS,
-        SURVEY_PROPORTION_AT_AGE_N,
+        SURVEY_ABUNDANCE,
         SURVEY_PROPORTION_AT_AGE,
         SURVEY_PROPORTION_AT_LENGTH_N,
         SURVEY_PROPORTION_AT_LENGTH,
@@ -433,7 +433,7 @@ namespace mas {
             if (str == "catch_biomass") {
                 return CATCH_BIOMASS;
             } else if (str == "catch_proportion_at_age_N") {
-                return CATCH_PROPORTION_AT_AGE_N;
+                return CATCH_ABUNDANCE;
             } else if (str == "catch_proportion_at_age") {
                 return CATCH_PROPORTION_AT_AGE;
             } else if (str == "catch_proportion_at_length_N") {
@@ -451,7 +451,7 @@ namespace mas {
             } else if (str == "survey_biomass") {
                 return SURVEY_BIOMASS;
             } else if (str == "survey_proportion_at_age_N") {
-                return SURVEY_PROPORTION_AT_AGE_N;
+                return SURVEY_ABUNDANCE;
             } else if (str == "survey_proportion_at_age") {
                 return SURVEY_PROPORTION_AT_AGE;
             } else if (str == "survey_proportion_at_length_N") {
@@ -550,7 +550,7 @@ namespace mas {
             case CATCH_BIOMASS:
                 out << "Catch Biomass:";
                 break;
-            case CATCH_PROPORTION_AT_AGE_N:
+            case CATCH_ABUNDANCE:
                 out << "Catch Proportion at Age Sample Size:";
                 break;
             case CATCH_PROPORTION_AT_AGE:
@@ -568,7 +568,7 @@ namespace mas {
             case SURVEY_BIOMASS:
                 out << "Survey Biomass";
                 break;
-            case SURVEY_PROPORTION_AT_AGE_N:
+            case SURVEY_ABUNDANCE:
                 out << "Survey Proportion at Age Sample Size:";
                 break;
             case SURVEY_PROPORTION_AT_AGE:
@@ -608,7 +608,7 @@ namespace mas {
                 }
                 out << "\n";
                 break;
-            case CATCH_PROPORTION_AT_AGE_N:
+            case CATCH_ABUNDANCE:
                 out << "Catch Proportion at Age Sample Size:";
                 break;
             case CATCH_PROPORTION_AT_AGE:
@@ -638,7 +638,7 @@ namespace mas {
                 out << "\n";
 
                 break;
-            case SURVEY_PROPORTION_AT_AGE_N:
+            case SURVEY_ABUNDANCE:
                 out << "Survey Proportion at Age Sample Size:";
                 break;
             case SURVEY_PROPORTION_AT_AGE:

@@ -83,6 +83,9 @@ namespace mas {
         int fishery_biomass_index_likelihood_component_id = -999;
         std::shared_ptr<mas::NLLFunctor<REAL_T> > fishery_biomass_index_likelihood_component;
 
+        int fishery_abundance_likelihood_component_id = -999;
+        std::shared_ptr<mas::NLLFunctor<REAL_T> > fishery_abundance_likelihood_component;
+
         std::unordered_set<int> operational_areas;
         std::unordered_map<int, std::unordered_map<int, int> > season_area_selectivity_ids;
         std::unordered_map<int, std::unordered_map<int, std::vector<int> > > season_area_selectivity_ensemble_ids;
@@ -270,7 +273,43 @@ namespace mas {
                         }
 
                         break;
-                    case mas::CATCH_PROPORTION_AT_AGE_N:
+                    case mas::CATCH_ABUNDANCE:
+                         switch (data_objects[i]->sex_type) {
+
+                            case mas::FEMALE:
+                                ss.str("");
+                                ss << "fishery_index_female" << tag;
+                                nll_component_values[i] = variable();
+                                nll_component_values[i].SetName(ss.str());
+                                this->nll_components.push_back(mas::NLLComponent<REAL_T>(&catch_abundance_females,
+                                        this->data_objects[i],
+                                        this->fishery_abundance_likelihood_component));
+
+                                break;
+
+                            case mas::MALE:
+                                ss.str("");
+                                ss << "fishery_index_male" << tag;
+                                nll_component_values[i] = variable();
+                                nll_component_values[i].SetName(ss.str());
+                                this->nll_components.push_back(mas::NLLComponent<REAL_T>(&catch_abundance_males,
+                                        this->data_objects[i],
+                                        this->fishery_abundance_likelihood_component));
+
+                                break;
+
+                            case mas::UNDIFFERENTIATED:
+                                ss.str("");
+                                ss << "fishery_index_undifferentiated" << tag;
+                                nll_component_values[i] = variable();
+                                nll_component_values[i].SetName(ss.str());
+                                this->nll_components.push_back(mas::NLLComponent<REAL_T>(&catch_abundance,
+                                        this->data_objects[i],
+                                        this->fishery_abundance_likelihood_component));
+                                break;
+
+
+                        }
                         break;
                     case mas::CATCH_PROPORTION_AT_AGE:
                         //                        for (int ay = 0; ay < this->active_years.size(); ay++) {
@@ -455,11 +494,11 @@ namespace mas {
 
                     this->catch_biomass_data->get(y, s) =
                             this->catch_biomass_total[y * this->seasons + s].GetValue()
-                            *std::exp(distribution(generator));
-                    
-             
+                            * std::exp(distribution(generator));
+
+
                     this->catch_biomass_data->get_error(y, s) = this->CV;
-                    
+
                     REAL_T total_c = 0.0;
                     std::vector<REAL_T> probs(this->ages);
 

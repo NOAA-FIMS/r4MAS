@@ -8292,7 +8292,7 @@ namespace mas {
                                 data_object->dimensions = 2;
                                 break;
 
-                            case mas::CATCH_PROPORTION_AT_AGE_N:
+                            case mas::CATCH_ABUNDANCE:
                                 INFO_DEBUG
                                 data_object->imax = years;
                                 data_object->jmax = seasons;
@@ -8330,7 +8330,7 @@ namespace mas {
                                 //                                data_object->dimensions = 3;
                                 //                                break;
 
-                            case mas::SURVEY_PROPORTION_AT_AGE_N:
+                            case mas::SURVEY_ABUNDANCE:
                                 INFO_DEBUG
                                 data_object->imax = years;
                                 data_object->jmax = seasons;
@@ -8462,7 +8462,7 @@ namespace mas {
                                     }
                                     break;
 
-                                case mas::CATCH_PROPORTION_AT_AGE_N:
+                                case mas::CATCH_ABUNDANCE:
                                     INFO_DEBUG
                                     data_object->imax = v.Size();
                                     for (i = 0; i < v.Size(); i++) {
@@ -8554,7 +8554,7 @@ namespace mas {
                                     //                                    }
                                     //                                    break;
 
-                                case mas::SURVEY_PROPORTION_AT_AGE_N:
+                                case mas::SURVEY_ABUNDANCE:
                                     INFO_DEBUG
                                     data_object->imax = v.Size();
                                     for (i = 0; i < v.Size(); i++) {
@@ -8683,7 +8683,7 @@ namespace mas {
                                     }
                                     break;
 
-                                case mas::CATCH_PROPORTION_AT_AGE_N:
+                                case mas::CATCH_ABUNDANCE:
                                     INFO_DEBUG
                                     for (i = 0; i < v.Size(); i++) {
                                         data_object->observation_error.push_back(static_cast<REAL_T> (v[i].GetDouble()));
@@ -8759,7 +8759,7 @@ namespace mas {
                                     //                                    }
                                     //                                    break;
 
-                                case mas::SURVEY_PROPORTION_AT_AGE_N:
+                                case mas::SURVEY_ABUNDANCE:
                                     INFO_DEBUG
                                     for (i = 0; i < v.Size(); i++) {
                                         data_object->observation_error.push_back(static_cast<REAL_T> (v[i].GetDouble()));
@@ -8871,7 +8871,7 @@ namespace mas {
                         }
 
                         break;
-                    case CATCH_PROPORTION_AT_AGE_N:
+                    case CATCH_ABUNDANCE:
                         break;
                     case CATCH_PROPORTION_AT_AGE:
                         if (data[i]->data.size() != threedsize) {
@@ -8922,7 +8922,7 @@ namespace mas {
                             }
                         }
                         break;
-                    case SURVEY_PROPORTION_AT_AGE_N:
+                    case SURVEY_ABUNDANCE:
                         break;
                     case SURVEY_PROPORTION_AT_AGE:
                         if (data[i]->data.size() != threedsize) {
@@ -9556,7 +9556,7 @@ namespace mas {
                                 (*fit).second->catch_biomass_data = data[i];
                                 (*fit).second->data_objects.push_back(data[i]);
                                 break;
-                            case mas::CATCH_PROPORTION_AT_AGE_N:
+                            case mas::CATCH_ABUNDANCE:
                                 (*fit).second->catch_proportion_at_age_data_N = data[i];
                                 (*fit).second->data_objects.push_back(data[i]);
                                 break;
@@ -9669,7 +9669,7 @@ namespace mas {
                                 (*ssit).second->survey_biomass_data = data[i];
                                 (*ssit).second->data_objects.push_back(data[i]);
                                 break;
-                            case mas::SURVEY_PROPORTION_AT_AGE_N:
+                            case mas::SURVEY_ABUNDANCE:
                                 (*ssit).second->survey_proportion_at_age_data_N = data[i];
                                 (*ssit).second->data_objects.push_back(data[i]);
                                 break;
@@ -9739,7 +9739,7 @@ namespace mas {
             //                            case CATCH_BIOMASS:
             //                                (*ait).second->catch_biomass_data.push_back((*dit).second[i]);
             //                                break;
-            //                            case CATCH_PROPORTION_AT_AGE_N:
+            //                            case CATCH_ABUNDANCE:
             //                                (*ait).second->catch_proportion_data_N.push_back((*dit).second[i]);
             //                                break;
             //                            case CATCH_PROPORTION_AT_AGE:
@@ -9760,7 +9760,7 @@ namespace mas {
             //                            case SURVEY_BIOMASS:
             //                                (*ait).second->survey_biomass_data.push_back((*dit).second[i]);
             //                                break;
-            //                            case SURVEY_PROPORTION_AT_AGE_N:
+            //                            case SURVEY_ABUNDANCE:
             //                                (*ait).second->survey_proportion_data_N.push_back((*dit).second[i]);
             //                                break;
             //                            case SURVEY_PROPORTION_AT_AGE:

@@ -1001,7 +1001,7 @@ namespace mas {
                     }
 
 
-                } else if (fleet->data_objects[i]->type == mas::CATCH_PROPORTION_AT_AGE_N) {
+                } else if (fleet->data_objects[i]->type == mas::CATCH_ABUNDANCE) {
                 } else if (fleet->data_objects[i]->type == mas::CATCH_PROPORTION_AT_AGE) {
 
 
@@ -1085,7 +1085,7 @@ namespace mas {
             //                    }
             //
             //                    popobject.AddMember("catch_biomass_total", obj, this->document.GetAllocator());
-            //                } else if (fleet->data_objects[i]->type == mas::CATCH_PROPORTION_AT_AGE_N) {
+            //                } else if (fleet->data_objects[i]->type == mas::CATCH_ABUNDANCE) {
             //                } else if (fleet->data_objects[i]->type == mas::CATCH_PROPORTION_AT_AGE) {
             //
             //                    if (fleet->data_objects[i]->sex_type == mas::FEMALE) {
@@ -1241,7 +1241,7 @@ namespace mas {
                     }
 
 
-                } else if (survey->data_objects[i]->type == mas::SURVEY_PROPORTION_AT_AGE_N) {
+                } else if (survey->data_objects[i]->type == mas::SURVEY_ABUNDANCE) {
                 } else if (survey->data_objects[i]->type == mas::SURVEY_PROPORTION_AT_AGE) {
 
 
