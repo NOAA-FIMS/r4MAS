@@ -602,7 +602,7 @@ namespace atl {
          * @return 
          */
         template<class A>
-        inline Variable& Assign(const ExpressionBase<REAL_T, A>& exp, size_t index) {
+        inline Variable& Assign(const ExpressionBase<REAL_T, A>& exp, const size_t& index) {
 
             if (Variable<REAL_T>::tape.recording) {
                 this->Assign(atl::Variable<REAL_T>::tape, exp, index);
@@ -621,7 +621,7 @@ namespace atl {
          * @return 
          */
         template<class A>
-        inline Variable& Assign(atl::Tape<REAL_T>& tape, const ExpressionBase<REAL_T, A>& exp, size_t index) {
+        inline Variable& Assign(atl::Tape<REAL_T>& tape, const ExpressionBase<REAL_T, A>& exp, const size_t& index) {
 
             if (tape.recording) {
 
