@@ -68,6 +68,7 @@ namespace mas {
         int selectivity_model_id;
         std::vector<int> area_ids;
         std::shared_ptr<DataObject<REAL_T> > survey_biomass_data;
+         std::shared_ptr<DataObject<REAL_T> > catch_abundance_data;
         // NOTE:  need sex-specific proportions-at-age, proportions-at-length, and mean size-at-age data
         std::shared_ptr<DataObject<REAL_T> > survey_proportion_at_age_data_N;
         std::shared_ptr<DataObject<REAL_T> > survey_proportion_at_age_data;

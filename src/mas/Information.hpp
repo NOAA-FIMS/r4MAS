@@ -9557,7 +9557,7 @@ namespace mas {
                                 (*fit).second->data_objects.push_back(data[i]);
                                 break;
                             case mas::CATCH_ABUNDANCE:
-                                (*fit).second->catch_proportion_at_age_data_N = data[i];
+                                (*fit).second->catch_abundance_data = data[i];
                                 (*fit).second->data_objects.push_back(data[i]);
                                 break;
                             case mas::CATCH_PROPORTION_AT_AGE:
@@ -9670,7 +9670,7 @@ namespace mas {
                                 (*ssit).second->data_objects.push_back(data[i]);
                                 break;
                             case mas::SURVEY_ABUNDANCE:
-                                (*ssit).second->survey_proportion_at_age_data_N = data[i];
+                                (*ssit).second->catch_abundance_data = data[i];
                                 (*ssit).second->data_objects.push_back(data[i]);
                                 break;
                             case mas::SURVEY_PROPORTION_AT_AGE:

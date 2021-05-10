@@ -59,7 +59,7 @@ namespace mas {
         bool has_catch_data_proportion_at_age;
         std::vector<bool> active_years;
         std::shared_ptr<DataObject<REAL_T> > catch_biomass_data;
-
+        std::shared_ptr<DataObject<REAL_T> > catch_abundance_data;
         // NOTE:  need sex-specific proportions-at-age, proportions-at-length, and mean size-at-age data
         std::shared_ptr<DataObject<REAL_T> > catch_proportion_at_age_data_N;
         std::shared_ptr<DataObject<REAL_T> > catch_proportion_at_age_data;
@@ -274,7 +274,7 @@ namespace mas {
 
                         break;
                     case mas::CATCH_ABUNDANCE:
-                         switch (data_objects[i]->sex_type) {
+                        switch (data_objects[i]->sex_type) {
 
                             case mas::FEMALE:
                                 ss.str("");

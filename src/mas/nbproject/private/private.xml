@@ -15,27 +15,6 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Makefile</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/MAS/main.cpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/MAS/EnsembleEngine.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Selectivity.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/MAS/MAS.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/MAS/NLLComponents.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Survey.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Information.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Mortality.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Area.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/MAS/ObjectiveFunction.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Growth.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Movement.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Fleet.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Output.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Options.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Common.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Recruitment.hpp</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/mas/third_party/rapidjson/allocators.h</file>
-            <file>file:/Users/mattadmin/NetBeansProjects/MAS/Population.hpp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
