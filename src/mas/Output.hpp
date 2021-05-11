@@ -962,7 +962,7 @@ namespace mas {
             this->GenerateArrayObject(array8, fleet->catch_abundance_males, 2, fleet->years, fleet->seasons);
             expected_catch_abundance_males.AddMember("units", "1000 fish", this->document.GetAllocator());
             expected_catch_abundance_males.AddMember("values", array8, this->document.GetAllocator());
-            females.AddMember("catch_abundance", expected_catch_abundance_males, this->document.GetAllocator());
+            males.AddMember("catch_abundance", expected_catch_abundance_males, this->document.GetAllocator());
 
             rapidjson::Value array9(rapidjson::kArrayType);
             this->GenerateArrayObject(array9, fleet->catch_at_age, 3, fleet->years, fleet->seasons, fleet->ages);
@@ -991,7 +991,7 @@ namespace mas {
             this->GenerateArrayObject(array13, fleet->catch_abundance, 2, fleet->years, fleet->seasons);
             expected_catch_abundance.AddMember("units", "1000 fish", this->document.GetAllocator());
             expected_catch_abundance.AddMember("values", array9, this->document.GetAllocator());
-            females.AddMember("catch_abundance", expected_catch_abundance, this->document.GetAllocator());
+            undiff.AddMember("catch_abundance", expected_catch_abundance, this->document.GetAllocator());
 
             popobject.AddMember("undifferentiated", undiff, this->document.GetAllocator());
 
