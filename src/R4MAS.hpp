@@ -6266,7 +6266,7 @@ public:
                             }
                             d->id = this->id;
                             d->name = "Index Data";
-                               if (data->is_abundance) {
+                            if (data->is_abundance) {
                                 d->type = mas::SURVEY_ABUNDANCE;
                             } else {
                                 d->type = mas::SURVEY_BIOMASS;
@@ -7442,6 +7442,7 @@ RCPP_MODULE(rmas) {
             .field("error", &IndexData::error)
             .field("sex", &IndexData::sex)
             .field("missing_value", &IndexData::missing_values)
+            .field("is_abundance", &IndexData::is_abundance)
             ;
 
     class_<AgeCompData>("AgeCompData")
