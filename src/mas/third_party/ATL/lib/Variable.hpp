@@ -20,7 +20,6 @@
 #include <vector>
 #include <valarray>
 #include <cassert>
-#include <utility>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846264338327950288
@@ -985,11 +984,11 @@ namespace atl {
         }
 
         inline void PushIds(typename atl::StackEntry<REAL_T>::vi_storage& ids)const {
-            ids.insert(std::forward(info));
+            ids.insert(info);
         }
 
         inline void PushIds(typename atl::StackEntry<REAL_T>::vi_storage& ids, size_t i, size_t j = 0)const {
-            ids.insert(std::forward(info));
+            ids.insert(info);
         }
 
         inline void PushNLIds(typename atl::StackEntry<REAL_T>::vi_storage& ids, bool nl = false)const {
