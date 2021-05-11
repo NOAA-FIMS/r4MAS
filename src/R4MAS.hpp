@@ -5447,6 +5447,7 @@ std::map<int, MultinomialRobust*> MultinomialRobust::initialized_models;
 class IndexData {
 public:
     static int id_g;
+    bool is_abundance = false;
 
     IndexData(bool add_to_list = true) {
 
@@ -5723,7 +5724,11 @@ public:
                             }
                             d->id = this->id;
                             d->name = "Index Data";
-                            d->type = mas::CATCH_BIOMASS;
+                            if (data->is_abundance) {
+                                d->type = mas::CATCH_ABUNDANCE;
+                            } else {
+                                d->type = mas::CATCH_BIOMASS;
+                            }
                             d->Validate();
                             info.data_dictionary[d->id].push_back(dd);
                             info.data.push_back(dd);
@@ -6096,7 +6101,7 @@ public:
     };
 
     static int id_g;
-    
+
     std::vector<std::pair<SexType, int> > index_data;
     std::vector<std::pair<SexType, int> > age_comp_data;
     std::vector<std::pair<SexType, int> > length_comp_data;
@@ -6261,7 +6266,11 @@ public:
                             }
                             d->id = this->id;
                             d->name = "Index Data";
-                            d->type = mas::SURVEY_BIOMASS;
+                               if (data->is_abundance) {
+                                d->type = mas::SURVEY_ABUNDANCE;
+                            } else {
+                                d->type = mas::SURVEY_BIOMASS;
+                            }
                             d->Validate();
                             info.data_dictionary[d->id].push_back(dd);
                             info.data.push_back(dd);
