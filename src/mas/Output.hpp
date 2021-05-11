@@ -890,6 +890,10 @@ namespace mas {
             rapidjson::Value expected_catch_biomas_totals(rapidjson::kObjectType);
             rapidjson::Value expected_catch_biomas_totals_t(rapidjson::kObjectType);
 
+            rapidjson::Value expected_catch_abundance_males(rapidjson::kObjectType);
+            rapidjson::Value expected_catch_abundance(rapidjson::kObjectType);
+            rapidjson::Value expected_catch_abundance_females(rapidjson::kObjectType);
+
             rapidjson::Value expected_catch_numbers_females(rapidjson::kObjectType);
             rapidjson::Value expected_catch_numbers_males(rapidjson::kObjectType);
             rapidjson::Value expected_catch_numbers_total(rapidjson::kObjectType);
@@ -922,6 +926,12 @@ namespace mas {
             expected_catch_biomass_females_t.AddMember("values", array8, this->document.GetAllocator());
             females.AddMember("catch_biomass", expected_catch_biomass_females_t, this->document.GetAllocator());
 
+            rapidjson::Value array9(rapidjson::kArrayType);
+            this->GenerateArrayObject(array9, fleet->catch_abundance_females, 2, fleet->years, fleet->seasons);
+            expected_catch_abundance_females.AddMember("units", "1000 fish", this->document.GetAllocator());
+            expected_catch_abundance_females.AddMember("values", array9, this->document.GetAllocator());
+            females.AddMember("catch_abundance", expected_catch_abundance_females, this->document.GetAllocator());
+
             popobject.AddMember("females", females, this->document.GetAllocator());
 
             rapidjson::Value array4(rapidjson::kArrayType);
@@ -948,6 +958,12 @@ namespace mas {
             males.AddMember("catch_biomass", expected_catch_biomass_males_t, this->document.GetAllocator());
             popobject.AddMember("males", males, this->document.GetAllocator());
 
+            rapidjson::Value array8(rapidjson::kArrayType);
+            this->GenerateArrayObject(array8, fleet->catch_abundance_males, 2, fleet->years, fleet->seasons);
+            expected_catch_abundance_males.AddMember("units", "1000 fish", this->document.GetAllocator());
+            expected_catch_abundance_males.AddMember("values", array8, this->document.GetAllocator());
+            females.AddMember("catch_abundance", expected_catch_abundance_males, this->document.GetAllocator());
+
             rapidjson::Value array9(rapidjson::kArrayType);
             this->GenerateArrayObject(array9, fleet->catch_at_age, 3, fleet->years, fleet->seasons, fleet->ages);
             expected_catch_numbers_total.AddMember("units", "1000 fish", this->document.GetAllocator());
@@ -970,6 +986,12 @@ namespace mas {
             expected_catch_biomas_totals_t.AddMember("units", "mt", this->document.GetAllocator());
             expected_catch_biomas_totals_t.AddMember("values", array12, this->document.GetAllocator());
             undiff.AddMember("catch_biomass", expected_catch_biomas_totals_t, this->document.GetAllocator());
+
+            rapidjson::Value array13(rapidjson::kArrayType);
+            this->GenerateArrayObject(array13, fleet->catch_abundance, 2, fleet->years, fleet->seasons);
+            expected_catch_abundance.AddMember("units", "1000 fish", this->document.GetAllocator());
+            expected_catch_abundance.AddMember("values", array9, this->document.GetAllocator());
+            females.AddMember("catch_abundance", expected_catch_abundance, this->document.GetAllocator());
 
             popobject.AddMember("undifferentiated", undiff, this->document.GetAllocator());
 
