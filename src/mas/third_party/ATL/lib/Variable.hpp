@@ -984,11 +984,11 @@ namespace atl {
         }
 
         inline void PushIds(typename atl::StackEntry<REAL_T>::vi_storage& ids)const {
-            ids.insert(info);
+            ids.insert(std::forward(info));
         }
 
         inline void PushIds(typename atl::StackEntry<REAL_T>::vi_storage& ids, size_t i, size_t j = 0)const {
-            ids.insert(info);
+            ids.insert(std::forward(info));
         }
 
         inline void PushNLIds(typename atl::StackEntry<REAL_T>::vi_storage& ids, bool nl = false)const {
