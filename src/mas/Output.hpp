@@ -990,7 +990,7 @@ namespace mas {
             rapidjson::Value array13(rapidjson::kArrayType);
             this->GenerateArrayObject(array13, fleet->catch_abundance, 2, fleet->years, fleet->seasons, fleet->ages);
             expected_catch_abundance.AddMember("units", "1000 fish", this->document.GetAllocator());
-            expected_catch_abundance.AddMember("values", array9, this->document.GetAllocator());
+            expected_catch_abundance.AddMember("values", array13, this->document.GetAllocator());
             undiff.AddMember("catch_abundance", expected_catch_abundance, this->document.GetAllocator());
 
             popobject.AddMember("undifferentiated", undiff, this->document.GetAllocator());
