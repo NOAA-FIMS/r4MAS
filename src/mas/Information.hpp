@@ -9486,6 +9486,8 @@ namespace mas {
 
                 }
 
+
+
                 nll = (*fit).second->fishery_biomass_likelihood_component_id;
 
                 INFO_DEBUG
@@ -9502,6 +9504,26 @@ namespace mas {
                     } else {
                         (*fit).second->fishery_biomass_likelihood_component = (*comp).second;
                         (*fit).second->fishery_biomass_likelihood_component->used = true;
+                    }
+
+                }
+
+                nll = (*fit).second->fishery_abundance_likelihood_component_id;
+
+                INFO_DEBUG
+                if (nll == -999) {
+                    (*fit).second->fishery_abundance_likelihood_component = std::make_shared < mas::Lognormal<REAL_T> >();
+                } else {
+
+                    likelihood_components_iterator comp =
+                            this->likelihood_components.find(nll);
+                    if (comp == this->likelihood_components.end()) {
+                        std::cout << "Configuration Error: Likelihood component \"" << nll << "\" not found  \n";
+                        std::cout << "Configuration Error: Likelihood component \"" << nll << "\" not found  \n";
+                        this->valid_configuration = false;
+                    } else {
+                        (*fit).second->fishery_abundance_likelihood_component = (*comp).second;
+                        (*fit).second->fishery_abundance_likelihood_component->used = true;
                     }
 
                 }
@@ -9551,7 +9573,7 @@ namespace mas {
                 for (int i = 0; i <this->data.size(); i++) {
                     if (data[i]->id == (*fit).second->id) {
 
-                        
+
                         switch (data[i]->type) {
                             case mas::CATCH_BIOMASS:
                                 (*fit).second->catch_biomass_data = data[i];
