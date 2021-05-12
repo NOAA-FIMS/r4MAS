@@ -9551,6 +9551,7 @@ namespace mas {
                 for (int i = 0; i <this->data.size(); i++) {
                     if (data[i]->id == (*fit).second->id) {
 
+                        
                         switch (data[i]->type) {
                             case mas::CATCH_BIOMASS:
                                 (*fit).second->catch_biomass_data = data[i];

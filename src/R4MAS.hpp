@@ -5677,7 +5677,7 @@ public:
             }
 
             if (this->index_nll_id != -999) {
-                f->fishery_biomass_likelihood_component_id = this->index_nll_id;
+                
 
                 bool nll_exists = false;
                 for (int i = 0; i < NLLBase::nll_submodels.size(); i++) {
@@ -5725,9 +5725,11 @@ public:
                             d->id = this->id;
                             d->name = "Index Data";
                             if (data->is_abundance) {
+                                f->fishery_abundance_likelihood_component_id = this->index_nll_id;
                                 d->type = mas::CATCH_ABUNDANCE;
                             } else {
                                 d->type = mas::CATCH_BIOMASS;
+                                f->fishery_biomass_likelihood_component_id = this->index_nll_id;
                             }
                             d->Validate();
                             info.data_dictionary[d->id].push_back(dd);
