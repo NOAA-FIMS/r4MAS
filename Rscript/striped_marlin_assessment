@@ -1,10 +1,10 @@
-# remotes::install_github("nmfs-fish-tools/r4MAS", ref = "82365c4e0955664911d3e7f022c9756ffe8f7535")
-# remotes::install_github("nmfs-fish-tools/fishsad")
+# remotes::install_github("nmfs-fish-tools/r4MAS")
+# remotes::install_github("r4ss/r4ss")
 
 library(r4MAS)
 library(Rcpp)
 library(jsonlite)
-library(fishsad)
+library(r4ss)
 
 ## Read SS input file
 file_path <- "C:/Users/bai.li/Desktop/striped_marlin/"
@@ -17,24 +17,41 @@ version <- "3.30"
 
 
 # Read SS input data
-ss_input <- ss_input(file_path=file_path,
-                     data_file=data_file,
-                     control_file=control_file,
-                     starter_file=starter_file,
-                     forecast_file=forecast_file,
-                     watage_file=watage_file,
-                     version=version)
+ss_dat <- r4ss::SS_readdat(
+  file = file.path(file_path, data_file),
+  version = version,
+  verbose = TRUE,
+  echoall = FALSE,
+  section = NULL
+)
+ss_ctl <- r4ss::SS_readctl(
+  file = file.path(file_path, control_file),
+  version = version,
+  verbose = TRUE,
+  echoall = lifecycle::deprecated(),
+  use_datlist = TRUE,
+  datlist = file.path(file_path, data_file),
+)
 
-ss_dat <- ss_input$ss_data
-ss_ctl <- ss_input$ss_control
+ss_starter <- r4ss::SS_readstarter(
+  file = file.path(file_path, starter_file),
+  verbose = TRUE
+)
+
+ss_forecast <- r4ss::SS_readforecast(
+  file = file.path(file_path, forecast_file),
+  version = version,
+  readAll = FALSE,
+  verbose = TRUE,
+  Nfleets = NULL,
+  Nareas = NULL,
+  nseas = NULL
+)
+
+ss_wtatage <- NULL
 
 fleet_id <- unique(ss_dat$catch$fleet)
 survey_id <- unique(ss_dat$CPUE$index)
-
-ss_wtatage <- ss_input$ss_wtatage
-ss_starter <- ss_input$ss_starter
-ss_forecast <- ss_input$ss_projection
-
 
 ## Convert SS inputs to MAS inputs
 
