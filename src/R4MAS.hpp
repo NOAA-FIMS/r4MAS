@@ -716,8 +716,10 @@ public:
                 std::stringstream ss;
                 ss << "age_base_selectivity[" << i << "]_" << this->id;
                 selex->w[i].SetName(ss.str());
+                selex->selex[info.ages[i]] = this->values[i];
+                selex->selex[info.ages[i]].SetName(ss.str());
                 if (this->estimate_age[i] > 0) {
-                    selex->Register(selex->w[i], this->phase);
+                    selex->Register(selex->selex[info.ages[i]] , this->phase);
                 }
             }
         }
