@@ -2354,10 +2354,10 @@ namespace atl {
                         iteration, false)) {
                     std::cout << "Outer Max line searches (" << this->max_line_searches << ").";
                     this->Print();
-                    return false;
+//                     return false;
 
                 }
-                if ((fv - this->function_value) == 0.0 && no_progress_count == 5) {
+                if ((fv - this->function_value) == 0.0 && no_progress_count == 15) {
                     std::cout << "Not progressing...bailing out!\n";
                     return false;
                 } else {
