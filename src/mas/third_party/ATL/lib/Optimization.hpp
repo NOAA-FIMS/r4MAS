@@ -1637,7 +1637,7 @@ namespace atl {
             }
 
             std::cout << "|\n" << ' ' << std::string((print_width * (name_width + 1 + value_width + 1 + grad_width + 1)), '-') << "\n";
-            std::cout << "\n\n";
+            std::cout << "\n\n"<<std::flush;
 //            exit(0);
         }
 
