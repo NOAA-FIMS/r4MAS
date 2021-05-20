@@ -2457,8 +2457,7 @@ namespace mas {
         inline void MoveFish(int year, int season) {
             int y = year;
             int s = season;
-            mas_log << year << ", " << season << "\n";
-            //            IncrementTime(y, s);
+
             movement_model_iterator it = this->movement_models.find(year + 1);
             if (it != this->movement_models.end()) {
                 int ss = season - 1;
@@ -2481,12 +2480,9 @@ namespace mas {
                             variable tempm = rercruit_fractions[i][j] * male_info_from.recruitment[year * this->seasons + (season - 1)];
                             variable tempf = rercruit_fractions[i][j] * female_info_from.recruitment[year * this->seasons + (season - 1)];
 
-                            //                            male_info_to.redistributed_recruits[year * this->seasons + (season - 1)] += tempm;
-
                             male_info_to.immigrant_recruits[year * this->seasons + (season - 1)] += tempm;
                             male_info_from.emigrant_recruits[year * this->seasons + (season - 1)] += tempm;
 
-                            //                            female_info_to.redistributed_recruits[year * this->seasons + (season - 1)] += tempf;
                             female_info_to.immigrant_recruits[year * this->seasons + (season - 1)] += tempf;
                             female_info_from.emigrant_recruits[year * this->seasons + (season - 1)] += tempf;
 
@@ -2498,8 +2494,7 @@ namespace mas {
                                 // move survivors only
                                 variable moving_males = male_fractions[i][j] * male_info_from.numbers_at_age[index] *
                                         mas::exp(static_cast<REAL_T> (-1.0) * male_info_from.Z[index]);
-                                //                                mas_log << a << " " << male_fractions[i][j] << "  * " << male_info_from.numbers_at_age[index]
-                                //                                        << " => moving " << emigrantsm << " males from " << areas_list[i]->id << " to " << areas_list[j]->id << "\n";
+                               
                                 male_info_from.emigrants[index] += moving_males;
                                 male_info_from.emigrants_biomass[index] += moving_males * male_info_from.weight_at_season_start[index];
 
