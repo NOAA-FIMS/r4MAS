@@ -195,10 +195,11 @@ namespace atl {
         Variable(REAL_T value = static_cast<REAL_T> (0.0),
                 REAL_T min_boundary = std::numeric_limits<REAL_T>::min(),
                 REAL_T max_boundary = std::numeric_limits<REAL_T>::max()) :
+                info( std::make_shared<VariableInfo<REAL_T> >(value)),
         bounded_m(false),
         min_boundary_m(min_boundary),
         max_boundary_m(max_boundary),
-        transformation(default_transformation.get()): info( std::make_shared<VariableInfo<REAL_T> >(value)) {
+        transformation(default_transformation.get()){
 
             // info = std::make_shared<VariableInfo<REAL_T> >(value);
 
@@ -207,7 +208,8 @@ namespace atl {
 
         Variable(int value,
                 REAL_T min_boundary = std::numeric_limits<REAL_T>::min(),
-                REAL_T max_boundary = std::numeric_limits<REAL_T>::max()) :, info( std::make_shared<VariableInfo<REAL_T> >(value)),
+                REAL_T max_boundary = std::numeric_limits<REAL_T>::max()) : 
+                info( std::make_shared<VariableInfo<REAL_T> >(value)),
         bounded_m(false),
         min_boundary_m(min_boundary),
         max_boundary_m(max_boundary),
@@ -219,7 +221,8 @@ namespace atl {
 
         Variable(long value,
                 REAL_T min_boundary = std::numeric_limits<REAL_T>::min(),
-                REAL_T max_boundary = std::numeric_limits<REAL_T>::max()) :, info( std::make_shared<VariableInfo<REAL_T> >(value)),
+                REAL_T max_boundary = std::numeric_limits<REAL_T>::max()) :
+                info( std::make_shared<VariableInfo<REAL_T> >(value)),
         bounded_m(false),
         min_boundary_m(min_boundary),
         max_boundary_m(max_boundary),
@@ -248,7 +251,8 @@ namespace atl {
         }
 
         template<class A>
-        Variable(const ExpressionBase<REAL_T, A>& exp) :, info( std::make_shared<VariableInfo<REAL_T> >(value)),
+        Variable(const ExpressionBase<REAL_T, A>& exp) :
+        info( std::make_shared<VariableInfo<REAL_T> >(value)),
         bounded_m(false),
         min_boundary_m(std::numeric_limits<REAL_T>::min()),
         max_boundary_m(std::numeric_limits<REAL_T>::max()),
