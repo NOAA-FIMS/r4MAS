@@ -441,14 +441,14 @@ namespace atl {
                         }
                         break;
 
-                    case FIRST_ORDER_REVERSE_COMPLEX_STEP:
-                        //                        for (it = entry.ids.begin(); it != entry.ids.end(); ++it) {
-                        //                            entry.min_id = std::min((*it)->id, entry.min_id);
-                        //                            entry.max_id = std::max((*it)->id, entry.max_id);
-                        //                            entry.first[i] = exp.ComplexEvaluate((*it)->id).imag()/1e-20;
-                        //                            i++;
-                        //                        }
-                        break;
+//                     case FIRST_ORDER_REVERSE_COMPLEX_STEP:
+//                         //                        for (it = entry.ids.begin(); it != entry.ids.end(); ++it) {
+//                         //                            entry.min_id = std::min((*it)->id, entry.min_id);
+//                         //                            entry.max_id = std::max((*it)->id, entry.max_id);
+//                         //                            entry.first[i] = exp.ComplexEvaluate((*it)->id).imag()/1e-20;
+//                         //                            i++;
+//                         //                        }
+//                         break;
 
                     case SECOND_ORDER_REVERSE:
                         entry.w->is_nl = exp.IsNonlinear();
