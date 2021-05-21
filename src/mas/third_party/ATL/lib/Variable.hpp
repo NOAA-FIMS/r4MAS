@@ -252,7 +252,7 @@ namespace atl {
 
         template<class A>
         Variable(const ExpressionBase<REAL_T, A>& exp) :
-        info( std::make_shared<VariableInfo<REAL_T> >(value)),
+        info( std::make_shared<VariableInfo<REAL_T> >(0.0)),
         bounded_m(false),
         min_boundary_m(std::numeric_limits<REAL_T>::min()),
         max_boundary_m(std::numeric_limits<REAL_T>::max()),
