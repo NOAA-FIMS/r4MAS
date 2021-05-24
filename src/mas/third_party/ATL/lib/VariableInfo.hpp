@@ -171,13 +171,13 @@ namespace atl {
             //            VariableIdGenerator::instance()->release(id);
         }
 
-        inline void* operator new(size_t size){
-            return VariableInfo::memory_pool->malloc();
-        }
+//         inline void* operator new(size_t size){
+//             return VariableInfo::memory_pool->malloc();
+//         }
 
-        inline void operator delete(void* ptr) {
-            VariableInfo::memory_pool->free(ptr);
-        }
+//         inline void operator delete(void* ptr) {
+//             VariableInfo::memory_pool->free(ptr);
+//         }
 
         inline void Aquire() {
             count++;
