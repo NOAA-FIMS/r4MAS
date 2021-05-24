@@ -74,7 +74,6 @@ private:
 	void intrusive_ptr_release(T *px) {
 		px->references--;
 		if (px->references == 0) {
-			std::cout<<"Deleteing ptr\n";
 			delete px;
 		}
 	}
