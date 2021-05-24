@@ -12,7 +12,7 @@ public:
 	constexpr intrusive_ptr() :
 			ptr_m(0) {
 	}
-	intrusive_ptr(T *p, bool add_ref = true) :
+	intrusive_ptr(T *p, bool add_ref = false) :
 			ptr_m(p) {
 		if (ptr_m != 0 && add_ref)
 			intrusive_ptr_add_ref(ptr_m);
