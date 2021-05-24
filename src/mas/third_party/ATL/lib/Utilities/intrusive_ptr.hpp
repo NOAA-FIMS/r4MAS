@@ -12,7 +12,7 @@ public:
 	constexpr intrusive_ptr() :
 			ptr_m(0) {
 	}
-	intrusive_ptr(T *p, bool add_ref = false) :
+	intrusive_ptr(T *p, bool add_ref = true) :
 			ptr_m(p) {
 		if (ptr_m != 0 && add_ref)
 			intrusive_ptr_add_ref(ptr_m);
@@ -70,7 +70,8 @@ private:
 	}
 
 	void intrusive_ptr_release(T *px) {
-		if (--(px->references) == 0) {
+		px->references--;
+		if (px->references == 0) {
 			delete px;
 		}
 	}
