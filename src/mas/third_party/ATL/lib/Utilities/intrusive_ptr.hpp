@@ -1,6 +1,8 @@
 #ifndef INTRUSIVE_PTR_HPP_
 #define INTRUSIVE_PTR_HPP_
 
+#include <iostream>
+
 namespace atl {
 
 template<class T> class intrusive_ptr {
@@ -72,6 +74,7 @@ private:
 	void intrusive_ptr_release(T *px) {
 		px->references--;
 		if (px->references == 0) {
+			std::cout<<"Deleteing ptr\n";
 			delete px;
 		}
 	}
