@@ -73,7 +73,7 @@ private:
 
 	void intrusive_ptr_release(T *px) {
 		px->references--;
-		if (px->references == 1) {
+		if (px->references == 0) {
 			delete px;
 		}
 	}
