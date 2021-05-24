@@ -18,7 +18,7 @@
 #include <vector>
 #include <iostream>
 #include "Utilities/MemoryPool.hpp"
-
+#include "Utilities/intrusive_ptr.hpp"
 
 namespace atl {
 
@@ -136,7 +136,7 @@ namespace atl {
      */
     template<typename REAL_T>
     struct VariableInfo {
-        static std::vector<std::shared_ptr<VariableInfo<REAL_T> > > ptrs;
+        static std::vector<atl::intrusive_ptr<VariableInfo<REAL_T> > > ptrs;
         static VISpinLock vinfo_mutex_g;
         static std::vector<VariableInfo<REAL_T>* > freed;
         std::atomic<int> count;
@@ -145,6 +145,7 @@ namespace atl {
         REAL_T value;
         bool is_nl = false;
         long index = -999;
+        int references = 0;
         std::vector<REAL_T> tayor_coefficients;
         static util::MemoryPool<VariableInfo<REAL_T> >* memory_pool;
 
@@ -224,7 +225,7 @@ namespace atl {
     
     
     template<typename REAL_T>
-    std::vector<std::shared_ptr<VariableInfo<REAL_T> > > VariableInfo<REAL_T>::ptrs;
+    std::vector<atl::intrusive_ptr<VariableInfo<REAL_T> > > VariableInfo<REAL_T>::ptrs;
 
     template<typename REAL_T>
     VISpinLock VariableInfo<REAL_T>::vinfo_mutex_g;

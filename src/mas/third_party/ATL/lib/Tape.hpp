@@ -51,7 +51,7 @@ namespace atl {
     template<typename REAL_T>
     struct less_variable_info {
 
-        bool operator()(const std::shared_ptr<VariableInfo<REAL_T> >& lhs, const std::shared_ptr<VariableInfo<REAL_T> >& rhs) const {
+        bool operator()(const atl::intrusive_ptr<VariableInfo<REAL_T> >& lhs, const atl::intrusive_ptr<VariableInfo<REAL_T> >& rhs) const {
             return lhs->id < rhs->id;
         }
     };
@@ -61,7 +61,7 @@ namespace atl {
         std::shared_ptr<DynamicExpressionBase<REAL_T> > exp;
         std::shared_ptr<DynamicExpressionBase<REAL_T> > texp;
 
-        typedef typename std::shared_ptr<VariableInfo<REAL_T> > VariableInfoPtr;
+        typedef typename atl::intrusive_ptr<VariableInfo<REAL_T> > VariableInfoPtr;
         VariableInfoPtr w;
         std::vector<VariableInfoPtr> diff_w;
         std::vector< std::shared_ptr<DynamicExpressionBase<REAL_T> > > diff_exp;
@@ -291,7 +291,7 @@ namespace atl {
         SpinLock stack_lock;
 
     public:
-        typedef typename std::shared_ptr<VariableInfo<REAL_T> > VariableInfoPtr;
+        typedef typename atl::intrusive_ptr<VariableInfo<REAL_T> > VariableInfoPtr;
         //first-order storage
         typedef  std::unordered_map <uint32_t,
         REAL_T,

@@ -28,7 +28,7 @@
 #include "Variable.hpp"
 #include <random>
 
-
+#include "Utilities/intrusive_ptr.hpp"
 
 
 
@@ -1113,8 +1113,8 @@ namespace atl {
                 std::chrono::duration<double> inner_time = (inner_end - inner_start);
                 std::cout << "Inner fit time = " << inner_time.count() << " secs\n" << std::endl;
 #endif
-                std::unordered_map<std::shared_ptr<atl::VariableInfo<T> >, T> derivatives_logdet;
-                std::unordered_map<std::shared_ptr<atl::VariableInfo<T> >, T> derivatives_f;
+                std::unordered_map<atl::intrusive_ptr<atl::VariableInfo<T> >, T> derivatives_logdet;
+                std::unordered_map<atl::intrusive_ptr<atl::VariableInfo<T> >, T> derivatives_f;
 
                 this->ClearReStructures();
                 atl::Variable<T>::tape.derivative_trace_level = atl::THIRD_ORDER_REVERSE;
@@ -1461,7 +1461,7 @@ namespace atl {
                 //push adjoint entry for log_det
                 atl::StackEntry<T>& entry = atl::Variable<T>::tape.NextEntry();
                 entry.w = log_det.info;
-                typename std::unordered_map<std::shared_ptr<atl::VariableInfo<T> >, T>::iterator it;
+                typename std::unordered_map<atl::intrusive_ptr<atl::VariableInfo<T> >, T>::iterator it;
                 for (it = derivatives_logdet.begin(); it != derivatives_logdet.end(); ++it) {
                     entry.ids.insert((*it).first);
                 }

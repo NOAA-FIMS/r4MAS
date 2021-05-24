@@ -391,7 +391,7 @@ template<typename REAL_T>
 struct Variable : atl::ExpressionBase<REAL_T, Variable<REAL_T> > {
     static std::vector<AssignmentFunctor<REAL_T>* > assignment_operators;
     
-    typedef typename std::shared_ptr<VariableInfo<REAL_T> > VariableInfoPtr;
+    typedef typename atl::intrusive_ptr<VariableInfo<REAL_T> > VariableInfoPtr;
     static Tape<REAL_T> tape;
     typedef REAL_T base_type;
     
@@ -414,7 +414,7 @@ struct Variable : atl::ExpressionBase<REAL_T, Variable<REAL_T> > {
         max_boundary_m(max_boundary),
         transformation(default_transformation.get()) {
         
-        info = std::make_shared<VariableInfo<REAL_T> >(value);
+        info = new VariableInfo<REAL_T>(value);
         
         //            info->value = v;
     }
@@ -427,7 +427,7 @@ struct Variable : atl::ExpressionBase<REAL_T, Variable<REAL_T> > {
         max_boundary_m(max_boundary),
         transformation(default_transformation.get()) {
         
-        info = std::make_shared<VariableInfo<REAL_T> >(static_cast<REAL_T> (value));
+        info = new VariableInfo<REAL_T>(static_cast<REAL_T> (value));
         //            info->value = v;
     }
     
@@ -439,7 +439,7 @@ struct Variable : atl::ExpressionBase<REAL_T, Variable<REAL_T> > {
         max_boundary_m(max_boundary),
         transformation(default_transformation.get()) {
         
-        info = std::make_shared<VariableInfo<REAL_T> >(static_cast<REAL_T> (value));
+        info = new VariableInfo<REAL_T>(static_cast<REAL_T> (value));
         //            info->value = v;
     }
     
@@ -468,7 +468,7 @@ struct Variable : atl::ExpressionBase<REAL_T, Variable<REAL_T> > {
         max_boundary_m(std::numeric_limits<REAL_T>::max()),
         transformation(default_transformation.get()) {
         
-        info = std::make_shared<VariableInfo<REAL_T> >(static_cast<REAL_T> (0.0));
+        info = new VariableInfo<REAL_T>(static_cast<REAL_T> (0.0));
         
         if (Variable<REAL_T>::tape.recording) {
             
