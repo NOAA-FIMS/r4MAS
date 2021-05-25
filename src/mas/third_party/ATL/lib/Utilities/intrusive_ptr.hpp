@@ -84,7 +84,7 @@ public:
 			if (pointer)
 				intrusive_ptr_add_ref(pointer);
 			ptr_m = pointer;
-			if (pTemp)
+			if (temp)
 				intrusive_ptr_release(temp);
 		}
 		return *this;
