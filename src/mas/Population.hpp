@@ -58,12 +58,12 @@ namespace mas {
 
         Population<REAL_T>* natal_population;
         bool natal_homing = false;
-        std::shared_ptr<Area<REAL_T> > area;
-        std::shared_ptr<Area<REAL_T> > natal_area;
-        std::shared_ptr<GrowthBase<REAL_T> > growth_model;
-        std::shared_ptr<mas::NaturalMortality<REAL_T> > natural_mortality_model; // population - area specific
-        std::shared_ptr<mas::RecruitmentBase<REAL_T> > recruitment_model; // population - area specific
-        std::unordered_map<int, std::shared_ptr<mas::RecruitmentBase<REAL_T> > > seasonal_recruitment_models;
+        atl::intrusive_ptr<Area<REAL_T> > area;
+        atl::intrusive_ptr<Area<REAL_T> > natal_area;
+        atl::intrusive_ptr<GrowthBase<REAL_T> > growth_model;
+        atl::intrusive_ptr<mas::NaturalMortality<REAL_T> > natural_mortality_model; // population - area specific
+        atl::intrusive_ptr<mas::RecruitmentBase<REAL_T> > recruitment_model; // population - area specific
+        std::unordered_map<int, atl::intrusive_ptr<mas::RecruitmentBase<REAL_T> > > seasonal_recruitment_models;
 
 
         std::vector<REAL_T> maturity; // should be the same across areas, same length as ages
@@ -879,7 +879,7 @@ namespace mas {
         //                f_l.SetValue(0.0);
         //                c_biomass.SetValue(0.0);
         //                sum.SetValue(0.0);
-        //                std::vector< std::shared_ptr<mas::Fleet<REAL_T> > >& fleets = this->area->seasonal_fleet_operations[1];
+        //                std::vector< atl::intrusive_ptr<mas::Fleet<REAL_T> > >& fleets = this->area->seasonal_fleet_operations[1];
         //                for (int f = 0; f < fleets.size(); f++) {
         //                    for (int a = 0; a < this->ages.size(); a++) {
         //                        //                        variable length_at_catch = this->growth_model->Evaluate(this->ages[a].GetValue() + this->catch_season_offset, this->sex);
@@ -928,13 +928,13 @@ namespace mas {
             variable::tape.recording = false;
             //                this->InitialNumbersEquilibrium();
             this->initialF = static_cast<REAL_T> (0.0);
-            std::vector< std::shared_ptr<Fleet<REAL_T> > >& fleets = this->area->seasonal_fleet_operations[1];
+            std::vector< atl::intrusive_ptr<Fleet<REAL_T> > >& fleets = this->area->seasonal_fleet_operations[1];
             variable wct, wct2;
 
             for (int f = 0; f < fleets.size(); f++) {
 
                 if (fleets[f]->catch_biomass_data.get() != NULL) {
-                    //                        std::shared_ptr<mas::FishingMortality<REAL_T> >& fm =
+                    //                        atl::intrusive_ptr<mas::FishingMortality<REAL_T> >& fm =
                     //                                fleets[f]->season_area_fishing_mortality[1][this->area->id];
                     REAL_T Epsilon = 0.0001;
                     REAL_T LowerBound = 0.0;
@@ -1001,7 +1001,7 @@ namespace mas {
          */
         inline void CalculateMortality(const int& year, const int& season, const int& age) {
 
-            std::vector< std::shared_ptr<Fleet<REAL_T> > >& fleets = this->area->seasonal_fleet_operations[season];
+            std::vector< atl::intrusive_ptr<Fleet<REAL_T> > >& fleets = this->area->seasonal_fleet_operations[season];
             this->sum_of_Z = 0.0;
 
 
@@ -1562,7 +1562,7 @@ namespace mas {
         inline void CalculateCatchAtAge(const int& year, const int& season, const int& age) {
 
             //get a vector of fleets operating this area at this season
-            std::vector< std::shared_ptr<Fleet<REAL_T> > >& fleets = this->area->seasonal_fleet_operations[season];
+            std::vector< atl::intrusive_ptr<Fleet<REAL_T> > >& fleets = this->area->seasonal_fleet_operations[season];
 
             //loop through the ages and calculate catch numbers and catch biomass
             //for both this local segment of the population and fleet[i]. 
@@ -1628,7 +1628,7 @@ namespace mas {
          * @param season
          */
         inline void CalculateSurveyNumbersAtAge(const int& year, const int& season, const int& age) {
-            std::vector< std::shared_ptr<Survey<REAL_T> > >& surveys = this->area->seasonal_survey_operations[season];
+            std::vector< atl::intrusive_ptr<Survey<REAL_T> > >& surveys = this->area->seasonal_survey_operations[season];
 
 
             REAL_T total_SI = static_cast<REAL_T> (0.0);
@@ -1721,7 +1721,7 @@ namespace mas {
             out << "Females\n";
         }
         for (int s = 1; s <= pi.seasons; s++) {
-            std::vector< std::shared_ptr<Fleet<REAL_T> > >& fleets = pi.area->seasonal_fleet_operations[s];
+            std::vector< atl::intrusive_ptr<Fleet<REAL_T> > >& fleets = pi.area->seasonal_fleet_operations[s];
             if (fleets.size() > 0) {
                 for (int f = 0; f < fleets.size(); f++) {
                     for (int y = 0; y < pi.years; y++) {
@@ -1742,7 +1742,7 @@ namespace mas {
             out << "Females\n";
         }
         for (int s = 1; s <= pi.seasons; s++) {
-            std::vector< std::shared_ptr<Fleet<REAL_T> > >& fleets = pi.area->seasonal_fleet_operations[s];
+            std::vector< atl::intrusive_ptr<Fleet<REAL_T> > >& fleets = pi.area->seasonal_fleet_operations[s];
             if (fleets.size() > 0) {
                 for (int f = 0; f < fleets.size(); f++) {
                     for (int a = 0; a < pi.ages.size(); a++) {
@@ -2287,9 +2287,9 @@ namespace mas {
          *********************************************/
         std::unordered_map<int, std::unordered_map<int, int> > area_season_recruitment_ids;
         typedef typename std::unordered_map<int, std::unordered_map<int, int> >::iterator season_area_id_iterator;
-        std::unordered_map<int, std::unordered_map<int, std::shared_ptr<mas::RecruitmentBase<REAL_T> > > > area_season_recruitment;
+        std::unordered_map<int, std::unordered_map<int, atl::intrusive_ptr<mas::RecruitmentBase<REAL_T> > > > area_season_recruitment;
         std::unordered_map<int, std::unordered_map<int, int> > season_area_recruitment_ids;
-        std::unordered_map<int, std::unordered_map<int, std::shared_ptr<mas::RecruitmentBase<REAL_T> > > > season_area_recruitment;
+        std::unordered_map<int, std::unordered_map<int, atl::intrusive_ptr<mas::RecruitmentBase<REAL_T> > > > season_area_recruitment;
         std::map<int, int> recruitment_ids; //area, recruitment model
         typedef typename std::map<int, int>::iterator recruitment_ids_iterator;
         // typedef typename std::map<int, int>::iterator recruitment_season_ids_iterator;
@@ -2350,17 +2350,17 @@ namespace mas {
         std::vector<REAL_T> fishing_mortality_males;
 
 
-        std::shared_ptr<Area<REAL_T> > natal_area; //birth area
-        std::vector<std::shared_ptr<Area<REAL_T> > > areas_list; //all areas
+        atl::intrusive_ptr<Area<REAL_T> > natal_area; //birth area
+        std::vector<atl::intrusive_ptr<Area<REAL_T> > > areas_list; //all areas
         //Movement Tracking
         typedef typename std::unordered_map<int, Subpopulation<REAL_T> >::iterator cohort_iterator;
         std::unordered_map<int, Subpopulation<REAL_T> > males;
         std::unordered_map<int, Subpopulation<REAL_T> > females;
         std::unordered_map<int, int > movement_models_ids; //season keyed
         typedef typename std::unordered_map<int, int >::iterator movement_model_id_iterator;
-        std::shared_ptr<mas::Movement<REAL_T> > movement_model;
-        std::unordered_map<int, std::shared_ptr<mas::Movement<REAL_T> > > movement_models; //year keyed
-        typedef typename std::unordered_map<int, std::shared_ptr<mas::Movement<REAL_T> > >::iterator movement_model_iterator;
+        atl::intrusive_ptr<mas::Movement<REAL_T> > movement_model;
+        std::unordered_map<int, atl::intrusive_ptr<mas::Movement<REAL_T> > > movement_models; //year keyed
+        typedef typename std::unordered_map<int, atl::intrusive_ptr<mas::Movement<REAL_T> > >::iterator movement_model_iterator;
         //Estimable
         std::unordered_map<int, std::pair<bool, std::vector<variable> > > initial_deviations_males; // area indexed
         std::unordered_map<int, std::pair<bool, std::vector<variable> > > initial_deviations_females; // area indexed
@@ -2371,7 +2371,7 @@ namespace mas {
         typedef typename std::unordered_map<int, std::vector<REAL_T> >::iterator area_maturity_model_iterator;
         //    typedef typename std::unordered_map<std::vector<std::vector<variable> > >::iterator movement_coefficient_iterator;
         // std::vector<mas::InitialNumbers<typename mas::VariableTrait<REAL_T>::variable > > initial_numbers;
-        std::shared_ptr<mas::HCRBase<REAL_T> > harvest_control_rule;
+        atl::intrusive_ptr<mas::HCRBase<REAL_T> > harvest_control_rule;
         std::unordered_set<int> active_fleets;
 
         //averages across all subpopulations
@@ -2393,8 +2393,8 @@ namespace mas {
         Population(int years,
                 int seasons,
                 int areas,
-                const std::shared_ptr<Area<REAL_T> >& natal_area,
-                const std::vector<std::shared_ptr<Area<REAL_T> > >& areas_list) :
+                const atl::intrusive_ptr<Area<REAL_T> >& natal_area,
+                const std::vector<atl::intrusive_ptr<Area<REAL_T> > >& areas_list) :
         years(years),
         seasons(seasons),
         areas(areas),
@@ -2626,7 +2626,7 @@ namespace mas {
                     females[areas_list[a]->id].maturity[i] = fv[i];
                 }
                 int area = males[areas_list[a]->id].area->id;
-                typename std::unordered_map<int, std::shared_ptr<mas::RecruitmentBase<REAL_T> > >::iterator it;
+                typename std::unordered_map<int, atl::intrusive_ptr<mas::RecruitmentBase<REAL_T> > >::iterator it;
                 for (it = this->area_season_recruitment[area].begin(); it != this->area_season_recruitment[area].end(); ++it) {
                     males[areas_list[a]->id].seasonal_recruitment_models[(*it).first] = (*it).second;
                 }
@@ -3402,3 +3402,6 @@ namespace mas {
 
 /** @} */ // end of group pop_dynamics
 #endif /* POPULATION_HPP */
+
+
+

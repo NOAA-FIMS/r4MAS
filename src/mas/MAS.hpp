@@ -116,8 +116,8 @@ namespace mas {
 
             typename mas::Information<REAL_T>::fleet_iterator fit;
             typename mas::Information<REAL_T>::survey_model_iterator sit;
-            typename std::unordered_map<int, std::shared_ptr<mas::Population<REAL_T> > >::iterator it;
-            std::unordered_map<int, std::shared_ptr<mas::Population<REAL_T> > >& pops =
+            typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator it;
+            std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >& pops =
                     info.GetPopulations();
             typename mas::Information<REAL_T>::area_iterator ait;
             typename mas::Information<REAL_T>::recruitment_model_iterator rit;
@@ -232,8 +232,8 @@ namespace mas {
 
             typename mas::Information<REAL_T>::fleet_iterator fit;
             typename mas::Information<REAL_T>::survey_model_iterator sit;
-            typename std::unordered_map<int, std::shared_ptr<mas::Population<REAL_T> > >::iterator it;
-            std::unordered_map<int, std::shared_ptr<mas::Population<REAL_T> > >& pops =
+            typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator it;
+            std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >& pops =
                     info.GetPopulations();
             typename mas::Information<REAL_T>::area_iterator ait;
             typename mas::Information<REAL_T>::recruitment_model_iterator rit;
@@ -365,9 +365,9 @@ namespace mas {
 
         void Finalize() {
 
-            std::unordered_map<int, std::shared_ptr<mas::Population<REAL_T> > >& pops =
+            std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >& pops =
                     info.GetPopulations();
-            typename std::unordered_map<int, std::shared_ptr<mas::Population<REAL_T> > >::iterator it;
+            typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator it;
             for (it = pops.begin(); it != pops.end(); ++it) {
                 (*it).second->PushToAreasAndFleets();
                 (*it).second->Finalize();
@@ -378,9 +378,9 @@ namespace mas {
 
         void Report() {
 
-            //            std::unordered_map<int, std::shared_ptr<mas::Population<REAL_T> > >& pops =
+            //            std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >& pops =
             //                    info.GetPopulations();
-            //            typename std::unordered_map<int, std::shared_ptr<mas::Population<REAL_T> > >::iterator it;
+            //            typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator it;
             //            this->info.DumpSelectivity("selectivity.txt");
             //            this->info.DumpFishingMortality("fishing_mortality.txt");
             //            atl::Variable<REAL_T>::tape.Reset();
@@ -510,10 +510,10 @@ namespace mas {
         void HTMLReport() {
 
 
-            std::unordered_map<int, std::shared_ptr<mas::Population<double> > >& pops =
+            std::unordered_map<int, atl::intrusive_ptr<mas::Population<double> > >& pops =
                     info.GetPopulations();
 
-            typename std::unordered_map<int, std::shared_ptr<mas::Population<double> > >::iterator it;
+            typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<double> > >::iterator it;
             std::ofstream out("mas_report.html");
 
 
@@ -543,9 +543,9 @@ namespace mas {
         }
 
         void show(std::ostream& out) {
-            std::unordered_map<int, std::shared_ptr<mas::Population<double> > >& pops =
+            std::unordered_map<int, atl::intrusive_ptr<mas::Population<double> > >& pops =
                     info.GetPopulations();
-            typename std::unordered_map<int, std::shared_ptr<mas::Population<double> > >::iterator it;
+            typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<double> > >::iterator it;
 
             for (it = pops.begin(); it != pops.end(); ++it) {
 
@@ -564,4 +564,7 @@ namespace mas {
 
 
 #endif /* MAS_MAS_HPP */
+
+
+
 

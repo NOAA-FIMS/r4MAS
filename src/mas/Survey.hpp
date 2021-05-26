@@ -67,40 +67,40 @@ namespace mas {
         int population;
         int selectivity_model_id;
         std::vector<int> area_ids;
-        std::shared_ptr<DataObject<REAL_T> > survey_biomass_data;
-         std::shared_ptr<DataObject<REAL_T> > catch_abundance_data;
+        atl::intrusive_ptr<DataObject<REAL_T> > survey_biomass_data;
+         atl::intrusive_ptr<DataObject<REAL_T> > catch_abundance_data;
         // NOTE:  need sex-specific proportions-at-age, proportions-at-length, and mean size-at-age data
-        std::shared_ptr<DataObject<REAL_T> > survey_proportion_at_age_data_N;
-        std::shared_ptr<DataObject<REAL_T> > survey_proportion_at_age_data;
-        std::shared_ptr<DataObject<REAL_T> > survey_proportion_at_length_data_N;
-        std::shared_ptr<DataObject<REAL_T> > survey_proportion_at_length_data;
-        std::shared_ptr<DataObject<REAL_T> > survey_mean_size_at_age_data;
-        std::shared_ptr<DataObject<REAL_T> > survey_mean_weight_at_age_data;
+        atl::intrusive_ptr<DataObject<REAL_T> > survey_proportion_at_age_data_N;
+        atl::intrusive_ptr<DataObject<REAL_T> > survey_proportion_at_age_data;
+        atl::intrusive_ptr<DataObject<REAL_T> > survey_proportion_at_length_data_N;
+        atl::intrusive_ptr<DataObject<REAL_T> > survey_proportion_at_length_data;
+        atl::intrusive_ptr<DataObject<REAL_T> > survey_mean_size_at_age_data;
+        atl::intrusive_ptr<DataObject<REAL_T> > survey_mean_weight_at_age_data;
 
 
-        std::vector<std::shared_ptr<DataObject<REAL_T> > > data_objects;
+        std::vector<atl::intrusive_ptr<DataObject<REAL_T> > > data_objects;
         std::vector<variable> nll_component_values;
 
-        std::shared_ptr<mas::SelectivityBase<REAL_T> > selectivity;
+        atl::intrusive_ptr<mas::SelectivityBase<REAL_T> > selectivity;
         std::unordered_map<int, std::unordered_map<int, int> > area_season_selectivity_ids;
-        std::unordered_map<int, std::unordered_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > > > area_season_selectivity;
+        std::unordered_map<int, std::unordered_map<int, atl::intrusive_ptr<mas::SelectivityBase<REAL_T> > > > area_season_selectivity;
 
         std::unordered_map<int, std::unordered_map<int, int> > season_area_selectivity_ids;
-        std::unordered_map<int, std::unordered_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > > > season_area_selectivity;
+        std::unordered_map<int, std::unordered_map<int, atl::intrusive_ptr<mas::SelectivityBase<REAL_T> > > > season_area_selectivity;
 
         std::unordered_map<int, std::unordered_map<int, REAL_T> > season_area_survey_fraction;
         std::unordered_map<int, std::unordered_map<int, REAL_T> > area_season_survey_fraction;
 
 
-        std::unordered_map<int, std::unordered_map<int, std::shared_ptr<mas::Area< REAL_T> > > > seasonal_areas_of_operation;
+        std::unordered_map<int, std::unordered_map<int, atl::intrusive_ptr<mas::Area< REAL_T> > > > seasonal_areas_of_operation;
 
         typedef typename std::unordered_map<int, std::unordered_map<int, int> >::iterator season_area_selectivity_ids_iterator;
         typedef typename std::unordered_map<int, std::unordered_map<int, int> >::const_iterator season_area_selectivity_ids_const_iterator;
-        typedef typename std::unordered_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > >::iterator area_sectivity_iterator;
+        typedef typename std::unordered_map<int, atl::intrusive_ptr<mas::SelectivityBase<REAL_T> > >::iterator area_sectivity_iterator;
         typedef typename std::unordered_map<int, std::unordered_map<int, int> >::iterator season_area_id_iterator;
         typedef typename std::unordered_map<int, int>::iterator area_id_iteraor;
         typedef typename std::unordered_map<int, int>::iterator season_id_iteraor;
-        typedef typename std::unordered_map<int, std::unordered_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > > >::iterator season_area_selectivity_iterator;
+        typedef typename std::unordered_map<int, std::unordered_map<int, atl::intrusive_ptr<mas::SelectivityBase<REAL_T> > > >::iterator season_area_selectivity_iterator;
 
         REAL_T survey_fraction_of_year = 0.75;
         REAL_T CV = .2;
@@ -113,13 +113,13 @@ namespace mas {
         variable survey_age_comp_component;
 
         int survey_age_comp_likelihood_component_id = -999;
-        std::shared_ptr<mas::NLLFunctor<REAL_T> > survey_age_comp_likelihood_component;
+        atl::intrusive_ptr<mas::NLLFunctor<REAL_T> > survey_age_comp_likelihood_component;
 
         int survey_biomass_likelihood_component_id = -999;
-        std::shared_ptr<mas::NLLFunctor<REAL_T> > survey_biomass_likelihood_component;
+        atl::intrusive_ptr<mas::NLLFunctor<REAL_T> > survey_biomass_likelihood_component;
 
         int survey_abundance_likelihood_component_id = -999;
-        std::shared_ptr<mas::NLLFunctor<REAL_T> > survey_abundance_likelihood_component;
+        atl::intrusive_ptr<mas::NLLFunctor<REAL_T> > survey_abundance_likelihood_component;
 
         REAL_T chi_squared;
         REAL_T g_test;
@@ -416,7 +416,7 @@ namespace mas {
 
         void ApplyOperatingModelError() {
             this->survey_biomass_data =
-                    std::make_shared<mas::DataObject<REAL_T> >();
+                    new mas::DataObject<REAL_T>();
             this->survey_biomass_data->sex_type = mas::UNDIFFERENTIATED;
             this->survey_biomass_data->id = this->id;
             this->survey_biomass_data->dimensions = 2;
@@ -426,7 +426,7 @@ namespace mas {
             this->survey_biomass_data->observation_error.resize(this->years * this->seasons);
 
             this->survey_proportion_at_age_data =
-                    std::make_shared<mas::DataObject<REAL_T> >();
+                    new mas::DataObject<REAL_T>();
             this->survey_proportion_at_age_data->sex_type = mas::UNDIFFERENTIATED;
             this->survey_proportion_at_age_data->id = this->id;
             this->survey_proportion_at_age_data->dimensions = 3;
@@ -750,4 +750,7 @@ namespace mas {
 
 
 #endif /* SURVEY_HPP */
+
+
+
 

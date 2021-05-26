@@ -141,7 +141,7 @@ namespace mas {
 
 #warning NLLFunctor can only be used once
 
-        std::shared_ptr<mas::DataObject<REAL_T> > lambda;
+        atl::intrusive_ptr<mas::DataObject<REAL_T> > lambda;
 
         NLLFunctor() {
         }
@@ -152,7 +152,7 @@ namespace mas {
 
 
 
-        virtual variable Evaluate(const std::shared_ptr<DataObject<REAL_T> >& observed,
+        virtual variable Evaluate(const atl::intrusive_ptr<DataObject<REAL_T> >& observed,
                 const std::vector<variable>& predicted,
                 size_t N) = 0;
 
@@ -180,7 +180,7 @@ namespace mas {
         NLLFunctor<REAL_T>(years, seasons, ages) {
         }
 
-        virtual variable Evaluate(const std::shared_ptr<DataObject<REAL_T> >& observed,
+        virtual variable Evaluate(const atl::intrusive_ptr<DataObject<REAL_T> >& observed,
                 const std::vector<variable>& predicted,
                 size_t N) {
             //
@@ -292,7 +292,7 @@ namespace mas {
         NLLFunctor<REAL_T>(years, seasons, ages) {
         }
 
-        virtual variable Evaluate(const std::shared_ptr<DataObject<REAL_T> >& observed,
+        virtual variable Evaluate(const atl::intrusive_ptr<DataObject<REAL_T> >& observed,
                 const std::vector<variable>& predicted,
                 size_t N) {
 
@@ -356,7 +356,7 @@ namespace mas {
         NLLFunctor<REAL_T>(years, seasons, ages) {
         }
 
-        virtual variable Evaluate(const std::shared_ptr<DataObject<REAL_T> >& observed,
+        virtual variable Evaluate(const atl::intrusive_ptr<DataObject<REAL_T> >& observed,
                 const std::vector<variable>& predicted,
                 size_t N) {
 
@@ -424,7 +424,7 @@ namespace mas {
         NLLFunctor<REAL_T>(years, seasons, ages) {
         }
 
-        virtual variable Evaluate(const std::shared_ptr<DataObject<REAL_T> >& observed,
+        virtual variable Evaluate(const atl::intrusive_ptr<DataObject<REAL_T> >& observed,
                 const std::vector<variable>& predicted,
                 size_t N) {
             this->years = observed->imax;
@@ -494,7 +494,7 @@ namespace mas {
         NLLFunctor<REAL_T>(years, seasons, ages) {
         }
 
-        virtual variable Evaluate(const std::shared_ptr<DataObject<REAL_T> >& observed,
+        virtual variable Evaluate(const atl::intrusive_ptr<DataObject<REAL_T> >& observed,
                 const std::vector<variable>& predicted,
                 size_t N) {
             this->years = observed->imax;
@@ -552,8 +552,8 @@ namespace mas {
     struct NLLComponent {
         typedef typename VariableTrait<REAL_T>::variable variable;
         std::vector<variable>* estimated;
-        std::shared_ptr<DataObject<REAL_T> > observed;
-        std::shared_ptr<mas::NLLFunctor<REAL_T> > nll_functor;
+        atl::intrusive_ptr<DataObject<REAL_T> > observed;
+        atl::intrusive_ptr<mas::NLLFunctor<REAL_T> > nll_functor;
         size_t N;
         static bool record_residuals;
         std::vector<REAL_T> residuals;
@@ -568,11 +568,11 @@ namespace mas {
         static int k; //number of parameters
 
         NLLComponent(std::vector<variable>* estimated,
-                std::shared_ptr<DataObject<REAL_T> > observed,
-                std::shared_ptr<mas::NLLFunctor<REAL_T> > nll_functor) :
+                atl::intrusive_ptr<DataObject<REAL_T> > observed,
+                atl::intrusive_ptr<mas::NLLFunctor<REAL_T> > nll_functor) :
         estimated(estimated), observed(observed), nll_functor(nll_functor) {
             if (nll_functor->lambda.get() == NULL) {
-                nll_functor->lambda = std::make_shared<mas::DataObject<REAL_T> >();
+                nll_functor->lambda = new mas::DataObject<REAL_T>();
                 nll_functor->lambda->data.resize(observed->data.size(), static_cast<REAL_T> (1.0));
                 nll_functor->lambda->imax = observed->imax;
                 nll_functor->lambda->jmax = observed->jmax;
@@ -739,4 +739,7 @@ namespace mas {
 
 
 #endif /* EFFECTIVESAMPLESIZE_HPP */
+
+
+
 

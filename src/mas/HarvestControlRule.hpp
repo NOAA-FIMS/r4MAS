@@ -159,8 +159,8 @@ namespace mas
 
             // NOTE:  season is HARD-CODED to 1
             const int season = 1;
-            std::vector< std::shared_ptr<Fleet<REAL_T> > >& fleets_f = api_females.area->seasonal_fleet_operations[season];
-            std::vector< std::shared_ptr<Fleet<REAL_T> > >& fleets_m = api_males.area->seasonal_fleet_operations[season];
+            std::vector< atl::intrusive_ptr<Fleet<REAL_T> > >& fleets_f = api_females.area->seasonal_fleet_operations[season];
+            std::vector< atl::intrusive_ptr<Fleet<REAL_T> > >& fleets_m = api_males.area->seasonal_fleet_operations[season];
 
             if (fleets_f.size() > 0)
             {
@@ -315,4 +315,7 @@ namespace mas
 
 
 #endif /* MAS_HARVEST_CONTROL_RULE_HPP */
+
+
+
 

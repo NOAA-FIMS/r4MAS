@@ -188,6 +188,7 @@ namespace mas {
         std::vector<REAL_T> initial_parameter_values;
         std::vector<int> estimated_phase;
         bool used = false;
+        int references = 0;
 
         void Register(variable& var, int phase = 1) {
             estimated_parameters_map[&var] = phase;
@@ -329,7 +330,7 @@ namespace mas {
         REAL_T missing_value;
         std::vector<bool> has_row_data;
         std::vector<REAL_T> sample_size;
-
+        int references = 0;
         uint32_t id;
         uint32_t area_id;
         uint32_t population_id;
@@ -751,4 +752,7 @@ namespace mas {
 
 
 #endif /* COMMON_HPP */
+
+
+
 

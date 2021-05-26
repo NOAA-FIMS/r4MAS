@@ -72,14 +72,14 @@ namespace mas {
 
 
 
-        typedef typename std::map<int, std::vector<std::shared_ptr<DataObject<REAL_T> > > >::iterator data_iterator;
+        typedef typename std::map<int, std::vector<atl::intrusive_ptr<DataObject<REAL_T> > > >::iterator data_iterator;
 
 
 
         std::string data_path;
     public:
-        std::map<int, std::vector<std::shared_ptr<DataObject<REAL_T> > > > data_dictionary;
-        std::vector<std::shared_ptr<DataObject<REAL_T> > > data;
+        std::map<int, std::vector<atl::intrusive_ptr<DataObject<REAL_T> > > > data_dictionary;
+        std::vector<atl::intrusive_ptr<DataObject<REAL_T> > > data;
         std::string analyst = "NA";
         std::string study_name = "NA";
         int nyears;
@@ -98,43 +98,43 @@ namespace mas {
 
 
 
-        std::unordered_map<int, std::shared_ptr<mas::Area<REAL_T> > > areas;
-        std::unordered_map<int, std::shared_ptr<mas::Season<REAL_T> > > seasons;
+        std::unordered_map<int, atl::intrusive_ptr<mas::Area<REAL_T> > > areas;
+        std::unordered_map<int, atl::intrusive_ptr<mas::Season<REAL_T> > > seasons;
 
         //System sub model objects
-        std::unordered_map<int, std::shared_ptr<mas::Population<REAL_T> > > populations;
-        std::unordered_map<int, std::shared_ptr<mas::FishingMortality<REAL_T> > > fishing_mortality_models;
-        std::unordered_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > > selectivity_models;
+        std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > > populations;
+        std::unordered_map<int, atl::intrusive_ptr<mas::FishingMortality<REAL_T> > > fishing_mortality_models;
+        std::unordered_map<int, atl::intrusive_ptr<mas::SelectivityBase<REAL_T> > > selectivity_models;
 
-        std::unordered_map<int, std::shared_ptr<mas::Fleet<REAL_T> > > fleets;
+        std::unordered_map<int, atl::intrusive_ptr<mas::Fleet<REAL_T> > > fleets;
 
-        std::unordered_map<int, std::shared_ptr<mas::Survey<REAL_T> > > survey_models;
+        std::unordered_map<int, atl::intrusive_ptr<mas::Survey<REAL_T> > > survey_models;
 
         // per population
-        std::unordered_map<int, std::shared_ptr<mas::GrowthBase<REAL_T> > > growth_models;
-        std::unordered_map<int, std::shared_ptr<mas::FecundityBase<REAL_T> > > fecundity_models;
-        std::unordered_map<int, std::shared_ptr<mas::Movement<REAL_T> > > movement_models;
+        std::unordered_map<int, atl::intrusive_ptr<mas::GrowthBase<REAL_T> > > growth_models;
+        std::unordered_map<int, atl::intrusive_ptr<mas::FecundityBase<REAL_T> > > fecundity_models;
+        std::unordered_map<int, atl::intrusive_ptr<mas::Movement<REAL_T> > > movement_models;
 
         // per population - area
-        std::unordered_map<int, std::shared_ptr<mas::NaturalMortality<REAL_T> > > natural_mortality_models;
-        std::unordered_map<int, std::shared_ptr<mas::RecruitmentBase<REAL_T> > > recruitment_models;
+        std::unordered_map<int, atl::intrusive_ptr<mas::NaturalMortality<REAL_T> > > natural_mortality_models;
+        std::unordered_map<int, atl::intrusive_ptr<mas::RecruitmentBase<REAL_T> > > recruitment_models;
 
-        std::unordered_map<int, std::shared_ptr<mas::NLLFunctor<REAL_T> > > likelihood_components;
+        std::unordered_map<int, atl::intrusive_ptr<mas::NLLFunctor<REAL_T> > > likelihood_components;
 
         //System sub model iterators
-        typedef typename std::unordered_map<int, std::shared_ptr<mas::Season<REAL_T> > >::iterator seasons_iterator;
-        typedef typename std::unordered_map<int, std::shared_ptr<mas::Area<REAL_T> > >::iterator area_iterator;
-        typedef typename std::unordered_map<int, std::shared_ptr<mas::Population<REAL_T> > >::iterator population_iterator;
-        typedef typename std::unordered_map<int, std::shared_ptr<mas::GrowthBase<REAL_T> > >::iterator growth_model_iterator;
-        typedef typename std::unordered_map<int, std::shared_ptr<mas::RecruitmentBase<REAL_T> > >::iterator recruitment_model_iterator;
-        typedef typename std::unordered_map<int, std::shared_ptr<mas::NaturalMortality<REAL_T> > >::iterator natural_mortality_model_iterator;
-        typedef typename std::unordered_map<int, std::shared_ptr<mas::FishingMortality<REAL_T> > >::iterator fishing_mortality_model_iterator;
-        typedef typename std::unordered_map<int, std::shared_ptr<mas::FecundityBase<REAL_T> > >::iterator fecundity_model_iterator;
-        typedef typename std::unordered_map<int, std::shared_ptr<mas::Movement<REAL_T> > >::iterator movement_model_iterator;
-        typedef typename std::unordered_map<int, std::shared_ptr<mas::SelectivityBase<REAL_T> > >::iterator selectivity_model_iterator;
-        typedef typename std::unordered_map<int, std::shared_ptr<mas::Fleet<REAL_T> > >::iterator fleet_iterator;
-        typedef typename std::unordered_map<int, std::shared_ptr<mas::Survey<REAL_T> > >::iterator survey_model_iterator;
-        typedef typename std::unordered_map<int, std::shared_ptr<mas::NLLFunctor<REAL_T> > >::iterator likelihood_components_iterator;
+        typedef typename std::unordered_map<int, atl::intrusive_ptr<mas::Season<REAL_T> > >::iterator seasons_iterator;
+        typedef typename std::unordered_map<int, atl::intrusive_ptr<mas::Area<REAL_T> > >::iterator area_iterator;
+        typedef typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator population_iterator;
+        typedef typename std::unordered_map<int, atl::intrusive_ptr<mas::GrowthBase<REAL_T> > >::iterator growth_model_iterator;
+        typedef typename std::unordered_map<int, atl::intrusive_ptr<mas::RecruitmentBase<REAL_T> > >::iterator recruitment_model_iterator;
+        typedef typename std::unordered_map<int, atl::intrusive_ptr<mas::NaturalMortality<REAL_T> > >::iterator natural_mortality_model_iterator;
+        typedef typename std::unordered_map<int, atl::intrusive_ptr<mas::FishingMortality<REAL_T> > >::iterator fishing_mortality_model_iterator;
+        typedef typename std::unordered_map<int, atl::intrusive_ptr<mas::FecundityBase<REAL_T> > >::iterator fecundity_model_iterator;
+        typedef typename std::unordered_map<int, atl::intrusive_ptr<mas::Movement<REAL_T> > >::iterator movement_model_iterator;
+        typedef typename std::unordered_map<int, atl::intrusive_ptr<mas::SelectivityBase<REAL_T> > >::iterator selectivity_model_iterator;
+        typedef typename std::unordered_map<int, atl::intrusive_ptr<mas::Fleet<REAL_T> > >::iterator fleet_iterator;
+        typedef typename std::unordered_map<int, atl::intrusive_ptr<mas::Survey<REAL_T> > >::iterator survey_model_iterator;
+        typedef typename std::unordered_map<int, atl::intrusive_ptr<mas::NLLFunctor<REAL_T> > >::iterator likelihood_components_iterator;
 
         rapidjson::Document config_document;
         rapidjson::Document data_document;
@@ -342,7 +342,7 @@ namespace mas {
 
         void HandleLikelihoodComponent(rapidjson::Document::MemberIterator& likelihood_component) {
             INFO_DEBUG
-            std::shared_ptr < mas::DataObject<REAL_T > > lambda_data(new mas::DataObject<REAL_T>());
+            atl::intrusive_ptr< mas::DataObject<REAL_T > > lambda_data(new mas::DataObject<REAL_T>());
             rapidjson::Document::MemberIterator rit;
             rit = (*likelihood_component).value.FindMember("model");
 
@@ -353,7 +353,7 @@ namespace mas {
 
             }
 
-            std::shared_ptr < mas::NLLFunctor<REAL_T > > model(NULL);
+            atl::intrusive_ptr< mas::NLLFunctor<REAL_T > > model(NULL);
             std::string smodel = std::string((*rit).value.GetString());
 
 
@@ -371,7 +371,7 @@ namespace mas {
             rit = (*likelihood_component).value.FindMember("lambda");
             if (rit != (*likelihood_component).value.MemberEnd()) {
 
-                //                lambda_data = std::make_shared<mas::DataObject<REAL_T> >();
+                //                lambda_data = new mas::DataObject<REAL_T>();
                 rapidjson::Document::MemberIterator lit;
                 rapidjson::Document::MemberIterator lvit;
 
@@ -418,7 +418,7 @@ namespace mas {
 
 
             if (smodel == std::string("dirichlet_multinomial")) {
-                model = std::make_shared<mas::DirichletMultinomial<REAL_T> >();
+                model = new mas::DirichletMultinomial<REAL_T>();
                 mas::DirichletMultinomial<REAL_T>* dirichlet = (mas::DirichletMultinomial<REAL_T>*)model.get();
 
                 std::stringstream ss;
@@ -488,7 +488,7 @@ namespace mas {
 
 
             } else if (smodel == std::string("dirichlet_multinomial_robust")) {
-                model = std::make_shared<mas::DirichletMultinomialRobust<REAL_T> >();
+                model = new mas::DirichletMultinomialRobust<REAL_T>();
                 mas::DirichletMultinomialRobust<REAL_T>* dirichlet = (mas::DirichletMultinomialRobust<REAL_T>*)model.get();
 
                 rapidjson::Document::MemberIterator eit = (*likelihood_component).value.FindMember("epsilon");
@@ -563,12 +563,12 @@ namespace mas {
 
                 //no estimable parameters for these component types
             } else if (smodel == std::string("multinomial")) {
-                model = std::make_shared<mas::Multinomial<REAL_T> >();
+                model = new mas::Multinomial<REAL_T>();
 
             } else if (smodel == std::string("multinomial_robust")) {
-                model = std::make_shared<mas::MultinomialRobust<REAL_T> >();
+                model = new mas::MultinomialRobust<REAL_T>();
             } else if (smodel == std::string("lognormal")) {
-                model = std::make_shared<mas::Lognormal<REAL_T> >();
+                model = new mas::Lognormal<REAL_T>();
                 rapidjson::Document::MemberIterator eit = (*likelihood_component).value.FindMember("standard_error");
                 if (eit != (*likelihood_component).value.MemberEnd()) {
                     mas::Lognormal<REAL_T>* models = (mas::Lognormal<REAL_T>*)model.get();
@@ -593,7 +593,7 @@ namespace mas {
         }
 
         void HandleSurveyModel(rapidjson::Document::MemberIterator & survey_model) {
-            std::shared_ptr<mas::Survey<REAL_T> > model(new mas::Survey<REAL_T>());
+            atl::intrusive_ptr<mas::Survey<REAL_T> > model(new mas::Survey<REAL_T>());
             std::stringstream ss;
             INFO_DEBUG
             rapidjson::Document::MemberIterator rit = (*survey_model).value.FindMember("id");
@@ -821,7 +821,7 @@ namespace mas {
 
         void HandleFishingMortalityModel(rapidjson::Document::MemberIterator & mortality_model) {
             INFO_DEBUG
-            std::shared_ptr<mas::FishingMortality<REAL_T> > model(new mas::FishingMortality<REAL_T>());
+            atl::intrusive_ptr<mas::FishingMortality<REAL_T> > model(new mas::FishingMortality<REAL_T>());
             bool estimated = false;
             bool delta_method = false;
             int phase = 1;
@@ -976,7 +976,7 @@ namespace mas {
 
         void HandleNaturalMortalityModel(rapidjson::Document::MemberIterator & mortality_model) {
             INFO_DEBUG
-            std::shared_ptr<mas::NaturalMortality<REAL_T> > model(new mas::NaturalMortality<REAL_T>());
+            atl::intrusive_ptr<mas::NaturalMortality<REAL_T> > model(new mas::NaturalMortality<REAL_T>());
             bool estimated = false;
             int phase = 1;
 
@@ -1087,7 +1087,7 @@ namespace mas {
 
         void HandleMovementModel(rapidjson::Document::MemberIterator & movement_model) {
             INFO_DEBUG
-            std::shared_ptr<mas::Movement<REAL_T> > model(new mas::Movement<REAL_T>());
+            atl::intrusive_ptr<mas::Movement<REAL_T> > model(new mas::Movement<REAL_T>());
             bool estimated = false;
             int phase = 1;
 
@@ -1291,7 +1291,7 @@ namespace mas {
 
         void HandleFleetModel(rapidjson::Document::MemberIterator & fleet_model) {
             INFO_DEBUG
-            std::shared_ptr<mas::Fleet<REAL_T> > model(new mas::Fleet<REAL_T>());
+            atl::intrusive_ptr<mas::Fleet<REAL_T> > model(new mas::Fleet<REAL_T>());
 
 
             rapidjson::Document::MemberIterator rit = (*fleet_model).value.FindMember("id");
@@ -1528,7 +1528,7 @@ namespace mas {
 
         void HandlePopulationModel(rapidjson::Document::MemberIterator & population_model) {
             INFO_DEBUG
-            std::shared_ptr<mas::Population<REAL_T> > model(new mas::Population<REAL_T>());
+            atl::intrusive_ptr<mas::Population<REAL_T> > model(new mas::Population<REAL_T>());
 
 
             rapidjson::Document::MemberIterator rit = (*population_model).value.FindMember("id");
@@ -1554,9 +1554,9 @@ namespace mas {
             if (rit != (*population_model).value.MemberEnd()) {
                 std::string hcrmodel = std::string((*rit).value.GetString());
                 if (hcrmodel == std::string("NPFMC Tier 3 HCR")) {
-                    model->harvest_control_rule = std::make_shared<mas::NPFMC_Tier3_HCR<REAL_T> >();
+                    model->harvest_control_rule = new mas::NPFMC_Tier3_HCR<REAL_T>();
                 } else if (hcrmodel == std::string("PFMC HCR")) {
-                    model->harvest_control_rule = std::make_shared<mas::PFMC_HCR<REAL_T> >();
+                    model->harvest_control_rule = new mas::PFMC_HCR<REAL_T>();
                 }
             } else {
                 std::cout << "Configuration Warning: Population has no Harvest Control Rule selected\n";
@@ -2128,7 +2128,7 @@ namespace mas {
 
         void HandleAreaModel(rapidjson::Document::MemberIterator & area_model) {
             INFO_DEBUG
-            std::shared_ptr<mas::Area<REAL_T> > model(new mas::Area<REAL_T>());
+            atl::intrusive_ptr<mas::Area<REAL_T> > model(new mas::Area<REAL_T>());
 
 
             rapidjson::Document::MemberIterator rit = (*area_model).value.FindMember("id");
@@ -2178,7 +2178,7 @@ namespace mas {
             }
 
 
-            std::shared_ptr<mas::SelectivityBase<REAL_T> > model(NULL);
+            atl::intrusive_ptr<mas::SelectivityBase<REAL_T> > model(NULL);
             std::string smodel = std::string((*rit).value.GetString());
 
             rit = (*selectivity_model).value.FindMember("id");
@@ -2206,7 +2206,7 @@ namespace mas {
 
             if (smodel == std::string("logistic")) {
 
-                model = std::make_shared<mas::LogisticSel<REAL_T> >();
+                model = new mas::LogisticSel<REAL_T>();
                 mas::LogisticSel<REAL_T>* l = (mas::LogisticSel<REAL_T>*)model.get();
 
                 std::stringstream ss;
@@ -2354,7 +2354,7 @@ namespace mas {
 
 
             } else if (smodel == std::string("double_logistic")) {
-                model = std::make_shared<mas::DoubleLogisticSel<REAL_T> >();
+                model = new mas::DoubleLogisticSel<REAL_T>();
                 mas::DoubleLogisticSel<REAL_T>* l = (mas::DoubleLogisticSel<REAL_T>*)model.get();
 
                 std::stringstream ss;
@@ -2620,7 +2620,7 @@ namespace mas {
 
             } else if (smodel == std::string("gaussian-rbf")) {
 
-                model = std::make_shared<mas::GaussianRBF<REAL_T> >();
+                model = new mas::GaussianRBF<REAL_T>();
                 mas::GaussianRBF<REAL_T>* l = (mas::GaussianRBF<REAL_T>*)model.get();
 
                 std::stringstream ss;
@@ -2843,7 +2843,7 @@ namespace mas {
 
             } else if (smodel == std::string("inverse_quadratic-rbf")) {
 
-                model = std::make_shared<mas::InverseQuadraticRBF<REAL_T> >();
+                model = new mas::InverseQuadraticRBF<REAL_T>();
                 mas::InverseQuadraticRBF<REAL_T>* l = (mas::InverseQuadraticRBF<REAL_T>*)model.get();
 
                 std::stringstream ss;
@@ -3067,7 +3067,7 @@ namespace mas {
 
             } else if (smodel == std::string("age_based")) {
 
-                model = std::make_shared<mas::AgeBased<REAL_T> >();
+                model = new mas::AgeBased<REAL_T>();
                 mas::AgeBased<REAL_T>* l = (mas::AgeBased<REAL_T>*)model.get();
 
                 std::stringstream ss;
@@ -3192,7 +3192,7 @@ namespace mas {
         void HandleGrowthModel(rapidjson::Document::MemberIterator & growth_model) {
             INFO_DEBUG
 
-            std::shared_ptr<mas::WeightFunctorBase<REAL_T> > weight_functor(NULL);
+            atl::intrusive_ptr<mas::WeightFunctorBase<REAL_T> > weight_functor(NULL);
             rapidjson::Document::MemberIterator rit;
             rit = (*growth_model).value.FindMember("model");
 
@@ -3203,7 +3203,7 @@ namespace mas {
             }
 
 
-            std::shared_ptr<mas::GrowthBase<REAL_T> > model(NULL);
+            atl::intrusive_ptr<mas::GrowthBase<REAL_T> > model(NULL);
             std::string smodel = std::string((*rit).value.GetString());
 
             rit = (*growth_model).value.FindMember("id");
@@ -3228,7 +3228,7 @@ namespace mas {
 
 
             if (smodel == std::string("von_bertalanffy_modified")) {
-                model = std::make_shared<mas::VonBertalanffyModified<REAL_T> >();
+                model = new mas::VonBertalanffyModified<REAL_T>();
                 mas::VonBertalanffyModified<REAL_T>* vb = (mas::VonBertalanffyModified<REAL_T>*)model.get();
 
                 std::stringstream ss;
@@ -3719,7 +3719,7 @@ namespace mas {
                 }
 
             } else if (smodel == std::string("von_bertalanffy")) {
-                model = std::make_shared<mas::VonBertalanffy<REAL_T> >();
+                model = new mas::VonBertalanffy<REAL_T>();
                 mas::VonBertalanffy<REAL_T>* vb = (mas::VonBertalanffy<REAL_T>*)model.get();
 
                 std::stringstream ss;
@@ -4096,7 +4096,7 @@ namespace mas {
 
             } else if (smodel == std::string("schnute_case_I")) {
 
-                model = std::make_shared<mas::SchnuteCaseI<REAL_T> >();
+                model = new mas::SchnuteCaseI<REAL_T>();
                 mas::SchnuteCaseI<REAL_T>* s = (mas::SchnuteCaseI<REAL_T>*)model.get();
 
                 std::stringstream ss;
@@ -4578,7 +4578,7 @@ namespace mas {
                 }
 
             } else if (smodel == std::string("schnute_case_II")) {
-                model = std::make_shared<mas::SchnuteCaseII<REAL_T> >();
+                model = new mas::SchnuteCaseII<REAL_T>();
                 mas::SchnuteCaseII<REAL_T>* s = (mas::SchnuteCaseII<REAL_T>*)model.get();
 
                 std::stringstream ss;
@@ -5002,7 +5002,7 @@ namespace mas {
                 }
 
             } else if (smodel == std::string("schnute_case_III")) {
-                model = std::make_shared<mas::SchnuteCaseIII<REAL_T> >();
+                model = new mas::SchnuteCaseIII<REAL_T>();
                 mas::SchnuteCaseIII<REAL_T>* s = (mas::SchnuteCaseIII<REAL_T>*)model.get();
 
                 std::stringstream ss;
@@ -5483,7 +5483,7 @@ namespace mas {
 
 
             } else if (smodel == std::string("schnute_case_IV")) {
-                model = std::make_shared<mas::SchnuteCaseIV<REAL_T> >();
+                model = new mas::SchnuteCaseIV<REAL_T>();
                 mas::SchnuteCaseIV<REAL_T>* s = (mas::SchnuteCaseIV<REAL_T>*)model.get();
 
                 std::stringstream ss;
@@ -6084,7 +6084,7 @@ namespace mas {
                 size_t years = this->nyears;
                 size_t seasons = this->nseasons;
 
-                weight_functor = std::make_shared<mas::EmpiricalWeightFunctor<REAL_T> >();
+                weight_functor = new mas::EmpiricalWeightFunctor<REAL_T>();
                 mas::EmpiricalWeightFunctor<REAL_T>* eg = (mas::EmpiricalWeightFunctor<REAL_T>*)weight_functor.get();
 
                 for (ewaa_it = (*growth_model).value.MemberBegin(); ewaa_it != (*growth_model).value.MemberEnd(); ++ewaa_it) {
@@ -6092,7 +6092,7 @@ namespace mas {
                     if ((*ewaa_it).value.IsArray()) {
                         rapidjson::Value& v = (*ewaa_it).value;
                         for (int ii = 0; ii < v.Size(); ii++) {
-                            std::shared_ptr<mas::DataObject<REAL_T> > data_object(new mas::DataObject<REAL_T>());
+                            atl::intrusive_ptr<mas::DataObject<REAL_T> > data_object(new mas::DataObject<REAL_T>());
                             rapidjson::Document::MemberIterator t_it = v[ii].FindMember("data_object_type");
                             mas::DataObjectType type = mas::DataObject<double>::GetType((*t_it).value.GetString());
                             t_it = v[ii].FindMember("sex");
@@ -6304,7 +6304,7 @@ namespace mas {
             } else {
 
                 //instantiate default here
-                weight_functor = std::make_shared<mas::DefaultWeightFunctor<REAL_T> >(model->alpha_f, model->alpha_m, model->beta_f, model->beta_f);
+                weight_functor = new mas::DefaultWeightFunctor<REAL_T>(model->alpha_f, model->alpha_m, model->beta_f, model->beta_f);
             }
 
 
@@ -6337,7 +6337,7 @@ namespace mas {
 
             }
 
-            std::shared_ptr<mas::RecruitmentBase<REAL_T> > model(NULL);
+            atl::intrusive_ptr<mas::RecruitmentBase<REAL_T> > model(NULL);
             std::string smodel = std::string((*rit).value.GetString());
 
             rit = (*recruitment_model).value.FindMember("id");
@@ -6354,7 +6354,7 @@ namespace mas {
 
 
             if (smodel == std::string("beverton_holt")) {
-                model = std::make_shared<mas::BevertonHolt<REAL_T> >();
+                model = new mas::BevertonHolt<REAL_T>();
                 mas::BevertonHolt<REAL_T>* bh = (mas::BevertonHolt<REAL_T>*)model.get();
                 model->id = model_id;
                 std::stringstream ss;
@@ -6718,7 +6718,7 @@ namespace mas {
                 }
 
             } else if (smodel == std::string("beverton_holt_alt")) {
-                model = std::make_shared<mas::BevertonHoltAlt<REAL_T> >();
+                model = new mas::BevertonHoltAlt<REAL_T>();
                 mas::BevertonHoltAlt<REAL_T>* bh = (mas::BevertonHoltAlt<REAL_T>*)model.get();
                 model->id = model_id;
                 std::stringstream ss;
@@ -6964,7 +6964,7 @@ namespace mas {
                     }
                 }
             } else if (smodel == std::string("beverton_holt_dep")) {
-                model = std::make_shared<mas::BevertonHoltDep<REAL_T> >();
+                model = new mas::BevertonHoltDep<REAL_T>();
                 mas::BevertonHoltDep<REAL_T>* bh = (mas::BevertonHoltDep<REAL_T>*)model.get();
                 model->id = model_id;
                 std::stringstream ss;
@@ -7205,7 +7205,7 @@ namespace mas {
                 }
 
             } else if (smodel == std::string("ricker")) {
-                model = std::make_shared<mas::Ricker<REAL_T> >();
+                model = new mas::Ricker<REAL_T>();
                 mas::Ricker<REAL_T>* r = (mas::Ricker<REAL_T>*)model.get();
                 model->id = model_id;
                 std::stringstream ss;
@@ -7329,7 +7329,7 @@ namespace mas {
                     }
                 }
             } else if (smodel == std::string("ricker_alt")) {
-                model = std::make_shared<mas::RickerAlt<REAL_T> >();
+                model = new mas::RickerAlt<REAL_T>();
                 mas::RickerAlt<REAL_T>* ra = (mas::RickerAlt<REAL_T>*)model.get();
                 model->id = model_id;
                 std::stringstream ss;
@@ -7570,7 +7570,7 @@ namespace mas {
 
                 }
             } else if (smodel == std::string("shepard")) {
-                //                model = std::make_shared<mas::Shepherd<REAL_T> >();
+                //                model = new mas::Shepherd<REAL_T>();
                 //                mas::Shepherd<REAL_T>* s = (mas::Shepherd<REAL_T>*)model.get();
                 //                model->id = model_id;
                 //                std::stringstream ss;
@@ -7810,7 +7810,7 @@ namespace mas {
                 //                    }
                 //                }
             } else if (smodel == std::string("deriso")) {
-                model = std::make_shared<mas::Deriso<REAL_T> >();
+                model = new mas::Deriso<REAL_T>();
                 mas::Deriso<REAL_T>* d = (mas::Deriso<REAL_T>*)model.get();
                 model->id = model_id;
                 std::stringstream ss;
@@ -8267,7 +8267,7 @@ namespace mas {
             for (dit = document.MemberBegin(); dit != document.MemberEnd(); ++dit) {
                 if (std::string((*dit).name.GetString()) == "data_object") {
                     rapidjson::Document::MemberIterator mit;
-                    std::shared_ptr<DataObject<REAL_T> > data_object(new DataObject<REAL_T>());
+                    atl::intrusive_ptr<DataObject<REAL_T> > data_object(new DataObject<REAL_T>());
                     INFO_DEBUG
                     //                    data_object->imax = years;
                     //                    data_object->jmax = seasons;
@@ -9470,7 +9470,7 @@ namespace mas {
 
 
                 if (nll == -999) {
-                    (*fit).second->fishery_age_comp_likelihood_component = std::make_shared < mas::Multinomial<REAL_T> >();
+                    (*fit).second->fishery_age_comp_likelihood_component = new  mas::Multinomial<REAL_T>();
                 } else {
 
                     likelihood_components_iterator comp =
@@ -9492,7 +9492,7 @@ namespace mas {
 
                 INFO_DEBUG
                 if (nll == -999) {
-                    (*fit).second->fishery_biomass_likelihood_component = std::make_shared < mas::Multinomial<REAL_T> >();
+                    (*fit).second->fishery_biomass_likelihood_component = new  mas::Multinomial<REAL_T>();
                 } else {
 
                     likelihood_components_iterator comp =
@@ -9512,7 +9512,7 @@ namespace mas {
 
                 INFO_DEBUG
                 if (nll == -999) {
-                    (*fit).second->fishery_abundance_likelihood_component = std::make_shared < mas::Lognormal<REAL_T> >();
+                    (*fit).second->fishery_abundance_likelihood_component = new  mas::Lognormal<REAL_T>();
                 } else {
 
                     likelihood_components_iterator comp =
@@ -9622,7 +9622,7 @@ namespace mas {
 
 
                 if (nll == -999) {
-                    (*ssit).second->survey_age_comp_likelihood_component = std::make_shared < mas::Multinomial<REAL_T> >();
+                    (*ssit).second->survey_age_comp_likelihood_component = new  mas::Multinomial<REAL_T>();
                 } else {
 
                     likelihood_components_iterator comp =
@@ -9642,7 +9642,7 @@ namespace mas {
 
 
                 if (nll == -999) {
-                    (*ssit).second->survey_biomass_likelihood_component = std::make_shared < mas::Multinomial<REAL_T> >();
+                    (*ssit).second->survey_biomass_likelihood_component = new  mas::Multinomial<REAL_T>();
                 } else {
 
                     likelihood_components_iterator comp =
@@ -10145,14 +10145,14 @@ namespace mas {
 
         }
 
-        std::unordered_map<int, std::shared_ptr<mas::Population<REAL_T> > >& GetPopulations() {
+        std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >& GetPopulations() {
             return populations;
         }
 
         void DumpFishingMortality(std::string file) {
             std::ofstream out(file.c_str());
 
-            typename std::unordered_map<int, std::shared_ptr<mas::FishingMortality<REAL_T> > >::iterator it;
+            typename std::unordered_map<int, atl::intrusive_ptr<mas::FishingMortality<REAL_T> > >::iterator it;
             for (it = this->fishing_mortality_models.begin(); it != this->fishing_mortality_models.end(); ++it) {
                 out << (*it).second->ToString() << "\n\n";
             }
@@ -10189,4 +10189,7 @@ namespace mas {
 
 
 #endif /* MAS_INFORMATION_HPP */
+
+
+
 

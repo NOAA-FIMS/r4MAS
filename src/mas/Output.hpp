@@ -24,10 +24,10 @@ namespace mas {
     template<typename REAL_T>
     class JSONOutputGenerator {
         typedef typename VariableTrait<REAL_T>::variable variable;
-        typedef typename std::unordered_map<int, std::shared_ptr<mas::Population<REAL_T> > >::iterator population_iterator;
-        typedef typename std::unordered_map<int, std::shared_ptr<mas::Fleet<REAL_T> > >::iterator fleet_iterator;
-        typedef typename std::unordered_map<int, std::shared_ptr<mas::Survey<REAL_T> > >::iterator survey_iterator;
-        typedef typename std::unordered_map<int, std::shared_ptr<mas::Area<REAL_T> > >::iterator area_iterator;
+        typedef typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator population_iterator;
+        typedef typename std::unordered_map<int, atl::intrusive_ptr<mas::Fleet<REAL_T> > >::iterator fleet_iterator;
+        typedef typename std::unordered_map<int, atl::intrusive_ptr<mas::Survey<REAL_T> > >::iterator survey_iterator;
+        typedef typename std::unordered_map<int, atl::intrusive_ptr<mas::Area<REAL_T> > >::iterator area_iterator;
         rapidjson::Document document;
 
         void GenerateArrayObject(rapidjson::Value& array,
@@ -121,7 +121,7 @@ namespace mas {
         }
 
         void GenerateArrayObject(rapidjson::Value& array,
-                const std::shared_ptr<DataObject<REAL_T> >& darray,
+                const atl::intrusive_ptr<DataObject<REAL_T> >& darray,
                 int dimensions,
                 size_t imax,
                 size_t jmax,
@@ -877,7 +877,7 @@ namespace mas {
         }
 
         void GenerateFleetOutput(rapidjson::Value& popobject,
-                const std::shared_ptr<mas::Fleet<REAL_T> >& fleet) {
+                const atl::intrusive_ptr<mas::Fleet<REAL_T> >& fleet) {
 
             rapidjson::Value females(rapidjson::kObjectType);
             rapidjson::Value males(rapidjson::kObjectType);
@@ -1139,7 +1139,7 @@ namespace mas {
         }
 
         void GenerateSurveyOutput(rapidjson::Value& popobject,
-                const std::shared_ptr<mas::Survey<REAL_T> >& survey) {
+                const atl::intrusive_ptr<mas::Survey<REAL_T> >& survey) {
 
             rapidjson::Value females(rapidjson::kObjectType);
             rapidjson::Value males(rapidjson::kObjectType);
@@ -1301,7 +1301,7 @@ namespace mas {
         }
 
         void GenerateAreaOutput(rapidjson::Value& popobject,
-                const std::shared_ptr<mas::Area<REAL_T> >& area) {
+                const atl::intrusive_ptr<mas::Area<REAL_T> >& area) {
         }
 
         void GenerateConfig(rapidjson::Value& popobject, const mas::Information<REAL_T>& info) {
@@ -2100,4 +2100,7 @@ namespace mas {
 
 
 #endif /* OUTPUT_HPP */
+
+
+
 

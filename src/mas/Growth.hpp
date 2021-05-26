@@ -73,13 +73,14 @@ namespace mas {
      */
     template<typename REAL_T>
     struct EmpricalDataStructure {
-        std::shared_ptr<mas::DataObject<REAL_T> > empirical_data_at_age;
+        atl::intrusive_ptr<mas::DataObject<REAL_T> > empirical_data_at_age;
         flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > > interpolated_data_at_age;
     };
 
     template <typename REAL_T>
     struct WeightFunctorBase {
         typedef typename VariableTrait<REAL_T>::variable variable;
+	int references = 0;
 
         WeightFunctorBase() {
         }
@@ -167,7 +168,7 @@ namespace mas {
         variable beta_f = 3.0;
         variable beta_m = 3.0;
 
-        std::shared_ptr<mas::WeightFunctorBase<REAL_T> > weight_functor;
+        atl::intrusive_ptr<mas::WeightFunctorBase<REAL_T> > weight_functor;
 
         //global list of ages to interpolate.
         static std::set<REAL_T> ages_to_intrpolate;
@@ -209,7 +210,7 @@ namespace mas {
             return y;
         }
 
-        static void Do2DInterpolation(int id, const std::shared_ptr<mas::DataObject<REAL_T> > & data,
+        static void Do2DInterpolation(int id, const atl::intrusive_ptr<mas::DataObject<REAL_T> > & data,
                 flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > >& results) {
 
             size_t years = data->imax;
@@ -232,7 +233,7 @@ namespace mas {
 
         }
 
-        static void Do2DInterpolation(const std::shared_ptr<mas::DataObject<REAL_T> > & data,
+        static void Do2DInterpolation(const atl::intrusive_ptr<mas::DataObject<REAL_T> > & data,
                 flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > >& results) {
 
             size_t years = data->imax;
@@ -255,7 +256,7 @@ namespace mas {
 
         }
 
-        static void Do3DInterpolation(int id, const std::shared_ptr<mas::DataObject<REAL_T> > & data,
+        static void Do3DInterpolation(int id, const atl::intrusive_ptr<mas::DataObject<REAL_T> > & data,
                 flat_map<int, flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > > >& results) {
 
             size_t years = data->imax;
@@ -283,7 +284,7 @@ namespace mas {
 
         }
 
-        static void Do3DInterpolation(const std::shared_ptr<mas::DataObject<REAL_T> > & data,
+        static void Do3DInterpolation(const atl::intrusive_ptr<mas::DataObject<REAL_T> > & data,
                 flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > >& results) {
             GROWTH_DEBUG
             size_t years = data->imax;
@@ -415,31 +416,31 @@ namespace mas {
     //  
     //
     //    template<typename REAL_T>
-    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_age_female_fleet;
+    //    flat_map<int, atl::intrusive_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_age_female_fleet;
     //    template<typename REAL_T>
-    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_age_male_fleet;
+    //    flat_map<int, atl::intrusive_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_age_male_fleet;
     //    template<typename REAL_T>
-    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_female_fleet;
+    //    flat_map<int, atl::intrusive_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_female_fleet;
     //    template<typename REAL_T>
-    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_male_fleet;
+    //    flat_map<int, atl::intrusive_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_male_fleet;
     //
     //
     //    template<typename REAL_T>
-    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_age_female_survey;
+    //    flat_map<int, atl::intrusive_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_age_female_survey;
     //    template<typename REAL_T>
-    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_age_male_survey;
+    //    flat_map<int, atl::intrusive_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_age_male_survey;
     //    template<typename REAL_T>
-    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_female_survey;
+    //    flat_map<int, atl::intrusive_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_female_survey;
     //    template<typename REAL_T>
-    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_male_survey;
+    //    flat_map<int, atl::intrusive_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_male_survey;
     //    template<typename REAL_T>
-    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_female;
+    //    flat_map<int, atl::intrusive_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_female;
     //    template<typename REAL_T>
-    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_male;
+    //    flat_map<int, atl::intrusive_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_spawning_male;
     //    template<typename REAL_T>
-    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_season_start_female;
+    //    flat_map<int, atl::intrusive_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_season_start_female;
     //    template<typename REAL_T>
-    //    flat_map<int, std::shared_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_season_start_male;
+    //    flat_map<int, atl::intrusive_ptr<mas::DataObject<REAL_T> > > mas::GrowthBase<REAL_T>::empirical_weight_at_season_start_male;
     //
     //    template<typename REAL_T>
     //    flat_map<int, flat_map<int, flat_map<int, flat_map<REAL_T, REAL_T> > > > mas::GrowthBase<REAL_T>::interpolated_empirical_weight_at_age_female_fleet;
@@ -963,4 +964,7 @@ namespace mas {
 
 
 #endif /* MAS_GROWTH_HPP */
+
+
+
 
