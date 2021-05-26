@@ -671,7 +671,7 @@ public:
         mas::VariableTrait<double>::variable A;
         mas::VariableTrait<double>::variable ret;
         mas::VariableTrait<double>::SetValue(A, a);
-        atl::intrusive_ptr<mas::AgeBased<double> > sel = new mas::AgeBased<double> > ();
+        atl::intrusive_ptr<mas::AgeBased<double> > sel = new mas::AgeBased<double>();
         mas::AgeBased<double>* selex = sel.get();
         for (int i = 0; i < this->values.size(); i++) {
             selex->w.push_back(this->values[i]);
@@ -687,7 +687,7 @@ public:
             std::cout << "mismatch in nages and AgeBasedSelectivity vecrtor\n";
             return;
         }
-        atl::intrusive_ptr<mas::AgeBased<double> > sel = new mas::AgeBased<double> > ();
+        atl::intrusive_ptr<mas::AgeBased<double> > sel = new mas::AgeBased<double>();
 
         mas::AgeBased<double>* selex = sel.get();
 
@@ -997,7 +997,7 @@ public:
     virtual void AddToMAS(mas::Information<double>& info) {
         typedef typename mas::VariableTrait<double>::variable variable;
 
-        atl::intrusive_ptr<mas::NaturalMortality<double> > nm = new mas::NaturalMortality<double> > ();
+        atl::intrusive_ptr<mas::NaturalMortality<double> > nm = new mas::NaturalMortality<double>();
         mas::NaturalMortality<double>* m = nm.get();
         m->mortality_vector.resize(info.ages.size());
         m->id = this->id;
@@ -5656,7 +5656,7 @@ public:
         if (this->used) {
 
 
-            atl::intrusive_ptr<mas::Fleet<double> > fleet = new mas::Fleet<double> > ();
+            atl::intrusive_ptr<mas::Fleet<double> > fleet = new mas::Fleet<double>();
             mas::Fleet<double>* f = fleet.get();
             f->id = this->id;
             f->catch_fraction_of_year = this->catch_fraction_of_year;
@@ -6187,7 +6187,7 @@ public:
     virtual void AddToMAS(mas::Information<double>& info) {
         std::cout << "Pushing survey " << this->id << " to MAS model engine!!!\n\n";
         if (this->used) {
-            atl::intrusive_ptr<mas::Survey<double> > survey = new mas::Survey<double> > ();
+            atl::intrusive_ptr<mas::Survey<double> > survey = new mas::Survey<double>();
             mas::Survey<double>* s = survey.get();
             s->id = this->id;
             s->survey_fraction_of_year = this->survey_fraction_of_year;
@@ -6865,7 +6865,7 @@ public:
                     mas->mas_instance.info.fleets[id]->catch_biomass_data;
 
 
-            fleet_index_data = new IndexData>();
+            fleet_index_data = new IndexData();
             //            fleet_index_data->id = data->id;
             fleet_index_data->data = data->data;
             fleet_index_data->error = data->observation_error;
@@ -6880,7 +6880,7 @@ public:
 
 
 
-            fleet_age_comp_data = new AgeCompData>();
+            fleet_age_comp_data = new AgeCompData();
             //            fleet_age_comp_data->id = data2->id;
             fleet_age_comp_data->data = data2->data;
             fleet_age_comp_data->sample_size = data2->sample_size;
@@ -6910,7 +6910,7 @@ public:
                     mas->mas_instance.info.survey_models[id]->survey_biomass_data;
 
 
-            survey_index_data = new IndexData>();
+            survey_index_data = new IndexData();
             //            survey_index_data->id = data->id;
             survey_index_data->data = data->data;
             survey_index_data->error = data->observation_error;
@@ -6925,7 +6925,7 @@ public:
 
 
 
-            survey_age_comp_data = new AgeCompData>();
+            survey_age_comp_data = new AgeCompData();
             //            survey_age_comp_data->id = data2->id;
             survey_age_comp_data->data = data2->data;
             survey_age_comp_data->sample_size = data2->sample_size;
