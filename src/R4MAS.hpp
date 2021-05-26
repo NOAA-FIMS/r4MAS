@@ -5448,7 +5448,7 @@ public:
 
 std::map<int, MultinomialRobust*> MultinomialRobust::initialized_models;
 
-class IndexData {
+class IndexData : public MASSubModel {
 public:
     static int id_g;
     bool is_abundance = false;
@@ -5485,7 +5485,7 @@ public:
 std::map<int, IndexData*> IndexData::initialized_models;
 int IndexData::id_g = 1;
 
-class AgeCompData {
+class AgeCompData  : public MASSubModel {
 public:
     static int id_g;
 
@@ -5521,7 +5521,7 @@ public:
 std::map<int, AgeCompData*> AgeCompData::initialized_models;
 int AgeCompData::id_g = 1;
 
-class LengthCompData {
+class LengthCompData  : public MASSubModel  {
 public:
     static int id_g;
 
