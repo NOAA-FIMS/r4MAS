@@ -233,7 +233,7 @@ public:
         mas::VariableTrait<double>::variable A;
         mas::VariableTrait<double>::variable ret;
         mas::VariableTrait<double>::SetValue(A, a);
-        std::shared_ptr<mas::LogisticSel<double> > sel = std::make_shared<mas::LogisticSel<double> >();
+        atl::intrusive_ptr<mas::LogisticSel<double> > sel = new mas::LogisticSel<double> >();
         mas::LogisticSel<double>* selex = sel.get();
         selex->a50 = this->a50.value;
         selex->s = this->slope.value;
@@ -242,7 +242,7 @@ public:
     }
 
     virtual void AddToMAS(mas::Information<double>& info) {
-        std::shared_ptr<mas::LogisticSel<double> > sel = std::make_shared<mas::LogisticSel<double> >();
+        atl::intrusive_ptr<mas::LogisticSel<double> > sel = new mas::LogisticSel<double> >();
         mas::VariableTrait<double>::SetValue(sel->a50, a50.value);
         mas::VariableTrait<double>::SetMinBoundary(sel->a50, a50.min);
         mas::VariableTrait<double>::SetMaxBoundary(sel->a50, a50.max);
@@ -365,7 +365,7 @@ public:
         it = info.selectivity_models.find(this->id);
         if (it != info.selectivity_models.end()) {
 
-            std::shared_ptr<mas::SelectivityBase<double> > sel = (*it).second;
+            atl::intrusive_ptr<mas::SelectivityBase<double> > sel = (*it).second;
             mas::LogisticSel<double>* lsel = (mas::LogisticSel<double>*)sel.get();
             this->a50.value = lsel->a50.GetValue();
             this->slope.value = lsel->s.GetValue();
@@ -406,7 +406,7 @@ public:
         mas::VariableTrait<double>::variable A;
         mas::VariableTrait<double>::variable ret;
         mas::VariableTrait<double>::SetValue(A, a);
-        std::shared_ptr<mas::DoubleLogisticSel<double> > sel = std::make_shared<mas::DoubleLogisticSel<double> >();
+        atl::intrusive_ptr<mas::DoubleLogisticSel<double> > sel = new mas::DoubleLogisticSel<double> >();
         mas::DoubleLogisticSel<double>* selex = sel.get();
         selex->alpha_asc = this->alpha_asc.value;
         selex->alpha_desc = this->alpha_desc.value;
@@ -417,7 +417,7 @@ public:
     }
 
     virtual void AddToMAS(mas::Information<double>& info) {
-        std::shared_ptr<mas::DoubleLogisticSel<double> > sel = std::make_shared<mas::DoubleLogisticSel<double> >();
+        atl::intrusive_ptr<mas::DoubleLogisticSel<double> > sel = new mas::DoubleLogisticSel<double> >();
 
         mas::DoubleLogisticSel<double>* selex = sel.get();
 
@@ -475,7 +475,7 @@ public:
         it = info.selectivity_models.find(this->id);
         if (it != info.selectivity_models.end()) {
 
-            std::shared_ptr<mas::SelectivityBase<double> > sel = (*it).second;
+            atl::intrusive_ptr<mas::SelectivityBase<double> > sel = (*it).second;
             mas::DoubleLogisticSel<double>* lsel = (mas::DoubleLogisticSel<double>*)sel.get();
             this->alpha_asc.value = lsel->alpha_asc.GetValue();
             this->beta_asc.value = lsel->beta_asc.GetValue();
@@ -669,7 +669,7 @@ public:
         mas::VariableTrait<double>::variable A;
         mas::VariableTrait<double>::variable ret;
         mas::VariableTrait<double>::SetValue(A, a);
-        std::shared_ptr<mas::AgeBased<double> > sel = std::make_shared<mas::AgeBased<double> > ();
+        atl::intrusive_ptr<mas::AgeBased<double> > sel = new mas::AgeBased<double> > ();
         mas::AgeBased<double>* selex = sel.get();
         for (int i = 0; i < this->values.size(); i++) {
             selex->w.push_back(this->values[i]);
@@ -685,7 +685,7 @@ public:
             std::cout << "mismatch in nages and AgeBasedSelectivity vecrtor\n";
             return;
         }
-        std::shared_ptr<mas::AgeBased<double> > sel = std::make_shared<mas::AgeBased<double> > ();
+        atl::intrusive_ptr<mas::AgeBased<double> > sel = new mas::AgeBased<double> > ();
 
         mas::AgeBased<double>* selex = sel.get();
 
@@ -730,7 +730,7 @@ public:
         typename mas::Information<double>::selectivity_model_iterator it;
         it = info.selectivity_models.find(this->id);
         if (it != info.selectivity_models.end()) {
-            std::shared_ptr<mas::SelectivityBase<double> > sel = (*it).second;
+            atl::intrusive_ptr<mas::SelectivityBase<double> > sel = (*it).second;
             mas::AgeBased<double>* lsel = (mas::AgeBased<double>*)sel.get();
             for (int i = 0; i < lsel->w.size(); i++) {
 
@@ -852,7 +852,7 @@ public:
     }
 
     virtual void AddToMAS(mas::Information<double>& info) {
-        std::shared_ptr<mas::FishingMortality<double> > fm = std::make_shared<mas::FishingMortality<double> >();
+        atl::intrusive_ptr<mas::FishingMortality<double> > fm = new mas::FishingMortality<double> >();
         mas::FishingMortality<double>* m = fm.get();
         m->fishing_mortality_type = mas::ESTIMATED;
         fm->id = this->id;
@@ -995,7 +995,7 @@ public:
     virtual void AddToMAS(mas::Information<double>& info) {
         typedef typename mas::VariableTrait<double>::variable variable;
 
-        std::shared_ptr<mas::NaturalMortality<double> > nm = std::make_shared<mas::NaturalMortality<double> > ();
+        atl::intrusive_ptr<mas::NaturalMortality<double> > nm = new mas::NaturalMortality<double> > ();
         mas::NaturalMortality<double>* m = nm.get();
         m->mortality_vector.resize(info.ages.size());
         m->id = this->id;
@@ -1027,7 +1027,7 @@ public:
         typename mas::Information<double>::natural_mortality_model_iterator nit;
         nit = info.natural_mortality_models.find(this->id);
         if (nit != info.natural_mortality_models.end()) {
-            std::shared_ptr<mas::NaturalMortality<double> > nm = (*nit).second;
+            atl::intrusive_ptr<mas::NaturalMortality<double> > nm = (*nit).second;
             mas::NaturalMortality<double>* m = nm.get();
             for (int i = 0; i < info.ages.size(); i++) {
 
@@ -1214,7 +1214,7 @@ public:
         variable sb_;
         mas::VariableTrait<double>::SetValue(SB0_, SB0);
         mas::VariableTrait<double>::SetValue(sb_, sb);
-        std::shared_ptr<mas::Ricker<double> > rec = std::make_shared<mas::Ricker<double> >();
+        atl::intrusive_ptr<mas::Ricker<double> > rec = new mas::Ricker<double> >();
         mas::Ricker<double>* r = rec.get();
         r->R0 = this->R0.value;
         r->log_R0 = std::log(this->R0.value);
@@ -1227,7 +1227,7 @@ public:
     virtual void AddToMAS(mas::Information<double>& info) {
         typedef typename mas::VariableTrait<double>::variable variable;
 
-        std::shared_ptr<mas::Ricker<double> > rec = std::make_shared<mas::Ricker<double> >();
+        atl::intrusive_ptr<mas::Ricker<double> > rec = new mas::Ricker<double> >();
         mas::Ricker<double>* r = rec.get();
         r->id = this->id;
 
@@ -1307,7 +1307,7 @@ public:
         rit = info.recruitment_models.find(this->id);
         if (rit != info.recruitment_models.end()) {
 
-            std::shared_ptr<mas::RecruitmentBase<double> > rec = (*rit).second;
+            atl::intrusive_ptr<mas::RecruitmentBase<double> > rec = (*rit).second;
             mas::Ricker<double>* r = (mas::Ricker<double>*)rec.get();
             this->R0.value = std::exp(r->log_R0.GetValue());
             this->alpha.value = r->alpha.GetValue();
@@ -1555,7 +1555,7 @@ public:
         variable sb_;
         mas::VariableTrait<double>::SetValue(SB0_, SB0);
         mas::VariableTrait<double>::SetValue(sb_, sb);
-        std::shared_ptr<mas::BevertonHolt<double> > rec = std::make_shared<mas::BevertonHolt<double> >();
+        atl::intrusive_ptr<mas::BevertonHolt<double> > rec = new mas::BevertonHolt<double> >();
         mas::BevertonHolt<double>* r = rec.get();
         r->log_R0 = std::log(this->R0.value);
         r->R0 = this->R0.value;
@@ -1568,7 +1568,7 @@ public:
     virtual void AddToMAS(mas::Information<double>& info) {
         typedef typename mas::VariableTrait<double>::variable variable;
 
-        std::shared_ptr<mas::BevertonHolt<double> > rec = std::make_shared<mas::BevertonHolt<double> >();
+        atl::intrusive_ptr<mas::BevertonHolt<double> > rec = new mas::BevertonHolt<double> >();
         mas::BevertonHolt<double>* r = rec.get();
         r->id = this->id;
 
@@ -1651,7 +1651,7 @@ public:
         rit = info.recruitment_models.find(this->id);
         if (rit != info.recruitment_models.end()) {
 
-            std::shared_ptr<mas::RecruitmentBase<double> > rec = (*rit).second;
+            atl::intrusive_ptr<mas::RecruitmentBase<double> > rec = (*rit).second;
             mas::BevertonHolt<double>* r = (mas::BevertonHolt<double>*)rec.get();
             this->R0.value = std::exp(r->log_R0.GetValue());
             this->h.value = r->h.GetValue();
@@ -1865,7 +1865,7 @@ public:
         variable sb_;
         mas::VariableTrait<double>::SetValue(SB0_, SB0);
         mas::VariableTrait<double>::SetValue(sb_, sb);
-        std::shared_ptr<mas::BevertonHolt<double> > rec = std::make_shared<mas::BevertonHolt<double> >();
+        atl::intrusive_ptr<mas::BevertonHolt<double> > rec = new mas::BevertonHolt<double> >();
         mas::BevertonHolt<double>* r = rec.get();
         r->R0 = this->R0.value;
         r->R0 = this->R0.value;
@@ -1879,7 +1879,7 @@ public:
     virtual void AddToMAS(mas::Information<double>& info) {
         typedef typename mas::VariableTrait<double>::variable variable;
 
-        std::shared_ptr<mas::BevertonHoltAlt<double> > rec = std::make_shared<mas::BevertonHoltAlt<double> >();
+        atl::intrusive_ptr<mas::BevertonHoltAlt<double> > rec = new mas::BevertonHoltAlt<double> >();
         mas::BevertonHoltAlt<double>* r = rec.get();
         r->id = this->id;
 
@@ -1962,7 +1962,7 @@ public:
         rit = info.recruitment_models.find(this->id);
         if (rit != info.recruitment_models.end()) {
 
-            std::shared_ptr<mas::RecruitmentBase<double> > rec = (*rit).second;
+            atl::intrusive_ptr<mas::RecruitmentBase<double> > rec = (*rit).second;
             mas::BevertonHoltAlt<double>* r = (mas::BevertonHoltAlt<double>*)rec.get();
             this->R0.value = std::exp(r->log_R0.GetValue());
             this->h.value = r->h.GetValue();
@@ -2262,7 +2262,7 @@ public:
     }
 
     double Evaluate(const double& age, const int& sex) {
-        std::shared_ptr<mas::VonBertalanffy<double> > vb = std::make_shared<mas::VonBertalanffy<double> >();
+        atl::intrusive_ptr<mas::VonBertalanffy<double> > vb = new mas::VonBertalanffy<double> >();
         mas::VonBertalanffy<double>* g = vb.get();
         mas::VariableTrait<double>::variable a;
         mas::VariableTrait<double>::SetValue(a, age);
@@ -2271,7 +2271,7 @@ public:
     }
 
     virtual void AddToMAS(mas::Information<double>& info) {
-        std::shared_ptr<mas::VonBertalanffy<double> > vb = std::make_shared<mas::VonBertalanffy<double> >();
+        atl::intrusive_ptr<mas::VonBertalanffy<double> > vb = new mas::VonBertalanffy<double> >();
         mas::VonBertalanffy<double>* g = vb.get();
         g->id = this->id;
         std::stringstream ss;
@@ -2303,11 +2303,11 @@ public:
         size_t data_length = info.ages.size() * info.nyears * info.nseasons;
 
 
-        std::shared_ptr<mas::WeightFunctorBase<double> > weight_functor;
+        atl::intrusive_ptr<mas::WeightFunctorBase<double> > weight_functor;
         if (this->has_emprical_weight == true) {
 
 
-            weight_functor = std::make_shared<mas::EmpiricalWeightFunctor<double> >();
+            weight_functor = new mas::EmpiricalWeightFunctor<double> >();
             g->weight_functor = weight_functor;
 
             mas::EmpiricalWeightFunctor<double>* eg = (mas::EmpiricalWeightFunctor<double>*)weight_functor.get();
@@ -2327,7 +2327,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -2353,7 +2353,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -2381,7 +2381,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -2407,7 +2407,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -2435,7 +2435,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -2461,7 +2461,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -2489,7 +2489,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -2515,7 +2515,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -2532,7 +2532,7 @@ public:
 
             //instantiate default here
 
-            weight_functor = std::make_shared<mas::DefaultWeightFunctor<double> >(g->alpha_f, g->alpha_m, g->beta_f, g->beta_f);
+            weight_functor = new mas::DefaultWeightFunctor<double> >(g->alpha_f, g->alpha_m, g->beta_f, g->beta_f);
             g->weight_functor = weight_functor;
         }
         info.growth_models[this->id] = vb;
@@ -3106,7 +3106,7 @@ public:
     }
 
     double Evaluate(const double& age, const int& sex) {
-        std::shared_ptr<mas::VonBertalanffyModified<double> > vb = std::make_shared<mas::VonBertalanffyModified<double> >();
+        atl::intrusive_ptr<mas::VonBertalanffyModified<double> > vb = new mas::VonBertalanffyModified<double> >();
         mas::VonBertalanffyModified<double>* g = vb.get();
         mas::VariableTrait<double>::variable a;
         mas::VariableTrait<double>::SetValue(a, age);
@@ -3115,7 +3115,7 @@ public:
     }
 
     virtual void AddToMAS(mas::Information<double>& info) {
-        std::shared_ptr<mas::VonBertalanffyModified<double> > vb = std::make_shared<mas::VonBertalanffyModified<double> >();
+        atl::intrusive_ptr<mas::VonBertalanffyModified<double> > vb = new mas::VonBertalanffyModified<double> >();
         mas::VonBertalanffyModified<double>* g = vb.get();
         g->id = this->id;
         std::stringstream ss;
@@ -3150,12 +3150,12 @@ public:
         ss << "l_inf_" << this->id;
         this->InitializeParameter(g, g->l_inf, this->l_inf, ss.str());
 
-        std::shared_ptr<mas::WeightFunctorBase<double> > weight_functor;
+        atl::intrusive_ptr<mas::WeightFunctorBase<double> > weight_functor;
         size_t data_length = info.ages.size() * info.nyears * info.nseasons;
         if (this->has_emprical_weight == true) {
 
 
-            weight_functor = std::make_shared<mas::EmpiricalWeightFunctor<double> >();
+            weight_functor = new mas::EmpiricalWeightFunctor<double> >();
             //            g->weight_functor = weight_functor;
 
             mas::EmpiricalWeightFunctor<double>* eg = (mas::EmpiricalWeightFunctor<double>*)weight_functor.get();
@@ -3175,7 +3175,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -3206,7 +3206,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -3236,7 +3236,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -3264,7 +3264,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -3294,7 +3294,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -3322,7 +3322,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -3352,7 +3352,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -3380,7 +3380,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                std::shared_ptr<mas::DataObject<double> > data = std::make_shared<mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -3399,7 +3399,7 @@ public:
 
             //instantiate default here
 
-            weight_functor = std::make_shared<mas::DefaultWeightFunctor<double> >(g->alpha_f, g->alpha_m, g->beta_f, g->beta_f);
+            weight_functor = new mas::DefaultWeightFunctor<double> >(g->alpha_f, g->alpha_m, g->beta_f, g->beta_f);
         }
         vb->weight_functor = weight_functor;
         info.growth_models[this->id] = vb;
@@ -3958,7 +3958,7 @@ public:
 
     virtual void AddToMAS(mas::Information<double>& info) {
 
-        std::shared_ptr<mas::Area<double> > area = std::make_shared<mas::Area<double> >();
+        atl::intrusive_ptr<mas::Area<double> > area = new mas::Area<double> >();
         mas::Area<double>* a = area.get();
         a->id = this->id;
         info.areas[a->id] = area;
@@ -4029,7 +4029,7 @@ public:
         } else {
             typedef typename mas::VariableTrait<double>::variable variable;
 
-            std::shared_ptr<mas::Movement<double> > movement = std::make_shared<mas::Movement<double> >();
+            atl::intrusive_ptr<mas::Movement<double> > movement = new mas::Movement<double> >();
             mas::Movement<double>* m = movement.get();
             m->id = this->id;
             int k = 0;
@@ -4070,7 +4070,7 @@ public:
         mit = info.movement_models.find(this->id);
 
         if (mit != info.movement_models.end()) {
-            std::shared_ptr<mas::Movement<double> > movement = (*mit).second;
+            atl::intrusive_ptr<mas::Movement<double> > movement = (*mit).second;
             mas::Movement<double>* m = movement.get();
             int k = 0;
             for (int s = 0; s < info.nseasons; s++) {
@@ -4326,7 +4326,7 @@ public:
 
     virtual void AddToMAS(mas::Information<double>& info) {
         typedef typename mas::VariableTrait<double>::variable variable;
-        std::shared_ptr<mas::Population<double> > population = std::make_shared<mas::Population<double> >();
+        atl::intrusive_ptr<mas::Population<double> > population = new mas::Population<double> >();
         mas::Population<double>* pop = population.get();
 
 
@@ -4826,14 +4826,14 @@ public:
     }
 
     virtual void AddToMAS(mas::Information<double>& info) {
-        std::shared_ptr < mas::DataObject<double > > lambda_data(new mas::DataObject<double>());
-        std::shared_ptr<mas::Lognormal<double> > ln = std::make_shared<mas::Lognormal<double> >();
+        atl::intrusive_ptr< mas::DataObject<double > > lambda_data(new mas::DataObject<double>());
+        atl::intrusive_ptr<mas::Lognormal<double> > ln = new mas::Lognormal<double> >();
         mas::Lognormal<double>* nll = ln.get();
         ln->use_bias_correction = this->use_bias_correction;
         nll->lambda = lambda_data;
         nll->id = this->id;
         if (this->has_lambdas) {
-            nll->lambda = std::make_shared<mas::DataObject<double> >();
+            nll->lambda = new mas::DataObject<double> >();
             mas::DataObject<double>* d = nll->lambda.get();
             int prod = 1.0;
             for (int i = 0; i < this->lambda_dimensions.size(); i++) {
@@ -4947,13 +4947,13 @@ public:
     }
 
     virtual void AddToMAS(mas::Information<double>& info) {
-        std::shared_ptr < mas::DataObject<double > > lambda_data(new mas::DataObject<double>());
-        std::shared_ptr<mas::DirichletMultinomial<double> > ln = std::make_shared<mas::DirichletMultinomial<double> >();
+        atl::intrusive_ptr< mas::DataObject<double > > lambda_data(new mas::DataObject<double>());
+        atl::intrusive_ptr<mas::DirichletMultinomial<double> > ln = new mas::DirichletMultinomial<double> >();
         mas::DirichletMultinomial<double>* nll = ln.get();
         nll->lambda = lambda_data;
         nll->id = this->id;
         if (this->has_lambdas) {
-            nll->lambda = std::make_shared<mas::DataObject<double> >();
+            nll->lambda = new mas::DataObject<double> >();
             mas::DataObject<double>* d = nll->lambda.get();
             int prod = 1.0;
             for (int i = 0; i < this->lambda_dimensions.size(); i++) {
@@ -5091,14 +5091,14 @@ public:
     }
 
     virtual void AddToMAS(mas::Information<double>& info) {
-        std::shared_ptr < mas::DataObject<double > > lambda_data(new mas::DataObject<double>());
+        atl::intrusive_ptr< mas::DataObject<double > > lambda_data(new mas::DataObject<double>());
 
-        std::shared_ptr<mas::DirichletMultinomialRobust<double> > ln = std::make_shared<mas::DirichletMultinomialRobust<double> >();
+        atl::intrusive_ptr<mas::DirichletMultinomialRobust<double> > ln = new mas::DirichletMultinomialRobust<double> >();
         mas::DirichletMultinomialRobust<double>* nll = ln.get();
         nll->lambda = lambda_data;
         nll->id = this->id;
         if (this->has_lambdas) {
-            nll->lambda = std::make_shared<mas::DataObject<double> >();
+            nll->lambda = new mas::DataObject<double> >();
             mas::DataObject<double>* d = nll->lambda.get();
             int prod = 1.0;
             for (int i = 0; i < this->lambda_dimensions.size(); i++) {
@@ -5235,14 +5235,14 @@ public:
     }
 
     virtual void AddToMAS(mas::Information<double>& info) {
-        std::shared_ptr<mas::Multinomial<double> > ln = std::make_shared<mas::Multinomial<double> >();
+        atl::intrusive_ptr<mas::Multinomial<double> > ln = new mas::Multinomial<double> >();
         mas::Multinomial<double>* nll = ln.get();
-        std::shared_ptr < mas::DataObject<double > > lambda_data(new mas::DataObject<double>());
+        atl::intrusive_ptr< mas::DataObject<double > > lambda_data(new mas::DataObject<double>());
         nll->lambda = lambda_data;
 
         nll->id = this->id;
         if (this->has_lambdas) {
-            nll->lambda = std::make_shared<mas::DataObject<double> >();
+            nll->lambda = new mas::DataObject<double> >();
             mas::DataObject<double>* d = nll->lambda.get();
             int prod = 1.0;
             for (int i = 0; i < this->lambda_dimensions.size(); i++) {
@@ -5355,13 +5355,13 @@ public:
     }
 
     virtual void AddToMAS(mas::Information<double>& info) {
-        std::shared_ptr<mas::MultinomialRobust<double> > ln = std::make_shared<mas::MultinomialRobust<double> >();
+        atl::intrusive_ptr<mas::MultinomialRobust<double> > ln = new mas::MultinomialRobust<double> >();
         mas::MultinomialRobust<double>* nll = ln.get();
-        std::shared_ptr < mas::DataObject<double > > lambda_data(new mas::DataObject<double>());
+        atl::intrusive_ptr< mas::DataObject<double > > lambda_data(new mas::DataObject<double>());
         nll->lambda = lambda_data;
         nll->id = this->id;
         if (this->has_lambdas) {
-            nll->lambda = std::make_shared<mas::DataObject<double> >();
+            nll->lambda = new mas::DataObject<double> >();
             mas::DataObject<double>* d = nll->lambda.get();
             int prod = 1.0;
             for (int i = 0; i < this->lambda_dimensions.size(); i++) {
@@ -5654,7 +5654,7 @@ public:
         if (this->used) {
 
 
-            std::shared_ptr<mas::Fleet<double> > fleet = std::make_shared<mas::Fleet<double> > ();
+            atl::intrusive_ptr<mas::Fleet<double> > fleet = new mas::Fleet<double> > ();
             mas::Fleet<double>* f = fleet.get();
             f->id = this->id;
             f->catch_fraction_of_year = this->catch_fraction_of_year;
@@ -5697,7 +5697,7 @@ public:
                     it = IndexData::initialized_models.find(this->index_data[i].second);
                     if (it != IndexData::initialized_models.end()) {
                         IndexData* data = (*it).second;
-                        std::shared_ptr<mas::DataObject<double> > dd = std::make_shared<mas::DataObject<double> >();
+                        atl::intrusive_ptr<mas::DataObject<double> > dd = new mas::DataObject<double> >();
                         mas::DataObject<double>* d = dd.get();
                         d->missing_value = data->missing_values;
                         d->dimensions = 2;
@@ -5760,7 +5760,7 @@ public:
                     it = AgeCompData::initialized_models.find(this->age_comp_data[i].second);
                     if (it != AgeCompData::initialized_models.end()) {
                         AgeCompData* data = (*it).second;
-                        std::shared_ptr<mas::DataObject<double> > dd = std::make_shared<mas::DataObject<double> >();
+                        atl::intrusive_ptr<mas::DataObject<double> > dd = new mas::DataObject<double> >();
                         mas::DataObject<double>* d = dd.get();
                         d->missing_value = data->missing_values;
                         d->dimensions = 3;
@@ -6185,7 +6185,7 @@ public:
     virtual void AddToMAS(mas::Information<double>& info) {
         std::cout << "Pushing survey " << this->id << " to MAS model engine!!!\n\n";
         if (this->used) {
-            std::shared_ptr<mas::Survey<double> > survey = std::make_shared<mas::Survey<double> > ();
+            atl::intrusive_ptr<mas::Survey<double> > survey = new mas::Survey<double> > ();
             mas::Survey<double>* s = survey.get();
             s->id = this->id;
             s->survey_fraction_of_year = this->survey_fraction_of_year;
@@ -6241,7 +6241,7 @@ public:
                     it = IndexData::initialized_models.find(this->index_data[i].second);
                     if (it != IndexData::initialized_models.end()) {
                         IndexData* data = (*it).second;
-                        std::shared_ptr<mas::DataObject<double> > dd = std::make_shared<mas::DataObject<double> >();
+                        atl::intrusive_ptr<mas::DataObject<double> > dd = new mas::DataObject<double> >();
                         mas::DataObject<double>* d = dd.get();
                         d->missing_value = data->missing_values;
                         d->dimensions = 2;
@@ -6302,7 +6302,7 @@ public:
                     it = AgeCompData::initialized_models.find(this->age_comp_data[i].second);
                     if (it != AgeCompData::initialized_models.end()) {
                         AgeCompData* data = (*it).second;
-                        std::shared_ptr<mas::DataObject<double> > dd = std::make_shared<mas::DataObject<double> >();
+                        atl::intrusive_ptr<mas::DataObject<double> > dd = new mas::DataObject<double> >();
                         mas::DataObject<double>* d = dd.get();
                         d->missing_value = data->missing_values;
                         d->dimensions = 3;
@@ -6643,8 +6643,8 @@ class MASModel {
     std::set<int> populations;
 
     //data produced from the operating model
-    std::vector<std::shared_ptr<IndexData> > om_index_data;
-    std::vector<std::shared_ptr<AgeCompData> > om_age_comp_data;
+    std::vector<atl::intrusive_ptr<IndexData> > om_index_data;
+    std::vector<atl::intrusive_ptr<AgeCompData> > om_age_comp_data;
 
 private:
 
@@ -6657,7 +6657,7 @@ private:
         }
     }
 
-    std::shared_ptr<mas::MASObjectiveFunction<double > > mas;
+    atl::intrusive_ptr<mas::MASObjectiveFunction<double > > mas;
 public:
     int nyears;
     int nseasons;
@@ -6708,7 +6708,7 @@ public:
 
     void Run() {
 
-        mas = std::make_shared<mas::MASObjectiveFunction<double > >();
+        mas = new mas::MASObjectiveFunction<double > >();
         if (this->nages == 0) {
             std::cout << "MAS error: nages = 0\n";
             return;
@@ -6786,7 +6786,7 @@ public:
 
     void RunOM() {
 
-        mas = std::make_shared<mas::MASObjectiveFunction<double > >();
+        mas = new mas::MASObjectiveFunction<double > >();
         if (this->nages == 0) {
             std::cout << "MAS error: nages = 0\n";
             return;
@@ -6852,18 +6852,18 @@ public:
                 ++it) {
             Fleet* f = (*it).second;
 
-            std::shared_ptr<IndexData> fleet_index_data;
-            std::shared_ptr<AgeCompData> fleet_age_comp_data;
+            atl::intrusive_ptr<IndexData> fleet_index_data;
+            atl::intrusive_ptr<AgeCompData> fleet_age_comp_data;
 
 
 
 
             int id = f->id;
-            std::shared_ptr<mas::DataObject<double> > data =
+            atl::intrusive_ptr<mas::DataObject<double> > data =
                     mas->mas_instance.info.fleets[id]->catch_biomass_data;
 
 
-            fleet_index_data = std::make_shared<IndexData>();
+            fleet_index_data = new IndexData>();
             //            fleet_index_data->id = data->id;
             fleet_index_data->data = data->data;
             fleet_index_data->error = data->observation_error;
@@ -6873,12 +6873,12 @@ public:
             //add back to initialized list
             f->AddIndexData(fleet_index_data->id, "undifferentiated");
 
-            std::shared_ptr<mas::DataObject<double> > data2 =
+            atl::intrusive_ptr<mas::DataObject<double> > data2 =
                     mas->mas_instance.info.fleets[id]->catch_proportion_at_age_data;
 
 
 
-            fleet_age_comp_data = std::make_shared<AgeCompData>();
+            fleet_age_comp_data = new AgeCompData>();
             //            fleet_age_comp_data->id = data2->id;
             fleet_age_comp_data->data = data2->data;
             fleet_age_comp_data->sample_size = data2->sample_size;
@@ -6897,18 +6897,18 @@ public:
 
             Survey* s = (*sit).second;
 
-            std::shared_ptr<IndexData> survey_index_data;
-            std::shared_ptr<AgeCompData> survey_age_comp_data;
+            atl::intrusive_ptr<IndexData> survey_index_data;
+            atl::intrusive_ptr<AgeCompData> survey_age_comp_data;
 
 
 
 
             int id = s->id;
-            std::shared_ptr<mas::DataObject<double> > data =
+            atl::intrusive_ptr<mas::DataObject<double> > data =
                     mas->mas_instance.info.survey_models[id]->survey_biomass_data;
 
 
-            survey_index_data = std::make_shared<IndexData>();
+            survey_index_data = new IndexData>();
             //            survey_index_data->id = data->id;
             survey_index_data->data = data->data;
             survey_index_data->error = data->observation_error;
@@ -6918,12 +6918,12 @@ public:
             //add back to initialized list
             s->AddIndexData(survey_index_data->id, "undifferentiated");
 
-            std::shared_ptr<mas::DataObject<double> > data2 =
+            atl::intrusive_ptr<mas::DataObject<double> > data2 =
                     mas->mas_instance.info.survey_models[id]->survey_proportion_at_age_data;
 
 
 
-            survey_age_comp_data = std::make_shared<AgeCompData>();
+            survey_age_comp_data = new AgeCompData>();
             //            survey_age_comp_data->id = data2->id;
             survey_age_comp_data->data = data2->data;
             survey_age_comp_data->sample_size = data2->sample_size;
@@ -7494,3 +7494,4 @@ RCPP_MODULE(rmas) {
 
 
 #endif /* R4MAS_HPP */
+
