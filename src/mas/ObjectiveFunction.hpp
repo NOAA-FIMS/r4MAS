@@ -29,7 +29,7 @@ namespace mas {
         std::string data_path = "";
         std::string config_path = "";
         std::string ouput_path = "mas_output.json";
-
+	int references = 0;
 
         typedef typename mas::VariableTrait<REAL_T>::variable variable;
 
