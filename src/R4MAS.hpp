@@ -235,7 +235,7 @@ public:
         mas::VariableTrait<double>::variable A;
         mas::VariableTrait<double>::variable ret;
         mas::VariableTrait<double>::SetValue(A, a);
-        atl::intrusive_ptr<mas::LogisticSel<double> > sel = new mas::LogisticSel<double> >();
+        atl::intrusive_ptr<mas::LogisticSel<double> > sel = new mas::LogisticSel<double>();
         mas::LogisticSel<double>* selex = sel.get();
         selex->a50 = this->a50.value;
         selex->s = this->slope.value;
@@ -244,7 +244,7 @@ public:
     }
 
     virtual void AddToMAS(mas::Information<double>& info) {
-        atl::intrusive_ptr<mas::LogisticSel<double> > sel = new mas::LogisticSel<double> >();
+        atl::intrusive_ptr<mas::LogisticSel<double> > sel = new mas::LogisticSel<double>();
         mas::VariableTrait<double>::SetValue(sel->a50, a50.value);
         mas::VariableTrait<double>::SetMinBoundary(sel->a50, a50.min);
         mas::VariableTrait<double>::SetMaxBoundary(sel->a50, a50.max);
@@ -408,7 +408,7 @@ public:
         mas::VariableTrait<double>::variable A;
         mas::VariableTrait<double>::variable ret;
         mas::VariableTrait<double>::SetValue(A, a);
-        atl::intrusive_ptr<mas::DoubleLogisticSel<double> > sel = new mas::DoubleLogisticSel<double> >();
+        atl::intrusive_ptr<mas::DoubleLogisticSel<double> > sel = new mas::DoubleLogisticSel<double>();
         mas::DoubleLogisticSel<double>* selex = sel.get();
         selex->alpha_asc = this->alpha_asc.value;
         selex->alpha_desc = this->alpha_desc.value;
@@ -419,7 +419,7 @@ public:
     }
 
     virtual void AddToMAS(mas::Information<double>& info) {
-        atl::intrusive_ptr<mas::DoubleLogisticSel<double> > sel = new mas::DoubleLogisticSel<double> >();
+        atl::intrusive_ptr<mas::DoubleLogisticSel<double> > sel = new mas::DoubleLogisticSel<double>();
 
         mas::DoubleLogisticSel<double>* selex = sel.get();
 
@@ -854,7 +854,7 @@ public:
     }
 
     virtual void AddToMAS(mas::Information<double>& info) {
-        atl::intrusive_ptr<mas::FishingMortality<double> > fm = new mas::FishingMortality<double> >();
+        atl::intrusive_ptr<mas::FishingMortality<double> > fm = new mas::FishingMortality<double>();
         mas::FishingMortality<double>* m = fm.get();
         m->fishing_mortality_type = mas::ESTIMATED;
         fm->id = this->id;
@@ -1216,7 +1216,7 @@ public:
         variable sb_;
         mas::VariableTrait<double>::SetValue(SB0_, SB0);
         mas::VariableTrait<double>::SetValue(sb_, sb);
-        atl::intrusive_ptr<mas::Ricker<double> > rec = new mas::Ricker<double> >();
+        atl::intrusive_ptr<mas::Ricker<double> > rec = new mas::Ricker<double>();
         mas::Ricker<double>* r = rec.get();
         r->R0 = this->R0.value;
         r->log_R0 = std::log(this->R0.value);
@@ -1229,7 +1229,7 @@ public:
     virtual void AddToMAS(mas::Information<double>& info) {
         typedef typename mas::VariableTrait<double>::variable variable;
 
-        atl::intrusive_ptr<mas::Ricker<double> > rec = new mas::Ricker<double> >();
+        atl::intrusive_ptr<mas::Ricker<double> > rec = new mas::Ricker<double>();
         mas::Ricker<double>* r = rec.get();
         r->id = this->id;
 
@@ -1557,7 +1557,7 @@ public:
         variable sb_;
         mas::VariableTrait<double>::SetValue(SB0_, SB0);
         mas::VariableTrait<double>::SetValue(sb_, sb);
-        atl::intrusive_ptr<mas::BevertonHolt<double> > rec = new mas::BevertonHolt<double> >();
+        atl::intrusive_ptr<mas::BevertonHolt<double> > rec = new mas::BevertonHolt<double>();
         mas::BevertonHolt<double>* r = rec.get();
         r->log_R0 = std::log(this->R0.value);
         r->R0 = this->R0.value;
@@ -1570,7 +1570,7 @@ public:
     virtual void AddToMAS(mas::Information<double>& info) {
         typedef typename mas::VariableTrait<double>::variable variable;
 
-        atl::intrusive_ptr<mas::BevertonHolt<double> > rec = new mas::BevertonHolt<double> >();
+        atl::intrusive_ptr<mas::BevertonHolt<double> > rec = new mas::BevertonHolt<double>();
         mas::BevertonHolt<double>* r = rec.get();
         r->id = this->id;
 
@@ -1867,7 +1867,7 @@ public:
         variable sb_;
         mas::VariableTrait<double>::SetValue(SB0_, SB0);
         mas::VariableTrait<double>::SetValue(sb_, sb);
-        atl::intrusive_ptr<mas::BevertonHolt<double> > rec = new mas::BevertonHolt<double> >();
+        atl::intrusive_ptr<mas::BevertonHolt<double> > rec = new mas::BevertonHolt<double>();
         mas::BevertonHolt<double>* r = rec.get();
         r->R0 = this->R0.value;
         r->R0 = this->R0.value;
@@ -1881,7 +1881,7 @@ public:
     virtual void AddToMAS(mas::Information<double>& info) {
         typedef typename mas::VariableTrait<double>::variable variable;
 
-        atl::intrusive_ptr<mas::BevertonHoltAlt<double> > rec = new mas::BevertonHoltAlt<double> >();
+        atl::intrusive_ptr<mas::BevertonHoltAlt<double> > rec = new mas::BevertonHoltAlt<double>();
         mas::BevertonHoltAlt<double>* r = rec.get();
         r->id = this->id;
 
@@ -2264,7 +2264,7 @@ public:
     }
 
     double Evaluate(const double& age, const int& sex) {
-        atl::intrusive_ptr<mas::VonBertalanffy<double> > vb = new mas::VonBertalanffy<double> >();
+        atl::intrusive_ptr<mas::VonBertalanffy<double> > vb = new mas::VonBertalanffy<double>();
         mas::VonBertalanffy<double>* g = vb.get();
         mas::VariableTrait<double>::variable a;
         mas::VariableTrait<double>::SetValue(a, age);
@@ -2273,7 +2273,7 @@ public:
     }
 
     virtual void AddToMAS(mas::Information<double>& info) {
-        atl::intrusive_ptr<mas::VonBertalanffy<double> > vb = new mas::VonBertalanffy<double> >();
+        atl::intrusive_ptr<mas::VonBertalanffy<double> > vb = new mas::VonBertalanffy<double>();
         mas::VonBertalanffy<double>* g = vb.get();
         g->id = this->id;
         std::stringstream ss;
@@ -2309,7 +2309,7 @@ public:
         if (this->has_emprical_weight == true) {
 
 
-            weight_functor = new mas::EmpiricalWeightFunctor<double> >();
+            weight_functor = new mas::EmpiricalWeightFunctor<double>();
             g->weight_functor = weight_functor;
 
             mas::EmpiricalWeightFunctor<double>* eg = (mas::EmpiricalWeightFunctor<double>*)weight_functor.get();
@@ -2329,7 +2329,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double>();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -2355,7 +2355,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double>();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -2383,7 +2383,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double>();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -2409,7 +2409,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double>();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -2437,7 +2437,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double>();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -2463,7 +2463,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double>();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -2491,7 +2491,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double>();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -2517,7 +2517,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double>();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -3108,7 +3108,7 @@ public:
     }
 
     double Evaluate(const double& age, const int& sex) {
-        atl::intrusive_ptr<mas::VonBertalanffyModified<double> > vb = new mas::VonBertalanffyModified<double> >();
+        atl::intrusive_ptr<mas::VonBertalanffyModified<double> > vb = new mas::VonBertalanffyModified<double>();
         mas::VonBertalanffyModified<double>* g = vb.get();
         mas::VariableTrait<double>::variable a;
         mas::VariableTrait<double>::SetValue(a, age);
@@ -3117,7 +3117,7 @@ public:
     }
 
     virtual void AddToMAS(mas::Information<double>& info) {
-        atl::intrusive_ptr<mas::VonBertalanffyModified<double> > vb = new mas::VonBertalanffyModified<double> >();
+        atl::intrusive_ptr<mas::VonBertalanffyModified<double> > vb = new mas::VonBertalanffyModified<double>();
         mas::VonBertalanffyModified<double>* g = vb.get();
         g->id = this->id;
         std::stringstream ss;
@@ -3157,7 +3157,7 @@ public:
         if (this->has_emprical_weight == true) {
 
 
-            weight_functor = new mas::EmpiricalWeightFunctor<double> >();
+            weight_functor = new mas::EmpiricalWeightFunctor<double>();
             //            g->weight_functor = weight_functor;
 
             mas::EmpiricalWeightFunctor<double>* eg = (mas::EmpiricalWeightFunctor<double>*)weight_functor.get();
@@ -3177,7 +3177,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double>();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -3208,7 +3208,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double>();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -3238,7 +3238,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double>();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -3266,7 +3266,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double>();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -3296,7 +3296,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double>();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -3324,7 +3324,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double>();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -3354,7 +3354,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double>();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -3382,7 +3382,7 @@ public:
 
 
                 mas::EmpricalDataStructure<double> eds;
-                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double> >();
+                atl::intrusive_ptr<mas::DataObject<double> > data = new mas::DataObject<double>();
                 mas::DataObject<double>* d = data.get();
                 d->imax = years;
                 d->jmax = seasons;
@@ -3960,7 +3960,7 @@ public:
 
     virtual void AddToMAS(mas::Information<double>& info) {
 
-        atl::intrusive_ptr<mas::Area<double> > area = new mas::Area<double> >();
+        atl::intrusive_ptr<mas::Area<double> > area = new mas::Area<double>();
         mas::Area<double>* a = area.get();
         a->id = this->id;
         info.areas[a->id] = area;
@@ -4031,7 +4031,7 @@ public:
         } else {
             typedef typename mas::VariableTrait<double>::variable variable;
 
-            atl::intrusive_ptr<mas::Movement<double> > movement = new mas::Movement<double> >();
+            atl::intrusive_ptr<mas::Movement<double> > movement = new mas::Movement<double>();
             mas::Movement<double>* m = movement.get();
             m->id = this->id;
             int k = 0;
@@ -4328,7 +4328,7 @@ public:
 
     virtual void AddToMAS(mas::Information<double>& info) {
         typedef typename mas::VariableTrait<double>::variable variable;
-        atl::intrusive_ptr<mas::Population<double> > population = new mas::Population<double> >();
+        atl::intrusive_ptr<mas::Population<double> > population = new mas::Population<double>();
         mas::Population<double>* pop = population.get();
 
 
@@ -4829,13 +4829,13 @@ public:
 
     virtual void AddToMAS(mas::Information<double>& info) {
         atl::intrusive_ptr< mas::DataObject<double > > lambda_data(new mas::DataObject<double>());
-        atl::intrusive_ptr<mas::Lognormal<double> > ln = new mas::Lognormal<double> >();
+        atl::intrusive_ptr<mas::Lognormal<double> > ln = new mas::Lognormal<double>();
         mas::Lognormal<double>* nll = ln.get();
         ln->use_bias_correction = this->use_bias_correction;
         nll->lambda = lambda_data;
         nll->id = this->id;
         if (this->has_lambdas) {
-            nll->lambda = new mas::DataObject<double> >();
+            nll->lambda = new mas::DataObject<double>();
             mas::DataObject<double>* d = nll->lambda.get();
             int prod = 1.0;
             for (int i = 0; i < this->lambda_dimensions.size(); i++) {
@@ -4950,12 +4950,12 @@ public:
 
     virtual void AddToMAS(mas::Information<double>& info) {
         atl::intrusive_ptr< mas::DataObject<double > > lambda_data(new mas::DataObject<double>());
-        atl::intrusive_ptr<mas::DirichletMultinomial<double> > ln = new mas::DirichletMultinomial<double> >();
+        atl::intrusive_ptr<mas::DirichletMultinomial<double> > ln = new mas::DirichletMultinomial<double>();
         mas::DirichletMultinomial<double>* nll = ln.get();
         nll->lambda = lambda_data;
         nll->id = this->id;
         if (this->has_lambdas) {
-            nll->lambda = new mas::DataObject<double> >();
+            nll->lambda = new mas::DataObject<double>();
             mas::DataObject<double>* d = nll->lambda.get();
             int prod = 1.0;
             for (int i = 0; i < this->lambda_dimensions.size(); i++) {
@@ -5095,12 +5095,12 @@ public:
     virtual void AddToMAS(mas::Information<double>& info) {
         atl::intrusive_ptr< mas::DataObject<double > > lambda_data(new mas::DataObject<double>());
 
-        atl::intrusive_ptr<mas::DirichletMultinomialRobust<double> > ln = new mas::DirichletMultinomialRobust<double> >();
+        atl::intrusive_ptr<mas::DirichletMultinomialRobust<double> > ln = new mas::DirichletMultinomialRobust<double>();
         mas::DirichletMultinomialRobust<double>* nll = ln.get();
         nll->lambda = lambda_data;
         nll->id = this->id;
         if (this->has_lambdas) {
-            nll->lambda = new mas::DataObject<double> >();
+            nll->lambda = new mas::DataObject<double>();
             mas::DataObject<double>* d = nll->lambda.get();
             int prod = 1.0;
             for (int i = 0; i < this->lambda_dimensions.size(); i++) {
@@ -5237,14 +5237,14 @@ public:
     }
 
     virtual void AddToMAS(mas::Information<double>& info) {
-        atl::intrusive_ptr<mas::Multinomial<double> > ln = new mas::Multinomial<double> >();
+        atl::intrusive_ptr<mas::Multinomial<double> > ln = new mas::Multinomial<double>();
         mas::Multinomial<double>* nll = ln.get();
         atl::intrusive_ptr< mas::DataObject<double > > lambda_data(new mas::DataObject<double>());
         nll->lambda = lambda_data;
 
         nll->id = this->id;
         if (this->has_lambdas) {
-            nll->lambda = new mas::DataObject<double> >();
+            nll->lambda = new mas::DataObject<double>();
             mas::DataObject<double>* d = nll->lambda.get();
             int prod = 1.0;
             for (int i = 0; i < this->lambda_dimensions.size(); i++) {
@@ -5357,13 +5357,13 @@ public:
     }
 
     virtual void AddToMAS(mas::Information<double>& info) {
-        atl::intrusive_ptr<mas::MultinomialRobust<double> > ln = new mas::MultinomialRobust<double> >();
+        atl::intrusive_ptr<mas::MultinomialRobust<double> > ln = new mas::MultinomialRobust<double>();
         mas::MultinomialRobust<double>* nll = ln.get();
         atl::intrusive_ptr< mas::DataObject<double > > lambda_data(new mas::DataObject<double>());
         nll->lambda = lambda_data;
         nll->id = this->id;
         if (this->has_lambdas) {
-            nll->lambda = new mas::DataObject<double> >();
+            nll->lambda = new mas::DataObject<double>();
             mas::DataObject<double>* d = nll->lambda.get();
             int prod = 1.0;
             for (int i = 0; i < this->lambda_dimensions.size(); i++) {
@@ -5699,7 +5699,7 @@ public:
                     it = IndexData::initialized_models.find(this->index_data[i].second);
                     if (it != IndexData::initialized_models.end()) {
                         IndexData* data = (*it).second;
-                        atl::intrusive_ptr<mas::DataObject<double> > dd = new mas::DataObject<double> >();
+                        atl::intrusive_ptr<mas::DataObject<double> > dd = new mas::DataObject<double>();
                         mas::DataObject<double>* d = dd.get();
                         d->missing_value = data->missing_values;
                         d->dimensions = 2;
@@ -5762,7 +5762,7 @@ public:
                     it = AgeCompData::initialized_models.find(this->age_comp_data[i].second);
                     if (it != AgeCompData::initialized_models.end()) {
                         AgeCompData* data = (*it).second;
-                        atl::intrusive_ptr<mas::DataObject<double> > dd = new mas::DataObject<double> >();
+                        atl::intrusive_ptr<mas::DataObject<double> > dd = new mas::DataObject<double>();
                         mas::DataObject<double>* d = dd.get();
                         d->missing_value = data->missing_values;
                         d->dimensions = 3;
@@ -6243,7 +6243,7 @@ public:
                     it = IndexData::initialized_models.find(this->index_data[i].second);
                     if (it != IndexData::initialized_models.end()) {
                         IndexData* data = (*it).second;
-                        atl::intrusive_ptr<mas::DataObject<double> > dd = new mas::DataObject<double> >();
+                        atl::intrusive_ptr<mas::DataObject<double> > dd = new mas::DataObject<double>();
                         mas::DataObject<double>* d = dd.get();
                         d->missing_value = data->missing_values;
                         d->dimensions = 2;
@@ -6304,7 +6304,7 @@ public:
                     it = AgeCompData::initialized_models.find(this->age_comp_data[i].second);
                     if (it != AgeCompData::initialized_models.end()) {
                         AgeCompData* data = (*it).second;
-                        atl::intrusive_ptr<mas::DataObject<double> > dd = new mas::DataObject<double> >();
+                        atl::intrusive_ptr<mas::DataObject<double> > dd = new mas::DataObject<double>();
                         mas::DataObject<double>* d = dd.get();
                         d->missing_value = data->missing_values;
                         d->dimensions = 3;
@@ -6710,7 +6710,7 @@ public:
 
     void Run() {
 
-        mas = new mas::MASObjectiveFunction<double > >();
+        mas = new mas::MASObjectiveFunction<double >();
         if (this->nages == 0) {
             std::cout << "MAS error: nages = 0\n";
             return;
@@ -6788,7 +6788,7 @@ public:
 
     void RunOM() {
 
-        mas = new mas::MASObjectiveFunction<double > >();
+        mas = new mas::MASObjectiveFunction<double >();
         if (this->nages == 0) {
             std::cout << "MAS error: nages = 0\n";
             return;
