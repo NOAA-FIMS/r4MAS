@@ -81,6 +81,8 @@ public:
 
     static std::vector<MASSubModel*> submodels;
 
+    int references = 0;
+    
     virtual ~MASSubModel() {
     }
 
