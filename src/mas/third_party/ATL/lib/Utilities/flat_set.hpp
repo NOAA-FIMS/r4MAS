@@ -4,7 +4,7 @@
 
 #include <vector>
 #include <algorithm>
-#include "../CLFAllocator.hpp"
+#include "aligned_allocator.hpp"
 //#include "../AutoDiff/AlignedAllocator.hpp"
 
 template<typename ForwardIterator, typename T, class P>
@@ -46,7 +46,7 @@ inline FwdIt fs_branchless_lower_bound(FwdIt begin, FwdIt end, T const &val,
 }
 
 template<class T, class Compare = std::less<T>,
-		class Allocator = atl::clfallocator<T> >
+		class Allocator = aligned_allocator<T> >
 class flat_set {
 	std::vector<T, Allocator> data_m;
 	Compare cmp;
@@ -80,7 +80,7 @@ public:
 	inline iterator insert(const T &t) {
 		iterator i = fs_eastl_lower_bound(begin(), end(), t, cmp);
 		if (i == end() || cmp(t, *i))
-			data_m.insert(i, t);
+			data_m.insert(i, std::move(t));
 		return i;
 	}
 
