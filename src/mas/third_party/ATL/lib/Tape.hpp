@@ -30,7 +30,7 @@
 #include "Utilities/flat_set.hpp"
 //#include "third_party/flat_hash_map/bytell_hash_map.hpp"
 #include "Utilities/flat_map.hpp"
-
+#include "Utilities/aligned_allocator.hpp"
 namespace atl {
 
 enum DerivativeTraceLevel {
@@ -300,7 +300,7 @@ public:
 	//first-order storage
 	typedef std::unordered_map<uint32_t, REAL_T, std::hash<uint32_t>,
 			std::equal_to<uint32_t>,
-			atl::clfallocator<std::pair<const uint32_t, REAL_T> > > first_order_container;
+			aligned_allocator<std::pair<const uint32_t, REAL_T> > > first_order_container;
 
 	first_order_container first_order_derivatives;
 	first_order_container range_weights;
@@ -310,14 +310,14 @@ public:
 	//second-order storage
 	typedef std::unordered_map<uint32_t, first_order_container,
 			std::hash<uint32_t>, std::equal_to<uint32_t>,
-			atl::clfallocator<std::pair<const uint32_t, first_order_container> > > second_order_container;
+			aligned_allocator<std::pair<const uint32_t, first_order_container> > > second_order_container;
 	second_order_container second_order_derivatives;
 	typedef typename second_order_container::iterator second_order_iterator;
 
 	//third-order storage
 	typedef std::unordered_map<uint32_t, second_order_container,
 			std::hash<uint32_t>, std::equal_to<uint32_t>,
-			atl::clfallocator<std::pair<const uint32_t, second_order_container> > > third_order_container;
+			aligned_allocator<std::pair<const uint32_t, second_order_container> > > third_order_container;
 	third_order_container third_order_derivatives;
 	typedef typename third_order_container::iterator third_order_iterator;
 
