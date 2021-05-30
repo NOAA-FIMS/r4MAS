@@ -11,7 +11,8 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Meta-population Assessmsnt System User Manual">
+<script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<meta property="og:title" content="Meta-population Assessmsnt System User Manual">
 <meta property="og:description" content="r4MAS">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -19,8 +20,6 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -60,29 +59,56 @@
   </a>
 </li>
 <li>
-  <a href="https://github.com/nmfs-fish-tools/RMAS/" class="external-link">
+  <a href="https://github.com/nmfs-fish-tools/RMAS/">
     <span class="fab fa-github fa-lg"></span>
      
     Source Code
   </a>
 </li>
 <li>
-  <a href="https://github.com/nmfs-fish-tools/RMAS/issues/" class="external-link">
+  <a href="https://github.com/nmfs-fish-tools/RMAS/issues/">
     <span class="fas fa-question-circle fa-lg"></span>
      
     Issues
   </a>
 </li>
-      </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/nmfs-fish-tools/RMAS/" class="external-link">
-    <span class="fab fa-github fa-lg"></span>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fas fa-file-contract fa-lg"></span>
      
-    Source Code
+    Vignettes
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/001_Introduction.html">Introduction</a>
+    </li>
+    <li>
+      <a href="../articles/002_ModelComparisonProjectExample.html">Model Comparison Project Example</a>
+    </li>
+    <li>
+      <a href="../articles/003_ASAPCaseStudy.html">ASAP Case Study</a>
+    </li>
+    <li>
+      <a href="../articles/004_SSCaseStudy.html">SS Case Study</a>
+    </li>
+    <li>
+      <a href="../articles/005_MetapopulationCaseStudy.html">Metapopulation Case Study</a>
+    </li>
+    <li>
+      <a href="../articles/Architecture.html">MAS Demo Notebook</a>
+    </li>
+    <li>
+      <a href="../articles/CreatingInputJson.html">PlottingMASoutput</a>
+    </li>
+    <li>
+      <a href="../articles/UserManual.html">Meta-population Assessmsnt System User Manual</a>
+    </li>
+  </ul>
 </li>
       </ul>
+<ul class="nav navbar-nav navbar-right"></ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -92,13 +118,13 @@
 
       
 
-      </header><div class="row">
+      </header><script src="UserManual_files/header-attrs-2.6/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Meta-population Assessmsnt System User Manual</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/nmfs-fish-tools/r4MAS/blob/master/../../vignettes/UserManual.Rmd" class="external-link"><code>../../vignettes/UserManual.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/nmfs-fish-tools/r4MAS/blob/master/vignettes/UserManual.Rmd"><code>vignettes/UserManual.Rmd</code></a></small>
       <div class="hidden name"><code>UserManual.Rmd</code></div>
 
     </div>
@@ -117,13 +143,11 @@
 
 
       <footer><div class="copyright">
-  <p></p>
-<p>Developed by NMFS National Modeling Team.</p>
+  <p>Developed by Christine Stawitz.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -131,8 +155,6 @@
 
   
 
-
-  
 
   </body>
 </html>

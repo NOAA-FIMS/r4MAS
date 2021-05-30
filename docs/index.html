@@ -11,7 +11,8 @@
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Read and Write Input and Output for MAS Model">
+<script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
+<meta property="og:title" content="Read and Write Input and Output for MAS Model">
 <meta property="og:description" content="This is a package to read in and create MAS input files and process output of the MAS model. ">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -19,8 +20,6 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -73,16 +72,43 @@
     Issues
   </a>
 </li>
-      </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/nmfs-fish-tools/RMAS/">
-    <span class="fab fa-github fa-lg"></span>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fas fa-file-contract fa-lg"></span>
      
-    Source Code
+    Vignettes
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/001_Introduction.html">Introduction</a>
+    </li>
+    <li>
+      <a href="articles/002_ModelComparisonProjectExample.html">Model Comparison Project Example</a>
+    </li>
+    <li>
+      <a href="articles/003_ASAPCaseStudy.html">ASAP Case Study</a>
+    </li>
+    <li>
+      <a href="articles/004_SSCaseStudy.html">SS Case Study</a>
+    </li>
+    <li>
+      <a href="articles/005_MetapopulationCaseStudy.html">Metapopulation Case Study</a>
+    </li>
+    <li>
+      <a href="articles/Architecture.html">MAS Demo Notebook</a>
+    </li>
+    <li>
+      <a href="articles/CreatingInputJson.html">PlottingMASoutput</a>
+    </li>
+    <li>
+      <a href="articles/UserManual.html">Meta-population Assessmsnt System User Manual</a>
+    </li>
+  </ul>
 </li>
       </ul>
+<ul class="nav navbar-nav navbar-right"></ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -105,7 +131,7 @@
 <hr>
 <hr>
 <p>The Metapopulation Assessment System (MAS) is a modular tool for creating and fitting fisheries stock assessment models. The R interface to MAS (r4MAS) allows users to build and run MAS models directly using the <code>R</code> language. It also includes functions to help translate between MAS and other stock assessment software and to plot outputs of MAS models, including estimates of key biological and observation parameters and derived quantities such as biological reference points, estimated biomass, and estimated numbers-at-age.</p>
-<p>This tool is supported by the NOAA Fisheries Integrated Toolbox. More information can be found on the toolbox <a href="https://nmfs-fish-tools.github.io/r4MAS/" class="external-link">landing page</a></p>
+<p>This tool is supported by the NOAA Fisheries Integrated Toolbox. More information can be found on the toolbox <a href="https://nmfs-fish-tools.github.io/r4MAS/">landing page</a></p>
 </div>
 <div id="getting-started" class="section level1">
 <h1 class="hasAnchor">
@@ -113,13 +139,13 @@
 <div id="installation-instructions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation-instructions" class="anchor"></a>Installation instructions</h2>
-<p>Since this package contains C++ files, you will need to ensure you have a C++ compiler installed. You can install a C++ compiler <a href="https://clang.llvm.org/" class="external-link">here</a>, please make sure it is C++14 or more recent.</p>
+<p>Since this package contains C++ files, you will need to ensure you have a C++ compiler installed. You can install a C++ compiler <a href="https://clang.llvm.org/">here</a>, please make sure it is C++14 or more recent.</p>
 <p>You will also need to have the <code>Rcpp</code> package installed.</p>
 <p>Please install and load <code>r4MAS</code> from Github using the <code>remotes</code> package as follows:</p>
-<pre><code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages("remotes")
+<pre><code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("remotes")
 remotes::install_github("nmfs-fish-tools/r4MAS")
 library(r4MAS)</a></code></pre>
-<p><strong>Windows users</strong>: Please ensure you have <a href="https://cran.r-project.org/bin/windows/Rtools/" class="external-link">Rtools</a>. If you receive errors related to C++ when loading r4MAS, it could be because your R installation uses the default Makevars.win file. To update your Makevars.win file, please run the following code in your R terminal:</p>
+<p><strong>Windows users</strong>: Please ensure you have <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a>. If you receive errors related to C++ when loading r4MAS, it could be because your R installation uses the default Makevars.win file. To update your Makevars.win file, please run the following code in your R terminal:</p>
 <pre><code>dotR &lt;- file.path(Sys.getenv("HOME"), ".R")
 if (!file.exists(dotR)) 
   dir.create(dotR)
@@ -142,7 +168,8 @@ cat("\nCXX14FLAGS=-O3 -Wno-unused-variable -Wno-unused-function",
 <a href="#disclaimer" class="anchor"></a>Disclaimer</h2>
 <p>“The United States Department of Commerce (DOC) GitHub project code is provided on an ‘as is’ basis and the user assumes responsibility for its use. DOC has relinquished control of the information and no longer has responsibility to protect the integrity, confidentiality, or availability of the information. Any claims against the Department of Commerce stemming from the use of its GitHub project will be governed by all applicable Federal law. Any reference to specific commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their endorsement, recommendation or favoring by the Department of Commerce. The Department of Commerce seal and logo, or the seal and logo of a DOC bureau, shall not be used in any manner to imply endorsement of any commercial product or activity by DOC or the United States Government.”</p>
 <ul>
-<li>This project code is made available through GitHub but is managed by NOAA at https://vlab.ncep.noaa.gov/redmine/projects/integrated-fisheries-toolbox/files</li>
+<li>This project code is made available through GitHub but is managed by NOAA at <a href="https://vlab.ncep.noaa.gov/redmine/projects/integrated-fisheries-toolbox/files" class="uri">https://vlab.ncep.noaa.gov/redmine/projects/integrated-fisheries-toolbox/files</a>
+</li>
 </ul>
 <hr>
 </div>
@@ -152,7 +179,7 @@ cat("\nCXX14FLAGS=-O3 -Wno-unused-variable -Wno-unused-function",
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2 data-toc-skip>Links</h2>
+<h2>Links</h2>
 <ul class="list-unstyled">
 <li>Browse source code at <br><a href="https://github.com/nmfs-fish-tools/r4MAS/">https://​github.com/​nmfs-fish-tools/​r4MAS/​</a>
 </li>
@@ -160,41 +187,35 @@ cat("\nCXX14FLAGS=-O3 -Wno-unused-variable -Wno-unused-function",
 </li>
 </ul>
 </div>
-
 <div class="license">
-<h2 data-toc-skip>License</h2>
+<h2>License</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
 </ul>
 </div>
-
-
 <div class="developers">
-<h2 data-toc-skip>Developers</h2>
+<h2>Developers</h2>
 <ul class="list-unstyled">
-<li>NMFS National Modeling Team <br><small class="roles"> Maintainer </small>  </li>
+<li>Christine Stawitz <br><small class="roles"> Maintainer </small>  </li>
 </ul>
 </div>
 
-<div class="dev-status">
-<h2 data-toc-skip>Dev status</h2>
+  <div class="dev-status">
+<h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/nmfs-fish-tools/r4MAS/actions/workflows/R-CMD-check-and-Release.yml" class="external-link"><img src="https://github.com/nmfs-fish-tools/r4MAS/actions/workflows/R-CMD-check-and-Release.yml/badge.svg" alt="R-CMD-check and release"></a></li>
+<li><a href="https://github.com/nmfs-fish-tools/r4MAS/actions/workflows/R-CMD-check-and-Release.yml"><img src="https://github.com/nmfs-fish-tools/r4MAS/actions/workflows/R-CMD-check-and-Release.yml/badge.svg" alt="R-CMD-check and release"></a></li>
 </ul>
 </div>
-
-  </div>
+</div>
 </div>
 
 
       <footer><div class="copyright">
-  <p></p>
-<p>Developed by NMFS National Modeling Team.</p>
+  <p>Developed by Christine Stawitz.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -202,8 +223,6 @@ cat("\nCXX14FLAGS=-O3 -Wno-unused-variable -Wno-unused-function",
 
   
 
-
-  
 
   </body>
 </html>
