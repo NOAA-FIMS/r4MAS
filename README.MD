@@ -48,6 +48,6 @@ Once you've installed the package and have confirmed you can load it, we recomme
 - This project code is made available through GitHub but is managed by NOAA at
  https://vlab.ncep.noaa.gov/redmine/projects/integrated-fisheries-toolbox/files
 
-<img src="https://raw.githubusercontent.com/nmfs-fish-tools/r4MAS/pkgsite/pkgdown/figures/noaa-fisheries-rgb-2line-horizontal-small.png" height="75" alt="NOAA Fisheries"> 
+<img src="https://raw.githubusercontent.com/nmfs-fish-tools/r4MAS/pkgdown-site/pkgdown/figures/noaa-fisheries-rgb-2line-horizontal-small.png" height="75" alt="NOAA Fisheries"> 
  
 [U.S. Department of Commerce](https://www.commerce.gov/) | [National Oceanographic and Atmospheric Administration](https://www.noaa.gov) | [NOAA Fisheries](https://www.fisheries.noaa.gov/)
