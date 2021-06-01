@@ -2,7 +2,7 @@
 /*---Use template from: https://ocsdata.ncd.noaa.gov/HSRP/css/ocs-fonts.css---*/
 /*---Use template from: https://www.legislative.noaa.gov/noaa-web/css/contentFormatting.css---*/
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   color: #000000;
@@ -14,17 +14,17 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6, p {
-  font-family: Arial, Helvetica, sans-serif;
-  color: #0057A5;
+  font-family: "Open Sans", sans-serif;
+  color: #00467f;
 }
 
 
 h1 {
-  font-size: 24px;
+  font-size: 36px;
 }
 
 h2 {
-  font-size: 21px;
+  font-size: 20px;
 }
 
 h3 {
@@ -36,7 +36,7 @@ h4 {
 }
 
 h5 {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 22px;
   margin-bottom: 10px;
 }
@@ -54,29 +54,29 @@ p {
 }
 
 h1.title {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 40px;
   line-height: 40px;
   margin-bottom: 25px;
   letter-spacing: 0px;
   font-weight: 700;
-  color: #0057A5;
+  color: #00467f;
 }
 
 h1.mobile {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 40px;
   line-height: 40px;
   margin-bottom: 25px;
   letter-spacing: 0px;
   font-weight: 700;
-  color: #0057A5;
+  color: #00467f;
 }
 
 a { font-weight: bold; }
-a:link { color: #0098da;	}
-a:visited { color: #00a3e3;	}
-a:hover { color: #0098da; }
+a:link { color: #007eb2;	}
+a:visited { color: #007eb2;	}
+a:hover { color: #007eb2; }
 
 .leftAlignImage img, .rightAlignImage img {
   width: 200px;
@@ -161,12 +161,12 @@ nav[data-toggle='toc'] .nav > li > a {
     padding: 4px 20px 4px 6px;
     font-size: 1.5rem;
     font-weight: 400;
-    color: #0057A5;
+    color: #00467f;
     background-color: #FFFFFF;
 } /*Table of content in the vignettes*/
 
 nav[data-toggle='toc'] .nav > li > a:focus,  nav[data-toggle='toc'] .nav > li > a:hover{
-   color: #0057A5;
+   color: #00467f;
    background-color: #FFFFFF;
 }
 
@@ -177,7 +177,7 @@ nav[data-toggle='toc'] .nav > .active > a, nav[data-toggle='toc'] .nav > .active
 /*---footer---*/
 footer {
   font-size: 14px;
-  color: #0057A5;
+  color: #00467f;
   background-color: #FFFFFF;
   padding-top: 15px;
   margin-bottom: 0px;
@@ -189,9 +189,9 @@ footer p {
   margin-left: 3px;
   margin-right: 3px;
   text-align: Center;
-  color: #0057A5;
+  color: #00467f;
 }
 
-footer a:link { color: #0057A5; text-decoration: none; }
-footer a:visited { color: #0057A5; text-decoration: none; }
-footer a:hover { color: #0057A5; text-decoration: none; }
+footer a:link { color: #00467f; text-decoration: none; }
+footer a:visited { color: #00467f; text-decoration: none; }
+footer a:hover { color: #00467f; text-decoration: none; }
