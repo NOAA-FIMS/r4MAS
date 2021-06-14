@@ -80,7 +80,7 @@ struct StackEntry {
 	vi_storage nl_ids;
 	vi_storage pushed_ids;
 	std::vector<VariableInfoPtr> id_list;
-	std::vector<REAL_T> first;
+	std::vector<REAL_T, aligned_allocator<REAL_T> > first;
 #warning use  std::unordered_map  here?????
 	std::vector<REAL_T> second;
 	std::vector<REAL_T> third;
