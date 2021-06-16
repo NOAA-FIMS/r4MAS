@@ -10843,7 +10843,7 @@ void CreateModel() {
 
 		}
 
-		int nll = (*fit).second->fishery_length_comp_likelihood_component_id;
+	    nll = (*fit).second->fishery_length_comp_likelihood_component_id;
 
 		if (nll == -999) {
 			(*fit).second->fishery_length_comp_likelihood_component =
