@@ -14,13 +14,12 @@ knitr::opts_chunk$set(echo = TRUE, fig.width = 10, fig.height = 10)
 ```{r}
 
 # remotes::install_github("nmfs-fish-tools/r4MAS")
-# remotes::install_github("Bai-Li-NOAA/DMAS")
 
 library(r4MAS)
 library(Rcpp)
 library(jsonlite)
-library(DMAS)
-
+library(fishsad)
+library(nmfspalette)
 ```
 
 ## Read ASAP input file
@@ -29,15 +28,15 @@ library(DMAS)
 temp_dir <- tempdir()
 
 # Read ASAP input data
-asap_input <- DMAS::asap_simple_input$dat
-asap_output <- DMAS::asap_simple_output
+asap_input <- fishsad::asap_simple_input$dat
+asap_output <- fishsad::asap_simple_output
 ```
 
 ## Convert ASAP inputs to MAS inputs
 ```{r}
 
 # Load r4MAS module
-r4mas <- Rcpp::Module("rmas", PACKAGE="r4MAS")
+r4mas <- Rcpp::Module("rmas", PACKAGE = "r4MAS")
 
 # General settings
 nyears <- asap_input$n_years
@@ -46,7 +45,7 @@ nseasons <- 1
 
 nages <- asap_input$n_ages
 
-ages <-  1:asap_input$n_ages
+ages <- 1:asap_input$n_ages
 
 area1 <- new(r4mas$Area)
 area1$name <- "area1"
@@ -68,7 +67,6 @@ recruitment$h$max <- 1.0
 
 recruitment$sigma_r$value <- sqrt(log((asap_input$recruit_cv[1, ])^2 + 1))
 recruitment$sigma_r$estimated <- FALSE
-# recruitment$sigma_r$estimated <- TRUE # The estimated sigma_r and recruitment deviations are 0 when estimating sigma_r.
 recruitment$sigma_r$min <- 0
 recruitment$sigma_r$max <- 3
 recruitment$sigma_r$phase <- 2
@@ -79,8 +77,7 @@ recruitment$constrained_deviations <- TRUE
 recruitment$deviations_min <- -15.0
 recruitment$deviations_max <- 15.0
 recruitment$deviation_phase <- abs(asap_input$phase_rec_devs)
-recruitment$SetDeviations(rep(0.0, times = nyears))
-# recruitment$SetDeviations(rnorm(nyears, mean=0, sd=sqrt(log((asap_input$recruit_cv[1,])^2+1))))
+recruitment$SetDeviations(rnorm(nyears, mean = 0, sd = sqrt(log((asap_input$recruit_cv[1, ])^2 + 1))))
 recruitment$use_bias_correction <- FALSE
 
 # Growth settings
@@ -130,9 +127,9 @@ natural_mortality$SetValues(asap_input$M[1, ])
 
 # Movement settings
 movement <- new(r4mas$Movement)
-movement$connectivity_females <- c(1.0)
-movement$connectivity_males <- c(1.0)
-movement$connectivity_recruits <- c(1.0)
+movement$connectivity_females <- c(0.0)
+movement$connectivity_males <- c(0.0)
+movement$connectivity_recruits <- c(0.0)
 
 # Initial deviations
 initial_deviations <- new(r4mas$InitialDeviations)
@@ -143,7 +140,7 @@ initial_deviations$phase <- abs(asap_input$phase_N1_devs)
 
 # Create population
 population <- new(r4mas$Population)
-for (y in 0:(nyears))
+for (y in 1:(nyears))
 {
   population$AddMovement(movement$id, y)
 } # y starts from 0 or 1?
@@ -153,7 +150,7 @@ population$AddMaturity(maturity$id, area1$id, "undifferentiated")
 population$AddRecruitment(recruitment$id, 1, area1$id)
 population$SetInitialDeviations(initial_deviations$id, area1$id, "undifferentiated")
 population$SetGrowth(growth$id)
-population$sex_ratio <- 0.5 # need to be updated with sex_ratio <- 1 after resolving the issue here (https://github.com/nmfs-fish-tools/r4MAS/issues/35) to match the assumption from ASAP. 
+population$sex_ratio <- 0.5 # need to be updated with sex_ratio <- 1 after resolving the issue here (https://github.com/nmfs-fish-tools/r4MAS/issues/35) to match the assumption from ASAP.
 
 # Catch index values and observation errors
 catch_index <- vector(mode = "list", length = fleet_num)
@@ -182,7 +179,7 @@ for (i in 1:fleet_num) {
 }
 
 
-# # Fleet selectivity settings
+# Fleet selectivity settings
 fleet_selectivity <- vector(mode = "list", length = fleet_num)
 for (i in 1:fleet_num) {
   selectivity_option <- asap_input$sel_block_option[i]
@@ -315,7 +312,6 @@ for (i in 1:survey_num) {
   survey[[i]]$q$estimated <- ifelse(asap_input$phase_q < 0, FALSE, TRUE)
   survey[[i]]$q$phase <- abs(asap_input$phase_q)
 }
-
 ```
 
 ## Build the MAS model
@@ -330,18 +326,17 @@ mas_model$extended_plus_group <- max(ages)
 mas_model$ages <- ages
 mas_model$catch_season_offset <- 0.0
 mas_model$spawning_season_offset <- asap_input$fracyr_spawn
-mas_model$survey_season_offset <- (asap_input$index_month[1]-1)/12
+mas_model$survey_season_offset <- (asap_input$index_month[1] - 1) / 12
 
 mas_model$AddPopulation(population$id)
 
-for (i in 1:fleet_num){
+for (i in 1:fleet_num) {
   mas_model$AddFleet(fleet[[i]]$id)
 }
 
-for (i in 1:survey_num){
+for (i in 1:survey_num) {
   mas_model$AddSurvey(survey[[i]]$id)
 }
-
 ```
 
 ## Run `MAS`, save `MAS` outputs, and reset `MAS`
@@ -351,14 +346,14 @@ mas_model$Run()
 
 # Write MAS outputs to a json file
 write(mas_model$GetOutput(),
-      file=file.path(temp_dir, "mas_output.json"))
+  file = file.path(temp_dir, "mas_output.json")
+)
 
 # Reset MAS for next run
 mas_model$Reset()
 
 # Import MAS output
 mas_output <- jsonlite::read_json(file.path(temp_dir, "mas_output.json"))
-
 ```
 
 ## Aggregate estimates of key variables from the `ASAP`
@@ -369,11 +364,11 @@ asap <- list()
 asap$biomass <- asap_output$tot.jan1.B
 asap$abundance <- apply(asap_output$N.age, 1, sum)
 asap$ssb <- asap_output$SSB
-asap$recruit <- asap_output$N.age[,1]
+asap$recruit <- asap_output$N.age[, 1]
 asap$f <- apply(asap_output$fleet.FAA$FAA.directed.fleet1, 1, max)
 asap$landing <- asap_output$catch.pred
 asap$survey <- asap_output$index.pred$ind01
-asap$agecomp <- apply(asap_output$N.age, 1, function(x) x/sum(x))
+asap$agecomp <- apply(asap_output$N.age, 1, function(x) x / sum(x))
 asap$r0 <- asap_output$SR.parms$SR.R0
 asap$h <- asap_output$SR.parms$SR.steepness
 asap$q <- asap_output$q.indices[1]
@@ -388,24 +383,28 @@ asap$recruit_deviation <- asap_output$SR.resids$logR.dev
 ```{r}
 
 parameter <- unlist(mas_output$estimated_parameters$parameters)
-parameter_table <- as.data.frame(matrix(parameter, ncol=3, byrow=TRUE))
-colnames(parameter_table) <- c("Parameter", 
-                               "Value",
-                               "Gradient")
+parameter_table <- as.data.frame(matrix(parameter, ncol = 3, byrow = TRUE))
+colnames(parameter_table) <- c(
+  "Parameter",
+  "Value",
+  "Gradient"
+)
 parameter_table$Value <- round(as.numeric(parameter_table$Value),
-                                digits = 6)
+  digits = 6
+)
 parameter_table$Gradient <- round(as.numeric(parameter_table$Gradient),
-                                digits = 6)
+  digits = 6
+)
 
 parameter_table
 ```
 
 ```{r}
 
-popdy<-mas_output$population_dynamics
-pop<-popdy$populations[[1]]
-flt<-popdy$fleets[[1]]
-srvy<-popdy$surveys[[1]]
+popdy <- mas_output$population_dynamics
+pop <- popdy$populations[[1]]
+flt <- popdy$fleets[[1]]
+srvy <- popdy$surveys[[1]]
 
 mas <- list()
 
@@ -418,104 +417,123 @@ mas$landing <- unlist(flt$undifferentiated$catch_biomass$values)
 mas$survey <- unlist(srvy$undifferentiated$survey_biomass$values)
 mas$agecomp <- apply(
   matrix(unlist(pop$undifferentiated$numbers_at_age$values),
-         nrow=popdy$nyears, 
-         ncol=popdy$nages, 
-         byrow = T), 
-  1, 
-  function(x) x/sum(x))
-mas$r0 <- exp(parameter_table$Value[parameter_table$Parameter=="log_R0_1"])
+    nrow = popdy$nyears,
+    ncol = popdy$nages,
+    byrow = T
+  ),
+  1,
+  function(x) x / sum(x)
+)
+mas$r0 <- exp(parameter_table$Value[parameter_table$Parameter == "log_R0_1"])
 mas$h <- parameter_table$Value[parameter_table$Parameter == "h1"]
-mas$q <- list(parameter_table$Value[parameter_table$Parameter=="q_1"])
+mas$q <- list(parameter_table$Value[parameter_table$Parameter == "q_1"])
 # mas$fleet_selectivity # Where to find selectivity outputs?
 # mas$survey_selectivity # Where to find selectivity outputs?
-mas$recruit_deviation <- parameter_table[grep('recruitment_deviations', parameter_table$Parameter), "Value"] # Is the order correct from starting year to ending year?
+mas$recruit_deviation <- parameter_table[grep("recruitment_deviations", parameter_table$Parameter), "Value"] # Is the order correct from starting year to ending year?
 ```
 
 ## Generate comparison figures
 Compare temporal trends of biomass(B), abundance(A), spawning stock biomass (SSB), recruit (R), fishing mortality (F), Landings (L), and Survey index (SI) from `ASAP` (dots) and `MAS` (lines).
 ```{r}
 years <- as.numeric(rownames(asap_output$N.age))
-par(mfrow=c(4, 2), mar=c(3, 3, 0, 0))
-var <- c("biomass", "abundance", "ssb", "recruit", "f", 
-         "landing", "survey")
-ylab <- c("B (mt)", "A (1000 fish)", 
-          "SSB (mt)", "R (1000 fish)", 
-          "F", "L (mt)", "SI 1")
-for(i in 1:length(var)){
-  ylim = range(asap[[var[i]]], mas[[var[i]]])
-  plot(years, asap[[var[i]]], 
-       xlab="", ylab="", 
-       ylim=ylim, pch=19)
-  lines(years, mas[[var[i]]], 
-        col="deepskyblue3", lty=1)
-  mtext("Year", side=1, line=2, cex=0.7)
-  mtext(ylab[i], side=2, line=2, cex=0.7)
+par(mfrow = c(4, 2), mar = c(3, 3, 0, 0))
+col <- nmfspalette::nmfs_palette("regional web")(2)
+var <- c(
+  "biomass", "abundance", "ssb", "recruit", "f",
+  "landing", "survey"
+)
+ylab <- c(
+  "B (mt)", "A (1000 fish)",
+  "SSB (mt)", "R (1000 fish)",
+  "F", "L (mt)", "SI 1"
+)
+for (i in 1:length(var)) {
+  ylim <- range(asap[[var[i]]], mas[[var[i]]])
+  plot(years, asap[[var[i]]],
+    xlab = "", ylab = "",
+    ylim = ylim, pch = 19,
+    col = col[1]
+  )
+  lines(years, mas[[var[i]]],
+    col = col[2], lty = 1
+  )
+  mtext("Year", side = 1, line = 2, cex = 0.7)
+  mtext(ylab[i], side = 2, line = 2, cex = 0.7)
 }
 plot.new()
 legend("center",
-       c("ASAP", "MAS"), 
-       pch=c(19, NA),
-       lty=c(NA, 1), 
-       col=c("black", "deepskyblue3"), 
-       bty="n")
+  c("ASAP", "MAS"),
+  pch = c(19, NA),
+  lty = c(NA, 1),
+  col = col,
+  bty = "n"
+)
 ```
 
 Compare age composition from the `ASAP` (dots) and `MAS` (lines).
 ```{r}
-par(mfrow=c(7, 3), mar=c(3, 3, 0, 0))
+par(mfrow = c(7, 3), mar = c(3, 3, 0, 0))
+col <- nmfspalette::nmfs_palette("regional web")(2)
 var <- c("agecomp")
 ylab <- c("Proportion")
-for(i in 1:ncol(asap[[var]])){
-  ylim = range(asap[[var]][,i], mas[[var]][,i])
-  plot(ages, asap[[var]][,i], 
-       xlab="", ylab="", 
-       ylim=ylim, pch=19)
-  lines(ages, mas[[var]][,i], 
-        col="deepskyblue3", lty=1)
-  mtext("Age", side=1, line=2, cex=0.7)
-  mtext(ylab, side=2, line=2, cex=0.7)
+for (i in 1:ncol(asap[[var]])) {
+  ylim <- range(asap[[var]][, i], mas[[var]][, i])
+  plot(ages, asap[[var]][, i],
+    xlab = "", ylab = "",
+    ylim = ylim, pch = 19,
+    col = col[1]
+  )
+  lines(ages, mas[[var]][, i],
+    col = col[2], lty = 1
+  )
+  mtext("Age", side = 1, line = 2, cex = 0.7)
+  mtext(ylab, side = 2, line = 2, cex = 0.7)
   legend("topright",
-         paste("Year", years[i]), 
-         bty="n")
+    paste("Year", years[i]),
+    bty = "n"
+  )
 }
 plot.new()
 legend("topright",
-       c("ASAP", "MAS"), 
-       pch=c(19, NA),
-       lty=c(NA, 1), 
-       col=c("black", "deepskyblue3"), 
-       bty="n")
-
+  c("ASAP", "MAS"),
+  pch = c(19, NA),
+  lty = c(NA, 1),
+  col = col,
+  bty = "n"
+)
 ```
 
 
 Compare recruitment deviations over years from the OM and `MAS`.
 ```{r}
-par(mfrow=c(1,1), mar=c(1,4,1,1))
+par(mfrow = c(1, 1), mar = c(1, 4, 1, 1))
+col <- nmfspalette::nmfs_palette("regional web")(2)
 barplot(rbind(asap$recruit_deviation, mas$recruit_deviation),
-        beside = T,
-        ylab = "Recruitment Deviations",
-        col = c("gray80", "gray20"))
+  beside = T,
+  ylab = "Recruitment Deviations",
+  col = col
+)
 box()
 legend("topright",
-       c("ASAP", "MAS"),
-       col = c("gray80", "gray20"),
-       pch= c(15, 15),
-       bty="n")
-
+  c("ASAP", "MAS"),
+  col = c("gray80", "gray20"),
+  pch = c(15, 15),
+  bty = "n"
+)
 ```
 
 ### Generate comparison table
 Compare estimated R0, q, and h.  
 ```{r}
 # var <- c("R0", "h", "q")
-summary_table <- matrix(c(asap$r0, mas$r0,
-                          asap$h, mas$h,
-                          asap$q, mas$q[[1]]),
-                        ncol=2, byrow=TRUE)
+summary_table <- matrix(c(
+  asap$r0, mas$r0,
+  asap$h, mas$h,
+  asap$q, mas$q[[1]]
+),
+ncol = 2, byrow = TRUE
+)
 colnames(summary_table) <- c("ASAP", "MAS")
 rownames(summary_table) <- c("R0", "h", "q")
 summary_table
-
 ```
-

@@ -27,6 +27,7 @@ remotes::install_github("nmfs-fish-tools/r4MAS")
 library(r4MAS)
 library(Rcpp)
 library(jsonlite)
+library(nmfspalette)
 ```
 
 If you receive errors related to C++ when loading r4MAS, please see the installation instructions from the [main page](https://github.com/nmfs-fish-tools/r4MAS#installation-instructions).
@@ -171,9 +172,9 @@ natural_mortality$SetValues(om_input$M.age)
 ```{r}
 # Only 1 area in this model
 movement <- new(r4mas$Movement)
-movement$connectivity_females <- c(1.0)
-movement$connectivity_males <- c(1.0)
-movement$connectivity_recruits <- c(1.0)
+movement$connectivity_females <- c(0.0)
+movement$connectivity_males <- c(0.0)
+movement$connectivity_recruits <- c(0.0)
 ```
 
 ### Initial deviation settings
@@ -187,7 +188,7 @@ initial_deviations$phase <- 2
 ### Creat the population
 ```{r}
 population <- new(r4mas$Population)
-for (y in 0:(nyears))
+for (y in 1:(nyears))
 {
   population$AddMovement(movement$id, y)
 }
@@ -389,13 +390,14 @@ mas$selexparm_survey <- list(
   a50 = parameter_table$Value[parameter_table$Parameter == "logistic_selectivity_a50_2"],
   slope = parameter_table$Value[parameter_table$Parameter == "logistic_selectivity_slope_2"]
 )
-mas$recruit_deviation <- parameter_table[grep('recruitment_deviations', parameter_table$Parameter), "Value"] # Is the order correct from starting year to ending year?
+mas$recruit_deviation <- parameter_table[grep("recruitment_deviations", parameter_table$Parameter), "Value"] # Is the order correct from starting year to ending year?
 ```
 
 ### Generate comparison figures
 Compare temporal trends of biomass(B), abundance(A), spawning stock biomass (SSB), recruit (R), fishing mortality (F), Landings (L), and Survey index (SI) from the OM (dots) and `MAS` (lines).
 ```{r}
 par(mfrow = c(4, 2), mar = c(3, 3, 0, 0))
+col <- nmfspalette::nmfs_palette("regional web")(2)
 var <- c(
   "biomass", "abundance", "ssb", "recruit", "f",
   "landing", "survey"
@@ -409,10 +411,11 @@ for (i in 1:length(var)) {
   ylim <- range(om[[var[i]]], mas[[var[i]]])
   plot(om_input$year, om[[var[i]]],
     xlab = "", ylab = "",
-    ylim = ylim, pch = 19
+    ylim = ylim, pch = 19,
+    col = col[1]
   )
   lines(om_input$year, mas[[var[i]]],
-    col = "deepskyblue3", lty = 1
+    col = col[2], lty = 1
   )
   mtext("Year", side = 1, line = 2, cex = 0.7)
   mtext(ylab[i], side = 2, line = 2, cex = 0.7)
@@ -422,7 +425,7 @@ legend("center",
   c("OM", "MAS"),
   pch = c(19, NA),
   lty = c(NA, 1),
-  col = c("black", "deepskyblue3"),
+  col = col,
   bty = "n"
 )
 ```
@@ -430,16 +433,18 @@ legend("center",
 Compare age composition from the OM (dots) and `MAS` (lines).
 ```{r}
 par(mfrow = c(8, 4), mar = c(3, 3, 0, 0))
+col <- nmfspalette::nmfs_palette("regional web")(2)
 var <- c("agecomp")
 ylab <- c("Proportion")
 for (i in 1:ncol(om[[var]])) {
   ylim <- range(om[[var]][, i], mas[[var]][, i])
   plot(om_input$ages, om[[var]][, i],
     xlab = "", ylab = "",
-    ylim = ylim, pch = 19
+    ylim = ylim, pch = 19,
+    col = col[1]
   )
   lines(om_input$age, mas[[var]][, i],
-    col = "deepskyblue3", lty = 1
+    col = col[2], lty = 1
   )
   mtext("Age", side = 1, line = 2, cex = 0.7)
   mtext(ylab, side = 2, line = 2, cex = 0.7)
@@ -453,24 +458,27 @@ legend("topright",
   c("OM", "MAS"),
   pch = c(19, NA),
   lty = c(NA, 1),
-  col = c("black", "deepskyblue3"),
+  col = col,
   bty = "n"
 )
 ```
 
 Compare recruitment deviations over years from the OM and `MAS`.
 ```{r}
-par(mfrow=c(1,1), mar=c(1,4,1,1))
+par(mfrow = c(1, 1), mar = c(1, 4, 1, 1))
+col <- nmfspalette::nmfs_palette("regional web")(2)
 barplot(rbind(om$recruit_deviation, mas$recruit_deviation),
-        beside = T,
-        ylab = "Recruitment Deviations",
-        col = c("gray80", "gray20"))
+  beside = T,
+  ylab = "Recruitment Deviations",
+  col = col
+)
 box()
 legend("topright",
-       c("OM", "MAS"),
-       col = c("gray80", "gray20"),
-       pch= c(15, 15),
-       bty="n")
+  c("OM", "MAS"),
+  col = col,
+  pch = c(15, 15),
+  bty = "n"
+)
 ```
 
 ### Generate comparison table

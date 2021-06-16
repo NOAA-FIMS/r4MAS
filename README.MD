@@ -1,12 +1,8 @@
-# README
-
 # r4MAS - R interface to the Metapopulation Assessment System
 
-**************
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/nmfs-fish-tools/r4MAS) 
 [![R-CMD-check and release](https://github.com/nmfs-fish-tools/r4MAS/actions/workflows/R-CMD-check-and-Release.yml/badge.svg)](https://github.com/nmfs-fish-tools/r4MAS/actions/workflows/R-CMD-check-and-Release.yml)
 
-**************
 The Metapopulation Assessment System (MAS) is a modular tool for creating and fitting fisheries stock assessment models. The R interface to MAS (r4MAS) allows users to build and run MAS models directly using the `R` language. It also includes functions to help translate between MAS and other stock assessment software and to plot outputs of MAS models, including estimates of key biological and observation parameters and derived quantities such as biological reference points, estimated biomass, and estimated numbers-at-age.
 
 This tool is supported by the NOAA Fisheries Integrated Toolbox. More information can be found on the toolbox [landing page](https://nmfs-fish-tools.github.io/r4MAS/)
@@ -52,4 +48,6 @@ Once you've installed the package and have confirmed you can load it, we recomme
 - This project code is made available through GitHub but is managed by NOAA at
  https://vlab.ncep.noaa.gov/redmine/projects/integrated-fisheries-toolbox/files
 
-***** *******
+<img src="https://raw.githubusercontent.com/nmfs-general-modeling-tools/nmfspalette/main/man/figures/noaa-fisheries-rgb-2line-horizontal-small.png" height="75" alt="NOAA Fisheries"> 
+
+[U.S. Department of Commerce](https://www.commerce.gov/) | [National Oceanographic and Atmospheric Administration](https://www.noaa.gov) | [NOAA Fisheries](https://www.fisheries.noaa.gov/)
