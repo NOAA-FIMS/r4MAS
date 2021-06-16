@@ -552,12 +552,14 @@ struct Fleet: mas::ModelObject<REAL_T> {
 
 						catch_length_at_age[index] /=
 								fleet_population_total_interactions[sindex];
+						std::cout<<catch_length_at_age[index]<<" ";
 						catch_length_at_age_males[index] /=
 								fleet_population_total_interactions[sindex];
 						catch_length_at_age_females[index] /=
 								fleet_population_total_interactions[sindex];
 
 					}
+					std::cout<<std::endl;
 				}
 
 			}
