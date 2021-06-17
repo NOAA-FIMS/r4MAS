@@ -1822,7 +1822,7 @@ struct Subpopulation {
 			//local fleet f at age
 			variable f_a; // =
 			variable fca;
-			if (a == 0) {
+			if (age == 0) {
 				fleets[f]->fleet_population_total_interactions[year
 						* this->seasons + (season - 1)]++;
 			}
