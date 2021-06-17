@@ -551,8 +551,8 @@ struct Fleet: mas::ModelObject<REAL_T> {
 								catch_biomass_at_age_females[index]
 										/ total_c_b_females;
 
-//						catch_length_at_age[index] /=
-//								fleet_population_total_interactions[sindex];
+						catch_length_at_age[index] /=
+								fleet_population_total_interactions[sindex];
 						std::cout<<catch_length_at_age[index]<<" ";
 						catch_length_at_age_males[index] /=
 								fleet_population_total_interactions[sindex];
