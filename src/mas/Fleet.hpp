@@ -498,7 +498,6 @@ struct Fleet: mas::ModelObject<REAL_T> {
 				for (int s = 0; s < this->seasons; s++) {
 
 					size_t sindex = y * this->seasons + s;
-					std::cout <<std::fixed<<this->fleet_population_total_interactions[sindex]<<"--\n";
 					variable total_c;
 					variable total_c_males;
 					variable total_c_females;
@@ -553,14 +552,12 @@ struct Fleet: mas::ModelObject<REAL_T> {
 
 						catch_length_at_age[index] /=
 								fleet_population_total_interactions[sindex];
-						std::cout<<catch_length_at_age[index]<<" ";
 						catch_length_at_age_males[index] /=
 								fleet_population_total_interactions[sindex];
 						catch_length_at_age_females[index] /=
 								fleet_population_total_interactions[sindex];
 
 					}
-					std::cout<<std::endl;
 				}
 
 			}
