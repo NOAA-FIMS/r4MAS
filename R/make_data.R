@@ -1,3 +1,8 @@
+#' FUnction to make a data object from input list
+#' @name make_data
+#' @param config_object a list item generated from reading in a MAS JSON config
+#' @param data_object a list item generated from reading in a MAS JSON data file
+#' @return a list with populated data objects
 make_data <- function(config_object, data_object){
   config_name <- c("study_name", "analyst")
   arguments <- c("model", "workgroup",

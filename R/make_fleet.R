@@ -1,11 +1,14 @@
-make_fleet <- function(names, ids, Fs, selectivity, likelihoods){
-  fleet_list <- vector("list")
-  for(i in 1:length(names)){
-    fleet_list$fleet$name <- names[i]
-    fleet_list$fleet$id <- ids[i]
-    fleet_list$fleet$fishing_mortality <- Fs[[i]]
-    fleet_list$fleet$selectivity <- selectivity[[i]]
-    fleet_list$fleet$likelihoods <- likelihoods[[i]]
-  }
-  return(fleet_list)
+
+
+make_fleet <- function(env__, catch_comp, catch_index, fleet_selectivity, area1, fishing_mortality){
+  fleet <- new(env__$Fleet)
+  fleet$AddAgeCompData(catch_comp$id, "undifferentiated")
+  fleet$AddIndexData(catch_index$id, "undifferentiated")
+  fleet$SetAgeCompNllComponent(fleet_age_comp_nll$id)
+  fleet$SetIndexNllComponent(fleet_index_comp_nll$id)
+  fleet$AddSelectivity(fleet_selectivity$id, 1, area1$id)
+  fleet$AddFishingMortality(fishing_mortality$id, 1,area1$id)
+  
+  return(fleet)
+  
 }

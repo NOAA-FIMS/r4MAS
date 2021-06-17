@@ -1,4 +1,10 @@
 *.Rproj
 \.Rproj\.user
-*.json
 .Rproj.user
+/src/tetsmin/build/
+/src/tetsmin/dist/
+*.DS_Store
+*.log
+*.o
+*.so
+*.dll

@@ -1,4 +1,12 @@
-plot_NAtAge <- function(SS, MAS, pdf_on = TRUE, byage, years, ages){
+#' A function to plot N at age
+#' @name plot_NAtAge
+#' @param SS the matrix of numbers at age from Stock Synthesis, where rows are ages
+#' @param MAS the matrix of numbers at age from MAS, where rows are ages
+#' @param pdf_on boolean, should the PDF be created? Default is \code{TRUE}
+#' @param byage boolean, should the numbers be plotted with each plot representing an age (default to FALSE) or a year?
+#' @param years the vector of years in the model
+#' @param ages the vector of ages in the model
+plot_NAtAge <- function(SS, MAS, pdf_on = TRUE, byage = FALSE, years, ages){
 
   if(byage){
   if(pdf_on){

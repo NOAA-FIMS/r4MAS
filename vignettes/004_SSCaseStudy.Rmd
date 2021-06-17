@@ -1,0 +1,451 @@
+---
+title: "SS Case Study"
+date: "Updated on `r format(Sys.time(), '%m/%d/%Y')`"
+output: 
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.width = 10, fig.height = 10)
+```
+
+## Install and library packages
+```{r}
+# remotes::install_github("nmfs-fish-tools/r4MAS")
+
+library(r4MAS)
+library(Rcpp)
+library(jsonlite)
+library(fishsad)
+library(nmfspalette)
+```
+
+## Read SS input file
+```{r}
+
+# Working directory
+temp_dir <- tempdir()
+
+# Read SS input data
+ss_input <- fishsad::ss_empiricalwaa_input
+
+ss_dat <- ss_input$ss_data
+ss_ctl <- ss_input$ss_control
+
+fleet_id <- unique(ss_dat$catch$fleet)
+survey_id <- unique(ss_dat$CPUE$index)
+
+ss_wtatage <- ss_input$ss_wtatage
+ss_starter <- ss_input$ss_starter
+ss_forecast <- ss_input$ss_projection
+```
+
+## Convert SS inputs to MAS inputs
+```{r}
+
+# Load r4MAS module
+r4mas <- Rcpp::Module("rmas", PACKAGE = "r4MAS")
+
+# General settings
+styr <- ss_dat$styr
+endyr <- ss_dat$endyr
+nyears <- ss_dat$endyr - ss_dat$styr + 1
+
+nseasons <- ss_dat$nseas
+
+ages <- ss_dat$agebin_vector # Use accumulator age or age group from SS? Include age 0 or not? They are not continuous numbers.
+nages <- length(ages)
+age_id <- as.character(ages)
+
+# ages <-  c(0, ss_dat$Nages)
+# nages <- length(ages)
+
+ngenders <- ss_dat$Nsexes
+
+area <- vector(mode = "list", length = ss_dat$N_areas)
+for (i in 1:ss_dat$N_areas) {
+  area[[i]] <- new(r4mas$Area)
+  area[[i]]$name <- paste("area", i, sep = "")
+}
+
+# Recruitment settings
+if (ss_ctl$SR_function == 3) {
+  recruitment <- new(r4mas$BevertonHoltRecruitment)
+}
+if (ss_ctl$SR_function == 2) {
+  recruitment <- new(r4mas$RickerRecruitment)
+}
+
+recruitment$R0$value <- exp(ss_ctl$SR_parm["SR_LN(R0)", "INIT"])
+recruitment$R0$estimated <-
+  ifelse(ss_ctl$SR_parm["SR_LN(R0)", "PHASE"] < 0, FALSE, TRUE)
+recruitment$R0$phase <- abs(ss_ctl$SR_parm["SR_LN(R0)", "PHASE"])
+recruitment$R0$min <- ss_ctl$SR_parm["SR_LN(R0)", "LO"]
+recruitment$R0$max <- ss_ctl$SR_parm["SR_LN(R0)", "HI"]
+
+recruitment$h$value <- ss_ctl$SR_parm[2, "INIT"]
+recruitment$h$estimated <-
+  ifelse(ss_ctl$SR_parm[2, "PHASE"] < 0, FALSE, TRUE)
+recruitment$h$phase <- abs(ss_ctl$SR_parm[2, "PHASE"])
+recruitment$h$min <- ss_ctl$SR_parm[2, "LO"]
+recruitment$h$max <- ss_ctl$SR_parm[2, "HI"]
+
+recruitment$sigma_r$value <- exp(ss_ctl$SR_parm["SR_sigmaR", "INIT"])
+recruitment$sigma_r$estimated <-
+  ifelse(ss_ctl$SR_parm["SR_sigmaR", "PHASE"] < 0, FALSE, TRUE)
+# recruitment$sigma_r$estimated <- TRUE # The estimated sigma_r and recruitment deviations are 0 when estimating sigma_r.
+recruitment$sigma_r$min <- ss_ctl$SR_parm["SR_sigmaR", "LO"]
+recruitment$sigma_r$max <- ss_ctl$SR_parm["SR_sigmaR", "HI"]
+recruitment$sigma_r$phase <- abs(ss_ctl$SR_parm["SR_sigmaR", "PHASE"])
+
+recruitment$estimate_deviations <-
+  ifelse(ss_ctl$recdev_phase < 0, FALSE, TRUE)
+recruitment$constrained_deviations <- TRUE
+recruitment$deviations_min <- -15.0
+recruitment$deviations_max <- 15.0
+recruitment$deviation_phase <- abs(ss_ctl$recdev_phase)
+recruitment$SetDeviations(rep(0.0, times = nyears))
+
+# Growth settings
+fleet_num <- length(fleet_id)
+catch_waa <- vector(mode = "list", length = fleet_num)
+for (i in 1:fleet_num) {
+  catch_waa[[i]] <- vector(mode = "list", length = ngenders)
+
+  for (j in 1:ngenders) {
+    waa <- as.vector(t(
+      ss_wtatage[(ss_wtatage$Fleet == fleet_id[i] & ss_wtatage$Sex == j), age_id]
+    ))
+
+    if (ss_dat$CPUEinfo[ss_dat$CPUEinfo$Fleet == fleet_id[i], "Units"] == 0) {
+      catch_waa[[i]][[j]] <- rep(1.0, nages * nyears)
+    } # Unit is number
+
+    if (ss_dat$CPUEinfo[ss_dat$CPUEinfo$Fleet == fleet_id[i], "Units"] == 1) {
+      catch_waa[[i]][[j]] <- waa
+    } # Unit is biomass
+  }
+}
+
+ssb_waa <- jan1_waa <- vector(mode = "list", length = ngenders)
+for (j in 1:ngenders) {
+  ssb_waa[[j]] <- as.vector(t(
+    ss_wtatage[(ss_wtatage$Fleet == -2 & ss_wtatage$Sex == j), age_id]
+  ))
+
+  jan1_waa[[j]] <- as.vector(t(
+    ss_wtatage[(ss_wtatage$Fleet == 0 & ss_wtatage$Sex == j), age_id]
+  ))
+}
+
+survey_num <- 1 # How to include multiple surveys
+# survey_num <- length(survey_id)
+survey_waa <- vector(mode = "list", length = survey_num)
+for (i in 1:survey_num) {
+  survey_waa[[i]] <- vector(mode = "list", length = ngenders)
+
+  for (j in 1:ngenders) {
+    waa <- as.vector(t(
+      ss_wtatage[(ss_wtatage$Fleet == survey_id[i] & ss_wtatage$Sex == j), age_id]
+    ))
+
+    if (ss_dat$CPUEinfo[ss_dat$CPUEinfo$Fleet == survey_id[i], "Units"] == 0) {
+      survey_waa[[i]][[j]] <- rep(1.0, nages * nyears)
+    } # Unit is number
+
+    if (ss_dat$CPUEinfo[ss_dat$CPUEinfo$Fleet == survey_id[i], "Units"] == 1) {
+      survey_waa[[i]][[j]] <- waa
+    } # Unit is biomass
+  }
+}
+
+show(r4mas$VonBertalanffyModified)
+growth <- new(r4mas$VonBertalanffyModified)
+growth$SetFemaleCatchWeight(catch_waa[[1]][[1]])
+growth$SetMaleCatchWeight(catch_waa[[1]][[2]])
+growth$SetFemaleWeightAtSeasonStart(jan1_waa[[1]])
+growth$SetMaleWeightAtSeasonStart(jan1_waa[[2]])
+growth$SetFemaleWeightAtSpawning(ssb_waa[[1]])
+growth$SetMaleWeightAtSpawning(ssb_waa[[2]])
+growth$SetFemaleSurveyWeight(survey_waa[[1]][[1]])
+growth$SetMaleSurveyWeight(survey_waa[[1]][[2]]) # How to set empirical weight-at-age for two surveys? One survey unit is biomass and the other survey unit is number. The data are stored in survey_empirical_weight list.
+
+# Maturity settings
+show(r4mas$Maturity)
+maturity <- vector(mode = "list", length = ngenders)
+for (j in 1:ngenders) {
+  maturity[[j]] <- new(r4mas$Maturity)
+  maturity[[j]]$values <- rep(1.0, nages) # SS has length-at-maturity and weight-at-age for fleet -2 uses maturity*fecundity
+}
+
+
+# Natural mortality settings
+natural_mortality <- vector(mode = "list", length = ngenders)
+if (ss_ctl$natM_type == 0) {
+  for (j in 1:ngenders) {
+    natural_mortality[[j]] <- new(r4mas$NaturalMortality) # No min and max settings
+    if (j == 1) {
+      natural_mortality[[j]]$estimate <-
+        ifelse(ss_ctl$MG_parms["NatM_p_1_Fem_GP_1", "PHASE"] < 0, FALSE, TRUE)
+      natural_mortality[[j]]$phase <- abs(ss_ctl$MG_parms["NatM_p_1_Fem_GP_1", "PHASE"])
+      natural_mortality[[j]]$values <- ss_ctl$MG_parms["NatM_p_1_Fem_GP_1", "INIT"]
+    }
+
+    if (j == 2) {
+      natural_mortality[[j]]$estimate <-
+        ifelse(ss_ctl$MG_parms["NatM_p_1_Mal_GP_1", "PHASE"] < 0, FALSE, TRUE)
+      natural_mortality[[j]]$phase <- abs(ss_ctl$MG_parms["NatM_p_1_Mal_GP_1", "PHASE"])
+      natural_mortality[[j]]$values <- ss_ctl$MG_parms["NatM_p_1_Mal_GP_1", "INIT"]
+    }
+  }
+}
+
+
+
+# Movement settings
+movement <- new(r4mas$Movement)
+movement$connectivity_females <- c(0.0)
+movement$connectivity_males <- c(0.0)
+movement$connectivity_recruits <- c(0.0)
+
+# Initial deviations
+initial_deviations <- vector(mode = "list", length = ngenders)
+
+for (j in 1:ngenders) {
+  initial_deviations[[j]] <- new(r4mas$InitialDeviations)
+  initial_deviations[[j]]$values <- rep(0.0, times = nages)
+  initial_deviations[[j]]$estimate <- TRUE # Is it true in SS?
+  initial_deviations[[j]]$phase <- 2
+}
+
+# Create population
+population <- new(r4mas$Population)
+for (y in 1:(nyears))
+{
+  population$AddMovement(movement$id, y)
+}
+
+population$AddNaturalMortality(natural_mortality[[1]]$id, area[[1]]$id, "females")
+population$AddNaturalMortality(natural_mortality[[2]]$id, area[[1]]$id, "males")
+population$AddMaturity(maturity[[1]]$id, area[[1]]$id, "females")
+population$AddMaturity(maturity[[2]]$id, area[[1]]$id, "males")
+population$AddRecruitment(recruitment$id, 1, area[[1]]$id)
+population$SetInitialDeviations(initial_deviations[[1]]$id, area[[1]]$id, "females")
+population$SetInitialDeviations(initial_deviations[[2]]$id, area[[1]]$id, "males")
+population$SetGrowth(growth$id)
+population$sex_ratio <- ss_ctl$MG_parms["FracFemale_GP_1", "INIT"] # Did SS use female fraction in this example?
+
+# Catch index values and observation errors
+catch_index <- vector(mode = "list", length = fleet_num)
+for (i in 1:fleet_num) {
+  catch_index[[i]] <- new(r4mas$IndexData)
+  catch_index[[i]]$values <- ss_dat$catch$catch[ss_dat$catch$fleet == fleet_id[i] &
+    ss_dat$catch$V1 > 0]
+  catch_index[[i]]$error <- ss_dat$catch$catch_se[ss_dat$catch$fleet == fleet_id[i] &
+    ss_dat$catch$V1 > 0]
+}
+
+# Catch composition data
+catch_comp <- vector(mode = "list", length = fleet_num)
+for (i in 1:fleet_num) {
+  catch_comp[[i]] <- vector(mode = "list", length = ngenders)
+  for (j in 1:ngenders) {
+    catch_comp[[i]][[j]] <- new(r4mas$AgeCompData)
+
+    if (j == 1) {
+      catch_comp[[i]][[j]]$values <- as.vector(t(
+        ss_dat$agecomp[ss_dat$agecomp$FltSvy == fleet_id[i], 10:(10 + nages - 1)]
+      ))
+      catch_comp[[i]][[j]]$sample_size <- ss_dat$agecomp[ss_dat$agecomp$FltSvy == fleet_id[i], "Nsamp"] / 2 # Should sample size be divided by 2?
+      catch_comp[[i]][[j]]$sex <- "females"
+    }
+
+    if (j == 2) {
+      catch_comp[[i]][[j]]$values <- as.vector(t(
+        ss_dat$agecomp[ss_dat$agecomp$FltSvy == fleet_id[i], (10 + nages):ncol(ss_dat$agecomp)]
+      ))
+      catch_comp[[i]][[j]]$sample_size <- ss_dat$agecomp[ss_dat$agecomp$FltSvy == fleet_id[i], "Nsamp"] / 2 # Should sample size be divided by 2?
+      catch_comp[[i]][[j]]$sex <- "males"
+    }
+  }
+}
+
+# Likelihood component settings
+fleet_index_comp_nll <- vector(mode = "list", length = fleet_num)
+fleet_age_comp_nll <- vector(mode = "list", length = fleet_num)
+for (i in 1:fleet_num) {
+  fleet_index_comp_nll[[i]] <- new(r4mas$Lognormal)
+  fleet_index_comp_nll[[i]]$use_bias_correction <- FALSE
+
+  fleet_age_comp_nll[[i]] <- new(r4mas$Multinomial)
+}
+
+
+# # Fleet selectivity settings
+fleet_selectivity <- vector(mode = "list", length = fleet_num)
+for (i in 1:fleet_num) {
+  selectivity_option <- ss_ctl$age_selex_types$Pattern[fleet_id[i]]
+
+  if (selectivity_option == 17) {
+    fleet_selectivity[[i]] <- new(r4mas$AgeBasedSelectivity)
+    fleet_selectivity[[i]]$estimated <- TRUE # if it is age based selectivity, can you estimate some values and fix the other values?
+    fleet_selectivity[[i]]$phase <- 2 # if it is age based selectivity, can you estimate some values and fix the other values?
+    # fleet_selectivity$estimated <-
+    #   ifelse(asap_input$sel_ini[[i]][(1:nages), 2] < 0, FALSE, TRUE)
+    # fleet_selectivity$phase <- asap_input$sel_ini[[i]][(1:nages), 2]
+    fleet_selectivity[[i]]$values <- seq(0, 1, length.out = nages)
+  } # SS uses random walk?
+
+  # Add simple-logistic and double-logistic cases later
+}
+
+# Fishing mortality settings
+fishing_mortality <- new(r4mas$FishingMortality)
+fishing_mortality$estimate <- TRUE
+fishing_mortality$phase <- 1
+fishing_mortality$min <- 0.0
+fishing_mortality$max <- ss_ctl$maxF
+fishing_mortality$SetValues(rep(0.01, nyears))
+
+# Create the fleet
+fleet <- vector(mode = "list", length = fleet_num)
+
+for (i in 1:fleet_num) {
+  fleet[[i]] <- new(r4mas$Fleet)
+  fleet[[i]]$AddIndexData(catch_index[[i]]$id, "undifferentiated")
+  fleet[[i]]$AddAgeCompData(catch_comp[[i]][[1]]$id, "males")
+  fleet[[i]]$AddAgeCompData(catch_comp[[i]][[2]]$id, "females")
+  fleet[[i]]$SetIndexNllComponent(fleet_index_comp_nll[[i]]$id)
+  fleet[[i]]$SetAgeCompNllComponent(fleet_age_comp_nll[[i]]$id)
+  fleet[[i]]$AddSelectivity(fleet_selectivity[[i]]$id, 1, area[[1]]$id)
+  fleet[[i]]$AddFishingMortality(fishing_mortality$id, 1, area[[1]]$id)
+}
+
+
+# Survey index values and observation errors
+survey_index <- vector(mode = "list", length = survey_num)
+for (i in 1:survey_num) {
+  survey_index[[i]] <- new(r4mas$IndexData)
+  survey_index[[i]]$values <- ss_dat$CPUE$obs[ss_dat$CPUE$index == survey_id[i]]
+  survey_index[[i]]$error <- ss_dat$CPUE$se_log[ss_dat$CPUE$index == survey_id[i]] # How to deal with missing data?
+}
+
+# Survey composition
+survey_comp <- vector(mode = "list", length = survey_num)
+for (i in 1:survey_num) {
+  survey_comp[[i]] <- vector(mode = "list", length = ngenders)
+  for (j in 1:ngenders) {
+    survey_comp[[i]][[j]] <- new(r4mas$AgeCompData)
+
+    if (j == 1) {
+      survey_comp[[i]][[j]]$values <- as.vector(t(
+        ss_dat$agecomp[ss_dat$agecomp$FltSvy == survey_id[i], 10:(10 + nages - 1)]
+      ))
+      survey_comp[[i]][[j]]$sample_size <- ss_dat$agecomp[ss_dat$agecomp$FltSvy == survey_id[i], "Nsamp"] / 2 # Should sample size be divided by 2?
+      survey_comp[[i]][[j]]$sex <- "females"
+    }
+
+    if (j == 2) {
+      survey_comp[[i]][[j]]$values <- as.vector(t(
+        ss_dat$agecomp[ss_dat$agecomp$FltSvy == survey_id[i], (10 + nages):ncol(ss_dat$agecomp)]
+      ))
+      survey_comp[[i]][[j]]$sample_size <- ss_dat$agecomp[ss_dat$agecomp$FltSvy == survey_id[i], "Nsamp"] / 2 # Should sample size be divided by 2?
+      survey_comp[[i]][[j]]$sex <- "males"
+    }
+  }
+}
+
+# Likelihood component settings
+survey_index_comp_nll <- vector(mode = "list", length = survey_num)
+survey_age_comp_nll <- vector(mode = "list", length = survey_num)
+for (i in 1:survey_num) {
+  survey_index_comp_nll[[i]] <- new(r4mas$Lognormal)
+  survey_index_comp_nll[[i]]$use_bias_correction <- FALSE
+
+  survey_age_comp_nll[[i]] <- new(r4mas$Multinomial)
+}
+
+# Survey selectivity settings
+survey_selectivity <- vector(mode = "list", length = survey_num)
+for (i in 1:survey_num) {
+  selectivity_option <- ss_ctl$age_selex_types$Pattern[survey_id[i]]
+
+  if (selectivity_option == 17) {
+    survey_selectivity[[i]] <- new(r4mas$AgeBasedSelectivity)
+    survey_selectivity[[i]]$estimated <- TRUE # if it is age based selectivity, can you estimate some values and fix the other values?
+    survey_selectivity[[i]]$phase <- 2
+    # survey_selectivity[[i]]$estimated <- ifelse(asap_input$index_sel_ini[[i]][(1:nages), 2] < 0, FALSE, TRUE)
+    # survey_selectivity[[i]]$phase <- asap_input$index_sel_ini[[i]][(1:nages), 2]
+    survey_selectivity[[i]]$values <- seq(0, 1, length.out = nages)
+  }
+
+  # Add simple-logistic and double-logistic cases later
+}
+
+# Create the survey
+survey <- vector(mode = "list", length = survey_num)
+for (i in 1:survey_num) {
+  survey[[i]] <- new(r4mas$Survey)
+
+  survey[[i]]$AddIndexData(survey_index[[i]]$id, "undifferentiated")
+  survey[[i]]$AddAgeCompData(survey_comp[[i]][[1]]$id, "females")
+  survey[[i]]$AddAgeCompData(survey_comp[[i]][[2]]$id, "males")
+  survey[[i]]$SetIndexNllComponent(survey_index_comp_nll[[i]]$id)
+  survey[[i]]$SetAgeCompNllComponent(survey_age_comp_nll[[i]]$id)
+  survey[[i]]$AddSelectivity(survey_selectivity[[i]]$id, 1, area[[1]]$id)
+
+  survey[[i]]$q$value <- exp(ss_ctl$Q_parms[paste("LnQ_base_", survey_id[i], "_S", i, sep = ""), "INIT"]) / 1000
+  survey[[i]]$q$min <- 0
+  survey[[i]]$q$max <- 10
+  survey[[i]]$q$estimated <- ifelse(ss_ctl$Q_parms[paste("LnQ_base_", survey_id[i], "_S", i, sep = ""), "PHASE"] < 0, FALSE, TRUE)
+  survey[[i]]$q$phase <- abs(ss_ctl$Q_parms[paste("LnQ_base_", survey_id[i], "_S", i, sep = ""), "PHASE"])
+}
+```
+
+## Build the MAS model
+```{r}
+
+mas_model <- new(r4mas$MASModel)
+
+mas_model$nyears <- nyears
+mas_model$nseasons <- nseasons
+mas_model$nages <- nages
+mas_model$extended_plus_group <- nages # what if the age are grouped?
+mas_model$ages <- ages
+mas_model$catch_season_offset <- 0.0
+mas_model$spawning_season_offset <- (ss_dat$spawn_month - 1) / 12
+mas_model$survey_season_offset <- (unique(ss_dat$CPUE$seas[ss_dat$CPUE$index == 2]) - 1) / 12
+
+mas_model$AddPopulation(population$id)
+
+for (i in 1:fleet_num) {
+  mas_model$AddFleet(fleet[[i]]$id)
+}
+
+for (i in 1:survey_num) {
+  mas_model$AddSurvey(survey[[i]]$id)
+}
+```
+
+## Run `MAS`, save `MAS` outputs, and reset `MAS`
+```{r}
+# # Run MAS
+# mas_model$Run()
+#
+# # Write MAS outputs to a json file
+# write(mas_model$GetOutput(),
+#       file=file.path(data_dir, "mas_output.json"))
+#
+# # Reset MAS for next run
+# mas_model$Reset()
+#
+# # Import MAS output
+# mas_output <- jsonlite::read_json(file.path(data_dir, "mas_output.json"))
+```
+
+## Questions 
+### r4MAS inputs and outputs
+- SS uses real ages in weight-at-age data, but age group in age composition data. How to set up ages in r4MAS in this situation? 
+
+- There are missing data in inputs (e.g., survey index and age composition).  How to set up survey in r4MAS with missing data? 

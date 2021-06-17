@@ -1,0 +1,45 @@
+## -*- Makefile -*-
+##
+## User: matthew
+## Time: Jun 25, 2015 9:07:06 AM
+## Makefile created by Oracle Solaris Studio.
+##
+## This file is generated automatically.
+##
+#### Compiler and tool definitions shared by all build targets #####
+CCC = mpic++++
+CXX = mpic++
+BASICOPTS =   -O3   -s -m64
+CCFLAGS = -std=c++11
+CXXFLAGS =  -O3  -DMAS_ENSEMBLE -pthread -std=c++11 $(EXTRA_CXXFLAGS)
+CCADMIN = 
+# Define the target directories.
+TARGETDIR_mas_ensemble=bin
+
+all: $(TARGETDIR_mas_ensemble)/mas_ensemble
+## Target: mas_ensemble
+OBJS_mas_ensemble =  \
+	$(TARGETDIR_mas_ensemble)/main_ensemble.o
+USERLIBS_mas_ensemble = $(SYSLIBS_mas_ensemble) 
+DEPLIBS_mas_ensemble =  
+LDLIBS_mas_ensemble = $(USERLIBS_mas_ensemble)
+# Link or archive
+$(TARGETDIR_mas_ensemble)/mas_ensemble: $(TARGETDIR_mas_ensemble) $(OBJS_mas_ensemble) $(DEPLIBS_mas_ensemble)
+	$(LINK.cc) $(CCFLAGS_mas_ensemble) $(CPPFLAGS_mas_ensemble) -o $@ $(OBJS_mas_ensemble) $(LDLIBS_mas_ensemble)
+       
+# Compile source files into .o files
+$(TARGETDIR_mas_ensemble)/main_ensemble.o: $(TARGETDIR_mas_ensemble) main.cpp
+	$(COMPILE.cc) $(CCFLAGS_mas_ensemble) $(CPPFLAGS_mas_ensemble) -o $@ main.cpp
+
+#### Clean target deletes all generated files ####
+clean:
+	rm -f \
+		$(TARGETDIR_mas_ensemble)/mas_ensemble \
+		$(TARGETDIR_mas_ensemble)/mas_ensemble.o
+
+# Create the target directory (if needed)
+$(TARGETDIR_mas_ensemble):
+	mkdir -p $(TARGETDIR_mas_ensemble)
+# Enable dependency checking
+.KEEP_STATE:
+.KEEP_STATE_FILE:.make.state.GNU-amd64-Linux
