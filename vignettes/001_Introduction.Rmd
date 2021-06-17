@@ -16,12 +16,11 @@ This package allows you to build and run a Metapopulation Assessment System (MAS
 The first step is to ensure you have `Rcpp`, the R package that allows calling of C++ code directly from R, and `jsonlite`, the R package that facilitates reading input and output files from JSON format. Right now, the `r4MAS` package is only available on Github so you need to install it with the `remotes` package (this package is included in `devtools` if you have already installed that.)
 
 ```{r setup_pkgs, eval= FALSE}
-##install.packages("Rcpp")
-##install.packages("jsonlite")
-##install.packages("remotes")
+## install.packages("Rcpp")
+## install.packages("jsonlite")
+## install.packages("remotes")
 
 remotes::install_github("nmfs-fish-tools/r4MAS")
-
 ```
 
 
@@ -31,12 +30,12 @@ Next, you will need to load the .dll included in the r4MAS package.
 require(Rcpp)
 require(r4MAS)
 # Option 1
-r4mas <- Rcpp::Module("rmas", PACKAGE="r4MAS")
+r4mas <- Rcpp::Module("rmas", PACKAGE = "r4MAS")
 # Option 2
-libs_path <- system.file("libs", package="r4MAS")
-dll_name <- paste("r4MAS", .Platform$dynlib.ext, sep="")
+libs_path <- system.file("libs", package = "r4MAS")
+dll_name <- paste("r4MAS", .Platform$dynlib.ext, sep = "")
 
-if(.Platform$OS.type == "windows") {
+if (.Platform$OS.type == "windows") {
   dll_path <- file.path(libs_path, .Platform$r_arch, dll_name)
 } else {
   dll_path <- file.path(libs_path, dll_name)
@@ -52,24 +51,24 @@ Next, we define model scalars, such as the number of years of the model, the num
 
 ```{r model_config, echo=FALSE}
 
-nyears<-30
-nseasons<-1
-ages<-c(0.1, seq(1,11))
+nyears <- 30
+nseasons <- 1
+ages <- c(0.1, seq(1, 11))
 nages <- length(ages)
 
 
 input_data <- write_test_data(nyears = nyears)
 ```
 
-r4MAS uses classes to parallel the object-oriented structure of MAS. In R, model classes are initiralized using the `new()` command. For each model component, the associated class is initialized and then its attributes are populated. To view available attributes for each class, use the `show()` function as shown below. 
+r4MAS uses classes to parallel the object-oriented structure of MAS. In R, model classes are initialized using the `new()` command. For each model component, the associated class is initialized and then its attributes are populated. To view available attributes for each class, use the `show()` function as shown below. 
 
 ```{r}
-#View attributes and methods associated with each class
+# View attributes and methods associated with each class
 show(r4mas$Area)
 
-#define area
-area1<-new(r4mas$Area)
-area1$name<-"area1"
+# define area
+area1 <- new(r4mas$Area)
+area1$name <- "area1"
 ```
 
 ## Setting parameter values
@@ -77,89 +76,97 @@ area1$name<-"area1"
 Next, we populate the parameter constructors for each different set of parameters: recruitment, growth, maturity, mortality, and movement. For functions with several parameters (e.g. the Beverton-Holt recruitment function), the `create_par_section()` function exists. This takes a number of arguments: the type of section, the associated object created for that function, then a series of vectors of length equivalent to the number of parameters. These vectors denote the name, lower bound, upper bound, units, phase, and value for each parameter. If any parameter doesn't have one of these attributes, you can use an NA in the vector. Or, if one of the attributes is not defined for all attributes (e.g. units in this case), you can pass a single NA for that attribute or leave the argument blank.
 
 ```{r}
-#Recruitment
-recruitment<-new(r4mas$BevertonHoltRecruitment)
+# Recruitment
+recruitment <- new(r4mas$BevertonHoltRecruitment)
 
-devs_list <- list(TRUE, TRUE, rep(0.0,22))
-recruitment <- create_par_section(section_type = "recruitment", section_type_object = recruitment, par_names = c("R0","h","sigma_r","recdevs"),
-                   par_lo = c(NA, 0.2001,NA,-15), par_hi = c(NA,1.0,NA,15), par_units = NA, par_phase = c(1,-2,-1,1), par_value = c(1000,0.75,0.55, NA), 
-                   rec_devs=devs_list)
-
-
-#Initial Deviations
-initial_deviations<-new(r4mas$InitialDeviations)
-initial_deviations$values<-rep(0.0,nages)
-initial_deviations$estimate<-FALSE
-initial_deviations$phase<-1
+devs_list <- list(TRUE, TRUE, rep(0.0, 22))
+recruitment <- create_par_section(
+  section_type = "recruitment", section_type_object = recruitment, par_names = c("R0", "h", "sigma_r", "recdevs"),
+  par_lo = c(NA, 0.2001, NA, -15), par_hi = c(NA, 1.0, NA, 15), par_units = NA, par_phase = c(1, -2, -1, 1), par_value = c(1000, 0.75, 0.55, NA),
+  rec_devs = devs_list
+)
 
 
-#Growth
-growth<-new(r4mas$VonBertalanffyModified)
+# Initial Deviations
+initial_deviations <- new(r4mas$InitialDeviations)
+initial_deviations$values <- rep(0.0, nages)
+initial_deviations$estimate <- FALSE
+initial_deviations$phase <- 1
+
+
+# Growth
+growth <- new(r4mas$VonBertalanffyModified)
 empirical_weight <- input_data$ewaa
 growth$SetUndifferentiatedCatchWeight(empirical_weight)
 growth$SetUndifferentiatedSurveyWeight(empirical_weight)
 growth$SetUndifferentiatedWeightAtSeasonStart(empirical_weight)
 growth$SetUndifferentiatedWeightAtSpawning(empirical_weight)
-growth <- create_par_section(section_type="growth", section_type_object = growth, 
-                             par_names = c("a_min","a_max","c","lmin","lmax","alpha_f","alpha_m","beta_f","beta_m"),
-                             par_value=c(0.01,10.0,0.3,5,50,2.5E-5,2.5E-5,2.9624,2.9624))
+growth <- create_par_section(
+  section_type = "growth", section_type_object = growth,
+  par_names = c("a_min", "a_max", "c", "lmin", "lmax", "alpha_f", "alpha_m", "beta_f", "beta_m"),
+  par_value = c(0.01, 10.0, 0.3, 5, 50, 2.5E-5, 2.5E-5, 2.9624, 2.9624)
+)
 
-#Maturity
-maturity<-new(r4mas$Maturity)
-maturity$values<-c(0.011488685,
-                   0.16041065,
-                   0.45232527,
-                   0.497389935,
-                   0.499869405,
-                   0.499993495,
-                   0.499999675,
-                   0.499999985,
-                   0.5,
-                   0.5,
-                   0.5,
-                   0.5)
+# Maturity
+maturity <- new(r4mas$Maturity)
+maturity$values <- c(
+  0.011488685,
+  0.16041065,
+  0.45232527,
+  0.497389935,
+  0.499869405,
+  0.499993495,
+  0.499999675,
+  0.499999985,
+  0.5,
+  0.5,
+  0.5,
+  0.5
+)
 
-#Natural Mortality
-natural_mortality<-new(r4mas$NaturalMortality)
-natural_mortality$SetValues(rep(0.2,nages))
-#need to add reset button to static variable so you can run again
+# Natural Mortality
+natural_mortality <- new(r4mas$NaturalMortality)
+natural_mortality$SetValues(rep(0.2, nages))
+# need to add reset button to static variable so you can run again
 
-#define Movement (only 1 area in this model)
-movement<-new(r4mas$Movement)
-movement$connectivity_females<-c(1.0)
-movement$connectivity_males<-c(1.0)
-movement$connectivity_recruits<-c(1.0)
-
+# define Movement (only 1 area in this model)
+movement <- new(r4mas$Movement)
+movement$connectivity_females <- c(1.0)
+movement$connectivity_males <- c(1.0)
+movement$connectivity_recruits <- c(1.0)
 ```
 
 Next we define the functions related to fishing, i.e. fishing mortality and selectivity.
 
 ```{r fishing}
-#Fishing Mortality
-fishing_mortality<-new(r4mas$FishingMortality)
-fishing_mortality$estimate<-TRUE
-fishing_mortality$phase<-1
-fishing_mortality$min<-1e-8
-fishing_mortality$max<-30
-fishing_mortality$SetValues(rep(0.3,30))
+# Fishing Mortality
+fishing_mortality <- new(r4mas$FishingMortality)
+fishing_mortality$estimate <- TRUE
+fishing_mortality$phase <- 1
+fishing_mortality$min <- 1e-8
+fishing_mortality$max <- 30
+fishing_mortality$SetValues(rep(0.3, 30))
 
-#Selectivity Model
-fleet_selectivity<-new(r4mas$LogisticSelectivity)
-fleet_selectivity <- create_par_section("selectivity",fleet_selectivity, par_names = c("a50","slope"),
-                                        par_lo = c(0.0,0.0001), par_hi = c(10.0,5.0), par_phase = c(2,0.5),
-                                        par_value = c(1.5,1.5))
-
-
-survey_selectivity<-new(r4mas$LogisticSelectivity)
-survey_selectivity <- create_par_section("selectivity",survey_selectivity, par_names = c("a50","slope"),
-                                        par_lo = c(0.0,0.0001), par_hi = c(10.0,5.0), par_phase = c(2,2),
-                                        par_value = c(1.0,0.3))
+# Selectivity Model
+fleet_selectivity <- new(r4mas$LogisticSelectivity)
+fleet_selectivity <- create_par_section("selectivity", fleet_selectivity,
+  par_names = c("a50", "slope"),
+  par_lo = c(0.0, 0.0001), par_hi = c(10.0, 5.0), par_phase = c(2, 0.5),
+  par_value = c(1.5, 1.5)
+)
 
 
-survey2_selectivity<-new(r4mas$AgeBasedSelectivity)
-survey2_selectivity$estimated<-FALSE
-survey2_selectivity$values<-c(1.0,rep(0.0,nages-1))
+survey_selectivity <- new(r4mas$LogisticSelectivity)
+survey_selectivity <- create_par_section("selectivity", survey_selectivity,
+  par_names = c("a50", "slope"),
+  par_lo = c(0.0, 0.0001), par_hi = c(10.0, 5.0), par_phase = c(2, 2),
+  par_value = c(1.0, 0.3)
+)
 
+
+survey2_selectivity <- new(r4mas$AgeBasedSelectivity)
+survey2_selectivity$estimated <- FALSE
+survey2_selectivity$values <- c(1.0, rep(0.0, nages - 1))
 ```
 
 ## Creating the population
@@ -168,16 +175,16 @@ Now that the classes for parameter values and movement have been created, you ca
 
 
 ```{r}
-population<-new(r4mas$Population)
+population <- new(r4mas$Population)
 
 for (y in 0:(nyears))
 {
   population$AddMovement(movement$id, y)
 }
 
-population$AddNaturalMortality(natural_mortality$id,area1$id,"undifferentiated")
-population$AddMaturity(maturity$id,area1$id, "undifferentiated")
-population$AddRecruitment(recruitment$id,1,area1$id)
+population$AddNaturalMortality(natural_mortality$id, area1$id, "undifferentiated")
+population$AddMaturity(maturity$id, area1$id, "undifferentiated")
+population$AddRecruitment(recruitment$id, 1, area1$id)
 population$SetInitialDeviations(initial_deviations$id, area1$id, "undifferentiated")
 population$SetGrowth(growth$id)
 ```
@@ -189,26 +196,26 @@ Next, use the data classes (`IndexData` and `AgeCompData`) to add values, error,
 
 
 ```{r}
-#Index data
-catch_index<-new(r4mas$IndexData)
+# Index data
+catch_index <- new(r4mas$IndexData)
 catch_index$values <- input_data$catch_index$values
 catch_index$error <- input_data$catch_index$error
 
-survey_index<-new(r4mas$IndexData)
+survey_index <- new(r4mas$IndexData)
 survey_index$values <- input_data$survey_index$values
 survey_index$error <- input_data$survey_index$error
 
 
-#Age Comp Data
-catch_comp<-new(r4mas$AgeCompData)
+# Age Comp Data
+catch_comp <- new(r4mas$AgeCompData)
 catch_comp$values <- input_data$catch_comp$values
-catch_comp$sample_size <-input_data$catch_comp$sample_size
+catch_comp$sample_size <- input_data$catch_comp$sample_size
 
 
 
-survey_comp<-new(r4mas$AgeCompData)
+survey_comp <- new(r4mas$AgeCompData)
 survey_comp$values <- input_data$survey_comp$values
-survey_comp$sample_size <-input_data$survey_comp$sample_size
+survey_comp$sample_size <- input_data$survey_comp$sample_size
 ```
 
 
@@ -216,43 +223,43 @@ survey_comp$sample_size <-input_data$survey_comp$sample_size
 To make each fishing fleet, you can use the `make_fleet()` function. This takes the fishery data associated with that fleet, the selectivity associated with that fleet, the area, and fishing mortality parameters and returns an `r4mas` fleet object. 
 
 ```{r}
-#NLL models
-fleet_index_comp_nll<-survey_index_comp_nll <- survey2_index_comp_nll <- new(r4mas$Lognormal)
-fleet_age_comp_nll<-survey_age_comp_nll <- new(r4mas$MultinomialRobust)
+# NLL models
+fleet_index_comp_nll <- survey_index_comp_nll <- survey2_index_comp_nll <- new(r4mas$Lognormal)
+fleet_age_comp_nll <- survey_age_comp_nll <- new(r4mas$MultinomialRobust)
 
 
-#Fleet
-fleet<- make_fleet(r4mas, catch_comp, catch_index, fleet_selectivity, area1, fishing_mortality)
+# Fleet
+fleet <- make_fleet(r4mas, catch_comp, catch_index, fleet_selectivity, area1, fishing_mortality)
 
-#Survey
-survey<-new(r4mas$Survey)
-survey$AddAgeCompData(survey_comp$id,"undifferentiated")
-survey$AddIndexData(survey_index$id,"undifferentiated")
+# Survey
+survey <- new(r4mas$Survey)
+survey$AddAgeCompData(survey_comp$id, "undifferentiated")
+survey$AddIndexData(survey_index$id, "undifferentiated")
 survey$SetIndexNllComponent(survey_index_comp_nll$id)
 survey$SetAgeCompNllComponent(survey_age_comp_nll$id)
 survey$AddSelectivity(survey_selectivity$id, 1, area1$id)
-survey$q$value<-0.0001
-survey$q$min<-0
-survey$q$max<-10
-survey$q$estimated<-TRUE
-survey$q$phase<-1
+survey$q$value <- 0.0001
+survey$q$min <- 0
+survey$q$max <- 10
+survey$q$estimated <- TRUE
+survey$q$phase <- 1
 ```
 
 ## Build and run the model and write output
 Finally, we create a `MASModel` object and add the relevant model configuration parameters, fleets, surveys, and populations to the model object. We call the `Run()` method to run the model and then write the output to a .json file.
 
 ```{r}
-#build the MAS model
-mas_model<-new(r4mas$MASModel)
-mas_model$nyears<-nyears
-mas_model$nseasons<-nseasons
-mas_model$nages<-nages
-mas_model$extended_plus_group<-15
-mas_model$ages<-ages
+# build the MAS model
+mas_model <- new(r4mas$MASModel)
+mas_model$nyears <- nyears
+mas_model$nseasons <- nseasons
+mas_model$nages <- nages
+mas_model$extended_plus_group <- 15
+mas_model$ages <- ages
 mas_model$AddFleet(fleet$id)
-mas_model$catch_season_offset<-0.5
-mas_model$spawning_season_offset<-0.5
-population$sex_ratio<-0.5
+mas_model$catch_season_offset <- 0.5
+mas_model$spawning_season_offset <- 0.5
+population$sex_ratio <- 0.5
 
 mas_model$AddSurvey(survey$id)
 mas_model$AddPopulation(population$id)
@@ -263,9 +270,12 @@ mas_model$AddPopulation(population$id)
 
 mas_model$Run()
 
-write(mas_model$GetOutput(), 
-      file=file.path(system.file("extdata", package="r4MAS"),
-                  "mas_s2_output.json"))
+write(mas_model$GetOutput(),
+  file = file.path(
+    system.file("extdata", package = "r4MAS"),
+    "mas_s2_output.json"
+  )
+)
 ```
 
 ## Read in model output
@@ -274,8 +284,10 @@ We use the `jsonlite` package to read in model output. This creates a list in yo
 
 ```{r}
 require(jsonlite)
-json_loc <- file.path(system.file("extdata", package="r4MAS"),
-                  "mas_s2_output.json")
+json_loc <- file.path(
+  system.file("extdata", package = "r4MAS"),
+  "mas_s2_output.json"
+)
 json_output <- jsonlite::read_json(json_loc)
 
 years <- json_output$nyears
@@ -286,11 +298,7 @@ popdy <- json_output$population_dynamics
 survey_biomass_f <- (popdy$surveys[[1]]$females$survey_biomass$values)
 
 
-#View the estimated values
+# View the estimated values
 popdy$fleet$undifferentiated
-#popdy$survey$undifferentiated
-
-
+# popdy$survey$undifferentiated
 ```
-
-
