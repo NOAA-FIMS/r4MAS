@@ -5147,7 +5147,7 @@ public:
 		this->id = NLLBase::id_g++;
 		this->id_ = this->id;
 		Lognormal::initialized_models[this->id] = this;
-		MASSubModel::submodels.push_back(this);
+		//MASSubModel::submodels.push_back(this);
 		NLLBase::nll_submodels.push_back(this);
 	}
 
@@ -5281,7 +5281,7 @@ public:
 		this->id_ = this->id;
 
 		DirichletMultinomial::initialized_models[this->id] = this;
-		MASSubModel::submodels.push_back(this);
+		//MASSubModel::submodels.push_back(this);
 		NLLBase::nll_submodels.push_back(this);
 	}
 
@@ -5438,7 +5438,7 @@ public:
 		this->id_ = this->id;
 
 		DirichletMultinomialRobust::initialized_models[this->id] = this;
-		MASSubModel::submodels.push_back(this);
+		//MASSubModel::submodels.push_back(this);
 		NLLBase::nll_submodels.push_back(this);
 	}
 
@@ -5597,7 +5597,7 @@ public:
 		this->id_ = this->id;
 
 		Multinomial::initialized_models[this->id] = this;
-		MASSubModel::submodels.push_back(this);
+		//MASSubModel::submodels.push_back(this);
 		NLLBase::nll_submodels.push_back(this);
 	}
 
@@ -5730,7 +5730,7 @@ public:
 		this->id_ = this->id;
 
 		MultinomialRobust::initialized_models[this->id] = this;
-		MASSubModel::submodels.push_back(this);
+		//MASSubModel::submodels.push_back(this);
 		NLLBase::nll_submodels.push_back(this);
 	}
 
