@@ -3495,8 +3495,8 @@ public:
 		REAL_T fmax;
 		for (int a = 0; a < areas_list.size(); a++) {
 
-			males[areas_list[a]->id].CalculateMSY();
-			females[areas_list[a]->id].CalculateMSY();
+			males[areas_list[a]->id].CalculateMSY(1.0, 0.01);
+			females[areas_list[a]->id].CalculateMSY(1.0, 0.01);
 
 			this->msy.spr_F0 += males[areas_list[a]->id].msy.spr_F0
 					/ static_cast<REAL_T>((areas_list.size() * 2.0));
