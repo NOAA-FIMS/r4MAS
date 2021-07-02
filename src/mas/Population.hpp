@@ -1580,12 +1580,12 @@ struct Subpopulation {
 			}
 		}
 		REAL_T msy_mt_out = max; //msy in whole weight
-		REAL_T SSB_msy_out;
-		REAL_T B_msy_out;
-		REAL_T R_msy_out;
-		REAL_T msy_knum_out;
-		REAL_T F_msy_out;
-		REAL_T spr_msy_out;
+		REAL_T SSB_msy_out = 0.0;
+		REAL_T B_msy_out = 0.0;
+		REAL_T R_msy_out = 0.0;
+		REAL_T msy_knum_out = 0.0;
+		REAL_T F_msy_out =0.0;
+		REAL_T spr_msy_out = 0.0;
 		int index_m = 0;
 		for (int i = 0; i < F.size(); i++) {
 			if (L_eq[i] == msy_mt_out) {
