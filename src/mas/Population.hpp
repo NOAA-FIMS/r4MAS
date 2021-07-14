@@ -176,7 +176,7 @@ struct Subpopulation {
 	std::vector<std::vector<REAL_T> > BootNumbers;
 
 
-        ~Subpopubation(){}
+        virtual ~Subpopulation(){}
 	
 	void Initialize() {
 
