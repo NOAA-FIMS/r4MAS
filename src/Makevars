@@ -1,5 +1,5 @@
 CXX_STD = CXX14
-PKG_CXXFLAGS = -O3 -w -mmacosx-version-min
-PKG_CPPFLAGS = -O3 -w -mmacosx-version-min
+PKG_CXXFLAGS = -O3 -w 
+PKG_CPPFLAGS = -O3 -w 
 CXX14STD = -std=c++1y 
 
