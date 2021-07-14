@@ -175,6 +175,9 @@ struct Subpopulation {
 	 **************************/
 	std::vector<std::vector<REAL_T> > BootNumbers;
 
+
+        ~Subpopubation(){}
+	
 	void Initialize() {
 
 		typename Area<REAL_T>::active_fleets_iterator af_it;
