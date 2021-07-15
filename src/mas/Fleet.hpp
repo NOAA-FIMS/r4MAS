@@ -187,6 +187,11 @@ struct Fleet: mas::ModelObject<REAL_T> {
 
 	std::vector<NLLComponent<REAL_T> > nll_components;
 
+
+
+        virtual ~Fleet(){
+	}
+
 	void Initialize(size_t years, size_t seasons, size_t ages) {
 
 		this->years = years;
