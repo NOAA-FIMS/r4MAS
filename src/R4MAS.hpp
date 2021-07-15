@@ -7256,7 +7256,7 @@ private:
 		}
 	}
 
-	atl::intrusive_ptr<mas::MASObjectiveFunction<double> > mas;
+	std::shared_ptr<mas::MASObjectiveFunction<double> > mas;
 public:
 	int nyears;
 	int nseasons;
@@ -7307,7 +7307,7 @@ public:
 
 	void Run() {
 
-		mas = new mas::MASObjectiveFunction<double>();
+		mas =  std::make_shared(mas::MASObjectiveFunction<double>());
 		if (this->nages == 0) {
 			std::cout << "MAS error: nages = 0\n";
 			return;
