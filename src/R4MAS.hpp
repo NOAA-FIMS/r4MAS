@@ -12,7 +12,7 @@
 #ifndef R4MAS_HPP
 #define R4MAS_HPP
 
-//#include <cstdlib>
+#include <cstdlib>
 #include <iostream>
 
 #include "mas/MAS.hpp"
