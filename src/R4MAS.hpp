@@ -7307,7 +7307,7 @@ public:
 
 	void Run() {
 
-		mas =  std::make_shared(mas::MASObjectiveFunction<double>());
+		mas =  std::make_shared<mas::MASObjectiveFunction<double> >();
 		if (this->nages == 0) {
 			std::cout << "MAS error: nages = 0\n";
 			return;
@@ -7391,7 +7391,7 @@ public:
 
 	void RunOM() {
 
-		mas = std::make_shared(mas::MASObjectiveFunction<double>());
+		mas = std::make_shared<mas::MASObjectiveFunction<double> >();
 		if (this->nages == 0) {
 			std::cout << "MAS error: nages = 0\n";
 			return;
