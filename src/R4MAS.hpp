@@ -935,7 +935,7 @@ public:
 		typename mas::Information<double>::fishing_mortality_model_iterator fit;
 		fit = info.fishing_mortality_models.find(this->id);
 		if (fit != info.fishing_mortality_models.end()) {
-			int i;
+			int i=0;
 			for (int y = 0; y < info.nyears; y++) {
 				for (int s = 0; s < info.nseasons; s++) {
 
