@@ -57,6 +57,9 @@ namespace mas {
         bool estimating_recruitment_deviations = false;
         bool recruitment_deviations_constrained = false;
 
+        virtual ~RecruitmentBase(){
+        }
+
         virtual const variable Evaluate(const int& pop_id, const int& area_id, const variable& s) = 0;
 
         /**
