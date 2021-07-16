@@ -19,7 +19,7 @@ inline void intrusive_ptr_release(T *p) {
 	}
 	}
 }
-/**
+
 template<typename T>
 class intrusive_ptr {
 protected:
@@ -197,7 +197,7 @@ intrusive_ptr<T> static_pointer_cast(const intrusive_ptr<U> &intrusivePtr) {
 }
 
 
-*/
+/*
 	template<class T>
     class intrusive_ptr {
     public:
@@ -377,6 +377,7 @@ intrusive_ptr<T> static_pointer_cast(const intrusive_ptr<U> &intrusivePtr) {
     intrusive_ptr<T> dynamic_pointer_cast(intrusive_ptr<U> const &r) noexcept {
         return r.template down_pointer_cast<T>();
     }
+    */
 }
 namespace std {
 template<class T>
