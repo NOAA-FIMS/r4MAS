@@ -1,5 +1,5 @@
-CXX_STD = CXX17
+CXX_STD = CXX14
 PKG_CXXFLAGS =  -w
 PKG_CPPFLAGS =  -w
-CXX17STD = -std=c++17 
+CXX17STD = -std=c++14 
 
