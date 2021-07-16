@@ -12,9 +12,11 @@ inline void intrusive_ptr_add_ref(T *p) {
 
 template<typename T>
 inline void intrusive_ptr_release(T *p) {
+	if(p != NULL){
 	p->references--;
 	if (p->references == 0) {
 		delete p;
+	}
 	}
 }
 
