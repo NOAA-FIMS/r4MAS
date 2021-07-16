@@ -190,6 +190,10 @@ namespace mas {
         bool used = false;
         int references = 0;
 
+
+        virtual ~ModelObject(){
+        }
+        
         void Register(variable& var, int phase = 1) {
             estimated_parameters_map[&var] = phase;
             this->estimated_parameters.push_back(&var);
