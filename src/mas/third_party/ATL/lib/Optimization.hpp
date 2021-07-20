@@ -738,7 +738,7 @@ namespace atl {
 //
             std::vector<T> se(this->parameters_m.size());
             for (int i = 0; i < this->parameters_m.size(); i++) {
-                se[i] = std::sqrt(inverse_hess(i, i));
+                se[i] = std::sqrt(inverse_hessian(i, i));
             }
 //
 //
@@ -755,7 +755,7 @@ namespace atl {
             atl::RealMatrix<T> ret_m(this->parameters_m.size(), this->parameters_m.size());
             for (size_t i = 0; i < this->parameters_m.size(); i++) {
                 for (size_t j = 0; j < this->parameters_m.size(); j++) {
-                    ret_m(i, j) = inverse_hess(i, j) * outer_product(i, j);
+                    ret_m(i, j) = inverse_hessian(i, j) * outer_product(i, j);
                 }
             }
             
