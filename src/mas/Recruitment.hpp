@@ -236,8 +236,6 @@ namespace mas {
             return ((this->R0 * this->SB0[pop_id][area_id]) /
                     this->SB0[pop_id][area_id])*mas::mfexp(this->h * (1.0 - s /
                     this->SB0[pop_id][area_id])) * mas::mfexp(-0.5 * this->sigma_r * this->sigma_r);
-            //            return (s / phi0) * mas::mfexp(A * (static_cast<REAL_T> (1.0)
-            //                    - (s / (phi0 * mas::exp(this->R0)))));
         }
 
         /**
@@ -302,16 +300,11 @@ namespace mas {
          * @return
          */
         const variable Evaluate(const int& pop_id, const int& area_id, const variable& sb) {
-            if (this->use_bias_correction) {
-
-            }
-            //            variable bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
+        
             alpha = 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
             beta = (this->SB0[pop_id][area_id] * (1.0 - this->h)) / (5.0 * this->h - 1.0);
 
             return ( 4.0 * this->h * mas::exp(this->log_R0) * sb) / (this->SB0[pop_id][area_id]*(1.0 - this->h) + sb * (5.0 * this->h - 1.0));
-
-            //            return (alpha * sb) / (beta + sb);
         }
 
         /**
@@ -322,11 +315,8 @@ namespace mas {
          * @return 
          */
         virtual const variable Evaluate(const variable& SB0, const variable& sb) {
-            //            variable bc = 0.5 * this->sigma_r * this->sigma_r; //bias correction
             alpha = 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
             beta = (SB0 * (1.0 - this->h)) / (5.0 * this->h - 1.0);
-            //
-            //            return (alpha * sb) / (beta + sb);
             return ( 4.0 * this->h * mas::exp(this->log_R0) * sb) / (SB0 * (1.0 - this->h) + sb * (5.0 * this->h - 1.0));
         }
 
@@ -382,17 +372,10 @@ namespace mas {
          * @return
          */
         const variable Evaluate(const int& pop_id, const int& area_id, const variable& s) {
-            //            std::cout << "spawing biomass = " << s << " --> \n";
-            //            variable r= (static_cast<REAL_T> (4.0) * R0 * h * s) /
-            //                    ((phi0 * R0 * (static_cast<REAL_T> (1.0) - h)) +
-            //                    (s * (static_cast<REAL_T> (5.0) * h
-            //                    - static_cast<REAL_T> (1.0))));
-            variable rr; // = (sigma_r*4.0 * R0 * h * s) / ((S0 * (1.0 - h)) + (s * (5.0 * h - 1.0)));
-            //            variable log_r0 = mas::log(this->R0);
-            //            variable bc= 0.5 * this->sigma_r * this->sigma_r;
+            variable rr;
+
             rr = 4.0 * (this->h * mas::exp(this->log_R0) * s / (this->SB0[pop_id][area_id]*(1.0 - this->h) +
-                    s * (5.0 * this->h - 1.0))); // * mas::mfexp(-0.5 * this->sigma_r * this->sigma_r);
-            //            std::cout << rr << "\n";
+                    s * (5.0 * this->h - 1.0))); 
             return rr;
         }
 
@@ -405,7 +388,6 @@ namespace mas {
          */
         virtual const variable Evaluate(const variable& SB0, const variable& s) {
             variable rr;
-            //            variable bc = 0.5 * this->sigma_r * this->sigma_r;
             rr = 4.0 * (this->h * mas::exp(this->log_R0) * s / (SB0 * (1.0 - this->h) +
                     s * (5.0 * this->h - 1.0)));
 
@@ -448,12 +430,9 @@ namespace mas {
          * @return
          */
         const variable Evaluate(const int& pop_id, const int& area_id, const variable& sb) {
-            //            variable s_c = mas::pow(s, c);
-
-            alpha = 4.0 * this->h * sb; //mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
-            beta = sb * (1.0 - this->h) + sb * (5.0 * this->h - 1.0); //mas::exp(this->log_R0)  * (1.0 - this->h ) / (5.0 * this->h  - 1.0);
-            //            return (alpha * s_c) / (beta + s_c);
-            //            return (alpha * s - beta) / s;
+          
+            alpha = 4.0 * this->h * sb; 
+            beta = sb * (1.0 - this->h) + sb * (5.0 * this->h - 1.0); 
             return (alpha / beta)* mas::exp(-0.5 * mas::pow(this->sigma_r, 2.0)); ///(alpha*s)/(beta + s);
         }
 
@@ -467,8 +446,6 @@ namespace mas {
         virtual const variable Evaluate(const variable& SB0, const variable& sb) {
             alpha = 4.0 * this->h * sb; //mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
             beta = sb * (1.0 - this->h) + sb * (5.0 * this->h - 1.0); //mas::exp(this->log_R0)  * (1.0 - this->h ) / (5.0 * this->h  - 1.0);
-            //            return (alpha * s_c) / (beta + s_c);
-            //            return (alpha * s - beta) / s;
             return (alpha / beta)* mas::exp(-0.5 * mas::pow(this->sigma_r, 2.0)); ///(alpha*s)/(beta + s);
         }
 
