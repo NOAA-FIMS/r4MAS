@@ -738,6 +738,43 @@ public:
 
 		}
 	}
+	
+	void AccumulateFirstOrderWRTDependent(uint32_t id) {
+
+		if (recording) {
+			this->first_order_derivatives.clear();
+			int sindex = 0;
+			for (int i = (stack_current - 1); i >= 0; i--) {
+				if (this->stack[i].w->id == id) {
+					sindex = i;
+					break;
+				}
+			}
+			this->first_order_derivatives[id] = static_cast<REAL_T>(1.0);
+
+			REAL_T w = static_cast<REAL_T>(0.0);
+			typename atl::StackEntry<REAL_T>::vi_iterator vit;
+			size_t index;
+			for (int i = sindex; i >= 0; i--) {
+
+				REAL_T &W = this->first_order_derivatives[this->stack[i].w->id];
+				if (W != static_cast<REAL_T>(0.0)) {
+					w = W;
+
+					W = static_cast<REAL_T>(0.0);
+					index = 0;
+					for (vit = this->stack[i].ids.begin();
+							vit != this->stack[i].ids.end(); ++vit) {
+						this->first_order_derivatives[(*vit)->id] += w
+								* this->stack[i].first[index];
+						index++;
+					}
+
+				}
+			}
+
+		}
+	}
 
 	inline void PushLive(
 			std::unordered_map<uint32_t,
@@ -757,6 +794,159 @@ public:
 		//                    }
 		//                }
 		//            }
+	}
+
+
+
+	void AccumulateSecondOrderWRTDependent(uint32_t id) {
+		if (recording) {
+
+			this->first_order_derivatives.clear();
+			this->second_order_derivatives.clear();
+			int sindex = (stack_current - 1);
+			for (int i = (stack_current - 1); i >= 0; i--) {
+				if (this->stack[i].w->id == id) {
+					sindex = i;
+					break;
+				}
+			}
+			this->first_order_derivatives[id] = static_cast<REAL_T>(1.0);
+
+			REAL_T w;
+
+			typename atl::StackEntry<REAL_T>::vi_iterator vit;
+			//initialize w
+//			this->Reference(this->stack[stack_current - 1].w->id) =
+//					static_cast<REAL_T>(1.0);
+
+			unsigned rows = 0; //the size of the local derivatives, anything higher was pushed from previous calculation
+
+			std::vector<REAL_T> vij; //holds current second order derivative for i wrt j
+
+			REAL_T hii = 0.0;
+			REAL_T hij = 0.0;
+			REAL_T dj = 0;
+			REAL_T dk = 0;
+
+			VariableInfoPtr vi;
+			VariableInfoPtr vj;
+			VariableInfoPtr vk;
+
+			std::unordered_map<uint32_t,
+					typename atl::StackEntry<REAL_T>::vi_storage> live_sets;
+
+			for (int i = sindex; i >= 0; i--) {
+
+				atl::StackEntry<REAL_T> &current_entry = this->stack[i];
+
+				vi = stack[i].w; //variable info for i
+				REAL_T &W = this->first_order_derivatives[this->stack[i].w->id];
+				w = W;
+
+				W = static_cast<REAL_T>(0.0);
+				int index = 0;
+				for (vit = current_entry.ids.begin();
+						vit != current_entry.ids.end(); ++vit) {
+					this->first_order_derivatives[(*vit)->id] += w
+							* current_entry.first[index];
+					index++;
+				}
+
+				rows = current_entry.first.size();
+
+				//get h[i][i]
+				hii = 0.0;
+
+				hii = this->Value(vi->id, vi->id);
+				if (hii != 0) {
+					this->Reference(vi->id, vi->id) = 0.0;
+				}
+
+				typename atl::StackEntry<REAL_T>::vi_storage &ls =
+						live_sets[current_entry.w->id];
+				typename atl::StackEntry<REAL_T>::vi_iterator lsit;
+				for (lsit = ls.begin(); lsit != ls.end(); lsit++) {
+					current_entry.Push(*lsit);
+				}
+				ls.clear();
+
+				current_entry.Prepare();
+				size_t ID_LIST_SIZE = current_entry.id_list.size();
+				vij.resize(ID_LIST_SIZE);
+
+				std::vector<bool> gh(ID_LIST_SIZE * ID_LIST_SIZE, false);
+
+				for (unsigned j = 0; j < ID_LIST_SIZE; j++) {
+					vj = current_entry.id_list[j];
+
+					//load second order partial derivative for i wrt j and k
+					hij = 0.0;
+
+					hij = this->Value(vi->id, vj->id);
+
+					if (hij != 0) {
+						this->Reference(vi->id, vj->id) = 0.0;
+					}
+
+					vij[j] = (hij);
+				}
+
+				for (int j = 0; j < rows; j++) {
+
+					dj = current_entry.first[j];
+					REAL_T hij = vij[j]; //h[i][j]
+					REAL_T entry = static_cast<REAL_T>(0.0);
+
+					for (int k = j; k < rows; k++) {
+
+						gh[j * ID_LIST_SIZE + k] = false;
+						gh[k * ID_LIST_SIZE + j] = false;
+
+						entry = 0.0; //the entry value for h[j][k]
+
+						dk = current_entry.first[k];
+
+						entry += vij[k] * dj + (hij * dk) + hii * dj * dk;
+
+						entry += w * current_entry.second[j * rows + k];
+
+						if (static_cast<REAL_T>(0.0) != entry) { //h[j][k] needs to be updated
+							vj = current_entry.id_list[j];
+							vk = current_entry.id_list[k];
+							this->Reference(vj->id, vk->id) += entry;
+							//                                this->PushLive(live_sets, vj, vk);
+							this->PushLive(live_sets, vk, vj);
+						}
+
+					}
+					for (int k = rows; k < ID_LIST_SIZE; k++) {
+
+						gh[j * ID_LIST_SIZE + k] = false;
+						gh[k * ID_LIST_SIZE + j] = false;
+
+						entry = static_cast<REAL_T>(0.0); //the entry value for h[j][k]
+
+						dk = 0;
+
+						entry += vij[k] * dj;
+
+						if (j < rows && k < rows) {
+							entry += w * current_entry.second[j * rows + k];
+						}
+
+						if (static_cast<REAL_T>(0.0) != entry) { //h[j][k] needs to be updated
+							vk = current_entry.id_list[k];
+							this->Reference(vj->id, vk->id) += entry;
+							//                                this->PushLive(live_sets, vj, vk);
+							this->PushLive(live_sets, vk, vj);
+						}
+
+					}
+				}
+			}
+
+		}
+
 	}
 
 	void AccumulateSecondOrder() {
