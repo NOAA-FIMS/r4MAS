@@ -761,6 +761,81 @@ namespace atl {
             
             return ret_m;
         }
+        
+        const atl::RealMatrix<T> GetVarianceCovariance(
+			const std::vector<uint32_t> &parameters) {
+
+		atl::Variable<T>::tape.Reset();
+		atl::Variable<T>::tape.derivative_trace_level =
+				atl::SECOND_ORDER_REVERSE;
+
+		atl::Variable<T>::tape.recording = true;
+		atl::Variable<T> f;
+
+		this->Objective_Function(f);
+
+		atl::Variable<T>::tape.AccumulateSecondOrder();
+		atl::RealMatrix<T> inverse_hessian(parameters.size(),
+				parameters.size());
+
+		for (int i = 0; i < parameters.size(); i++) {
+			for (int j = 0; j < parameters.size(); j++) {
+				T dxx = atl::Variable<T>::tape.Value(parameters[i],
+						parameters[j]);
+				if (dxx != dxx) { //this is a big hack
+					dxx = std::numeric_limits<T>::min();
+				}
+				inverse_hessian(i, j) = dxx;
+			}
+		}
+		inverse_hessian.Invert();
+
+		std::vector<T> se(parameters.size());
+		for (int i = 0; i < parameters.size(); i++) {
+			se[i] = std::sqrt(inverse_hessian(i, i));
+		}
+
+		atl::RealMatrix<T> outer_product(parameters.size(), parameters.size());
+		for (size_t i = 0; i < parameters.size(); i++) {
+			for (size_t j = 0; j < parameters.size(); j++) {
+				outer_product(i, j) = se[i] * se[j];
+			}
+		}
+
+		atl::RealMatrix<T> ret_m(parameters.size(), parameters.size());
+		for (size_t i = 0; i < parameters.size(); i++) {
+			for (size_t j = 0; j < parameters.size(); j++) {
+				ret_m(i, j) = inverse_hessian(i, j) * outer_product(i, j);
+			}
+		}
+		return ret_m;
+	}
+
+	const T GetStandardDeviationForDerivedValue(const uint32_t &id,
+			const std::vector<uint32_t> &parameters) {
+		atl::RealMatrix<T> g(1, parameters.size());
+		atl::RealMatrix<T> g_d(parameters.size(), 1);
+		atl::RealMatrix<T> cov = GetVarianceCovariance(parameters);
+
+		//fill gradient of objective function w.r.t. parameters
+		for (int i = 0; i < parameters.size(); i++) {
+			g(0, i) = atl::Variable<T>::tape.Value(parameters[i]);
+		}
+
+		//clear current derivatives and reaccumulate gradient of id
+		//w.r.t. parameters
+		atl::Variable<T>::tape.AccumulateFirstOrderWRTDependent(id);
+
+		//fill gradient of objective function w.r.t. parameters
+		for (int i = 0; i < parameters.size(); i++) {
+			g_d(i,0) = atl::Variable<T>::tape.Value(parameters[i]);
+		}
+
+		atl::RealMatrix<T> ret = g_d*cov*g;
+
+		return ret(0,0);
+
+	}
     };
 
     template<typename T>
