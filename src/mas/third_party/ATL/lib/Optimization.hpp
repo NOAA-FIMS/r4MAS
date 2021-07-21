@@ -811,7 +811,7 @@ namespace atl {
 		return ret_m;
 	}
 
-	const T GetVarianceDerivedValue(const uint32_t &id,
+	const T GetVarianceOfDerivedValue(const uint32_t &id,
 			const std::vector<uint32_t> &parameters) {
 		atl::RealMatrix<T> g(1, parameters.size());
 		atl::RealMatrix<T> g_d(parameters.size(), 1);
