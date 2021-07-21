@@ -811,6 +811,10 @@ namespace atl {
 		return ret_m;
 	}
 
+        /**
+	* Computes the estimated variance of a derived quantity.
+	* Returns a scalar value
+	*/
 	const T GetVarianceOfDerivedValue(const uint32_t &id,
 			const std::vector<uint32_t> &parameters) {
 		atl::RealMatrix<T> g(1, parameters.size());
@@ -826,7 +830,7 @@ namespace atl {
 		//w.r.t. parameters
 		atl::Variable<T>::tape.AccumulateFirstOrderWRTDependent(id);
 
-		//fill gradient of objective function w.r.t. parameters
+		//fill gradient of derived quantity w.r.t. parameters
 		for (int i = 0; i < parameters.size(); i++) {
 			g_d(i,0) = atl::Variable<T>::tape.Value(parameters[i]);
 		}
