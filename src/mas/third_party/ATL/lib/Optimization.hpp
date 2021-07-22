@@ -817,28 +817,28 @@ namespace atl {
 	*/
 	const T GetVarianceOfDerivedValue(const uint32_t &id,
 			const std::vector<uint32_t> &parameters) {
-		atl::RealMatrix<T> g(1, parameters.size());
-		atl::RealMatrix<T> g_d(parameters.size(), 1);
+		
+		atl::RealMatrix<T> g(parameters.size(),1);
+		atl::RealMatrix<T> g_d(1,parameters.size());
 		atl::RealMatrix<T> cov = GetVarianceCovariance(parameters);
 
 		//fill gradient of objective function w.r.t. parameters
 		for (int i = 0; i < parameters.size(); i++) {
-			g(0, i) = atl::Variable<T>::tape.Value(parameters[i]);
+			g(i,0) = atl::Variable<T>::tape.Value(parameters[i]);
 		}
 
 		//clear current derivatives and reaccumulate gradient of id
 		//w.r.t. parameters
 		atl::Variable<T>::tape.AccumulateFirstOrderWRTDependent(id);
 
-		//fill gradient of derived quantity w.r.t. parameters
+		//fill gradient of objective function w.r.t. parameters
 		for (int i = 0; i < parameters.size(); i++) {
-			g_d(i,0) = atl::Variable<T>::tape.Value(parameters[i]);
+			g_d(0,i) = atl::Variable<T>::tape.Value(parameters[i]);
 		}
 
 		atl::RealMatrix<T> ret = g_d*cov*g;
 
 		return ret(0,0);
-
 	}
     };
 
