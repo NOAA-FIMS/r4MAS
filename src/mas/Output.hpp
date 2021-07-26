@@ -551,6 +551,7 @@ namespace mas {
 
                 case mas::UNDIFFERENTIATED:
                     popobject.AddMember("note", "these values represent the mean across all subpopulations", this->document.GetAllocator());
+                    popobject.AddMember("msy", popinfo.msy.msy, this->document.GetAllocator());
                     popobject.AddMember("spr_F0", popinfo.msy.spr_F0, this->document.GetAllocator());
                     popobject.AddMember("F_msy", popinfo.msy.F_msy, this->document.GetAllocator());
                     popobject.AddMember("spr_msy", popinfo.msy.spr_msy, this->document.GetAllocator());
@@ -583,6 +584,7 @@ namespace mas {
                     break;
                 case mas::FEMALE:
                     popobject.AddMember("note", "these values represent the mean across all female subpopulations", this->document.GetAllocator());
+                    popobject.AddMember("msy", popinfo.msy_females.msy, this->document.GetAllocator());
                     popobject.AddMember("spr_F0", popinfo.msy_females.spr_F0, this->document.GetAllocator());
                     popobject.AddMember("F_msy", popinfo.msy_females.F_msy, this->document.GetAllocator());
                     popobject.AddMember("spr_msy", popinfo.msy_females.spr_msy, this->document.GetAllocator());
@@ -615,6 +617,7 @@ namespace mas {
                     break;
                 case mas::MALE:
                     popobject.AddMember("note", "these values represent the mean across all male subpopulations", this->document.GetAllocator());
+                    popobject.AddMember("msy", popinfo.msy_males.msy, this->document.GetAllocator());
                     popobject.AddMember("spr_F0", popinfo.msy_males.spr_F0, this->document.GetAllocator());
                     popobject.AddMember("F_msy", popinfo.msy_males.F_msy, this->document.GetAllocator());
                     popobject.AddMember("spr_msy", popinfo.msy_males.spr_msy, this->document.GetAllocator());
@@ -2100,7 +2103,3 @@ namespace mas {
 
 
 #endif /* OUTPUT_HPP */
-
-
-
-
