@@ -418,7 +418,7 @@ public:
 	virtual void AddToMAS(mas::Information<double> &info) {
 		atl::intrusive_ptr<mas::DoubleLogisticSel<double> > sel =
 				new mas::DoubleLogisticSel<double>();
-
+                sel->id = id;
 		mas::DoubleLogisticSel<double> *selex = sel.get();
 
 		mas::VariableTrait<double>::SetValue(selex->alpha_asc,
