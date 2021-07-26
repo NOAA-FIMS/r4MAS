@@ -478,6 +478,8 @@ public:
 			sel->lambdas.push_back(beta_desc.lambda);
 		}
 
+		info.selectivity_models[sel->id] = sel;
+
 	}
 
 	void ExtractFromMAS(mas::Information<double> &info) {
