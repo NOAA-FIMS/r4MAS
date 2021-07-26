@@ -1235,6 +1235,7 @@ public:
 	Parameter R0;
 	Parameter alpha;
 	Parameter beta;
+	bool use_bias_correction = false;
 	int id;
 
 	RickerRecruitment() {
@@ -1280,6 +1281,10 @@ public:
 		r->id = this->id;
 
 		r->log_R0 = std::log(this->R0.value);
+		
+		
+		r->use_bias_correction = this->use_bias_correction;
+		
 		if (this->R0.estimated) {
 			std::stringstream ss;
 			ss << "log_R0" << this->id;
@@ -7863,6 +7868,7 @@ RCPP_MODULE(rmas) {
 	.constructor()
 	.method("SetDeviations", &RickerRecruitment::SetDeviations)
 	.field("R0", &RickerRecruitment::R0)
+        .field("use_bias_correction", &RickerRecruitment::use_bias_correction)
 	.method("Evaluate", &RickerRecruitment::Evaluate)
 	.field("alpha", &RickerRecruitment::alpha)
 	.field("constrained_deviations", &RickerRecruitment::constrained_deviations)
