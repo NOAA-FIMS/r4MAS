@@ -1637,6 +1637,12 @@ struct Subpopulation {
 		this->msy.B_F40_msy = B_eq[F40_out];
 		this->msy.E_F40_msy = E_eq[F40_out];
 
+		if(this->sex == mas::FEMALE){
+			this->area->msy_subpopulations_females[this->id] = this->msy;
+		}else{
+			this->area->msy_subpopulations_males[this->id] = this->msy;
+		}
+
 		std::cout << std::scientific;
 		//
 		std::cout << "\n\nFmax: " << maxF << "\n";
