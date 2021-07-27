@@ -682,7 +682,7 @@ class JSONOutputGenerator {
 			popobject.AddMember("note",
 					"these values represent the mean across all female subpopulations",
 					this->document.GetAllocator());
-			popobject.AddMember("msy", popinfo.msy.msy,
+			popobject.AddMember("msy", popinfo.msy_females.msy,
 					this->document.GetAllocator());
 			popobject.AddMember("spr_F0", popinfo.msy_females.spr_F0,
 					this->document.GetAllocator());
@@ -747,7 +747,7 @@ class JSONOutputGenerator {
 			popobject.AddMember("note",
 					"these values represent the mean across all male subpopulations",
 					this->document.GetAllocator());
-			popobject.AddMember("msy", popinfo.msy.msy,
+			popobject.AddMember("msy", popinfo.msy_males.msy,
 					this->document.GetAllocator());
 			popobject.AddMember("spr_F0", popinfo.msy_males.spr_F0,
 					this->document.GetAllocator());
