@@ -615,7 +615,9 @@ class JSONOutputGenerator {
 
 		case mas::UNDIFFERENTIATED:
 			popobject.AddMember("note",
-					"these values represent the mean across all subpopulations",
+					"these values represent the sum across all subpopulations for this population",
+					this->document.GetAllocator());
+			popobject.AddMember("msy", popinfo.msy.msy,
 					this->document.GetAllocator());
 			popobject.AddMember("spr_F0", popinfo.msy.spr_F0,
 					this->document.GetAllocator());
@@ -679,6 +681,8 @@ class JSONOutputGenerator {
 		case mas::FEMALE:
 			popobject.AddMember("note",
 					"these values represent the mean across all female subpopulations",
+					this->document.GetAllocator());
+			popobject.AddMember("msy", popinfo.msy.msy,
 					this->document.GetAllocator());
 			popobject.AddMember("spr_F0", popinfo.msy_females.spr_F0,
 					this->document.GetAllocator());
