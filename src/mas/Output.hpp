@@ -747,6 +747,8 @@ class JSONOutputGenerator {
 			popobject.AddMember("note",
 					"these values represent the mean across all male subpopulations",
 					this->document.GetAllocator());
+			popobject.AddMember("msy", popinfo.msy.msy,
+					this->document.GetAllocator());
 			popobject.AddMember("spr_F0", popinfo.msy_males.spr_F0,
 					this->document.GetAllocator());
 			popobject.AddMember("F_msy", popinfo.msy_males.F_msy,
@@ -812,6 +814,8 @@ class JSONOutputGenerator {
 
 	void GenerateReferencePoints(rapidjson::Value &popobject,
 			const mas::Subpopulation<REAL_T> &popinfo) {
+		popobject.AddMember("msy", popinfo.msy.msy,
+					this->document.GetAllocator());
 		popobject.AddMember("spr_F0", popinfo.msy.spr_F0,
 				this->document.GetAllocator());
 		popobject.AddMember("F_msy", popinfo.msy.F_msy,
@@ -875,7 +879,8 @@ class JSONOutputGenerator {
 
 	void GenerateReferencePoints(rapidjson::Value &popobject,
 			const mas::Area<REAL_T> &popinfo) {
-
+		popobject.AddMember("msy", popinfo.msy.msy,
+					this->document.GetAllocator());
 		popobject.AddMember("spr_F0", popinfo.msy.spr_F0,
 				this->document.GetAllocator());
 		popobject.AddMember("F_msy", popinfo.msy.F_msy,
