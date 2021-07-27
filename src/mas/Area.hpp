@@ -163,9 +163,7 @@ namespace mas {
         variable survey_age_comp_component;
         variable recruitment_deviations_component;
         
-        MaximumSustainableYield<REAL_T> avg_msy;
-        std::map<uint32_t,  MaximumSustainableYield<REAL_T> > msy_subpopulations_males;
-        std::map<uint32_t,  MaximumSustainableYield<REAL_T> > msy_subpopulations_females;
+        MaximumSustainableYield<REAL_T> msy;
         
 
         void Initialize(size_t years, size_t seasons, size_t ages) {
