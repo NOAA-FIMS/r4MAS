@@ -374,6 +374,11 @@ namespace mas {
 
                 //                (*it).second->ComputeBiologicalReferencePoints();
             }
+            		
+           typename std::unordered_map<int, atl::intrusive_ptr<mas::Area<REAL_T> > >::iterator ait;
+           for(ait = this->info.areas.begin(); ait != this->info.areas.end(); ++ait){
+			   (*ait).second->msy.F_msy/=this->info.populations.size();
+		   }
         }
 
         void Report() {
