@@ -68,9 +68,9 @@ namespace mas {
     			typename std::unordered_map<int, Subpopulation<REAL_T> >::iterator spit;
 
     			for(spit = population->females.begin(); spit != population->females.end(); ++spit){
-
+                                std::cout<<std::fixed <<"spawning stock biomass variance for subpopulation "<<(*spit).second.id<<"\n";
     				for(int i =0; i < (*spit).second.spawning_stock_biomass.size(); i++){
-    					std::cout<<"spawning stock biomass variance for subpopulation "<<(*spit).second.id<<"\n";
+    					
     				std::vector<uint32_t> pid;
 
 
@@ -83,9 +83,10 @@ namespace mas {
 
 							pid.push_back((*spit).second.recruitment_model->estimated_parameters[j]->info->id);
 				        }
-					std::cout<<this->GetVarianceOfDerivedValue((*spit).second.spawning_stock_biomass[i].info->id, pid)<<"\n";
+					std::cout<<this->GetVarianceOfDerivedValue((*spit).second.spawning_stock_biomass[i].info->id, pid)<<"\t";
 
     				}
+				std::cout<<"\n";
     			}
 
     		}
