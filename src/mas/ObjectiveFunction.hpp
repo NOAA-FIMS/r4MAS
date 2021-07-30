@@ -77,16 +77,16 @@ namespace mas {
 					for (int j = 0;j< (*spit).second.growth_model->estimated_parameters.size(); j++) {
 
 							pid.push_back((*spit).second.growth_model->estimated_parameters[j]->info->id);
-							//std::cout<<(*spit).second.growth_model->estimated_parameters[j]->GetName()<<"\n";
+							std::cout<<(*spit).second.growth_model->estimated_parameters[j]->GetName()<<"   ";
 
 				        }
 					
 					for (int j = 0;j< (*spit).second.recruitment_model->estimated_parameters.size(); j++) {
 
 							pid.push_back((*spit).second.recruitment_model->estimated_parameters[j]->info->id);
-							//std::cout<<(*spit).second.recruitment_model->estimated_parameters[j]->GetName()<<"\n";
+							std::cout<<(*spit).second.recruitment_model->estimated_parameters[j]->GetName()<<"   ";
 				        }
-					std::cout<<this->GetVarianceOfDerivedValue((*spit).second.spawning_stock_biomass[i].info->id, pid)<<"\t";
+					std::cout<<"\n"<<this->GetVarianceOfDerivedValue((*spit).second.spawning_stock_biomass[i].info->id, pid)<<"\t";
 
     				}
 				std::cout<<"\n";
