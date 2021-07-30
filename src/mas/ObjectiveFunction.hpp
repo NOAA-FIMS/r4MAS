@@ -85,6 +85,7 @@ namespace mas {
     			}
 
     		}
+		}
 
         virtual void Finalize() {
            
