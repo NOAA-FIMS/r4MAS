@@ -74,11 +74,15 @@ namespace mas {
     				std::vector<uint32_t> pid;
 
 
-					for (int j = 0;
-							j< (*spit).second.growth_model->estimated_parameters.size(); j++) {
+					for (int j = 0;j< (*spit).second.growth_model->estimated_parameters.size(); j++) {
 
 							pid.push_back((*spit).second.growth_model->estimated_parameters[j]->info->id);
-						}
+				        }
+					
+					for (int j = 0;j< (*spit).second.recruitment_model->estimated_parameters.size(); j++) {
+
+							pid.push_back((*spit).second.recruitment_model->estimated_parameters[j]->info->id);
+				        }
 					std::cout<<this->GetVarianceOfDerivedValue((*spit).second.spawning_stock_biomass[i].info->id, pid)<<"\n";
 
     				}
