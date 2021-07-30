@@ -79,7 +79,7 @@ namespace mas {
 
 							pid.push_back((*spit).second.growth_model->estimated_parameters[j]->info->id);
 						}
-					std::cout<<this->GetVarianceForDerivedValue((*spit).second.spawning_stock_biomass[i].info->id, pid)<<"\n";
+					std::cout<<this->GetVarianceOfDerivedValue((*spit).second.spawning_stock_biomass[i].info->id, pid)<<"\n";
 
     				}
     			}
