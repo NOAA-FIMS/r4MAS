@@ -69,9 +69,7 @@ namespace mas {
 
     			for(spit = population->females.begin(); spit != population->females.end(); ++spit){
                                 std::cout<<"spawning stock biomass variance for subpopulation "<<(*spit).second.id<<"\n";
-    				for(int i =0; i < (*spit).second.spawning_stock_biomass.size(); i++){
-    					
-    				std::vector<uint32_t> pid;
+				std::vector<uint32_t> pid;
 
 
 					for (int j = 0;j< (*spit).second.growth_model->estimated_parameters.size(); j++) {
@@ -86,6 +84,9 @@ namespace mas {
 							pid.push_back((*spit).second.recruitment_model->estimated_parameters[j]->info->id);
 							std::cout<<(*spit).second.recruitment_model->estimated_parameters[j]->GetName()<<"   ";
 				        }
+    				for(int i =0; i < (*spit).second.spawning_stock_biomass.size(); i++){
+    					
+    				
 					std::cout<<"\n"<<this->GetVarianceOfDerivedValue((*spit).second.spawning_stock_biomass[i].info->id, pid)<<"\t";
 
     				}
