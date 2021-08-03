@@ -1688,6 +1688,7 @@ public:
 		}
 
 		r->recruitment_deviations.resize(info.nyears);
+		std::cout<<info.nyears<<" != " <<this->deviations.size()<<std::endl;
 		for (int i = 0; i < this->deviations.size(); i++) {
 			r->recruitment_deviations[i] = variable(this->deviations[i]);
 		}
