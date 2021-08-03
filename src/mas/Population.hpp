@@ -3536,7 +3536,7 @@ public:
 			this->msy.msy += males[areas_list[a]->id].msy.msy;
 
 			this->msy.spr_F0 += males[areas_list[a]->id].msy.spr_F0;
-			this->msy.F_msy += males[areas_list[a]->id].msy.F_msy;
+			this->msy.F_msy += males[areas_list[a]->id].msy.F_msy/areas_list.size()*2.0;
 			this->msy.spr_msy += males[areas_list[a]->id].msy.spr_msy;
 			this->msy.SR_msy += males[areas_list[a]->id].msy.SR_msy;
 			this->msy.R_msy += males[areas_list[a]->id].msy.R_msy;
