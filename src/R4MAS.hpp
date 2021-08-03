@@ -1329,7 +1329,7 @@ public:
 		}
 
 		r->recruitment_deviations.resize(info.nyears);
-		for (int i = 0; i < this->deviations.size(); i++) {
+		for (int i = 0; i < info.nyears; i++) {
 			r->recruitment_deviations[i] = variable(this->deviations[i]);
 		}
 		r->recruitment_deviations_constrained = this->constrained_deviations;
