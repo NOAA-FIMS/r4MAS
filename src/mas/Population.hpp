@@ -1637,7 +1637,7 @@ struct Subpopulation {
 
 		this->area->msy.msy += this->msy.msy;
 		this->area->msy.spr_F0 += this->msy.spr_F0;
-		this->area->msy.F_msy += this->msy.F_msy;
+		this->area->msy.F_msy += this->msy.F_msy/this->area->nsubpopulations;
 		this->area->msy.spr_msy += this->msy.spr_msy;
 		this->area->msy.SR_msy += this->msy.SR_msy;
 		this->area->msy.R_msy += this->msy.R_msy;
@@ -2753,7 +2753,7 @@ public:
 					natal_area), areas_list(areas) {
 
 		for (int d = 0; d < areas_list.size(); d++) {
-
+                        areas_list[d]->nsubpopulations+=2.0;
 			males[areas_list[d]->id].forecast_years = this->forecast_years;
 			females[areas_list[d]->id].forecast_years = this->forecast_years;
 
