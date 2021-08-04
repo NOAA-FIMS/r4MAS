@@ -1335,7 +1335,7 @@ public:
 		r->recruitment_deviations_constrained = this->constrained_deviations;
 
 		if (this->estimate_deviations) {
-			for (int i = 0; i < this->deviations.size(); i++) {
+			for (int i = 0; i < info.nyears; i++) {
 				std::stringstream ss;
 				ss << "recruitment_deviations[" << i << "]_" << this->id;
 				mas::VariableTrait<double>::SetName(
@@ -1694,7 +1694,7 @@ public:
 		r->recruitment_deviations_constrained = this->constrained_deviations;
 
 		if (this->estimate_deviations) {
-			for (int i = 0; i < this->deviations.size(); i++) {
+			for (int i = 0; i <info.nyears; i++) {
 				std::stringstream ss;
 				ss << "recruitment_deviations[" << i << "]_" << this->id;
 				mas::VariableTrait<double>::SetName(
@@ -2020,7 +2020,7 @@ public:
 		r->recruitment_deviations_constrained = this->constrained_deviations;
 
 		if (this->estimate_deviations) {
-			for (int i = 0; i < this->deviations.size(); i++) {
+			for (int i = 0; i < info.nyears; i++) {
 				std::stringstream ss;
 				ss << "recruitment_deviations[" << i << "]_" << this->id;
 				mas::VariableTrait<double>::SetName(
