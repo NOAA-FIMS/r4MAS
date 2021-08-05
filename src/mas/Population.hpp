@@ -1425,8 +1425,8 @@ struct Subpopulation {
 		int nages = ages.size();
 
 		std::vector<variable_t> F;
-		for (variable_t f = 0.0; f <= maxF; f += step) {
-			F.push_back(f);
+		for (REAL_T f = 0.0; f <= maxF; f += step) {
+			F.push_back(variable_t(f));
 		}
 
 		std::valarray<variable_t> spr(F.size()); //equilibrium spr at F
