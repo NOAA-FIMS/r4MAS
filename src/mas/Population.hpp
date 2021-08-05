@@ -1552,7 +1552,10 @@ struct Subpopulation {
 		}
 		int max_index = 0;
 		variable_t max = 1e-18; //std::numeric_limits<variable_t>::min();
-		spr_ratio = spr / spr_F0;
+		
+		for(int j =0; j < spar_ratio.size(); j++{
+		   spr_ratio[j] = spr[j] / spr_F0;
+		}
 		variable_t F01_dum = min(fabs(spr_ratio - 0.001));
 		variable_t F30_dum = min(fabs(spr_ratio - 0.3));
 		variable_t F35_dum = min(fabs(spr_ratio - 0.35));
