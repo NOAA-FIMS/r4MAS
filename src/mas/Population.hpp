@@ -1355,34 +1355,34 @@ struct Subpopulation {
 
 	}
 
-	REAL_T sum(const std::valarray<REAL_T> &val) {
-		REAL_T ret = 0.0;
+	variable sum(const std::valarray<variable> &val) {
+		variable ret = 0.0;
 		for (int i = 0; i < val.size(); i++) {
 			ret += val[i];
 		}
 		return ret;
 	}
 
-	REAL_T sum_product(const std::valarray<REAL_T> &x,
-			const std::valarray<REAL_T> &y) {
-		REAL_T ret = 0.0;
+	variable sum_product(const std::valarray<variable> &x,
+			const std::valarray<variable> &y) {
+		variable ret = 0.0;
 		for (int i = 0; i < y.size(); i++) {
 			ret += x[i] * y[i];
 		}
 		return ret;
 	}
 
-	REAL_T sum_quitient(const std::valarray<REAL_T> &x,
-			const std::valarray<REAL_T> &y) {
-		REAL_T ret = 0.0;
+	variable sum_quitient(const std::valarray<variable> &x,
+			const std::valarray<variable> &y) {
+		variable ret = 0.0;
 		for (int i = 0; i < x.size(); i++) {
 			ret += x[i] / y[i];
 		}
 		return ret;
 	}
 
-	REAL_T min(const std::valarray<REAL_T> &val) {
-		REAL_T ret = std::numeric_limits<REAL_T>::max();
+	variable min(const std::valarray<variable> &val) {
+		variable ret = std::numeric_limits<variable>::max();
 		for (int i = 0; i < val.size(); i++) {
 			if (val[i] < ret) {
 				ret = val[i];
@@ -1391,8 +1391,8 @@ struct Subpopulation {
 		return ret;
 	}
 
-	REAL_T max(const std::valarray<REAL_T> &val) {
-		REAL_T ret = std::numeric_limits<REAL_T>::min();
+	variable max(const std::valarray<variable> &val) {
+		variable ret = std::numeric_limits<variable>::min();
 		for (int i = 0; i < val.size(); i++) {
 			if (val[i] > ret) {
 				ret = val[i];
@@ -1401,8 +1401,8 @@ struct Subpopulation {
 		return ret;
 	}
 
-	std::valarray<REAL_T> fabs(const std::valarray<REAL_T> &val) {
-		std::valarray<REAL_T> ret(val.size());
+	std::valarray<variable> fabs(const std::valarray<variable> &val) {
+		std::valarray<variable> ret(val.size());
 		for (int i = 0; i < val.size(); i++) {
 			ret[i] = std::fabs(val[i]);
 
@@ -1416,42 +1416,43 @@ struct Subpopulation {
 		 */
 		bool recording = mas::VariableTrait<REAL_T>::IsRecording();
 
-		mas::VariableTrait<REAL_T>::SetRecording(false);
+//		mas::VariableTrait<REAL_T>::SetRecording(false);
+  		typedef typename mas::VariableTrait<REAL_T>::variable variable_t;
 
-		int year = this->years - 1;
+  		int year = this->years - 1;
 		int season = this->seasons - 1;
 		int nages = ages.size();
 
-		std::vector<REAL_T> F;
-		for (REAL_T f = 0.0; f <= maxF; f += step) {
+		std::vector<variable_t> F;
+		for (variable_t f = 0.0; f <= maxF; f += step) {
 			F.push_back(f);
 		}
 
-		std::valarray<REAL_T> spr(F.size()); //equilibrium spr at F
-		std::valarray<REAL_T> spr_ratio(F.size()); //equilibrium spr at F
-		std::vector<REAL_T> S_eq(F.size()); //equilibrium SSB at F
-		std::vector<REAL_T> R_eq(F.size()); //equilibrium recruitment at F
-		std::vector<REAL_T> B_eq(F.size()); //equilibrium biomass at F
-		std::vector<REAL_T> L_eq(F.size()); //equilibrium landings at F
-		std::vector<REAL_T> D_eq(F.size()); //equilibrium dead discards at F
-		std::vector<REAL_T> E_eq(F.size()); //equilibrium exploitation rate at F (landings only)
-		std::valarray<REAL_T> L_eq_knum(F.size());
-		std::valarray<REAL_T> SSB_eq(F.size());
+		std::valarray<variable_t> spr(F.size()); //equilibrium spr at F
+		std::valarray<variable_t> spr_ratio(F.size()); //equilibrium spr at F
+		std::vector<variable_t> S_eq(F.size()); //equilibrium SSB at F
+		std::vector<variable_t> R_eq(F.size()); //equilibrium recruitment at F
+		std::vector<variable_t> B_eq(F.size()); //equilibrium biomass at F
+		std::vector<variable_t> L_eq(F.size()); //equilibrium landings at F
+		std::vector<variable_t> D_eq(F.size()); //equilibrium dead discards at F
+		std::vector<variable_t> E_eq(F.size()); //equilibrium exploitation rate at F (landings only)
+		std::valarray<variable_t> L_eq_knum(F.size());
+		std::valarray<variable_t> SSB_eq(F.size());
 
-		REAL_T spr_F0 = 0.0;
+		variable_t spr_F0 = 0.0;
 
-		std::vector<REAL_T> N0(this->ages.size(), 1.0);
+		std::vector<variable_t> N0(this->ages.size(), 1.0);
 		for (int iage = 1; iage < nages; iage++) {
 			N0[iage] = N0[iage - 1] * std::exp(-1.0 * M[iage - 1].GetValue());
 		}
 		N0[nages - 1] = N0[nages - 2] * std::exp(-1.0 * M[nages - 2].GetValue())
 				/ (1.0 - std::exp(-1.0 * M[nages - 1].GetValue()));
 
-		std::valarray<REAL_T> reprod(nages);
-		std::valarray<REAL_T> selL(nages);
-		std::valarray<REAL_T> selZ(nages);
-		std::valarray<REAL_T> M_age(nages);
-		std::valarray<REAL_T> wgt(nages);
+		std::valarray<variable_t> reprod(nages);
+		std::valarray<variable_t> selL(nages);
+		std::valarray<variable_t> selZ(nages);
+		std::valarray<variable_t> M_age(nages);
+		std::valarray<variable_t> wgt(nages);
 
 		for (int a = 0; a < ages.size(); a++) {
 			//dimension folded index
@@ -1468,49 +1469,50 @@ struct Subpopulation {
 			wgt[a] = this->weight_at_catch_time[index].GetValue();
 		}
 
-		std::valarray<REAL_T> L_age(nages); //#landings at age
-		std::valarray<REAL_T> D_age(nages); //#dead discards at age
-		std::valarray<REAL_T> F_age(nages); //#F at age
-		std::valarray<REAL_T> Z_age(nages); //#Z at age
+		std::valarray<variable_t> L_age(nages); //#landings at age
+		std::valarray<variable_t> D_age(nages); //#dead discards at age
+		std::valarray<variable_t> F_age(nages); //#F at age
+		std::valarray<variable_t> Z_age(nages); //#Z at age
 
 		// BEGIN ALGORITHM
 		for (int i = 0; i < F.size(); i++) {
 
-			std::valarray<REAL_T> FL_age = F[i] * selL;
-			//std::valarray<REAL_T> FD_age = F[i] * selD;
-			std::valarray<REAL_T> Z_age = M_age + F[i] * selZ;
+			std::valarray<variable_t> FL_age = F[i] * selL;
+			//std::valarray<variable_t> FD_age = F[i] * selD;
+			std::valarray<variable_t> Z_age = M_age + F[i] * selZ;
 
-			std::valarray<REAL_T> N_age(nages);
-			std::valarray<REAL_T> N_age_spawn(nages);
+			std::valarray<variable_t> N_age(nages);
+			std::valarray<variable_t> N_age_spawn(nages);
 
 			N_age[0] = 1.0;
 
 			for (int iage = 1; iage < nages; iage++) {
 				N_age[iage] = N_age[iage - 1]
-						* std::exp(-1.0 * Z_age[iage - 1]);
+						* mas::exp(-1.0 * Z_age[iage - 1]);
 			}
 
 			//last age is pooled
 			N_age[nages - 1] = N_age[nages - 2]
-					* std::exp(-1.0 * Z_age[nages - 2])
-					/ (1.0 - std::exp(-1.0 * Z_age[nages - 1]));
+					* mas::exp(-1.0 * Z_age[nages - 2])
+					/ (1.0 - mas::exp(-1.0 * Z_age[nages - 1]));
 
-			N_age_spawn =
-					(N_age
-							* std::exp(
-									(-1.0 * Z_age
-											* this->spawning_season_offset.GetValue())));
-
+			for(int iage = 0; iage < nages; iage++){
+			N_age_spawn[iage] =
+					(N_age[iage]
+							* mas::exp(
+									(-1.0 * Z_age[iage]
+											* this->spawning_season_offset)));
+			}
 			N_age_spawn[nages - 1] =
 					(N_age_spawn[nages - 2]
-							* (std::exp(
+							* (mas::exp(
 									-1.
 											* (Z_age[nages - 2]
 													* (1.0
-															- this->spawning_season_offset.GetValue())
+															- this->spawning_season_offset)
 													+ Z_age[nages - 1]
-															* this->spawning_season_offset.GetValue()))))
-							/ (1.0 - std::exp(-1. * Z_age[nages - 1]));
+															* this->spawning_season_offset))))
+							/ (1.0 - mas::exp(-1. * Z_age[nages - 1]));
 
 			spr[i] = sum_product(N_age, reprod);
 			//                                                R_eq[i] = (R0 / ((5.0 * steep - 1.0) * spr[i]))*
@@ -1532,7 +1534,7 @@ struct Subpopulation {
 
 			for (int iage = 0; iage < nages; iage++) {
 				L_age[iage] = N_age[iage] * (FL_age[iage] / Z_age[iage])
-						* (1.0 - std::exp(-1.0 * Z_age[iage]));
+						* (1.0 - mas::exp(-1.0 * Z_age[iage]));
 				//                            D_age[iage] = N_age[iage]*
 				//                                              (FD_age[iage] / Z_age[iage])*(1. - exp(-1.0 * Z_age[iage]))
 			}
@@ -1545,12 +1547,12 @@ struct Subpopulation {
 
 		}
 		int max_index = 0;
-		REAL_T max = 1e-18; //std::numeric_limits<REAL_T>::min();
+		variable_t max = 1e-18; //std::numeric_limits<variable_t>::min();
 		spr_ratio = spr / spr_F0;
-		REAL_T F01_dum = min(fabs(spr_ratio - 0.001));
-		REAL_T F30_dum = min(fabs(spr_ratio - 0.3));
-		REAL_T F35_dum = min(fabs(spr_ratio - 0.35));
-		REAL_T F40_dum = min(fabs(spr_ratio - 0.4));
+		variable_t F01_dum = min(fabs(spr_ratio - 0.001));
+		variable_t F30_dum = min(fabs(spr_ratio - 0.3));
+		variable_t F35_dum = min(fabs(spr_ratio - 0.35));
+		variable_t F40_dum = min(fabs(spr_ratio - 0.4));
 		size_t F01_out = 0;
 		size_t F30_out = 0;
 		size_t F35_out = 0;
@@ -1580,13 +1582,13 @@ struct Subpopulation {
 				F40_out = i;
 			}
 		}
-		REAL_T msy_mt_out = max; //msy in whole weight
-		REAL_T SSB_msy_out = 0.0;
-		REAL_T B_msy_out = 0.0;
-		REAL_T R_msy_out = 0.0;
-		REAL_T msy_knum_out = 0.0;
-		REAL_T F_msy_out = 0.0;
-		REAL_T spr_msy_out = 0.0;
+		variable_t msy_mt_out = max; //msy in whole weight
+		variable_t SSB_msy_out = 0.0;
+		variable_t B_msy_out = 0.0;
+		variable_t R_msy_out = 0.0;
+		variable_t msy_knum_out = 0.0;
+		variable_t F_msy_out = 0.0;
+		variable_t spr_msy_out = 0.0;
 		int index_m = 0;
 		for (int i = 0; i < F.size(); i++) {
 			if (L_eq[i] == msy_mt_out) {
@@ -1600,7 +1602,7 @@ struct Subpopulation {
 				index_m = i;
 			}
 		}
-
+		this->area->nsubpopulations++;
 		this->msy.msy = msy_mt_out * this->sex_fraction_value;
 		this->msy.spr_F0 = spr_F0;
 		this->msy.F_msy = F_msy_out;
@@ -1637,7 +1639,7 @@ struct Subpopulation {
 
 		this->area->msy.msy += this->msy.msy;
 		this->area->msy.spr_F0 += this->msy.spr_F0;
-		this->area->msy.F_msy += this->msy.F_msy/this->area->nsubpopulations;
+		this->area->msy.F_msy += this->msy.F_msy;
 		this->area->msy.spr_msy += this->msy.spr_msy;
 		this->area->msy.SR_msy += this->msy.SR_msy;
 		this->area->msy.R_msy += this->msy.R_msy;
@@ -1668,7 +1670,7 @@ struct Subpopulation {
 		this->area->msy.SSB_F40_msy += this->msy.SSB_F40_msy;
 		this->area->msy.B_F40_msy += this->msy.B_F40_msy;
 		this->area->msy.E_F40_msy += this->msy.E_F40_msy;
-
+//
 		std::cout << std::scientific;
 		//
 		std::cout << "\n\nFmax: " << maxF << "\n";
@@ -1680,7 +1682,7 @@ struct Subpopulation {
 		spr_msy_out = spr[max_index];
 		std::cout << "msy: " << this->msy.msy << "\n";
 		std::cout << "spr_msy: " << spr[max_index] << "\n";
-		std::cout << "SR_msy: " << spr_msy_out / spr_F0 << "\n";
+		std::cout << "SR_msy: " << (spr_msy_out / spr_F0).GetValue() << "\n";
 		//                        std::cout << "D_msy_out" << D_eq[max_index] << "\n";
 		std::cout << "R_msy: " << R_eq[max_index] << "\n";
 		std::cout << "SSB_msy: " << this->msy.SSB_msy << "\n";
@@ -1691,11 +1693,10 @@ struct Subpopulation {
 		std::cout << "E_msy: " << E_eq[max_index] << "\n";
 		std::cout << "Alpha: " << this->recruitment_model->GetAlpha() << "\n";
 		std::cout << "Beta: " << this->recruitment_model->GetBeta() << "\n\n";
-
-		mas::VariableTrait<REAL_T>::SetRecording(recording);
+//
+//		mas::VariableTrait<REAL_T>::SetRecording(recording);
 
 	}
-
 	void Finalize() {
 
 		for (int y = 0; y < this->years; y++) {
