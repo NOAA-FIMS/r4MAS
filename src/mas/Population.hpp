@@ -1634,6 +1634,40 @@ struct Subpopulation {
 		this->msy.SSB_F40_msy = S_eq[F40_out];
 		this->msy.B_F40_msy = B_eq[F40_out];
 		this->msy.E_F40_msy = E_eq[F40_out];
+		
+			this->area->msy.msy += this->msy.msy;
+		this->area->msy.spr_F0 += this->msy.spr_F0;
+		this->area->msy.F_msy += this->msy.F_msy;
+		this->area->msy.spr_msy += this->msy.spr_msy;
+		this->area->msy.SR_msy += this->msy.SR_msy;
+		this->area->msy.R_msy += this->msy.R_msy;
+		this->area->msy.SSB_msy += this->msy.SSB_msy;
+		this->area->msy.B_msy += this->msy.B_msy;
+		this->area->msy.E_msy += this->msy.E_msy;
+
+		this->area->msy.F30 += this->msy.F30;
+		this->area->msy.spr_F30_msy += this->msy.spr_F30_msy;
+		this->area->msy.SR_F30_msy += this->msy.SR_F30_msy;
+		this->area->msy.R_F30_msy += this->msy.R_F30_msy;
+		this->area->msy.SSB_F30_msy += this->msy.SSB_F30_msy;
+		this->area->msy.B_F30_msy += this->msy.B_F30_msy;
+		this->area->msy.E_F30_msy += this->msy.E_F30_msy;
+
+		this->area->msy.F35 += this->msy.F35;
+		this->area->msy.spr_F35_msy += this->msy.spr_F35_msy;
+		this->area->msy.SR_F35_msy += this->msy.SR_F35_msy;
+		this->area->msy.R_F35_msy += this->msy.R_F35_msy;
+		this->area->msy.SSB_F35_msy += this->msy.SSB_F35_msy;
+		this->area->msy.B_F35_msy += this->msy.B_F35_msy;
+		this->area->msy.E_F35_msy += this->msy.E_F35_msy;
+
+		this->area->msy.F40 += this->msy.F40;
+		this->area->msy.spr_F40_msy += this->msy.spr_F40_msy;
+		this->area->msy.SR_F40_msy += this->msy.SR_F40_msy;
+		this->area->msy.R_F40_msy += this->msy.R_F40_msy;
+		this->area->msy.SSB_F40_msy += this->msy.SSB_F40_msy;
+		this->area->msy.B_F40_msy += this->msy.B_F40_msy;
+		this->area->msy.E_F40_msy += this->msy.E_F40_msy;
 
 		std::cout << std::scientific;
 		//
