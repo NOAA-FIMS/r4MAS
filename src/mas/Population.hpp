@@ -1558,7 +1558,7 @@ struct Subpopulation {
 		REAL_T F35_dum = 1000; // min(fabs(spr_ratio - 0.35));
 		REAL_T F40_dum = 1000; // min(fabs(spr_ratio - 0.4))
 
-		for(int j =0; j < spar_ratio.size(); j++ {
+		for(int j =0; j < spr_ratio.size(); j++ ){
 					spr_ratio[j] = spr[j] / spr_F0;
 					REAL_T temp = std::fabs(spr_ratio[j] - 0.001);
 
