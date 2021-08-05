@@ -1478,10 +1478,14 @@ struct Subpopulation {
 		// BEGIN ALGORITHM
 		for (int i = 0; i < F.size(); i++) {
 
-			std::valarray<variable_t> FL_age = F[i] * selL;
-			//std::valarray<variable_t> FD_age = F[i] * selD;
-			std::valarray<variable_t> Z_age = M_age + F[i] * selZ;
-
+			std::valarray<variable_t> FL_age(nages);
+			std::valarray<variable_t> Z_age(nages);
+			for (int a = 0; a < ages.size(); a++) {
+				FL_age[a] = F[i] * selL[a];
+				//std::valarray<variable_t> FD_age = F[i] * selD;
+				Z_age[a] = M_age[a] + F[i] * selZ[a];
+			}
+			
 			std::valarray<variable_t> N_age(nages);
 			std::valarray<variable_t> N_age_spawn(nages);
 
