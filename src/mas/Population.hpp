@@ -1553,13 +1553,38 @@ struct Subpopulation {
 		int max_index = 0;
 		variable_t max = 1e-18; //std::numeric_limits<variable_t>::min();
 		
-		for(int j =0; j < spar_ratio.size(); j++{
-		   spr_ratio[j] = spr[j] / spr_F0;
-		}
-		variable_t F01_dum = min(fabs(spr_ratio - 0.001));
-		variable_t F30_dum = min(fabs(spr_ratio - 0.3));
-		variable_t F35_dum = min(fabs(spr_ratio - 0.35));
-		variable_t F40_dum = min(fabs(spr_ratio - 0.4));
+	REAL_T F01_dum = 1000; //min(fabs(spr_ratio - 0.001));
+		REAL_T F30_dum = 1000; // min(fabs(spr_ratio - 0.3));
+		REAL_T F35_dum = 1000; // min(fabs(spr_ratio - 0.35));
+		REAL_T F40_dum = 1000; // min(fabs(spr_ratio - 0.4))
+
+		for(int j =0; j < spar_ratio.size(); j++ {
+					spr_ratio[j] = spr[j] / spr_F0;
+					REAL_T temp = std::fabs(spr_ratio[j] - 0.001);
+
+					if(temp < F01_dum) {
+						F01_dum = temp;
+					}
+
+					temp = std::fabs(spr_ratio[j] - 0.3);
+
+					if(temp < F03_dum) {
+						F03_dum = temp;
+					}
+
+					temp = std::fabs(spr_ratio[j] - 0.35);
+
+					if(temp < F33_dum) {
+						F53_dum = temp;
+					}
+
+					temp = std::fabs(spr_ratio[j] - 0.4);
+
+					if(temp < F03_dum) {
+						F40_dum = temp;
+					}
+
+				}
 		size_t F01_out = 0;
 		size_t F30_out = 0;
 		size_t F35_out = 0;
