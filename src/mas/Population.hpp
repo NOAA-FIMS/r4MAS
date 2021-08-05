@@ -1495,11 +1495,13 @@ struct Subpopulation {
 					* std::exp(-1.0 * Z_age[nages - 2])
 					/ (1.0 - std::exp(-1.0 * Z_age[nages - 1]));
 
-			N_age_spawn =
-					(N_age
+for (int iage = 1; iage < nages; iage++) {
+			N_age_spawn[iage] =
+					(N_age[iage]
 							* std::exp(
-									(-1.0 * Z_age
+									(-1.0 * Z_age[iage]
 											* this->spawning_season_offset.GetValue())));
+}
 
 			N_age_spawn[nages - 1] =
 					(N_age_spawn[nages - 2]
