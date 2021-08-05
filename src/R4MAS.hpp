@@ -418,7 +418,7 @@ public:
 	virtual void AddToMAS(mas::Information<double> &info) {
 		atl::intrusive_ptr<mas::DoubleLogisticSel<double> > sel =
 				new mas::DoubleLogisticSel<double>();
-
+                sel->id = id;
 		mas::DoubleLogisticSel<double> *selex = sel.get();
 
 		mas::VariableTrait<double>::SetValue(selex->alpha_asc,
@@ -477,6 +477,8 @@ public:
 			sel->Register(selex->beta_desc, this->beta_desc.phase);
 			sel->lambdas.push_back(beta_desc.lambda);
 		}
+
+		info.selectivity_models[sel->id] = sel;
 
 	}
 
@@ -935,7 +937,7 @@ public:
 		typename mas::Information<double>::fishing_mortality_model_iterator fit;
 		fit = info.fishing_mortality_models.find(this->id);
 		if (fit != info.fishing_mortality_models.end()) {
-			int i;
+			int i=0;
 			for (int y = 0; y < info.nyears; y++) {
 				for (int s = 0; s < info.nseasons; s++) {
 
@@ -1233,6 +1235,7 @@ public:
 	Parameter R0;
 	Parameter alpha;
 	Parameter beta;
+	bool use_bias_correction = false;
 	int id;
 
 	RickerRecruitment() {
@@ -1278,6 +1281,10 @@ public:
 		r->id = this->id;
 
 		r->log_R0 = std::log(this->R0.value);
+		
+		
+		r->use_bias_correction = this->use_bias_correction;
+		
 		if (this->R0.estimated) {
 			std::stringstream ss;
 			ss << "log_R0" << this->id;
@@ -1322,13 +1329,13 @@ public:
 		}
 
 		r->recruitment_deviations.resize(info.nyears);
-		for (int i = 0; i < this->deviations.size(); i++) {
+		for (int i = 0; i < info.nyears; i++) {
 			r->recruitment_deviations[i] = variable(this->deviations[i]);
 		}
 		r->recruitment_deviations_constrained = this->constrained_deviations;
 
 		if (this->estimate_deviations) {
-			for (int i = 0; i < this->deviations.size(); i++) {
+			for (int i = 0; i < info.nyears; i++) {
 				std::stringstream ss;
 				ss << "recruitment_deviations[" << i << "]_" << this->id;
 				mas::VariableTrait<double>::SetName(
@@ -1681,13 +1688,13 @@ public:
 		}
 
 		r->recruitment_deviations.resize(info.nyears);
-		for (int i = 0; i < this->deviations.size(); i++) {
+		for (int i = 0; i < info.nyears; i++) {
 			r->recruitment_deviations[i] = variable(this->deviations[i]);
 		}
 		r->recruitment_deviations_constrained = this->constrained_deviations;
 
 		if (this->estimate_deviations) {
-			for (int i = 0; i < this->deviations.size(); i++) {
+			for (int i = 0; i <info.nyears; i++) {
 				std::stringstream ss;
 				ss << "recruitment_deviations[" << i << "]_" << this->id;
 				mas::VariableTrait<double>::SetName(
@@ -2007,13 +2014,13 @@ public:
 		}
 
 		r->recruitment_deviations.resize(info.nyears);
-		for (int i = 0; i < this->deviations.size(); i++) {
+		for (int i = 0; i < info.nyears; i++) {
 			r->recruitment_deviations[i] = variable(this->deviations[i]);
 		}
 		r->recruitment_deviations_constrained = this->constrained_deviations;
 
 		if (this->estimate_deviations) {
-			for (int i = 0; i < this->deviations.size(); i++) {
+			for (int i = 0; i < info.nyears; i++) {
 				std::stringstream ss;
 				ss << "recruitment_deviations[" << i << "]_" << this->id;
 				mas::VariableTrait<double>::SetName(
@@ -5147,7 +5154,7 @@ public:
 		this->id = NLLBase::id_g++;
 		this->id_ = this->id;
 		Lognormal::initialized_models[this->id] = this;
-		MASSubModel::submodels.push_back(this);
+		//MASSubModel::submodels.push_back(this);
 		NLLBase::nll_submodels.push_back(this);
 	}
 
@@ -5281,7 +5288,7 @@ public:
 		this->id_ = this->id;
 
 		DirichletMultinomial::initialized_models[this->id] = this;
-		MASSubModel::submodels.push_back(this);
+		//MASSubModel::submodels.push_back(this);
 		NLLBase::nll_submodels.push_back(this);
 	}
 
@@ -5438,7 +5445,7 @@ public:
 		this->id_ = this->id;
 
 		DirichletMultinomialRobust::initialized_models[this->id] = this;
-		MASSubModel::submodels.push_back(this);
+		//MASSubModel::submodels.push_back(this);
 		NLLBase::nll_submodels.push_back(this);
 	}
 
@@ -5597,7 +5604,7 @@ public:
 		this->id_ = this->id;
 
 		Multinomial::initialized_models[this->id] = this;
-		MASSubModel::submodels.push_back(this);
+		//MASSubModel::submodels.push_back(this);
 		NLLBase::nll_submodels.push_back(this);
 	}
 
@@ -5730,7 +5737,7 @@ public:
 		this->id_ = this->id;
 
 		MultinomialRobust::initialized_models[this->id] = this;
-		MASSubModel::submodels.push_back(this);
+		//MASSubModel::submodels.push_back(this);
 		NLLBase::nll_submodels.push_back(this);
 	}
 
@@ -7256,7 +7263,7 @@ private:
 		}
 	}
 
-	atl::intrusive_ptr<mas::MASObjectiveFunction<double> > mas;
+	std::shared_ptr<mas::MASObjectiveFunction<double> > mas;
 public:
 	int nyears;
 	int nseasons;
@@ -7307,7 +7314,7 @@ public:
 
 	void Run() {
 
-		mas = new mas::MASObjectiveFunction<double>();
+		mas =  std::make_shared<mas::MASObjectiveFunction<double> >();
 		if (this->nages == 0) {
 			std::cout << "MAS error: nages = 0\n";
 			return;
@@ -7391,7 +7398,7 @@ public:
 
 	void RunOM() {
 
-		mas = new mas::MASObjectiveFunction<double>();
+		mas = std::make_shared<mas::MASObjectiveFunction<double> >();
 		if (this->nages == 0) {
 			std::cout << "MAS error: nages = 0\n";
 			return;
@@ -7861,6 +7868,7 @@ RCPP_MODULE(rmas) {
 	.constructor()
 	.method("SetDeviations", &RickerRecruitment::SetDeviations)
 	.field("R0", &RickerRecruitment::R0)
+        .field("use_bias_correction", &RickerRecruitment::use_bias_correction)
 	.method("Evaluate", &RickerRecruitment::Evaluate)
 	.field("alpha", &RickerRecruitment::alpha)
 	.field("constrained_deviations", &RickerRecruitment::constrained_deviations)

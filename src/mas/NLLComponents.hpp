@@ -150,6 +150,8 @@ namespace mas {
         years(years), seasons(seasons), ages(ages), neff(10.0) {
         }
 
+        virtual ~NLLFunctor(){
+        }
 
 
         virtual variable Evaluate(const atl::intrusive_ptr<DataObject<REAL_T> >& observed,

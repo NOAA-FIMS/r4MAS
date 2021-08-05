@@ -39,6 +39,8 @@
 #include "Selectivity.hpp"
 #include "Fleet.hpp"
 #include "Survey.hpp"
+#include "MaximumSustainableYield.hpp"
+
 
 namespace mas {
 
@@ -160,6 +162,10 @@ namespace mas {
         variable fishery_age_comp_component;
         variable survey_age_comp_component;
         variable recruitment_deviations_component;
+        
+        REAL_T nsubpopulations = 0.0;
+        MaximumSustainableYield<REAL_T> msy;
+        
 
         void Initialize(size_t years, size_t seasons, size_t ages) {
             this->years = years;

@@ -15,7 +15,7 @@ Since this package contains C++ files, you will need to ensure you have a C++ co
 You will also need to have the `Rcpp` package installed. 
 
 Please install and load `r4MAS` from Github using the `remotes` package as follows:
-```
+```r
 install.packages("remotes")
 remotes::install_github("nmfs-fish-tools/r4MAS")
 library(r4MAS)
@@ -23,7 +23,7 @@ library(r4MAS)
 
 **Windows users**: Please ensure you have [Rtools](https://cran.r-project.org/bin/windows/Rtools/). If you receive errors related to C++ when loading r4MAS, it could be because your R installation uses the default Makevars.win file. To update your Makevars.win file, please run the following code in your R terminal:
 
-```
+```r
 dotR <- file.path(Sys.getenv("HOME"), ".R")
 if (!file.exists(dotR)) 
   dir.create(dotR)

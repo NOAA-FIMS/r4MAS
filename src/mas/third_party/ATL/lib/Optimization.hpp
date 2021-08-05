@@ -710,6 +710,7 @@ namespace atl {
 
         const atl::RealMatrix<T> GetVarianceCovariance() {
 
+            
             atl::Variable<T>::tape.Reset();
             struct cs_sparse<T>* RHessian = cs_spalloc<T>(0, 0, 1, 1, 1);
             atl::Variable<T>::tape.derivative_trace_level = atl::SECOND_ORDER_REVERSE;
@@ -720,88 +721,125 @@ namespace atl {
             this->Objective_Function(f);
 
             atl::Variable<T>::tape.AccumulateSecondOrder();
+            atl::RealMatrix<T> inverse_hessian(this->parameters_m.size(), this->parameters_m.size());
 
-//            for (int i = 0; i < this->parameters_m.size(); i++) {
-//                for (int j = 0; j < this->parameters_m.size(); j++) {
-//                    T dxx = atl::Variable<T>::tape.Value(this->parameters_m[i]->info->id,
-//                            this->parameters_m[j]->info->id);
-//                    if (dxx != dxx) {//this is a big hack
-//                        dxx = std::numeric_limits<T>::min();
-//                    }
-//                    if (dxx != static_cast<T> (0.0)) {
-//                        cs_entry<T>(RHessian, i, j, dxx);
-//                    }
-//                }
-//            }
+            for (int i = 0; i < this->parameters_m.size(); i++) {
+                for (int j = 0; j < this->parameters_m.size(); j++) {
+                    T dxx = atl::Variable<T>::tape.Value(this->parameters_m[i]->info->id,
+                            this->parameters_m[j]->info->id);
+                    if (dxx != dxx) {//this is a big hack
+                        dxx = std::numeric_limits<T>::min();
+                    }
+                    inverse_hessian(i,j) = dxx;
+                }
+            }
+            inverse_hessian.Invert();
+
 //
-//            struct cs_sparse<T> *hessian = cs_compress<T>(RHessian);
-//            SparseCholesky<T> sparse_cholesky;
-//
-//            SCResult<T> ret = sparse_cholesky.Analyze(hessian);
-//
-//            csi p, j, m, n, nzmax, nz, *Ap, *Ai;
-//            T* Ax;
-//            n = ret.A_inv->n;
-//            Ap = ret.A_inv->p;
-//            Ai = ret.A_inv->i;
-//            Ax = ret.A_inv->x;
-//
-//            atl::RealMatrix<T> inverse_hess(this->parameters_m.size(), this->parameters_m.size());
-//
-//            for (int j = 0; j < n; j++) {
-//                for (int k = Ap [j]; k < Ap [j + 1]; k++) {
-//                    inverse_hess(Ai[k], j) = Ax[k];
-//                }
-//            }
-//
-//            cs_spfree(RHessian);
-//            cs_spfree(hessian);
-//
-//            std::vector<T> se(this->parameters_m.size());
-//            for (int i = 0; i < this->parameters_m.size(); i++) {
-//                se[i] = std::sqrt(inverse_hess(i, i));
-//            }
+            std::vector<T> se(this->parameters_m.size());
+            for (int i = 0; i < this->parameters_m.size(); i++) {
+                se[i] = std::sqrt(inverse_hessian(i, i));
+            }
 //
 //
 //
-//            atl::RealMatrix<T> outer_product(this->parameters_m.size(), this->parameters_m.size());
-//            for (size_t i = 0; i < this->parameters_m.size(); i++) {
-//                for (size_t j = 0; j < this->parameters_m.size(); j++) {
-//                    outer_product(i, j) = se[i] * se[j];
-//                }
-//            }
+            atl::RealMatrix<T> outer_product(this->parameters_m.size(), this->parameters_m.size());
+            for (size_t i = 0; i < this->parameters_m.size(); i++) {
+                for (size_t j = 0; j < this->parameters_m.size(); j++) {
+                    outer_product(i, j) = se[i] * se[j];
+                }
+            }
 //
 //
 //
             atl::RealMatrix<T> ret_m(this->parameters_m.size(), this->parameters_m.size());
-//            for (size_t i = 0; i < this->parameters_m.size(); i++) {
-//                for (size_t j = 0; j < this->parameters_m.size(); j++) {
-//                    ret_m(i, j) = inverse_hess(i, j) * outer_product(i, j);
-//                }
-//            }
+            for (size_t i = 0; i < this->parameters_m.size(); i++) {
+                for (size_t j = 0; j < this->parameters_m.size(); j++) {
+                    ret_m(i, j) = inverse_hessian(i, j) * outer_product(i, j);
+                }
+            }
+            
             return ret_m;
-
-            //            atl::Matrix<T> inverse_hess = atl::Matrix<T>::Identity(hess.Size(0));
-            //
-            //            std::cout << "\nHessian matrix\n" << hess << std::endl;
-            //
-            //            hess.Invert();
-            //            inverse_hess = hess;
-            //
-            //            std::cout << "\nInverse of Hessian matrix\n" << inverse_hess << std::endl;
-            //
-            //            atl::Vector<T> se(hess.Size(0));
-            //
-            //            for (int i = 0; i < hess.Size(0); i++) {
-            //                se(i) = std::sqrt(inverse_hess(i, i));
-            //            }
-            //
-            //            std::cout << "\nSE vector\n" << se << std::endl;
-            //
-            //            atl::Matrix<T> var_covar = inverse_hess / (atl::OuterProduct(se, se));
-            //
-            //            std::cout << "\nVariance-covariance matrix\n" << var_covar << std::endl;
         }
+        
+        const atl::RealMatrix<T> GetVarianceCovariance(
+			const std::vector<uint32_t> &parameters) {
+
+		atl::Variable<T>::tape.Reset();
+		atl::Variable<T>::tape.derivative_trace_level =
+				atl::SECOND_ORDER_REVERSE;
+
+		atl::Variable<T>::tape.recording = true;
+		atl::Variable<T> f;
+
+		this->Objective_Function(f);
+
+		atl::Variable<T>::tape.AccumulateSecondOrder();
+		atl::RealMatrix<T> inverse_hessian(parameters.size(),
+				parameters.size());
+
+		for (int i = 0; i < parameters.size(); i++) {
+			for (int j = 0; j < parameters.size(); j++) {
+				T dxx = atl::Variable<T>::tape.Value(parameters[i],
+						parameters[j]);
+				if (dxx != dxx) { //this is a big hack
+					dxx = std::numeric_limits<T>::min();
+				}
+				inverse_hessian(i, j) = dxx;
+			}
+		}
+		inverse_hessian.Invert();
+
+		std::vector<T> se(parameters.size());
+		for (int i = 0; i < parameters.size(); i++) {
+			se[i] = std::sqrt(inverse_hessian(i, i));
+		}
+
+		atl::RealMatrix<T> outer_product(parameters.size(), parameters.size());
+		for (size_t i = 0; i < parameters.size(); i++) {
+			for (size_t j = 0; j < parameters.size(); j++) {
+				outer_product(i, j) = se[i] * se[j];
+			}
+		}
+
+		atl::RealMatrix<T> ret_m(parameters.size(), parameters.size());
+		for (size_t i = 0; i < parameters.size(); i++) {
+			for (size_t j = 0; j < parameters.size(); j++) {
+				ret_m(i, j) = inverse_hessian(i, j) * outer_product(i, j);
+			}
+		}
+		return ret_m;
+	}
+
+        /**
+	* Computes the estimated variance of a derived quantity.
+	* Returns a scalar value
+	*/
+	const T GetVarianceOfDerivedValue(const uint32_t &id,
+			const std::vector<uint32_t> &parameters) {
+		
+		atl::RealMatrix<T> g(parameters.size(),1);
+		atl::RealMatrix<T> g_d(1,parameters.size());
+		atl::RealMatrix<T> cov = GetVarianceCovariance(parameters);
+
+		//fill gradient of objective function w.r.t. parameters
+		for (int i = 0; i < parameters.size(); i++) {
+			g(i,0) = atl::Variable<T>::tape.Value(parameters[i]);
+		}
+
+		//clear current derivatives and reaccumulate gradient of id
+		//w.r.t. parameters
+		atl::Variable<T>::tape.AccumulateFirstOrderWRTDependent(id);
+
+		//fill gradient of objective function w.r.t. parameters
+		for (int i = 0; i < parameters.size(); i++) {
+			g_d(0,i) = atl::Variable<T>::tape.Value(parameters[i]);
+		}
+
+		atl::RealMatrix<T> ret = g_d*cov*g;
+
+		return ret(0,0);
+	}
     };
 
     template<typename T>
