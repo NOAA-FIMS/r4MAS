@@ -1568,19 +1568,19 @@ struct Subpopulation {
 
 					temp = std::fabs(spr_ratio[j] - 0.3);
 
-					if(temp < F03_dum) {
-						F03_dum = temp;
+					if(temp < F30_dum) {
+						F30_dum = temp;
 					}
 
 					temp = std::fabs(spr_ratio[j] - 0.35);
 
-					if(temp < F33_dum) {
-						F53_dum = temp;
+					if(temp < F35_dum) {
+						F35_dum = temp;
 					}
 
 					temp = std::fabs(spr_ratio[j] - 0.4);
 
-					if(temp < F03_dum) {
+					if(temp < F40_dum) {
 						F40_dum = temp;
 					}
 
