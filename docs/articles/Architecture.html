@@ -118,13 +118,13 @@
 
       
 
-      </header><script src="Architecture_files/header-attrs-2.6/header-attrs.js"></script><div class="row">
+      </header><script src="Architecture_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>MAS Demo Notebook</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/nmfs-fish-tools/r4MAS/blob/master/../r4MAS/vignettes/Architecture.Rmd"><code>../r4MAS/vignettes/Architecture.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/nmfs-fish-tools/r4MAS/blob/master/vignettes/Architecture.Rmd"><code>vignettes/Architecture.Rmd</code></a></small>
       <div class="hidden name"><code>Architecture.Rmd</code></div>
 
     </div>
@@ -142,19 +142,22 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"nmfs-fish-tools/r4MAS"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Downloading GitHub repo nmfs-fish-tools/r4MAS@HEAD</code></pre>
-<pre><code>## jsonlite (1.7.2 -&gt; 59ed56d8a...) [GitHub]</code></pre>
+<pre><code>## jsonlite (1.7.2 -&gt; 59ed56d8a...) [GitHub]
+## Rcpp     (1.0.6 -&gt; 1.0.7       ) [CRAN]</code></pre>
+<pre><code>## Installing 1 packages: Rcpp</code></pre>
+<pre><code>## Warning: package 'Rcpp' is in use and will not be installed</code></pre>
 <pre><code>## Downloading GitHub repo cstawitz/jsonlite@HEAD</code></pre>
 <pre><code>##   
   
   
-   checking for file 'C:\Users\bai.li\AppData\Local\Temp\RtmpuSUTSP\remotes472c468be7c\cstawitz-jsonlite-59ed56d/DESCRIPTION' ...
+   checking for file 'C:\Users\bai.li\AppData\Local\Temp\Rtmp6Pun8u\remotes4c10206a4bbe\cstawitz-jsonlite-59ed56d/DESCRIPTION' ...
   
-v  checking for file 'C:\Users\bai.li\AppData\Local\Temp\RtmpuSUTSP\remotes472c468be7c\cstawitz-jsonlite-59ed56d/DESCRIPTION' (1.1s)
+v  checking for file 'C:\Users\bai.li\AppData\Local\Temp\Rtmp6Pun8u\remotes4c10206a4bbe\cstawitz-jsonlite-59ed56d/DESCRIPTION' (701ms)
 ## 
   
   
   
--  preparing 'jsonlite': (1.2s)
+-  preparing 'jsonlite': (862ms)
 ##    checking DESCRIPTION meta-information ...
   
    checking DESCRIPTION meta-information ... 
@@ -165,7 +168,7 @@ v  checking DESCRIPTION meta-information
   
   
   
--  checking for LF line-endings in source and make files and shell scripts (669ms)
+-  checking for LF line-endings in source and make files and shell scripts (481ms)
 ## 
   
   
@@ -180,21 +183,21 @@ v  checking DESCRIPTION meta-information
   
    
 ## </code></pre>
-<pre><code>## Installing package into 'C:/Users/bai.li/AppData/Local/Temp/RtmpGoI1T2/temp_libpath1f74acc1232'
+<pre><code>## Installing package into 'C:/Users/bai.li/AppData/Local/Temp/Rtmpc7jwza/temp_libpath571053df50cb'
 ## (as 'lib' is unspecified)</code></pre>
 <pre><code>##   
   
   
-   checking for file 'C:\Users\bai.li\AppData\Local\Temp\RtmpuSUTSP\remotes472c63f07c04\nmfs-fish-tools-r4MAS-13b21fa/DESCRIPTION' ...
+   checking for file 'C:\Users\bai.li\AppData\Local\Temp\Rtmp6Pun8u\remotes4c1012daaef\nmfs-fish-tools-r4MAS-c8b1c7b/DESCRIPTION' ...
   
-   checking for file 'C:\Users\bai.li\AppData\Local\Temp\RtmpuSUTSP\remotes472c63f07c04\nmfs-fish-tools-r4MAS-13b21fa/DESCRIPTION' ... 
+   checking for file 'C:\Users\bai.li\AppData\Local\Temp\Rtmp6Pun8u\remotes4c1012daaef\nmfs-fish-tools-r4MAS-c8b1c7b/DESCRIPTION' ... 
   
-v  checking for file 'C:\Users\bai.li\AppData\Local\Temp\RtmpuSUTSP\remotes472c63f07c04\nmfs-fish-tools-r4MAS-13b21fa/DESCRIPTION' (784ms)
+v  checking for file 'C:\Users\bai.li\AppData\Local\Temp\Rtmp6Pun8u\remotes4c1012daaef\nmfs-fish-tools-r4MAS-c8b1c7b/DESCRIPTION' (604ms)
 ## 
   
   
   
--  preparing 'r4MAS': (2.5s)
+-  preparing 'r4MAS': (1.9s)
 ##    checking DESCRIPTION meta-information ...
   
    checking DESCRIPTION meta-information ... 
@@ -205,20 +208,18 @@ v  checking DESCRIPTION meta-information
   
   
   
--  checking for LF line-endings in source and make files and shell scripts (558ms)
+-  checking for LF line-endings in source and make files and shell scripts (426ms)
 ## 
   
   
   
--  checking for empty or unneeded directories (2.1s)
+-  checking for empty or unneeded directories (1.5s)
 ## 
   
 Removed empty directory 
   
    Removed empty directory 'r4MAS/src/mas/third_party/ATL/docs/html'
 ## 
-  
-Removed empty directory 
   
    Removed empty directory 'r4MAS/src/mas/third_party/ATL/docs/latex'
 ## 
@@ -237,10 +238,11 @@ Warning in utils::tar(filepath, pkgname, compression = compression, compression_
   
    
 ## </code></pre>
-<pre><code>## Installing package into 'C:/Users/bai.li/AppData/Local/Temp/RtmpGoI1T2/temp_libpath1f74acc1232'
+<pre><code>## Installing package into 'C:/Users/bai.li/AppData/Local/Temp/Rtmpc7jwza/temp_libpath571053df50cb'
 ## (as 'lib' is unspecified)</code></pre>
-<pre><code>## Warning in i.p(...): installation of package 'C:/Users/bai.li/AppData/Local/
-## Temp/RtmpuSUTSP/file472c2d124951/r4MAS_0.1.0.tar.gz' had non-zero exit status</code></pre>
+<pre><code>## Warning in i.p(...): installation of package
+## 'C:/Users/bai.li/AppData/Local/Temp/Rtmp6Pun8u/file4c10691457c6/r4MAS_0.1.0.tar.gz'
+## had non-zero exit status</code></pre>
 </div>
 <div id="create-model" class="section level1">
 <h1 class="hasAnchor">

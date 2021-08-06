@@ -371,6 +371,9 @@ mas$recruit <- unlist(pop$undifferentiated$recruits$values)
 mas$f <- unlist(pop$undifferentiated$fishing_mortality$values)
 mas$landing <- unlist(flt$undifferentiated$catch_biomass$values)
 mas$survey <- unlist(srvy$undifferentiated$survey_biomass$values)
+mas$msy <- pop$MSY$msy
+mas$fmsy <- round(pop$MSY$F_msy, digits = 3)
+mas$ssbmsy <- pop$MSY$SSB_msy
 mas$agecomp <- apply(
   matrix(unlist(pop$undifferentiated$numbers_at_age$values),
     nrow = popdy$nyears,
@@ -484,10 +487,13 @@ legend("topright",
 ### Generate comparison table
 Compare estimated R0, q, and selectivity parameters. The estimated selectivity slope values from the `MAS` were converted using 1/slope to match the slope from the OM. 
 ```{r}
-# var <- c("R0", "q", "selexparm_fleet", "selexparm_survey")
+
 summary_table <- matrix(c(
   om$r0, mas$r0,
   om$q$survey1, mas$q[[1]],
+  om$msy, mas$msy,
+  om$fmsy, mas$fmsy, 
+  om$ssbmsy, mas$ssbmsy,
   om$selexparm_fleet$fleet1$A50.sel1, mas$selexparm_fleet$a50,
   om$selexparm_fleet$fleet1$slope.sel1, 1 / mas$selexparm_fleet$slope,
   om$selexparm_survey$survey1$A50.sel1, mas$selexparm_survey$a50,
@@ -498,6 +504,7 @@ ncol = 2, byrow = TRUE
 colnames(summary_table) <- c("OM", "MAS")
 rownames(summary_table) <- c(
   "R0", "q",
+  "MSY", "FMSY", "SSBMSY",
   "Fleet selectivity A50",
   "Fleet selectivity slope",
   "Survey selectivity A50",
