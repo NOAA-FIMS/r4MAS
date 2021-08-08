@@ -1594,12 +1594,10 @@ struct Subpopulation {
 		//            std::cout << "F40_dum " << F40_dum << "\n";
 
 		for (int i = 0; i < L_eq.size(); i++) {
-std::cout<<L_eq[i] <<" ";
 			if (L_eq[i] >= max) {
 				max = L_eq[i];
 				max_index = i;
 			}
-std::cout<<"\n";
 			//                if (std::fabs(spr_ratio[i] - 0.001) == F01_dum) {
 			//                    F01_out = F[i];
 			//                }
