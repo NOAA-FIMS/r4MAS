@@ -118,14 +118,14 @@
 
       
 
-      </header><script src="003_ASAPCaseStudy_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><script src="003_ASAPCaseStudy_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>ASAP Case Study</h1>
             
-            <h4 class="date">Updated on 08/06/2021</h4>
+            <h4 class="date">Updated on 08/09/2021</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/nmfs-fish-tools/r4MAS/blob/master/vignettes/003_ASAPCaseStudy.Rmd"><code>vignettes/003_ASAPCaseStudy.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/nmfs-fish-tools/r4MAS/blob/master/../../../vignettes/003_ASAPCaseStudy.Rmd"><code>../../../vignettes/003_ASAPCaseStudy.Rmd</code></a></small>
       <div class="hidden name"><code>003_ASAPCaseStudy.Rmd</code></div>
 
     </div>
@@ -139,17 +139,19 @@
 <code class="sourceCode R"><span class="co"># remotes::install_github("nmfs-fish-tools/r4MAS")</span>
 
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://nmfs-fish-tools.github.io/r4MAS/">r4MAS</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.rcpp.org">Rcpp</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://arxiv.org/abs/1403.2805">jsonlite</a></span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning: package 'jsonlite' was built under R version 4.0.5</code></pre>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.rcpp.org">Rcpp</a></span><span class="op">)</span></code></pre></div>
+<pre><code>## Warning: package 'Rcpp' was built under R version 4.0.5</code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://arxiv.org/abs/1403.2805">jsonlite</a></span><span class="op">)</span></code></pre></div>
+<pre><code>## Warning: package 'jsonlite' was built under R version 4.0.5</code></pre>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">fishsad</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">nmfspalette</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="read-asap-input-file" class="section level2">
 <h2 class="hasAnchor">
 <a href="#read-asap-input-file" class="anchor"></a>Read ASAP input file</h2>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Working directory</span>
 <span class="va">temp_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>
 
@@ -160,7 +162,7 @@
 <div id="convert-asap-inputs-to-mas-inputs" class="section level2">
 <h2 class="hasAnchor">
 <a href="#convert-asap-inputs-to-mas-inputs" class="anchor"></a>Convert ASAP inputs to MAS inputs</h2>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Load r4MAS module</span>
 <span class="va">r4mas</span> <span class="op">&lt;-</span> <span class="fu">Rcpp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Rcpp/man/Module.html">Module</a></span><span class="op">(</span><span class="st">"rmas"</span>, PACKAGE <span class="op">=</span> <span class="st">"r4MAS"</span><span class="op">)</span>
 
@@ -442,7 +444,7 @@
 <div id="build-the-mas-model" class="section level2">
 <h2 class="hasAnchor">
 <a href="#build-the-mas-model" class="anchor"></a>Build the MAS model</h2>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mas_model</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">MASModel</span><span class="op">)</span>
 
 <span class="va">mas_model</span><span class="op">$</span><span class="va">nyears</span> <span class="op">&lt;-</span> <span class="va">nyears</span>
@@ -468,7 +470,7 @@
 <h2 class="hasAnchor">
 <a href="#run-mas-save-mas-outputs-and-reset-mas" class="anchor"></a>Run <code>MAS</code>, save <code>MAS</code> outputs, and reset <code>MAS</code>
 </h2>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Run MAS</span>
 <span class="va">mas_model</span><span class="op">$</span><span class="fu">Run</span><span class="op">(</span><span class="op">)</span>
 
@@ -487,7 +489,7 @@
 <h2 class="hasAnchor">
 <a href="#aggregate-estimates-of-key-variables-from-the-asap" class="anchor"></a>Aggregate estimates of key variables from the <code>ASAP</code>
 </h2>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read ASAP outputs</span>
 <span class="va">asap</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>
 
@@ -512,7 +514,7 @@
 <h2 class="hasAnchor">
 <a href="#aggregate-estimates-of-key-variables-from-the-mas" class="anchor"></a>Aggregate estimates of key variables from the <code>MAS</code>
 </h2>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">parameter</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">mas_output</span><span class="op">$</span><span class="va">estimated_parameters</span><span class="op">$</span><span class="va">parameters</span><span class="op">)</span>
 <span class="va">parameter_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">parameter</span>, ncol <span class="op">=</span> <span class="fl">3</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">parameter_table</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
@@ -529,82 +531,82 @@
 
 <span class="va">parameter_table</span></code></pre></div>
 <pre><code>##                       Parameter     Value  Gradient
-## 1                           q_1  0.116908  0.017070
-## 2                      log_R0_1  6.290755  1.305260
-## 3                            h1  0.631224  1.053281
-## 4   recruitment_deviations[0]_1 -0.153794 -0.000168
-## 5   recruitment_deviations[1]_1 -0.001741  0.013890
-## 6   recruitment_deviations[2]_1 -0.575916  0.009274
-## 7   recruitment_deviations[3]_1 -0.254822  0.021837
-## 8   recruitment_deviations[4]_1 -1.053749  0.011025
-## 9   recruitment_deviations[5]_1  1.592833  0.191151
-## 10  recruitment_deviations[6]_1  0.095964  0.055116
-## 11  recruitment_deviations[7]_1 -0.266458  0.050897
-## 12  recruitment_deviations[8]_1  0.330642  0.134924
-## 13  recruitment_deviations[9]_1 -1.388167  0.037835
-## 14 recruitment_deviations[10]_1  0.507349  0.303773
-## 15 recruitment_deviations[11]_1 -0.041130  0.192713
-## 16 recruitment_deviations[12]_1 -0.106867  0.179551
-## 17 recruitment_deviations[13]_1 -0.021576  0.165660
-## 18 recruitment_deviations[14]_1  0.063999  0.163188
-## 19 recruitment_deviations[15]_1 -0.834270  0.058345
-## 20 recruitment_deviations[16]_1  0.480928  0.144848
-## 21 recruitment_deviations[17]_1 -0.247500  0.028501
-## 22 recruitment_deviations[18]_1 -0.269909  0.006398
-## 23 recruitment_deviations[19]_1 -0.785689  0.001478
-## 24   logistic_selectivity_a50_2  3.271390 -0.003725
-## 25 logistic_selectivity_slope_2  0.645195 -0.002530
-## 26    age_base_selectivity[7]_1  0.918583  0.051471
-## 27    age_base_selectivity[2]_1  0.610447 -0.148850
-## 28    age_base_selectivity[8]_1  0.979696  0.039036
-## 29    age_base_selectivity[9]_1  1.134704  0.013258
-## 30    age_base_selectivity[1]_1  0.348631 -0.352825
-## 31    age_base_selectivity[0]_1  0.155161 -0.505161
-## 32    age_base_selectivity[4]_1  0.937463 -0.036559
-## 33    age_base_selectivity[6]_1  0.984136  0.022594
-## 34    age_base_selectivity[5]_1  0.918760  0.095141
-## 35    age_base_selectivity[3]_1  0.872329  0.051043
-## 36   fishing_mortality[18][0]_1  0.100878  2.724678
-## 37    fishing_mortality[1][0]_1  0.073877 -0.052054
-## 38    fishing_mortality[9][0]_1  0.413989 -0.485666
-## 39    fishing_mortality[4][0]_1  0.089353 -0.270743
-## 40   fishing_mortality[11][0]_1  0.588622 -0.381165
-## 41    fishing_mortality[7][0]_1  0.268735 -0.139903
-## 42   fishing_mortality[14][0]_1  0.134571 -0.742779
-## 43   fishing_mortality[13][0]_1  0.099186  1.243055
-## 44    fishing_mortality[3][0]_1  0.127339 -0.075364
-## 45    fishing_mortality[8][0]_1  0.353819 -0.274306
-## 46   fishing_mortality[10][0]_1  0.573502 -0.292178
-## 47   fishing_mortality[16][0]_1  0.076696  0.752208
-## 48    fishing_mortality[5][0]_1  0.144338 -0.367369
-## 49    fishing_mortality[0][0]_1  0.014865  2.638941
-## 50    fishing_mortality[2][0]_1  0.103359 -0.263616
-## 51    fishing_mortality[6][0]_1  0.361284 -0.070990
-## 52   fishing_mortality[12][0]_1  0.504904 -0.379430
-## 53   fishing_mortality[19][0]_1  0.067246  3.569019
-## 54   fishing_mortality[17][0]_1  0.032234  6.088611
-## 55   fishing_mortality[15][0]_1  0.081250  2.369413
-## 56    m_initial_deviations[0]_1  0.993631  0.054309
-## 57    m_initial_deviations[1]_1  1.384646  0.026236
-## 58    m_initial_deviations[2]_1  0.816017 -0.047400
-## 59    m_initial_deviations[3]_1  1.527019 -0.011433
-## 60    m_initial_deviations[4]_1  1.640696  0.074517
-## 61    m_initial_deviations[5]_1  1.535742  0.016795
-## 62    m_initial_deviations[6]_1 -0.052808  0.012385
-## 63    m_initial_deviations[7]_1  1.915500  0.008823
-## 64    m_initial_deviations[8]_1  1.049745  0.022589
-## 65    m_initial_deviations[9]_1  0.452821  0.045967
-## 66    f_initial_deviations[0]_1  0.993631  0.054309
-## 67    f_initial_deviations[1]_1  1.384646  0.026236
-## 68    f_initial_deviations[2]_1  0.816017 -0.047400
-## 69    f_initial_deviations[3]_1  1.527019 -0.011433
-## 70    f_initial_deviations[4]_1  1.640696  0.074517
-## 71    f_initial_deviations[5]_1  1.535742  0.016795
-## 72    f_initial_deviations[6]_1 -0.052808  0.012385
-## 73    f_initial_deviations[7]_1  1.915500  0.008823
-## 74    f_initial_deviations[8]_1  1.049745  0.022589
-## 75    f_initial_deviations[9]_1  0.452821  0.045967</code></pre>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+## 1                           q_1  0.116949 -0.018617
+## 2                      log_R0_1  6.295283 -1.711829
+## 3                            h1  0.636953 -0.912915
+## 4   recruitment_deviations[0]_1 -0.153747 -0.000016
+## 5   recruitment_deviations[1]_1 -0.004119 -0.035666
+## 6   recruitment_deviations[2]_1 -0.578192 -0.022271
+## 7   recruitment_deviations[3]_1 -0.257362 -0.037346
+## 8   recruitment_deviations[4]_1 -1.056609 -0.021432
+## 9   recruitment_deviations[5]_1  1.589160 -0.359349
+## 10  recruitment_deviations[6]_1  0.091686 -0.093443
+## 11  recruitment_deviations[7]_1 -0.271399 -0.075946
+## 12  recruitment_deviations[8]_1  0.325468 -0.172808
+## 13  recruitment_deviations[9]_1 -1.392756 -0.036740
+## 14 recruitment_deviations[10]_1  0.502236 -0.308870
+## 15 recruitment_deviations[11]_1 -0.047241 -0.183931
+## 16 recruitment_deviations[12]_1 -0.114641 -0.148906
+## 17 recruitment_deviations[13]_1 -0.030546 -0.130485
+## 18 recruitment_deviations[14]_1  0.055766 -0.122450
+## 19 recruitment_deviations[15]_1 -0.841212 -0.040833
+## 20 recruitment_deviations[16]_1  0.475124 -0.101875
+## 21 recruitment_deviations[17]_1 -0.252784 -0.021942
+## 22 recruitment_deviations[18]_1 -0.274465 -0.007367
+## 23 recruitment_deviations[19]_1 -0.788804  0.000010
+## 24   logistic_selectivity_a50_2  3.273007  0.005008
+## 25 logistic_selectivity_slope_2  0.645471 -0.008571
+## 26    age_base_selectivity[2]_1  0.604844  0.120519
+## 27    age_base_selectivity[4]_1  0.929428 -0.060273
+## 28    age_base_selectivity[0]_1  0.153690  0.536991
+## 29    age_base_selectivity[1]_1  0.345386  0.369546
+## 30    age_base_selectivity[3]_1  0.864307 -0.113664
+## 31    age_base_selectivity[5]_1  0.910984 -0.081366
+## 32    age_base_selectivity[8]_1  0.972771 -0.023041
+## 33    age_base_selectivity[9]_1  1.127300 -0.010837
+## 34    age_base_selectivity[6]_1  0.976091 -0.070698
+## 35    age_base_selectivity[7]_1  0.910920 -0.064953
+## 36    fishing_mortality[9][0]_1  0.417633  0.265260
+## 37    fishing_mortality[3][0]_1  0.128548  0.220976
+## 38    fishing_mortality[6][0]_1  0.364563  0.278559
+## 39   fishing_mortality[10][0]_1  0.578567  0.331463
+## 40    fishing_mortality[8][0]_1  0.357032  0.256048
+## 41    fishing_mortality[0][0]_1  0.015024 -6.292613
+## 42   fishing_mortality[12][0]_1  0.509180  0.265233
+## 43    fishing_mortality[2][0]_1  0.104367  0.150008
+## 44    fishing_mortality[7][0]_1  0.271166  0.203328
+## 45   fishing_mortality[11][0]_1  0.593749  0.249321
+## 46   fishing_mortality[14][0]_1  0.135597 -0.575205
+## 47   fishing_mortality[15][0]_1  0.081841 -1.034255
+## 48   fishing_mortality[16][0]_1  0.077223 -1.695111
+## 49   fishing_mortality[13][0]_1  0.099986 -0.770485
+## 50    fishing_mortality[1][0]_1  0.074621  0.509506
+## 51    fishing_mortality[4][0]_1  0.090183  0.322404
+## 52    fishing_mortality[5][0]_1  0.145645  0.270227
+## 53   fishing_mortality[19][0]_1  0.067622 -2.940095
+## 54   fishing_mortality[18][0]_1  0.101487 -1.285786
+## 55   fishing_mortality[17][0]_1  0.032445 -4.556905
+## 56    f_initial_deviations[0]_1  0.989855  0.075640
+## 57    f_initial_deviations[1]_1  1.380563  0.046003
+## 58    f_initial_deviations[2]_1  0.813330  0.014339
+## 59    f_initial_deviations[3]_1  1.524080  0.080196
+## 60    f_initial_deviations[4]_1  1.628542 -0.263628
+## 61    f_initial_deviations[5]_1  1.529723 -0.025984
+## 62    f_initial_deviations[6]_1 -0.066398 -0.019439
+## 63    f_initial_deviations[7]_1  1.912079  0.020137
+## 64    f_initial_deviations[8]_1  1.037958 -0.002288
+## 65    f_initial_deviations[9]_1  0.445281  0.022808
+## 66    m_initial_deviations[0]_1  0.989855  0.075640
+## 67    m_initial_deviations[1]_1  1.380563  0.046003
+## 68    m_initial_deviations[2]_1  0.813330  0.014339
+## 69    m_initial_deviations[3]_1  1.524080  0.080196
+## 70    m_initial_deviations[4]_1  1.628542 -0.263628
+## 71    m_initial_deviations[5]_1  1.529723 -0.025984
+## 72    m_initial_deviations[6]_1 -0.066398 -0.019439
+## 73    m_initial_deviations[7]_1  1.912079  0.020137
+## 74    m_initial_deviations[8]_1  1.037958 -0.002288
+## 75    m_initial_deviations[9]_1  0.445281  0.022808</code></pre>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">popdy</span> <span class="op">&lt;-</span> <span class="va">mas_output</span><span class="op">$</span><span class="va">population_dynamics</span>
 <span class="va">pop</span> <span class="op">&lt;-</span> <span class="va">popdy</span><span class="op">$</span><span class="va">populations</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="va">flt</span> <span class="op">&lt;-</span> <span class="va">popdy</span><span class="op">$</span><span class="va">fleets</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
@@ -639,7 +641,7 @@
 <h2 class="hasAnchor">
 <a href="#generate-comparison-figures" class="anchor"></a>Generate comparison figures</h2>
 <p>Compare temporal trends of biomass(B), abundance(A), spawning stock biomass (SSB), recruit (R), fishing mortality (F), Landings (L), and Survey index (SI) from <code>ASAP</code> (dots) and <code>MAS</code> (lines).</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">years</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">asap_output</span><span class="op">$</span><span class="va">N.age</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 <span class="va">col</span> <span class="op">&lt;-</span> <span class="fu">nmfspalette</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nmfspalette/man/nmfs_palette.html">nmfs_palette</a></span><span class="op">(</span><span class="st">"regional web"</span><span class="op">)</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
@@ -675,7 +677,7 @@
 <span class="op">)</span></code></pre></div>
 <p><img src="003_ASAPCaseStudy_files/figure-html/unnamed-chunk-9-1.png" width="960"></p>
 <p>Compare age composition from the <code>ASAP</code> (dots) and <code>MAS</code> (lines).</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">3</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 <span class="va">col</span> <span class="op">&lt;-</span> <span class="fu">nmfspalette</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nmfspalette/man/nmfs_palette.html">nmfs_palette</a></span><span class="op">(</span><span class="st">"regional web"</span><span class="op">)</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
 <span class="va">var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"agecomp"</span><span class="op">)</span>
@@ -707,7 +709,7 @@
 <span class="op">)</span></code></pre></div>
 <p><img src="003_ASAPCaseStudy_files/figure-html/unnamed-chunk-10-1.png" width="960"></p>
 <p>Compare recruitment deviations over years from the OM and <code>MAS</code>.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="va">col</span> <span class="op">&lt;-</span> <span class="fu">nmfspalette</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nmfspalette/man/nmfs_palette.html">nmfs_palette</a></span><span class="op">(</span><span class="st">"regional web"</span><span class="op">)</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html">barplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">asap</span><span class="op">$</span><span class="va">recruit_deviation</span>, <span class="va">mas</span><span class="op">$</span><span class="va">recruit_deviation</span><span class="op">)</span>,
@@ -727,7 +729,7 @@
 <h3 class="hasAnchor">
 <a href="#generate-comparison-table" class="anchor"></a>Generate comparison table</h3>
 <p>Compare estimated R0, q, and h.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># var &lt;- c("R0", "h", "q")</span>
 <span class="va">summary_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
   <span class="va">asap</span><span class="op">$</span><span class="va">r0</span>, <span class="va">mas</span><span class="op">$</span><span class="va">r0</span>,
@@ -740,9 +742,9 @@ ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op"
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">summary_table</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"R0"</span>, <span class="st">"h"</span>, <span class="st">"q"</span><span class="op">)</span>
 <span class="va">summary_table</span></code></pre></div>
 <pre><code>##           ASAP        MAS
-## R0 471.7017000 539.560544
-## h    0.5792984   0.631224
-## q    0.1289099   0.116908</code></pre>
+## R0 471.7017000 542.009213
+## h    0.5792984   0.636953
+## q    0.1289099   0.116949</code></pre>
 </div>
 </div>
   </div>

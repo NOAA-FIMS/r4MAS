@@ -118,13 +118,13 @@
 
       
 
-      </header><script src="001_Introduction_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><script src="001_Introduction_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/nmfs-fish-tools/r4MAS/blob/master/vignettes/001_Introduction.Rmd"><code>vignettes/001_Introduction.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/nmfs-fish-tools/r4MAS/blob/master/../../../vignettes/001_Introduction.Rmd"><code>../../../vignettes/001_Introduction.Rmd</code></a></small>
       <div class="hidden name"><code>001_Introduction.Rmd</code></div>
 
     </div>
@@ -144,6 +144,7 @@
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"nmfs-fish-tools/r4MAS"</span><span class="op">)</span></code></pre></div>
 <p>Next, you will need to load the .dll included in the r4MAS package.</p>
 <pre><code>## Loading required package: Rcpp</code></pre>
+<pre><code>## Warning: package 'Rcpp' was built under R version 4.0.5</code></pre>
 <pre><code>## Loading required package: r4MAS</code></pre>
 </div>
 <div id="setting-model-specifications" class="section level2">
@@ -151,10 +152,10 @@
 <a href="#setting-model-specifications" class="anchor"></a>Setting model specifications</h2>
 <p>Next, we define model scalars, such as the number of years of the model, the number of seasons, and the vector of ages. For this example, we will use the test data created by <code>rmas::write_test_data()</code>, but this can be replaced by user input data later on in the script.</p>
 <p>r4MAS uses classes to parallel the object-oriented structure of MAS. In R, model classes are initialized using the <code>new()</code> command. For each model component, the associated class is initialized and then its attributes are populated. To view available attributes for each class, use the <code>show()</code> function as shown below.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># View attributes and methods associated with each class</span>
 <span class="fu">show</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Area</span><span class="op">)</span></code></pre></div>
-<pre><code>## C++ class 'Area' &lt;00000000168c3730&gt;
+<pre><code>## C++ class 'Area' &lt;000000001e7d9970&gt;
 ## Constructors:
 ##     Area()
 ## 
@@ -163,7 +164,7 @@
 ##     std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; name
 ## 
 ## Methods: no methods exposed by this class</code></pre>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># define area</span>
 <span class="va">area1</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Area</span><span class="op">)</span>
 <span class="va">area1</span><span class="op">$</span><span class="va">name</span> <span class="op">&lt;-</span> <span class="st">"area1"</span></code></pre></div>
@@ -172,7 +173,7 @@
 <h2 class="hasAnchor">
 <a href="#setting-parameter-values" class="anchor"></a>Setting parameter values</h2>
 <p>Next, we populate the parameter constructors for each different set of parameters: recruitment, growth, maturity, mortality, and movement. For functions with several parameters (e.g. the Beverton-Holt recruitment function), the <code><a href="../reference/create_par_section.html">create_par_section()</a></code> function exists. This takes a number of arguments: the type of section, the associated object created for that function, then a series of vectors of length equivalent to the number of parameters. These vectors denote the name, lower bound, upper bound, units, phase, and value for each parameter. If any parameter doesn’t have one of these attributes, you can use an NA in the vector. Or, if one of the attributes is not defined for all attributes (e.g. units in this case), you can pass a single NA for that attribute or leave the argument blank.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Recruitment</span>
 <span class="va">recruitment</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">BevertonHoltRecruitment</span><span class="op">)</span>
 
@@ -232,7 +233,7 @@
 <span class="va">movement</span><span class="op">$</span><span class="va">connectivity_males</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.0</span><span class="op">)</span>
 <span class="va">movement</span><span class="op">$</span><span class="va">connectivity_recruits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.0</span><span class="op">)</span></code></pre></div>
 <p>Next we define the functions related to fishing, i.e. fishing mortality and selectivity.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Fishing Mortality</span>
 <span class="va">fishing_mortality</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">FishingMortality</span><span class="op">)</span>
 <span class="va">fishing_mortality</span><span class="op">$</span><span class="va">estimate</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span>
@@ -266,7 +267,7 @@
 <h2 class="hasAnchor">
 <a href="#creating-the-population" class="anchor"></a>Creating the population</h2>
 <p>Now that the classes for parameter values and movement have been created, you can create a population class and add the relevant classes.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">population</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Population</span><span class="op">)</span>
 
 <span class="kw">for</span> <span class="op">(</span><span class="va">y</span> <span class="kw">in</span> <span class="fl">0</span><span class="op">:</span><span class="op">(</span><span class="va">nyears</span><span class="op">)</span><span class="op">)</span>
@@ -284,7 +285,7 @@
 <h2 class="hasAnchor">
 <a href="#adding-data-to-the-model" class="anchor"></a>Adding data to the model</h2>
 <p>Next, use the data classes (<code>IndexData</code> and <code>AgeCompData</code>) to add values, error, and sample sizes for each data set. Indices and error values are the same length as the number of years, <code>{r} nyears</code>. Age comp data are passed as a vector of length <code>nages</code> x <code>nyears</code>. The <code>sample_size</code> vectors should be of length <code>nyears</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Index data</span>
 <span class="va">catch_index</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">IndexData</span><span class="op">)</span>
 <span class="va">catch_index</span><span class="op">$</span><span class="va">values</span> <span class="op">&lt;-</span> <span class="va">input_data</span><span class="op">$</span><span class="va">catch_index</span><span class="op">$</span><span class="va">values</span>
@@ -310,7 +311,7 @@
 <h2 class="hasAnchor">
 <a href="#defining-fleets" class="anchor"></a>Defining fleets</h2>
 <p>To make each fishing fleet, you can use the <code>make_fleet()</code> function. This takes the fishery data associated with that fleet, the selectivity associated with that fleet, the area, and fishing mortality parameters and returns an <code>r4mas</code> fleet object.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># NLL models</span>
 <span class="va">fleet_index_comp_nll</span> <span class="op">&lt;-</span> <span class="va">survey_index_comp_nll</span> <span class="op">&lt;-</span> <span class="va">survey2_index_comp_nll</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Lognormal</span><span class="op">)</span>
 <span class="va">fleet_age_comp_nll</span> <span class="op">&lt;-</span> <span class="va">survey_age_comp_nll</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">MultinomialRobust</span><span class="op">)</span>
@@ -336,7 +337,7 @@
 <h2 class="hasAnchor">
 <a href="#build-and-run-the-model-and-write-output" class="anchor"></a>Build and run the model and write output</h2>
 <p>Finally, we create a <code>MASModel</code> object and add the relevant model configuration parameters, fleets, surveys, and populations to the model object. We call the <code>Run()</code> method to run the model and then write the output to a .json file.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># build the MAS model</span>
 <span class="va">mas_model</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">MASModel</span><span class="op">)</span>
 <span class="va">mas_model</span><span class="op">$</span><span class="va">nyears</span> <span class="op">&lt;-</span> <span class="va">nyears</span>
@@ -369,11 +370,11 @@
 <h2 class="hasAnchor">
 <a href="#read-in-model-output" class="anchor"></a>Read in model output</h2>
 <p>We use the <code>jsonlite</code> package to read in model output. This creates a list in your R environment with the associated output values and estimates.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://arxiv.org/abs/1403.2805">jsonlite</a></span><span class="op">)</span></code></pre></div>
 <pre><code>## Loading required package: jsonlite</code></pre>
 <pre><code>## Warning: package 'jsonlite' was built under R version 4.0.5</code></pre>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">json_loc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span>
   <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"r4MAS"</span><span class="op">)</span>,
   <span class="st">"mas_s2_output.json"</span>
@@ -391,7 +392,7 @@
 <span class="co"># View the estimated values</span>
 <span class="va">popdy</span><span class="op">$</span><span class="va">fleet</span><span class="op">$</span><span class="va">undifferentiated</span></code></pre></div>
 <pre><code>## NULL</code></pre>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># popdy$survey$undifferentiated</span></code></pre></div>
 </div>
   </div>
