@@ -1,22 +1,22 @@
-Package: r4MAS
-Type: Package
-Title: Read and Write Input and Output for MAS Model
-Version: 0.1.0
-Author: Matthew Supernaw <matthew.supernaw@noaa.gov>, Christine Stawitz <christine.stawitz@noaa.gov>, and Bai Li <bai.li@noaa.gov>, 
-Maintainer: Christine Stawitz <christine.stawitz@noaa.gov>
-Description: This is a package to read in and create MAS input files and process output of the MAS model. 
-License: GPL-3
-Encoding: UTF-8
-LazyData: true
-Depends: R (>= 4.0.0)
-StagedInstall: no
-Imports:
-    jsonlite,
-    Rcpp
-RoxygenNote: 7.1.1
-LinkingTo: 
-    Rcpp
-Suggests: 
-    testthat (>= 2.1.0)
-URL: https://nmfs-fish-tools.github.io/r4MAS/, https://github.com/nmfs-fish-tools/r4MAS
-BugReports: https://github.com/nmfs-fish-tools/r4MAS/issues 
+Package: r4MAS  
+Type: Package  
+Title: Read and Write Input and Output for MAS Model  
+Version: 0.1.0  
+Author: Matthew Supernaw <matthew.supernaw@noaa.gov>, Christine Stawitz <christine.stawitz@noaa.gov>, and Bai Li <bai.li@noaa.gov>  
+Maintainer: Christine Stawitz <christine.stawitz@noaa.gov>  
+Description: This is a package to read in and create MAS input files and process output of the MAS model.  
+License: GPL-3  
+Encoding: UTF-8  
+LazyData: true  
+Depends: R (>= 4.0.0)  
+StagedInstall: no  
+Imports:  
+    jsonlite,  
+    Rcpp  
+RoxygenNote: 7.1.1  
+LinkingTo:   
+    Rcpp  
+Suggests:   
+    testthat (>= 2.1.0)  
+URL: https://nmfs-fish-tools.github.io/r4MAS/, https://github.com/nmfs-fish-tools/r4MAS  
+BugReports: https://github.com/nmfs-fish-tools/r4MAS/issues  
