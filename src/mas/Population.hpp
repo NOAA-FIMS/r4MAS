@@ -228,6 +228,7 @@ struct Subpopulation {
 		fecundity_at_age.resize(years * seasons * ages.size());
 		spawning_numbers_at_age.resize(years * seasons * ages.size());
 		spawning_stock_biomass.resize(years * seasons);
+                spawning_stock_biomass_variance.resize(years*seasons);
 		recruitment.resize(years * seasons);
 		redistributed_recruits.resize(years * seasons);
 		immigrant_recruits.resize(years * seasons);

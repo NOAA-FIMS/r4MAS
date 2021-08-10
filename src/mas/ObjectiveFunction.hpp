@@ -87,7 +87,7 @@ namespace mas {
 
     				for(int i =0; i < (*spit).second.spawning_stock_biomass.size(); i++){
     					REAL_T temp = this->GetVarianceOfDerivedValue((*spit).second.spawning_stock_biomass[i].info->id, pid);
-    				      (*spit).second.spawning_stock_biomass_variance.push_back(temp);
+    				        (*spit).second.spawning_stock_biomass_variance[i] = temp;
 					std::cout<<"\n"<<temp<<"\t";
 
     				}
