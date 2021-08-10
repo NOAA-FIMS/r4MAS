@@ -790,7 +790,6 @@ namespace atl {
 		}
 		inverse_hessian.Invert();
 
-                std::cout<<"\n"<<inverse_hessian<<"\n";
 
 		std::vector<T> se(parameters.size());
 		for (int i = 0; i < parameters.size(); i++) {
@@ -837,6 +836,8 @@ namespace atl {
 		for (int i = 0; i < parameters.size(); i++) {
 			g_d(0,i) = atl::Variable<T>::tape.Value(parameters[i]);
 		}
+
+                std::cout<<"\n"<<g_d<<"\n";
 
 		atl::RealMatrix<T> ret = g_d*cov*g;
 
