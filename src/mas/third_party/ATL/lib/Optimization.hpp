@@ -790,6 +790,8 @@ namespace atl {
 		}
 		inverse_hessian.Invert();
 
+                std::cout<<"\n"<<inverse_hessian<<"\n";
+
 		std::vector<T> se(parameters.size());
 		for (int i = 0; i < parameters.size(); i++) {
 			se[i] = std::sqrt(inverse_hessian(i, i));
