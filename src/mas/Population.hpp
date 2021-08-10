@@ -121,6 +121,7 @@ struct Subpopulation {
 
 	std::vector<variable> fecundity_at_age;
 	std::vector<variable> spawning_stock_biomass;
+        std::vector<REAL_T> spawning_stock_biomass_variance;
 	std::vector<variable> redistributed_recruits;
 	std::vector<variable> immigrant_recruits;
 	std::vector<variable> immigrant_recruits_biomass;

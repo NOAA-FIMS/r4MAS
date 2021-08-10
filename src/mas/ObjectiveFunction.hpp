@@ -84,10 +84,11 @@ namespace mas {
 							pid.push_back((*spit).second.recruitment_model->estimated_parameters[j]->info->id);
 							std::cout<<(*spit).second.recruitment_model->estimated_parameters[j]->GetName()<<"   ";
 				        }
+
     				for(int i =0; i < (*spit).second.spawning_stock_biomass.size(); i++){
-    					
-    				
-					std::cout<<"\n"<<this->GetVarianceOfDerivedValue((*spit).second.spawning_stock_biomass[i].info->id, pid)<<"\t";
+    					REAL_T temp = this->GetVarianceOfDerivedValue((*spit).second.spawning_stock_biomass[i].info->id, pid);
+    				      (*spit).second.spawning_stock_biomass_variance.push_back(temp)
+					std::cout<<"\n"<<temp<<"\t";
 
     				}
 				std::cout<<"\n";

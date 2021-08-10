@@ -1121,10 +1121,14 @@ class JSONOutputGenerator {
 	void GeneratePopulationSpawningStockBiomass(rapidjson::Value &popobject,
 			const mas::Subpopulation<REAL_T> &popinfo) {
 		rapidjson::Value obj(rapidjson::kArrayType);
+                rapidjson::Value obj2(rapidjson::kArrayType);
 
 		this->GenerateArrayObject(obj, popinfo.spawning_stock_biomass, 2,
 				popinfo.years, popinfo.seasons, popinfo.ages.size());
+                this->GenerateArrayObject(obj2, popinfo.spawning_stock_biomass_variance, 2,
+				popinfo.years, popinfo.seasons, popinfo.ages.size());
 		popobject.AddMember("values", obj, this->document.GetAllocator());
+                popobject.AddMember("variance", obj2, this->document.GetAllocator());
 	}
 
 	void GeneratePopulationSpawningStockBiomass(rapidjson::Value &popobject,
