@@ -7,5 +7,6 @@
 
 .LastLib <- function(libpath)
  {
+   print("unloading r4MAS")
    library.dynam.unload("r4MAS", libpath)
 }
