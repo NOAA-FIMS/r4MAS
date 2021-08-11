@@ -4,3 +4,8 @@
   library.dynam("r4MAS", pkgname, libname)
 
 }
+
+.LastLib <- function(libpath)
+ {
+   library.dynam.unload("r4MAS", libpath)
+}
