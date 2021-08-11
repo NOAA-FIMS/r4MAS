@@ -1,6 +1,6 @@
 # Load RMAS module -------------------------------------------------------------------------
 .onLoad <- function(libname, pkgname) {
-
+  print("loading r4MAS")
   library.dynam("r4MAS", pkgname, libname)
 
 }
