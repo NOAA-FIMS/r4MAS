@@ -7376,7 +7376,7 @@ public:
 		try {
 
 			if (mas->mas_instance.info.valid_configuration == true) {
-				atl::Variable<double>::tape(10000);
+				atl::Variable<double>::tape =atl::Variable<double>(10000);
 				atl::LBFGS<double> min;
 				min.SetPrintWidth(2);
 				min.max_line_searches = this->max_line_searches;
