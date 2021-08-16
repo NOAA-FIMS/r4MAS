@@ -121,7 +121,6 @@ namespace mas {
 
         std::vector<variable> fecundity_at_age;
         std::vector<variable> spawning_stock_biomass;
-        std::vector<REAL_T> spawning_stock_biomass_variance;
         std::vector<variable> redistributed_recruits;
         std::vector<variable> immigrant_recruits;
         std::vector<variable> immigrant_recruits_biomass;
@@ -142,7 +141,7 @@ namespace mas {
         std::vector<variable> P; //selectivity at age.
         variable sum_of_Z;
         std::vector<variable> S;
-
+        std::vector<variable> F_over_F_msy;
         std::vector<variable> numbers_at_age;
         std::vector<variable> biomass_at_age;
         std::vector<variable> abundance;
@@ -161,6 +160,13 @@ namespace mas {
         static uint32_t length_weight_key_carryout;
 
         MaximumSustainableYield<REAL_T> msy;
+
+        //variance for derived quantities
+        std::vector<REAL_T> spawning_stock_biomass_variance;
+        std::vector<variable> F_over_F_msy_variance;
+
+
+
 
         REAL_T MSY; //     maximum sustainable yield
         REAL_T Dmsy; //    dead discards at MSY
@@ -271,6 +277,7 @@ namespace mas {
             catch_biomass_total.resize(years * seasons);
             expected_N.resize(years * seasons * ages.size());
             N_proj.resize(seasons * ages.size());
+            F_over_F_msy.resize(years * seasons);
         }
 
         inline void Reset() {
@@ -1702,6 +1709,10 @@ namespace mas {
             this->area->msy.SSB_F40_msy += this->msy.SSB_F40_msy;
             this->area->msy.B_F40_msy += this->msy.B_F40_msy;
             this->area->msy.E_F40_msy += this->msy.E_F40_msy;
+            
+            for(int i =0; i < this->F_over_F_msy.size(); i++){
+                this->F_over_F_msy[i]= this->fishing_mortality_total[i]/this->msy.F_msy;
+            }
             //
             std::cout << std::scientific;
             //
