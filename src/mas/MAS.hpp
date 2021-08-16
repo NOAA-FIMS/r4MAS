@@ -135,8 +135,8 @@ namespace mas {
             for (rit = info.recruitment_models.begin(); rit != info.recruitment_models.end(); rit++) {
                 (*rit).second->Prepare();
             }
-            
-            
+
+
             //this is probably deprecated
             for (selex_it = info.selectivity_models.begin(); selex_it != info.selectivity_models.end(); selex_it++) {
                 (*selex_it).second->Update(this->info.ages);
@@ -291,8 +291,8 @@ namespace mas {
             }
 
 
-            
-            
+
+
 
             //          
             /**
@@ -303,7 +303,7 @@ namespace mas {
             for (fit = info.fleets.begin(); fit != info.fleets.end(); ++fit) {
                 (*fit).second->ComputeProportions();
                 (*fit).second->ApplyOperatingModelError();
-                
+
                 info.data.push_back((*fit).second->catch_biomass_data);
                 info.data.push_back((*fit).second->catch_proportion_at_age_data);
                 info.data_dictionary[(*fit).second->id].push_back((*fit).second->catch_biomass_data);
@@ -368,21 +368,25 @@ namespace mas {
             std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >& pops =
                     info.GetPopulations();
             typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator it;
+
+            for (it = pops.begin(); it != pops.end(); ++it) {
+                (*it).second->do_msy_calculations = true;
+            }
             for (it = pops.begin(); it != pops.end(); ++it) {
                 (*it).second->PushToAreasAndFleets();
                 (*it).second->Finalize();
 
                 //                (*it).second->ComputeBiologicalReferencePoints();
             }
-            		
-           typename std::unordered_map<int, atl::intrusive_ptr<mas::Area<REAL_T> > >::iterator ait;
-           for(ait = this->info.areas.begin(); ait != this->info.areas.end(); ++ait){
-			   (*ait).second->msy.F_msy/=this->info.populations.size()*2.0;
-			   (*ait).second->msy.F30 /= this->info.populations.size()*2.0;
-			   (*ait).second->msy.F35 /= this->info.populations.size()*2.0;
-			   (*ait).second->msy.F40 /= this->info.populations.size()*2.0;
-            }       
-     }
+
+            typename std::unordered_map<int, atl::intrusive_ptr<mas::Area<REAL_T> > >::iterator ait;
+            for (ait = this->info.areas.begin(); ait != this->info.areas.end(); ++ait) {
+                (*ait).second->msy.F_msy /= this->info.populations.size()*2.0;
+                (*ait).second->msy.F30 /= this->info.populations.size()*2.0;
+                (*ait).second->msy.F35 /= this->info.populations.size()*2.0;
+                (*ait).second->msy.F40 /= this->info.populations.size()*2.0;
+            }
+        }
 
         void Report() {
 

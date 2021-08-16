@@ -355,6 +355,11 @@ public:
 		stack.resize(size);
 	}
 
+        Tape(const Tape<REAL_T>& other) {
+            stack.resize(other.stack.size());
+        }
+
+        
 	~Tape() {
 		std::cout << "Destructing tape " << this << std::endl;
 	}
