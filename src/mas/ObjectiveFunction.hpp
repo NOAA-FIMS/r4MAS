@@ -29,9 +29,9 @@ namespace mas {
         std::string data_path = "";
         std::string config_path = "";
         std::string ouput_path = "mas_output.json";
-	int references = 0;
-	
-	
+        int references = 0;
+
+
 
         typedef typename mas::VariableTrait<REAL_T>::variable variable;
 
@@ -56,53 +56,52 @@ namespace mas {
             }
 
         }
-	
-	
-    	void CalculateVarianceOfDerivedParameters(){
-    		typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator pit;
 
-    		for (pit = this->mas_instance.info.populations.begin(); pit != this->mas_instance.info.populations.end();
-    				++pit) {
+        void CalculateVarianceOfDerivedParameters() {
+            typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator pit;
 
-    			mas::Population<REAL_T> *population = (*pit).second.get();
-    			typename std::unordered_map<int, Subpopulation<REAL_T> >::iterator spit;
+            for (pit = this->mas_instance.info.populations.begin(); pit != this->mas_instance.info.populations.end();
+                    ++pit) {
+                (*pit).second->do_msy_calculations = true;
+                mas::Population<REAL_T> *population = (*pit).second.get();
+                typename std::unordered_map<int, Subpopulation<REAL_T> >::iterator spit;
 
-    			for(spit = population->females.begin(); spit != population->females.end(); ++spit){
-                                std::cout<<"spawning stock biomass variance for subpopulation "<<(*spit).second.id<<"\n";
-				std::vector<uint32_t> pid;
+                for (spit = population->females.begin(); spit != population->females.end(); ++spit) {
+                    std::cout << "spawning stock biomass variance for subpopulation " << (*spit).second.id << "\n";
+                    std::vector<uint32_t> pid;
 
 
-					for (int j = 0;j< (*spit).second.growth_model->estimated_parameters.size(); j++) {
+                    for (int j = 0; j < (*spit).second.growth_model->estimated_parameters.size(); j++) {
 
-							pid.push_back((*spit).second.growth_model->estimated_parameters[j]->info->id);
-							std::cout<<(*spit).second.growth_model->estimated_parameters[j]->GetName()<<"   ";
+                        pid.push_back((*spit).second.growth_model->estimated_parameters[j]->info->id);
+                        std::cout << (*spit).second.growth_model->estimated_parameters[j]->GetName() << "   ";
 
-				        }
-					
-					for (int j = 0;j< (*spit).second.recruitment_model->estimated_parameters.size(); j++) {
+                    }
 
-							pid.push_back((*spit).second.recruitment_model->estimated_parameters[j]->info->id);
-							std::cout<<(*spit).second.recruitment_model->estimated_parameters[j]->GetName()<<"   ";
-				        }
+                    for (int j = 0; j < (*spit).second.recruitment_model->estimated_parameters.size(); j++) {
 
-    				for(int i =0; i < (*spit).second.spawning_stock_biomass.size(); i++){
-    					REAL_T temp = this->GetVarianceOfDerivedValue((*spit).second.spawning_stock_biomass[i].info->id, pid);
-    				        (*spit).second.spawning_stock_biomass_variance[i] = temp;
-					std::cout<<"\n"<<temp<<"\t";
+                        pid.push_back((*spit).second.recruitment_model->estimated_parameters[j]->info->id);
+                        std::cout << (*spit).second.recruitment_model->estimated_parameters[j]->GetName() << "   ";
+                    }
 
-    				}
-				std::cout<<"\n";
-    			}
+                    for (int i = 0; i < (*spit).second.spawning_stock_biomass.size(); i++) {
+                        REAL_T temp = this->GetVarianceOfDerivedValue((*spit).second.spawning_stock_biomass[i].info->id, pid);
+                        (*spit).second.spawning_stock_biomass_variance[i] = temp;
+                        std::cout << "\n" << temp << "\t";
 
-    		}
-		}
+                    }
+                    std::cout << "\n";
+                }
+
+            }
+        }
 
         virtual void Finalize() {
-           
+
             this->SetVarianceCovariance();
             mas_instance.Finalize();
-	    this->CalculateVarianceOfDerivedParameters();
-//            mas_instance.Report();
+            this->CalculateVarianceOfDerivedParameters();
+            //            mas_instance.Report();
             mas::JSONOutputGenerator<REAL_T> json;
             std::ofstream output(this->ouput_path.data());
             output << json.GenerateOutput(mas_instance);
