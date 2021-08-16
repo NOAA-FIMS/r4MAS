@@ -1,13 +1,13 @@
-on: [workflow_dispatch]
-# on: 
-#   push:
-#     branches:
-#       - master
-#     tags:
-#       - v*
-#   pull_request:
-#     branches:
-#       - master
+# on: [workflow_dispatch]
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - v*
+  pull_request:
+    branches:
+      - master
 
 name: R-CMD-check and release
 
