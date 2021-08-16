@@ -11,10 +11,7 @@ LazyData: true
 Depends: R (>= 4.0.0)
 StagedInstall: no
 Imports:
-    jsonlite,
     Rcpp
-Remotes:
-    jeroen/jsonlite
 RoxygenNote: 7.1.1
 LinkingTo: 
     Rcpp
