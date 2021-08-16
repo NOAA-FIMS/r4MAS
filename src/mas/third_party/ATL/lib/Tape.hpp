@@ -354,12 +354,20 @@ public:
 		stack.reserve(size * 1.5);
 		stack.resize(size);
 	}
+<<<<<<< HEAD
 
         Tape(const Tape<REAL_T>& other) {
             stack.resize(other.stack.size());
         }
 
         
+=======
+	
+        Tape(const Tape<REAL_T>& other) {
+            stack.resize(other.stack.size());
+        }
+	
+>>>>>>> master
 	~Tape() {
 		std::cout << "Destructing tape " << this << std::endl;
 	}
