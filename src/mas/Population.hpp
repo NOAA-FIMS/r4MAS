@@ -1427,7 +1427,7 @@ namespace mas {
 
             mas::VariableTrait<REAL_T>::SetRecording(false);
             typedef typename mas::VariableTrait<REAL_T>::variable variable_t;
-
+           
             int year = this->years - 1;
             int season = this->seasons - 1;
             int nages = ages.size();

@@ -370,13 +370,13 @@ namespace mas {
             typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator it;
 
             for (it = pops.begin(); it != pops.end(); ++it) {
-                (*it).second->do_msy_calculations = true;
+//                (*it).second->do_msy_calculations = true;
             }
             for (it = pops.begin(); it != pops.end(); ++it) {
                 (*it).second->PushToAreasAndFleets();
                 (*it).second->Finalize();
 
-                //                (*it).second->ComputeBiologicalReferencePoints();
+                (*it).second->ComputeBiologicalReferencePoints();
             }
 
             typename std::unordered_map<int, atl::intrusive_ptr<mas::Area<REAL_T> > >::iterator ait;
