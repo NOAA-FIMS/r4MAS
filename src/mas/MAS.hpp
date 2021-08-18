@@ -376,7 +376,7 @@ namespace mas {
                 (*it).second->PushToAreasAndFleets();
                 (*it).second->Finalize();
 
-                (*it).second->ComputeBiologicalReferencePoints();
+               // (*it).second->ComputeBiologicalReferencePoints();
             }
 
             typename std::unordered_map<int, atl::intrusive_ptr<mas::Area<REAL_T> > >::iterator ait;
