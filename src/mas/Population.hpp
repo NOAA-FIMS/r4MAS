@@ -3393,9 +3393,9 @@ namespace mas {
             //                females[areas_list[area]->id].CalculateNumbersAtAgeEndYearPlusOne();
             //            }
 
-            if (this->do_msy_calculations) {
-                this->ComputeBiologicalReferencePoints();
-            }
+//            if (this->do_msy_calculations) {
+//                this->ComputeBiologicalReferencePoints();
+//            }
 
         }
 
