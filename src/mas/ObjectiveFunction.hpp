@@ -63,6 +63,7 @@ namespace mas {
             for(int i =0; i < this->mas_instance.info.estimated_parameters.size(); i++){
                 pid.push_back(this->mas_instance.info.estimated_parameters[i]->info->id);
             }
+            std::cout<<"Parameters size = "<<pid.size()<<"\n";
             for (pit = this->mas_instance.info.populations.begin(); pit != this->mas_instance.info.populations.end();
                     ++pit) {
                 (*pit).second->do_msy_calculations = true;
