@@ -837,9 +837,9 @@ namespace atl {
 			g_d(0,i) = atl::Variable<T>::tape.Value(parameters[i]);
 		}
 
-                std::cout<<"\n"<<g<<"\n\n";
+//                std::cout<<"\n"<<g<<"\n\n";
                 std::cout<<cov<<"\n\n";
-                std::cout<<g_d<<"\n\n";
+//                std::cout<<g_d<<"\n\n";
                 
 		atl::RealMatrix<T> ret = g_d*cov*g;
 
