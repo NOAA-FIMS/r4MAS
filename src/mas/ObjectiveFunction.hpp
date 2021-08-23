@@ -59,7 +59,10 @@ namespace mas {
 
         void CalculateVarianceOfDerivedParameters() {
             typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator pit;
-
+            std::vector<uint32_t> pid;
+            for(int i =0; i < this->mas_instance.info.estimated_parameters.size(); i++){
+                pid.push_back(this->mas_instance.info.estimated_parameters[i]->info->id);
+            }
             for (pit = this->mas_instance.info.populations.begin(); pit != this->mas_instance.info.populations.end();
                     ++pit) {
                 (*pit).second->do_msy_calculations = true;
@@ -68,21 +71,21 @@ namespace mas {
 
                 for (spit = population->females.begin(); spit != population->females.end(); ++spit) {
                     std::cout << "spawning stock biomass variance for subpopulation " << (*spit).second.id << "\n";
-                    std::vector<uint32_t> pid;
 
 
-                    for (int j = 0; j < (*spit).second.growth_model->estimated_parameters.size(); j++) {
 
-                        pid.push_back((*spit).second.growth_model->estimated_parameters[j]->info->id);
-                        std::cout << (*spit).second.growth_model->estimated_parameters[j]->GetName() << "   ";
-
-                    }
-
-                    for (int j = 0; j < (*spit).second.recruitment_model->estimated_parameters.size(); j++) {
-
-                        pid.push_back((*spit).second.recruitment_model->estimated_parameters[j]->info->id);
-                        std::cout << (*spit).second.recruitment_model->estimated_parameters[j]->GetName() << "   ";
-                    }
+//                    for (int j = 0; j < (*spit).second.growth_model->estimated_parameters.size(); j++) {
+//
+//                        pid.push_back((*spit).second.growth_model->estimated_parameters[j]->info->id);
+//                        std::cout << (*spit).second.growth_model->estimated_parameters[j]->GetName() << "   ";
+//
+//                    }
+//
+//                    for (int j = 0; j < (*spit).second.recruitment_model->estimated_parameters.size(); j++) {
+//
+//                        pid.push_back((*spit).second.recruitment_model->estimated_parameters[j]->info->id);
+//                        std::cout << (*spit).second.recruitment_model->estimated_parameters[j]->GetName() << "   ";
+//                    }
 
                     for (int i = 0; i < (*spit).second.spawning_stock_biomass.size(); i++) {
                         REAL_T temp = this->GetVarianceOfDerivedValue((*spit).second.spawning_stock_biomass[i].info->id, pid);
