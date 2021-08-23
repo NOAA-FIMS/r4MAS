@@ -821,7 +821,7 @@ namespace atl {
 		
 		atl::RealMatrix<T> g(parameters.size(),1);
 		atl::RealMatrix<T> g_d(1,parameters.size());
-		atl::RealMatrix<T> cov = GetVarianceCovariance(parameters);
+		atl::RealMatrix<T> cov = GetVarianceCovariance();//parameters);
 
 		//fill gradient of objective function w.r.t. parameters
 		for (int i = 0; i < parameters.size(); i++) {
