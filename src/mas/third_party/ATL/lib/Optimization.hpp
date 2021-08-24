@@ -734,8 +734,8 @@ namespace atl {
                 }
             }
             inverse_hessian.Invert();
-            std::cout<<"inverse hessian\n\n"<<
-                    inverse_hessian<<"\n\n\n";
+//            std::cout<<"inverse hessian\n\n"<<
+//                    inverse_hessian<<"\n\n\n";
 
 //
             std::vector<T> se(this->parameters_m.size());
