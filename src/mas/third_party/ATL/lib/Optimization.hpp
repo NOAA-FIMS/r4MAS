@@ -756,7 +756,7 @@ namespace atl {
             for (size_t i = 0; i < this->parameters_m.size(); i++) {
                 for (size_t j = 0; j < this->parameters_m.size(); j++) {
                     
-                    ret_m(i, j) = inverse_hessian(i, j) / outer_product(i, j);
+                    ret_m(i, j) = inverse_hessian(i, j) * outer_product(i, j);
                 }
             }
             
@@ -840,7 +840,7 @@ namespace atl {
 
 //                std::cout<<"\n"<<g<<"\n\n";
                // std::cout<<cov<<"\n\n";
-//                std::cout<<g_d<<"\n\n";
+                std::cout<<"\n\n"<<g_d<<"\n\n";
                 
 		atl::RealMatrix<T> ret = g_d*cov*g;
 

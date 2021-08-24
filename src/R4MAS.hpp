@@ -1259,16 +1259,21 @@ public:
 		variable ret;
 		variable SB0_;
 		variable sb_;
+                
 		mas::VariableTrait<double>::SetValue(SB0_, SB0);
 		mas::VariableTrait<double>::SetValue(sb_, sb);
+                
 		atl::intrusive_ptr<mas::Ricker<double> > rec =
 				new mas::Ricker<double>();
+                
 		mas::Ricker<double> *r = rec.get();
+                r->SB0[1][1] = SB0_;
 		r->R0 = this->R0.value;
 		r->log_R0 = std::log(this->R0.value);
 		r->alpha = this->alpha.value;
 		r->beta = this->beta.value;
-		ret = r->Evaluate(SB0_, sb_);
+		ret = r->Evaluate(1,1, sb_);
+                
 		return mas::VariableTrait<double>::Value(ret);
 	}
 

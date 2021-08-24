@@ -1273,7 +1273,7 @@ namespace mas {
          * @param season
          */
         inline void CalculateRecruitment(int year, int season) {
-            //#warning add compiler hint here
+            //#warning add compiler hintS here
             if (year == 0 && season == 1) {
                 this->recruitment[year * seasons + (season - 1)] =
                         this->initial_numbers[0]
