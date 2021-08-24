@@ -807,7 +807,7 @@ namespace atl {
 		atl::RealMatrix<T> ret_m(parameters.size(), parameters.size());
 		for (size_t i = 0; i < parameters.size(); i++) {
 			for (size_t j = 0; j < parameters.size(); j++) {
-				ret_m(i, j) = inverse_hessian(i, j) * outer_product(i, j);
+				ret_m(i, j) = inverse_hessian(i, j)/se[i];// * outer_product(i, j);
 			}
 		}
 		return ret_m;
