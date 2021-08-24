@@ -58,6 +58,7 @@ namespace mas {
         }
 
         void CalculateVarianceOfDerivedParameters() {
+            
             typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator pit;
             std::vector<uint32_t> pid;
             for(int i =0; i < this->mas_instance.info.estimated_parameters.size(); i++){
@@ -89,7 +90,8 @@ namespace mas {
 //                    }
 
                     for (int i = 0; i < (*spit).second.spawning_stock_biomass.size(); i++) {
-                        REAL_T temp = this->GetVarianceOfDerivedValue((*spit).second.spawning_stock_biomass[i].info->id, pid);
+                        REAL_T temp = this->GetVarianceOfDerivedValue(
+                                (*spit).second.spawning_stock_biomass[i].info->id, pid,mas_instance.variance_covaiance);
                         (*spit).second.spawning_stock_biomass_variance[i] = temp;
                         std::cout << "\n" << temp << "\t";
 
