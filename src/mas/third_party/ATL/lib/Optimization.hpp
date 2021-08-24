@@ -751,7 +751,7 @@ namespace atl {
             }
 //
 //
-//
+
             atl::RealMatrix<T> ret_m(this->parameters_m.size(), this->parameters_m.size());
             for (size_t i = 0; i < this->parameters_m.size(); i++) {
                 for (size_t j = 0; j < this->parameters_m.size(); j++) {
@@ -820,13 +820,13 @@ namespace atl {
 	const T GetVarianceOfDerivedValue(const uint32_t &id,
 			const std::vector<uint32_t> &parameters) {
 		
-		atl::RealMatrix<T> g(parameters.size(),1);
-		atl::RealMatrix<T> g_d(1,parameters.size());
+		atl::RealMatrix<T> g(1,parameters.size());
+		atl::RealMatrix<T> g_d(parameters.size(),1);
 		atl::RealMatrix<T> cov = GetVarianceCovariance();//parameters);
 
 		//fill gradient of objective function w.r.t. parameters
 		for (int i = 0; i < parameters.size(); i++) {
-			g(i,0) = atl::Variable<T>::tape.Value(parameters[i]);
+			g(0,i) = atl::Variable<T>::tape.Value(parameters[i]);
 		}
 
 		//clear current derivatives and reaccumulate gradient of id
@@ -835,7 +835,7 @@ namespace atl {
 
 		//fill gradient of objective function w.r.t. parameters
 		for (int i = 0; i < parameters.size(); i++) {
-			g_d(0,i) = atl::Variable<T>::tape.Value(parameters[i]);
+			g_d(i,0) = atl::Variable<T>::tape.Value(parameters[i]);
 		}
 
                 std::cout<<"\n"<<g<<"\n\n";
