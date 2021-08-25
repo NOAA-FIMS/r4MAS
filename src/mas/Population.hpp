@@ -1513,7 +1513,7 @@ namespace mas {
                     N_age_spawn[iage] = (N_age[iage]
                             * mas::exp(
                             (-1.0 * Z_age[iage]
-                            /* this->spawning_season_offset*/)));
+                            * this->spawning_season_offset)));
                 }
                 N_age_spawn[nages - 1] =
                         (N_age_spawn[nages - 2]
