@@ -46,7 +46,7 @@ namespace mas {
         variable sigma_r; // recruitment standard deviation
         variable rho; // correlation coefficient
         bool use_bias_correction = false;
-        
+
         variable bias_correction = 0.0;
 
         std::unordered_map<int, std::unordered_map<int, variable> > SB0; // unfished equilibrium female spawning biomass, by population and area
@@ -57,7 +57,7 @@ namespace mas {
         bool estimating_recruitment_deviations = false;
         bool recruitment_deviations_constrained = false;
 
-        virtual ~RecruitmentBase(){
+        virtual ~RecruitmentBase() {
         }
 
         virtual const variable Evaluate(const int& pop_id, const int& area_id, const variable& s) = 0;
@@ -89,7 +89,11 @@ namespace mas {
             return 0.0;
         }
 
-        virtual const REAL_T CalculateEquilibriumRecruitment(REAL_T equilibrium_spawning_biomass) {
+        virtual const REAL_T CalculateEquilibriumRecruitment(REAL_T spr) {
+            return 0.0;
+        }
+
+        virtual const variable CalculateEquilibriumRecruitment(variable spr, variable spr_F0) {
             return 0.0;
         }
 
@@ -133,7 +137,7 @@ namespace mas {
         }
 
         void Prepare() {
-           
+
 
             if (estimating_recruitment_deviations && recruitment_deviations_constrained) {
                 variable sum = static_cast<REAL_T> (0.0);
@@ -164,7 +168,8 @@ namespace mas {
 
         const variable Evaluate(const int& pop_id, const int& area_id, const variable& s) {
 
-            return alpha * s * mas::mfexp(static_cast<REAL_T> (-1.0) * beta * s) * mas::mfexp(-0.5 * this->sigma_r * this->sigma_r);
+            return alpha * s * mas::mfexp(static_cast<REAL_T> (-1.0) * beta * s) *
+                    mas::mfexp(-0.5 * this->sigma_r * this->sigma_r);
         }
 
         /**
@@ -175,7 +180,8 @@ namespace mas {
          * @return 
          */
         virtual const variable Evaluate(const variable& SB0, const variable& s) {
-            return alpha * s * mas::mfexp(static_cast<REAL_T> (-1.0) * beta * s) * mas::mfexp(-0.5 * this->sigma_r * this->sigma_r);
+            return alpha * s * mas::mfexp(static_cast<REAL_T> (-1.0) * beta * s)
+                    * mas::mfexp(-0.5 * this->sigma_r * this->sigma_r);
         }
 
         virtual const REAL_T GetAlpha() {
@@ -194,6 +200,12 @@ namespace mas {
         virtual const REAL_T CalculateEquilibriumRecruitment(REAL_T equilibrium_spawning_biomass) {
             return this->GetAlpha() * equilibrium_spawning_biomass *
                     std::exp(-1.0 * this->GetBeta() * equilibrium_spawning_biomass);
+        }
+
+        virtual const variable CalculateEquilibriumRecruitment(variable spr, variable spr_F0) {
+
+            return mas::exp(this->log_R0) * (1.0 + mas::log(mas::exp(this->bias_correction) *
+                    spr / spr_F0) / this->h) / (spr / spr_F0);
         }
 
         virtual const std::string ToJSONString() {
@@ -255,6 +267,12 @@ namespace mas {
             return 0.0;
         }
 
+        virtual const variable CalculateEquilibriumRecruitment(variable spr, variable spr_F0) {
+
+            return mas::exp(this->log_R0) * (1.0 + mas::log(mas::exp(this->bias_correction) *
+                    spr / spr_F0) / this->h) / (spr / spr_F0);
+        }
+
         virtual const std::string ToJSONString() {
             std::stringstream ss;
             ss.setf(std::ios::fixed, std::ios::floatfield);
@@ -300,7 +318,7 @@ namespace mas {
          * @return
          */
         const variable Evaluate(const int& pop_id, const int& area_id, const variable& sb) {
-        
+
             alpha = 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
             beta = (this->SB0[pop_id][area_id] * (1.0 - this->h)) / (5.0 * this->h - 1.0);
 
@@ -335,6 +353,12 @@ namespace mas {
         virtual const REAL_T CalculateEquilibriumRecruitment(REAL_T equilibrium_spawning_biomass) {
             return (this->GetAlpha() * equilibrium_spawning_biomass) /
                     (this->GetBeta() + equilibrium_spawning_biomass);
+        }
+
+        virtual const variable CalculateEquilibriumRecruitment(variable spr, variable spr_F0) {
+
+            return (mas::exp(this->log_R0) / ((5.0 * this->h - 1.0) * spr))*
+                    (mas::exp(this->bias_correction)*4.0 * this->h * spr - spr_F0 * (1.0 - this->h));
         }
 
         virtual const std::string ToJSONString() {
@@ -375,7 +399,7 @@ namespace mas {
             variable rr;
 
             rr = 4.0 * (this->h * mas::exp(this->log_R0) * s / (this->SB0[pop_id][area_id]*(1.0 - this->h) +
-                    s * (5.0 * this->h - 1.0))); 
+                    s * (5.0 * this->h - 1.0)));
             return rr;
         }
 
@@ -392,6 +416,12 @@ namespace mas {
                     s * (5.0 * this->h - 1.0)));
 
             return rr;
+        }
+
+        virtual const variable CalculateEquilibriumRecruitment(variable spr, variable spr_F0) {
+
+            return (mas::exp(this->log_R0) / ((5.0 * this->h - 1.0) * spr))*
+                    (mas::exp(this->bias_correction)*4.0 * this->h * spr - spr_F0 * (1.0 - this->h));
         }
 
         virtual const std::string ToJSONString() {
@@ -430,9 +460,9 @@ namespace mas {
          * @return
          */
         const variable Evaluate(const int& pop_id, const int& area_id, const variable& sb) {
-          
-            alpha = 4.0 * this->h * sb; 
-            beta = sb * (1.0 - this->h) + sb * (5.0 * this->h - 1.0); 
+
+            alpha = 4.0 * this->h * sb;
+            beta = sb * (1.0 - this->h) + sb * (5.0 * this->h - 1.0);
             return (alpha / beta)* mas::exp(-0.5 * mas::pow(this->sigma_r, 2.0)); ///(alpha*s)/(beta + s);
         }
 

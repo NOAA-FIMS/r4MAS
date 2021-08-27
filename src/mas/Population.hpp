@@ -1529,10 +1529,8 @@ namespace mas {
                 spr[i] = sum_product(N_age, reprod);
                 //                                                R_eq[i] = (R0 / ((5.0 * steep - 1.0) * spr[i]))*
                 //                                                        (BC * 4.0 * steep * spr[i] - spr_F0 * (1.0 - steep));
-                R_eq[i] =
-                        this->recruitment_model->CalculateEquilibriumRecruitment(
-                        this->recruitment_model->CalculateEquilibriumSpawningBiomass(
-                        spr[i])); //*1000*this->sex_fraction_value;
+                R_eq[i] = this->recruitment_model->CalculateEquilibriumSpawningBiomass(
+                        spr[i], spr_F0); //*1000*this->sex_fraction_value;
 
                 if (R_eq[i] < 0.0000001) {
                     R_eq[i] = 0.0000001;
