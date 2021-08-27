@@ -838,7 +838,7 @@ namespace atl {
 		}
 
                 //std::cout<<"\n"<<g<<"\n\n";
-                 std::cout<<cov<<"\n\n";
+             //    std::cout<<cov<<"\n\n";
                // std::cout<<"\n\n"<<g_d<<"\n\n";
                 
 		atl::RealMatrix<T> ret = g_d*cov*g;

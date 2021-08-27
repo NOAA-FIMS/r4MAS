@@ -59,7 +59,7 @@ namespace mas {
 
         void CalculateVarianceOfDerivedParameters() {
             
-            std::cout<<"\n\n"<<std::fixed<<mas_instance.variance_covaiance<<"\n\n";
+      //      std::cout<<"\n\n"<<std::fixed<<mas_instance.variance_covaiance<<"\n\n";
             typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator pit;
             std::vector<uint32_t> pid;
             for(int i =0; i < this->mas_instance.info.estimated_parameters.size(); i++){
