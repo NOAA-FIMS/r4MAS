@@ -1452,10 +1452,10 @@ namespace mas {
 
             std::vector<variable_t> N0(this->ages.size(), 1.0);
             for (int iage = 1; iage < nages; iage++) {
-                N0[iage] = N0[iage - 1] * std::exp(-1.0 * M[iage - 1].GetValue());
+                N0[iage] = N0[iage - 1] * mas::exp(-1.0 * M[iage - 1]);
             }
-            N0[nages - 1] = N0[nages - 2] * std::exp(-1.0 * M[nages - 2].GetValue())
-                    / (1.0 - std::exp(-1.0 * M[nages - 1].GetValue()));
+            N0[nages - 1] = N0[nages - 2] * mas::exp(-1.0 * M[nages - 2])
+                    / (1.0 - mas::exp(-1.0 * M[nages - 1]));
 
             std::valarray<variable_t> reprod(nages);
             std::valarray<variable_t> selL(nages);
@@ -1469,13 +1469,13 @@ namespace mas {
                         + (season) * this->ages.size() + a;
 
                 //is this ssb_unfished?
-                reprod[a] = this->weight_at_spawning[index].GetValue()
+                reprod[a] = this->weight_at_spawning[index]
                         * (this->maturity[a] * this->sex_fraction_value);
                 spr_F0 += N0[a] * reprod[a];
-                selL[a] = this->sum_selectivity[index].GetValue();
-                selZ[a] = this->sum_selectivity[index].GetValue();
-                M_age[a] = this->M[a].GetValue();
-                wgt[a] = this->weight_at_catch_time[index].GetValue();
+                selL[a] = this->sum_selectivity[index];
+                selZ[a] = this->sum_selectivity[index];
+                M_age[a] = this->M[a];
+                wgt[a] = this->weight_at_catch_time[index];
             }
 
             std::valarray<variable_t> L_age(nages); //#landings at age
@@ -1618,7 +1618,7 @@ namespace mas {
                     F40_out = i;
                 }
             }
-            variable_t msy_mt_out = max; //msy in whole weight
+            variable_t msy_mt_out = max*this->sex_fraction_value; //msy in whole weight
             variable_t SSB_msy_out = 0.0;
             variable_t B_msy_out = 0.0;
             variable_t R_msy_out = 0.0;
