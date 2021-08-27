@@ -1627,7 +1627,7 @@ namespace mas {
             variable_t spr_msy_out = 0.0;
             int index_m = 0;
             for (int i = 0; i < F.size(); i++) {
-                if (L_eq[i] == (msy_mt_out*this->sex_fraction_value) {
+                if (L_eq[i] == (msy_mt_out) {
 
                     SSB_msy_out = SSB_eq[i];
                     B_msy_out = B_eq[i] * this->sex_fraction_value;
