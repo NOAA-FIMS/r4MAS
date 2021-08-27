@@ -1618,7 +1618,7 @@ namespace mas {
                     F40_out = i;
                 }
             }
-            variable_t msy_mt_out = max*this->sex_fraction_value; //msy in whole weight
+            variable_t msy_mt_out = max; //msy in whole weight
             variable_t SSB_msy_out = 0.0;
             variable_t B_msy_out = 0.0;
             variable_t R_msy_out = 0.0;
@@ -1627,7 +1627,7 @@ namespace mas {
             variable_t spr_msy_out = 0.0;
             int index_m = 0;
             for (int i = 0; i < F.size(); i++) {
-                if (L_eq[i] == msy_mt_out) {
+                if (L_eq[i] == (msy_mt_out*this->sex_fraction_value)) {
 
                     SSB_msy_out = SSB_eq[i];
                     B_msy_out = B_eq[i] * this->sex_fraction_value;
