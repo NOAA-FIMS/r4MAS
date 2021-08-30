@@ -1474,10 +1474,11 @@ namespace mas {
                 spr_F0 += N0[a] * reprod[a];
                 selL[a] = this->sum_selectivity[index];
                 selZ[a] = this->sum_selectivity[index];
+                std::cout<<selZ[a] <<"\t";
                 M_age[a] = this->M[a];
                 wgt[a] = this->weight_at_catch_time[index];
             }
-
+            std::cout<<"\n";
             std::valarray<variable_t> L_age(nages); //#landings at age
             std::valarray<variable_t> D_age(nages); //#dead discards at age
             std::valarray<variable_t> F_age(nages); //#F at age
@@ -1524,7 +1525,7 @@ namespace mas {
                         - this->spawning_season_offset)
                         + Z_age[nages - 1]
                         * this->spawning_season_offset))))
-                        / (1.0 - mas::exp(-1. * Z_age[nages - 1]));
+                        / (1.0 - mas::exp(-1.0 * Z_age[nages - 1]));
 
                 spr[i] = sum_product(N_age, reprod);
                 //                                                R_eq[i] = (R0 / ((5.0 * steep - 1.0) * spr[i]))*
