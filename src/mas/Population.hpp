@@ -282,6 +282,7 @@ namespace mas {
             expected_N.resize(years * seasons * ages.size());
             N_proj.resize(seasons * ages.size());
             F_over_F_msy.resize(years * seasons);
+            F_over_F_msy_variance.resize(years * seasons);
         }
 
         inline void Reset() {
