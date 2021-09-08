@@ -3404,9 +3404,9 @@ namespace mas {
             //                females[areas_list[area]->id].CalculateNumbersAtAgeEndYearPlusOne();
             //            }
 
-//            if (this->do_msy_calculations) {
-//                this->ComputeBiologicalReferencePoints();
-//            }
+            if (this->do_msy_calculations) {
+                this->ComputeBiologicalReferencePoints();
+            }
 
         }
 
@@ -3585,7 +3585,7 @@ namespace mas {
             for (double f = 0.01; f < 3.0; f += 0.01) {
                 fs.push_back(f);
             }
-            variable::tape.recording = false;
+//            variable::tape.recording = false;
             REAL_T msy;
             REAL_T f_msy;
             REAL_T s_msy;
