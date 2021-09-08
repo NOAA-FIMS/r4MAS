@@ -859,9 +859,9 @@ namespace atl {
                 g_d(0, i) = atl::Variable<T>::tape.Value(subset[i]);
             }
 
-            std::cout << "g:\n" << g << "\n\n";
-            std::cout << "cov:\n" << cov << "\n\n";
-            std::cout << "g_d:\n" << g_d << "\n\n";
+//            std::cout << "g:\n" << g << "\n\n";
+//            std::cout << "cov:\n" << cov << "\n\n";
+//            std::cout << "g_d:\n" << g_d << "\n\n";
 
             atl::RealMatrix<T> ret = g_d * cov*g;
 
