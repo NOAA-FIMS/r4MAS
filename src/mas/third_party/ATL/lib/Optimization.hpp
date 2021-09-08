@@ -831,7 +831,7 @@ namespace atl {
             //fill gradient of objective function w.r.t. parameters
             for (int i = 0; i < parameters.size(); i++) {
                 T dx = atl::Variable<T>::tape.Value(parameters[i]);
-                if (std::fabs(dx) > 1e-18) {
+                if (std::fabs(dx) != 0.0) {
                     subset.push_back(parameters[i]);
                 }
 
