@@ -269,8 +269,8 @@ namespace mas {
             P.resize(years * seasons * ages.size());
             S.resize(years * seasons * ages.size());
             biomass_total.resize(years * seasons);
-            biomass_variance.resize(years*seasons);
-            recruitment_variance.resize(years*seasons);
+            biomass_variance.resize(years * seasons);
+            recruitment_variance.resize(years * seasons);
             survey_numbers_at_age.resize(years * seasons * ages.size());
             survey_index_at_age.resize(years * seasons * ages.size());
             survey_biomass_total.resize(years, seasons);
@@ -1321,9 +1321,14 @@ namespace mas {
         inline void CalculateNumbersAtAge(const int &year, const int &season,
                 const int &age) {
 
+            size_t index = (year * this->seasons) + season - 1;
             if (year == 0 && season == 1) {
-
+                size_t index1 = year * this->seasons * this->ages.size()
+                        + (season - 1) * this->ages.size() + age;
                 this->numbers_at_age[age] = this->initial_numbers[age];
+                this->biomass_at_age[index1] = this->numbers_at_age[index1]
+                        * this->weight_at_season_start[index1];
+                this->biomass_total[index] += this->biomass_at_age[index1];
 
             } else {
                 int y = year;
@@ -1344,7 +1349,7 @@ namespace mas {
                             * mas::exp(static_cast<REAL_T> (-1.0) * Z[index2]);
                     this->biomass_at_age[index1] = this->numbers_at_age[index1]
                             * this->weight_at_season_start[index1];
-
+                    this->biomass_total[index] += this->biomass_at_age[index1];
                 }
 
                 if (age == this->ages.size() - 1) {
@@ -1363,6 +1368,7 @@ namespace mas {
 
                     this->biomass_at_age[index1] += this->numbers_at_age[index1]
                             * this->weight_at_season_start[index1];
+                   this->biomass_total[index] += this->biomass_at_age[index1];
                 }
 
             }
@@ -1432,7 +1438,7 @@ namespace mas {
 
             mas::VariableTrait<REAL_T>::SetRecording(false);
             typedef typename mas::VariableTrait<REAL_T>::variable variable_t;
-           
+
             int year = this->years - 1;
             int season = this->seasons - 1;
             int nages = ages.size();
@@ -1714,9 +1720,9 @@ namespace mas {
             this->area->msy.SSB_F40_msy += this->msy.SSB_F40_msy;
             this->area->msy.B_F40_msy += this->msy.B_F40_msy;
             this->area->msy.E_F40_msy += this->msy.E_F40_msy;
-            
-            for(int i =0; i < this->F_over_F_msy.size(); i++){
-                this->F_over_F_msy[i]= this->fishing_mortality_total[i]/this->msy.F_msy;
+
+            for (int i = 0; i < this->F_over_F_msy.size(); i++) {
+                this->F_over_F_msy[i] = this->fishing_mortality_total[i] / this->msy.F_msy;
             }
             //
             std::cout << std::scientific;
@@ -3398,9 +3404,9 @@ namespace mas {
             //                females[areas_list[area]->id].CalculateNumbersAtAgeEndYearPlusOne();
             //            }
 
-//            if (this->do_msy_calculations) {
-//                this->ComputeBiologicalReferencePoints();
-//            }
+            if (this->do_msy_calculations) {
+                this->ComputeBiologicalReferencePoints();
+            }
 
         }
 
