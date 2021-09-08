@@ -176,7 +176,7 @@ namespace atl {
 
             //2. do numeric factorization
             if (S != NULL) {
-                    ret.factor = cs_chol<Type>(ret.A, S);
+                ret.factor = cs_chol<Type>(ret.A, S);
                 if (ret.factor == NULL) {
                     std::cout << "Cholesky factorization error. " << std::endl;
                 }
@@ -710,9 +710,9 @@ namespace atl {
 
         const atl::RealMatrix<T> GetVarianceCovariance() {
 
-            
+
             atl::Variable<T>::tape.Reset();
-           // struct cs_sparse<T>* RHessian = cs_spalloc<T>(0, 0, 1, 1, 1);
+            // struct cs_sparse<T>* RHessian = cs_spalloc<T>(0, 0, 1, 1, 1);
             atl::Variable<T>::tape.derivative_trace_level = atl::SECOND_ORDER_REVERSE;
 
             atl::Variable<T>::tape.recording = true;
@@ -730,14 +730,14 @@ namespace atl {
                     if (dxx != dxx) {//this is a big hack
                         dxx = std::numeric_limits<T>::min();
                     }
-                    inverse_hessian(i,j) = dxx;
+                    inverse_hessian(i, j) = dxx;
                 }
             }
             inverse_hessian.Invert();
-//            std::cout<<"inverse hessian\n\n"<<
-//                    inverse_hessian<<"\n\n\n";
+            //            std::cout<<"inverse hessian\n\n"<<
+            //                    inverse_hessian<<"\n\n\n";
 
-//
+            //
             std::vector<T> se(this->parameters_m.size());
             for (int i = 0; i < this->parameters_m.size(); i++) {
                 se[i] = std::sqrt(inverse_hessian(i, i));
@@ -754,132 +754,147 @@ namespace atl {
             atl::RealMatrix<T> ret_m(this->parameters_m.size(), this->parameters_m.size());
             for (size_t i = 0; i < this->parameters_m.size(); i++) {
                 for (size_t j = 0; j < this->parameters_m.size(); j++) {
-                    
+
                     ret_m(i, j) = inverse_hessian(i, j) * outer_product(i, j);
                 }
             }
-            
+
             return ret_m;
         }
-        
+
         const atl::RealMatrix<T> GetVarianceCovariance(
-			const std::vector<uint32_t> &parameters) {
+                const std::vector<uint32_t> &parameters) {
 
-		atl::Variable<T>::tape.Reset();
-		atl::Variable<T>::tape.derivative_trace_level =
-				atl::SECOND_ORDER_REVERSE;
+            atl::Variable<T>::tape.Reset();
+            atl::Variable<T>::tape.derivative_trace_level =
+                    atl::SECOND_ORDER_REVERSE;
 
-		atl::Variable<T>::tape.recording = true;
-		atl::Variable<T> f;
+            atl::Variable<T>::tape.recording = true;
+            atl::Variable<T> f;
 
-		this->Objective_Function(f);
+            this->Objective_Function(f);
 
-		atl::Variable<T>::tape.AccumulateSecondOrder();
-		atl::RealMatrix<T> inverse_hessian(parameters.size(),
-				parameters.size());
+            atl::Variable<T>::tape.AccumulateSecondOrder();
+            atl::RealMatrix<T> inverse_hessian(parameters.size(),
+                    parameters.size());
 
-		for (int i = 0; i < parameters.size(); i++) {
-			for (int j = 0; j < parameters.size(); j++) {
-				T dxx = atl::Variable<T>::tape.Value(parameters[i],
-						parameters[j]);
-				if (dxx != dxx) { //this is a big hack
-					dxx = std::numeric_limits<T>::min();
-				}
-				inverse_hessian(i, j) = dxx;
-			}
-		}
-		inverse_hessian.Invert();
+            for (int i = 0; i < parameters.size(); i++) {
+                for (int j = 0; j < parameters.size(); j++) {
+                    T dxx = atl::Variable<T>::tape.Value(parameters[i],
+                            parameters[j]);
+                    if (dxx != dxx) { //this is a big hack
+                        dxx = std::numeric_limits<T>::min();
+                    }
+                    inverse_hessian(i, j) = dxx;
+                }
+            }
+            inverse_hessian.Invert();
 
 
-		std::vector<T> se(parameters.size());
-		for (int i = 0; i < parameters.size(); i++) {
-			se[i] = std::sqrt(inverse_hessian(i, i));
-		}
+            std::vector<T> se(parameters.size());
+            for (int i = 0; i < parameters.size(); i++) {
+                se[i] = std::sqrt(inverse_hessian(i, i));
+            }
 
-		atl::RealMatrix<T> outer_product(parameters.size(), parameters.size());
-		for (size_t i = 0; i < parameters.size(); i++) {
-			for (size_t j = 0; j < parameters.size(); j++) {
-				outer_product(i, j) = se[i] * se[j];
-			}
-		}
+            atl::RealMatrix<T> outer_product(parameters.size(), parameters.size());
+            for (size_t i = 0; i < parameters.size(); i++) {
+                for (size_t j = 0; j < parameters.size(); j++) {
+                    outer_product(i, j) = se[i] * se[j];
+                }
+            }
 
-		atl::RealMatrix<T> ret_m(parameters.size(), parameters.size());
-		for (size_t i = 0; i < parameters.size(); i++) {
-			for (size_t j = 0; j < parameters.size(); j++) {
-				ret_m(i, j) = inverse_hessian(i, j) * outer_product(i, j);
-			}
-		}
-		return ret_m;
-	}
+            atl::RealMatrix<T> ret_m(parameters.size(), parameters.size());
+            for (size_t i = 0; i < parameters.size(); i++) {
+                for (size_t j = 0; j < parameters.size(); j++) {
+                    ret_m(i, j) = inverse_hessian(i, j) * outer_product(i, j);
+                }
+            }
+            return ret_m;
+        }
 
         /**
-	* Computes the estimated variance of a derived quantity.
-	* Returns a scalar value
-	*/
-	const T GetVarianceOfDerivedValue(const uint32_t &id,
-			const std::vector<uint32_t> &parameters) {
-		
-		atl::RealMatrix<T> g(parameters.size(),1);
-		atl::RealMatrix<T> g_d(1,parameters.size());
-		atl::RealMatrix<T> cov = GetVarianceCovariance();//parameters);
+         * Computes the estimated variance of a derived quantity.
+         * Returns a scalar value
+         */
+        const T GetVarianceOfDerivedValue(const uint32_t &id,
+                const std::vector<uint32_t> &parameters) {
 
-		//fill gradient of objective function w.r.t. parameters
-		for (int i = 0; i < parameters.size(); i++) {
-			g(i,0) = atl::Variable<T>::tape.Value(parameters[i]);
-		}
 
-		//clear current derivatives and reaccumulate gradient of id
-		//w.r.t. parameters
-		atl::Variable<T>::tape.AccumulateFirstOrderWRTDependent(id);
+            atl::Variable<T>::tape.AccumulateFirstOrderWRTDependent(id);
+            //parameters that are actually related to the
+            //derived quantity
+            std::vector<uint32_t> subset;
 
-		//fill gradient of objective function w.r.t. parameters
-		for (int i = 0; i < parameters.size(); i++) {
-			g_d(0,i) = atl::Variable<T>::tape.Value(parameters[i]);
-		}
-
-                //std::cout<<"\n"<<g<<"\n\n";
-             //    std::cout<<cov<<"\n\n";
-               // std::cout<<"\n\n"<<g_d<<"\n\n";
+            //fill gradient of objective function w.r.t. parameters
+            for (int i = 0; i < parameters.size(); i++) {
+                T dx =  atl::Variable<T>::tape.Value(parameters[i]);
+                if(dx != 0.0){
+                    subset.push_back(parameters[i]);
+                }
                 
-		atl::RealMatrix<T> ret = g_d*cov*g;
+            }
 
-		return ret(0,0);
-	}
-        
-          /**
-	* Computes the estimated variance of a derived quantity.
-	* Returns a scalar value
-	*/
-	const T GetVarianceOfDerivedValue(const uint32_t &id,
-			const std::vector<uint32_t> &parameters,
+            atl::RealMatrix<T> g(subset.size(), 1);
+            atl::RealMatrix<T> g_d(1, subset.size());
+            atl::RealMatrix<T> cov = GetVarianceCovariance(subset); //parameters);
+
+            //fill gradient of objective function w.r.t. parameters
+            for (int i = 0; i < parameters.size(); i++) {
+                g(i, 0) = atl::Variable<T>::tape.Value(parameters[i]);
+            }
+
+            //clear current derivatives and reaccumulate gradient of id
+            //w.r.t. parameters
+            atl::Variable<T>::tape.AccumulateFirstOrderWRTDependent(id);
+
+            //fill gradient of objective function w.r.t. parameters
+            for (int i = 0; i < parameters.size(); i++) {
+                g_d(0, i) = atl::Variable<T>::tape.Value(parameters[i]);
+            }
+
+            //std::cout<<"\n"<<g<<"\n\n";
+            //    std::cout<<cov<<"\n\n";
+            // std::cout<<"\n\n"<<g_d<<"\n\n";
+
+            atl::RealMatrix<T> ret = g_d * cov*g;
+
+            return ret(0, 0);
+        }
+
+        /**
+         * Computes the estimated variance of a derived quantity.
+         * Returns a scalar value
+         */
+        const T GetVarianceOfDerivedValue(const uint32_t &id,
+                const std::vector<uint32_t> &parameters,
                 const atl::RealMatrix<T>& cov) {
-		
-		atl::RealMatrix<T> g(parameters.size(),1);
-		atl::RealMatrix<T> g_d(1,parameters.size());
-//		atl::RealMatrix<T> cov = GetVarianceCovariance();//parameters);
 
-		//fill gradient of objective function w.r.t. parameters
-		for (int i = 0; i < parameters.size(); i++) {
-			g(i,0) = atl::Variable<T>::tape.Value(parameters[i]);
-		}
+            atl::RealMatrix<T> g(parameters.size(), 1);
+            atl::RealMatrix<T> g_d(1, parameters.size());
+            //		atl::RealMatrix<T> cov = GetVarianceCovariance();//parameters);
 
-		//clear current derivatives and reaccumulate gradient of id
-		//w.r.t. parameters
-		atl::Variable<T>::tape.AccumulateFirstOrderWRTDependent(id);
+            //fill gradient of objective function w.r.t. parameters
+            for (int i = 0; i < parameters.size(); i++) {
+                g(i, 0) = atl::Variable<T>::tape.Value(parameters[i]);
+            }
 
-		//fill gradient of objective function w.r.t. parameters
-		for (int i = 0; i < parameters.size(); i++) {
-			g_d(0,i) = atl::Variable<T>::tape.Value(parameters[i]);
-		}
+            //clear current derivatives and reaccumulate gradient of id
+            //w.r.t. parameters
+            atl::Variable<T>::tape.AccumulateFirstOrderWRTDependent(id);
 
-                //std::cout<<"\n"<<g<<"\n\n";
-                // std::cout<<cov<<"\n\n";
-               // std::cout<<"\n\n"<<g_d<<"\n\n";
-                
-		atl::RealMatrix<T> ret = g_d*cov*g;
+            //fill gradient of objective function w.r.t. parameters
+            for (int i = 0; i < parameters.size(); i++) {
+                g_d(0, i) = atl::Variable<T>::tape.Value(parameters[i]);
+            }
 
-		return ret(0,0);
-	}
+            //std::cout<<"\n"<<g<<"\n\n";
+            // std::cout<<cov<<"\n\n";
+            // std::cout<<"\n\n"<<g_d<<"\n\n";
+
+            atl::RealMatrix<T> ret = g_d * cov*g;
+
+            return ret(0, 0);
+        }
     };
 
     template<typename T>
@@ -1260,7 +1275,7 @@ namespace atl {
                 T ld = cs_log_det(chol->L);
                 log_det = ld;
 
-//                std::cout << ld << "\n";
+                //                std::cout << ld << "\n";
                 //                exit(0);
 
                 for (int i = 0; i < PARAMETERS_SIZE; i++) {
@@ -1318,10 +1333,10 @@ namespace atl {
                         int error = cs_cholsol_x(0, hessian, re_dx.data(), chol, this->S_outer, this->x_scratch.data(), i);
                         trace += re_dx[i];
                     }
-//                    std::cout << trace << "......\n";
+                    //                    std::cout << trace << "......\n";
                     derivatives_logdet[this->parameters_m[p]->info] = trace;
                 }
-//                exit(0);
+                //                exit(0);
 
 
 
@@ -1715,8 +1730,8 @@ namespace atl {
             }
 
             std::cout << "|\n" << ' ' << std::string((print_width * (name_width + 1 + value_width + 1 + grad_width + 1)), '-') << "\n";
-            std::cout << "\n\n"<<std::flush;
-//            exit(0);
+            std::cout << "\n\n" << std::flush;
+            //            exit(0);
         }
 
         virtual bool Evaluate() = 0;
@@ -2171,7 +2186,7 @@ namespace atl {
             //            atl::Variable<T> fx;
 
             for (ls = 0; ls < this->max_line_searches; ++ls) {
-             
+
 
                 if (((this->outer_iteration + ls) % this->print_interval) == 0) {
                     this->Print();
@@ -2361,7 +2376,7 @@ namespace atl {
                             this->parameters_m[j]->GetInternalValue()) * this->gradient[j];
                 }
 
-                if ((i % this->print_interval) == 0 ) {
+                if ((i % this->print_interval) == 0) {
                     std::cout << "Iteration " << i << "\n";
                     std::cout << "Phase = " << this->phase_m << "\n";
 
