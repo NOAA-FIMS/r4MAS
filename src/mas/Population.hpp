@@ -1725,28 +1725,28 @@ namespace mas {
                 this->F_over_F_msy[i] = this->fishing_mortality_total[i] / this->msy.F_msy;
             }
             //
-            std::cout << std::scientific;
-            //
-            std::cout << "\n\nFmax: " << maxF << "\n";
-            std::cout << "Step: " << step << "\n";
-            std::cout << "\n\nF_msy: " << F[max_index] << "\n";
-            std::cout << "F30: " << F[F30_out] << "\n";
-            std::cout << "F35: " << F[F35_out] << "\n";
-            std::cout << "F40: " << F[F40_out] << "\n";
-            spr_msy_out = spr[max_index];
-            std::cout << "msy: " << this->msy.msy << "\n";
-            std::cout << "spr_msy: " << spr[max_index] << "\n";
-            std::cout << "SR_msy: " << (spr_msy_out / spr_F0).GetValue() << "\n";
-            //                        std::cout << "D_msy_out" << D_eq[max_index] << "\n";
-            std::cout << "R_msy: " << R_eq[max_index] << "\n";
-            std::cout << "SSB_msy: " << this->msy.SSB_msy << "\n";
-            std::cout << "B_msy: " << this->msy.B_msy << "\n";
-            std::cout << "E_msy: " << E_eq[max_index] << "\n";
-            std::cout << "R0: " << this->R0 << "\n";
-            std::cout << "S0: " << this->S0 << "\n";
-            std::cout << "E_msy: " << E_eq[max_index] << "\n";
-            std::cout << "Alpha: " << this->recruitment_model->GetAlpha() << "\n";
-            std::cout << "Beta: " << this->recruitment_model->GetBeta() << "\n\n";
+//            std::cout << std::scientific;
+//            //
+//            std::cout << "\n\nFmax: " << maxF << "\n";
+//            std::cout << "Step: " << step << "\n";
+//            std::cout << "\n\nF_msy: " << F[max_index] << "\n";
+//            std::cout << "F30: " << F[F30_out] << "\n";
+//            std::cout << "F35: " << F[F35_out] << "\n";
+//            std::cout << "F40: " << F[F40_out] << "\n";
+//            spr_msy_out = spr[max_index];
+//            std::cout << "msy: " << this->msy.msy << "\n";
+//            std::cout << "spr_msy: " << spr[max_index] << "\n";
+//            std::cout << "SR_msy: " << (spr_msy_out / spr_F0).GetValue() << "\n";
+//            //                        std::cout << "D_msy_out" << D_eq[max_index] << "\n";
+//            std::cout << "R_msy: " << R_eq[max_index] << "\n";
+//            std::cout << "SSB_msy: " << this->msy.SSB_msy << "\n";
+//            std::cout << "B_msy: " << this->msy.B_msy << "\n";
+//            std::cout << "E_msy: " << E_eq[max_index] << "\n";
+//            std::cout << "R0: " << this->R0 << "\n";
+//            std::cout << "S0: " << this->S0 << "\n";
+//            std::cout << "E_msy: " << E_eq[max_index] << "\n";
+//            std::cout << "Alpha: " << this->recruitment_model->GetAlpha() << "\n";
+//            std::cout << "Beta: " << this->recruitment_model->GetBeta() << "\n\n";
             //
             mas::VariableTrait<REAL_T>::SetRecording(recording);
 
@@ -3404,9 +3404,9 @@ namespace mas {
             //                females[areas_list[area]->id].CalculateNumbersAtAgeEndYearPlusOne();
             //            }
 
-//            if (this->do_msy_calculations) {
-//                this->ComputeBiologicalReferencePoints();
-//            }
+            if (this->do_msy_calculations) {
+                this->ComputeBiologicalReferencePoints();
+            }
 
         }
 
