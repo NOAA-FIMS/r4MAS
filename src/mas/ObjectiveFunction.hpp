@@ -105,16 +105,23 @@ namespace mas {
                                 (*spit).second.biomass_total[i].info->id, pid);
                         (*spit).second.biomass_variance[i] = temp;
                         std::cout << " " << temp << "\t";
+                    }
 
-                        //F_over_F_msy_variance
-                        temp = this->GetVarianceOfDerivedValue(
+                    for (int i = 0; i < (*spit).second.biomass_total.size(); i++) {
+                        //recruitment variance
+                        REAL_T temp = this->GetVarianceOfDerivedValue(
                                 (*spit).second.recruitment[i].info->id, pid);
                         (*spit).second.recruitment_variance[i] = temp;
+                        std::cout << " " << temp << "\t";
+                    }
 
+                    for (int i = 0; i < (*spit).second.biomass_total.size(); i++) {
                         //F_over_F_msy_variance
-                        temp = this->GetVarianceOfDerivedValue(
+                        REAL_T temp = this->GetVarianceOfDerivedValue(
                                 (*spit).second.F_over_F_msy[i].info->id, pid);
                         (*spit).second.F_over_F_msy_variance[i] = temp;
+                        std::cout << " " << temp << "\t";
+
                     }
                 }
 
