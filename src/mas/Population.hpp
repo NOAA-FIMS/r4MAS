@@ -1879,7 +1879,7 @@ namespace mas {
             } else {
 
                 this->spawning_stock_biomass[year * this->seasons + (season - 1)] =
-                        -999.0;
+                        0.0;
             }
         }
 
