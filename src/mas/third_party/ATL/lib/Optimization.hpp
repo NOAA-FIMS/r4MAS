@@ -831,7 +831,7 @@ namespace atl {
             //fill gradient of objective function w.r.t. parameters
             for (int i = 0; i < parameters.size(); i++) {
                 T dx =  atl::Variable<T>::tape.Value(parameters[i]);
-                if(dx != 0.0){
+                if(std::fabs(dx) > 1e-18){
                     subset.push_back(parameters[i]);
                 }
                 
@@ -842,8 +842,8 @@ namespace atl {
             atl::RealMatrix<T> cov = GetVarianceCovariance(subset); //parameters);
 
             //fill gradient of objective function w.r.t. parameters
-            for (int i = 0; i < parameters.size(); i++) {
-                g(i, 0) = atl::Variable<T>::tape.Value(parameters[i]);
+            for (int i = 0; i < subset.size(); i++) {
+                g(i, 0) = atl::Variable<T>::tape.Value(subset[i]);
             }
 
             //clear current derivatives and reaccumulate gradient of id
@@ -851,8 +851,8 @@ namespace atl {
             atl::Variable<T>::tape.AccumulateFirstOrderWRTDependent(id);
 
             //fill gradient of objective function w.r.t. parameters
-            for (int i = 0; i < parameters.size(); i++) {
-                g_d(0, i) = atl::Variable<T>::tape.Value(parameters[i]);
+            for (int i = 0; i < subset.size(); i++) {
+                g_d(0, i) = atl::Variable<T>::tape.Value(subset[i]);
             }
 
             //std::cout<<"\n"<<g<<"\n\n";
