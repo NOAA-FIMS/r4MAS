@@ -163,7 +163,9 @@ namespace mas {
 
         //variance for derived quantities
         std::vector<REAL_T> spawning_stock_biomass_variance;
-        std::vector<variable> F_over_F_msy_variance;
+        std::vector<REAL_T> biomass_variance;
+        std::vector<REAL_T> recruitment_variance;
+        std::vector<REAL_T> F_over_F_msy_variance;
 
 
 
@@ -267,6 +269,8 @@ namespace mas {
             P.resize(years * seasons * ages.size());
             S.resize(years * seasons * ages.size());
             biomass_total.resize(years * seasons);
+            biomass_variance.resize(years*seasons);
+            recruitment_variance.resize(years*seasons);
             survey_numbers_at_age.resize(years * seasons * ages.size());
             survey_index_at_age.resize(years * seasons * ages.size());
             survey_biomass_total.resize(years, seasons);
