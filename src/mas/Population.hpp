@@ -270,6 +270,7 @@ namespace mas {
             S.resize(years * seasons * ages.size());
             biomass_total.resize(years * seasons);
             biomass_variance.resize(years * seasons);
+            F_over_F_msy_variance.resize(years*seasons);
             survey_numbers_at_age.resize(years * seasons * ages.size());
             survey_index_at_age.resize(years * seasons * ages.size());
             survey_biomass_total.resize(years, seasons);

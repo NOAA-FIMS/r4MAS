@@ -734,32 +734,34 @@ namespace atl {
                 }
             }
             inverse_hessian.Invert();
-            //            std::cout<<"inverse hessian\n\n"<<
-            //                    inverse_hessian<<"\n\n\n";
-
-            //
-            std::vector<T> se(this->parameters_m.size());
-            for (int i = 0; i < this->parameters_m.size(); i++) {
-                se[i] = std::sqrt(inverse_hessian(i, i));
-            }
-
-            atl::RealMatrix<T> outer_product(this->parameters_m.size(), this->parameters_m.size());
-            for (size_t i = 0; i < this->parameters_m.size(); i++) {
-                for (size_t j = 0; j < this->parameters_m.size(); j++) {
-                    outer_product(i, j) = se[i] * se[j];
-                }
-            }
-
-
-            atl::RealMatrix<T> ret_m(this->parameters_m.size(), this->parameters_m.size());
-            for (size_t i = 0; i < this->parameters_m.size(); i++) {
-                for (size_t j = 0; j < this->parameters_m.size(); j++) {
-
-                    ret_m(i, j) = inverse_hessian(i, j) * outer_product(i, j);
-                }
-            }
-
-            return ret_m;
+            
+            return inverse_hessian;
+//            //            std::cout<<"inverse hessian\n\n"<<
+//            //                    inverse_hessian<<"\n\n\n";
+//
+//            //
+//            std::vector<T> se(this->parameters_m.size());
+//            for (int i = 0; i < this->parameters_m.size(); i++) {
+//                se[i] = std::sqrt(inverse_hessian(i, i));
+//            }
+//
+//            atl::RealMatrix<T> outer_product(this->parameters_m.size(), this->parameters_m.size());
+//            for (size_t i = 0; i < this->parameters_m.size(); i++) {
+//                for (size_t j = 0; j < this->parameters_m.size(); j++) {
+//                    outer_product(i, j) = se[i] * se[j];
+//                }
+//            }
+//
+//
+//            atl::RealMatrix<T> ret_m(this->parameters_m.size(), this->parameters_m.size());
+//            for (size_t i = 0; i < this->parameters_m.size(); i++) {
+//                for (size_t j = 0; j < this->parameters_m.size(); j++) {
+//
+//                    ret_m(i, j) = inverse_hessian(i, j) * outer_product(i, j);
+//                }
+//            }
+//
+//            return ret_m;
         }
 
         const atl::RealMatrix<T> GetVarianceCovariance(
@@ -790,26 +792,27 @@ namespace atl {
             }
             inverse_hessian.Invert();
 
-
-            std::vector<T> se(parameters.size());
-            for (int i = 0; i < parameters.size(); i++) {
-                se[i] = std::sqrt(inverse_hessian(i, i));
-            }
-
-            atl::RealMatrix<T> outer_product(parameters.size(), parameters.size());
-            for (size_t i = 0; i < parameters.size(); i++) {
-                for (size_t j = 0; j < parameters.size(); j++) {
-                    outer_product(i, j) = se[i] * se[j];
-                }
-            }
-
-            atl::RealMatrix<T> ret_m(parameters.size(), parameters.size());
-            for (size_t i = 0; i < parameters.size(); i++) {
-                for (size_t j = 0; j < parameters.size(); j++) {
-                    ret_m(i, j) = inverse_hessian(i, j) * outer_product(i, j);
-                }
-            }
-            return ret_m;
+            return inverse_hessian;
+//
+//            std::vector<T> se(parameters.size());
+//            for (int i = 0; i < parameters.size(); i++) {
+//                se[i] = std::sqrt(inverse_hessian(i, i));
+//            }
+//
+//            atl::RealMatrix<T> outer_product(parameters.size(), parameters.size());
+//            for (size_t i = 0; i < parameters.size(); i++) {
+//                for (size_t j = 0; j < parameters.size(); j++) {
+//                    outer_product(i, j) = se[i] * se[j];
+//                }
+//            }
+//
+//            atl::RealMatrix<T> ret_m(parameters.size(), parameters.size());
+//            for (size_t i = 0; i < parameters.size(); i++) {
+//                for (size_t j = 0; j < parameters.size(); j++) {
+//                    ret_m(i, j) = inverse_hessian(i, j) * outer_product(i, j);
+//                }
+//            }
+//            return ret_m;
         }
 
         /**
