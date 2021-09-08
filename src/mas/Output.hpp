@@ -2696,4 +2696,3 @@ public:
 }
 
 #endif /* OUTPUT_HPP */
-
