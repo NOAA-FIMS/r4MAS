@@ -94,7 +94,7 @@ namespace mas {
                         REAL_T temp = this->GetVarianceOfDerivedValue(
                                 (*spit).second.spawning_stock_biomass[i].info->id, pid);
                         (*spit).second.spawning_stock_biomass_variance[i] = temp;
-                        std::cout << "\n" << temp << "\t";
+                        std::cout << " " << temp << "\t";
 
 
                     }
@@ -104,7 +104,7 @@ namespace mas {
                         REAL_T temp = this->GetVarianceOfDerivedValue(
                                 (*spit).second.biomass_total[i].info->id, pid);
                         (*spit).second.biomass_variance[i] = temp;
-                        std::cout << "\n" << temp << "\t";
+                        std::cout << " " << temp << "\t";
 
                         //F_over_F_msy_variance
                         temp = this->GetVarianceOfDerivedValue(
