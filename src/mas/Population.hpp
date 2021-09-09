@@ -1436,7 +1436,7 @@ namespace mas {
              */
             bool recording = mas::VariableTrait<REAL_T>::IsRecording();
 
-            mas::VariableTrait<REAL_T>::SetRecording(false);
+//            mas::VariableTrait<REAL_T>::SetRecording(false);
             typedef typename mas::VariableTrait<REAL_T>::variable variable_t;
 
             int year = this->years - 1;
@@ -1748,7 +1748,7 @@ namespace mas {
 //            std::cout << "Alpha: " << this->recruitment_model->GetAlpha() << "\n";
 //            std::cout << "Beta: " << this->recruitment_model->GetBeta() << "\n\n";
             //
-            mas::VariableTrait<REAL_T>::SetRecording(recording);
+//            mas::VariableTrait<REAL_T>::SetRecording(recording);
 
         }
 
