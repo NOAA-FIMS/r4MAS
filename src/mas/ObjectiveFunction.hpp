@@ -94,7 +94,7 @@ namespace mas {
                         REAL_T temp = this->GetVarianceOfDerivedValue(
                                 (*spit).second.spawning_stock_biomass[i].info->id, pid);
                         (*spit).second.spawning_stock_biomass_variance[i] = temp;
-                        std::cout<<i<<": " << std::scientific << "\n" << temp << "\t";
+                        std::cout<<i<<": " << std::scientific  << temp << "\t";
 
 
                     }
