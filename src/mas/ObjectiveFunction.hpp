@@ -65,7 +65,7 @@ namespace mas {
             for (int i = 0; i < this->mas_instance.info.estimated_parameters.size(); i++) {
                 pid.push_back(this->mas_instance.info.estimated_parameters[i]->info->id);
             }
-            std::cout << "Calculating variance for derived quantities...";
+            std::cout << "Calculating variance for derived quantities..."<<std::flush;
             for (pit = this->mas_instance.info.populations.begin();
                     pit != this->mas_instance.info.populations.end();
                     ++pit) {
@@ -74,7 +74,7 @@ namespace mas {
                 typename std::unordered_map<int, Subpopulation<REAL_T> >::iterator spit;
 
                 for (spit = population->females.begin(); spit != population->females.end(); ++spit) {
-                    std::cout << ".";
+                    std::cout << "."<<std::flush;
 
 
                     for (int i = 0; i < (*spit).second.spawning_stock_biomass.size(); i++) {
