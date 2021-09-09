@@ -845,16 +845,6 @@ namespace atl {
             atl::RealMatrix<T> g_d(1, subset.size());
             atl::RealMatrix<T> cov = GetVarianceCovariance(subset); //parameters);
 
-            atl::Variable<T>::tape.Reset();
-            atl::Variable<T>::tape.derivative_trace_level =
-                    atl::FIRST_ORDER_REVERSE;
-
-            atl::Variable<T>::tape.recording = true;
-            atl::Variable<T> f;
-
-            this->Objective_Function(f);
-            atl::Variable<T>::tape.AccumulateFirstOrder();
-            
             //fill gradient of objective function w.r.t. parameters
             for (int i = 0; i < subset.size(); i++) {
                 g(i, 0) = atl::Variable<T>::tape.Value(subset[i]);
@@ -869,9 +859,9 @@ namespace atl {
                 g_d(0, i) = atl::Variable<T>::tape.Value(subset[i]);
             }
 
-            //            std::cout << "g:\n" << g << "\n\n";
-            //            std::cout << "cov:\n" << cov << "\n\n";
-            //            std::cout << "g_d:\n" << g_d << "\n\n";
+//            std::cout << "g:\n" << g << "\n\n";
+//            std::cout << "cov:\n" << cov << "\n\n";
+//            std::cout << "g_d:\n" << g_d << "\n\n";
 
             atl::RealMatrix<T> ret = g_d * cov*g;
 
