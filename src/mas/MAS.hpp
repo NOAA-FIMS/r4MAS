@@ -369,9 +369,9 @@ namespace mas {
                     info.GetPopulations();
             typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator it;
 
-            for (it = pops.begin(); it != pops.end(); ++it) {
-//                (*it).second->do_msy_calculations = true;
-            }
+//            for (it = pops.begin(); it != pops.end(); ++it) {
+////               (*it).second->do_msy_calculations = true;
+//            }
             for (it = pops.begin(); it != pops.end(); ++it) {
                 (*it).second->PushToAreasAndFleets();
                 (*it).second->Finalize();

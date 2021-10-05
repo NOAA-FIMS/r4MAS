@@ -288,6 +288,8 @@ namespace mas {
 
         inline void Reset() {
 
+            this->msy.Reset();
+            
             std::fill(this->catch_biomass_total.begin(),
                     this->catch_biomass_total.end(), static_cast<REAL_T> (0.0));
             std::fill(this->survey_biomass_total.begin(),
@@ -3407,7 +3409,7 @@ namespace mas {
 
             if (this->do_msy_calculations) {
                 this->ComputeBiologicalReferencePoints();
-                  this->do_msy_calculations = false;
+//                  this->do_msy_calculations = false;
             }
 
         }
@@ -3592,6 +3594,8 @@ namespace mas {
             REAL_T f_msy;
             REAL_T s_msy;
             REAL_T fmax;
+            this->msy.Reset();
+            
             for (int a = 0; a < areas_list.size(); a++) {
 
                 males[areas_list[a]->id].CalculateMSY(1.0, 0.01);
