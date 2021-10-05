@@ -1484,10 +1484,10 @@ namespace mas {
                 reprod[a] = this->weight_at_spawning[index].GetValue()
                         * (this->maturity[a] * this->sex_fraction_value);
                 spr_F0 += N0[a] * reprod[a];
-                selL[a] = this->sum_selectivity[index].GetValue();
-                selZ[a] = this->Z[index];//this->sum_selectivity[index].GetValue();
+                selL[a] = this->sum_selectivity[index];//.GetValue();
+                selZ[a] = this->sum_selectivity[index];//.GetValue();
                 M_age[a] = this->M[a].GetValue();
-                wgt[a] = this->weight_at_catch_time[index].GetValue();
+                wgt[a] = this->weight_at_catch_time[index];//.GetValue();
             }
 
             std::valarray<variable_t> L_age(nages); //#landings at age
@@ -3405,9 +3405,9 @@ namespace mas {
             //                females[areas_list[area]->id].CalculateNumbersAtAgeEndYearPlusOne();
             //            }
 
-            if (this->do_msy_calculations) {
-                this->ComputeBiologicalReferencePoints();
-            }
+//            if (this->do_msy_calculations) {
+//                this->ComputeBiologicalReferencePoints();
+//            }
 
         }
 
@@ -3416,7 +3416,7 @@ namespace mas {
          */
         void Finalize() {
 
-            //            this->ComputeBiologicalReferencePoints();
+                       this->ComputeBiologicalReferencePoints();
 
             //by age
             for (int al = 0; al < areas_list.size(); al++) {
