@@ -1481,7 +1481,7 @@ namespace mas {
 
                 //is this ssb_unfished?
                 reprod[a] = this->weight_at_spawning[index].GetValue()
-                        * (this->maturity[a] * this->sex_fraction_value);
+                        * (this->maturity[a]);// * this->sex_fraction_value);
                 spr_F0 += N0[a] * reprod[a];
                 selL[a] = this->sum_selectivity[index].GetValue();
                 selZ[a] = this->sum_selectivity[index].GetValue();
