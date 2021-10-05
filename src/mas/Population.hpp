@@ -3405,9 +3405,10 @@ namespace mas {
             //                females[areas_list[area]->id].CalculateNumbersAtAgeEndYearPlusOne();
             //            }
 
-//            if (this->do_msy_calculations) {
-//                this->ComputeBiologicalReferencePoints();
-//            }
+            if (this->do_msy_calculations) {
+                this->ComputeBiologicalReferencePoints();
+                  this->do_msy_calculations = false;
+            }
 
         }
 
@@ -3416,7 +3417,7 @@ namespace mas {
          */
         void Finalize() {
 
-                       this->ComputeBiologicalReferencePoints();
+//                       this->ComputeBiologicalReferencePoints();
 
             //by age
             for (int al = 0; al < areas_list.size(); al++) {
