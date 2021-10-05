@@ -136,6 +136,7 @@ namespace mas {
         std::vector<variable> biomass_total;
         std::vector<variable> fishing_mortality_total;
         std::vector<variable> sum_selectivity;
+        std::vector<variable> selectivity_at_age;
 
         std::vector<variable> Z;
         std::vector<variable> P; //selectivity at age.
@@ -1368,7 +1369,7 @@ namespace mas {
 
                     this->biomass_at_age[index1] += this->numbers_at_age[index1]
                             * this->weight_at_season_start[index1];
-                   this->biomass_total[index] += this->biomass_at_age[index1];
+                    this->biomass_total[index] += this->biomass_at_age[index1];
                 }
 
             }
@@ -1436,7 +1437,7 @@ namespace mas {
              */
             bool recording = mas::VariableTrait<REAL_T>::IsRecording();
 
-//            mas::VariableTrait<REAL_T>::SetRecording(false);
+            //            mas::VariableTrait<REAL_T>::SetRecording(false);
             typedef typename mas::VariableTrait<REAL_T>::variable variable_t;
 
             int year = this->years - 1;
@@ -1484,7 +1485,7 @@ namespace mas {
                         * (this->maturity[a] * this->sex_fraction_value);
                 spr_F0 += N0[a] * reprod[a];
                 selL[a] = this->sum_selectivity[index].GetValue();
-                selZ[a] = this->sum_selectivity[index].GetValue();
+                selZ[a] = this->Z[index];//this->sum_selectivity[index].GetValue();
                 M_age[a] = this->M[a].GetValue();
                 wgt[a] = this->weight_at_catch_time[index].GetValue();
             }
@@ -1725,30 +1726,30 @@ namespace mas {
                 this->F_over_F_msy[i] = this->fishing_mortality_total[i] / this->msy.F_msy;
             }
             //
-//            std::cout << std::scientific;
-//            //
-//            std::cout << "\n\nFmax: " << maxF << "\n";
-//            std::cout << "Step: " << step << "\n";
-//            std::cout << "\n\nF_msy: " << F[max_index] << "\n";
-//            std::cout << "F30: " << F[F30_out] << "\n";
-//            std::cout << "F35: " << F[F35_out] << "\n";
-//            std::cout << "F40: " << F[F40_out] << "\n";
-//            spr_msy_out = spr[max_index];
-//            std::cout << "msy: " << this->msy.msy << "\n";
-//            std::cout << "spr_msy: " << spr[max_index] << "\n";
-//            std::cout << "SR_msy: " << (spr_msy_out / spr_F0).GetValue() << "\n";
-//            //                        std::cout << "D_msy_out" << D_eq[max_index] << "\n";
-//            std::cout << "R_msy: " << R_eq[max_index] << "\n";
-//            std::cout << "SSB_msy: " << this->msy.SSB_msy << "\n";
-//            std::cout << "B_msy: " << this->msy.B_msy << "\n";
-//            std::cout << "E_msy: " << E_eq[max_index] << "\n";
-//            std::cout << "R0: " << this->R0 << "\n";
-//            std::cout << "S0: " << this->S0 << "\n";
-//            std::cout << "E_msy: " << E_eq[max_index] << "\n";
-//            std::cout << "Alpha: " << this->recruitment_model->GetAlpha() << "\n";
-//            std::cout << "Beta: " << this->recruitment_model->GetBeta() << "\n\n";
+            //            std::cout << std::scientific;
+            //            //
+            //            std::cout << "\n\nFmax: " << maxF << "\n";
+            //            std::cout << "Step: " << step << "\n";
+            //            std::cout << "\n\nF_msy: " << F[max_index] << "\n";
+            //            std::cout << "F30: " << F[F30_out] << "\n";
+            //            std::cout << "F35: " << F[F35_out] << "\n";
+            //            std::cout << "F40: " << F[F40_out] << "\n";
+            //            spr_msy_out = spr[max_index];
+            //            std::cout << "msy: " << this->msy.msy << "\n";
+            //            std::cout << "spr_msy: " << spr[max_index] << "\n";
+            //            std::cout << "SR_msy: " << (spr_msy_out / spr_F0).GetValue() << "\n";
+            //            //                        std::cout << "D_msy_out" << D_eq[max_index] << "\n";
+            //            std::cout << "R_msy: " << R_eq[max_index] << "\n";
+            //            std::cout << "SSB_msy: " << this->msy.SSB_msy << "\n";
+            //            std::cout << "B_msy: " << this->msy.B_msy << "\n";
+            //            std::cout << "E_msy: " << E_eq[max_index] << "\n";
+            //            std::cout << "R0: " << this->R0 << "\n";
+            //            std::cout << "S0: " << this->S0 << "\n";
+            //            std::cout << "E_msy: " << E_eq[max_index] << "\n";
+            //            std::cout << "Alpha: " << this->recruitment_model->GetAlpha() << "\n";
+            //            std::cout << "Beta: " << this->recruitment_model->GetBeta() << "\n\n";
             //
-//            mas::VariableTrait<REAL_T>::SetRecording(recording);
+            //            mas::VariableTrait<REAL_T>::SetRecording(recording);
 
         }
 
@@ -3415,7 +3416,7 @@ namespace mas {
          */
         void Finalize() {
 
-//            this->ComputeBiologicalReferencePoints();
+            //            this->ComputeBiologicalReferencePoints();
 
             //by age
             for (int al = 0; al < areas_list.size(); al++) {
@@ -3585,7 +3586,7 @@ namespace mas {
             for (double f = 0.01; f < 3.0; f += 0.01) {
                 fs.push_back(f);
             }
-//            variable::tape.recording = false;
+            //            variable::tape.recording = false;
             REAL_T msy;
             REAL_T f_msy;
             REAL_T s_msy;
