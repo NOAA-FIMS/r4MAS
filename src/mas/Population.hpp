@@ -3409,7 +3409,7 @@ namespace mas {
 
             if (this->do_msy_calculations) {
                 this->ComputeBiologicalReferencePoints();
-//                  this->do_msy_calculations = false;
+                this->do_msy_calculations = false;
             }
 
         }
