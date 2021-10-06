@@ -307,7 +307,7 @@ namespace mas {
             if (this->use_bias_correction) {
                 this->bias_correction = -0.5 * this->sigma_r * this->sigma_r; //bias correction
             } else {
-                this->bias_correction = 1.0;
+                this->bias_correction = 0.0;
             }
         }
 
@@ -358,7 +358,7 @@ namespace mas {
         virtual const variable CalculateEquilibriumRecruitment(variable spr, variable spr_F0) {
 
             return (mas::exp(this->log_R0) / ((5.0 * this->h - 1.0) * spr))*
-                    ((this->bias_correction)*4.0 * this->h * spr - spr_F0 * (1.0 - this->h));
+                    (mas::exp(this->bias_correction)*4.0 * this->h * spr - spr_F0 * (1.0 - this->h));
         }
 
         virtual const std::string ToJSONString() {
