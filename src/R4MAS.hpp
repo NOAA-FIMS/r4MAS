@@ -7259,7 +7259,6 @@ class MASModel {
     std::vector<atl::intrusive_ptr<AgeCompData> > om_age_comp_data;
 
 private:
-    bool compute_variance_for_derived_quantities = true;
 
     /**
      * Create the actual MAS model
@@ -7272,6 +7271,7 @@ private:
 
     std::shared_ptr<mas::MASObjectiveFunction<double> > mas;
 public:
+    bool compute_variance_for_derived_quantities = true;
     int nyears;
     int nseasons;
     int nages;
