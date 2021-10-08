@@ -341,7 +341,7 @@ public:
 	std::unordered_map<uint32_t, ForwardModeDerivativeInfo<REAL_T> > forward_mode_derivative_info;
 
 	std::vector<StackEntry<REAL_T>, atl::clfallocator<StackEntry<REAL_T> > > stack;
-	std::atomic<size_t> stack_current;
+        std::atomic<size_t> stack_current;
 
 	/**
 	 * Constructor.
