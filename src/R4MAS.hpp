@@ -7252,13 +7252,14 @@ class MASModel {
     std::set<int> fleets;
     std::set<int> surveys;
     std::set<int> populations;
-    bool compute_vaiance_for_derived_quantities = true;
+
 
     //data produced from the operating model
     std::vector<atl::intrusive_ptr<IndexData> > om_index_data;
     std::vector<atl::intrusive_ptr<AgeCompData> > om_age_comp_data;
 
 private:
+    bool / Users / mattadmin / r4MAS - model - comparison = true;
 
     /**
      * Create the actual MAS model
@@ -8100,7 +8101,7 @@ RCPP_MODULE(rmas) {
             .field("tolerance", &MASModel::tolerance)
             .field("max_iterations", &MASModel::max_iterations)
             .field("catch_season_offset", &MASModel::catch_season_offset)
-            .field("compute_vaiance_for_derived_quantities", &compute_vaiance_for_derived_quantities)
+            .field("compute_variance_for_derived_quantities", &compute_variance_for_derived_quantities)
             .field("spawning_season_offset", &MASModel::spawning_season_offset)
             .field("survey_season_offset", &MASModel::survey_season_offset)
             .field("extended_plus_group", &MASModel::extended_plus_group)
