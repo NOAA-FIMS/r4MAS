@@ -8101,7 +8101,7 @@ RCPP_MODULE(rmas) {
             .field("tolerance", &MASModel::tolerance)
             .field("max_iterations", &MASModel::max_iterations)
             .field("catch_season_offset", &MASModel::catch_season_offset)
-            .field("compute_variance_for_derived_quantities", &compute_variance_for_derived_quantities)
+            .field("compute_variance_for_derived_quantities", &MASModel::compute_variance_for_derived_quantities)
             .field("spawning_season_offset", &MASModel::spawning_season_offset)
             .field("survey_season_offset", &MASModel::survey_season_offset)
             .field("extended_plus_group", &MASModel::extended_plus_group)
