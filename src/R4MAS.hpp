@@ -7259,7 +7259,7 @@ class MASModel {
     std::vector<atl::intrusive_ptr<AgeCompData> > om_age_comp_data;
 
 private:
-    bool / Users / mattadmin / r4MAS - model - comparison = true;
+    bool compute_variance_for_derived_quantities = true;
 
     /**
      * Create the actual MAS model
