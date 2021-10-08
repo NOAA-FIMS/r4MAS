@@ -30,6 +30,7 @@ namespace mas {
         std::string config_path = "";
         std::string ouput_path = "mas_output.json";
         int references = 0;
+        bool compute_vaiance_for_derived_quantities = true;
 
 
 
@@ -59,13 +60,12 @@ namespace mas {
 
         void CalculateVarianceOfDerivedParameters() {
 
-            //      std::cout<<"\n\n"<<std::fixed<<mas_instance.variance_covaiance<<"\n\n";
             typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator pit;
             std::vector<uint32_t> pid;
             for (int i = 0; i < this->mas_instance.info.estimated_parameters.size(); i++) {
                 pid.push_back(this->mas_instance.info.estimated_parameters[i]->info->id);
             }
-            std::cout << "Calculating variance for derived quantities..."<<std::flush;
+            std::cout << "Calculating variance for derived quantities..." << std::flush;
             for (pit = this->mas_instance.info.populations.begin();
                     pit != this->mas_instance.info.populations.end();
                     ++pit) {
@@ -74,7 +74,7 @@ namespace mas {
                 typename std::unordered_map<int, Subpopulation<REAL_T> >::iterator spit;
 
                 for (spit = population->females.begin(); spit != population->females.end(); ++spit) {
-                    std::cout << "."<<std::flush;
+                    std::cout << "." << std::flush;
 
 
                     for (int i = 0; i < (*spit).second.spawning_stock_biomass.size(); i++) {
@@ -151,7 +151,9 @@ namespace mas {
 
             this->SetVarianceCovariance();
             mas_instance.Finalize();
-            this->CalculateVarianceOfDerivedParameters();
+            if (compute_vaiance_for_derived_quantities) {
+                this->CalculateVarianceOfDerivedParameters();
+            }
             //            mas_instance.Report();
             mas::JSONOutputGenerator<REAL_T> json;
             std::ofstream output(this->ouput_path.data());

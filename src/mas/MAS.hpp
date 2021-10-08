@@ -86,6 +86,8 @@ namespace mas {
         REAL_T rmsle;
         REAL_T AIC;
         REAL_T BIC;
+        
+        bool compute_vaiance_for_derived_quantities = true;
 
         MAS() {
         }
