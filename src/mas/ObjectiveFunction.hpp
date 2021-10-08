@@ -30,7 +30,7 @@ namespace mas {
         std::string config_path = "";
         std::string ouput_path = "mas_output.json";
         int references = 0;
-        bool compute_vaiance_for_derived_quantities = true;
+        bool compute_variance_for_derived_quantities = true;
 
 
 
@@ -151,7 +151,7 @@ namespace mas {
 
             this->SetVarianceCovariance();
             mas_instance.Finalize();
-            if (compute_vaiance_for_derived_quantities) {
+            if (compute_variance_for_derived_quantities) {
                 this->CalculateVarianceOfDerivedParameters();
             }
             //            mas_instance.Report();

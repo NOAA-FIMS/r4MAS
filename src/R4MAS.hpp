@@ -7322,7 +7322,7 @@ public:
     void Run() {
 
         mas = std::make_shared<mas::MASObjectiveFunction<double> >();
-        mas->compute_vaiance_for_derived_quantities = this->compute_vaiance_for_derived_quantities;
+        mas->compute_variance_for_derived_quantities = this->compute_variance_for_derived_quantities;
 
         if (this->nages == 0) {
             std::cout << "MAS error: nages = 0\n";
