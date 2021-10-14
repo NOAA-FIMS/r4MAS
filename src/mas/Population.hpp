@@ -1544,9 +1544,9 @@ namespace mas {
                 //                                                R_eq[i] = (R0 / ((5.0 * steep - 1.0) * spr[i]))*
                 //                                                        (BC * 4.0 * steep * spr[i] - spr_F0 * (1.0 - steep));
                 R_eq[i] =
-                        this->recruitment_model->CalculateEquilibriumRecruitment(
-                        this->recruitment_model->CalculateEquilibriumSpawningBiomass(
-                        spr[i])); //*1000*this->sex_fraction_value;
+                        this->recruitment_model->CalculateEquilibriumRecruitment(spr[i], spr_F0);
+//                        this->recruitment_model->CalculateEquilibriumSpawningBiomass(
+//                        spr[i])); //*1000*this->sex_fraction_value;
 
                 if (R_eq[i] < 0.0000001) {
                     R_eq[i] = 0.0000001;
@@ -1642,6 +1642,7 @@ namespace mas {
             variable_t F_msy_out = 0.0;
             variable_t spr_msy_out = 0.0;
             int index_m = 0;
+            
             for (int i = 0; i < F.size(); i++) {
                 if (L_eq[i] == msy_mt_out) {
 
@@ -3601,7 +3602,7 @@ namespace mas {
                 males[areas_list[a]->id].CalculateMSY(1.0, 0.01);
                 females[areas_list[a]->id].CalculateMSY(1.0, 0.01);
 
-                this->msy.msy += males[areas_list[a]->id].msy.msy;
+                this->msy.msy += males[areas_list[a]->id].msy.msy 
 
                 this->msy.spr_F0 += males[areas_list[a]->id].msy.spr_F0;
                 this->msy.F_msy += males[areas_list[a]->id].msy.F_msy / (areas_list.size()*2.0);

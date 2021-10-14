@@ -351,6 +351,10 @@ namespace mas {
         }
 
         virtual const REAL_T CalculateEquilibriumRecruitment(REAL_T equilibrium_spawning_biomass) {
+             //                                                R_eq[i] = (R0 / ((5.0 * steep - 1.0) * spr[i]))*
+                //                                                        (BC * 4.0 * steep * spr[i] - spr_F0 * (1.0 - steep));
+//             (mas::exp(this->log_R0) / ((5.0 * this->h - 1.0) * spr[i]))*
+//                                                                       (BC * 4.0 * this->h * spr[i] - spr_F0 * (1.0 - this->h));
             return (this->GetAlpha() * equilibrium_spawning_biomass) /
                     (this->GetBeta() + equilibrium_spawning_biomass);
         }
