@@ -3602,7 +3602,7 @@ namespace mas {
                 males[areas_list[a]->id].CalculateMSY(1.0, 0.01);
                 females[areas_list[a]->id].CalculateMSY(1.0, 0.01);
 
-                this->msy.msy += males[areas_list[a]->id].msy.msy 
+                this->msy.msy += males[areas_list[a]->id].msy.msy; 
 
                 this->msy.spr_F0 += males[areas_list[a]->id].msy.spr_F0;
                 this->msy.F_msy += males[areas_list[a]->id].msy.F_msy / (areas_list.size()*2.0);
