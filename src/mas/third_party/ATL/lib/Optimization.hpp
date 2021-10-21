@@ -2153,7 +2153,6 @@ namespace atl {
             T descent = 0;
 
             int nops = parameters.size();
-            std::valarray<T> nwg(nops);
             std::valarray<T> ng(nops);
 
             for (size_t j = 0; j < nops; j++) {
@@ -2372,7 +2371,7 @@ namespace atl {
 
 
             std::valarray<T> p(this->max_history);
-            std::valarray<T>a(this->max_history);
+            std::valarray<T> a(this->max_history);
             int no_progress_count = 0;
             int i;
             for (int iteration = 0; iteration < this->max_iterations; iteration++) {

@@ -70,6 +70,7 @@ namespace mas {
                     pit != this->mas_instance.info.populations.end();
                     ++pit) {
                 (*pit).second->do_msy_calculations = true;
+
                 mas::Population<REAL_T> *population = (*pit).second.get();
                 typename std::unordered_map<int, Subpopulation<REAL_T> >::iterator spit;
 
@@ -153,6 +154,14 @@ namespace mas {
             mas_instance.Finalize();
             if (compute_variance_for_derived_quantities) {
                 this->CalculateVarianceOfDerivedParameters();
+            } else {
+                 typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator pit;
+                for (pit = this->mas_instance.info.populations.begin();
+                        pit != this->mas_instance.info.populations.end();
+                        ++pit) {
+                    (*pit).second->ComputeBiologicalReferencePoints();
+                }
+
             }
             //            mas_instance.Report();
             mas::JSONOutputGenerator<REAL_T> json;
