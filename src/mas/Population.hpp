@@ -1521,8 +1521,445 @@ namespace mas {
             }
             return ret;
         }
+        
+        void CalculateMSY(REAL_T maxF = 1.0, REAL_T step = 0.001) {
+            /**
+             * This code was ported from BAM. Original Author: Kyle Shertzer
+             */
+            bool recording = mas::VariableTrait<REAL_T>::IsRecording();
 
-        void CalculateMSY(REAL_T maxF = 1.0, REAL_T step = 0.01) {
+            //            mas::VariableTrait<REAL_T>::SetRecording(false);
+            typedef typename mas::VariableTrait<REAL_T>::variable variable_t;
+
+            int year = this->years - 1;
+            int season = this->seasons - 1;
+            int nages = ages.size();
+
+
+
+
+            std::vector<variable_t> surviavability(this->ages.size());
+            std::vector<variable_t> unfished_spawing_biomass_per_recruit(this->ages.size());
+            std::vector<variable_t> unfished_spawners_per_recruit(this->ages.size());
+            variable_t F_sbpr_unfished;
+
+            surviavability[0] = 1.0;
+            unfished_spawing_biomass_per_recruit[0] = this->weight_at_spawning[0] * this->maturity[0] * this->sex_fraction_value;
+            F_sbpr_unfished += unfished_spawing_biomass_per_recruit[0];
+
+            int i;
+            for (i = 1; i < this->ages.size() - 1; i++) {
+                size_t index = year * this->seasons * this->ages.size()
+                        + (season) * this->ages.size() + i;
+                surviavability[i] = mas::exp(-1.0 * (this->M[i] + 0.0 * this->sum_selectivity[i])) * surviavability[i - 1];
+                unfished_spawing_biomass_per_recruit[i] = this->weight_at_spawning[index] * this->maturity[i] * this->sex_fraction_value * surviavability[i];
+                F_sbpr_unfished += unfished_spawing_biomass_per_recruit[i];
+            }
+
+            size_t index = year * this->seasons * this->ages.size()
+                    + (season) * this->ages.size() + i;
+
+            surviavability[i] = mas::exp(-1.0 * (this->M[i] + 0.0 * this->sum_selectivity[i])) * surviavability[i - 1] / (1.0 - mas::exp(-1.0 * this->M[i]));
+            unfished_spawing_biomass_per_recruit[i] = this->weight_at_spawning[i] * this->maturity[index] * this->sex_fraction_value * surviavability[i];
+            F_sbpr_unfished += unfished_spawing_biomass_per_recruit[i];
+
+//            std::cout << "F_sbpr_unfished = " << F_sbpr_unfished << "\n\n";
+
+            std::vector<variable_t> F;
+            for (REAL_T f = 0.0; f <= maxF; f += step) {
+                F.push_back(variable_t(f));
+            }
+
+            std::valarray<variable_t> spr(F.size()); //equilibrium spr at F
+            std::valarray<variable_t> spr_ratio(F.size()); //equilibrium spr at F
+            std::vector<variable_t> S_eq(F.size()); //equilibrium SSB at F
+            std::vector<variable_t> R_eq(F.size()); //equilibrium recruitment at F
+            std::vector<variable_t> B_eq(F.size()); //equilibrium biomass at F
+            std::vector<variable_t> L_eq(F.size()); //equilibrium landings at F
+            std::vector<variable_t> D_eq(F.size()); //equilibrium dead discards at F
+            std::vector<variable_t> E_eq(F.size()); //equilibrium exploitation rate at F (landings only)
+            std::valarray<variable_t> L_eq_knum(F.size());
+            std::valarray<variable_t> SSB_eq(F.size());
+
+
+            for (int i = 0; i < F.size(); i++) {
+//                std::cout << "F = " << F[i] << "\n\n";
+                std::vector<variable_t> spawners_per_recruit(this->ages.size());
+                std::vector<variable_t> spawning_biomass_per_recruit(this->ages.size());
+                std::vector<variable_t> total_mortality(this->ages.size());
+                std::vector<variable_t> equilibrium_numbers(this->ages.size());
+                std::vector<variable_t> equilibrium_landing_numbers(this->ages.size());
+                variable_t F_sbpr;
+
+                variable_t F_sbpr_eq;
+                variable_t F_B_eq;
+                variable_t F_L_eq;
+                variable_t F_L_sum;
+
+                size_t index_ = year * this->seasons * this->ages.size()
+                        + (season) * this->ages.size() + 0;
+                spawners_per_recruit[0] = 1.0;
+                spawning_biomass_per_recruit[0] = spawners_per_recruit[0] * this->weight_at_spawning[index_] * this->maturity[0] * this->sex_fraction_value;
+                F_sbpr += spawning_biomass_per_recruit[0];
+
+//                std::cout << std::fixed << spawning_biomass_per_recruit[0] << "\n";
+
+                int a;
+                for (a = 0; a < this->ages.size() - 1; a++) {
+
+                    size_t index = year * this->seasons * this->ages.size()
+                            + (season) * this->ages.size() + a;
+
+                    total_mortality[a] = this->M[a] + this->sum_selectivity[index] * F[i];
+
+                    if (a != 0) {
+
+                        spawners_per_recruit[a] = spawners_per_recruit[a - 1] * mas::exp(-1.0 * total_mortality[a - 1]);
+                        spawning_biomass_per_recruit[a] = spawners_per_recruit[a] * this->weight_at_spawning[index] * this->maturity[a] * this->sex_fraction_value;
+                        F_sbpr += spawning_biomass_per_recruit[a];
+//                        std::cout << spawning_biomass_per_recruit[a] << "\n";
+                    }
+                }
+                size_t index = year * this->seasons * this->ages.size()
+                        + (season) * this->ages.size() + a;
+
+                total_mortality[a] = this->M[a] + this->sum_selectivity[index] * F[i];
+                spawners_per_recruit[a] = spawners_per_recruit[a - 1] * mas::exp(-1.0 * total_mortality[a - 1]) / (1.0 - mas::exp(-1.0 * total_mortality[a]));
+                spawning_biomass_per_recruit[a] = spawners_per_recruit[a] * this->weight_at_spawning[index] * this->maturity[a] * this->sex_fraction_value;
+                F_sbpr += spawning_biomass_per_recruit[a];
+//                std::cout << spawning_biomass_per_recruit[a] << "\n";
+//                std::cout << "F_SBPR = " << F_sbpr;
+
+                R_eq[i] = this->recruitment_model->CalculateEquilibriumRecruitment(F_sbpr_unfished, F_sbpr);
+
+//                std::cout << "\n\nEquilibrium Recruitment At Fishing Mortality F = " << R_eq[i] << "\n";
+
+                for (a = 0; a < this->ages.size(); a++) {
+                    size_t index = year * this->seasons * this->ages.size()
+                            + (season) * this->ages.size() + a;
+
+                    equilibrium_numbers[a] = R_eq[i] * spawners_per_recruit[a];
+                    F_sbpr_eq += equilibrium_numbers[a] * (this->weight_at_spawning[index] * this->maturity[a] * this->sex_fraction_value);
+                    F_B_eq += equilibrium_numbers[a] * this->weight_at_spawning[index];
+                    equilibrium_landing_numbers[a] = F[i] * this->sum_selectivity[index] * equilibrium_numbers[a]*(1.0 - mas::exp(-1.0 * total_mortality[a])) / total_mortality[a];
+                    F_L_sum += equilibrium_landing_numbers[a];
+                    F_L_eq += equilibrium_landing_numbers[a] * this->weight_at_catch_time[index];
+
+//                    std::cout << "equilibrium_landing_numbers[" << a << "] = " << equilibrium_landing_numbers[a] << "\n";
+                }
+
+                S_eq[i] = F_sbpr_eq;
+                B_eq[i] = F_B_eq;
+                L_eq[i] = F_L_eq;
+
+//                std::cout << "F_sbpr_eq = " << F_sbpr_eq << "\n";
+     
+            }
+     
+
+
+            variable_t spr_F0 = 0.0;
+
+            std::vector<variable_t> N0(this->ages.size(), 1.0);
+            for (int iage = 1; iage < nages; iage++) {
+                N0[iage] = N0[iage - 1] * mas::exp(-1.0 * M[iage - 1]);
+            }
+            N0[nages - 1] = N0[nages - 2] * mas::exp(-1.0 * M[nages - 2])
+                    / (1.0 - mas::exp(-1.0 * M[nages - 1]));
+
+            std::valarray<variable_t> reprod(nages);
+            std::valarray<variable_t> selL(nages);
+            std::valarray<variable_t> selZ(nages);
+            std::valarray<variable_t> M_age(nages);
+            std::valarray<variable_t> wgt(nages);
+
+            for (int a = 0; a < ages.size(); a++) {
+                //dimension folded index
+                size_t index = year * this->seasons * this->ages.size()
+                        + (season) * this->ages.size() + a;
+
+                //is this ssb_unfished?
+                reprod[a] = this->weight_at_spawning[index]
+                        * (this->maturity[a] * this->sex_fraction_value);
+                spr_F0 += N0[a] * reprod[a];
+                selL[a] = this->sum_selectivity[index];
+                selZ[a] = this->sum_selectivity[index];
+                M_age[a] = this->M[a].GetValue();
+                wgt[a] = this->weight_at_catch_time[index];
+            }
+
+            std::valarray<variable_t> L_age(nages); //#landings at age
+            std::valarray<variable_t> D_age(nages); //#dead discards at age
+            std::valarray<variable_t> F_age(nages); //#F at age
+            std::valarray<variable_t> Z_age(nages); //#Z at age
+
+            // BEGIN ALGORITHM
+//            for (int i = 0; i < F.size(); i++) {
+//
+//                std::valarray<variable_t> FL_age(nages);
+//                std::valarray<variable_t> Z_age(nages);
+//                variable_t sprb_f;
+//
+//                for (int a = 0; a < ages.size(); a++) {
+//
+//
+//
+//                    FL_age[a] = F[i] * selL[a];
+//                    //std::valarray<variable_t> FD_age = F[i] * selD;
+//                    Z_age[a] = M_age[a] + F[i] * selZ[a];
+//
+//                    //                    
+//                }
+//                //                int A;
+//                //                for (A = 0; A < ages.size() - 1; A++) {
+//                //                    size_t index = year * this->seasons * this->ages.size()
+//                //                            + (season) * this->ages.size() + A;
+//                //                    variable_t sum;
+//                //                    for (int k = 0; k < ages.size() - 1; k++) {
+//                //                        size_t index2 = year * this->seasons * this->ages.size()
+//                //                                + (season) * this->ages.size() + A;
+//                //                        variable_t sum;
+//                //                        sum += F[i] * this->sum_selectivity[index2] + this->M[k];
+//                //                    }
+//                //                    sprb_f += this->maturity[A] * this->weight_at_catch_time[index] * mas::exp(
+//                //                            -1.0 * this->catch_season_offset * F[i] * this->sum_selectivity[index] -
+//                //                            this->spawning_season_offset * this->maturity[A] - sum);
+//                //                }
+//                //
+//                //                variable_t sum;
+//                //                for (int k = 0; k < ages.size() - 1; k++) {
+//                //                    size_t index2 = year * this->seasons * this->ages.size()
+//                //                            + (season) * this->ages.size() + A;
+//                //                    variable_t sum;
+//                //                    sum += F[i] * this->sum_selectivity[index2] + this->M[k];
+//                //                }
+//                //                size_t index = year * this->seasons * this->ages.size()
+//                //                            + (season) * this->ages.size() + A;
+//                //                sprb_f += this->maturity[A] * this->weight_at_catch_time[index] * mas::exp(
+//                //                        -1.0 * this->catch_season_offset * F[i] * this->sum_selectivity[index] -
+//                //                        this->spawning_season_offset * this->M[A] - sum)/ (1.0- mas::exp(-1.0*(F[i]*this->sum_selectivity[index]-this->M[A])));
+//
+//                std::valarray<variable_t> N_age(nages);
+//                std::valarray<variable_t> N_age_spawn(nages);
+//
+//                N_age[0] = 1.0;
+//
+//                for (int iage = 1; iage < nages; iage++) {
+//                    N_age[iage] = N_age[iage - 1]
+//                            * mas::exp(-1.0 * Z_age[iage - 1]);
+//                }
+//
+//                //last age is pooled
+//                N_age[nages - 1] = N_age[nages - 2]
+//                        * mas::exp(-1.0 * Z_age[nages - 2])
+//                        / (1.0 - mas::exp(-1.0 * Z_age[nages - 1]));
+//
+//                for (int iage = 0; iage < nages; iage++) {
+//                    N_age_spawn[iage] = (N_age[iage]
+//                            * mas::exp((-1.0 * Z_age[iage]
+//                            * this->spawning_season_offset)));
+//                }
+//
+//
+//                N_age_spawn[nages - 1] =
+//                        (N_age_spawn[nages - 2]
+//                        * (mas::exp(-1.0 * (Z_age[nages - 2]* (1.0 - this->spawning_season_offset) + Z_age[nages - 1] * this->spawning_season_offset))))
+//                        / (1.0 - mas::exp(-1.0 * Z_age[nages - 1]));
+//
+//                spr[i] = sum_product(N_age, reprod);
+//
+//                SSB_eq[i] = this->recruitment_model->CalculateEquilibriumSpawningBiomass(this->SB0, spr[i]);
+//                R_eq[i] = this->recruitment_model->Evaluate(this->SB0, SSB_eq[i]);
+//
+//
+//                if (R_eq[i] < 0.0000001) {
+//                    R_eq[i] = 0.0000001;
+//                }
+//
+//                N_age *= R_eq[i];
+//                N_age_spawn *= R_eq[i];
+//
+//                S_eq[i] = sum_product(N_age, reprod);
+//                B_eq[i] = sum_product(N_age, wgt);
+//
+//                for (int iage = 0; iage < nages; iage++) {
+//                    L_age[iage] = N_age[iage] * (FL_age[iage] / Z_age[iage])
+//                            * (1.0 - mas::exp(-1.0 * Z_age[iage]));
+//                    //                            D_age[iage] = N_age[iage]*
+//                    //                                              (FD_age[iage] / Z_age[iage])*(1. - exp(-1.0 * Z_age[iage]))
+//                }
+//
+//
+//
+//                L_eq[i] = sum_product(L_age, wgt);
+//                E_eq[i] = this->sum(L_age) / this->sum(N_age);
+//                L_eq_knum[i] = (this->sum(L_age) / 1000.0);
+//
+//            }
+            int max_index = 0;
+            variable_t max = 1e-18; //std::numeric_limits<variable_t>::min();
+
+            REAL_T F01_dum = 1000; //min(fabs(spr_ratio - 0.001));
+            REAL_T F30_dum = 1000; // min(fabs(spr_ratio - 0.3));
+            REAL_T F35_dum = 1000; // min(fabs(spr_ratio - 0.35));
+            REAL_T F40_dum = 1000; // min(fabs(spr_ratio - 0.4))
+
+            for (int j = 0; j < spr_ratio.size(); j++) {
+                spr_ratio[j] = spr[j] / spr_F0;
+                REAL_T temp = std::fabs(spr_ratio[j] - 0.001);
+
+                if (temp < F01_dum) {
+                    F01_dum = temp;
+                }
+
+                temp = std::fabs(spr_ratio[j] - 0.3);
+
+                if (temp < F30_dum) {
+                    F30_dum = temp;
+                }
+
+                temp = std::fabs(spr_ratio[j] - 0.35);
+
+                if (temp < F35_dum) {
+                    F35_dum = temp;
+                }
+
+                temp = std::fabs(spr_ratio[j] - 0.4);
+
+                if (temp < F40_dum) {
+                    F40_dum = temp;
+                }
+
+            }
+            size_t F01_out = 0;
+            size_t F30_out = 0;
+            size_t F35_out = 0;
+            size_t F40_out = 0;
+            //            std::cout << "F30_dum " << F30_dum << "\n";
+            //            std::cout << "F35_dum " << F35_dum << "\n";
+            //            std::cout << "F40_dum " << F40_dum << "\n";
+
+            for (int i = 0; i < L_eq.size(); i++) {
+                if (L_eq[i] >= max) {
+                    max = L_eq[i];
+                    max_index = i;
+                }
+                //                if (std::fabs(spr_ratio[i] - 0.001) == F01_dum) {
+                //                    F01_out = F[i];
+                //                }
+
+                if (std::fabs(spr_ratio[i] - 0.3) == F30_dum) {
+                    F30_out = i;
+                }
+                if (std::fabs(spr_ratio[i] - 0.35) == F35_dum) {
+                    F35_out = i;
+                }
+                if (std::fabs(spr_ratio[i] - 0.4) == F40_dum) {
+                    F40_out = i;
+                }
+            }
+            variable_t msy_mt_out = max; //msy in whole weight
+            variable_t SSB_msy_out = 0.0;
+            variable_t B_msy_out = 0.0;
+            variable_t R_msy_out = 0.0;
+            variable_t msy_knum_out = 0.0;
+            variable_t F_msy_out = 0.0;
+            variable_t spr_msy_out = 0.0;
+            int index_m = 0;
+
+            for (int i = 0; i < F.size(); i++) {
+                if (L_eq[i] == msy_mt_out) {
+
+                    SSB_msy_out = S_eq[i];
+                    B_msy_out = B_eq[i] * this->sex_fraction_value;
+                    R_msy_out = R_eq[i] * 1000.0 * this->sex_fraction_value;
+                    msy_knum_out = L_eq_knum[i];
+                    F_msy_out = F[i];
+                    spr_msy_out = spr[i];
+                    index_m = i;
+                }
+            }
+            this->msy.Reset();
+            this->area->nsubpopulations++;
+            this->msy.msy = msy_mt_out * this->sex_fraction_value;
+            
+//            std::cout<<"SSB_msy_out "<<SSB_msy_out<<"\n";
+            this->msy.spr_F0 = spr_F0;
+            this->msy.F_msy = F_msy_out;
+            this->msy.spr_msy = spr[index_m];
+            this->msy.SR_msy = spr[index_m] / spr_F0;
+            this->msy.R_msy = R_msy_out;
+            this->msy.SSB_msy = SSB_msy_out;
+            this->msy.B_msy = B_msy_out;
+            this->msy.E_msy = E_eq[index_m];
+
+            this->msy.F30 = F[F30_out];
+            this->msy.spr_F30_msy = spr[F30_out];
+            this->msy.SR_F30_msy = spr[F30_out] / spr_F0;
+            this->msy.R_F30_msy = R_eq[F30_out];
+            this->msy.SSB_F30_msy = S_eq[F30_out];
+            this->msy.B_F30_msy = B_eq[F30_out];
+            this->msy.E_F30_msy = E_eq[F30_out];
+
+            this->msy.F35 = F[F35_out];
+            this->msy.spr_F35_msy = spr[F35_out];
+            this->msy.SR_F35_msy = spr[F35_out] / spr_F0;
+            this->msy.R_F35_msy = R_eq[F35_out];
+            this->msy.SSB_F35_msy = S_eq[F35_out];
+            this->msy.B_F35_msy = B_eq[F35_out];
+            this->msy.E_F35_msy = E_eq[F35_out];
+
+            this->msy.F40 = F[F40_out];
+            this->msy.spr_F40_msy = spr[F40_out];
+            this->msy.SR_F40_msy = spr[F40_out] / spr_F0;
+            this->msy.R_F40_msy = R_eq[F40_out];
+            this->msy.SSB_F40_msy = S_eq[F40_out];
+            this->msy.B_F40_msy = B_eq[F40_out];
+            this->msy.E_F40_msy = E_eq[F40_out];
+
+            this->area->msy.msy += this->msy.msy;
+            this->area->msy.spr_F0 += this->msy.spr_F0;
+            this->area->msy.F_msy += this->msy.F_msy;
+            this->area->msy.spr_msy += this->msy.spr_msy;
+            this->area->msy.SR_msy += this->msy.SR_msy;
+            this->area->msy.R_msy += this->msy.R_msy;
+            this->area->msy.SSB_msy += this->msy.SSB_msy;
+            this->area->msy.B_msy += this->msy.B_msy;
+            this->area->msy.E_msy += this->msy.E_msy;
+
+            this->area->msy.F30 += this->msy.F30;
+            this->area->msy.spr_F30_msy += this->msy.spr_F30_msy;
+            this->area->msy.SR_F30_msy += this->msy.SR_F30_msy;
+            this->area->msy.R_F30_msy += this->msy.R_F30_msy;
+            this->area->msy.SSB_F30_msy += this->msy.SSB_F30_msy;
+            this->area->msy.B_F30_msy += this->msy.B_F30_msy;
+            this->area->msy.E_F30_msy += this->msy.E_F30_msy;
+
+            this->area->msy.F35 += this->msy.F35;
+            this->area->msy.spr_F35_msy += this->msy.spr_F35_msy;
+            this->area->msy.SR_F35_msy += this->msy.SR_F35_msy;
+            this->area->msy.R_F35_msy += this->msy.R_F35_msy;
+            this->area->msy.SSB_F35_msy += this->msy.SSB_F35_msy;
+            this->area->msy.B_F35_msy += this->msy.B_F35_msy;
+            this->area->msy.E_F35_msy += this->msy.E_F35_msy;
+
+            this->area->msy.F40 += this->msy.F40;
+            this->area->msy.spr_F40_msy += this->msy.spr_F40_msy;
+            this->area->msy.SR_F40_msy += this->msy.SR_F40_msy;
+            this->area->msy.R_F40_msy += this->msy.R_F40_msy;
+            this->area->msy.SSB_F40_msy += this->msy.SSB_F40_msy;
+            this->area->msy.B_F40_msy += this->msy.B_F40_msy;
+            this->area->msy.E_F40_msy += this->msy.E_F40_msy;
+
+            for (int i = 0; i < this->F_over_F_msy.size(); i++) {
+
+                this->F_over_F_msy[i] = this->fishing_mortality_total[i] / F_msy_out;
+            }
+
+
+        }
+
+        void CalculateMSY_(REAL_T maxF = 1.0, REAL_T step = 0.01) {
             /**
              * This code was ported from BAM. Original Author: Kyle Shertzer
              */
