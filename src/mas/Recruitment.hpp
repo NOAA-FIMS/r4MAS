@@ -359,10 +359,20 @@ namespace mas {
                     (this->GetBeta() + equilibrium_spawning_biomass);
         }
 
-        virtual const variable CalculateEquilibriumRecruitment(variable spr, variable spr_F0) {
+//         virtual const variable CalculateEquilibriumRecruitment(variable spr, variable spr_F0) {
 
-            return (mas::exp(this->log_R0) / ((5.0 * this->h - 1.0) * spr))*
-                    (/*mas::exp(this->bias_correction)*/4.0 * this->h * spr - spr_F0 * (1.0 - this->h));
+//             return (mas::exp(this->log_R0) / ((5.0 * this->h - 1.0) * spr))*
+//                     (/*mas::exp(this->bias_correction)*/4.0 * this->h * spr - spr_F0 * (1.0 - this->h));
+//         }
+
+        virtual const variable CalculateEquilibriumRecruitment(
+        variable spawning_biomass_per_recruit_unfished,
+                variable spawning_biomass_per_recruit_f) {
+//=R0*((4*h*R52-(1-h)*$B$7)/((5*h-1)*R52))
+            return mas::exp(this->log_R0)*((4.0*this->h*
+                    spawning_biomass_per_recruit_f-(1.0-this->h)*
+                    spawning_biomass_per_recruit_unfished)/((5.0*this->h-1.0)
+                    *spawning_biomass_per_recruit_f));
         }
 
         virtual const std::string ToJSONString() {
