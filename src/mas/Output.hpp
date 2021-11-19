@@ -2018,6 +2018,8 @@ namespace mas {
                 rapidjson::Value males(rapidjson::kObjectType);
                 rapidjson::Value undiff(rapidjson::kObjectType);
 
+                females.AddMember("SB0", (*pit).second->SB0, allocator);
+
                 rapidjson::Value fmsy(rapidjson::kObjectType);
                 this->GenerateReferencePoints(fmsy, *(*pit).second, mas::FEMALE);
                 females.AddMember("MSY", fmsy, allocator);
@@ -2083,6 +2085,8 @@ namespace mas {
 
                 Popobject.AddMember("females", females, allocator);
 
+                males.AddMember("SB0", (*pit).second->SB0, allocator);
+
                 rapidjson::Value mmsy(rapidjson::kObjectType);
                 this->GenerateReferencePoints(mmsy, *(*pit).second, mas::MALE);
                 males.AddMember("MSY", mmsy, allocator);
@@ -2146,6 +2150,8 @@ namespace mas {
                 males.AddMember("fishing_mortality", mfmort, allocator);
 
                 Popobject.AddMember("males", males, allocator);
+
+                undiff.AddMember("SB0", (*pit).second->SB0, allocator);
 
                 rapidjson::Value urecruits(rapidjson::kObjectType);
                 urecruits.AddMember("units", "1000 fish", allocator);
