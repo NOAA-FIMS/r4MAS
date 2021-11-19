@@ -3341,6 +3341,7 @@ namespace mas {
                 bool do_msy_calculations = false;
                 //number of forecast years
                 int forecast_years = 5;
+                variable SB0;
 
                 Population() {
         }
@@ -3574,6 +3575,7 @@ namespace mas {
                         females[areas_list[a]->id].CalculateUnfishedSpawningBiomassPerRecruit();
                         females[areas_list[a]->id].CalculateUnfishedEquilSpawningBiomass();
 
+                        this->SB0 = females[areas_list[a]->id].SB0;
                         males[areas_list[a]->id].SB0 = females[areas_list[a]->id].SB0;
                         males[areas_list[a]->id].S0 = females[areas_list[a]->id].S0;
 
