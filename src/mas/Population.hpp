@@ -945,7 +945,7 @@ namespace mas {
                             * this->M[a]);
                 }
                 this->recruitment_model->SB0[this->id][this->area->id] = temp;
-                        this->SB0 = temp;
+                        this->SB0 = temp*.9;
             }
         }
 
