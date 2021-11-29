@@ -323,7 +323,7 @@ namespace mas {
             beta = (this->SB0[pop_id][area_id] * (1.0 - this->h)) / (5.0 * this->h - 1.0);
 //(0.8*R0*h*S)/(0.2*R0*Phi.0*(1-h) + S*(h-0.2))
             
-            return ( 4.0 * this->h * mas::exp(this->log_R0) * sb) / (this->SB0[pop_id][area_id]*(1.0 - this->h) + (sb * (5.0 * this->h - 1.0)));
+            return ( 4.0 * this->h * mas::exp(this->log_R0) * sb) / (this->SB0[pop_id][area_id]*(1.0 - this->h) + sb * (5.0 * this->h - 1.0));
         }
 
         /**
