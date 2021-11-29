@@ -4185,7 +4185,7 @@ namespace mas {
                         this->msy.spr_msy += females[areas_list[a]->id].msy.spr_msy;
                         this->msy.SR_msy += females[areas_list[a]->id].msy.SR_msy;
                         this->msy.R_msy += females[areas_list[a]->id].msy.R_msy;
-                        this->msy.SSB_msy += females[areas_list[a]->id].msy.SSB_msy;
+                        this->msy.SSB_msy += females[areas_list[a]->id].msy.SSB_msy/ (areas_list.size()*2.0);
                         this->msy.B_msy += females[areas_list[a]->id].msy.B_msy;
                         this->msy.E_msy += females[areas_list[a]->id].msy.E_msy;
 
