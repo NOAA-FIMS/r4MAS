@@ -485,7 +485,7 @@ namespace mas {
                                 weight_at_spawning[index]);
 
                         this->fecundity_at_age[index] =
-                                this->weight_at_spawning[index] * this->maturity[a];
+                                this->weight_at_spawning[index] * this->maturity[a]*this->sex_fraction_value;
 
                         //weight at catch time
                         this->growth_model->GetWeight(y, s,
