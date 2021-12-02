@@ -1543,7 +1543,7 @@ namespace mas {
                     this->area->seasonal_fleet_operations[season];
 
             std::vector<variable_t> surviavability(this->ages.size());
-            std::vector<variable_t> selectivity(this->ages.size());
+//            std::vector<variable_t> selectivity(this->ages.size());
             std::vector<variable_t> unfished_spawing_biomass_per_recruit(this->ages.size());
             std::vector<variable_t> unfished_spawners_per_recruit(this->ages.size());
             variable_t F_sbpr_unfished;
@@ -1789,7 +1789,7 @@ namespace mas {
 
                     SSB_msy_out = S_eq[i];
                     B_msy_out = B_eq[i] * this->sex_fraction_value;
-                    R_msy_out = R_eq[i] * 1000.0 * this->sex_fraction_value;
+                    R_msy_out = R_eq[i];/// * 1000.0 * this->sex_fraction_value;
                     msy_knum_out = L_eq_knum[i];
                     F_msy_out = F[i];
                     spr_msy_out = spr[i];
