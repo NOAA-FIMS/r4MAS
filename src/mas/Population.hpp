@@ -1535,8 +1535,8 @@ namespace mas {
             int season = this->seasons - 1;
             int nages = ages.size();
 
-            std::vector<atl::intrusive_ptr<Fleet<REAL_T> > > &fleets =
-                    this->area->seasonal_fleet_operations[season];
+//            std::vector<atl::intrusive_ptr<Fleet<REAL_T> > > &fleets =
+//                    this->area->seasonal_fleet_operations[season];
 
 
 
@@ -1656,7 +1656,7 @@ namespace mas {
                     F_B_eq += equilibrium_numbers[a] * this->weight_at_spawning[index];
                     equilibrium_landing_numbers[a] = (F[i] * this->sum_selectivity[index]) * equilibrium_numbers[a]*(1.0 - mas::exp(-1.0 * total_mortality[a])) / total_mortality[a];
                     F_L_sum += equilibrium_landing_numbers[a];
-                    F_L_eq += equilibrium_landing_numbers[a] * this->weight_at_catch_time[index];
+                    F_L_eq += equilibrium_landing_numbers[a] * this->weight_at_catch_time[index]/1000.0;
                 }
 
                 S_eq[i] = F_sbpr_eq;
