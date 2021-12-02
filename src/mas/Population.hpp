@@ -1547,12 +1547,12 @@ namespace mas {
             std::vector<variable_t> unfished_spawners_per_recruit(this->ages.size());
             variable_t F_sbpr_unfished;
 
-            for (int i = 0; i < fleets.size(); i++) {
-                for (int a = 0; a < this->ages.size(); a++) {
-                    selectivity[a] += fleets[i]->season_area_selectivity[season][this->area->id]->Evaluate(
-                            this->ages[a]);
-                }
-            }
+//            for (int i = 0; i < fleets.size(); i++) {
+//                for (int a = 0; a < this->ages.size(); a++) {
+//                    selectivity[a] += fleets[i]->season_area_selectivity[season][this->area->id]->Evaluate(
+//                            this->ages[a]);
+//                }
+//            }
 
             surviavability[0] = 1.0;
             unfished_spawing_biomass_per_recruit[0] = this->weight_at_spawning[0] * this->maturity[0] * this->sex_fraction_value;
@@ -1562,7 +1562,7 @@ namespace mas {
             for (i = 1; i < this->ages.size() - 1; i++) {
                 size_t index = year * this->seasons * this->ages.size()
                         + (season) * this->ages.size() + i;
-                surviavability[i] = mas::exp(-1.0 * (this->M[i] + 0.0 * selectivity[i])) * surviavability[i - 1];
+                surviavability[i] = mas::exp(-1.0 * (this->M[i] + 0.0 * this->sum_selectivity[i])) * surviavability[i - 1];
                 unfished_spawing_biomass_per_recruit[i] = this->weight_at_spawning[index] * this->maturity[i] * this->sex_fraction_value * surviavability[i];
                 F_sbpr_unfished += unfished_spawing_biomass_per_recruit[i];
             }
@@ -1570,7 +1570,7 @@ namespace mas {
             size_t index = year * this->seasons * this->ages.size()
                     + (season) * this->ages.size() + i;
 
-            surviavability[i] = mas::exp(-1.0 * (this->M[i] + 0.0 * selectivity[i])) * surviavability[i - 1] / (1.0 - mas::exp(-1.0 * this->M[i]));
+            surviavability[i] = mas::exp(-1.0 * (this->M[i] + 0.0 * this->sum_selectivity[i])) * surviavability[i - 1] / (1.0 - mas::exp(-1.0 * this->M[i]));
             unfished_spawing_biomass_per_recruit[i] = this->weight_at_spawning[i] * this->maturity[index] * this->sex_fraction_value * surviavability[i];
             F_sbpr_unfished += unfished_spawing_biomass_per_recruit[i];
 
@@ -1592,6 +1592,7 @@ namespace mas {
             std::valarray<variable_t> L_eq_knum(F.size());
             std::valarray<variable_t> SSB_eq(F.size());
 
+            this->
 
 
             for (int i = 0; i < F.size(); i++) {
@@ -1623,7 +1624,7 @@ namespace mas {
                     size_t index = year * this->seasons * this->ages.size()
                             + (season) * this->ages.size() + a;
 
-                    total_mortality[a] = this->M[a] + selectivity[a] * F[i];
+                    total_mortality[a] = this->M[a] + this->sum_selectivity[index] * F[i];
 
                     if (a != 0) {
 
@@ -1636,7 +1637,7 @@ namespace mas {
                 size_t index = year * this->seasons * this->ages.size()
                         + (season) * this->ages.size() + a;
 
-                total_mortality[a] = this->M[a] + selectivity[a] * F[i];
+                total_mortality[a] = this->M[a] + this->sum_selectivity[index] * F[i];
                 spawners_per_recruit[a] = spawners_per_recruit[a - 1] * mas::exp(-1.0 * total_mortality[a - 1]) / (1.0 - mas::exp(-1.0 * total_mortality[a]));
                 spr[i] += spawners_per_recruit[a];
                 spawning_biomass_per_recruit[a] = spawners_per_recruit[a] * this->weight_at_spawning[index] * this->maturity[a] * this->sex_fraction_value;
@@ -1654,7 +1655,7 @@ namespace mas {
                     F_num_sum += equilibrium_numbers[a];
                     F_sbpr_eq += equilibrium_numbers[a] * (this->weight_at_spawning[index] * this->maturity[a] * this->sex_fraction_value);
                     F_B_eq += equilibrium_numbers[a] * this->weight_at_spawning[index];
-                    equilibrium_landing_numbers[a] = (F[i] * selectivity[a]) * equilibrium_numbers[a]*(1.0 - mas::exp(-1.0 * total_mortality[a])) / total_mortality[a];
+                    equilibrium_landing_numbers[a] = (F[i] * this->sum_selectivity[index]) * equilibrium_numbers[a]*(1.0 - mas::exp(-1.0 * total_mortality[a])) / total_mortality[a];
                     F_L_sum += equilibrium_landing_numbers[a];
                     F_L_eq += equilibrium_landing_numbers[a] * this->weight_at_catch_time[index];
                 }
@@ -1694,7 +1695,7 @@ namespace mas {
                 reprod[a] = this->weight_at_spawning[index]
                         * (this->maturity[a] * this->sex_fraction_value);
                 spr_F0 += N0[a] * reprod[a];
-                selL[a] = selectivity[a];
+                selL[a] = this->sum_selectivity[index];
                 selZ[a] = this->Z[index];
                 M_age[a] = this->M[a].GetValue();
                 wgt[a] = this->weight_at_catch_time[index];
