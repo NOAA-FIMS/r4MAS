@@ -3409,7 +3409,7 @@ namespace atl {
             atl::Variable<T> fx;
             this->objective_function_m->Objective_Function(fx);
 
-
+            return true;
         }
     };
 

@@ -30,7 +30,7 @@ namespace mas {
         std::string config_path = "";
         std::string ouput_path = "mas_output.json";
         int references = 0;
-        bool compute_variance_for_derived_quantities = true;
+        bool compute_variance_for_derived_quantities =  true;
 
 
 
