@@ -1592,7 +1592,6 @@ namespace mas {
             std::valarray<variable_t> L_eq_knum(F.size());
             std::valarray<variable_t> SSB_eq(F.size());
 
-            this->
 
 
             for (int i = 0; i < F.size(); i++) {
