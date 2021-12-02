@@ -1646,7 +1646,7 @@ namespace mas {
                     F_B_eq += equilibrium_numbers[a] * this->weight_at_spawning[index];
                     equilibrium_landing_numbers[a] = F[i] * this->sum_selectivity[index] * equilibrium_numbers[a]*(1.0 - mas::exp(-1.0 * total_mortality[a])) / total_mortality[a];
                     F_L_sum += equilibrium_landing_numbers[a];
-                    F_L_eq += equilibrium_landing_numbers[a] * this->weight_at_catch_time[index];
+                    F_L_eq += equilibrium_landing_numbers[a] * this->weight_at_catch_time[index]/1000;
 
                     //                    std::cout << "equilibrium_landing_numbers[" << a << "] = " << equilibrium_landing_numbers[a] << "\n";
                 }
@@ -1697,109 +1697,6 @@ namespace mas {
             std::valarray<variable_t> F_age(nages); //#F at age
             std::valarray<variable_t> Z_age(nages); //#Z at age
 
-            // BEGIN ALGORITHM
-            //            for (int i = 0; i < F.size(); i++) {
-            //
-            //                std::valarray<variable_t> FL_age(nages);
-            //                std::valarray<variable_t> Z_age(nages);
-            //                variable_t sprb_f;
-            //
-            //                for (int a = 0; a < ages.size(); a++) {
-            //
-            //
-            //
-            //                    FL_age[a] = F[i] * selL[a];
-            //                    //std::valarray<variable_t> FD_age = F[i] * selD;
-            //                    Z_age[a] = M_age[a] + F[i] * selZ[a];
-            //
-            //                    //                    
-            //                }
-            //                //                int A;
-            //                //                for (A = 0; A < ages.size() - 1; A++) {
-            //                //                    size_t index = year * this->seasons * this->ages.size()
-            //                //                            + (season) * this->ages.size() + A;
-            //                //                    variable_t sum;
-            //                //                    for (int k = 0; k < ages.size() - 1; k++) {
-            //                //                        size_t index2 = year * this->seasons * this->ages.size()
-            //                //                                + (season) * this->ages.size() + A;
-            //                //                        variable_t sum;
-            //                //                        sum += F[i] * this->sum_selectivity[index2] + this->M[k];
-            //                //                    }
-            //                //                    sprb_f += this->maturity[A] * this->weight_at_catch_time[index] * mas::exp(
-            //                //                            -1.0 * this->catch_season_offset * F[i] * this->sum_selectivity[index] -
-            //                //                            this->spawning_season_offset * this->maturity[A] - sum);
-            //                //                }
-            //                //
-            //                //                variable_t sum;
-            //                //                for (int k = 0; k < ages.size() - 1; k++) {
-            //                //                    size_t index2 = year * this->seasons * this->ages.size()
-            //                //                            + (season) * this->ages.size() + A;
-            //                //                    variable_t sum;
-            //                //                    sum += F[i] * this->sum_selectivity[index2] + this->M[k];
-            //                //                }
-            //                //                size_t index = year * this->seasons * this->ages.size()
-            //                //                            + (season) * this->ages.size() + A;
-            //                //                sprb_f += this->maturity[A] * this->weight_at_catch_time[index] * mas::exp(
-            //                //                        -1.0 * this->catch_season_offset * F[i] * this->sum_selectivity[index] -
-            //                //                        this->spawning_season_offset * this->M[A] - sum)/ (1.0- mas::exp(-1.0*(F[i]*this->sum_selectivity[index]-this->M[A])));
-            //
-            //                std::valarray<variable_t> N_age(nages);
-            //                std::valarray<variable_t> N_age_spawn(nages);
-            //
-            //                N_age[0] = 1.0;
-            //
-            //                for (int iage = 1; iage < nages; iage++) {
-            //                    N_age[iage] = N_age[iage - 1]
-            //                            * mas::exp(-1.0 * Z_age[iage - 1]);
-            //                }
-            //
-            //                //last age is pooled
-            //                N_age[nages - 1] = N_age[nages - 2]
-            //                        * mas::exp(-1.0 * Z_age[nages - 2])
-            //                        / (1.0 - mas::exp(-1.0 * Z_age[nages - 1]));
-            //
-            //                for (int iage = 0; iage < nages; iage++) {
-            //                    N_age_spawn[iage] = (N_age[iage]
-            //                            * mas::exp((-1.0 * Z_age[iage]
-            //                            * this->spawning_season_offset)));
-            //                }
-            //
-            //
-            //                N_age_spawn[nages - 1] =
-            //                        (N_age_spawn[nages - 2]
-            //                        * (mas::exp(-1.0 * (Z_age[nages - 2]* (1.0 - this->spawning_season_offset) + Z_age[nages - 1] * this->spawning_season_offset))))
-            //                        / (1.0 - mas::exp(-1.0 * Z_age[nages - 1]));
-            //
-            //                spr[i] = sum_product(N_age, reprod);
-            //
-            //                SSB_eq[i] = this->recruitment_model->CalculateEquilibriumSpawningBiomass(this->SB0, spr[i]);
-            //                R_eq[i] = this->recruitment_model->Evaluate(this->SB0, SSB_eq[i]);
-            //
-            //
-            //                if (R_eq[i] < 0.0000001) {
-            //                    R_eq[i] = 0.0000001;
-            //                }
-            //
-            //                N_age *= R_eq[i];
-            //                N_age_spawn *= R_eq[i];
-            //
-            //                S_eq[i] = sum_product(N_age, reprod);
-            //                B_eq[i] = sum_product(N_age, wgt);
-            //
-            //                for (int iage = 0; iage < nages; iage++) {
-            //                    L_age[iage] = N_age[iage] * (FL_age[iage] / Z_age[iage])
-            //                            * (1.0 - mas::exp(-1.0 * Z_age[iage]));
-            //                    //                            D_age[iage] = N_age[iage]*
-            //                    //                                              (FD_age[iage] / Z_age[iage])*(1. - exp(-1.0 * Z_age[iage]))
-            //                }
-            //
-            //
-            //
-            //                L_eq[i] = sum_product(L_age, wgt);
-            //                E_eq[i] = this->sum(L_age) / this->sum(N_age);
-            //                L_eq_knum[i] = (this->sum(L_age) / 1000.0);
-            //
-            //            }
             int max_index = 0;
             variable_t max = 1e-18; //std::numeric_limits<variable_t>::min();
 
