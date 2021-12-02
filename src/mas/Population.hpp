@@ -1642,8 +1642,8 @@ namespace mas {
 
                     equilibrium_numbers[a] = R_eq[i] * spawners_per_recruit[a];
                     F_num_sum+=equilibrium_numbers[a];
-                    F_sbpr_eq += equilibrium_numbers[a] * (this->weight_at_spawning[index] * this->maturity[a] * this->sex_fraction_value);
-                    F_B_eq += equilibrium_numbers[a] * this->weight_at_spawning[index];
+                    F_sbpr_eq += equilibrium_numbers[a] * (this->weight_at_spawning[index]/1000.0 * this->maturity[a] * this->sex_fraction_value);
+                    F_B_eq += equilibrium_numbers[a] * this->weight_at_spawning[index]/1000.0;
                     equilibrium_landing_numbers[a] = F[i] * this->sum_selectivity[index] * equilibrium_numbers[a]*(1.0 - mas::exp(-1.0 * total_mortality[a])) / total_mortality[a];
                     F_L_sum += equilibrium_landing_numbers[a];
                     F_L_eq += equilibrium_landing_numbers[a] * this->weight_at_catch_time[index]/1000.0;
