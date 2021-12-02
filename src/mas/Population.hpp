@@ -1623,7 +1623,7 @@ namespace mas {
                     size_t index = year * this->seasons * this->ages.size()
                             + (season) * this->ages.size() + a;
 
-                    total_mortality[a] = this->M[a] + selectivity[index] * F[i];
+                    total_mortality[a] = this->M[a] + selectivity[a] * F[i];
 
                     if (a != 0) {
 
@@ -1636,7 +1636,7 @@ namespace mas {
                 size_t index = year * this->seasons * this->ages.size()
                         + (season) * this->ages.size() + a;
 
-                total_mortality[a] = this->M[a] + selectivity[index] * F[i];
+                total_mortality[a] = this->M[a] + selectivity[a] * F[i];
                 spawners_per_recruit[a] = spawners_per_recruit[a - 1] * mas::exp(-1.0 * total_mortality[a - 1]) / (1.0 - mas::exp(-1.0 * total_mortality[a]));
                 spr[i] += spawners_per_recruit[a];
                 spawning_biomass_per_recruit[a] = spawners_per_recruit[a] * this->weight_at_spawning[index] * this->maturity[a] * this->sex_fraction_value;
@@ -1654,7 +1654,7 @@ namespace mas {
                     F_num_sum += equilibrium_numbers[a];
                     F_sbpr_eq += equilibrium_numbers[a] * (this->weight_at_spawning[index] * this->maturity[a] * this->sex_fraction_value);
                     F_B_eq += equilibrium_numbers[a] * this->weight_at_spawning[index];
-                    equilibrium_landing_numbers[a] = (F[i] * selectivity[index]) * equilibrium_numbers[a]*(1.0 - mas::exp(-1.0 * total_mortality[a])) / total_mortality[a];
+                    equilibrium_landing_numbers[a] = (F[i] * selectivity[a]) * equilibrium_numbers[a]*(1.0 - mas::exp(-1.0 * total_mortality[a])) / total_mortality[a];
                     F_L_sum += equilibrium_landing_numbers[a];
                     F_L_eq += equilibrium_landing_numbers[a] * this->weight_at_catch_time[index];
                 }
