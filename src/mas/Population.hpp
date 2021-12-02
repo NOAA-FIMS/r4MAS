@@ -1646,7 +1646,7 @@ namespace mas {
                     F_B_eq += equilibrium_numbers[a] * this->weight_at_spawning[index];
                     equilibrium_landing_numbers[a] = F[i] * this->sum_selectivity[index] * equilibrium_numbers[a]*(1.0 - mas::exp(-1.0 * total_mortality[a])) / total_mortality[a];
                     F_L_sum += equilibrium_landing_numbers[a];
-                    F_L_eq += equilibrium_landing_numbers[a] * this->weight_at_catch_time[index]/1000;
+                    F_L_eq += equilibrium_landing_numbers[a] * this->weight_at_catch_time[index]/1000.0;
 
                     //                    std::cout << "equilibrium_landing_numbers[" << a << "] = " << equilibrium_landing_numbers[a] << "\n";
                 }
