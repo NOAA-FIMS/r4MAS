@@ -1666,10 +1666,10 @@ namespace mas {
 
             std::vector<variable_t> N0(this->ages.size(), 1.0);
             for (int iage = 1; iage < nages; iage++) {
-                N0[iage] = N0[iage - 1] * mas::exp(-1.0 * total_mortality[iage - 1]);
+                N0[iage] = N0[iage - 1] * mas::exp(-1.0 * M[iage - 1]);
             }
-            N0[nages - 1] = N0[nages - 2] * mas::exp(-1.0 * total_mortality[nages - 2])
-                    / (1.0 - mas::exp(-1.0 * total_mortality[nages - 1]));
+            N0[nages - 1] = N0[nages - 2] * mas::exp(-1.0 * M[nages - 2])
+                    / (1.0 - mas::exp(-1.0 * M[nages - 1]));
 
             std::valarray<variable_t> reprod(nages);
             std::valarray<variable_t> selL(nages);
