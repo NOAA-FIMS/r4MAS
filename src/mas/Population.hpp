@@ -1575,7 +1575,7 @@ namespace mas {
             for (i = 1; i < this->ages.size() - 1; i++) {
                 size_t index = year * this->seasons * this->ages.size()
                         + (season) * this->ages.size() + i;
-                surviavability[i] = mas::exp(-1.0 * (this->M[i] +  this->sum_selectivity[i])) * surviavability[i - 1];
+                surviavability[i] = mas::exp(-1.0 * (this->M[i] + 0.0 * this->sum_selectivity[i])) * surviavability[i - 1];
                 unfished_spawing_biomass_per_recruit[i] = this->weight_at_spawning[index] * this->maturity[i] * this->sex_fraction_value * surviavability[i];
                 F_sbpr_unfished += unfished_spawing_biomass_per_recruit[i];
             }
