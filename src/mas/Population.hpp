@@ -1522,6 +1522,11 @@ namespace mas {
             return ret;
         }
 
+        /**
+         * 
+         * @param maxF
+         * @param step
+         */
         void CalculateMSY(REAL_T maxF = 1.0, REAL_T step = 0.001) {
             /**
              * This code was ported from BAM. Original Author: Kyle Shertzer
@@ -1543,24 +1548,24 @@ namespace mas {
                     this->area->seasonal_fleet_operations[season];
 
             std::vector<variable_t> surviavability(this->ages.size());
-//            std::vector<variable_t> selectivity(this->ages.size());
+            std::vector<variable_t> selectivity(this->ages.size());
             std::vector<variable_t> unfished_spawing_biomass_per_recruit(this->ages.size());
             std::vector<variable_t> unfished_spawners_per_recruit(this->ages.size());
             variable_t F_sbpr_unfished;
 
-//            for (int i = 0; i < fleets.size(); i++) {
-//                for (int a = 0; a < this->ages.size(); a++) {
-//                    selectivity[a] += fleets[i]->season_area_selectivity[season][this->area->id]->Evaluate(
-//                            this->ages[a]);
-//                }
-//            }
-//
-//            for (int i = 0; i < surveys.size(); i++) {
-//                for (int a = 0; a < this->ages.size(); a++) {
-//                    selectivity[a] += fleets[i]->season_area_selectivity[season][this->area->id]->Evaluate(
-//                            this->ages[a]);
-//                }
-//            }
+            for (int i = 0; i < fleets.size(); i++) {
+                for (int a = 0; a < this->ages.size(); a++) {
+                    selectivity[a] += fleets[i]->season_area_selectivity[season][this->area->id]->Evaluate(
+                            this->ages[a]);
+                }
+            }
+
+            for (int i = 0; i < surveys.size(); i++) {
+                for (int a = 0; a < this->ages.size(); a++) {
+                    selectivity[a] += fleets[i]->season_area_selectivity[season][this->area->id]->Evaluate(
+                            this->ages[a]);
+                }
+            }
 
             surviavability[0] = 1.0;
             unfished_spawing_biomass_per_recruit[0] = this->weight_at_spawning[0] * this->maturity[0] * this->sex_fraction_value;
@@ -1570,7 +1575,7 @@ namespace mas {
             for (i = 1; i < this->ages.size() - 1; i++) {
                 size_t index = year * this->seasons * this->ages.size()
                         + (season) * this->ages.size() + i;
-                surviavability[i] = mas::exp(-1.0 * (this->M[i] + 0.0 * this->sum_selectivity[i])) * surviavability[i - 1];
+                surviavability[i] = mas::exp(-1.0 * (this->M[i] +  this->sum_selectivity[i])) * surviavability[i - 1];
                 unfished_spawing_biomass_per_recruit[i] = this->weight_at_spawning[index] * this->maturity[i] * this->sex_fraction_value * surviavability[i];
                 F_sbpr_unfished += unfished_spawing_biomass_per_recruit[i];
             }
