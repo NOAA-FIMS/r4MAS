@@ -13,7 +13,8 @@ knitr::opts_chunk$set(echo = TRUE, fig.width = 10, fig.height = 10)
 ## Install and library packages
 ```{r}
 
-# remotes::install_github("nmfs-fish-tools/r4MAS")
+remotes::install_github("nmfs-fish-tools/r4MAS")
+remotes::install_github("nmfs-general-modeling-tools/nmfspalette")
 
 library(r4MAS)
 library(Rcpp)
