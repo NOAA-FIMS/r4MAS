@@ -1522,11 +1522,6 @@ namespace mas {
             return ret;
         }
 
-        /**
-         * 
-         * @param maxF
-         * @param step
-         */
         void CalculateMSY(REAL_T maxF = 1.0, REAL_T step = 0.001) {
             /**
              * This code was ported from BAM. Original Author: Kyle Shertzer
@@ -1655,7 +1650,7 @@ namespace mas {
                 spawning_biomass_per_recruit[a] = spawners_per_recruit[a] * this->weight_at_spawning[index] * this->maturity[a] * this->sex_fraction_value;
                 F_sbpr += spawning_biomass_per_recruit[a];
 
-                R_eq[i] = this->recruitment_model->CalculateEquilibriumRecruitment(F_sbpr_unfished, F_sbpr)* this->sex_fraction_value;
+                R_eq[i] = this->recruitment_model->CalculateEquilibriumRecruitment(F_sbpr_unfished, F_sbpr);
 
                 //                std::cout << "\n\nEquilibrium Recruitment At Fishing Mortality F = " << R_eq[i] << "\n";
 
