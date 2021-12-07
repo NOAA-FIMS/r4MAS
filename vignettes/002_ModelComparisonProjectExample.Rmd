@@ -22,9 +22,14 @@ This vignette allows you to walk through an example using `r4MAS` (R interface t
 6. Compare estimates from `MAS` with true values from the OM
 
 ## 1. Install packages
-```{r setup_pkgs, eval= FALSE}
+```{r, install, eval= FALSE}
 remotes::install_github("nmfs-fish-tools/r4MAS")
+install.packages("jsonlite")
 remotes::install_github("nmfs-general-modeling-tools/nmfspalette")
+
+```
+
+```{r, load, eval= FALSE}
 library(r4MAS)
 library(Rcpp)
 library(jsonlite)

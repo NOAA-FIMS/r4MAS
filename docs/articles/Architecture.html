@@ -94,9 +94,6 @@
       <a href="../articles/004_SSCaseStudy.html">SS Case Study</a>
     </li>
     <li>
-      <a href="../articles/005_MetapopulationCaseStudy.html">Metapopulation Case Study</a>
-    </li>
-    <li>
       <a href="../articles/Architecture.html">MAS Demo Notebook</a>
     </li>
     <li>
@@ -124,7 +121,7 @@
       <h1 data-toc-skip>MAS Demo Notebook</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/nmfs-fish-tools/r4MAS/blob/master/../../../vignettes/Architecture.Rmd"><code>../../../vignettes/Architecture.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/nmfs-fish-tools/r4MAS/blob/master/vignettes/Architecture.Rmd"><code>vignettes/Architecture.Rmd</code></a></small>
       <div class="hidden name"><code>Architecture.Rmd</code></div>
 
     </div>
@@ -139,11 +136,72 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="http://www.rcpp.org">Rcpp</a></span><span class="op">)</span></code></pre></div>
 <pre><code>## Loading required package: Rcpp</code></pre>
-<pre><code>## Warning: package 'Rcpp' was built under R version 4.0.5</code></pre>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"nmfs-fish-tools/r4MAS"</span><span class="op">)</span></code></pre></div>
-<pre><code>## Skipping install of 'r4MAS' from a github remote, the SHA1 (bf17601c) has not changed since last install.
-##   Use `force = TRUE` to force installation</code></pre>
+<pre><code>## Downloading GitHub repo nmfs-fish-tools/r4MAS@HEAD</code></pre>
+<pre><code>## 
+##   
+  
+  
+   checking for file 'C:\Users\bai.li\AppData\Local\Temp\RtmpMrAMgo\remotes229c64565003\nmfs-fish-tools-r4MAS-826f980/DESCRIPTION' ...
+  
+   checking for file 'C:\Users\bai.li\AppData\Local\Temp\RtmpMrAMgo\remotes229c64565003\nmfs-fish-tools-r4MAS-826f980/DESCRIPTION' ... 
+  
+v  checking for file 'C:\Users\bai.li\AppData\Local\Temp\RtmpMrAMgo\remotes229c64565003\nmfs-fish-tools-r4MAS-826f980/DESCRIPTION' (625ms)
+## 
+  
+  
+  
+-  preparing 'r4MAS': (2.9s)
+##    checking DESCRIPTION meta-information ...
+  
+   checking DESCRIPTION meta-information ... 
+  
+v  checking DESCRIPTION meta-information
+## 
+  
+-  cleaning src
+## 
+  
+  
+  
+-  checking for LF line-endings in source and make files and shell scripts (518ms)
+## 
+  
+  
+  
+-  checking for empty or unneeded directories (1.6s)
+## 
+  
+Removed empty directory 
+  
+   Removed empty directory 'r4MAS/src/mas/third_party/ATL/docs/html'
+## 
+  
+   Removed empty directory 'r4MAS/src/mas/third_party/ATL/docs/latex'
+## 
+  
+   Omitted 'LazyData' from DESCRIPTION
+## 
+  
+  
+  
+-  building 'r4MAS_0.1.0.tar.gz'
+## 
+  
+Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      'r4MAS/src/mas/third_party/ATL/lib/third_party/hat-trie-master/include/tsl/array-hash/array_growth_policy.h'
+## 
+  
+   
+## </code></pre>
+<pre><code>## Installing package into 'C:/Users/bai.li/AppData/Local/Temp/RtmpgrxwZP/temp_libpath1c603f0e2010'
+## (as 'lib' is unspecified)</code></pre>
+<pre><code>## Warning in i.p(...): installation of package 'C:/Users/bai.li/AppData/Local/
+## Temp/RtmpMrAMgo/file229c3cc124/r4MAS_0.1.0.tar.gz' had non-zero exit status</code></pre>
 </div>
 <div id="create-model" class="section level1">
 <h1 class="hasAnchor">
