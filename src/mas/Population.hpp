@@ -937,7 +937,7 @@ namespace mas {
                 for (int a = 0; a < this->ages.size(); a++) {
 
                     temp += this->initial_equilibrium_numbers[a]
-                            * this->weight_at_spawning[a] * (this->maturity[a] /* this->sex_fraction_value*/)
+                            * this->weight_at_spawning[a] * (this->maturity[a] * this->sex_fraction_value)
                             * mas::exp(
                             -1.0 * this->spawning_season_offset
                             * this->M[a]);
