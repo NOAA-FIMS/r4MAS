@@ -1650,7 +1650,7 @@ namespace mas {
                 spawning_biomass_per_recruit[a] = spawners_per_recruit[a] * this->weight_at_spawning[index] * this->maturity[a] * this->sex_fraction_value;
                 F_sbpr += spawning_biomass_per_recruit[a];
 
-                R_eq[i] = this->recruitment_model->CalculateEquilibriumRecruitment(F_sbpr_unfished, F_sbpr)* this->sex_fraction_value;
+                R_eq[i] = this->recruitment_model->CalculateEquilibriumRecruitment(F_sbpr_unfished, F_sbpr);
 
                 //                std::cout << "\n\nEquilibrium Recruitment At Fishing Mortality F = " << R_eq[i] << "\n";
 
@@ -1789,7 +1789,7 @@ namespace mas {
 
                     SSB_msy_out = S_eq[i];
                     B_msy_out = B_eq[i] * this->sex_fraction_value;
-                    R_msy_out = R_eq[i] * 1000.0;// * this->sex_fraction_value;
+                    R_msy_out = R_eq[i] * 1000.0 * this->sex_fraction_value;
                     msy_knum_out = L_eq_knum[i];
                     F_msy_out = F[i];
                     spr_msy_out = spr[i];
@@ -4064,7 +4064,7 @@ namespace mas {
                 this->msy.spr_msy += males[areas_list[a]->id].msy.spr_msy;
                 this->msy.SR_msy += males[areas_list[a]->id].msy.SR_msy;
                 this->msy.R_msy += males[areas_list[a]->id].msy.R_msy;
-                this->msy.SSB_msy += males[areas_list[a]->id].msy.SSB_msy / (areas_list.size()*2.0);
+                this->msy.SSB_msy += males[areas_list[a]->id].msy.SSB_msy;// / (areas_list.size()*2.0);
                 this->msy.B_msy += males[areas_list[a]->id].msy.B_msy;
                 this->msy.E_msy += males[areas_list[a]->id].msy.E_msy;
 
@@ -4072,7 +4072,7 @@ namespace mas {
                 this->msy.spr_F30_msy += males[areas_list[a]->id].msy.spr_F30_msy;
                 this->msy.SR_F30_msy += males[areas_list[a]->id].msy.SR_F30_msy;
                 this->msy.R_F30_msy += males[areas_list[a]->id].msy.R_F30_msy;
-                this->msy.SSB_F30_msy += males[areas_list[a]->id].msy.SSB_F30_msy / (areas_list.size()*2.0);
+                this->msy.SSB_F30_msy += males[areas_list[a]->id].msy.SSB_F30_msy;/// / (areas_list.size()*2.0);
                 this->msy.B_F30_msy += males[areas_list[a]->id].msy.B_F30_msy;
                 this->msy.E_F30_msy += males[areas_list[a]->id].msy.E_F30_msy;
 
@@ -4080,7 +4080,7 @@ namespace mas {
                 this->msy.spr_F35_msy += males[areas_list[a]->id].msy.spr_F35_msy;
                 this->msy.SR_F35_msy += males[areas_list[a]->id].msy.SR_F35_msy;
                 this->msy.R_F35_msy += males[areas_list[a]->id].msy.R_F35_msy;
-                this->msy.SSB_F35_msy += males[areas_list[a]->id].msy.SSB_F35_msy / (areas_list.size()*2.0);
+                this->msy.SSB_F35_msy += males[areas_list[a]->id].msy.SSB_F35_msy;// / (areas_list.size()*2.0);
                 this->msy.B_F35_msy += males[areas_list[a]->id].msy.B_F35_msy;
                 this->msy.E_F35_msy += males[areas_list[a]->id].msy.E_F35_msy;
 
@@ -4088,7 +4088,7 @@ namespace mas {
                 this->msy.spr_F40_msy += males[areas_list[a]->id].msy.spr_F40_msy;
                 this->msy.SR_F40_msy += males[areas_list[a]->id].msy.SR_F40_msy;
                 this->msy.R_F40_msy += males[areas_list[a]->id].msy.R_F40_msy;
-                this->msy.SSB_F40_msy += males[areas_list[a]->id].msy.SSB_F40_msy / (areas_list.size()*2.0);
+                this->msy.SSB_F40_msy += males[areas_list[a]->id].msy.SSB_F40_msy;// / (areas_list.size()*2.0);
                 this->msy.B_F40_msy += males[areas_list[a]->id].msy.B_F40_msy;
                 this->msy.E_F40_msy += males[areas_list[a]->id].msy.E_F40_msy;
 
@@ -4098,7 +4098,7 @@ namespace mas {
                 this->msy.spr_msy += females[areas_list[a]->id].msy.spr_msy;
                 this->msy.SR_msy += females[areas_list[a]->id].msy.SR_msy;
                 this->msy.R_msy += females[areas_list[a]->id].msy.R_msy;
-                this->msy.SSB_msy += females[areas_list[a]->id].msy.SSB_msy / (areas_list.size()*2.0);
+                this->msy.SSB_msy += females[areas_list[a]->id].msy.SSB_msy;// / (areas_list.size()*2.0);
                 this->msy.B_msy += females[areas_list[a]->id].msy.B_msy;
                 this->msy.E_msy += females[areas_list[a]->id].msy.E_msy;
 
@@ -4106,7 +4106,7 @@ namespace mas {
                 this->msy.spr_F30_msy += females[areas_list[a]->id].msy.spr_F30_msy;
                 this->msy.SR_F30_msy += females[areas_list[a]->id].msy.SR_F30_msy;
                 this->msy.R_F30_msy += females[areas_list[a]->id].msy.R_F30_msy;
-                this->msy.SSB_F30_msy += females[areas_list[a]->id].msy.SSB_F30_msy / (areas_list.size()*2.0);
+                this->msy.SSB_F30_msy += females[areas_list[a]->id].msy.SSB_F30_msy;// / (areas_list.size()*2.0);
                 this->msy.B_F30_msy += females[areas_list[a]->id].msy.B_F30_msy;
                 this->msy.E_F30_msy += females[areas_list[a]->id].msy.E_F30_msy;
 
@@ -4114,7 +4114,7 @@ namespace mas {
                 this->msy.spr_F35_msy += females[areas_list[a]->id].msy.spr_F35_msy;
                 this->msy.SR_F35_msy += females[areas_list[a]->id].msy.SR_F35_msy;
                 this->msy.R_F35_msy += females[areas_list[a]->id].msy.R_F35_msy;
-                this->msy.SSB_F35_msy += females[areas_list[a]->id].msy.SSB_F35_msy / (areas_list.size()*2.0);
+                this->msy.SSB_F35_msy += females[areas_list[a]->id].msy.SSB_F35_msy;// / (areas_list.size()*2.0);
                 this->msy.B_F35_msy += females[areas_list[a]->id].msy.B_F35_msy;
                 this->msy.E_F35_msy += females[areas_list[a]->id].msy.E_F35_msy;
 
@@ -4122,7 +4122,7 @@ namespace mas {
                 this->msy.spr_F40_msy += females[areas_list[a]->id].msy.spr_F40_msy;
                 this->msy.SR_F40_msy += females[areas_list[a]->id].msy.SR_F40_msy;
                 this->msy.R_F40_msy += females[areas_list[a]->id].msy.R_F40_msy;
-                this->msy.SSB_F40_msy += females[areas_list[a]->id].msy.SSB_F40_msy / (areas_list.size()*2.0);
+                this->msy.SSB_F40_msy += females[areas_list[a]->id].msy.SSB_F40_msy;// / (areas_list.size()*2.0);
                 this->msy.B_F40_msy += females[areas_list[a]->id].msy.B_F40_msy;
                 this->msy.E_F40_msy += females[areas_list[a]->id].msy.E_F40_msy;
 
