@@ -1650,7 +1650,7 @@ namespace mas {
                 spawning_biomass_per_recruit[a] = spawners_per_recruit[a] * this->weight_at_spawning[index] * this->maturity[a] * this->sex_fraction_value;
                 F_sbpr += spawning_biomass_per_recruit[a];
 
-                R_eq[i] = this->recruitment_model->CalculateEquilibriumRecruitment(F_sbpr_unfished, F_sbpr);
+                R_eq[i] = this->recruitment_model->CalculateEquilibriumRecruitment(F_sbpr_unfished, F_sbpr)* this->sex_fraction_value;
 
                 //                std::cout << "\n\nEquilibrium Recruitment At Fishing Mortality F = " << R_eq[i] << "\n";
 
@@ -1789,7 +1789,7 @@ namespace mas {
 
                     SSB_msy_out = S_eq[i];
                     B_msy_out = B_eq[i] * this->sex_fraction_value;
-                    R_msy_out = R_eq[i];/// * 1000.0 * this->sex_fraction_value;
+                    R_msy_out = R_eq[i] * 1000.0;// * this->sex_fraction_value;
                     msy_knum_out = L_eq_knum[i];
                     F_msy_out = F[i];
                     spr_msy_out = spr[i];
@@ -4054,8 +4054,8 @@ namespace mas {
 
             for (int a = 0; a < areas_list.size(); a++) {
 
-                males[areas_list[a]->id].CalculateMSY(1.0, 0.01);
-                females[areas_list[a]->id].CalculateMSY(1.0, 0.01);
+                males[areas_list[a]->id].CalculateMSY(1.0, 0.001);
+                females[areas_list[a]->id].CalculateMSY(1.0, 0.001);
 
                 this->msy.msy += males[areas_list[a]->id].msy.msy;
 
