@@ -1583,7 +1583,7 @@ namespace mas {
                     reprod[a] = this->weight_at_spawning[index]
                             * (this->maturity[a] * this->sex_fraction_value);
                 }
-                N_age_msy(1) = 1.0;
+                N_age_msy[0] = 1.0;
                 for (int iage = 1; iage < this->ages.size() - 1; iage++)
                     //GR uses HB selex
                 {
