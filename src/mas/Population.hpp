@@ -1577,7 +1577,7 @@ namespace mas {
             for (int ff = 0; ff < F_msy.size(); ff++) {
                 //uses fishery-weighted F’s Z_age_msy=0.0; F_L_age_msy=0.0; F_D_age_msy=0.0;
                 for (int a = 0; a <this->ages.size(); a++) {
-                    F_L_age_msy[a] = F_msy(ff) * sel_wgted_L[a];
+                    F_L_age_msy[a] = F_msy[ff] * sel_wgted_L[a];
                     //                    F_D_age_msy = F_msy(ff) * sel_wgted_D;
                     Z_age_msy[a] = M + F_L_age_msy[a]; // + F_D_age_msy;
                     reprod[a] = this->weight_at_spawning[index]
