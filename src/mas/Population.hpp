@@ -1543,24 +1543,24 @@ namespace mas {
                     this->area->seasonal_fleet_operations[season];
 
             std::vector<variable_t> surviavability(this->ages.size());
-//            std::vector<variable_t> selectivity(this->ages.size());
+            //            std::vector<variable_t> selectivity(this->ages.size());
             std::vector<variable_t> unfished_spawing_biomass_per_recruit(this->ages.size());
             std::vector<variable_t> unfished_spawners_per_recruit(this->ages.size());
             variable_t F_sbpr_unfished;
 
-//            for (int i = 0; i < fleets.size(); i++) {
-//                for (int a = 0; a < this->ages.size(); a++) {
-//                    selectivity[a] += fleets[i]->season_area_selectivity[season][this->area->id]->Evaluate(
-//                            this->ages[a]);
-//                }
-//            }
-//
-//            for (int i = 0; i < surveys.size(); i++) {
-//                for (int a = 0; a < this->ages.size(); a++) {
-//                    selectivity[a] += fleets[i]->season_area_selectivity[season][this->area->id]->Evaluate(
-//                            this->ages[a]);
-//                }
-//            }
+            //            for (int i = 0; i < fleets.size(); i++) {
+            //                for (int a = 0; a < this->ages.size(); a++) {
+            //                    selectivity[a] += fleets[i]->season_area_selectivity[season][this->area->id]->Evaluate(
+            //                            this->ages[a]);
+            //                }
+            //            }
+            //
+            //            for (int i = 0; i < surveys.size(); i++) {
+            //                for (int a = 0; a < this->ages.size(); a++) {
+            //                    selectivity[a] += fleets[i]->season_area_selectivity[season][this->area->id]->Evaluate(
+            //                            this->ages[a]);
+            //                }
+            //            }
 
             surviavability[0] = 1.0;
             unfished_spawing_biomass_per_recruit[0] = this->weight_at_spawning[0] * this->maturity[0] * this->sex_fraction_value;
@@ -1650,6 +1650,7 @@ namespace mas {
                 spawning_biomass_per_recruit[a] = spawners_per_recruit[a] * this->weight_at_spawning[index] * this->maturity[a] * this->sex_fraction_value;
                 F_sbpr += spawning_biomass_per_recruit[a];
 
+                spr_ratio[i] = spr[i] / F_sbpr;
                 R_eq[i] = this->recruitment_model->CalculateEquilibriumRecruitment(F_sbpr_unfished, F_sbpr);
 
                 //                std::cout << "\n\nEquilibrium Recruitment At Fishing Mortality F = " << R_eq[i] << "\n";
@@ -1722,7 +1723,7 @@ namespace mas {
             REAL_T F40_dum = 1000; // min(fabs(spr_ratio - 0.4))
 
             for (int j = 0; j < spr_ratio.size(); j++) {
-                spr_ratio[j] = spr[j] / spr_F0;
+//                spr_ratio[j] = spr[j] / spr_F0;
                 REAL_T temp = std::fabs(spr_ratio[j] - 0.001);
 
                 if (temp < F01_dum) {
@@ -1784,18 +1785,18 @@ namespace mas {
             variable_t spr_msy_out = 0.0;
             int index_m = 0;
 
-            for (int i = 0; i < F.size(); i++) {
-                if (L_eq[i] == msy_mt_out) {
+            //            for (int i = 0; i < F.size(); i++) {
+            //                if (L_eq[i] == msy_mt_out) {
 
-                    SSB_msy_out = S_eq[i];
-                    B_msy_out = B_eq[i] * this->sex_fraction_value;
-                    R_msy_out = R_eq[i] * 1000.0 * this->sex_fraction_value;
-                    msy_knum_out = L_eq_knum[i];
-                    F_msy_out = F[i];
-                    spr_msy_out = spr[i];
-                    index_m = i;
-                }
-            }
+            SSB_msy_out = S_eq[max_index];
+            B_msy_out = B_eq[max_index] * this->sex_fraction_value;
+            R_msy_out = R_eq[max_index] * 1000.0 * this->sex_fraction_value;
+            msy_knum_out = L_eq_knum[max_index];
+            F_msy_out = F[max_index];
+            spr_msy_out = spr[max_index];
+            index_m = max_index;
+            //                }
+            //            }
             this->msy.Reset();
             this->area->nsubpopulations++;
             this->msy.msy = msy_mt_out * this->sex_fraction_value;
