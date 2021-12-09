@@ -1543,7 +1543,7 @@ namespace mas {
             return ret;
         }
 
-        void CalculateMSY(REAL_T maxF = 1.0, REAL_T step = 0.001) {
+        void CalculateMSY__(REAL_T maxF = 1.0, REAL_T step = 0.001) {
             typedef typename mas::VariableTrait<REAL_T>::variable variable_t;
 
             std::vector<variable_t> F_msy;
@@ -1673,7 +1673,7 @@ namespace mas {
 //                this->msy.E_msy = E_eq[index_m];
         }
 
-        void CalculateMSY__(REAL_T maxF = 1.0, REAL_T step = 0.001) {
+        void CalculateMSY(REAL_T maxF = 1.0, REAL_T step = 0.001) {
             /**
              * This code was ported from BAM. Original Author: Kyle Shertzer
              */
