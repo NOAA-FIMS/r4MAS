@@ -1571,7 +1571,7 @@ namespace mas {
                 int index = (year * this->seasons * this->ages.size()) + (season * this->ages.size()) + a;
                 wgt_mt[a] = this->weight_at_spawning[index];
                 wgt_wgted_L_klb[a] = this->weight_at_catch_time[index];
-                ;
+                
             }
             //compute values as functions of F 
             for (int ff = 0; ff < F_msy.size(); ff++) {
@@ -1579,7 +1579,7 @@ namespace mas {
                 for (int a = 0; a <this->ages.size(); a++) {
                     F_L_age_msy[a] = F_msy[ff] * sel_wgted_L[a];
                     //                    F_D_age_msy = F_msy(ff) * sel_wgted_D;
-                    Z_age_msy[a] = M + F_L_age_msy[a]; // + F_D_age_msy;
+                    Z_age_msy[a] = M[a] + F_L_age_msy[a]; // + F_D_age_msy;
                     reprod[a] = this->weight_at_spawning[index]
                             * (this->maturity[a] * this->sex_fraction_value);
                 }
@@ -1644,7 +1644,7 @@ namespace mas {
             variable_t spr_msy_out;// = spr_msy[ff];
             variable_t msy_klb_out = max(L_eq_klb); //msy in gutted weight
             int index;
-            for (int ff = 0; ff < F_msy; ff++) {
+            for (int ff = 0; ff < F_msy.size(); ff++) {
                 if (L_eq_klb[ff] == msy_klb_out) {
                     index =ff;
                     SSB_msy_out = SSB_eq[ff];
