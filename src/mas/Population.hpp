@@ -1570,7 +1570,7 @@ namespace mas {
                 int season = this->seasons - 1;
                 int index = (year * this->seasons * this->ages.size()) + (season * this->ages.size()) + a;
                 wgt_mt[a] = this->weight_at_spawning[index];
-                wgt_wgted_L_klb[a] = this->weight_at_catch_time[index];
+                wgt_wgted_L_klb[a] = this->weight_at_catch_time[index]/1000.0;
                 
             }
             //compute values as functions of F 
