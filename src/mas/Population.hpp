@@ -1480,6 +1480,16 @@ namespace mas {
             return ret;
         }
 
+        variable sum_product(const std::vector<variable> &x,
+                const std::vector<variable> &y) {
+            variable ret = 0.0;
+            for (int i = 0; i < y.size(); i++) {
+
+                ret += x[i] * y[i];
+            }
+            return ret;
+        }
+
         variable sum_quitient(const std::valarray<variable> &x,
                 const std::valarray<variable> &y) {
             variable ret = 0.0;
@@ -1512,6 +1522,17 @@ namespace mas {
             return ret;
         }
 
+        variable max(const std::vector<variable> &val) {
+            variable ret = std::numeric_limits<variable>::min();
+            for (int i = 0; i < val.size(); i++) {
+                if (val[i] > ret) {
+
+                    ret = val[i];
+                }
+            }
+            return ret;
+        }
+
         std::valarray<variable> fabs(const std::valarray<variable> &val) {
             std::valarray<variable> ret(val.size());
             for (int i = 0; i < val.size(); i++) {
@@ -1523,6 +1544,133 @@ namespace mas {
         }
 
         void CalculateMSY(REAL_T maxF = 1.0, REAL_T step = 0.001) {
+            typedef typename mas::VariableTrait<REAL_T>::variable variable_t;
+
+            std::vector<variable_t> F_msy;
+            for (REAL_T f = 0.0; f <= maxF; f += step) {
+                F_msy.push_back(variable_t(f));
+            }
+            std::vector<variable_t> spr_msy(F_msy.size());
+            std::vector<variable_t> R_eq(F_msy.size());
+            std::vector<variable_t> SSB_eq(F_msy.size());
+            std::vector<variable_t> B_eq(F_msy.size());
+            std::vector<variable_t> L_eq_klb(F_msy.size());
+            std::vector<variable_t> F_L_age_msy(this->ages.size());
+            std::vector<variable_t> L_age_msy(this->ages.size());
+            std::vector<variable_t> sel_wgted_L(this->ages.size());
+            std::vector<variable_t> N_age_msy(this->ages.size());
+            std::vector<variable_t> Z_age_msy(this->ages.size());
+            std::vector<variable_t> N_age_msy_spawn(this->ages.size());
+            std::vector<variable_t> wgt_mt(this->ages.size());
+            std::vector<variable_t> wgt_wgted_L_klb(this->ages.size());
+            std::vector<variable_t> reprod(this->ages.size());
+
+            for (int a = 0; a < this->ages.size(); a++) {
+                int year = (this->years - 1);
+                int season = this->seasons - 1;
+                int index = (year * this->seasons * this->ages.size()) + (season * this->ages.size()) + a;
+                wgt_mt[a] = this->weight_at_spawning[index];
+                wgt_wgted_L_klb[a] = this->weight_at_catch_time[index];
+                ;
+            }
+            //compute values as functions of F 
+            for (int ff = 0; ff < F_msy.size(); ff++) {
+                //uses fishery-weighted F’s Z_age_msy=0.0; F_L_age_msy=0.0; F_D_age_msy=0.0;
+                for (int a = 0; a <this->ages.size(); a++) {
+                    F_L_age_msy[a] = F_msy(ff) * sel_wgted_L[a];
+                    //                    F_D_age_msy = F_msy(ff) * sel_wgted_D;
+                    Z_age_msy[a] = M + F_L_age_msy[a]; // + F_D_age_msy;
+                    reprod[a] = this->weight_at_spawning[index]
+                            * (this->maturity[a] * this->sex_fraction_value);
+                }
+                N_age_msy(1) = 1.0;
+                for (int iage = 1; iage < this->ages.size() - 1; iage++)
+                    //GR uses HB selex
+                {
+                    N_age_msy[iage] = N_age_msy[iage - 1] * mas::exp(-1.0 * Z_age_msy[iage - 1]);
+                }
+                N_age_msy[this->ages.size() - 1] = N_age_msy[this->ages.size() - 1] / (1.0 - mas::exp(-1.0 * Z_age_msy[this->ages.size() - 1]));
+                for (int a = 0; a < this->ages.size() - 1; a++) {
+                    N_age_msy_spawn[a] = N_age_msy[a] * mas::exp((-1. * Z_age_msy[a]) * this->spawning_season_offset);
+                }
+
+                N_age_msy_spawn[this->ages.size() - 1] = (N_age_msy_spawn[this->ages.size() - 2]*(mas::exp(-1.0 * (Z_age_msy[this->ages.size() - 2]*(1.0 - this->spawning_season_offset) +
+                        Z_age_msy[this->ages.size() - 1] * this->spawning_season_offset)))) / (1.0 - mas::exp(-1. * Z_age_msy[this->ages.size() - 1]));
+                spr_msy[ff] = sum_product(N_age_msy_spawn, reprod); //sum(elem_prod(N_age_msy_spawn, reprod(endyr)));
+
+                R_eq[ff] = this->recruitment_model->CalculateEquilibriumRecruitment(spr_msy[0], spr_msy[ff]); //SR_eq_func(R0, steep, spr_msy(1), spr_msy(ff), BiasCor, SR_switch);
+
+                for (int a = 0; a < this->ages.size(); a++) {
+                    N_age_msy[a] *= R_eq[ff];
+                    N_age_msy_spawn[a] *= R_eq[ff];
+                }
+
+                for (int iage = 0; iage < this->ages.size(); iage++) {
+                    L_age_msy[iage] = N_age_msy[iage]*(F_L_age_msy[iage] / Z_age_msy[iage])* (1.0 - mas::exp(-1.0 * Z_age_msy[iage]));
+                    //                    D_age_msy[iage] = N_age_msy[iage]*(F_D_age_msy(iage) / Z_age_msy(iage))* (1. - mfexp(-1.0 * Z_age_msy(iage)));
+                }
+
+                SSB_eq[ff] = sum_product(N_age_msy_spawn, reprod);
+                B_eq[ff] = sum_product(N_age_msy, wgt_mt);
+                L_eq_klb[ff] = sum_product(L_age_msy, wgt_wgted_L_klb);
+                //                                N_age_msy_spawn(1, (nages - 1)) = elem_prod(N_age_msy(1, (nages - 1)),
+                //                        mfexp((-1. * Z_age_msy(1, (nages - 1))) * spawn_time_frac));
+                //                N_age_msy_spawn(nages) = (N_age_msy_spawn(nages - 1)*(mfexp(-1. * (Z_age_msy(nages - 1)*(1.0 - spawn_time_frac) +
+                //                        Z_age_msy(nages) * spawn_time_frac)))) / (1.0 - mfexp(-1. * Z_age_msy(nages)));
+                //                spr_msy(ff) = sum(elem_prod(N_age_msy_spawn, reprod(endyr)));
+                //                R_eq(ff) = SR_eq_func(R0, steep, spr_msy(1), spr_msy(ff), BiasCor, SR_switch);
+                //                if (R_eq(ff) < dzero) {
+                //                    R_eq(ff) = dzero;
+                //                }
+                //                N_age_msy *= R_eq(ff);
+                //                N_age_msy_spawn *= R_eq(ff);
+                //                for (iage = 1; iage <= nages; iage++) {
+                //                    L_age_msy(iage) = N_age_msy(iage)*(F_L_age_msy(iage) / Z_age_msy(iage))* (1. - mfexp(-1. * Z_age_msy(iage)));
+                //                    D_age_msy(iage) = N_age_msy(iage)*(F_D_age_msy(iage) / Z_age_msy(iage))* (1. - mfexp(-1.0 * Z_age_msy(iage)));
+                //                }
+                //                SSB_eq(ff) = sum(elem_prod(N_age_msy_spawn, reprod(endyr)));
+                //                B_eq(ff) = sum(elem_prod(N_age_msy, wgt_mt));
+                //                L_eq_klb(ff) = sum(elem_prod(L_age_msy, wgt_wgted_L_klb)); //in gutted weight L_eq_knum(ff)=sum(L_age_msy)/1000.0; D_eq_klb(ff)=sum(elem_prod(D_age_msy,wgt_wgted_D_klb)); //in gutted weight D_eq_knum(ff)=sum(D_age_msy)/1000.0;
+            }
+
+            variable_t SSB_msy_out;
+            variable_t B_msy_out;
+            variable_t R_msy_out;
+            variable_t msy_knum_out;
+            variable_t D_msy_knum_out;
+            variable_t D_msy_klb_out;
+            variable_t F_msy_out;
+
+            variable_t spr_msy_out;// = spr_msy[ff];
+            variable_t msy_klb_out = max(L_eq_klb); //msy in gutted weight
+            int index;
+            for (int ff = 0; ff < F_msy; ff++) {
+                if (L_eq_klb[ff] == msy_klb_out) {
+                    index =ff;
+                    SSB_msy_out = SSB_eq[ff];
+                    B_msy_out = B_eq[ff];
+                    R_msy_out = R_eq[ff];
+//                    msy_knum_out = L_eq_knum[ff];
+//                    D_msy_knum_out = D_eq_knum[ff];
+//                    D_msy_klb_out = D_eq_klb[ff];
+                    F_msy_out = F_msy[ff];
+                    spr_msy_out = spr_msy[ff];
+                }
+            }
+              this->msy.Reset();
+                this->area->nsubpopulations++;
+//                this->msy.msy = F_msy_out * this->sex_fraction_value;
+                this->msy.spr_F0 = spr_msy[index];
+                this->msy.F_msy = F_msy_out;
+//                this->msy.spr_msy = spr[index_m];
+//                this->msy.SR_msy = spr[index_m] / spr_F0;
+                this->msy.R_msy = R_msy_out;
+                this->msy.SSB_msy = SSB_msy_out;
+                this->msy.B_msy = B_msy_out;
+//                this->msy.E_msy = E_eq[index_m];
+        }
+
+        void CalculateMSY__(REAL_T maxF = 1.0, REAL_T step = 0.001) {
             /**
              * This code was ported from BAM. Original Author: Kyle Shertzer
              */
@@ -1723,7 +1871,7 @@ namespace mas {
             REAL_T F40_dum = 1000; // min(fabs(spr_ratio - 0.4))
 
             for (int j = 0; j < spr_ratio.size(); j++) {
-//                spr_ratio[j] = spr[j] / spr_F0;
+                //                spr_ratio[j] = spr[j] / spr_F0;
                 REAL_T temp = std::fabs(spr_ratio[j] - 0.001);
 
                 if (temp < F01_dum) {
