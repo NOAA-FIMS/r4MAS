@@ -1758,7 +1758,7 @@ namespace mas {
             //            std::cout << "F40_dum " << F40_dum << "\n";
 
             for (int i = 0; i < L_eq.size(); i++) {
-                if (L_eq[i] >= max) {
+                if (L_eq[i] > max) {
                     max = L_eq[i];
                     max_index = i;
                 }
