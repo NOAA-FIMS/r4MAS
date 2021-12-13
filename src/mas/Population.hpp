@@ -1570,16 +1570,16 @@ namespace mas {
                 int season = this->seasons - 1;
                 int index = (year * this->seasons * this->ages.size()) + (season * this->ages.size()) + a;
                 wgt_mt[a] = this->weight_at_spawning[index];
-                wgt_wgted_L_klb[a] = this->weight_at_catch_time[index]/1000.0;
-                
+                wgt_wgted_L_klb[a] = this->weight_at_catch_time[index] / 1000.0;
+
             }
             //compute values as functions of F 
             for (int ff = 0; ff < F_msy.size(); ff++) {
                 //uses fishery-weighted F’s Z_age_msy=0.0; F_L_age_msy=0.0; F_D_age_msy=0.0;
                 for (int a = 0; a <this->ages.size(); a++) {
                     int year = (this->years - 1);
-                int season = this->seasons - 1;
-                int index = (year * this->seasons * this->ages.size()) + (season * this->ages.size()) + a;
+                    int season = this->seasons - 1;
+                    int index = (year * this->seasons * this->ages.size()) + (season * this->ages.size()) + a;
                     F_L_age_msy[a] = F_msy[ff] * sel_wgted_L[a];
                     //                    F_D_age_msy = F_msy(ff) * sel_wgted_D;
                     Z_age_msy[a] = M[a] + F_L_age_msy[a]; // + F_D_age_msy;
@@ -1644,33 +1644,33 @@ namespace mas {
             variable_t D_msy_klb_out;
             variable_t F_msy_out;
 
-            variable_t spr_msy_out;// = spr_msy[ff];
+            variable_t spr_msy_out; // = spr_msy[ff];
             variable_t msy_klb_out = max(L_eq_klb); //msy in gutted weight
             int index;
             for (int ff = 0; ff < F_msy.size(); ff++) {
                 if (L_eq_klb[ff] == msy_klb_out) {
-                    index =ff;
+                    index = ff;
                     SSB_msy_out = SSB_eq[ff];
                     B_msy_out = B_eq[ff];
                     R_msy_out = R_eq[ff];
-//                    msy_knum_out = L_eq_knum[ff];
-//                    D_msy_knum_out = D_eq_knum[ff];
-//                    D_msy_klb_out = D_eq_klb[ff];
+                    //                    msy_knum_out = L_eq_knum[ff];
+                    //                    D_msy_knum_out = D_eq_knum[ff];
+                    //                    D_msy_klb_out = D_eq_klb[ff];
                     F_msy_out = F_msy[ff];
                     spr_msy_out = spr_msy[ff];
                 }
             }
-              this->msy.Reset();
-                this->area->nsubpopulations++;
-//                this->msy.msy = F_msy_out * this->sex_fraction_value;
-                this->msy.spr_F0 = spr_msy[index];
-                this->msy.F_msy = F_msy_out;
-//                this->msy.spr_msy = spr[index_m];
-//                this->msy.SR_msy = spr[index_m] / spr_F0;
-                this->msy.R_msy = R_msy_out;
-                this->msy.SSB_msy = SSB_msy_out;
-                this->msy.B_msy = B_msy_out;
-//                this->msy.E_msy = E_eq[index_m];
+            this->msy.Reset();
+            this->area->nsubpopulations++;
+            //                this->msy.msy = F_msy_out * this->sex_fraction_value;
+            this->msy.spr_F0 = spr_msy[index];
+            this->msy.F_msy = F_msy_out;
+            //                this->msy.spr_msy = spr[index_m];
+            //                this->msy.SR_msy = spr[index_m] / spr_F0;
+            this->msy.R_msy = R_msy_out;
+            this->msy.SSB_msy = SSB_msy_out;
+            this->msy.B_msy = B_msy_out;
+            //                this->msy.E_msy = E_eq[index_m];
         }
 
         void CalculateMSY(REAL_T maxF = 1.0, REAL_T step = 0.001) {
@@ -1762,11 +1762,11 @@ namespace mas {
                 std::vector<variable_t> equilibrium_landing_numbers(this->ages.size());
                 variable_t F_sbpr;
 
-                variable_t F_sbpr_eq;
-                variable_t F_B_eq;
-                variable_t F_L_eq;
-                variable_t F_L_sum;
-                variable_t F_num_sum;
+                variable_t F_sbpr_eq = 0.0;
+                variable_t F_B_eq = 0.0;
+                variable_t F_L_eq = 0.0;
+                variable_t F_L_sum = 0.0;
+                variable_t F_num_sum = 0.0;
 
                 size_t index_ = year * this->seasons * this->ages.size()
                         + (season) * this->ages.size() + 0;
