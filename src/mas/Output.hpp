@@ -1950,6 +1950,8 @@ namespace mas {
 
 
             REAL_T max_gc = -10000.0;
+            REAL_T gc = -10000.0;
+            REAL_T p;
             std::string name_max_gc;
             rapidjson::Value max_gradient_component(rapidjson::kObjectType);
             for (int i = 0; i < mas.info.estimated_parameters.size(); i++) {
@@ -1965,6 +1967,8 @@ namespace mas {
                 if (std::fabs(g) > max_gc) {
                     max_gc = std::fabs(g);
                     name_max_gc = n;
+                    gc = g;
+                    p = mas.info.estimated_parameters[i]->GetValue();
                 }
                 parameter.AddMember("value",
                         mas.info.estimated_parameters[i]->GetValue(), allocator);
@@ -1978,7 +1982,9 @@ namespace mas {
             rapidjson::Value name;
             name.SetString(name_max_gc.c_str(), name_max_gc.size(), allocator);
             max_gradient_component.AddMember("name", name, allocator);
-            max_gradient_component.AddMember("value", max_gc, allocator);
+            max_gradient_component.AddMember("value", p, allocator);
+            max_gradient_component.AddMember("gradient_component_value", max_gc, allocator);
+            max_gradient_component.AddMember("gradient_value", g, allocator);
             metrics.AddMember("max_gradient_component", max_gradient_component, allocator);
 
             document.AddMember("metrics", metrics, allocator);
