@@ -1877,7 +1877,7 @@ namespace mas {
             std::valarray<variable_t> Z_age(nages); //#Z at age
 
             int max_index = 0;
-            variable_t max = 1e-18; //std::numeric_limits<variable_t>::min();
+            variable_t max = std::numeric_limits<variable_t>::min();
 
             REAL_T F01_dum = 1000; //min(fabs(spr_ratio - 0.001));
             REAL_T F30_dum = 1000; // min(fabs(spr_ratio - 0.3));
@@ -1938,6 +1938,7 @@ namespace mas {
                     F40_out = i;
                 }
             }
+            
             variable_t msy_mt_out = max; //msy in whole weight
             variable_t SSB_msy_out = 0.0;
             variable_t B_msy_out = 0.0;
@@ -4209,14 +4210,15 @@ namespace mas {
         void ComputeBiologicalReferencePoints() {
             std::cout << std::fixed;
             std::vector<double> fs;
-            for (double f = 0.01; f < 3.0; f += 0.01) {
-                fs.push_back(f);
-            }
-            //            variable::tape.recording = false;
-            REAL_T msy;
-            REAL_T f_msy;
-            REAL_T s_msy;
-            REAL_T fmax;
+//            for (double f = 0.01; f < 3.0; f += 0.01) {
+//                fs.push_back(f);
+//            }
+//            //            variable::tape.recording = false;
+//            REAL_T msy;
+//            REAL_T f_msy;
+//            REAL_T s_msy;
+//            REAL_T fmax;
+            
             this->msy.Reset();
 
             for (int a = 0; a < areas_list.size(); a++) {
