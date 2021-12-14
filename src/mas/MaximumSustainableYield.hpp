@@ -34,6 +34,8 @@ namespace mas {
         variable_t SSB_msy = 0;
         variable_t B_msy = 0;
         variable_t E_msy = 0;
+        variable_t L_msy = 0;
+
 
         //F30
         variable_t F30 = 0;
@@ -79,6 +81,7 @@ namespace mas {
             this->SSB_msy = 0;
             this->B_msy = 0;
             this->E_msy = 0;
+            this->L_msy = 0;
 
             //F30
             this->F30 = 0;
@@ -115,8 +118,24 @@ namespace mas {
 
     };
 
+
+
+
 }
 
+template<typename T>
+std::ostream& operator<<(std::ostream& out, mas::MaximumSustainableYield<T>& msy) {
+    out << "MSY = " << msy.msy << "\n";
+    out << "F_MSY = " << msy.F_msy << "\n";
+    out << "SSB_MSY = " << msy.SSB_msy << "\n";
+    out << "R_MSY = " << msy.R_msy << "\n";
+    out << "spr_F = " << msy.spr_F0 << "\n";
+    out << "spr_MSY = " << msy.spr_msy << "\n";
+    out << "E_MSY = " << msy.E_msy << "\n";
+    out << "L_MSY = " << msy.L_msy << "\n";
+
+    return out;
+}
 
 #endif /* MAXIMUMSUSTAINABLEYIELD_HPP */
 

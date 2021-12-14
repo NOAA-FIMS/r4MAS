@@ -1800,7 +1800,7 @@ namespace mas {
                 spr[i] += spawners_per_recruit[a];
                 spawning_biomass_per_recruit[a] = spawners_per_recruit[a] * this->weight_at_spawning[index] * this->maturity[a] * this->sex_fraction_value;
                 F_sbpr += spawning_biomass_per_recruit[a];
-
+                spr[i] = F_sbpr;
                 spr_ratio[i] = spr[i] / F_sbpr;
                 R_eq[i] = this->recruitment_model->CalculateEquilibriumRecruitment(F_sbpr_unfished, F_sbpr);
 
@@ -1845,20 +1845,20 @@ namespace mas {
             std::valarray<variable_t> M_age(nages);
             std::valarray<variable_t> wgt(nages);
 
-            for (int a = 0; a < ages.size(); a++) {
-                //dimension folded index
-                size_t index = year * this->seasons * this->ages.size()
-                        + (season) * this->ages.size() + a;
-
-                //is this ssb_unfished?
-                reprod[a] = this->weight_at_spawning[index]
-                        * (this->maturity[a] * this->sex_fraction_value);
-                spr_F0 += N0[a] * reprod[a];
-                selL[a] = this->sum_selectivity[index];
-                selZ[a] = this->Z[index];
-                M_age[a] = this->M[a].GetValue();
-                wgt[a] = this->weight_at_catch_time[index];
-            }
+//            for (int a = 0; a < ages.size(); a++) {
+//                //dimension folded index
+//                size_t index = year * this->seasons * this->ages.size()
+//                        + (season) * this->ages.size() + a;
+//
+//                //is this ssb_unfished?
+//                reprod[a] = this->weight_at_spawning[index]
+//                        * (this->maturity[a] * this->sex_fraction_value);
+//                spr_F0 += N0[a] * reprod[a];
+//                selL[a] = this->sum_selectivity[index];
+//                //                selZ[a] = this->Z[index];
+//                M_age[a] = this->M[a].GetValue();
+//                wgt[a] = this->weight_at_catch_time[index];
+//            }
 
             std::valarray<variable_t> L_age(nages); //#landings at age
             std::valarray<variable_t> D_age(nages); //#dead discards at age
@@ -1941,7 +1941,7 @@ namespace mas {
 
             SSB_msy_out = S_eq[max_index];
             B_msy_out = B_eq[max_index] * this->sex_fraction_value;
-            R_msy_out = R_eq[max_index] * 1000.0 * this->sex_fraction_value;
+            R_msy_out = R_eq[max_index] * this->sex_fraction_value;
             msy_knum_out = L_eq_knum[max_index];
             F_msy_out = F[max_index];
             spr_msy_out = spr[max_index];
@@ -1950,15 +1950,15 @@ namespace mas {
             //            }
             this->msy.Reset();
             this->area->nsubpopulations++;
-            this->msy.msy = msy_mt_out * this->sex_fraction_value;
+            this->msy.msy = msy_mt_out;// * this->sex_fraction_value;
             //             std::cout << "\n\nthis->msy.msy = " << this->msy.msy << "\n";
-            this->msy.spr_F0 = spr_F0;
+            this->msy.spr_F0 = spr_msy_out;
             //             std::cout << "this->msy.spr_F0 = " << spr_F0 << "\n";
             this->msy.F_msy = F_msy_out;
             //             std::cout << "this->msy.F_msy = " << this->msy.F_msy << "\n";
             this->msy.spr_msy = spr[index_m];
             //             std::cout << "this->msy.spr_msy = " << this->msy.spr_msy << "\n";
-            this->msy.SR_msy = spr[index_m] / spr_F0;
+            this->msy.SR_msy = spr_ratio[index_m];// / spr_F0;
             //             std::cout << "this->msy.SR_msy = " << this->msy.SR_msy << "\n";
             this->msy.R_msy = R_msy_out;
             //             std::cout << "this->msy.R_msy = " << this->msy.R_msy << "\n";
@@ -1967,11 +1967,14 @@ namespace mas {
             this->msy.B_msy = B_msy_out;
             //             std::cout << "this->msy.B_msy = " << this->msy.B_msy << "\n";
             this->msy.E_msy = E_eq[index_m];
+            
+            this->msy.L_msy = L_eq[index_m];
+            
             //             std::cout << "this->msy.E_msy = " << this->msy.E_msy << "\n";
 
             this->msy.F30 = F[F30_out];
             this->msy.spr_F30_msy = spr[F30_out];
-            this->msy.SR_F30_msy = spr[F30_out] / spr_F0;
+            this->msy.SR_F30_msy = spr_ratio[F30_out];
             this->msy.R_F30_msy = R_eq[F30_out];
             this->msy.SSB_F30_msy = S_eq[F30_out];
             this->msy.B_F30_msy = B_eq[F30_out];
@@ -1979,7 +1982,7 @@ namespace mas {
 
             this->msy.F35 = F[F35_out];
             this->msy.spr_F35_msy = spr[F35_out];
-            this->msy.SR_F35_msy = spr[F35_out] / spr_F0;
+            this->msy.SR_F35_msy = spr_ratio[F35_out];
             this->msy.R_F35_msy = R_eq[F35_out];
             this->msy.SSB_F35_msy = S_eq[F35_out];
             this->msy.B_F35_msy = B_eq[F35_out];
@@ -1987,7 +1990,7 @@ namespace mas {
 
             this->msy.F40 = F[F40_out];
             this->msy.spr_F40_msy = spr[F40_out];
-            this->msy.SR_F40_msy = spr[F40_out] / spr_F0;
+            this->msy.SR_F40_msy = spr_ratio[F40_out];
             this->msy.R_F40_msy = R_eq[F40_out];
             this->msy.SSB_F40_msy = S_eq[F40_out];
             this->msy.B_F40_msy = B_eq[F40_out];
@@ -2002,6 +2005,7 @@ namespace mas {
             this->area->msy.SSB_msy += this->msy.SSB_msy;
             this->area->msy.B_msy += this->msy.B_msy;
             this->area->msy.E_msy += this->msy.E_msy;
+            this->area->msy.L_msy += this->msy.L_msy;
 
             this->area->msy.F30 += this->msy.F30;
             this->area->msy.spr_F30_msy += this->msy.spr_F30_msy;
