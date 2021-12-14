@@ -1950,7 +1950,7 @@ namespace mas {
             //            }
             this->msy.Reset();
             this->area->nsubpopulations++;
-            this->msy.msy = msy_mt_out;// * this->sex_fraction_value;
+            this->msy.msy = msy_mt_out * this->sex_fraction_value;
             //             std::cout << "\n\nthis->msy.msy = " << this->msy.msy << "\n";
             this->msy.spr_F0 = spr_msy_out;
             //             std::cout << "this->msy.spr_F0 = " << spr_F0 << "\n";
