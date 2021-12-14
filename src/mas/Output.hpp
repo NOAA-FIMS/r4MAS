@@ -1984,7 +1984,7 @@ namespace mas {
             max_gradient_component.AddMember("name", name, allocator);
             max_gradient_component.AddMember("value", p, allocator);
             max_gradient_component.AddMember("gradient_component_value", max_gc, allocator);
-            max_gradient_component.AddMember("gradient_value", g, allocator);
+            max_gradient_component.AddMember("gradient_value", gc, allocator);
             metrics.AddMember("max_gradient_component", max_gradient_component, allocator);
 
             document.AddMember("metrics", metrics, allocator);
