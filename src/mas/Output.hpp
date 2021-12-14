@@ -1947,7 +1947,7 @@ namespace mas {
 
             metrics.AddMember("likelihood_components", likelihood_components,
                     allocator);
-            document.AddMember("metrics", metrics, allocator);
+
 
             REAL_T max_gc = -10000.0;
             rapidjson::Value name_max_gc;
@@ -1975,9 +1975,12 @@ namespace mas {
 
             }
 
-            max_gradient_component.AddMember("max_gc", max_gradient_component, allocator);
-            metrics.AddMember("max_gc", max_gradient_component, allocator);
+            max_gradient_component.AddMember("name", name_max_gc, allocator);
+            max_gradient_component.AddMember("value", max_gc, allocator);
+            metrics.AddMember("max_gradient_component", max_gradient_component, allocator);
             
+            document.AddMember("metrics", metrics, allocator);
+
             estimated_parameters.AddMember("parameters", estimated_parameters_array,
                     allocator);
 
