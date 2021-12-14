@@ -1833,9 +1833,9 @@ namespace mas {
 
             rapidjson::Value estimated_parameters(rapidjson::kObjectType);
             rapidjson::Value estimated_parameters_array(rapidjson::kArrayType);
-            metrics.AddMember("max_gc", mas.max_gc, allocator);
+
             mas.ComputeGoodnessOfFit();
-            
+
             metrics.AddMember("chi-squared", mas.chi_squared, allocator);
             metrics.AddMember("g-test", mas.g_test, allocator);
             metrics.AddMember("RMSE", mas.rmse, allocator);
@@ -1949,23 +1949,35 @@ namespace mas {
                     allocator);
             document.AddMember("metrics", metrics, allocator);
 
-            
+            REAL_T max_gc = -10000.0;
+            rapidjson::Value name_max_gc;
+            rapidjson::Value max_gradient_component(rapidjson::kObjectType);
             for (int i = 0; i < mas.info.estimated_parameters.size(); i++) {
                 rapidjson::Value parameter(rapidjson::kObjectType);
                 std::string n = mas.info.estimated_parameters[i]->GetName();
                 //                rapidjson::GenericStringRef<char> name(n.c_str(), n.size());
+                REAL_T g = atl::Variable<REAL_T>::tape.Value(
+                        mas.info.estimated_parameters[i]->info->id);
+
                 rapidjson::Value name;
                 name.SetString(n.c_str(), n.size(), allocator);
                 parameter.AddMember("name", name, allocator);
+                if (std::fabs(g) > max_gc) {
+                    max_gc = std::fabs(g);
+                    name_max_gc = name;
+                }
                 parameter.AddMember("value",
                         mas.info.estimated_parameters[i]->GetValue(), allocator);
                 parameter.AddMember("gradient_value",
-                        atl::Variable<REAL_T>::tape.Value(
-                        mas.info.estimated_parameters[i]->info->id),
+                        g,
                         allocator);
                 estimated_parameters_array.PushBack(parameter, allocator);
 
             }
+
+            max_gradient_component.AddMember("max_gc", max_gradient_component, allocator);
+            metrics.AddMember("max_gc", max_gradient_component, allocator);
+            
             estimated_parameters.AddMember("parameters", estimated_parameters_array,
                     allocator);
 
