@@ -1754,6 +1754,17 @@ namespace mas {
 
 
             for (int i = 0; i < F.size(); i++) {
+
+                spr[i] = variable_t();
+                spr_ratio[i] = variable_t();
+                S_eq[i] = variable_t();
+                R_eq[i] = variable_t();
+                B_eq[i] = variable_t();
+                L_eq[i] = variable_t();
+                D_eq[i] = variable_t();
+                L_eq_knum[i] = variable_t();
+                E_eq[i] = variable_t();
+                SSB_eq[i] = variable_t();
                 //                std::cout << "F = " << F[i] << "\n\n";
                 std::vector<variable_t> spawners_per_recruit(this->ages.size());
                 std::vector<variable_t> spawning_biomass_per_recruit(this->ages.size());
@@ -1845,20 +1856,20 @@ namespace mas {
             std::valarray<variable_t> M_age(nages);
             std::valarray<variable_t> wgt(nages);
 
-//            for (int a = 0; a < ages.size(); a++) {
-//                //dimension folded index
-//                size_t index = year * this->seasons * this->ages.size()
-//                        + (season) * this->ages.size() + a;
-//
-//                //is this ssb_unfished?
-//                reprod[a] = this->weight_at_spawning[index]
-//                        * (this->maturity[a] * this->sex_fraction_value);
-//                spr_F0 += N0[a] * reprod[a];
-//                selL[a] = this->sum_selectivity[index];
-//                //                selZ[a] = this->Z[index];
-//                M_age[a] = this->M[a].GetValue();
-//                wgt[a] = this->weight_at_catch_time[index];
-//            }
+            //            for (int a = 0; a < ages.size(); a++) {
+            //                //dimension folded index
+            //                size_t index = year * this->seasons * this->ages.size()
+            //                        + (season) * this->ages.size() + a;
+            //
+            //                //is this ssb_unfished?
+            //                reprod[a] = this->weight_at_spawning[index]
+            //                        * (this->maturity[a] * this->sex_fraction_value);
+            //                spr_F0 += N0[a] * reprod[a];
+            //                selL[a] = this->sum_selectivity[index];
+            //                //                selZ[a] = this->Z[index];
+            //                M_age[a] = this->M[a].GetValue();
+            //                wgt[a] = this->weight_at_catch_time[index];
+            //            }
 
             std::valarray<variable_t> L_age(nages); //#landings at age
             std::valarray<variable_t> D_age(nages); //#dead discards at age
@@ -1958,7 +1969,7 @@ namespace mas {
             //             std::cout << "this->msy.F_msy = " << this->msy.F_msy << "\n";
             this->msy.spr_msy = spr[index_m];
             //             std::cout << "this->msy.spr_msy = " << this->msy.spr_msy << "\n";
-            this->msy.SR_msy = spr_ratio[index_m];// / spr_F0;
+            this->msy.SR_msy = spr_ratio[index_m]; // / spr_F0;
             //             std::cout << "this->msy.SR_msy = " << this->msy.SR_msy << "\n";
             this->msy.R_msy = R_msy_out;
             //             std::cout << "this->msy.R_msy = " << this->msy.R_msy << "\n";
@@ -1967,9 +1978,9 @@ namespace mas {
             this->msy.B_msy = B_msy_out;
             //             std::cout << "this->msy.B_msy = " << this->msy.B_msy << "\n";
             this->msy.E_msy = E_eq[index_m];
-            
+
             this->msy.L_msy = L_eq[index_m];
-            
+
             //             std::cout << "this->msy.E_msy = " << this->msy.E_msy << "\n";
 
             this->msy.F30 = F[F30_out];
