@@ -79,6 +79,7 @@ namespace mas {
         variable recruitment_likelihood;
         variable selectivity_likelihood;
 
+        REAL_T max_gc;
         //goodness of fit
         REAL_T chi_squared;
         REAL_T g_test;
@@ -330,13 +331,20 @@ namespace mas {
          * Pearson's chi-squared test on biomass and age comp.
          */
         void ComputeGoodnessOfFit() {
-
+            this->max_gc = -1.0;
+            
             variable f;
             atl::Variable<REAL_T>::tape.Reset();
             atl::Variable<REAL_T>::tape.recording = true;
             atl::Variable<REAL_T>::tape.derivative_trace_level = atl::SECOND_ORDER_REVERSE;
             this->Run(f);
             atl::Variable<REAL_T>::tape.AccumulateSecondOrder();
+            for(int i =0; i < this->info.estimated_parameters.size(); i++){
+                REAL_T g = std::fabs(atl::Variable<REAL_T>::tape.Value(this->info.estimated_parameters[i]->info->id));
+                if( g  > this->max_gc){
+                    this->max_gc = g;
+                }
+            }
             typename mas::Information<REAL_T>::fleet_iterator fit;
             typename mas::Information<REAL_T>::survey_model_iterator sit;
 

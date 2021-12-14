@@ -1833,7 +1833,9 @@ namespace mas {
 
             rapidjson::Value estimated_parameters(rapidjson::kObjectType);
             rapidjson::Value estimated_parameters_array(rapidjson::kArrayType);
+            metrics.AddMember("max_gc", mas.max_gc, allocator);
             mas.ComputeGoodnessOfFit();
+            
             metrics.AddMember("chi-squared", mas.chi_squared, allocator);
             metrics.AddMember("g-test", mas.g_test, allocator);
             metrics.AddMember("RMSE", mas.rmse, allocator);
@@ -1947,6 +1949,7 @@ namespace mas {
                     allocator);
             document.AddMember("metrics", metrics, allocator);
 
+            
             for (int i = 0; i < mas.info.estimated_parameters.size(); i++) {
                 rapidjson::Value parameter(rapidjson::kObjectType);
                 std::string n = mas.info.estimated_parameters[i]->GetName();
