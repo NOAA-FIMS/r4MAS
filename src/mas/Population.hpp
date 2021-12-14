@@ -1877,7 +1877,7 @@ namespace mas {
             std::valarray<variable_t> Z_age(nages); //#Z at age
 
             int max_index = 0;
-            variable_t max = std::numeric_limits<variable_t>::min();
+            variable_t max = std::numeric_limits<double>::min();
 
             REAL_T F01_dum = 1000; //min(fabs(spr_ratio - 0.001));
             REAL_T F30_dum = 1000; // min(fabs(spr_ratio - 0.3));
@@ -1920,7 +1920,7 @@ namespace mas {
             //            std::cout << "F40_dum " << F40_dum << "\n";
 
             for (int i = 0; i < L_eq.size(); i++) {
-                if (L_eq[i] > max) {
+                if (L_eq[i].GetValue() > max) {
                     max = L_eq[i];
                     max_index = i;
                 }
