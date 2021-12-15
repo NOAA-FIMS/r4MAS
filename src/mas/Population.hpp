@@ -1714,7 +1714,7 @@ namespace mas {
             //            }
 
             surviavability[0] = 1.0;
-            unfished_spawing_biomass_per_recruit[0] = this->weight_at_spawning[0] * this->maturity[0] * this->sex_fraction_value;
+            unfished_spawing_biomass_per_recruit[0] = (this->weight_at_spawning[0]/1000.0) * this->maturity[0] * this->sex_fraction_value;
             F_sbpr_unfished += unfished_spawing_biomass_per_recruit[0];
 
             int i;
@@ -1724,7 +1724,7 @@ namespace mas {
                 
                 surviavability[i] = mas::exp(-1.0 * (this->M[i] + 0.0 * this->sum_selectivity[i])) * surviavability[i - 1];
                 
-                unfished_spawing_biomass_per_recruit[i] = this->weight_at_spawning[index] * this->maturity[i] * this->sex_fraction_value * surviavability[i];
+                unfished_spawing_biomass_per_recruit[i] = (this->weight_at_spawning[index]/1000.0) * this->maturity[i] * this->sex_fraction_value * surviavability[i];
                 
                 F_sbpr_unfished += unfished_spawing_biomass_per_recruit[i];
             }
@@ -1733,7 +1733,7 @@ namespace mas {
                     + (season) * this->ages.size() + i;
 
             surviavability[i] = mas::exp(-1.0 * (this->M[i] + 0.0 * this->sum_selectivity[i])) * surviavability[i - 1] / (1.0 - mas::exp(-1.0 * this->M[i]));
-            unfished_spawing_biomass_per_recruit[i] = this->weight_at_spawning[i] * this->maturity[index] * this->sex_fraction_value * surviavability[i];
+            unfished_spawing_biomass_per_recruit[i] = (this->weight_at_spawning[i]/1000.0) * this->maturity[index] * this->sex_fraction_value * surviavability[i];
             F_sbpr_unfished += unfished_spawing_biomass_per_recruit[i];
 
             //            std::cout << "F_sbpr_unfished = " << F_sbpr_unfished << "\n\n";
