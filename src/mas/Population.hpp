@@ -1819,15 +1819,11 @@ namespace mas {
 
                 for (a = 0; a < this->ages.size(); a++) {
                     size_t index = year * this->seasons * this->ages.size()
-                            + (season) * this->ages.size() + a;
+                            + (season * this->ages.size()) + a;
 
                     equilibrium_numbers[a] = R_eq[i] * spawners_per_recruit[a];
-                    if (equilibrium_numbers[a] < 0.0) {
 
-                        for (int i = 0; i < F.size(); i++) {
-                            msy_debug << "f = " << F[i] << "  " << R_eq[i] << " " << spawners_per_recruit[a] << "\n";
-                        }
-                    }
+
 
                     F_num_sum += equilibrium_numbers[a];
                     F_sbpr_eq += equilibrium_numbers[a] * (this->weight_at_spawning[index] * this->maturity[a] * this->sex_fraction_value);
@@ -1841,6 +1837,14 @@ namespace mas {
                 B_eq[i] = F_B_eq;
                 L_eq[i] = F_L_eq;
                 E_eq[i] = F_L_sum / F_num_sum;
+                if (L_eq[i] < 0.0) {
+
+                    for (int i = 0; i < F.size(); i++) {
+                        for (int a = 0; a < ages.size(); a++) {
+                            msy_debug << "f = " << F[i] << "  " << R_eq[i] << " " << spawners_per_recruit[a] << "\n";
+                        }
+                    }
+                }
 
                 //                std::cout << "F_sbpr_eq = " << F_sbpr_eq << "\n";
 
