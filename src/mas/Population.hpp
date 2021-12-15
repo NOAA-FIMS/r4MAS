@@ -1899,7 +1899,7 @@ namespace mas {
             std::valarray<variable_t> F_age(nages); //#F at age
             std::valarray<variable_t> Z_age(nages); //#Z at age
 
-            int max_index = 0;
+            size_t max_index = 0;
             variable_t max = std::numeric_limits<double>::min();
 
             REAL_T F01_dum = 1000; //min(fabs(spr_ratio - 0.001));
@@ -1961,13 +1961,8 @@ namespace mas {
                     F40_out = i;
                 }
             }
-            
-            if(max < 0.0){
-                std::ofstream debug("msy_debug.txt");
-                for (int i = 0; i < L_eq.size(); i++) {
-                    debug<<L_eq[i]<<"\n";
-                }
-            }
+
+
 
             variable_t msy_mt_out = max; //msy in whole weight
             variable_t SSB_msy_out = 0.0;
@@ -1976,18 +1971,25 @@ namespace mas {
             variable_t msy_knum_out = 0.0;
             variable_t F_msy_out = 0.0;
             variable_t spr_msy_out = 0.0;
-            int index_m = 0;
+            size_t index_m = 0;
 
             //            for (int i = 0; i < F.size(); i++) {
             //                if (L_eq[i] == msy_mt_out) {
 
             SSB_msy_out = 1000.0 * S_eq[max_index];
             B_msy_out = B_eq[max_index] * 1000.0 * this->sex_fraction_value;
-            R_msy_out = R_eq[max_index] *  this->sex_fraction_value;
+            R_msy_out = R_eq[max_index] * this->sex_fraction_value;
             msy_knum_out = L_eq_knum[max_index];
             F_msy_out = F[max_index];
             spr_msy_out = spr[max_index]*1000.0;
             index_m = max_index;
+
+            if (max < 0.0) {
+                std::ofstream debug("msy_debug.txt");
+                for (int i = 0; i < S_eq.size(); i++) {
+                    debug << S_eq[i] << "\n";
+                }
+            }
             //                }
             //            }
             this->msy.Reset();
