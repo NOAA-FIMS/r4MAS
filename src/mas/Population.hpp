@@ -1685,13 +1685,13 @@ namespace mas {
             int year = this->years - 1;
             int season = this->seasons - 1;
             int nages = ages.size();
-            
+
             std::vector<variable_t> wgt(this->ages.size());
             for (int i = 0; i < this->ages.size(); i++) {
-                int index = (year*this->seasons*this->ages.size()) + (season*this->ages.size())+i;
-                wgt[i] = this->weight_at_spawning[index]/1000.0;
+                int index = (year * this->seasons * this->ages.size()) + (season * this->ages.size()) + i;
+                wgt[i] = this->weight_at_spawning[index] / 1000.0;
             }
-            
+
 
             std::vector<atl::intrusive_ptr<Fleet<REAL_T> > > &fleets =
                     this->area->seasonal_fleet_operations[season];
@@ -1704,7 +1704,7 @@ namespace mas {
             //            std::vector<variable_t> selectivity(this->ages.size());
             std::vector<variable_t> unfished_spawing_biomass_per_recruit(this->ages.size());
             std::vector<variable_t> unfished_spawners_per_recruit(this->ages.size());
-            variable_t F_sbpr_unfished =0.0;
+            variable_t F_sbpr_unfished = 0.0;
 
             //            for (int i = 0; i < fleets.size(); i++) {
             //                for (int a = 0; a < this->ages.size(); a++) {
@@ -1728,7 +1728,7 @@ namespace mas {
             for (i = 1; i < this->ages.size() - 1; i++) {
                 size_t index = year * this->seasons * this->ages.size()
                         + (season) * this->ages.size() + i;
-                
+
                 surviavability[i] = mas::exp(-1.0 * (this->M[i] + 0.0 * this->sum_selectivity[i])) * surviavability[i - 1];
                 unfished_spawing_biomass_per_recruit[i] = wgt[i] * this->maturity[i] * this->sex_fraction_value * surviavability[i];
                 F_sbpr_unfished += unfished_spawing_biomass_per_recruit[i];
@@ -1758,7 +1758,7 @@ namespace mas {
             std::vector<variable_t> E_eq(F.size()); //equilibrium exploitation rate at F (landings only)
             std::valarray<variable_t> L_eq_knum(F.size());
             std::valarray<variable_t> SSB_eq(F.size());
-//            std::ofstream msy_debug("msy_debug.txt");
+            //            std::ofstream msy_debug("msy_debug.txt");
 
 
             for (int i = 0; i < F.size(); i++) {
@@ -1834,7 +1834,7 @@ namespace mas {
 
 
                     F_num_sum += equilibrium_numbers[a];
-                    F_sbpr_eq += equilibrium_numbers[a] * (wgt[a]* this->maturity[a] * this->sex_fraction_value);
+                    F_sbpr_eq += equilibrium_numbers[a] * (wgt[a] * this->maturity[a] * this->sex_fraction_value);
                     F_B_eq += equilibrium_numbers[a] * wgt[a];
                     equilibrium_landing_numbers[a] = (F[i] * this->sum_selectivity[index]) * equilibrium_numbers[a]*(1.0 - mas::exp(-1.0 * total_mortality[a])) / total_mortality[a];
                     F_L_sum += equilibrium_landing_numbers[a];
@@ -1845,18 +1845,18 @@ namespace mas {
                 B_eq[i] = F_B_eq;
                 L_eq[i] = F_L_eq;
                 E_eq[i] = F_L_sum / F_num_sum;
-                
-//                if (L_eq[i] < 0.0) {
-//
-//                    for (int i = 0; i < F.size(); i++) {
-//                        for (int a = 0; a < ages.size(); a++) {
-//                            msy_debug <<"a = "<<a<<"\n";
-//                            msy_debug<<"L_eq = "<<L_eq[i]<<"\n";
-//                            msy_debug <<"F_sbpr_unfished = "<<F_sbpr_unfished<<" F_sbpr = "<< F_sbpr<<"\n";
-//                            msy_debug << "f = " << F[i] << "  F_L_eq = "<<F_L_eq<<" R_eq = " << R_eq[i] << " spawners_per_recruit = " << spawners_per_recruit[a]<< " equilibrium_numbers = "<<equilibrium_numbers[a] << "\n";
-//                        }
-//                    }
-//                }
+
+                //                if (L_eq[i] < 0.0) {
+                //
+                //                    for (int i = 0; i < F.size(); i++) {
+                //                        for (int a = 0; a < ages.size(); a++) {
+                //                            msy_debug <<"a = "<<a<<"\n";
+                //                            msy_debug<<"L_eq = "<<L_eq[i]<<"\n";
+                //                            msy_debug <<"F_sbpr_unfished = "<<F_sbpr_unfished<<" F_sbpr = "<< F_sbpr<<"\n";
+                //                            msy_debug << "f = " << F[i] << "  F_L_eq = "<<F_L_eq<<" R_eq = " << R_eq[i] << " spawners_per_recruit = " << spawners_per_recruit[a]<< " equilibrium_numbers = "<<equilibrium_numbers[a] << "\n";
+                //                        }
+                //                    }
+                //                }
 
                 //                std::cout << "F_sbpr_eq = " << F_sbpr_eq << "\n";
 
@@ -1974,9 +1974,9 @@ namespace mas {
             //            for (int i = 0; i < F.size(); i++) {
             //                if (L_eq[i] == msy_mt_out) {
 
-            SSB_msy_out = 1000.0*S_eq[max_index];
-            B_msy_out = B_eq[max_index] * 1000.0 *this->sex_fraction_value;
-            R_msy_out = R_eq[max_index] * 1000.0*this->sex_fraction_value;
+            SSB_msy_out = 1000.0 * S_eq[max_index];
+            B_msy_out = B_eq[max_index] * 1000.0 * this->sex_fraction_value;
+            R_msy_out = R_eq[max_index] *  this->sex_fraction_value;
             msy_knum_out = L_eq_knum[max_index];
             F_msy_out = F[max_index];
             spr_msy_out = spr[max_index];
@@ -1989,7 +1989,7 @@ namespace mas {
 
 
             this->area->nsubpopulations++;
-            this->msy.msy = msy_mt_out *1000.0* this->sex_fraction_value;
+            this->msy.msy = msy_mt_out * 1000 * this->sex_fraction_value;
             //             std::cout << "\n\nthis->msy.msy = " << this->msy.msy << "\n";
             this->msy.spr_F0 = spr_msy_out;
             //             std::cout << "this->msy.spr_F0 = " << spr_F0 << "\n";
