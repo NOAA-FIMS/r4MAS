@@ -1841,8 +1841,9 @@ namespace mas {
 
                     for (int i = 0; i < F.size(); i++) {
                         for (int a = 0; a < ages.size(); a++) {
-                            msy_debug <<"a = "<<a;
-                            msy_debug << "f = " << F[i] << "  F_L_eq = "<<F_L_eq<<" R_eq = " << R_eq[i] << " spawners_per_recruit = " << spawners_per_recruit[a]<< "equilibrium_landing_numbers = "<<equilibrium_landing_numbers[a] << "\n";
+                            msy_debug <<"a = "<<a<<"\n";
+                            msy_debug <<"F_sbpr_unfished = "<<F_sbpr_unfished<<" F_sbpr = "<< F_sbpr<<"\n";
+                            msy_debug << "f = " << F[i] << "  F_L_eq = "<<F_L_eq<<" R_eq = " << R_eq[i] << " spawners_per_recruit = " << spawners_per_recruit[a]<< " equilibrium_landing_numbers = "<<equilibrium_landing_numbers[a] << "\n";
                         }
                     }
                 }
