@@ -215,7 +215,7 @@ namespace mas {
                                     se2 = std::log(cv * cv + 1.0);
                                     se = std::sqrt(se2) / std::sqrt(std::log(M_E));
                                     nll1 += this->lambda->get(i, j) * std::log(se);
-                                     nll2 += this->lambda->get(i, j) * SQUARE((mas::log(obs) - mas::log(expected)))/se;
+                                     nll2 += this->lambda->get(i, j) * SQUARE((std::log(obs) - mas::log(expected)))/se;
 //                                    nll2 += this->lambda->get(i, j) * SQUARE((mas::log((obs / expected)) / se) + 0.5 * se);
                                 }
                             }
