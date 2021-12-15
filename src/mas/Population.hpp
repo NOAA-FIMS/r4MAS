@@ -1685,6 +1685,13 @@ namespace mas {
             int year = this->years - 1;
             int season = this->seasons - 1;
             int nages = ages.size();
+            
+            std::vector<variable_t> wgt(this->ages.size());
+            for (int i = 0; i < this->ages.size(); i++) {
+                int index = (year*this->seasons*this->ages.size()) + (season*this->ages.size())+i;
+                wgt[i] = this->weight_at_spawning[index]/1000.0;
+            }
+            
 
             std::vector<atl::intrusive_ptr<Fleet<REAL_T> > > &fleets =
                     this->area->seasonal_fleet_operations[season];
@@ -1714,7 +1721,7 @@ namespace mas {
             //            }
 
             surviavability[0] = 1.0;
-            unfished_spawing_biomass_per_recruit[0] = (this->weight_at_spawning[0]/1000.0) * this->maturity[0] * this->sex_fraction_value;
+            unfished_spawing_biomass_per_recruit[0] = wgt[0] * this->maturity[0] * this->sex_fraction_value;
             F_sbpr_unfished += unfished_spawing_biomass_per_recruit[0];
 
             int i;
@@ -1723,9 +1730,7 @@ namespace mas {
                         + (season) * this->ages.size() + i;
                 
                 surviavability[i] = mas::exp(-1.0 * (this->M[i] + 0.0 * this->sum_selectivity[i])) * surviavability[i - 1];
-                
-                unfished_spawing_biomass_per_recruit[i] = (this->weight_at_spawning[index]/1000.0) * this->maturity[i] * this->sex_fraction_value * surviavability[i];
-                
+                unfished_spawing_biomass_per_recruit[i] = wgt[i] * this->maturity[i] * this->sex_fraction_value * surviavability[i];
                 F_sbpr_unfished += unfished_spawing_biomass_per_recruit[i];
             }
 
@@ -1733,7 +1738,7 @@ namespace mas {
                     + (season) * this->ages.size() + i;
 
             surviavability[i] = mas::exp(-1.0 * (this->M[i] + 0.0 * this->sum_selectivity[i])) * surviavability[i - 1] / (1.0 - mas::exp(-1.0 * this->M[i]));
-            unfished_spawing_biomass_per_recruit[i] = (this->weight_at_spawning[i]/1000.0) * this->maturity[index] * this->sex_fraction_value * surviavability[i];
+            unfished_spawing_biomass_per_recruit[i] = wgt[i] * this->maturity[index] * this->sex_fraction_value * surviavability[i];
             F_sbpr_unfished += unfished_spawing_biomass_per_recruit[i];
 
             //            std::cout << "F_sbpr_unfished = " << F_sbpr_unfished << "\n\n";
@@ -1785,7 +1790,7 @@ namespace mas {
                 size_t index_ = year * this->seasons * this->ages.size()
                         + (season) * this->ages.size() + 0;
                 spawners_per_recruit[0] = 1.0;
-                spawning_biomass_per_recruit[0] = spawners_per_recruit[0] * (this->weight_at_spawning[index]/1000.0) * this->maturity[0] * this->sex_fraction_value;
+                spawning_biomass_per_recruit[0] = spawners_per_recruit[0] * wgt[0] * this->maturity[0] * this->sex_fraction_value;
                 F_sbpr += spawning_biomass_per_recruit[0];
 
                 //                std::cout << std::fixed << spawning_biomass_per_recruit[0] << "\n";
@@ -1801,7 +1806,7 @@ namespace mas {
                     if (a != 0) {
 
                         spawners_per_recruit[a] = spawners_per_recruit[a - 1] * mas::exp(-1.0 * total_mortality[a - 1]);
-                        spawning_biomass_per_recruit[a] = spawners_per_recruit[a] * (this->weight_at_spawning[index]/1000.0) * this->maturity[a] * this->sex_fraction_value;
+                        spawning_biomass_per_recruit[a] = spawners_per_recruit[a] * wgt[a] * this->maturity[a] * this->sex_fraction_value;
                         F_sbpr += spawning_biomass_per_recruit[a];
                         //                        std::cout << spawning_biomass_per_recruit[a] << "\n";
                     }
@@ -1812,7 +1817,7 @@ namespace mas {
                 total_mortality[a] = this->M[a] + this->sum_selectivity[index] * F[i];
                 spawners_per_recruit[a] = spawners_per_recruit[a - 1] * mas::exp(-1.0 * total_mortality[a - 1]) / (1.0 - mas::exp(-1.0 * total_mortality[a]));
                 spr[i] += spawners_per_recruit[a];
-                spawning_biomass_per_recruit[a] = spawners_per_recruit[a] * (this->weight_at_spawning[index]/1000.0) * this->maturity[a] * this->sex_fraction_value;
+                spawning_biomass_per_recruit[a] = spawners_per_recruit[a] * wgt[a] * this->maturity[a] * this->sex_fraction_value;
                 F_sbpr += spawning_biomass_per_recruit[a];
                 spr[i] = F_sbpr;
                 spr_ratio[i] = spr[i] / F_sbpr;
@@ -1829,11 +1834,11 @@ namespace mas {
 
 
                     F_num_sum += equilibrium_numbers[a];
-                    F_sbpr_eq += equilibrium_numbers[a] * ((this->weight_at_spawning[index]/1000.0)* this->maturity[a] * this->sex_fraction_value);
-                    F_B_eq += equilibrium_numbers[a] * (this->weight_at_spawning[index]/1000.0);
+                    F_sbpr_eq += equilibrium_numbers[a] * (wgt[a]* this->maturity[a] * this->sex_fraction_value);
+                    F_B_eq += equilibrium_numbers[a] * wgt[a];
                     equilibrium_landing_numbers[a] = (F[i] * this->sum_selectivity[index]) * equilibrium_numbers[a]*(1.0 - mas::exp(-1.0 * total_mortality[a])) / total_mortality[a];
                     F_L_sum += equilibrium_landing_numbers[a];
-                    F_L_eq += equilibrium_landing_numbers[a] * this->weight_at_catch_time[index]/1000.0;
+                    F_L_eq += equilibrium_landing_numbers[a] * wgt[a];
                 }
 
                 S_eq[i] = F_sbpr_eq;
