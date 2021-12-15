@@ -366,13 +366,15 @@ namespace mas {
 //         }
 
         virtual const variable CalculateEquilibriumRecruitment(
-        const variable& spawning_biomass_per_recruit_unfished,
-                const variable& spawning_biomass_per_recruit_f) {
+        const variable spawning_biomass_per_recruit_unfished,
+                const variable spawning_biomass_per_recruit_f) {
 //=R0*((4*h*R52-(1-h)*$B$7)/((5*h-1)*R52))
-            return mas::exp(this->log_R0)*((4.0*this->h*
+//            std::cout<<spawning_biomass_per_recruit_unfished<<"\n"<<spawning_biomass_per_recruit_f<<"\n";
+            variable ret = mas::exp(this->log_R0)*((4.0*this->h*
                     spawning_biomass_per_recruit_f-(1.0-this->h)*
-                    spawning_biomass_per_recruit_unfished)/((5.0*this->h-1.0)
+                    spawning_biomass_per_recruit_unfished)/(((5.0*this->h)-1.0)
                     *spawning_biomass_per_recruit_f));
+            return ret;
         }
 
         virtual const std::string ToJSONString() {
