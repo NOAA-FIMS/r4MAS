@@ -1779,8 +1779,9 @@ namespace mas {
                 std::vector<variable_t> total_mortality(this->ages.size());
                 std::vector<variable_t> equilibrium_numbers(this->ages.size());
                 std::vector<variable_t> equilibrium_landing_numbers(this->ages.size());
-                variable_t F_sbpr;
 
+
+                variable_t F_sbpr = 0.0;
                 variable_t F_sbpr_eq = 0.0;
                 variable_t F_B_eq = 0.0;
                 variable_t F_L_eq = 0.0;
@@ -1984,7 +1985,7 @@ namespace mas {
             spr_msy_out = spr[max_index]*1000.0;
             index_m = max_index;
 
-            if (max < 0.0) {
+            if (S_eq[max_index] < 0.0) {
                 std::ofstream debug("msy_debug.txt");
                 for (int i = 0; i < S_eq.size(); i++) {
                     debug << S_eq[i] << "\n";
