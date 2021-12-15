@@ -1758,7 +1758,7 @@ namespace mas {
             std::vector<variable_t> E_eq(F.size()); //equilibrium exploitation rate at F (landings only)
             std::valarray<variable_t> L_eq_knum(F.size());
             std::valarray<variable_t> SSB_eq(F.size());
-            std::ofstream msy_debug("msy_debug.txt");
+//            std::ofstream msy_debug("msy_debug.txt");
 
 
             for (int i = 0; i < F.size(); i++) {
@@ -1846,17 +1846,17 @@ namespace mas {
                 L_eq[i] = F_L_eq;
                 E_eq[i] = F_L_sum / F_num_sum;
                 
-                if (L_eq[i] < 0.0) {
-
-                    for (int i = 0; i < F.size(); i++) {
-                        for (int a = 0; a < ages.size(); a++) {
-                            msy_debug <<"a = "<<a<<"\n";
-                            msy_debug<<"L_eq = "<<L_eq[i]<<"\n";
-                            msy_debug <<"F_sbpr_unfished = "<<F_sbpr_unfished<<" F_sbpr = "<< F_sbpr<<"\n";
-                            msy_debug << "f = " << F[i] << "  F_L_eq = "<<F_L_eq<<" R_eq = " << R_eq[i] << " spawners_per_recruit = " << spawners_per_recruit[a]<< " equilibrium_numbers = "<<equilibrium_numbers[a] << "\n";
-                        }
-                    }
-                }
+//                if (L_eq[i] < 0.0) {
+//
+//                    for (int i = 0; i < F.size(); i++) {
+//                        for (int a = 0; a < ages.size(); a++) {
+//                            msy_debug <<"a = "<<a<<"\n";
+//                            msy_debug<<"L_eq = "<<L_eq[i]<<"\n";
+//                            msy_debug <<"F_sbpr_unfished = "<<F_sbpr_unfished<<" F_sbpr = "<< F_sbpr<<"\n";
+//                            msy_debug << "f = " << F[i] << "  F_L_eq = "<<F_L_eq<<" R_eq = " << R_eq[i] << " spawners_per_recruit = " << spawners_per_recruit[a]<< " equilibrium_numbers = "<<equilibrium_numbers[a] << "\n";
+//                        }
+//                    }
+//                }
 
                 //                std::cout << "F_sbpr_eq = " << F_sbpr_eq << "\n";
 
