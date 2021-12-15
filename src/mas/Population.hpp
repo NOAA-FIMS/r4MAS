@@ -1974,9 +1974,9 @@ namespace mas {
             //            for (int i = 0; i < F.size(); i++) {
             //                if (L_eq[i] == msy_mt_out) {
 
-            SSB_msy_out = S_eq[max_index];
-            B_msy_out = B_eq[max_index] * this->sex_fraction_value;
-            R_msy_out = R_eq[max_index] * this->sex_fraction_value;
+            SSB_msy_out = 1000.0*S_eq[max_index];
+            B_msy_out = B_eq[max_index] * 1000.0 *this->sex_fraction_value;
+            R_msy_out = R_eq[max_index] * 1000.0*this->sex_fraction_value;
             msy_knum_out = L_eq_knum[max_index];
             F_msy_out = F[max_index];
             spr_msy_out = spr[max_index];
