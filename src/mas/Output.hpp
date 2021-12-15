@@ -617,6 +617,7 @@ namespace mas {
                     popobject.AddMember("note",
                             "these values represent the sum across all subpopulations for this population",
                             this->document.GetAllocator());
+                    
                     popobject.AddMember("msy", popinfo.msy.msy,
                             this->document.GetAllocator());
                     popobject.AddMember("spr_F0", popinfo.msy.spr_F0,

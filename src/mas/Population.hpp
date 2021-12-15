@@ -1840,21 +1840,21 @@ namespace mas {
             }
 
 
-
-            variable_t spr_F0 = 0.0;
-
-            std::vector<variable_t> N0(this->ages.size(), 1.0);
-            for (int iage = 1; iage < nages; iage++) {
-                N0[iage] = N0[iage - 1] * mas::exp(-1.0 * M[iage - 1]);
-            }
-            N0[nages - 1] = N0[nages - 2] * mas::exp(-1.0 * M[nages - 2])
-                    / (1.0 - mas::exp(-1.0 * M[nages - 1]));
-
-            std::valarray<variable_t> reprod(nages);
-            std::valarray<variable_t> selL(nages);
-            std::valarray<variable_t> selZ(nages);
-            std::valarray<variable_t> M_age(nages);
-            std::valarray<variable_t> wgt(nages);
+//
+//            variable_t spr_F0 = 0.0;
+//
+//            std::vector<variable_t> N0(this->ages.size(), 1.0);
+//            for (int iage = 1; iage < nages; iage++) {
+//                N0[iage] = N0[iage - 1] * mas::exp(-1.0 * M[iage - 1]);
+//            }
+//            N0[nages - 1] = N0[nages - 2] * mas::exp(-1.0 * M[nages - 2])
+//                    / (1.0 - mas::exp(-1.0 * M[nages - 1]));
+//
+//            std::valarray<variable_t> reprod(nages);
+//            std::valarray<variable_t> selL(nages);
+//            std::valarray<variable_t> selZ(nages);
+//            std::valarray<variable_t> M_age(nages);
+//            std::valarray<variable_t> wgt(nages);
 
             //            for (int a = 0; a < ages.size(); a++) {
             //                //dimension folded index
@@ -1961,6 +1961,15 @@ namespace mas {
             //                }
             //            }
             this->msy.Reset();
+            
+            if(SSB_msy_out < 0.0){
+                std::ofstream msy_debug("msy_debug.txt");
+                for(int i =0; i < F.size(); i++){
+                    msy_debug<<L_eq[i].GetValue()<<"\n";
+                }
+            }
+            
+            
             this->area->nsubpopulations++;
             this->msy.msy = msy_mt_out * this->sex_fraction_value;
             //             std::cout << "\n\nthis->msy.msy = " << this->msy.msy << "\n";

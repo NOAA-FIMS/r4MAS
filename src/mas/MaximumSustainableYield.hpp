@@ -130,7 +130,7 @@ std::ostream& operator<<(std::ostream& out, mas::MaximumSustainableYield<T>& msy
     out << "SSB_MSY = " << msy.SSB_msy << "\n";
     out << "R_MSY = " << msy.R_msy << "\n";
     out << "spr_F = " << msy.spr_F0 << "\n";
-    out << "spr_MSY = " << msy.spr_msy << "\n";
+//    out << "spr_MSY = " << msy.spr_msy << "\n";
     out << "E_MSY = " << msy.E_msy << "\n";
     out << "L_MSY = " << msy.L_msy << "\n";
 
