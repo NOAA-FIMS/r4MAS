@@ -1750,7 +1750,7 @@ namespace mas {
             std::vector<variable_t> E_eq(F.size()); //equilibrium exploitation rate at F (landings only)
             std::valarray<variable_t> L_eq_knum(F.size());
             std::valarray<variable_t> SSB_eq(F.size());
-
+            std::ofstream msy_debug("msy_debug.txt");
 
 
             for (int i = 0; i < F.size(); i++) {
@@ -1822,6 +1822,13 @@ namespace mas {
                             + (season) * this->ages.size() + a;
 
                     equilibrium_numbers[a] = R_eq[i] * spawners_per_recruit[a];
+                    if (equilibrium_numbers[a] < 0.0) {
+
+                        for (int i = 0; i < F.size(); i++) {
+                            msy_debug << "f = " << F[i] << "  " << R_eq[i] << " " << spawners_per_recruit[a] << "\n";
+                        }
+                    }
+
                     F_num_sum += equilibrium_numbers[a];
                     F_sbpr_eq += equilibrium_numbers[a] * (this->weight_at_spawning[index] * this->maturity[a] * this->sex_fraction_value);
                     F_B_eq += equilibrium_numbers[a] * this->weight_at_spawning[index];
@@ -1840,21 +1847,21 @@ namespace mas {
             }
 
 
-//
-//            variable_t spr_F0 = 0.0;
-//
-//            std::vector<variable_t> N0(this->ages.size(), 1.0);
-//            for (int iage = 1; iage < nages; iage++) {
-//                N0[iage] = N0[iage - 1] * mas::exp(-1.0 * M[iage - 1]);
-//            }
-//            N0[nages - 1] = N0[nages - 2] * mas::exp(-1.0 * M[nages - 2])
-//                    / (1.0 - mas::exp(-1.0 * M[nages - 1]));
-//
-//            std::valarray<variable_t> reprod(nages);
-//            std::valarray<variable_t> selL(nages);
-//            std::valarray<variable_t> selZ(nages);
-//            std::valarray<variable_t> M_age(nages);
-//            std::valarray<variable_t> wgt(nages);
+            //
+            //            variable_t spr_F0 = 0.0;
+            //
+            //            std::vector<variable_t> N0(this->ages.size(), 1.0);
+            //            for (int iage = 1; iage < nages; iage++) {
+            //                N0[iage] = N0[iage - 1] * mas::exp(-1.0 * M[iage - 1]);
+            //            }
+            //            N0[nages - 1] = N0[nages - 2] * mas::exp(-1.0 * M[nages - 2])
+            //                    / (1.0 - mas::exp(-1.0 * M[nages - 1]));
+            //
+            //            std::valarray<variable_t> reprod(nages);
+            //            std::valarray<variable_t> selL(nages);
+            //            std::valarray<variable_t> selZ(nages);
+            //            std::valarray<variable_t> M_age(nages);
+            //            std::valarray<variable_t> wgt(nages);
 
             //            for (int a = 0; a < ages.size(); a++) {
             //                //dimension folded index
@@ -1938,7 +1945,7 @@ namespace mas {
                     F40_out = i;
                 }
             }
-            
+
             variable_t msy_mt_out = max; //msy in whole weight
             variable_t SSB_msy_out = 0.0;
             variable_t B_msy_out = 0.0;
@@ -1961,15 +1968,10 @@ namespace mas {
             //                }
             //            }
             this->msy.Reset();
-            
-            if(SSB_msy_out < 0.0){
-                std::ofstream msy_debug("msy_debug.txt");
-                for(int i =0; i < F.size(); i++){
-                    msy_debug<<L_eq[i].GetValue()<<"\n";
-                }
-            }
-            
-            
+
+
+
+
             this->area->nsubpopulations++;
             this->msy.msy = msy_mt_out * this->sex_fraction_value;
             //             std::cout << "\n\nthis->msy.msy = " << this->msy.msy << "\n";
@@ -4219,15 +4221,15 @@ namespace mas {
         void ComputeBiologicalReferencePoints() {
             std::cout << std::fixed;
             std::vector<double> fs;
-//            for (double f = 0.01; f < 3.0; f += 0.01) {
-//                fs.push_back(f);
-//            }
-//            //            variable::tape.recording = false;
-//            REAL_T msy;
-//            REAL_T f_msy;
-//            REAL_T s_msy;
-//            REAL_T fmax;
-            
+            //            for (double f = 0.01; f < 3.0; f += 0.01) {
+            //                fs.push_back(f);
+            //            }
+            //            //            variable::tape.recording = false;
+            //            REAL_T msy;
+            //            REAL_T f_msy;
+            //            REAL_T s_msy;
+            //            REAL_T fmax;
+
             this->msy.Reset();
 
             for (int a = 0; a < areas_list.size(); a++) {
