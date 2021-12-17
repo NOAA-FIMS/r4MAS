@@ -1677,7 +1677,7 @@ namespace mas {
             /**
              * This code was ported from BAM. Original Author: Kyle Shertzer
              */
-            bool recording = mas::VariableTrait<REAL_T>::IsRecording();
+//            bool recording = mas::VariableTrait<REAL_T>::IsRecording();
 
             //            mas::VariableTrait<REAL_T>::SetRecording(false);
             typedef typename mas::VariableTrait<REAL_T>::variable variable_t;
@@ -1738,7 +1738,7 @@ namespace mas {
                     + (season) * this->ages.size() + i;
 
             surviavability[i] = mas::exp(-1.0 * (this->M[i] + 0.0 * this->sum_selectivity[i])) * surviavability[i - 1] / (1.0 - mas::exp(-1.0 * this->M[i]));
-            unfished_spawing_biomass_per_recruit[i] = wgt[i] * this->maturity[index] * this->sex_fraction_value * surviavability[i];
+            unfished_spawing_biomass_per_recruit[i] = wgt[i] * this->maturity[i] * this->sex_fraction_value * surviavability[i];
             F_sbpr_unfished += unfished_spawing_biomass_per_recruit[i];
 
             //            std::cout << "F_sbpr_unfished = " << F_sbpr_unfished << "\n\n";
@@ -1979,7 +1979,7 @@ namespace mas {
 
             SSB_msy_out = 1000.0 * S_eq[max_index];
             B_msy_out = B_eq[max_index] * 1000.0 * this->sex_fraction_value;
-            R_msy_out = R_eq[max_index] * this->sex_fraction_value;
+            R_msy_out = R_eq[max_index] * 1000*this->sex_fraction_value;
             msy_knum_out = L_eq_knum[max_index];
             F_msy_out = F[max_index];
             spr_msy_out = spr[max_index]*1000.0;
@@ -1999,6 +1999,7 @@ namespace mas {
 
 
             this->area->nsubpopulations++;
+            
             this->msy.msy = msy_mt_out * 1000 * this->sex_fraction_value;
             //             std::cout << "\n\nthis->msy.msy = " << this->msy.msy << "\n";
             this->msy.spr_F0 = spr_msy_out;

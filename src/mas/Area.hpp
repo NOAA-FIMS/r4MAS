@@ -163,7 +163,7 @@ namespace mas {
         variable survey_age_comp_component;
         variable recruitment_deviations_component;
         
-        REAL_T nsubpopulations = 0.0;
+        variable nsubpopulations = 0.0;
         MaximumSustainableYield<REAL_T> msy;
         
 

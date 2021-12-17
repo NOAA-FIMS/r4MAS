@@ -5292,7 +5292,7 @@
           <incDir>
             <pElem>third_party/ATL/lib/third_party/EASTL/include</pElem>
           </incDir>
-          <commandLine>-DEIGEN_DONT_VECTORIZE -DEIGEN_DISABLE_UNALIGNED_ARRAY_ASSERT</commandLine>
+          <commandLine>-DEIGEN_DONT_VECTORIZE -Wall -DEIGEN_DISABLE_UNALIGNED_ARRAY_ASSERT</commandLine>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
