@@ -4746,6 +4746,7 @@ public:
                     this->recruitment[i].first;
         }
 
+        std::cout<<"growth model for this population is "<<this->growth<<"\n";
         /*
          * Growth
          */
