@@ -15,13 +15,13 @@ CND_PACKAGE_DIR_Debug=dist/Debug/GNU-MacOSX/package
 CND_PACKAGE_NAME_Debug=mas.tar
 CND_PACKAGE_PATH_Debug=dist/Debug/GNU-MacOSX/package/mas.tar
 # Release configuration
-CND_PLATFORM_Release=GNU-Linux
-CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
+CND_PLATFORM_Release=GNU-MacOSX
+CND_ARTIFACT_DIR_Release=dist/Release/GNU-MacOSX
 CND_ARTIFACT_NAME_Release=mas
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/mas
-CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-MacOSX/mas
+CND_PACKAGE_DIR_Release=dist/Release/GNU-MacOSX/package
 CND_PACKAGE_NAME_Release=mas.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/mas.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-MacOSX/package/mas.tar
 #
 # include compiler specific variables
 #

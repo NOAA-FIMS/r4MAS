@@ -6,7 +6,6 @@
 /*
  * File:   Population.hpp
  * Author: matthewsupernaw
- *
  * Created on September 14, 2016, 1:44 PM
  */
 #ifndef POPULATION_HPP

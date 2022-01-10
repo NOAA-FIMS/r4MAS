@@ -148,6 +148,7 @@ namespace mas {
          * @return 
          */
         virtual const variable Evaluate(const variable& a) {
+           
             return (static_cast<REAL_T> (1.0) /
                     (static_cast<REAL_T> (1.0) +
                     mas::mfexp(-beta_asc * (a - alpha_asc)))) *
