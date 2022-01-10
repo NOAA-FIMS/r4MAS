@@ -1383,9 +1383,9 @@ namespace mas {
                             * seasons + (season - 1)]);
 
                 } else {
-
-                    std::cout << "recruitment model not found!!!\n";
-                    exit(0);
+//
+//                    std::cout << "recruitment model not found!!!\n";
+//                    exit(0);
                 }
 
                 this->numbers_at_age[year * this->seasons * this->ages.size()

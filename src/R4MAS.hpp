@@ -2667,6 +2667,7 @@ public:
                     g->alpha_m, g->beta_f, g->beta_f);
             g->weight_functor = weight_functor;
         }
+       
         info.growth_models[this->id] = vb;
     }
 
