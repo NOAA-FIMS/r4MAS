@@ -1382,7 +1382,7 @@ namespace mas {
                             this->recruitment_model->bias_correction
                             + //either 0.0 or -0.5*sigma_r^2
                             this->recruitment_model->recruitment_deviations[year
-                            * seasons + (season - 1)]);
+                            /* seasons + (season - 1)*/]);
 
                 } else {
 //
