@@ -1370,11 +1370,11 @@ namespace mas {
             } else {
                 
                 if (season == this->spawning_season) {
-                    std::cout<<"spawning season...\n";
+                    std::cout<<"spawning season..."<<this->recruitment.size()<<" --- "<<(season*year)<<"\n";
                     //previous year spawning biomass
                     variable sb = this->spawning_stock_biomass[(year - 1) * seasons
                             + (season - 1)];
-
+                    
                     this->recruitment[year * seasons + (season - 1)] =
                             static_cast<REAL_T> (this->sex_fraction_value)
                             * this->recruitment_model->Evaluate(this->id,
