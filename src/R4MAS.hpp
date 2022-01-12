@@ -1333,8 +1333,8 @@ public:
             r->Register(r->beta, this->beta.phase);
         }
 
-        r->recruitment_deviations.resize(info.nyears);
-        for (int i = 0; i < info.nyears; i++) {
+        r->recruitment_deviations.resize(this->deviations.size());
+        for (int i = 0; i < this->deviations.size(); i++) {
             r->recruitment_deviations[i] = variable(this->deviations[i]);
         }
         r->recruitment_deviations_constrained = this->constrained_deviations;
@@ -1692,8 +1692,8 @@ public:
             r->Register(r->sigma_r, this->sigma_r.phase);
         }
 
-        r->recruitment_deviations.resize(info.nyears*info.nseasons);
-        for (int i = 0; i < info.nyears; i++) {
+        r->recruitment_deviations.resize(this->deviations.size());
+        for (int i = 0; i < this->deviations.size(); i++) {
             r->recruitment_deviations[i] = variable(this->deviations[i]);
         }
         r->recruitment_deviations_constrained = this->constrained_deviations;
@@ -2018,8 +2018,8 @@ public:
             r->Register(r->sigma_r, this->sigma_r.phase);
         }
 
-        r->recruitment_deviations.resize(info.nyears);
-        for (int i = 0; i < info.nyears; i++) {
+        r->recruitment_deviations.resize(this->deviations.size());
+        for (int i = 0; i < this->deviations.size(); i++) {
             r->recruitment_deviations[i] = variable(this->deviations[i]);
         }
         r->recruitment_deviations_constrained = this->constrained_deviations;
@@ -2667,7 +2667,7 @@ public:
                     g->alpha_m, g->beta_f, g->beta_f);
             g->weight_functor = weight_functor;
         }
-       
+
         info.growth_models[this->id] = vb;
     }
 
@@ -4747,7 +4747,7 @@ public:
                     this->recruitment[i].first;
         }
 
-        std::cout<<"growth model for this population is "<<this->growth<<"\n";
+        std::cout << "growth model for this population is " << this->growth << "\n";
         /*
          * Growth
          */
