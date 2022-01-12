@@ -1692,7 +1692,7 @@ public:
             r->Register(r->sigma_r, this->sigma_r.phase);
         }
 
-        r->recruitment_deviations.resize(info.nyears);
+        r->recruitment_deviations.resize(info.nyears*info.nseasons);
         for (int i = 0; i < info.nyears; i++) {
             r->recruitment_deviations[i] = variable(this->deviations[i]);
         }
