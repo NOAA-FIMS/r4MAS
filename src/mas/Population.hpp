@@ -1361,12 +1361,14 @@ namespace mas {
          * @param season
          */
         inline void CalculateRecruitment(int year, int season) {
+            std::cout<<year<<" "<<season<<"\n";
             //#warning add compiler hintS here
             if (year == 0 && season == 1) {
                 this->recruitment[year * seasons + (season - 1)] =
-                        this->initial_numbers[0]
-                        + ((this->recruitment_model->recruitment_deviations[0]));
+                        this->initial_numbers[0];
+                        //+ ((this->recruitment_model->recruitment_deviations[0]));
             } else {
+                std::cout<<"spawning season...\n";
                 if (season == this->spawning_season) {
                     //previous year spawning biomass
                     variable sb = this->spawning_stock_biomass[(year - 1) * seasons
