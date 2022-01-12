@@ -1545,6 +1545,7 @@ namespace mas {
         }
 
         void CalculateMSY__(REAL_T maxF = 1.0, REAL_T step = 0.001) {
+            std::cout<<"Calculating MSY...\n";
             typedef typename mas::VariableTrait<REAL_T>::variable variable_t;
 
             std::vector<variable_t> F_msy;
