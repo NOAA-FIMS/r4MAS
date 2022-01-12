@@ -1368,8 +1368,9 @@ namespace mas {
                         this->initial_numbers[0];
                         //+ ((this->recruitment_model->recruitment_deviations[0]));
             } else {
-                std::cout<<"spawning season...\n";
+                
                 if (season == this->spawning_season) {
+                    std::cout<<"spawning season...\n";
                     //previous year spawning biomass
                     variable sb = this->spawning_stock_biomass[(year - 1) * seasons
                             + (season - 1)];
