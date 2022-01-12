@@ -1361,19 +1361,19 @@ namespace mas {
          * @param season
          */
         inline void CalculateRecruitment(int year, int season) {
-//            std::cout<<year<<" "<<season<<"\n";
+            //            std::cout<<year<<" "<<season<<"\n";
             //#warning add compiler hintS here
             if (year == 0 && season == 1) {
                 this->recruitment[year * seasons + (season - 1)] =
                         this->initial_numbers[0];
-                        //+ ((this->recruitment_model->recruitment_deviations[0]));
+                //+ ((this->recruitment_model->recruitment_deviations[0]));
             } else {
-                
+
                 if (season == this->spawning_season) {
                     //previous year spawning biomass
                     variable sb = this->spawning_stock_biomass[(year - 1) * seasons
                             + (season - 1)];
-                    
+
                     this->recruitment[year * seasons + (season - 1)] =
                             static_cast<REAL_T> (this->sex_fraction_value)
                             * this->recruitment_model->Evaluate(this->id,
@@ -1385,9 +1385,9 @@ namespace mas {
                             /* seasons + (season - 1)*/]);
 
                 } else {
-//
-//                    std::cout << "recruitment model not found!!!\n";
-//                    exit(0);
+                    //
+                    //                    std::cout << "recruitment model not found!!!\n";
+                    //                    exit(0);
                 }
 
                 this->numbers_at_age[year * this->seasons * this->ages.size()
@@ -1545,7 +1545,7 @@ namespace mas {
         }
 
         void CalculateMSY__(REAL_T maxF = 1.0, REAL_T step = 0.001) {
-            std::cout<<"Calculating MSY...\n";
+            std::cout << "Calculating MSY...\n";
             typedef typename mas::VariableTrait<REAL_T>::variable variable_t;
 
             std::vector<variable_t> F_msy;
@@ -1679,7 +1679,7 @@ namespace mas {
             /**
              * This code was ported from BAM. Original Author: Kyle Shertzer
              */
-//            bool recording = mas::VariableTrait<REAL_T>::IsRecording();
+            //            bool recording = mas::VariableTrait<REAL_T>::IsRecording();
 
             //            mas::VariableTrait<REAL_T>::SetRecording(false);
             typedef typename mas::VariableTrait<REAL_T>::variable variable_t;
@@ -1981,7 +1981,7 @@ namespace mas {
 
             SSB_msy_out = 1000.0 * S_eq[max_index];
             B_msy_out = B_eq[max_index] * 1000.0 * this->sex_fraction_value;
-            R_msy_out = R_eq[max_index] * 1000*this->sex_fraction_value;
+            R_msy_out = R_eq[max_index] * 1000 * this->sex_fraction_value;
             msy_knum_out = L_eq_knum[max_index];
             F_msy_out = F[max_index];
             spr_msy_out = spr[max_index]*1000.0;
@@ -2001,7 +2001,7 @@ namespace mas {
 
 
             this->area->nsubpopulations++;
-            
+
             this->msy.msy = msy_mt_out * 1000 * this->sex_fraction_value;
             //             std::cout << "\n\nthis->msy.msy = " << this->msy.msy << "\n";
             this->msy.spr_F0 = spr_msy_out;
@@ -2696,7 +2696,7 @@ namespace mas {
         }
 
         inline void PushToArea() {
-
+            std::cout << "pushing to area\n";
             this->area->PushNumbersAndBiomass(this->survey_numbers_at_age,
                     this->survey_index_at_age, this->numbers_at_age,
                     this->catch_at_age, this->catch_biomass_at_age,
@@ -4490,6 +4490,7 @@ namespace mas {
         }
 
         void PushToAreasAndFleets() {
+            mas::VariableTrait<REAL_T>::SetRecording(false);
             for (int a = 0; a < areas_list.size(); a++) {
 
                 /******************************************
@@ -4503,10 +4504,11 @@ namespace mas {
         }
 
         void PushToFleets() {
+
             for (int a = 0; a < areas_list.size(); a++) {
 
                 /******************************************
-                 * Push info to areas
+                 * Push info to fleets
                  *****************************************/
                 males[areas_list[a]->id].PushNumbersToFleet();
                 females[areas_list[a]->id].PushNumbersToFleet();
