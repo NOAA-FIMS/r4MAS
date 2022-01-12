@@ -1361,7 +1361,7 @@ namespace mas {
          * @param season
          */
         inline void CalculateRecruitment(int year, int season) {
-            std::cout<<year<<" "<<season<<"\n";
+//            std::cout<<year<<" "<<season<<"\n";
             //#warning add compiler hintS here
             if (year == 0 && season == 1) {
                 this->recruitment[year * seasons + (season - 1)] =
@@ -1370,7 +1370,7 @@ namespace mas {
             } else {
                 
                 if (season == this->spawning_season) {
-                    std::cout<<"spawning season..."<<this->recruitment.size()<<" --- "<<(season*year)<<"\n";
+//                    std::cout<<"spawning season..."<<this->recruitment.size()<<" --- "<<(season*year)<<"\n";
                     //previous year spawning biomass
                     variable sb = this->spawning_stock_biomass[(year - 1) * seasons
                             + (season - 1)];
