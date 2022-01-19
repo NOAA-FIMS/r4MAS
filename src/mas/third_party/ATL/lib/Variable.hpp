@@ -761,6 +761,7 @@ namespace atl {
             this->info->value = exp.GetValue();
 
             if (this->info->value != this->info->value) {
+                std::cout<<exp.ToExpressionTemplateString()<<"\n";
                 raise(SIGSEGV);
             }
 
