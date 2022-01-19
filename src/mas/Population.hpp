@@ -3994,6 +3994,7 @@ namespace mas {
             for (y = 0; y < this->years; y++) {
                 std::cout<<"\nyear = "<<y<<"\n";
                 for (int s = 1; s <= this->seasons; s++) {
+                    std::cout<<"season = "s<<"\n";
                     for (int a = 0; a < this->ages; a++) {
                         for (int area = 0; area < areas_list.size(); area++) {
 
