@@ -2603,6 +2603,7 @@ namespace mas {
                             * Z[index])));
                 }
 
+                std::cout<<numbers_at_age[index]<<"\n";
                 //add  to the fleet[i]'s total catch numbers at age
                 fleets[f]->catch_at_age[index] += fca;
                 fleets[f]->catch_length_at_age[index] +=
