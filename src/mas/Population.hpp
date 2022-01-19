@@ -3992,7 +3992,7 @@ namespace mas {
             InitializePopulationinAreas();
             int y;
             for (y = 0; y < this->years; y++) {
-                std::cout<<"\n";
+                std::cout<<"year = "<<y<<"\n";
                 for (int s = 1; s <= this->seasons; s++) {
                     for (int a = 0; a < this->ages; a++) {
                         for (int area = 0; area < areas_list.size(); area++) {
