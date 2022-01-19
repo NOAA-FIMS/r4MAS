@@ -1438,6 +1438,8 @@ namespace mas {
                     this->biomass_at_age[index1] = this->numbers_at_age[index1]
                             * this->weight_at_season_start[index1];
                     this->biomass_total[index] += this->biomass_at_age[index1];
+                    
+                    std::cout<<this->numbers_at_age[index1]<<"  ";
                 }
 
                 if (age == this->ages.size() - 1) {
@@ -2603,7 +2605,7 @@ namespace mas {
                             * Z[index])));
                 }
 
-                std::cout<<numbers_at_age[index]<<"\n";
+
                 //add  to the fleet[i]'s total catch numbers at age
                 fleets[f]->catch_at_age[index] += fca;
                 fleets[f]->catch_length_at_age[index] +=
@@ -3990,6 +3992,7 @@ namespace mas {
             InitializePopulationinAreas();
             int y;
             for (y = 0; y < this->years; y++) {
+                std::cout<<"\n";
                 for (int s = 1; s <= this->seasons; s++) {
                     for (int a = 0; a < this->ages; a++) {
                         for (int area = 0; area < areas_list.size(); area++) {
