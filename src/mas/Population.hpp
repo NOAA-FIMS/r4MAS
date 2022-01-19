@@ -1439,7 +1439,7 @@ namespace mas {
                             * this->weight_at_season_start[index1];
                     this->biomass_total[index] += this->biomass_at_age[index1];
                     
-                    std::cout<<this->numbers_at_age[index1]<<"  ";
+//                    std::cout<<this->numbers_at_age[index1]<<"  ";
                 }
 
                 if (age == this->ages.size() - 1) {
@@ -3992,9 +3992,9 @@ namespace mas {
             InitializePopulationinAreas();
             int y;
             for (y = 0; y < this->years; y++) {
-                std::cout<<"\nyear = "<<y<<"\n";
+//                std::cout<<"\nyear = "<<y<<"\n";
                 for (int s = 1; s <= this->seasons; s++) {
-                    std::cout<<"season = "<<s<<"\n";
+//                    std::cout<<"\nseason = "<<s<<"\n";
                     for (int a = 0; a < this->ages; a++) {
                         for (int area = 0; area < areas_list.size(); area++) {
 
