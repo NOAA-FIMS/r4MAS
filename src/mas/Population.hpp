@@ -1348,8 +1348,10 @@ namespace mas {
                     this->fishing_mortality_total[year * this->seasons
                             + (season - 1)] += ff;
                 }
-                this->fishing_mortality_total[year * this->seasons + (season - 1)] /=
-                        static_cast<REAL_T> (fleets.size());
+                if (fleets.size() > 0) {
+                    this->fishing_mortality_total[year * this->seasons + (season - 1)] /=
+                            static_cast<REAL_T> (fleets.size());
+                }
             }
 
         }
