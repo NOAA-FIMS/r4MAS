@@ -761,7 +761,7 @@ namespace atl {
             this->info->value = exp.GetValue();
 
             if (std::isnan(this->info->value)) {
-                std::cout<<exp.ToExpressionTemplateString()<<"\n";
+                std::cout << exp.ToExpressionTemplateString() << "\n";
                 raise(SIGSEGV);
             }
 
@@ -929,6 +929,10 @@ namespace atl {
 
         inline void SetValue(const REAL_T& val) {
             this->info->value = val;
+            if (std::isnan(this->info->value)) {
+                std::cout << exp.ToExpressionTemplateString() << "\n";
+                raise(SIGSEGV);
+            }
         }
 
         inline const REAL_T GetValue() const {
@@ -977,6 +981,11 @@ namespace atl {
 
             } else {
                 this->SetValue(v);
+            }
+
+            if (std::isnan(this->info->value)) {
+                std::cout << exp.ToExpressionTemplateString() << "\n";
+                raise(SIGSEGV);
             }
         }
 
