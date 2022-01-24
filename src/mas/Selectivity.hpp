@@ -71,16 +71,16 @@ namespace mas {
         }
 
         virtual variable LikelihoodComponent(int phase) {
-        
+
             assert(this->initial_parameter_values.size() == this->estimated_parameters.size());
             variable ret;
             for (int i = 0; i < this->estimated_parameters.size(); i++) {
                 if (this->estimated_phase[i] <= phase) {
                     variable p = *this->estimated_parameters[i];
                     if (p > 0.0) {
-                        ret +=  (mas::log(sigma) + 0.5 * SELX_SQUARE(std::log(this->initial_parameter_values[i]) - mas::log(p)) / sigma2);
+                        ret += (mas::log(sigma) + 0.5 * SELX_SQUARE(std::log(this->initial_parameter_values[i]) - mas::log(p)) / sigma2);
                     } else {
-//                        std::cout << "Warning:  cannot do prior in log space for parm with min <= 0.0\n";
+                        //                        std::cout << "Warning:  cannot do prior in log space for parm with min <= 0.0\n";
                     }
                 }
             }
@@ -148,22 +148,30 @@ namespace mas {
          * @return 
          */
         virtual const variable Evaluate(const variable& a) {
-           
-            return (static_cast<REAL_T> (1.0) /
-                    (static_cast<REAL_T> (1.0) +
-                    mas::mfexp(-beta_asc * (a - alpha_asc)))) *
-                    (static_cast<REAL_T> (1.0) - (static_cast<REAL_T> (1.0) /
-                    (static_cast<REAL_T> (1.0) +
-                    mas::mfexp(-beta_desc * (a - alpha_desc)))));
+
+            variable a = 1.0 / (1.0 + mas::mfexp(-1.0 * (a - this->alpha_asc) / this->beta_asc));
+            variable b = 1.0 - (1.0 / (1.0 + mas::mfexp(-1.0 * (a - this->alpha_desc) / this->beta_desc)));
+
+            return a*b;
+            //            return (static_cast<REAL_T> (1.0) /
+            //                    (static_cast<REAL_T> (1.0) +
+            //                    mas::mfexp(-beta_asc * (a - alpha_asc)))) *
+            //                    (static_cast<REAL_T> (1.0) - (static_cast<REAL_T> (1.0) /
+            //                    (static_cast<REAL_T> (1.0) +
+            //                    mas::mfexp(-beta_desc * (a - alpha_desc)))));
         }
 
         virtual const variable Evaluate(const std::vector<variable>& ages, size_t index) {
-            return (static_cast<REAL_T> (1.0) /
-                    (static_cast<REAL_T> (1.0) +
-                    mas::mfexp(-beta_asc * (ages[index] - alpha_asc)))) *
-                    (static_cast<REAL_T> (1.0) - (static_cast<REAL_T> (1.0) /
-                    (static_cast<REAL_T> (1.0) +
-                    mas::mfexp(-beta_desc * (ages[index] - alpha_desc)))));
+            variable a = 1.0 / (1.0 + mas::mfexp(-1.0 * (ages[index] - this->alpha_asc) / this->beta_asc));
+            variable b = 1.0 - (1.0 / (1.0 + mas::mfexp(-1.0 * (ages[index] - this->alpha_desc) / this->beta_desc)));
+
+            return a*b;
+//            return (static_cast<REAL_T> (1.0) /
+//                    (static_cast<REAL_T> (1.0) +
+//                    mas::mfexp(-beta_asc * (ages[index] - alpha_asc)))) *
+//                    (static_cast<REAL_T> (1.0) - (static_cast<REAL_T> (1.0) /
+//                    (static_cast<REAL_T> (1.0) +
+//                    mas::mfexp(-beta_desc * (ages[index] - alpha_desc)))));
         }
 
         virtual const std::string ToJSONString() {
