@@ -983,10 +983,10 @@ namespace atl {
                 this->SetValue(v);
             }
 
-            if (std::isnan(this->info->value)) {
-                std::cout << v << "\n";
-                raise(SIGSEGV);
-            }
+//            if (std::isnan(this->info->value)) {
+//                std::cout << v << "\n";
+//                raise(SIGSEGV);
+//            }
         }
 
         /**
