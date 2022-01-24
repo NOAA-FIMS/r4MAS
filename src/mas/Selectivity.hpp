@@ -149,10 +149,10 @@ namespace mas {
          */
         virtual const variable Evaluate(const variable& a) {
 
-            variable a = 1.0 / (1.0 + mas::mfexp(-1.0 * (a - this->alpha_asc) / this->beta_asc));
-            variable b = 1.0 - (1.0 / (1.0 + mas::mfexp(-1.0 * (a - this->alpha_desc) / this->beta_desc)));
+            variable a_ = 1.0 / (1.0 + mas::mfexp(-1.0 * (a - this->alpha_asc) / this->beta_asc));
+            variable b_ = 1.0 - (1.0 / (1.0 + mas::mfexp(-1.0 * (a - this->alpha_desc) / this->beta_desc)));
 
-            return a*b;
+            return a_*b_;
             //            return (static_cast<REAL_T> (1.0) /
             //                    (static_cast<REAL_T> (1.0) +
             //                    mas::mfexp(-beta_asc * (a - alpha_asc)))) *
@@ -162,10 +162,10 @@ namespace mas {
         }
 
         virtual const variable Evaluate(const std::vector<variable>& ages, size_t index) {
-            variable a = 1.0 / (1.0 + mas::mfexp(-1.0 * (ages[index] - this->alpha_asc) / this->beta_asc));
-            variable b = 1.0 - (1.0 / (1.0 + mas::mfexp(-1.0 * (ages[index] - this->alpha_desc) / this->beta_desc)));
+            variable a_ = 1.0 / (1.0 + mas::mfexp(-1.0 * (ages[index] - this->alpha_asc) / this->beta_asc));
+            variable b_ = 1.0 - (1.0 / (1.0 + mas::mfexp(-1.0 * (ages[index] - this->alpha_desc) / this->beta_desc)));
 
-            return a*b;
+            return a_*b_;
 //            return (static_cast<REAL_T> (1.0) /
 //                    (static_cast<REAL_T> (1.0) +
 //                    mas::mfexp(-beta_asc * (ages[index] - alpha_asc)))) *
