@@ -929,10 +929,10 @@ namespace atl {
 
         inline void SetValue(const REAL_T& val) {
             this->info->value = val;
-            if (std::isnan(this->info->value)) {
-                std::cout << val << "\n";
-                raise(SIGSEGV);
-            }
+//            if (std::isnan(this->info->value)) {
+//                std::cout << val << "\n";
+//                raise(SIGSEGV);
+//            }
         }
 
         inline const REAL_T GetValue() const {
@@ -983,10 +983,10 @@ namespace atl {
                 this->SetValue(v);
             }
 
-            if (std::isnan(this->info->value)) {
-                std::cout << v << "\n";
-                raise(SIGSEGV);
-            }
+//            if (std::isnan(this->info->value)) {
+//                std::cout << v << "\n";
+//                raise(SIGSEGV);
+//            }
         }
 
         /**
