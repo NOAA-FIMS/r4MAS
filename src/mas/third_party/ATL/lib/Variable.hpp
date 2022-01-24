@@ -760,10 +760,10 @@ namespace atl {
 
             this->info->value = exp.GetValue();
 
-            if (std::isnan(this->info->value)) {
-                std::cout << exp.ToExpressionTemplateString() << "\n";
-                raise(SIGSEGV);
-            }
+//            if (std::isnan(this->info->value)) {
+//                std::cout << exp.ToExpressionTemplateString() << "\n";
+//                raise(SIGSEGV);
+//            }
 
             return *this;
         }
