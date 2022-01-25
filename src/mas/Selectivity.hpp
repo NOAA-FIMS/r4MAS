@@ -73,17 +73,17 @@ namespace mas {
         virtual variable LikelihoodComponent(int phase) {
 
             assert(this->initial_parameter_values.size() == this->estimated_parameters.size());
-            variable ret = 1.0;
-//            for (int i = 0; i < this->estimated_parameters.size(); i++) {
-//                if (this->estimated_phase[i] <= phase) {
-//                    variable p = *this->estimated_parameters[i];
-//                    if (p > 0.0) {
-//                        ret += (mas::log(sigma) + 0.5 * SELX_SQUARE(std::log(this->initial_parameter_values[i]) - mas::log(p)) / sigma2);
-//                    } else {
-//                        //                        std::cout << "Warning:  cannot do prior in log space for parm with min <= 0.0\n";
-//                    }
-//                }
-//            }
+            variable ret;
+            for (int i = 0; i < this->estimated_parameters.size(); i++) {
+                if (this->estimated_phase[i] <= phase) {
+                    variable p = *this->estimated_parameters[i];
+                    if (p > 0.0) {
+                        ret += (mas::log(sigma) + 0.5 * SELX_SQUARE(1e-8 + std::log(this->initial_parameter_values[i]) - mas::log(p)) / sigma2);
+                    } else {
+                        //                        std::cout << "Warning:  cannot do prior in log space for parm with min <= 0.0\n";
+                    }
+                }
+            }
 
             return ret;
         }
