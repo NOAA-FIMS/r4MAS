@@ -78,7 +78,7 @@ namespace mas {
                 if (this->estimated_phase[i] <= phase) {
                     variable p = *this->estimated_parameters[i];
                     if (p > 0.0) {
-                        ret += (mas::log(sigma) + 0.5 * SELX_SQUARE(1e-8 + std::log(this->initial_parameter_values[i]) - mas::log(p)) / sigma2);
+                        ret += (mas::log(sigma) + 0.5 * (1e-3 + SELX_SQUARE(std::log(this->initial_parameter_values[i]) - mas::log(p))) / sigma2);
                     } else {
                         //                        std::cout << "Warning:  cannot do prior in log space for parm with min <= 0.0\n";
                     }
