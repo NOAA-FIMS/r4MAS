@@ -88,7 +88,7 @@ namespace mas {
                         std::cout << "Warning:  cannot do prior in log space for parm with min <= 0.0\n";
                     }
                 } else {
-                    ret = 1.0;
+//                    ret = 1.0;
                 }
             }
 
