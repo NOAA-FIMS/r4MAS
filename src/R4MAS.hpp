@@ -213,6 +213,8 @@ public:
     Parameter a50; //age of 50% selectivity
     Parameter slope; //the rate of increase in selectivity at a50
     int id;
+    Parameter sigma;
+    Parameter sigma2;
 
     LogisticSelectivity() : SelectivityBase() {
 
@@ -401,6 +403,8 @@ public:
     Parameter beta_asc; // ascending beta
     Parameter alpha_desc; // descending alpha
     Parameter beta_desc; // descending beta
+    Parameter sigma;
+    Parameter sigma2;
 
     DoubleLogisticSelectivity() : SelectivityBase() {
 
@@ -698,6 +702,8 @@ public:
     bool estimated = false;
     int phase = 1;
     int id;
+    Parameter sigma;
+    Parameter sigma2;
 
     AgeBasedSelectivity() : SelectivityBase() {
 
@@ -7889,7 +7895,7 @@ RCPP_MODULE(rmas) {
             .field("sigma2", &DoubleLogisticSelectivity::sigma2)
             .field("id", &DoubleLogisticSelectivity::id)
             ;
-    
+
     class_<FishingMortality>("FishingMortality")
             .constructor()
             .method("SetValues", &FishingMortality::SetValues)
