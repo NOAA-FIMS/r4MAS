@@ -217,9 +217,10 @@ public:
     int id;
     Parameter sigma;
     Parameter sigma2;
+    Parameter cv;
 
     LogisticSelectivity() : SelectivityBase() {
-
+        cv.value = 0.05;
         this->id = SelectivityBase::id_g++;
         LogisticSelectivity::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
@@ -258,7 +259,7 @@ public:
         mas::VariableTrait<double>::SetValue(sel->s, slope.value);
         mas::VariableTrait<double>::SetMinBoundary(sel->s, slope.min);
         mas::VariableTrait<double>::SetMaxBoundary(sel->s, slope.max);
-        
+
         mas::VariableTrait<double>::SetValue(sel->cv, this->cv.value);
         mas::VariableTrait<double>::SetMinBoundary(sel->cv, this->cv.min);
         mas::VariableTrait<double>::SetMaxBoundary(sel->cv, this->cv.max);
@@ -411,9 +412,10 @@ public:
     Parameter beta_desc; // descending beta
     Parameter sigma;
     Parameter sigma2;
+    Parameter cv;
 
     DoubleLogisticSelectivity() : SelectivityBase() {
-
+        cv.value = 0.05;
         this->id = SelectivityBase::id_g++;
         DoubleLogisticSelectivity::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
@@ -714,9 +716,10 @@ public:
     int id;
     Parameter sigma;
     Parameter sigma2;
-
+    Parameter cv;
+    
     AgeBasedSelectivity() : SelectivityBase() {
-
+        cv.value = 0.05;
         this->id = SelectivityBase::id_g++;
         AgeBasedSelectivity::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
