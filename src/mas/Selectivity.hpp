@@ -156,29 +156,29 @@ namespace mas {
          */
         virtual const variable Evaluate(const variable& a) {
 
-            variable a_ = 1.0 / (1.0 + mas::exp(-1.0 * (a - this->alpha_asc) / this->beta_asc));
-            variable b_ = 1.0 - (1.0 / (1.0 + mas::exp(-1.0 * (a - this->alpha_desc) / this->beta_desc)));
-
-            return a_*b_;
-            //            return (static_cast<REAL_T> (1.0) /
-            //                    (static_cast<REAL_T> (1.0) +
-            //                    mas::mfexp(-beta_asc * (a - alpha_asc)))) *
-            //                    (static_cast<REAL_T> (1.0) - (static_cast<REAL_T> (1.0) /
-            //                    (static_cast<REAL_T> (1.0) +
-            //                    mas::mfexp(-beta_desc * (a - alpha_desc)))));
+//            variable a_ = 1.0 / (1.0 + mas::exp(-1.0 * (a - this->alpha_asc) / this->beta_asc));
+//            variable b_ = 1.0 - (1.0 / (1.0 + mas::exp(-1.0 * (a - this->alpha_desc) / this->beta_desc)));
+//
+//            return a_*b_;
+                        return (static_cast<REAL_T> (1.0) /
+                                (static_cast<REAL_T> (1.0) +
+                                mas::mfexp(-beta_asc * (a - alpha_asc)))) *
+                                (static_cast<REAL_T> (1.0) - (static_cast<REAL_T> (1.0) /
+                                (static_cast<REAL_T> (1.0) +
+                                mas::mfexp(-beta_desc * (a - alpha_desc)))));
         }
 
         virtual const variable Evaluate(const std::vector<variable>& ages, size_t index) {
-            variable a_ = 1.0 / (1.0 + mas::exp(-1.0 * (ages[index] - this->alpha_asc) / this->beta_asc));
-            variable b_ = 1.0 - (1.0 / (1.0 + mas::exp(-1.0 * (ages[index] - this->alpha_desc) / this->beta_desc)));
-
-            return a_*b_;
-            //            return (static_cast<REAL_T> (1.0) /
-            //                    (static_cast<REAL_T> (1.0) +
-            //                    mas::mfexp(-beta_asc * (ages[index] - alpha_asc)))) *
-            //                    (static_cast<REAL_T> (1.0) - (static_cast<REAL_T> (1.0) /
-            //                    (static_cast<REAL_T> (1.0) +
-            //                    mas::mfexp(-beta_desc * (ages[index] - alpha_desc)))));
+//            variable a_ = 1.0 / (1.0 + mas::exp(-1.0 * (ages[index] - this->alpha_asc) / this->beta_asc));
+//            variable b_ = 1.0 - (1.0 / (1.0 + mas::exp(-1.0 * (ages[index] - this->alpha_desc) / this->beta_desc)));
+//
+//            return a_*b_;
+                        return (static_cast<REAL_T> (1.0) /
+                                (static_cast<REAL_T> (1.0) +
+                                mas::mfexp(-beta_asc * (ages[index] - alpha_asc)))) *
+                                (static_cast<REAL_T> (1.0) - (static_cast<REAL_T> (1.0) /
+                                (static_cast<REAL_T> (1.0) +
+                                mas::mfexp(-beta_desc * (ages[index] - alpha_desc)))));
         }
 
         virtual const std::string ToJSONString() {
