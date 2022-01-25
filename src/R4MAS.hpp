@@ -194,9 +194,11 @@ protected:
 public:
     Parameter sigma;
     Parameter sigma2;
+    Parameter cv;
     static int id_g;
 
     SelectivityBase() {
+        cv.value = 0.05;
         sigma.value = 0.85;
         sigma2.value = 0.7225;
     }
@@ -256,6 +258,10 @@ public:
         mas::VariableTrait<double>::SetValue(sel->s, slope.value);
         mas::VariableTrait<double>::SetMinBoundary(sel->s, slope.min);
         mas::VariableTrait<double>::SetMaxBoundary(sel->s, slope.max);
+        
+        mas::VariableTrait<double>::SetValue(sel->cv, this->cv.value);
+        mas::VariableTrait<double>::SetMinBoundary(sel->cv, this->cv.min);
+        mas::VariableTrait<double>::SetMaxBoundary(sel->cv, this->cv.max);
 
         mas::VariableTrait<double>::SetValue(sel->sigma, sigma.value);
         mas::VariableTrait<double>::SetMinBoundary(sel->sigma, sigma.min);
@@ -442,6 +448,10 @@ public:
                 new mas::DoubleLogisticSel<double>();
         sel->id = id;
         mas::DoubleLogisticSel<double> *selex = sel.get();
+
+        mas::VariableTrait<double>::SetValue(sel->cv, this->cv.value);
+        mas::VariableTrait<double>::SetMinBoundary(sel->cv, this->cv.min);
+        mas::VariableTrait<double>::SetMaxBoundary(sel->cv, this->cv.max);
 
         mas::VariableTrait<double>::SetValue(sel->sigma, sigma.value);
         mas::VariableTrait<double>::SetMinBoundary(sel->sigma, sigma.min);
@@ -738,6 +748,10 @@ public:
         }
         atl::intrusive_ptr<mas::AgeBased<double> > sel = new mas::AgeBased<
                 double>();
+
+        mas::VariableTrait<double>::SetValue(sel->cv, this->cv.value);
+        mas::VariableTrait<double>::SetMinBoundary(sel->cv, this->cv.min);
+        mas::VariableTrait<double>::SetMaxBoundary(sel->cv, this->cv.max);
 
         mas::VariableTrait<double>::SetValue(sel->sigma, sigma.value);
         mas::VariableTrait<double>::SetMinBoundary(sel->sigma, sigma.min);
@@ -7871,6 +7885,7 @@ RCPP_MODULE(rmas) {
             .field("slope", &LogisticSelectivity::slope)
             .field("sigma", &LogisticSelectivity::sigma)
             .field("sigma2", &LogisticSelectivity::sigma2)
+            .field("cv", &LogisticSelectivity::cv)
             .field("id", &LogisticSelectivity::id)
             ;
 
@@ -7880,6 +7895,7 @@ RCPP_MODULE(rmas) {
             .field("estimate_age", &AgeBasedSelectivity::estimate_age)
             .field("sigma", &AgeBasedSelectivity::sigma)
             .field("sigma2", &AgeBasedSelectivity::sigma2)
+            .field("cv", &AgeBasedSelectivity::cv)
             .field("id", &AgeBasedSelectivity::id)
             .field("estimated", &AgeBasedSelectivity::estimated)
             .field("phase", &AgeBasedSelectivity::phase)
@@ -7893,6 +7909,7 @@ RCPP_MODULE(rmas) {
             .field("beta_desc", &DoubleLogisticSelectivity::beta_desc)
             .field("sigma", &DoubleLogisticSelectivity::sigma)
             .field("sigma2", &DoubleLogisticSelectivity::sigma2)
+            .field("cv", &DoubleLogisticSelectivity::cv)
             .field("id", &DoubleLogisticSelectivity::id)
             ;
 
