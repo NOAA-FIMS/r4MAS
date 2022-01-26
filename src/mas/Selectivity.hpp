@@ -75,7 +75,7 @@ namespace mas {
         virtual variable LikelihoodComponent(int phase) {
 
             assert(this->initial_parameter_values.size() == this->estimated_parameters.size());
-            variable ret = 1.0;
+            variable ret = 0.0;
             for (int i = 0; i < this->estimated_parameters.size(); i++) {
                 if (this->estimated_phase[i] <= phase) {
 
