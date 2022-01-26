@@ -76,23 +76,23 @@ namespace mas {
 
             assert(this->initial_parameter_values.size() == this->estimated_parameters.size());
             variable ret = 1.0;
-//            for (int i = 0; i < this->estimated_parameters.size(); i++) {
-//                if (this->estimated_phase[i] <= phase) {
-//
-//                    variable p = *this->estimated_parameters[i];
-//                    if (p > 0.0) {
-//
-//                        this->sigma2 = mas::log(this->cv * this->cv + 1.0);
-//                        this->sigma = mas::pow(this->sigma2, 0.5);
-//                        ret += 0.5 * std::log(2.0 * M_PI) + std::log(this->initial_parameter_values[i]);
-//                        ret += (mas::log(sigma) + 0.5 * (SELX_SQUARE(std::log(this->initial_parameter_values[i]) - mas::log(p))) / sigma2);
-//                    } else {
-//                        std::cout << "Warning:  cannot do prior in log space for parm with min <= 0.0\n";
-//                    }
-//                } else {
-//                    //                    ret = 1.0;
-//                }
-//            }
+            for (int i = 0; i < this->estimated_parameters.size(); i++) {
+                if (this->estimated_phase[i] <= phase) {
+
+                    variable p = *this->estimated_parameters[i];
+                    if (p > 0.0) {
+
+                        this->sigma2 = mas::log(this->cv * this->cv + 1.0);
+                        this->sigma = mas::pow(this->sigma2, 0.5);
+                        ret += 0.5 * std::log(2.0 * M_PI) + std::log(this->initial_parameter_values[i]);
+                        ret += (mas::log(sigma) + 0.5 * (SELX_SQUARE(std::log(this->initial_parameter_values[i]) - mas::log(p))) / sigma2);
+                    } else {
+                        std::cout << "Warning:  cannot do prior in log space for parm with min <= 0.0\n";
+                    }
+                } else {
+                    //                    ret = 1.0;
+                }
+            }
 
             return ret;
         }
