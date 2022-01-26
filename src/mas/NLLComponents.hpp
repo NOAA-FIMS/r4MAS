@@ -173,7 +173,7 @@ namespace mas {
         typedef typename VariableTrait<REAL_T>::variable variable;
         NLL_Functor_Type functor_type = LOGNORMAL;
         variable sigma = 0.2;
-        bool use_bias_correction = true;
+        bool use_bias_correction = false;
 
         Lognormal() {
         }
