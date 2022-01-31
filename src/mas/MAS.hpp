@@ -79,6 +79,7 @@ namespace mas {
         variable recruitment_likelihood;
         variable selectivity_likelihood;
 
+        REAL_T max_gc;
         //goodness of fit
         REAL_T chi_squared;
         REAL_T g_test;
@@ -86,6 +87,8 @@ namespace mas {
         REAL_T rmsle;
         REAL_T AIC;
         REAL_T BIC;
+        
+        bool compute_vaiance_for_derived_quantities = true;
 
         MAS() {
         }
@@ -135,8 +138,8 @@ namespace mas {
             for (rit = info.recruitment_models.begin(); rit != info.recruitment_models.end(); rit++) {
                 (*rit).second->Prepare();
             }
-            
-            
+
+
             //this is probably deprecated
             for (selex_it = info.selectivity_models.begin(); selex_it != info.selectivity_models.end(); selex_it++) {
                 (*selex_it).second->Update(this->info.ages);
@@ -291,8 +294,8 @@ namespace mas {
             }
 
 
-            
-            
+
+
 
             //          
             /**
@@ -303,7 +306,7 @@ namespace mas {
             for (fit = info.fleets.begin(); fit != info.fleets.end(); ++fit) {
                 (*fit).second->ComputeProportions();
                 (*fit).second->ApplyOperatingModelError();
-                
+
                 info.data.push_back((*fit).second->catch_biomass_data);
                 info.data.push_back((*fit).second->catch_proportion_at_age_data);
                 info.data_dictionary[(*fit).second->id].push_back((*fit).second->catch_biomass_data);
@@ -328,13 +331,20 @@ namespace mas {
          * Pearson's chi-squared test on biomass and age comp.
          */
         void ComputeGoodnessOfFit() {
-
+            this->max_gc = -1.0;
+            
             variable f;
             atl::Variable<REAL_T>::tape.Reset();
             atl::Variable<REAL_T>::tape.recording = true;
             atl::Variable<REAL_T>::tape.derivative_trace_level = atl::SECOND_ORDER_REVERSE;
             this->Run(f);
             atl::Variable<REAL_T>::tape.AccumulateSecondOrder();
+            for(int i =0; i < this->info.estimated_parameters.size(); i++){
+                REAL_T g = std::fabs(atl::Variable<REAL_T>::tape.Value(this->info.estimated_parameters[i]->info->id));
+                if( g  > this->max_gc){
+                    this->max_gc = g;
+                }
+            }
             typename mas::Information<REAL_T>::fleet_iterator fit;
             typename mas::Information<REAL_T>::survey_model_iterator sit;
 
@@ -368,12 +378,26 @@ namespace mas {
             std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >& pops =
                     info.GetPopulations();
             typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator it;
+
+//            for (it = pops.begin(); it != pops.end(); ++it) {
+////               (*it).second->do_msy_calculations = true;
+//            }
             for (it = pops.begin(); it != pops.end(); ++it) {
                 (*it).second->PushToAreasAndFleets();
                 (*it).second->Finalize();
 
-                //                (*it).second->ComputeBiologicalReferencePoints();
+               // (*it).second->ComputeBiologicalReferencePoints();
             }
+
+            typename std::unordered_map<int, atl::intrusive_ptr<mas::Area<REAL_T> > >::iterator ait;
+            for (ait = this->info.areas.begin(); ait != this->info.areas.end(); ++ait) {
+                (*ait).second->msy.F_msy /= (*ait).second->nsubpopulations;//this->info.populations.size()*2.0;
+                (*ait).second->msy.F30 /= (*ait).second->nsubpopulations;//this->info.populations.size()*2.0;
+                (*ait).second->msy.F35 /= (*ait).second->nsubpopulations;//this->info.populations.size()*2.0;
+                (*ait).second->msy.F40 /= (*ait).second->nsubpopulations;//this->info.populations.size()*2.0;
+            }
+            
+            
         }
 
         void Report() {

@@ -2019,7 +2019,7 @@ public:
 					rapidjson::Value &entry = deviations[i];
 					rapidjson::Document::MemberIterator nit;
 					std::string sex;
-					int area;
+					int area=0;
 					int phase = 1;
 					bool estimated = false;
 					int sex_ = mas::UNDIFFERENTIATED;

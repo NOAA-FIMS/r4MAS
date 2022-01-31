@@ -11,9 +11,15 @@ knitr::opts_chunk$set(echo = TRUE, fig.width = 10, fig.height = 10)
 ```
 
 ## Install and library packages
-```{r}
-# remotes::install_github("nmfs-fish-tools/r4MAS")
+```{r, install, eval= FALSE}
 
+remotes::install_github("nmfs-fish-tools/r4MAS")
+install.packages("jsonlite")
+remotes::install_github("nmfs-general-modeling-tools/nmfspalette")
+remotes::install_github("nmfs-fish-tools/fishsad")
+```
+
+```{r, load, eval= FALSE}
 library(r4MAS)
 library(Rcpp)
 library(jsonlite)
@@ -28,7 +34,7 @@ library(nmfspalette)
 temp_dir <- tempdir()
 
 # Read SS input data
-ss_input <- fishsad::ss_empiricalwaa_input
+ss_input <- fishsad::ss_empiricalwaa$input
 
 ss_dat <- ss_input$ss_data
 ss_ctl <- ss_input$ss_control
@@ -47,6 +53,15 @@ ss_forecast <- ss_input$ss_projection
 # Load r4MAS module
 r4mas <- Rcpp::Module("rmas", PACKAGE = "r4MAS")
 
+# Find the path of dynamically-loaded file with extension .so on Linux, .dylib on OS X or .dll on Windows
+libs_path <- system.file("libs", package = "r4MAS")
+dll_name <- paste("r4MAS", .Platform$dynlib.ext, sep = "")
+if (.Platform$OS.type == "windows") {
+  dll_path <- file.path(libs_path, .Platform$r_arch, dll_name)
+} else {
+  dll_path <- file.path(libs_path, dll_name)
+}
+r4mas <- Rcpp::Module("rmas", dyn.load(dll_path))
 # General settings
 styr <- ss_dat$styr
 endyr <- ss_dat$endyr

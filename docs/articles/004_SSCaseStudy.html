@@ -94,9 +94,6 @@
       <a href="../articles/004_SSCaseStudy.html">SS Case Study</a>
     </li>
     <li>
-      <a href="../articles/005_MetapopulationCaseStudy.html">Metapopulation Case Study</a>
-    </li>
-    <li>
       <a href="../articles/Architecture.html">MAS Demo Notebook</a>
     </li>
     <li>
@@ -118,12 +115,12 @@
 
       
 
-      </header><script src="004_SSCaseStudy_files/header-attrs-2.6/header-attrs.js"></script><div class="row">
+      </header><script src="004_SSCaseStudy_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>SS Case Study</h1>
             
-            <h4 class="date">Updated on 06/11/2021</h4>
+            <h4 class="date">Updated on 12/06/2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nmfs-fish-tools/r4MAS/blob/master/vignettes/004_SSCaseStudy.Rmd"><code>vignettes/004_SSCaseStudy.Rmd</code></a></small>
       <div class="hidden name"><code>004_SSCaseStudy.Rmd</code></div>
@@ -136,25 +133,26 @@
 <h2 class="hasAnchor">
 <a href="#install-and-library-packages" class="anchor"></a>Install and library packages</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># remotes::install_github("nmfs-fish-tools/r4MAS")</span>
-
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://nmfs-fish-tools.github.io/r4MAS/">r4MAS</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"nmfs-fish-tools/r4MAS"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"jsonlite"</span><span class="op">)</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"nmfs-general-modeling-tools/nmfspalette"</span><span class="op">)</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"nmfs-fish-tools/fishsad"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://nmfs-fish-tools.github.io/r4MAS/">r4MAS</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.rcpp.org">Rcpp</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://arxiv.org/abs/1403.2805">jsonlite</a></span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning: package 'jsonlite' was built under R version 4.0.5</code></pre>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">fishsad</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://arxiv.org/abs/1403.2805">jsonlite</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">fishsad</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">nmfspalette</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="read-ss-input-file" class="section level2">
 <h2 class="hasAnchor">
 <a href="#read-ss-input-file" class="anchor"></a>Read SS input file</h2>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Working directory</span>
 <span class="va">temp_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># Read SS input data</span>
-<span class="va">ss_input</span> <span class="op">&lt;-</span> <span class="fu">fishsad</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/fishsad/man/ss_empiricalwaa_input.html">ss_empiricalwaa_input</a></span>
+<span class="va">ss_input</span> <span class="op">&lt;-</span> <span class="fu">fishsad</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/fishsad/man/ss_empiricalwaa.html">ss_empiricalwaa</a></span><span class="op">$</span><span class="va">input</span>
 
 <span class="va">ss_dat</span> <span class="op">&lt;-</span> <span class="va">ss_input</span><span class="op">$</span><span class="va">ss_data</span>
 <span class="va">ss_ctl</span> <span class="op">&lt;-</span> <span class="va">ss_input</span><span class="op">$</span><span class="va">ss_control</span>
@@ -169,10 +167,19 @@
 <div id="convert-ss-inputs-to-mas-inputs" class="section level2">
 <h2 class="hasAnchor">
 <a href="#convert-ss-inputs-to-mas-inputs" class="anchor"></a>Convert SS inputs to MAS inputs</h2>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Load r4MAS module</span>
 <span class="va">r4mas</span> <span class="op">&lt;-</span> <span class="fu">Rcpp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Rcpp/man/Module.html">Module</a></span><span class="op">(</span><span class="st">"rmas"</span>, PACKAGE <span class="op">=</span> <span class="st">"r4MAS"</span><span class="op">)</span>
 
+<span class="co"># Find the path of dynamically-loaded file with extension .so on Linux, .dylib on OS X or .dll on Windows</span>
+<span class="va">libs_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"libs"</span>, package <span class="op">=</span> <span class="st">"r4MAS"</span><span class="op">)</span>
+<span class="va">dll_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"r4MAS"</span>, <span class="va">.Platform</span><span class="op">$</span><span class="va">dynlib.ext</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>
+<span class="kw">if</span> <span class="op">(</span><span class="va">.Platform</span><span class="op">$</span><span class="va">OS.type</span> <span class="op">==</span> <span class="st">"windows"</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">dll_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">libs_path</span>, <span class="va">.Platform</span><span class="op">$</span><span class="va">r_arch</span>, <span class="va">dll_name</span><span class="op">)</span>
+<span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+  <span class="va">dll_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">libs_path</span>, <span class="va">dll_name</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="va">r4mas</span> <span class="op">&lt;-</span> <span class="fu">Rcpp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Rcpp/man/Module.html">Module</a></span><span class="op">(</span><span class="st">"rmas"</span>, <span class="fu"><a href="https://rdrr.io/r/base/dynload.html">dyn.load</a></span><span class="op">(</span><span class="va">dll_path</span><span class="op">)</span><span class="op">)</span>
 <span class="co"># General settings</span>
 <span class="va">styr</span> <span class="op">&lt;-</span> <span class="va">ss_dat</span><span class="op">$</span><span class="va">styr</span>
 <span class="va">endyr</span> <span class="op">&lt;-</span> <span class="va">ss_dat</span><span class="op">$</span><span class="va">endyr</span>
@@ -287,7 +294,7 @@
 <span class="op">}</span>
 
 <span class="fu">show</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">VonBertalanffyModified</span><span class="op">)</span></code></pre></div>
-<pre><code>## C++ class 'VonBertalanffyModified' &lt;000000001d7a68a0&gt;
+<pre><code>## C++ class 'VonBertalanffyModified' &lt;0000000017763540&gt;
 ## Constructors:
 ##     VonBertalanffyModified()
 ## 
@@ -329,7 +336,7 @@
 ##            
 ##      void SetUndifferentiatedWeightAtSpawning(Rcpp::NumericVector)  
 ## </code></pre>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">growth</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">VonBertalanffyModified</span><span class="op">)</span>
 <span class="va">growth</span><span class="op">$</span><span class="fu">SetFemaleCatchWeight</span><span class="op">(</span><span class="va">catch_waa</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
 <span class="va">growth</span><span class="op">$</span><span class="fu">SetMaleCatchWeight</span><span class="op">(</span><span class="va">catch_waa</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
@@ -342,7 +349,7 @@
 
 <span class="co"># Maturity settings</span>
 <span class="fu">show</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Maturity</span><span class="op">)</span></code></pre></div>
-<pre><code>## C++ class 'Maturity' &lt;000000001d7a65e0&gt;
+<pre><code>## C++ class 'Maturity' &lt;0000000017763ac0&gt;
 ## Constructors:
 ##     Maturity()
 ## 
@@ -351,7 +358,7 @@
 ##     Rcpp::Vector&lt;14, Rcpp::PreserveStorage&gt; values
 ## 
 ## Methods: no methods exposed by this class</code></pre>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">maturity</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">ngenders</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">ngenders</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">maturity</span><span class="op">[[</span><span class="va">j</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Maturity</span><span class="op">)</span>
@@ -584,7 +591,7 @@
 <div id="build-the-mas-model" class="section level2">
 <h2 class="hasAnchor">
 <a href="#build-the-mas-model" class="anchor"></a>Build the MAS model</h2>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mas_model</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">MASModel</span><span class="op">)</span>
 
 <span class="va">mas_model</span><span class="op">$</span><span class="va">nyears</span> <span class="op">&lt;-</span> <span class="va">nyears</span>
@@ -610,7 +617,7 @@
 <h2 class="hasAnchor">
 <a href="#run-mas-save-mas-outputs-and-reset-mas" class="anchor"></a>Run <code>MAS</code>, save <code>MAS</code> outputs, and reset <code>MAS</code>
 </h2>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># # Run MAS</span>
 <span class="co"># mas_model$Run()</span>
 <span class="co">#</span>

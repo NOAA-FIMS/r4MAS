@@ -509,8 +509,8 @@ jobs:
             om[[i]]$recruit_deviation <- om_input[[i]]$logR.resid
           }
 
-          print(mas[[1]]$biomass)
-          print(om[[1]]$biomass)
+           print(mas[[1]]$biomass)
+           print(om[[1]]$biomass)
 
 
         shell: Rscript {0}

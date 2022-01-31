@@ -29,9 +29,10 @@ namespace mas {
         std::string data_path = "";
         std::string config_path = "";
         std::string ouput_path = "mas_output.json";
-	int references = 0;
-	
-	
+        int references = 0;
+        bool compute_variance_for_derived_quantities =  true;
+
+
 
         typedef typename mas::VariableTrait<REAL_T>::variable variable;
 
@@ -57,11 +58,112 @@ namespace mas {
 
         }
 
+        void CalculateVarianceOfDerivedParameters() {
+
+            typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator pit;
+            std::vector<uint32_t> pid;
+            for (int i = 0; i < this->mas_instance.info.estimated_parameters.size(); i++) {
+                pid.push_back(this->mas_instance.info.estimated_parameters[i]->info->id);
+            }
+            std::cout << "Calculating variance for derived quantities..." << std::flush;
+            for (pit = this->mas_instance.info.populations.begin();
+                    pit != this->mas_instance.info.populations.end();
+                    ++pit) {
+                (*pit).second->do_msy_calculations = true;
+
+                mas::Population<REAL_T> *population = (*pit).second.get();
+                typename std::unordered_map<int, Subpopulation<REAL_T> >::iterator spit;
+
+                for (spit = population->females.begin(); spit != population->females.end(); ++spit) {
+                    std::cout << "." << std::flush;
+
+
+                    for (int i = 0; i < (*spit).second.spawning_stock_biomass.size(); i++) {
+                        REAL_T temp = this->GetVarianceOfDerivedValue(
+                                (*spit).second.spawning_stock_biomass[i].info->id, pid);
+                        (*spit).second.spawning_stock_biomass_variance[i] = temp;
+                        //                        std::cout<<i<<": " << std::scientific  << temp << "\t";
+
+
+                    }
+                    //                    std::cout << "\n";
+
+                    for (int i = 0; i < (*spit).second.biomass_total.size(); i++) {
+                        REAL_T temp = this->GetVarianceOfDerivedValue(
+                                (*spit).second.biomass_total[i].info->id, pid);
+                        (*spit).second.biomass_variance[i] = temp;
+                        //                        std::cout << "\n" << temp << "\t";
+
+                        //F_over_F_msy_variance
+                        temp = this->GetVarianceOfDerivedValue(
+                                (*spit).second.recruitment[i].info->id, pid);
+                        (*spit).second.recruitment_variance[i] = temp;
+
+
+
+                        //F_over_F_msy_variance
+                        temp = this->GetVarianceOfDerivedValue(
+                                (*spit).second.F_over_F_msy[i].info->id, pid);
+                        (*spit).second.F_over_F_msy_variance[i] = temp;
+                        //                        std::cout << std::scientific << "\n" << temp << "\t";
+                    }
+                }
+
+                for (spit = population->males.begin(); spit != population->males.end(); ++spit) {
+                    std::cout << ".";
+
+
+                    for (int i = 0; i < (*spit).second.spawning_stock_biomass.size(); i++) {
+                        REAL_T temp = this->GetVarianceOfDerivedValue(
+                                (*spit).second.spawning_stock_biomass[i].info->id, pid);
+                        (*spit).second.spawning_stock_biomass_variance[i] = temp;
+                        //                        std::cout<<i<<": " << std::scientific  << temp << "\t";
+
+
+                    }
+                    //                    std::cout << "\n";
+
+                    for (int i = 0; i < (*spit).second.biomass_total.size(); i++) {
+                        REAL_T temp = this->GetVarianceOfDerivedValue(
+                                (*spit).second.biomass_total[i].info->id, pid);
+                        (*spit).second.biomass_variance[i] = temp;
+                        //                        std::cout << "\n" << temp << "\t";
+
+                        //F_over_F_msy_variance
+                        temp = this->GetVarianceOfDerivedValue(
+                                (*spit).second.recruitment[i].info->id, pid);
+                        (*spit).second.recruitment_variance[i] = temp;
+
+
+
+                        //F_over_F_msy_variance
+                        temp = this->GetVarianceOfDerivedValue(
+                                (*spit).second.F_over_F_msy[i].info->id, pid);
+                        (*spit).second.F_over_F_msy_variance[i] = temp;
+                        //                        std::cout << std::scientific << "\n" << temp << "\t";
+                    }
+                }
+
+            }
+            std::cout << "done.\n";
+        }
+
         virtual void Finalize() {
-           
+
             this->SetVarianceCovariance();
             mas_instance.Finalize();
-//            mas_instance.Report();
+            if (compute_variance_for_derived_quantities) {
+                this->CalculateVarianceOfDerivedParameters();
+            } else {
+                 typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator pit;
+                for (pit = this->mas_instance.info.populations.begin();
+                        pit != this->mas_instance.info.populations.end();
+                        ++pit) {
+                    (*pit).second->ComputeBiologicalReferencePoints();
+                }
+
+            }
+            //            mas_instance.Report();
             mas::JSONOutputGenerator<REAL_T> json;
             std::ofstream output(this->ouput_path.data());
             output << json.GenerateOutput(mas_instance);
