@@ -194,11 +194,11 @@ protected:
 public:
     Parameter sigma;
     Parameter sigma2;
+    Parameter cv;
     static int id_g;
 
     SelectivityBase() {
-        sigma.value = 0.85;
-        sigma2.value = 0.7225;
+
     }
 
     virtual ~SelectivityBase() {
@@ -215,9 +215,10 @@ public:
     int id;
     Parameter sigma;
     Parameter sigma2;
-    
-    LogisticSelectivity() : SelectivityBase() {
+    Parameter cv;
 
+    LogisticSelectivity() : SelectivityBase() {
+        cv.value = 0.05;
         this->id = SelectivityBase::id_g++;
         LogisticSelectivity::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
@@ -256,6 +257,12 @@ public:
         mas::VariableTrait<double>::SetValue(sel->s, slope.value);
         mas::VariableTrait<double>::SetMinBoundary(sel->s, slope.min);
         mas::VariableTrait<double>::SetMaxBoundary(sel->s, slope.max);
+
+
+        mas::VariableTrait<double>::SetValue(sel->cv, this->cv.value);
+        mas::VariableTrait<double>::SetMinBoundary(sel->cv, this->cv.min);
+        mas::VariableTrait<double>::SetMaxBoundary(sel->cv, this->cv.max);
+
 
         mas::VariableTrait<double>::SetValue(sel->sigma, sigma.value);
         mas::VariableTrait<double>::SetMinBoundary(sel->sigma, sigma.min);
@@ -405,8 +412,10 @@ public:
     Parameter beta_desc; // descending beta
     Parameter sigma;
     Parameter sigma2;
-    
+    Parameter cv;
+
     DoubleLogisticSelectivity() : SelectivityBase() {
+        cv.value = 0.05;
 
         this->id = SelectivityBase::id_g++;
         DoubleLogisticSelectivity::initialized_models[this->id] = this;
@@ -442,6 +451,10 @@ public:
                 new mas::DoubleLogisticSel<double>();
         sel->id = id;
         mas::DoubleLogisticSel<double> *selex = sel.get();
+
+        mas::VariableTrait<double>::SetValue(sel->cv, this->cv.value);
+        mas::VariableTrait<double>::SetMinBoundary(sel->cv, this->cv.min);
+        mas::VariableTrait<double>::SetMaxBoundary(sel->cv, this->cv.max);
 
         mas::VariableTrait<double>::SetValue(sel->sigma, sigma.value);
         mas::VariableTrait<double>::SetMinBoundary(sel->sigma, sigma.min);
@@ -704,9 +717,10 @@ public:
     int id;
     Parameter sigma;
     Parameter sigma2;
+    Parameter cv;
     
     AgeBasedSelectivity() : SelectivityBase() {
-
+        cv.value = 0.05;
         this->id = SelectivityBase::id_g++;
         AgeBasedSelectivity::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
@@ -738,6 +752,10 @@ public:
         }
         atl::intrusive_ptr<mas::AgeBased<double> > sel = new mas::AgeBased<
                 double>();
+
+        mas::VariableTrait<double>::SetValue(sel->cv, this->cv.value);
+        mas::VariableTrait<double>::SetMinBoundary(sel->cv, this->cv.min);
+        mas::VariableTrait<double>::SetMaxBoundary(sel->cv, this->cv.max);
 
         mas::VariableTrait<double>::SetValue(sel->sigma, sigma.value);
         mas::VariableTrait<double>::SetMinBoundary(sel->sigma, sigma.min);
@@ -7871,6 +7889,7 @@ RCPP_MODULE(rmas) {
             .field("slope", &LogisticSelectivity::slope)
             .field("sigma", &LogisticSelectivity::sigma)
             .field("sigma2", &LogisticSelectivity::sigma2)
+            .field("cv", &LogisticSelectivity::cv)
             .field("id", &LogisticSelectivity::id)
             ;
 
@@ -7880,6 +7899,7 @@ RCPP_MODULE(rmas) {
             .field("estimate_age", &AgeBasedSelectivity::estimate_age)
             .field("sigma", &AgeBasedSelectivity::sigma)
             .field("sigma2", &AgeBasedSelectivity::sigma2)
+            .field("cv", &AgeBasedSelectivity::cv)
             .field("id", &AgeBasedSelectivity::id)
             .field("estimated", &AgeBasedSelectivity::estimated)
             .field("phase", &AgeBasedSelectivity::phase)
@@ -7893,9 +7913,8 @@ RCPP_MODULE(rmas) {
             .field("beta_desc", &DoubleLogisticSelectivity::beta_desc)
             .field("sigma", &DoubleLogisticSelectivity::sigma)
             .field("sigma2", &DoubleLogisticSelectivity::sigma2)
-            .field("id", &DoubleLogisticSelectivity::id)
-            ;
-    
+            .field("cv", &DoubleLogisticSelectivity::cv)
+            .field("id", &DoubleLogisticSelectivity::id);
     class_<FishingMortality>("FishingMortality")
             .constructor()
             .method("SetValues", &FishingMortality::SetValues)
