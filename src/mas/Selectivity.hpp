@@ -158,6 +158,7 @@ namespace mas {
          */
         virtual const variable Evaluate(const variable& a) {
 
+
             variable a_ = 1.0 / (1.0 + mas::exp(-1.0 * (a - this->alpha_asc) / this->beta_asc));
             variable b_ = 1.0 - (1.0 / (1.0 + mas::exp(-1.0 * (a - this->alpha_desc) / this->beta_desc)));
 
@@ -168,6 +169,7 @@ namespace mas {
             //                    (static_cast<REAL_T> (1.0) - (static_cast<REAL_T> (1.0) /
             //                    (static_cast<REAL_T> (1.0) +
             //                    mas::mfexp(-beta_desc * (a - alpha_desc)))));
+
         }
 
         virtual const variable Evaluate(const std::vector<variable>& ages, size_t index) {

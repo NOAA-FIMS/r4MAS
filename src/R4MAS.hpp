@@ -198,9 +198,7 @@ public:
     static int id_g;
 
     SelectivityBase() {
-        cv.value = 0.05;
-        sigma.value = 0.85;
-        sigma2.value = 0.7225;
+
     }
 
     virtual ~SelectivityBase() {
@@ -260,9 +258,11 @@ public:
         mas::VariableTrait<double>::SetMinBoundary(sel->s, slope.min);
         mas::VariableTrait<double>::SetMaxBoundary(sel->s, slope.max);
 
+
         mas::VariableTrait<double>::SetValue(sel->cv, this->cv.value);
         mas::VariableTrait<double>::SetMinBoundary(sel->cv, this->cv.min);
         mas::VariableTrait<double>::SetMaxBoundary(sel->cv, this->cv.max);
+
 
         mas::VariableTrait<double>::SetValue(sel->sigma, sigma.value);
         mas::VariableTrait<double>::SetMinBoundary(sel->sigma, sigma.min);
@@ -416,6 +416,7 @@ public:
 
     DoubleLogisticSelectivity() : SelectivityBase() {
         cv.value = 0.05;
+
         this->id = SelectivityBase::id_g++;
         DoubleLogisticSelectivity::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
@@ -7913,9 +7914,7 @@ RCPP_MODULE(rmas) {
             .field("sigma", &DoubleLogisticSelectivity::sigma)
             .field("sigma2", &DoubleLogisticSelectivity::sigma2)
             .field("cv", &DoubleLogisticSelectivity::cv)
-            .field("id", &DoubleLogisticSelectivity::id)
-            ;
-
+            .field("id", &DoubleLogisticSelectivity::id);
     class_<FishingMortality>("FishingMortality")
             .constructor()
             .method("SetValues", &FishingMortality::SetValues)
