@@ -1400,6 +1400,7 @@ public:
         r->recruitment_deviations_constrained = this->constrained_deviations;
 
         if (this->estimate_deviations) {
+            r->estimating_recruitment_deviations = true;
             for (int i = 0; i < info.nyears; i++) {
                 std::stringstream ss;
                 ss << "recruitment_deviations[" << i << "]_" << this->id;
@@ -1759,6 +1760,7 @@ public:
         r->recruitment_deviations_constrained = this->constrained_deviations;
 
         if (this->estimate_deviations) {
+            r->estimating_recruitment_deviations = true;
             for (int i = 0; i < info.nyears; i++) {
                 std::stringstream ss;
                 ss << "recruitment_deviations[" << i << "]_" << this->id;
@@ -2085,6 +2087,7 @@ public:
         r->recruitment_deviations_constrained = this->constrained_deviations;
 
         if (this->estimate_deviations) {
+            r->estimating_recruitment_deviations = true;
             for (int i = 0; i < info.nyears; i++) {
                 std::stringstream ss;
                 ss << "recruitment_deviations[" << i << "]_" << this->id;
