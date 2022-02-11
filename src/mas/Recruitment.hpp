@@ -146,9 +146,13 @@ namespace mas {
                     sum += this->recruitment_deviations[i];
                 }
 
+                variable sum2 = static_cast<REAL_T> (0.0);
                 for (int i = 0; i < this->recruitment_deviations.size(); i++) {
                     this->recruitment_deviations[i] -= sum / static_cast<REAL_T> (this->recruitment_deviations.size());
+                    sum2+=this->recruitment_deviations[i];
                 }
+                std::cout<<sum2<<"***\n\n"<<std::flush;
+                throw std::exception("sum check");
             }
             if (this->use_bias_correction) {
                 this->bias_correction = -0.5 * this->sigma_r * this->sigma_r; //bias correction
