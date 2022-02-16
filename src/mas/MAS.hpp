@@ -117,6 +117,7 @@ namespace mas {
             this->recruitment_likelihood = 0.0;
             this->selectivity_likelihood = 0.0;
 
+            
             typename mas::Information<REAL_T>::fleet_iterator fit;
             typename mas::Information<REAL_T>::survey_model_iterator sit;
             typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator it;
