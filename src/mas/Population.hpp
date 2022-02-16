@@ -2054,8 +2054,9 @@ namespace mas {
             this->msy.B_F40_msy = B_eq[F40_out];
             this->msy.E_F40_msy = E_eq[F40_out];
             
-            std::ofstream debug("debug_msy.txt");
-            debug<<this->msy.F_msy;
+            std::ofstream debug;
+            debug.open("msy_debug.txt", std::ios_base::app);
+            debug<<this->msy.F_msy<<"\n";
 
             this->area->msy.msy += this->msy.msy;
             this->area->msy.spr_F0 += this->msy.spr_F0;
