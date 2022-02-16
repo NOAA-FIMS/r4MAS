@@ -47,6 +47,8 @@ namespace mas {
         std::vector<REAL_T> lambdas;
         variable sigma = 0.85;
         variable sigma2 = 0.7225;
+        variable cv = 0.01;
+        
         std::vector<variable> selectivity;
 
         void Update(const std::vector<variable>& ages) {
@@ -73,9 +75,12 @@ namespace mas {
         virtual variable LikelihoodComponent(int phase) {
         
             assert(this->initial_parameter_values.size() == this->estimated_parameters.size());
-            variable ret;
+            variable ret = 1.0;
             for (int i = 0; i < this->estimated_parameters.size(); i++) {
                 if (this->estimated_phase[i] <= phase) {
+              
+                this->sigma2 = mas::log(this->cv * this->cv + 1.0);
+                this->sigma= mas::pow(this->sigma2, 0.5);
                     variable p = *this->estimated_parameters[i];
                     if (p > 0.0) {
                         ret +=  (mas::log(sigma) + 0.5 * SELX_SQUARE(std::log(this->initial_parameter_values[i]) - mas::log(p)) / sigma2);

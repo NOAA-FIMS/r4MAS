@@ -374,6 +374,8 @@ namespace mas {
         }
 
         void Finalize() {
+            
+          
 
             std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >& pops =
                     info.GetPopulations();

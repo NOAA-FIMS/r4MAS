@@ -680,7 +680,6 @@ namespace atl {
                     entry.min_id = std::min((*it)->id, entry.min_id);
                     entry.max_id = std::max((*it)->id, entry.max_id);
                     entry.first[index++] = entry.exp->EvaluateDerivative((*it)->id);
-                    std::cout << entry.exp->EvaluateDerivative((*it)->id) << "\n";
                 }
 
                 REAL_T v = entry.exp->GetValue();
