@@ -146,6 +146,8 @@ namespace mas {
                     sum += this->recruitment_deviations[i];
                 }
 
+   
+            
                 for (int i = 0; i < this->recruitment_deviations.size(); i++) {
                     this->recruitment_deviations[i] -= sum / static_cast<REAL_T> (this->recruitment_deviations.size());
                 }
