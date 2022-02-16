@@ -185,7 +185,7 @@ namespace mas {
             variable a_ = 1.0 / (1.0 + mas::exp(-1.0 * (ages[index] - this->alpha_asc) / this->beta_asc));
             variable b_ = 1.0 - (1.0 / (1.0 + mas::exp(-1.0 * (ages[index] - this->alpha_desc) / this->beta_desc)));
 
-            return (a_*b_)/this->max;
+            return (a_*b_);
             //            return (static_cast<REAL_T> (1.0) /
             //                    (static_cast<REAL_T> (1.0) +
             //                    mas::mfexp(-beta_asc * (ages[index] - alpha_asc)))) *
