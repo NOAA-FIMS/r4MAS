@@ -63,6 +63,8 @@ namespace mas {
                     this->max = this->selectivity[i];
                 }
             }
+             std::cout<<"max selx = "<<this->max<<"\n";
+             exit(0);
         }
 
         virtual const variable& Get(const std::vector<variable>& ages, size_t index) {
