@@ -63,8 +63,6 @@ namespace mas {
                     this->max = this->selectivity[i];
                 }
             }
-             std::cout<<"max selx = "<<this->max<<"\n";
-             exit(0);
         }
 
         virtual const variable& Get(const std::vector<variable>& ages, size_t index) {
@@ -169,7 +167,6 @@ namespace mas {
 
             variable a_ = 1.0 / (1.0 + mas::exp(-1.0 * (a - this->alpha_asc) / this->beta_asc));
             variable b_ = 1.0 - (1.0 / (1.0 + mas::exp(-1.0 * (a - this->alpha_desc) / this->beta_desc)));
-            std::cout<<"max selx = "<<this->max<<"\n";
             return (a_*b_)/this->max;
             //            return (static_cast<REAL_T> (1.0) /
             //                    (static_cast<REAL_T> (1.0) +
@@ -181,7 +178,7 @@ namespace mas {
         }
 
         virtual const variable Evaluate(const std::vector<variable>& ages, size_t index) {
-            std::cout<<"max selx = "<<this->max<<"\n";
+
             variable a_ = 1.0 / (1.0 + mas::exp(-1.0 * (ages[index] - this->alpha_asc) / this->beta_asc));
             variable b_ = 1.0 - (1.0 / (1.0 + mas::exp(-1.0 * (ages[index] - this->alpha_desc) / this->beta_desc)));
 
