@@ -6,7 +6,7 @@ navbar:
     - reference
     - github
     - issue
-    - article
+    - articles
 
   components:
     home:
@@ -37,8 +37,6 @@ navbar:
       text: Vignettes
       icon: fas fa-file-contract fa-lg
       menu:
-      - text: Introduction
-        href: articles/001_Introduction.html
       - text: Model Comparison Project Example
         href: articles/002_ModelComparisonProjectExample.html
       - text: ASAP Case Study
