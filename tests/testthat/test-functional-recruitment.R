@@ -206,6 +206,7 @@ test_that(
     
     # build the MAS model
     mas_model <- new(r4mas$MASModel)
+    mas_model$compute_variance_for_derived_quantities<-FALSE
     mas_model$nyears <- nyears
     mas_model$nseasons <- nseasons
     mas_model$nages <- nages
@@ -283,7 +284,7 @@ test_that(
     recruitment$sigma_r$max <- 1.0
     recruitment$sigma_r$phase <- 2
     recruitment$estimate_deviations <- TRUE
-    recruitment$constrained_deviations <- FALSE
+    recruitment$constrained_deviations <- TRUE
     recruitment$deviations_min <- -15.0
     recruitment$deviations_max <- 15.0
     recruitment$deviation_phase <- 1
@@ -418,6 +419,7 @@ test_that(
     
     # build the MAS model
     mas_model <- new(r4mas$MASModel)
+    mas_model$compute_variance_for_derived_quantities<-FALSE
     mas_model$nyears <- nyears
     mas_model$nseasons <- nseasons
     mas_model$nages <- nages
@@ -465,7 +467,7 @@ test_that(
     expect <- om_output$N.age[, 1] / 1000
     
     for (i in 1:length(object)) {
-      expect_lt(abs(object[i] - expect[i]) / expect[i], 0.2) # <20%
+      expect_lt(abs(object[i] - expect[i]) / expect[i], 0.16) # <16%
     }
     
     # R0
@@ -483,40 +485,5 @@ test_that(
     expect_length(object, 1)
     expect_type(object, "double")
     
-  }
-)
-
-test_that(
-  "r4MAS Ricker recruit_expect works",
-  {
-    
-    test_path <- file.path(test_example_path, "functional_test_data")
-    source(file.path(test_path, "recruitment.R"))
-    mas_recruitment <- c()
-    
-    # Load module
-    r4mas <- Rcpp::Module("rmas", dyn.load(dll_path))
-    
-    for (i in 1:nrow(Ricker_data)){
-      recruitment <- new(r4mas$RickerRecruitment)
-      
-      recruitment$R0$value <- Ricker_data$r0[i]
-      recruitment$R0$estimated <- FALSE
-      recruitment$h$value <- Ricker_data$h[i]
-      recruitment$h$estimated <- FALSE
-      recruitment$sigma_r$value <- Ricker_data$sigma_r[i]
-      recruitment$sigma_r$estimated <- FALSE
-      recruitment$estimate_deviations <- FALSE
-      recruitment$SetDeviations(Ricker_data$deviation[i])
-      recruitment$use_bias_correction <- FALSE
-      mas_recruitment[i] <- recruitment$Evaluate(SB0 = Ricker_data$sb0[i], sb = Ricker_data$ssb[i])
-      
-    }
-    
-    expect_equal(
-      object = mas_recruitment,
-      expected = recruitment$recruit_expect,
-      tolerance = 1
-    ) # <1
   }
 )

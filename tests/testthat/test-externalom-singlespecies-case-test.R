@@ -66,7 +66,7 @@ test_that(
 
     # Maturity
     maturity <- new(r4mas$Maturity)
-    maturity$values <- om_input$mat.age * 0.5
+    maturity$values <- om_input$mat.age 
 
     # Natural Mortality
     natural_mortality <- new(r4mas$NaturalMortality)
@@ -74,15 +74,15 @@ test_that(
 
     # Define Movement (only 1 area in this model)
     movement <- new(r4mas$Movement)
-    movement$connectivity_females <- c(1.0)
-    movement$connectivity_males <- c(1.0)
-    movement$connectivity_recruits <- c(1.0)
+    movement$connectivity_females <- c(0.0)
+    movement$connectivity_males <- c(0.0)
+    movement$connectivity_recruits <- c(0.0)
 
     # Initial Deviations
     initial_deviations <- new(r4mas$InitialDeviations)
     initial_deviations$values <- rep(0.0, times = om_input$nages)
     initial_deviations$estimate <- TRUE
-    initial_deviations$phase <- 1
+    initial_deviations$phase <- 2
 
     population <- new(r4mas$Population)
     for (y in 1:(nyears))
@@ -185,6 +185,7 @@ test_that(
 
     # Build the MAS model
     mas_model <- new(r4mas$MASModel)
+    mas_model$compute_variance_for_derived_quantities<-FALSE
     mas_model$nyears <- nyears
     mas_model$nseasons <- nseasons
     mas_model$nages <- nages
@@ -302,7 +303,7 @@ test_that(
       y <- summary_table$OM[i]
 
       if (rownames(summary_table)[i] == "R0") {
-        expect_lt(abs(x - y) / y, 0.02) # <2%
+        expect_lt(abs(x - y) / y, 0.01) # <1%
       } else {
         expect_equal(x, y, tolerance = 0.1) # <0.1
       }
