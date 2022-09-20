@@ -7340,8 +7340,8 @@ public:
     int nyears;
     int nseasons;
     int nages;
-    int max_line_searches = 50;
-    int max_iterations = 1000;
+    int max_line_searches = 500;
+    int max_iterations = 5000;
     int print_interval = 10;
     double tolerance = 1e-4;
     double spawning_season_offset = 0.0;
