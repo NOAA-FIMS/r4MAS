@@ -136,7 +136,7 @@ jobs:
           for (x in 1:length(maturity)){
             temp <- new(r4mas$Maturity)
 
-            temp$values <- om_input[[x]]$mat.age*0.5
+            temp$values <- om_input[[x]]$mat.age
 
             maturity[[x]] <- temp
           }

@@ -20,6 +20,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -32,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">r4MAS</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
       </span>
     </div>
 
@@ -59,14 +61,14 @@
   </a>
 </li>
 <li>
-  <a href="https://github.com/nmfs-fish-tools/RMAS/">
+  <a href="https://github.com/nmfs-fish-tools/RMAS/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
     Source Code
   </a>
 </li>
 <li>
-  <a href="https://github.com/nmfs-fish-tools/RMAS/issues/">
+  <a href="https://github.com/nmfs-fish-tools/RMAS/issues/" class="external-link">
     <span class="fas fa-question-circle fa-lg"></span>
      
     Issues
@@ -82,9 +84,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/001_Introduction.html">Introduction</a>
-    </li>
-    <li>
       <a href="articles/002_ModelComparisonProjectExample.html">Model Comparison Project Example</a>
     </li>
     <li>
@@ -105,7 +104,15 @@
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/nmfs-fish-tools/RMAS/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+    Source Code
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -118,55 +125,55 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
-<div id="r4mas---r-interface-to-the-metapopulation-assessment-system" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#r4mas---r-interface-to-the-metapopulation-assessment-system" class="anchor"></a>r4MAS - R interface to the Metapopulation Assessment System</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="r4mas---r-interface-to-the-metapopulation-assessment-system">r4MAS - R interface to the Metapopulation Assessment System<a class="anchor" aria-label="anchor" href="#r4mas---r-interface-to-the-metapopulation-assessment-system"></a>
+</h1></div>
 
 <p>The Metapopulation Assessment System (MAS) is a modular tool for creating and fitting fisheries stock assessment models. The R interface to MAS (r4MAS) allows users to build and run MAS models directly using the <code>R</code> language. It also includes functions to help translate between MAS and other stock assessment software and to plot outputs of MAS models, including estimates of key biological and observation parameters and derived quantities such as biological reference points, estimated biomass, and estimated numbers-at-age.</p>
-<p>This tool is supported by the NOAA Fisheries Integrated Toolbox. More information can be found on the toolbox <a href="https://nmfs-fish-tools.github.io/r4MAS/">landing page</a></p>
+<p>This tool is supported by the NOAA Fisheries Integrated Toolbox. More information can be found on the toolbox <a href="https://nmfs-fish-tools.github.io/r4MAS/" class="external-link">landing page</a></p>
 </div>
-<div id="getting-started" class="section level1">
-<h1 class="hasAnchor">
-<a href="#getting-started" class="anchor"></a>Getting started</h1>
-<div id="installation-instructions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation-instructions" class="anchor"></a>Installation instructions</h2>
-<p>Since this package contains C++ files, you will need to ensure you have a C++ compiler installed. You can install a C++ compiler <a href="https://clang.llvm.org/">here</a>, please make sure it is C++14 or more recent.</p>
+<div class="section level1">
+<h1 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+</h1>
+<div class="section level2">
+<h2 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
+</h2>
+<p>Since this package contains C++ files, you will need to ensure you have a C++ compiler installed. You can install a C++ compiler <a href="https://clang.llvm.org/" class="external-link">here</a>, please make sure it is C++14 or more recent.</p>
 <p>You will also need to have the <code>Rcpp</code> package installed.</p>
 <p>Please install and load <code>r4MAS</code> from Github using the <code>remotes</code> package as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"nmfs-fish-tools/r4MAS"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://nmfs-fish-tools.github.io/r4MAS/">r4MAS</a></span><span class="op">)</span></code></pre></div>
-<p><strong>Windows users</strong>: Please ensure you have <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a>. If you receive errors related to C++ when loading r4MAS, it could be because your R installation uses the default Makevars.win file. To update your Makevars.win file, please run the following code in your R terminal:</p>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"nmfs-fish-tools/r4MAS"</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nmfs-fish-tools.github.io/r4MAS/" class="external-link">r4MAS</a></span><span class="op">)</span></code></pre></div>
+<p><strong>Windows users</strong>: Please ensure you have <a href="https://cran.r-project.org/bin/windows/Rtools/" class="external-link">Rtools</a>. If you receive errors related to C++ when loading r4MAS, it could be because your R installation uses the default Makevars.win file. To update your Makevars.win file, please run the following code in your R terminal:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dotR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv</a></span><span class="op">(</span><span class="st">"HOME"</span><span class="op">)</span>, <span class="st">".R"</span><span class="op">)</span>
-<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span><span class="op">(</span><span class="va">dotR</span><span class="op">)</span><span class="op">)</span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span><span class="op">(</span><span class="va">dotR</span><span class="op">)</span>
-<span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">dotR</span>, <span class="st">"Makevars.win"</span><span class="op">)</span>
-<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span><span class="op">)</span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/files.html">file.create</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\nCXX14FLAGS=-O3 -Wno-unused-variable -Wno-unused-function"</span>,
+<code class="sourceCode R"><span class="va">dotR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"HOME"</span><span class="op">)</span>, <span class="st">".R"</span><span class="op">)</span>
+<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="va">dotR</span><span class="op">)</span><span class="op">)</span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">dotR</span><span class="op">)</span>
+<span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dotR</span>, <span class="st">"Makevars.win"</span><span class="op">)</span>
+<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span><span class="op">)</span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.create</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"\nCXX14FLAGS=-O3 -Wno-unused-variable -Wno-unused-function"</span>,
     <span class="st">"CXX14 = $(BINPREF)g++ -m$(WIN) -std=c++1y"</span>,
     <span class="st">"CXX11FLAGS=-O3 -Wno-unused-variable -Wno-unused-function"</span>,
     file <span class="op">=</span> <span class="va">M</span>, sep <span class="op">=</span> <span class="st">"\n"</span>, append <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>To get notifications about <code>r4MAS</code>, you can watch this GitHub project.</p>
 </div>
-<div id="creating-a-model" class="section level2">
-<h2 class="hasAnchor">
-<a href="#creating-a-model" class="anchor"></a>Creating a model</h2>
+<div class="section level2">
+<h2 id="creating-a-model">Creating a model<a class="anchor" aria-label="anchor" href="#creating-a-model"></a>
+</h2>
 <p>Once you’ve installed the package and have confirmed you can load it, we recommend starting with the introductory <a href="vignettes/001_Introduction.Rmd">vignette</a> to see an example of building and running a simple model within r4MAS. The <a href="R/write_test_data.R">write_test_data()</a> function will generate simple dummy input data. You can replace these dummy data with your own data.</p>
 </div>
-<div id="disclaimer" class="section level2">
-<h2 class="hasAnchor">
-<a href="#disclaimer" class="anchor"></a>Disclaimer</h2>
+<div class="section level2">
+<h2 id="disclaimer">Disclaimer<a class="anchor" aria-label="anchor" href="#disclaimer"></a>
+</h2>
 <p>“The United States Department of Commerce (DOC) GitHub project code is provided on an ‘as is’ basis and the user assumes responsibility for its use. DOC has relinquished control of the information and no longer has responsibility to protect the integrity, confidentiality, or availability of the information. Any claims against the Department of Commerce stemming from the use of its GitHub project will be governed by all applicable Federal law. Any reference to specific commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their endorsement, recommendation or favoring by the Department of Commerce. The Department of Commerce seal and logo, or the seal and logo of a DOC bureau, shall not be used in any manner to imply endorsement of any commercial product or activity by DOC or the United States Government.”</p>
 <ul>
-<li>This project code is made available through GitHub but is managed by NOAA at <a href="https://vlab.ncep.noaa.gov/redmine/projects/integrated-fisheries-toolbox/files" class="uri">https://vlab.ncep.noaa.gov/redmine/projects/integrated-fisheries-toolbox/files</a>
+<li>This project code is made available through GitHub but is managed by NOAA at <a href="https://vlab.ncep.noaa.gov/redmine/projects/integrated-fisheries-toolbox/files" class="external-link uri">https://vlab.ncep.noaa.gov/redmine/projects/integrated-fisheries-toolbox/files</a>
 </li>
 </ul>
 <p><img src="https://raw.githubusercontent.com/nmfs-general-modeling-tools/nmfspalette/main/man/figures/noaa-fisheries-rgb-2line-horizontal-small.png" height="75" alt="NOAA Fisheries"></p>
-<p><a href="https://www.commerce.gov/">U.S. Department of Commerce</a> | <a href="https://www.noaa.gov">National Oceanographic and Atmospheric Administration</a> | <a href="https://www.fisheries.noaa.gov/">NOAA Fisheries</a></p>
+<p><a href="https://www.commerce.gov/" class="external-link">U.S. Department of Commerce</a> | <a href="https://www.noaa.gov" class="external-link">National Oceanographic and Atmospheric Administration</a> | <a href="https://www.fisheries.noaa.gov/" class="external-link">NOAA Fisheries</a></p>
 </div>
 </div>
 
@@ -174,43 +181,54 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/nmfs-fish-tools/r4MAS/">https://​github.com/​nmfs-fish-tools/​r4MAS/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/nmfs-fish-tools/r4MAS/issues">https://​github.com/​nmfs-fish-tools/​r4MAS/​issues</a>
-</li>
+<li><a href="https://github.com/nmfs-fish-tools/r4MAS/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/nmfs-fish-tools/r4MAS/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
+<li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing r4MAS</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Christine Stawitz <br><small class="roles"> Maintainer </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/nmfs-fish-tools/r4MAS/actions/workflows/R-CMD-check-and-Release.yml"><img src="https://github.com/nmfs-fish-tools/r4MAS/actions/workflows/R-CMD-check-and-Release.yml/badge.svg" alt="R-CMD-check and release"></a></li>
+<li><a href="https://github.com/nmfs-fish-tools/r4MAS/actions/workflows/R-CMD-check-and-Release.yml" class="external-link"><img src="https://github.com/nmfs-fish-tools/r4MAS/actions/workflows/R-CMD-check-and-Release.yml/badge.svg" alt="R-CMD-check and release"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Christine Stawitz.</p>
+  <p></p>
+<p>Developed by Christine Stawitz.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -218,6 +236,8 @@
 
   
 
+
+  
 
   </body>
 </html>
