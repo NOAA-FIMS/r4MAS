@@ -165,7 +165,7 @@ growth$beta_m$value <- om_input$b.lw
 ### Maturity settings
 ```{r}
 maturity <- new(r4mas$Maturity)
-maturity$values <- om_input$mat.age * 0.5
+maturity$values <- om_input$mat.age 
 ```
 
 ### Natural mortality settings

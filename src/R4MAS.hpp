@@ -198,9 +198,7 @@ public:
     static int id_g;
 
     SelectivityBase() {
-        cv.value = 0.05;
-        sigma.value = 0.85;
-        sigma2.value = 0.7225;
+
     }
 
     virtual ~SelectivityBase() {
@@ -260,9 +258,11 @@ public:
         mas::VariableTrait<double>::SetMinBoundary(sel->s, slope.min);
         mas::VariableTrait<double>::SetMaxBoundary(sel->s, slope.max);
 
+
         mas::VariableTrait<double>::SetValue(sel->cv, this->cv.value);
         mas::VariableTrait<double>::SetMinBoundary(sel->cv, this->cv.min);
         mas::VariableTrait<double>::SetMaxBoundary(sel->cv, this->cv.max);
+
 
         mas::VariableTrait<double>::SetValue(sel->sigma, sigma.value);
         mas::VariableTrait<double>::SetMinBoundary(sel->sigma, sigma.min);
@@ -416,6 +416,7 @@ public:
 
     DoubleLogisticSelectivity() : SelectivityBase() {
         cv.value = 0.05;
+
         this->id = SelectivityBase::id_g++;
         DoubleLogisticSelectivity::initialized_models[this->id] = this;
         MASSubModel::submodels.push_back(this);
@@ -1399,6 +1400,7 @@ public:
         r->recruitment_deviations_constrained = this->constrained_deviations;
 
         if (this->estimate_deviations) {
+            r->estimating_recruitment_deviations = true;
             for (int i = 0; i < info.nyears; i++) {
                 std::stringstream ss;
                 ss << "recruitment_deviations[" << i << "]_" << this->id;
@@ -1758,6 +1760,7 @@ public:
         r->recruitment_deviations_constrained = this->constrained_deviations;
 
         if (this->estimate_deviations) {
+            r->estimating_recruitment_deviations = true;
             for (int i = 0; i < info.nyears; i++) {
                 std::stringstream ss;
                 ss << "recruitment_deviations[" << i << "]_" << this->id;
@@ -2084,6 +2087,7 @@ public:
         r->recruitment_deviations_constrained = this->constrained_deviations;
 
         if (this->estimate_deviations) {
+            r->estimating_recruitment_deviations = true;
             for (int i = 0; i < info.nyears; i++) {
                 std::stringstream ss;
                 ss << "recruitment_deviations[" << i << "]_" << this->id;
@@ -7336,8 +7340,8 @@ public:
     int nyears;
     int nseasons;
     int nages;
-    int max_line_searches = 50;
-    int max_iterations = 1000;
+    int max_line_searches = 500;
+    int max_iterations = 5000;
     int print_interval = 10;
     double tolerance = 1e-4;
     double spawning_season_offset = 0.0;
@@ -7913,9 +7917,7 @@ RCPP_MODULE(rmas) {
             .field("sigma", &DoubleLogisticSelectivity::sigma)
             .field("sigma2", &DoubleLogisticSelectivity::sigma2)
             .field("cv", &DoubleLogisticSelectivity::cv)
-            .field("id", &DoubleLogisticSelectivity::id)
-            ;
-
+            .field("id", &DoubleLogisticSelectivity::id);
     class_<FishingMortality>("FishingMortality")
             .constructor()
             .method("SetValues", &FishingMortality::SetValues)

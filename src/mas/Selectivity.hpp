@@ -48,6 +48,7 @@ namespace mas {
         variable sigma = 0.85;
         variable sigma2 = 0.7225;
         variable cv = 0.01;
+        variable max = 0.0;
 
         std::vector<variable> selectivity;
 
@@ -55,8 +56,12 @@ namespace mas {
             if (this->selectivity.size() != ages.size()) {
                 this->selectivity.resize(ages.size());
             }
+            this->max = 0.0;
             for (size_t i = 0; i < this->selectivity.size(); i++) {
                 this->selectivity[i] = this->Evaluate(ages, i);
+                if(this->selectivity[i] > this->max){
+                    this->max = this->selectivity[i];
+                }
             }
         }
 
@@ -74,7 +79,8 @@ namespace mas {
 
         virtual variable LikelihoodComponent(int phase) {
 
-            assert(this->initial_parameter_values.size() == this->estimated_parameters.size());
+//            assert(this->initial_parameter_values.size() == this->estimated_parameters.size());
+
             variable ret = 0.0;
 //            for (int i = 0; i < this->estimated_parameters.size(); i++) {
 //                if (this->estimated_phase[i] <= phase) {
@@ -158,23 +164,25 @@ namespace mas {
          */
         virtual const variable Evaluate(const variable& a) {
 
+
             variable a_ = 1.0 / (1.0 + mas::exp(-1.0 * (a - this->alpha_asc) / this->beta_asc));
             variable b_ = 1.0 - (1.0 / (1.0 + mas::exp(-1.0 * (a - this->alpha_desc) / this->beta_desc)));
-
-            return a_*b_;
+            return (a_*b_)/this->max;
             //            return (static_cast<REAL_T> (1.0) /
             //                    (static_cast<REAL_T> (1.0) +
             //                    mas::mfexp(-beta_asc * (a - alpha_asc)))) *
             //                    (static_cast<REAL_T> (1.0) - (static_cast<REAL_T> (1.0) /
             //                    (static_cast<REAL_T> (1.0) +
             //                    mas::mfexp(-beta_desc * (a - alpha_desc)))));
+
         }
 
         virtual const variable Evaluate(const std::vector<variable>& ages, size_t index) {
+
             variable a_ = 1.0 / (1.0 + mas::exp(-1.0 * (ages[index] - this->alpha_asc) / this->beta_asc));
             variable b_ = 1.0 - (1.0 / (1.0 + mas::exp(-1.0 * (ages[index] - this->alpha_desc) / this->beta_desc)));
 
-            return a_*b_;
+            return (a_*b_);
             //            return (static_cast<REAL_T> (1.0) /
             //                    (static_cast<REAL_T> (1.0) +
             //                    mas::mfexp(-beta_asc * (ages[index] - alpha_asc)))) *

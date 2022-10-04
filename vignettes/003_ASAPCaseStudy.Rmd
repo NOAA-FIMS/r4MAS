@@ -334,6 +334,7 @@ for (i in 1:survey_num) {
 
 mas_model <- new(r4mas$MASModel)
 
+mas_model$compute_variance_for_derived_quantities<-FALSE
 mas_model$nyears <- nyears
 mas_model$nseasons <- nseasons
 mas_model$nages <- nages

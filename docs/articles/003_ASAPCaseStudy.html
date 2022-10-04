@@ -20,6 +20,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -32,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r4MAS</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
       </span>
     </div>
 
@@ -59,14 +61,14 @@
   </a>
 </li>
 <li>
-  <a href="https://github.com/nmfs-fish-tools/RMAS/">
+  <a href="https://github.com/nmfs-fish-tools/RMAS/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
     Source Code
   </a>
 </li>
 <li>
-  <a href="https://github.com/nmfs-fish-tools/RMAS/issues/">
+  <a href="https://github.com/nmfs-fish-tools/RMAS/issues/" class="external-link">
     <span class="fas fa-question-circle fa-lg"></span>
      
     Issues
@@ -82,9 +84,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/001_Introduction.html">Introduction</a>
-    </li>
-    <li>
       <a href="../articles/002_ModelComparisonProjectExample.html">Model Comparison Project Example</a>
     </li>
     <li>
@@ -105,7 +104,15 @@
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/nmfs-fish-tools/RMAS/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+    Source Code
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -115,62 +122,62 @@
 
       
 
-      </header><script src="003_ASAPCaseStudy_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>ASAP Case Study</h1>
             
-            <h4 class="date">Updated on 12/06/2021</h4>
+            <h4 data-toc-skip class="date">Updated on 02/17/2022</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/nmfs-fish-tools/r4MAS/blob/master/vignettes/003_ASAPCaseStudy.Rmd"><code>vignettes/003_ASAPCaseStudy.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/nmfs-fish-tools/r4MAS/blob/HEAD/../../vignettes/003_ASAPCaseStudy.Rmd" class="external-link"><code>../../vignettes/003_ASAPCaseStudy.Rmd</code></a></small>
       <div class="hidden name"><code>003_ASAPCaseStudy.Rmd</code></div>
 
     </div>
 
     
     
-<div id="install-and-library-packages" class="section level2">
-<h2 class="hasAnchor">
-<a href="#install-and-library-packages" class="anchor"></a>Install and library packages</h2>
+<div class="section level2">
+<h2 id="install-and-library-packages">Install and library packages<a class="anchor" aria-label="anchor" href="#install-and-library-packages"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"nmfs-fish-tools/r4MAS"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"jsonlite"</span><span class="op">)</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"nmfs-general-modeling-tools/nmfspalette"</span><span class="op">)</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"nmfs-fish-tools/fishsad"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"nmfs-fish-tools/r4MAS"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"jsonlite"</span><span class="op">)</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"nmfs-general-modeling-tools/nmfspalette"</span><span class="op">)</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"nmfs-fish-tools/fishsad"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://nmfs-fish-tools.github.io/r4MAS/">r4MAS</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.rcpp.org">Rcpp</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://arxiv.org/abs/1403.2805">jsonlite</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">fishsad</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">nmfspalette</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nmfs-fish-tools.github.io/r4MAS/" class="external-link">r4MAS</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.rcpp.org" class="external-link">Rcpp</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://arxiv.org/abs/1403.2805" class="external-link">jsonlite</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">fishsad</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">nmfspalette</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="read-asap-input-file" class="section level2">
-<h2 class="hasAnchor">
-<a href="#read-asap-input-file" class="anchor"></a>Read ASAP input file</h2>
+<div class="section level2">
+<h2 id="read-asap-input-file">Read ASAP input file<a class="anchor" aria-label="anchor" href="#read-asap-input-file"></a>
+</h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Working directory</span>
-<span class="va">temp_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">temp_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># Read ASAP input data</span>
-<span class="va">asap_input</span> <span class="op">&lt;-</span> <span class="fu">fishsad</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/fishsad/man/asap_simple.html">asap_simple</a></span><span class="op">$</span><span class="va">input</span><span class="op">$</span><span class="va">dat</span>
-<span class="va">asap_output</span> <span class="op">&lt;-</span> <span class="fu">fishsad</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/fishsad/man/asap_simple.html">asap_simple</a></span><span class="op">$</span><span class="va">output</span></code></pre></div>
+<span class="va">asap_input</span> <span class="op">&lt;-</span> <span class="fu">fishsad</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/fishsad/man/asap_simple.html" class="external-link">asap_simple</a></span><span class="op">$</span><span class="va">input</span><span class="op">$</span><span class="va">dat</span>
+<span class="va">asap_output</span> <span class="op">&lt;-</span> <span class="fu">fishsad</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/fishsad/man/asap_simple.html" class="external-link">asap_simple</a></span><span class="op">$</span><span class="va">output</span></code></pre></div>
 </div>
-<div id="convert-asap-inputs-to-mas-inputs" class="section level2">
-<h2 class="hasAnchor">
-<a href="#convert-asap-inputs-to-mas-inputs" class="anchor"></a>Convert ASAP inputs to MAS inputs</h2>
+<div class="section level2">
+<h2 id="convert-asap-inputs-to-mas-inputs">Convert ASAP inputs to MAS inputs<a class="anchor" aria-label="anchor" href="#convert-asap-inputs-to-mas-inputs"></a>
+</h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Load r4MAS module</span>
-<span class="va">r4mas</span> <span class="op">&lt;-</span> <span class="fu">Rcpp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Rcpp/man/Module.html">Module</a></span><span class="op">(</span><span class="st">"rmas"</span>, PACKAGE <span class="op">=</span> <span class="st">"r4MAS"</span><span class="op">)</span>
+<span class="va">r4mas</span> <span class="op">&lt;-</span> <span class="fu">Rcpp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Rcpp/man/Module.html" class="external-link">Module</a></span><span class="op">(</span><span class="st">"rmas"</span>, PACKAGE <span class="op">=</span> <span class="st">"r4MAS"</span><span class="op">)</span>
 
 <span class="co"># Find the path of dynamically-loaded file with extension .so on Linux, .dylib on OS X or .dll on Windows</span>
-<span class="va">libs_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"libs"</span>, package <span class="op">=</span> <span class="st">"r4MAS"</span><span class="op">)</span>
-<span class="va">dll_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"r4MAS"</span>, <span class="va">.Platform</span><span class="op">$</span><span class="va">dynlib.ext</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>
+<span class="va">libs_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"libs"</span>, package <span class="op">=</span> <span class="st">"r4MAS"</span><span class="op">)</span>
+<span class="va">dll_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"r4MAS"</span>, <span class="va">.Platform</span><span class="op">$</span><span class="va">dynlib.ext</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>
 <span class="kw">if</span> <span class="op">(</span><span class="va">.Platform</span><span class="op">$</span><span class="va">OS.type</span> <span class="op">==</span> <span class="st">"windows"</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">dll_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">libs_path</span>, <span class="va">.Platform</span><span class="op">$</span><span class="va">r_arch</span>, <span class="va">dll_name</span><span class="op">)</span>
+  <span class="va">dll_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">libs_path</span>, <span class="va">.Platform</span><span class="op">$</span><span class="va">r_arch</span>, <span class="va">dll_name</span><span class="op">)</span>
 <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
-  <span class="va">dll_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">libs_path</span>, <span class="va">dll_name</span><span class="op">)</span>
+  <span class="va">dll_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">libs_path</span>, <span class="va">dll_name</span><span class="op">)</span>
 <span class="op">}</span>
-<span class="va">r4mas</span> <span class="op">&lt;-</span> <span class="fu">Rcpp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Rcpp/man/Module.html">Module</a></span><span class="op">(</span><span class="st">"rmas"</span>, <span class="fu"><a href="https://rdrr.io/r/base/dynload.html">dyn.load</a></span><span class="op">(</span><span class="va">dll_path</span><span class="op">)</span><span class="op">)</span>
+<span class="va">r4mas</span> <span class="op">&lt;-</span> <span class="fu">Rcpp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Rcpp/man/Module.html" class="external-link">Module</a></span><span class="op">(</span><span class="st">"rmas"</span>, <span class="fu"><a href="https://rdrr.io/r/base/dynload.html" class="external-link">dyn.load</a></span><span class="op">(</span><span class="va">dll_path</span><span class="op">)</span><span class="op">)</span>
 <span class="co"># General settings</span>
 <span class="va">nyears</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">n_years</span>
 
@@ -180,68 +187,68 @@
 
 <span class="va">ages</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="va">asap_input</span><span class="op">$</span><span class="va">n_ages</span>
 
-<span class="va">area1</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Area</span><span class="op">)</span>
+<span class="va">area1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Area</span><span class="op">)</span>
 <span class="va">area1</span><span class="op">$</span><span class="va">name</span> <span class="op">&lt;-</span> <span class="st">"area1"</span>
 
 <span class="co"># Recruitment settings</span>
-<span class="va">recruitment</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">BevertonHoltRecruitment</span><span class="op">)</span>
+<span class="va">recruitment</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">BevertonHoltRecruitment</span><span class="op">)</span>
 
 <span class="va">recruitment</span><span class="op">$</span><span class="va">R0</span><span class="op">$</span><span class="va">value</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">SR_scalar_ini</span> <span class="op">/</span> <span class="fl">1000</span>
 <span class="va">recruitment</span><span class="op">$</span><span class="va">R0</span><span class="op">$</span><span class="va">estimated</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">phase_SR_scalar</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># TRUE</span>
-<span class="va">recruitment</span><span class="op">$</span><span class="va">R0</span><span class="op">$</span><span class="va">phase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">phase_SR_scalar</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">phase_SR_scalar</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># TRUE</span>
+<span class="va">recruitment</span><span class="op">$</span><span class="va">R0</span><span class="op">$</span><span class="va">phase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">phase_SR_scalar</span><span class="op">)</span>
 
 <span class="va">recruitment</span><span class="op">$</span><span class="va">h</span><span class="op">$</span><span class="va">value</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">steepness_ini</span>
 <span class="va">recruitment</span><span class="op">$</span><span class="va">h</span><span class="op">$</span><span class="va">estimated</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">phase_steepness</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># TRUE</span>
-<span class="va">recruitment</span><span class="op">$</span><span class="va">h</span><span class="op">$</span><span class="va">phase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">phase_steepness</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">phase_steepness</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># TRUE</span>
+<span class="va">recruitment</span><span class="op">$</span><span class="va">h</span><span class="op">$</span><span class="va">phase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">phase_steepness</span><span class="op">)</span>
 <span class="va">recruitment</span><span class="op">$</span><span class="va">h</span><span class="op">$</span><span class="va">min</span> <span class="op">&lt;-</span> <span class="fl">0.2001</span>
 <span class="va">recruitment</span><span class="op">$</span><span class="va">h</span><span class="op">$</span><span class="va">max</span> <span class="op">&lt;-</span> <span class="fl">1.0</span>
 
-<span class="va">recruitment</span><span class="op">$</span><span class="va">sigma_r</span><span class="op">$</span><span class="va">value</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">recruit_cv</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<span class="va">recruitment</span><span class="op">$</span><span class="va">sigma_r</span><span class="op">$</span><span class="va">value</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">recruit_cv</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="va">recruitment</span><span class="op">$</span><span class="va">sigma_r</span><span class="op">$</span><span class="va">estimated</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span>
 <span class="va">recruitment</span><span class="op">$</span><span class="va">sigma_r</span><span class="op">$</span><span class="va">min</span> <span class="op">&lt;-</span> <span class="fl">0</span>
 <span class="va">recruitment</span><span class="op">$</span><span class="va">sigma_r</span><span class="op">$</span><span class="va">max</span> <span class="op">&lt;-</span> <span class="fl">3</span>
 <span class="va">recruitment</span><span class="op">$</span><span class="va">sigma_r</span><span class="op">$</span><span class="va">phase</span> <span class="op">&lt;-</span> <span class="fl">2</span>
 
 <span class="va">recruitment</span><span class="op">$</span><span class="va">estimate_deviations</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">phase_rec_devs</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># TRUE</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">phase_rec_devs</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># TRUE</span>
 <span class="va">recruitment</span><span class="op">$</span><span class="va">constrained_deviations</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span>
 <span class="va">recruitment</span><span class="op">$</span><span class="va">deviations_min</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">15.0</span>
 <span class="va">recruitment</span><span class="op">$</span><span class="va">deviations_max</span> <span class="op">&lt;-</span> <span class="fl">15.0</span>
-<span class="va">recruitment</span><span class="op">$</span><span class="va">deviation_phase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">phase_rec_devs</span><span class="op">)</span>
-<span class="va">recruitment</span><span class="op">$</span><span class="fu">SetDeviations</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">nyears</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">recruit_cv</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">recruitment</span><span class="op">$</span><span class="va">deviation_phase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">phase_rec_devs</span><span class="op">)</span>
+<span class="va">recruitment</span><span class="op">$</span><span class="fu">SetDeviations</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">nyears</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">recruit_cv</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="va">recruitment</span><span class="op">$</span><span class="va">use_bias_correction</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span>
 
 <span class="co"># Growth settings</span>
-<span class="va">growth</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">VonBertalanffyModified</span><span class="op">)</span>
+<span class="va">growth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">VonBertalanffyModified</span><span class="op">)</span>
 
 <span class="va">fleet_num</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">n_fleets</span>
 <span class="va">catch_waa_pointer</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">WAA_pointers</span><span class="op">[</span><span class="va">fleet_num</span> <span class="op">*</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">1</span><span class="op">]</span>
 <span class="va">catch_empirical_weight</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">WAA_mats</span><span class="op">[[</span><span class="va">catch_waa_pointer</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="co"># Total catch</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">WAA_mats</span><span class="op">[[</span><span class="va">catch_waa_pointer</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="co"># Total catch</span>
 
 <span class="va">ssb_waa_pointer</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">WAA_pointers</span><span class="op">[</span><span class="va">fleet_num</span> <span class="op">*</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">1</span><span class="op">]</span>
 <span class="va">ssb_empirical_weight</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">WAA_mats</span><span class="op">[[</span><span class="va">ssb_waa_pointer</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">WAA_mats</span><span class="op">[[</span><span class="va">ssb_waa_pointer</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">jan1_waa_pointer</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">WAA_pointers</span><span class="op">[</span><span class="va">fleet_num</span> <span class="op">*</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">2</span><span class="op">]</span>
 <span class="va">jan1_empirical_weight</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">WAA_mats</span><span class="op">[[</span><span class="va">jan1_waa_pointer</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">WAA_mats</span><span class="op">[[</span><span class="va">jan1_waa_pointer</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">survey_num</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="co"># Need to be updated using the code below when MAS can have multiple surveys with different unit</span>
 <span class="co"># survey_num &lt;- asap_input$n_indices</span>
-<span class="va">survey_empirical_weight</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">survey_num</span><span class="op">)</span>
+<span class="va">survey_empirical_weight</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">survey_num</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">survey_num</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">survey_waa_pointer</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">index_WAA_pointers</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>
-  <span class="va">survey_waa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">WAA_mats</span><span class="op">[[</span><span class="va">survey_waa_pointer</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+  <span class="va">survey_waa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">WAA_mats</span><span class="op">[[</span><span class="va">survey_waa_pointer</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
 
   <span class="kw">if</span> <span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">index_units</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">{</span>
     <span class="va">survey_empirical_weight</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">survey_waa</span>
   <span class="op">}</span> <span class="co"># Survey unit is biomass</span>
 
   <span class="kw">if</span> <span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">index_units</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">survey_empirical_weight</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span><span class="op">(</span><span class="va">nages</span> <span class="op">*</span> <span class="va">nyears</span>, <span class="fl">1.0</span><span class="op">)</span>
+    <span class="va">survey_empirical_weight</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="va">nages</span> <span class="op">*</span> <span class="va">nyears</span>, <span class="fl">1.0</span><span class="op">)</span>
   <span class="op">}</span> <span class="co"># Survey unit is number</span>
 <span class="op">}</span>
 
@@ -251,28 +258,28 @@
 <span class="va">growth</span><span class="op">$</span><span class="fu">SetUndifferentiatedSurveyWeight</span><span class="op">(</span><span class="va">survey_empirical_weight</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
 
 <span class="co"># Maturity settings</span>
-<span class="va">maturity</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Maturity</span><span class="op">)</span>
+<span class="va">maturity</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Maturity</span><span class="op">)</span>
 <span class="va">maturity</span><span class="op">$</span><span class="va">values</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">maturity</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>
 
 <span class="co"># Natural mortality settings</span>
-<span class="va">natural_mortality</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">NaturalMortality</span><span class="op">)</span>
+<span class="va">natural_mortality</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">NaturalMortality</span><span class="op">)</span>
 <span class="va">natural_mortality</span><span class="op">$</span><span class="fu">SetValues</span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">M</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span><span class="op">)</span>
 
 <span class="co"># Movement settings</span>
-<span class="va">movement</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Movement</span><span class="op">)</span>
-<span class="va">movement</span><span class="op">$</span><span class="va">connectivity_females</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.0</span><span class="op">)</span>
-<span class="va">movement</span><span class="op">$</span><span class="va">connectivity_males</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.0</span><span class="op">)</span>
-<span class="va">movement</span><span class="op">$</span><span class="va">connectivity_recruits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.0</span><span class="op">)</span>
+<span class="va">movement</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Movement</span><span class="op">)</span>
+<span class="va">movement</span><span class="op">$</span><span class="va">connectivity_females</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.0</span><span class="op">)</span>
+<span class="va">movement</span><span class="op">$</span><span class="va">connectivity_males</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.0</span><span class="op">)</span>
+<span class="va">movement</span><span class="op">$</span><span class="va">connectivity_recruits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.0</span><span class="op">)</span>
 
 <span class="co"># Initial deviations</span>
-<span class="va">initial_deviations</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">InitialDeviations</span><span class="op">)</span>
-<span class="va">initial_deviations</span><span class="op">$</span><span class="va">values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0.0</span>, times <span class="op">=</span> <span class="va">nages</span><span class="op">)</span>
+<span class="va">initial_deviations</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">InitialDeviations</span><span class="op">)</span>
+<span class="va">initial_deviations</span><span class="op">$</span><span class="va">values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.0</span>, times <span class="op">=</span> <span class="va">nages</span><span class="op">)</span>
 <span class="va">initial_deviations</span><span class="op">$</span><span class="va">estimate</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">phase_N1_devs</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># TRUE</span>
-<span class="va">initial_deviations</span><span class="op">$</span><span class="va">phase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">phase_N1_devs</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">phase_N1_devs</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># TRUE</span>
+<span class="va">initial_deviations</span><span class="op">$</span><span class="va">phase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">phase_N1_devs</span><span class="op">)</span>
 
 <span class="co"># Create population</span>
-<span class="va">population</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Population</span><span class="op">)</span>
+<span class="va">population</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Population</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">y</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="va">nyears</span><span class="op">)</span><span class="op">)</span>
 <span class="op">{</span>
   <span class="va">population</span><span class="op">$</span><span class="fu">AddMovement</span><span class="op">(</span><span class="va">movement</span><span class="op">$</span><span class="va">id</span>, <span class="va">y</span><span class="op">)</span>
@@ -286,39 +293,39 @@
 <span class="va">population</span><span class="op">$</span><span class="va">sex_ratio</span> <span class="op">&lt;-</span> <span class="fl">0.5</span> <span class="co"># need to be updated with sex_ratio &lt;- 1 after resolving the issue here (https://github.com/nmfs-fish-tools/r4MAS/issues/35) to match the assumption from ASAP.</span>
 
 <span class="co"># Catch index values and observation errors</span>
-<span class="va">catch_index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">fleet_num</span><span class="op">)</span>
+<span class="va">catch_index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">fleet_num</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">fleet_num</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">catch_index</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">IndexData</span><span class="op">)</span>
+  <span class="va">catch_index</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">IndexData</span><span class="op">)</span>
   <span class="va">catch_index</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">values</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">CAA_mats</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="op">(</span><span class="va">nages</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">]</span>
   <span class="va">catch_index</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">error</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">catch_cv</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span>
 <span class="op">}</span>
 
 <span class="co"># Catch composition data</span>
-<span class="va">catch_comp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">fleet_num</span><span class="op">)</span>
+<span class="va">catch_comp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">fleet_num</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">fleet_num</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">catch_comp</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">AgeCompData</span><span class="op">)</span>
-  <span class="va">catch_comp</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">CAA_mats</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">nages</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+  <span class="va">catch_comp</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">AgeCompData</span><span class="op">)</span>
+  <span class="va">catch_comp</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">CAA_mats</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">nages</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
   <span class="va">catch_comp</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">sample_size</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">catch_Neff</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span>
 <span class="op">}</span>
 
 <span class="co"># Likelihood component settings</span>
-<span class="va">fleet_index_comp_nll</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">fleet_num</span><span class="op">)</span>
-<span class="va">fleet_age_comp_nll</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">fleet_num</span><span class="op">)</span>
+<span class="va">fleet_index_comp_nll</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">fleet_num</span><span class="op">)</span>
+<span class="va">fleet_age_comp_nll</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">fleet_num</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">fleet_num</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">fleet_index_comp_nll</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Lognormal</span><span class="op">)</span>
+  <span class="va">fleet_index_comp_nll</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Lognormal</span><span class="op">)</span>
   <span class="va">fleet_index_comp_nll</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">use_bias_correction</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span>
 
-  <span class="va">fleet_age_comp_nll</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Multinomial</span><span class="op">)</span>
+  <span class="va">fleet_age_comp_nll</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Multinomial</span><span class="op">)</span>
 <span class="op">}</span>
 
 
 <span class="co"># Fleet selectivity settings</span>
-<span class="va">fleet_selectivity</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">fleet_num</span><span class="op">)</span>
+<span class="va">fleet_selectivity</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">fleet_num</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">fleet_num</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">selectivity_option</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">sel_block_option</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>
 
   <span class="kw">if</span> <span class="op">(</span><span class="va">selectivity_option</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">fleet_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">AgeBasedSelectivity</span><span class="op">)</span>
+    <span class="va">fleet_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">AgeBasedSelectivity</span><span class="op">)</span>
     <span class="va">fleet_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">estimated</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span> <span class="co"># if it is age based selectivity, can you estimate some values and fix the other values?</span>
     <span class="va">fleet_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">phase</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="co"># if it is age based selectivity, can you estimate some values and fix the other values?</span>
     <span class="co"># fleet_selectivity$estimated &lt;-</span>
@@ -329,16 +336,16 @@
   <span class="op">}</span>
 
   <span class="kw">if</span> <span class="op">(</span><span class="va">selectivity_option</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">fleet_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">LogisticSelectivity</span><span class="op">)</span>
+    <span class="va">fleet_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">LogisticSelectivity</span><span class="op">)</span>
     <span class="va">fleet_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">a50</span><span class="op">$</span><span class="va">value</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">sel_ini</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">(</span><span class="va">nages</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span>, <span class="fl">1</span><span class="op">]</span>
     <span class="va">fleet_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">a50</span><span class="op">$</span><span class="va">estimated</span> <span class="op">&lt;-</span>
-      <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">sel_ini</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">(</span><span class="va">nages</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span>, <span class="fl">2</span><span class="op">]</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">sel_ini</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">(</span><span class="va">nages</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span>, <span class="fl">2</span><span class="op">]</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span>
     <span class="va">fleet_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">a50</span><span class="op">$</span><span class="va">phase</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">sel_ini</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">(</span><span class="va">nages</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span>, <span class="fl">2</span><span class="op">]</span>
     <span class="va">fleet_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">a50</span><span class="op">$</span><span class="va">min</span> <span class="op">&lt;-</span> <span class="fl">0.0001</span>
     <span class="va">fleet_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">a50</span><span class="op">$</span><span class="va">max</span> <span class="op">&lt;-</span> <span class="va">nages</span>
 
     <span class="va">fleet_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">slope</span><span class="op">$</span><span class="va">value</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">sel_ini</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">(</span><span class="va">nages</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>, <span class="fl">1</span><span class="op">]</span>
-    <span class="va">fleet_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">slope</span><span class="op">$</span><span class="va">estimated</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">sel_ini</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">(</span><span class="va">nages</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>, <span class="fl">2</span><span class="op">]</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span>
+    <span class="va">fleet_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">slope</span><span class="op">$</span><span class="va">estimated</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">sel_ini</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">(</span><span class="va">nages</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>, <span class="fl">2</span><span class="op">]</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span>
     <span class="va">fleet_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">slope</span><span class="op">$</span><span class="va">phase</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">sel_ini</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">(</span><span class="va">nages</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>, <span class="fl">2</span><span class="op">]</span>
     <span class="va">fleet_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">slope</span><span class="op">$</span><span class="va">min</span> <span class="op">&lt;-</span> <span class="fl">0.0001</span>
     <span class="va">fleet_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">slope</span><span class="op">$</span><span class="va">max</span> <span class="op">&lt;-</span> <span class="va">nages</span>
@@ -348,18 +355,18 @@
 <span class="op">}</span>
 
 <span class="co"># Fishing mortality settings</span>
-<span class="va">fishing_mortality</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">FishingMortality</span><span class="op">)</span>
+<span class="va">fishing_mortality</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">FishingMortality</span><span class="op">)</span>
 <span class="va">fishing_mortality</span><span class="op">$</span><span class="va">estimate</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span>
 <span class="va">fishing_mortality</span><span class="op">$</span><span class="va">phase</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">phase_F1</span>
 <span class="va">fishing_mortality</span><span class="op">$</span><span class="va">min</span> <span class="op">&lt;-</span> <span class="fl">0.0</span>
 <span class="va">fishing_mortality</span><span class="op">$</span><span class="va">max</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">Fmax</span>
-<span class="va">fishing_mortality</span><span class="op">$</span><span class="fu">SetValues</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">F1_ini</span>, <span class="va">nyears</span><span class="op">)</span><span class="op">)</span>
+<span class="va">fishing_mortality</span><span class="op">$</span><span class="fu">SetValues</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">F1_ini</span>, <span class="va">nyears</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Create the fleet</span>
-<span class="va">fleet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">fleet_num</span><span class="op">)</span>
+<span class="va">fleet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">fleet_num</span><span class="op">)</span>
 
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">fleet_num</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">fleet</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Fleet</span><span class="op">)</span>
+  <span class="va">fleet</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Fleet</span><span class="op">)</span>
   <span class="va">fleet</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">AddIndexData</span><span class="op">(</span><span class="va">catch_index</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">id</span>, <span class="st">"undifferentiated"</span><span class="op">)</span>
   <span class="va">fleet</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">AddAgeCompData</span><span class="op">(</span><span class="va">catch_comp</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">id</span>, <span class="st">"undifferentiated"</span><span class="op">)</span>
   <span class="va">fleet</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">SetIndexNllComponent</span><span class="op">(</span><span class="va">fleet_index_comp_nll</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">id</span><span class="op">)</span>
@@ -370,39 +377,39 @@
 
 
 <span class="co"># Survey index values and observation errors</span>
-<span class="va">survey_index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">survey_num</span><span class="op">)</span>
+<span class="va">survey_index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">survey_num</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">survey_num</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">survey_index</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">IndexData</span><span class="op">)</span>
+  <span class="va">survey_index</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">IndexData</span><span class="op">)</span>
   <span class="va">survey_index</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">values</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">IAA_mats</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span>
   <span class="va">survey_index</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">error</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">IAA_mats</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="fl">3</span><span class="op">]</span>
 <span class="op">}</span>
 
 <span class="co"># Survey composition</span>
-<span class="va">survey_comp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">survey_num</span><span class="op">)</span>
+<span class="va">survey_comp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">survey_num</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">survey_num</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">survey_comp</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">AgeCompData</span><span class="op">)</span>
-  <span class="va">survey_comp</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">IAA_mats</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="fl">4</span><span class="op">:</span><span class="op">(</span><span class="fl">4</span> <span class="op">+</span> <span class="va">nages</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+  <span class="va">survey_comp</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">AgeCompData</span><span class="op">)</span>
+  <span class="va">survey_comp</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">IAA_mats</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="fl">4</span><span class="op">:</span><span class="op">(</span><span class="fl">4</span> <span class="op">+</span> <span class="va">nages</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
   <span class="va">survey_comp</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">sample_size</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">IAA_mats</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="op">(</span><span class="fl">4</span> <span class="op">+</span> <span class="va">nages</span><span class="op">)</span><span class="op">]</span>
   <span class="va">survey_comp</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">missing_values</span> <span class="op">&lt;-</span> <span class="fl">0</span>
 <span class="op">}</span>
 
 <span class="co"># Likelihood component settings</span>
-<span class="va">survey_index_comp_nll</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">survey_num</span><span class="op">)</span>
-<span class="va">survey_age_comp_nll</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">survey_num</span><span class="op">)</span>
+<span class="va">survey_index_comp_nll</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">survey_num</span><span class="op">)</span>
+<span class="va">survey_age_comp_nll</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">survey_num</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">survey_num</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">survey_index_comp_nll</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Lognormal</span><span class="op">)</span>
+  <span class="va">survey_index_comp_nll</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Lognormal</span><span class="op">)</span>
   <span class="va">survey_index_comp_nll</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">use_bias_correction</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span>
 
-  <span class="va">survey_age_comp_nll</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Multinomial</span><span class="op">)</span>
+  <span class="va">survey_age_comp_nll</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Multinomial</span><span class="op">)</span>
 <span class="op">}</span>
 
 <span class="co"># Survey selectivity settings</span>
-<span class="va">survey_selectivity</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">survey_num</span><span class="op">)</span>
+<span class="va">survey_selectivity</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">survey_num</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">survey_num</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">selectivity_option</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">index_sel_option</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>
 
   <span class="kw">if</span> <span class="op">(</span><span class="va">selectivity_option</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">survey_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">AgeBasedSelectivity</span><span class="op">)</span>
+    <span class="va">survey_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">AgeBasedSelectivity</span><span class="op">)</span>
     <span class="va">survey_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">estimated</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span> <span class="co"># If it is age based selectivity, can MAS estimates some values and fixes the rest of values?</span>
     <span class="va">survey_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">phase</span> <span class="op">&lt;-</span> <span class="fl">1</span>
     <span class="co"># survey_selectivity[[i]]$estimated &lt;- ifelse(asap_input$index_sel_ini[[i]][(1:nages), 2] &lt; 0, FALSE, TRUE)</span>
@@ -411,15 +418,15 @@
   <span class="op">}</span>
 
   <span class="kw">if</span> <span class="op">(</span><span class="va">selectivity_option</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">survey_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">LogisticSelectivity</span><span class="op">)</span>
+    <span class="va">survey_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">LogisticSelectivity</span><span class="op">)</span>
     <span class="va">survey_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">a50</span><span class="op">$</span><span class="va">value</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">index_sel_ini</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">(</span><span class="va">nages</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span>, <span class="fl">1</span><span class="op">]</span>
-    <span class="va">survey_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">a50</span><span class="op">$</span><span class="va">estimated</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">index_sel_ini</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">(</span><span class="va">nages</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span>, <span class="fl">2</span><span class="op">]</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span>
+    <span class="va">survey_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">a50</span><span class="op">$</span><span class="va">estimated</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">index_sel_ini</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">(</span><span class="va">nages</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span>, <span class="fl">2</span><span class="op">]</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span>
     <span class="va">survey_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">a50</span><span class="op">$</span><span class="va">phase</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">index_sel_ini</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">(</span><span class="va">nages</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span>, <span class="fl">2</span><span class="op">]</span>
     <span class="va">survey_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">a50</span><span class="op">$</span><span class="va">min</span> <span class="op">&lt;-</span> <span class="fl">0.0001</span>
     <span class="va">survey_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">a50</span><span class="op">$</span><span class="va">max</span> <span class="op">&lt;-</span> <span class="va">nages</span>
 
     <span class="va">survey_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">slope</span><span class="op">$</span><span class="va">value</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">index_sel_ini</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">(</span><span class="va">nages</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>, <span class="fl">1</span><span class="op">]</span>
-    <span class="va">survey_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">slope</span><span class="op">$</span><span class="va">estimated</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">index_sel_ini</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">(</span><span class="va">nages</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>, <span class="fl">2</span><span class="op">]</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span>
+    <span class="va">survey_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">slope</span><span class="op">$</span><span class="va">estimated</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">index_sel_ini</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">(</span><span class="va">nages</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>, <span class="fl">2</span><span class="op">]</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span>
     <span class="va">survey_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">slope</span><span class="op">$</span><span class="va">phase</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">index_sel_ini</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">(</span><span class="va">nages</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>, <span class="fl">2</span><span class="op">]</span>
     <span class="va">survey_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">slope</span><span class="op">$</span><span class="va">min</span> <span class="op">&lt;-</span> <span class="fl">0.0001</span>
     <span class="va">survey_selectivity</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">slope</span><span class="op">$</span><span class="va">max</span> <span class="op">&lt;-</span> <span class="va">nages</span>
@@ -429,9 +436,9 @@
 <span class="op">}</span>
 
 <span class="co"># Create the survey</span>
-<span class="va">survey</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">survey_num</span><span class="op">)</span>
+<span class="va">survey</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="va">survey_num</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">survey_num</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">survey</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Survey</span><span class="op">)</span>
+  <span class="va">survey</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">Survey</span><span class="op">)</span>
 
   <span class="va">survey</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">AddIndexData</span><span class="op">(</span><span class="va">survey_index</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">id</span>, <span class="st">"undifferentiated"</span><span class="op">)</span>
   <span class="va">survey</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">AddAgeCompData</span><span class="op">(</span><span class="va">survey_comp</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">id</span>, <span class="st">"undifferentiated"</span><span class="op">)</span>
@@ -442,20 +449,21 @@
   <span class="va">survey</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">q</span><span class="op">$</span><span class="va">value</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">q_ini</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>
   <span class="va">survey</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">q</span><span class="op">$</span><span class="va">min</span> <span class="op">&lt;-</span> <span class="fl">0</span>
   <span class="va">survey</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">q</span><span class="op">$</span><span class="va">max</span> <span class="op">&lt;-</span> <span class="fl">10</span>
-  <span class="va">survey</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">q</span><span class="op">$</span><span class="va">estimated</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">phase_q</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span>
-  <span class="va">survey</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">q</span><span class="op">$</span><span class="va">phase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">phase_q</span><span class="op">)</span>
+  <span class="va">survey</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">q</span><span class="op">$</span><span class="va">estimated</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">phase_q</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span>
+  <span class="va">survey</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">q</span><span class="op">$</span><span class="va">phase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">asap_input</span><span class="op">$</span><span class="va">phase_q</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 </div>
-<div id="build-the-mas-model" class="section level2">
-<h2 class="hasAnchor">
-<a href="#build-the-mas-model" class="anchor"></a>Build the MAS model</h2>
+<div class="section level2">
+<h2 id="build-the-mas-model">Build the MAS model<a class="anchor" aria-label="anchor" href="#build-the-mas-model"></a>
+</h2>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mas_model</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">MASModel</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">mas_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">r4mas</span><span class="op">$</span><span class="va">MASModel</span><span class="op">)</span>
 
+<span class="va">mas_model</span><span class="op">$</span><span class="va">compute_variance_for_derived_quantities</span><span class="op">&lt;-</span><span class="cn">FALSE</span>
 <span class="va">mas_model</span><span class="op">$</span><span class="va">nyears</span> <span class="op">&lt;-</span> <span class="va">nyears</span>
 <span class="va">mas_model</span><span class="op">$</span><span class="va">nseasons</span> <span class="op">&lt;-</span> <span class="va">nseasons</span>
 <span class="va">mas_model</span><span class="op">$</span><span class="va">nages</span> <span class="op">&lt;-</span> <span class="va">nages</span>
-<span class="va">mas_model</span><span class="op">$</span><span class="va">extended_plus_group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">ages</span><span class="op">)</span>
+<span class="va">mas_model</span><span class="op">$</span><span class="va">extended_plus_group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">ages</span><span class="op">)</span>
 <span class="va">mas_model</span><span class="op">$</span><span class="va">ages</span> <span class="op">&lt;-</span> <span class="va">ages</span>
 <span class="va">mas_model</span><span class="op">$</span><span class="va">catch_season_offset</span> <span class="op">&lt;-</span> <span class="fl">0.0</span>
 <span class="va">mas_model</span><span class="op">$</span><span class="va">spawning_season_offset</span> <span class="op">&lt;-</span> <span class="va">asap_input</span><span class="op">$</span><span class="va">fracyr_spawn</span>
@@ -471,41 +479,39 @@
   <span class="va">mas_model</span><span class="op">$</span><span class="fu">AddSurvey</span><span class="op">(</span><span class="va">survey</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">id</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 </div>
-<div id="run-mas-save-mas-outputs-and-reset-mas" class="section level2">
-<h2 class="hasAnchor">
-<a href="#run-mas-save-mas-outputs-and-reset-mas" class="anchor"></a>Run <code>MAS</code>, save <code>MAS</code> outputs, and reset <code>MAS</code>
+<div class="section level2">
+<h2 id="run-mas-save-mas-outputs-and-reset-mas">Run <code>MAS</code>, save <code>MAS</code> outputs, and reset <code>MAS</code><a class="anchor" aria-label="anchor" href="#run-mas-save-mas-outputs-and-reset-mas"></a>
 </h2>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Run MAS</span>
 <span class="va">mas_model</span><span class="op">$</span><span class="fu">Run</span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># Write MAS outputs to a json file</span>
-<span class="fu"><a href="https://rdrr.io/r/base/write.html">write</a></span><span class="op">(</span><span class="va">mas_model</span><span class="op">$</span><span class="fu">GetOutput</span><span class="op">(</span><span class="op">)</span>,
-  file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">temp_dir</span>, <span class="st">"mas_output.json"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/write.html" class="external-link">write</a></span><span class="op">(</span><span class="va">mas_model</span><span class="op">$</span><span class="fu">GetOutput</span><span class="op">(</span><span class="op">)</span>,
+  file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">temp_dir</span>, <span class="st">"mas_output.json"</span><span class="op">)</span>
 <span class="op">)</span>
 
 <span class="co"># Reset MAS for next run</span>
 <span class="va">mas_model</span><span class="op">$</span><span class="fu">Reset</span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># Import MAS output</span>
-<span class="va">mas_output</span> <span class="op">&lt;-</span> <span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jsonlite/man/read_json.html">read_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">temp_dir</span>, <span class="st">"mas_output.json"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="va">mas_output</span> <span class="op">&lt;-</span> <span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jsonlite/man/read_json.html" class="external-link">read_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">temp_dir</span>, <span class="st">"mas_output.json"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="aggregate-estimates-of-key-variables-from-the-asap" class="section level2">
-<h2 class="hasAnchor">
-<a href="#aggregate-estimates-of-key-variables-from-the-asap" class="anchor"></a>Aggregate estimates of key variables from the <code>ASAP</code>
+<div class="section level2">
+<h2 id="aggregate-estimates-of-key-variables-from-the-asap">Aggregate estimates of key variables from the <code>ASAP</code><a class="anchor" aria-label="anchor" href="#aggregate-estimates-of-key-variables-from-the-asap"></a>
 </h2>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read ASAP outputs</span>
-<span class="va">asap</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">asap</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">asap</span><span class="op">$</span><span class="va">biomass</span> <span class="op">&lt;-</span> <span class="va">asap_output</span><span class="op">$</span><span class="va">tot.jan1.B</span>
-<span class="va">asap</span><span class="op">$</span><span class="va">abundance</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">asap_output</span><span class="op">$</span><span class="va">N.age</span>, <span class="fl">1</span>, <span class="va">sum</span><span class="op">)</span>
+<span class="va">asap</span><span class="op">$</span><span class="va">abundance</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">asap_output</span><span class="op">$</span><span class="va">N.age</span>, <span class="fl">1</span>, <span class="va">sum</span><span class="op">)</span>
 <span class="va">asap</span><span class="op">$</span><span class="va">ssb</span> <span class="op">&lt;-</span> <span class="va">asap_output</span><span class="op">$</span><span class="va">SSB</span>
 <span class="va">asap</span><span class="op">$</span><span class="va">recruit</span> <span class="op">&lt;-</span> <span class="va">asap_output</span><span class="op">$</span><span class="va">N.age</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>
-<span class="va">asap</span><span class="op">$</span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">asap_output</span><span class="op">$</span><span class="va">fleet.FAA</span><span class="op">$</span><span class="va">FAA.directed.fleet1</span>, <span class="fl">1</span>, <span class="va">max</span><span class="op">)</span>
+<span class="va">asap</span><span class="op">$</span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">asap_output</span><span class="op">$</span><span class="va">fleet.FAA</span><span class="op">$</span><span class="va">FAA.directed.fleet1</span>, <span class="fl">1</span>, <span class="va">max</span><span class="op">)</span>
 <span class="va">asap</span><span class="op">$</span><span class="va">landing</span> <span class="op">&lt;-</span> <span class="va">asap_output</span><span class="op">$</span><span class="va">catch.pred</span>
 <span class="va">asap</span><span class="op">$</span><span class="va">survey</span> <span class="op">&lt;-</span> <span class="va">asap_output</span><span class="op">$</span><span class="va">index.pred</span><span class="op">$</span><span class="va">ind01</span>
-<span class="va">asap</span><span class="op">$</span><span class="va">agecomp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">asap_output</span><span class="op">$</span><span class="va">N.age</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+<span class="va">asap</span><span class="op">$</span><span class="va">agecomp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">asap_output</span><span class="op">$</span><span class="va">N.age</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
 <span class="va">asap</span><span class="op">$</span><span class="va">r0</span> <span class="op">&lt;-</span> <span class="va">asap_output</span><span class="op">$</span><span class="va">SR.parms</span><span class="op">$</span><span class="va">SR.R0</span>
 <span class="va">asap</span><span class="op">$</span><span class="va">h</span> <span class="op">&lt;-</span> <span class="va">asap_output</span><span class="op">$</span><span class="va">SR.parms</span><span class="op">$</span><span class="va">SR.steepness</span>
 <span class="va">asap</span><span class="op">$</span><span class="va">q</span> <span class="op">&lt;-</span> <span class="va">asap_output</span><span class="op">$</span><span class="va">q.indices</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>
@@ -515,241 +521,240 @@
 <span class="va">asap</span><span class="op">$</span><span class="va">recruit_deviation</span> <span class="op">&lt;-</span> <span class="va">asap_output</span><span class="op">$</span><span class="va">SR.resids</span><span class="op">$</span><span class="va">logR.dev</span>
 <span class="co"># asap$initial_deviation &lt;- c(0, asap_std$value[asap_std$name=="log_N_year1_devs"])</span></code></pre></div>
 </div>
-<div id="aggregate-estimates-of-key-variables-from-the-mas" class="section level2">
-<h2 class="hasAnchor">
-<a href="#aggregate-estimates-of-key-variables-from-the-mas" class="anchor"></a>Aggregate estimates of key variables from the <code>MAS</code>
+<div class="section level2">
+<h2 id="aggregate-estimates-of-key-variables-from-the-mas">Aggregate estimates of key variables from the <code>MAS</code><a class="anchor" aria-label="anchor" href="#aggregate-estimates-of-key-variables-from-the-mas"></a>
 </h2>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">parameter</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">mas_output</span><span class="op">$</span><span class="va">estimated_parameters</span><span class="op">$</span><span class="va">parameters</span><span class="op">)</span>
-<span class="va">parameter_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">parameter</span>, ncol <span class="op">=</span> <span class="fl">3</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">parameter_table</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+<code class="sourceCode R"><span class="va">parameter</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">mas_output</span><span class="op">$</span><span class="va">estimated_parameters</span><span class="op">$</span><span class="va">parameters</span><span class="op">)</span>
+<span class="va">parameter_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">parameter</span>, ncol <span class="op">=</span> <span class="fl">3</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">parameter_table</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
   <span class="st">"Parameter"</span>,
   <span class="st">"Value"</span>,
   <span class="st">"Gradient"</span>
 <span class="op">)</span>
-<span class="va">parameter_table</span><span class="op">$</span><span class="va">Value</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">parameter_table</span><span class="op">$</span><span class="va">Value</span><span class="op">)</span>,
+<span class="va">parameter_table</span><span class="op">$</span><span class="va">Value</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">parameter_table</span><span class="op">$</span><span class="va">Value</span><span class="op">)</span>,
   digits <span class="op">=</span> <span class="fl">6</span>
 <span class="op">)</span>
-<span class="va">parameter_table</span><span class="op">$</span><span class="va">Gradient</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">parameter_table</span><span class="op">$</span><span class="va">Gradient</span><span class="op">)</span>,
+<span class="va">parameter_table</span><span class="op">$</span><span class="va">Gradient</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">parameter_table</span><span class="op">$</span><span class="va">Gradient</span><span class="op">)</span>,
   digits <span class="op">=</span> <span class="fl">6</span>
 <span class="op">)</span>
 
 <span class="va">parameter_table</span></code></pre></div>
-<pre><code>##                       Parameter     Value  Gradient
-## 1                           q_1  0.116918  0.439649
-## 2                      log_R0_1  6.293264 -0.049097
-## 3                            h1  0.635369  0.167564
-## 4   recruitment_deviations[0]_1 -0.153087  0.002131
-## 5   recruitment_deviations[1]_1 -0.002844 -0.006318
-## 6   recruitment_deviations[2]_1 -0.577008 -0.002743
-## 7   recruitment_deviations[3]_1 -0.256007  0.007288
-## 8   recruitment_deviations[4]_1 -1.055261  0.000362
-## 9   recruitment_deviations[5]_1  1.590749 -0.019211
-## 10  recruitment_deviations[6]_1  0.093469  0.000282
-## 11  recruitment_deviations[7]_1 -0.269078  0.034599
-## 12  recruitment_deviations[8]_1  0.327699  0.016469
-## 13  recruitment_deviations[9]_1 -1.391000 -0.016745
-## 14 recruitment_deviations[10]_1  0.504431  0.035205
-## 15 recruitment_deviations[11]_1 -0.044773  0.048451
-## 16 recruitment_deviations[12]_1 -0.111888  0.033474
-## 17 recruitment_deviations[13]_1 -0.027684 -0.002601
-## 18 recruitment_deviations[14]_1  0.058522  0.035256
-## 19 recruitment_deviations[15]_1 -0.838810  0.012235
-## 20 recruitment_deviations[16]_1  0.477169  0.017507
-## 21 recruitment_deviations[17]_1 -0.250966 -0.003145
-## 22 recruitment_deviations[18]_1 -0.272660  0.005093
-## 23 recruitment_deviations[19]_1 -0.787381  0.002313
-## 24   logistic_selectivity_a50_2  3.272175  0.027397
-## 25 logistic_selectivity_slope_2  0.645271 -0.104347
-## 26    age_base_selectivity[6]_1  0.981243 -0.046413
-## 27    age_base_selectivity[1]_1  0.347495 -0.063374
-## 28    age_base_selectivity[4]_1  0.934632 -0.015583
-## 29    age_base_selectivity[8]_1  0.976153 -0.040335
-## 30    age_base_selectivity[9]_1  1.133668 -0.021024
-## 31    age_base_selectivity[0]_1  0.154625 -0.091119
-## 32    age_base_selectivity[7]_1  0.916154 -0.002118
-## 33    age_base_selectivity[2]_1  0.608506 -0.007797
-## 34    age_base_selectivity[5]_1  0.916047  0.021278
-## 35    age_base_selectivity[3]_1  0.869463 -0.116731
-## 36    fishing_mortality[0][0]_1  0.014927 -3.592359
-## 37    fishing_mortality[1][0]_1  0.074151 -0.225980
-## 38   fishing_mortality[11][0]_1  0.590240 -0.268636
-## 39   fishing_mortality[12][0]_1  0.506094 -0.061690
-## 40   fishing_mortality[16][0]_1  0.076804  0.295289
-## 41    fishing_mortality[7][0]_1  0.269551 -0.034545
-## 42   fishing_mortality[19][0]_1  0.067286  0.603722
-## 43    fishing_mortality[4][0]_1  0.089639 -0.236705
-## 44    fishing_mortality[2][0]_1  0.103706 -0.214741
-## 45    fishing_mortality[8][0]_1  0.354909 -0.032171
-## 46   fishing_mortality[15][0]_1  0.081376  0.150982
-## 47    fishing_mortality[9][0]_1  0.415221  0.050806
-## 48   fishing_mortality[10][0]_1  0.575151  0.077838
-## 49   fishing_mortality[17][0]_1  0.032270  1.817160
-## 50   fishing_mortality[13][0]_1  0.099406 -0.080016
-## 51   fishing_mortality[14][0]_1  0.134812 -0.124063
-## 52    fishing_mortality[5][0]_1  0.144775 -0.191588
-## 53   fishing_mortality[18][0]_1  0.100976  0.222899
-## 54    fishing_mortality[3][0]_1  0.127769 -0.014137
-## 55    fishing_mortality[6][0]_1  0.362337 -0.051425
-## 56    f_initial_deviations[0]_1  0.990791  0.025397
-## 57    f_initial_deviations[1]_1  1.381768 -0.010726
-## 58    f_initial_deviations[2]_1  0.815301  0.009388
-## 59    f_initial_deviations[3]_1  1.524923  0.002353
-## 60    f_initial_deviations[4]_1  1.636663 -0.003059
-## 61    f_initial_deviations[5]_1  1.533643  0.019035
-## 62    f_initial_deviations[6]_1 -0.062723 -0.015229
-## 63    f_initial_deviations[7]_1  1.910895 -0.035475
-## 64    f_initial_deviations[8]_1  1.059122  0.041606
-## 65    f_initial_deviations[9]_1  0.438787 -0.003645
-## 66    m_initial_deviations[0]_1  0.990791  0.025397
-## 67    m_initial_deviations[1]_1  1.381768 -0.010726
-## 68    m_initial_deviations[2]_1  0.815301  0.009388
-## 69    m_initial_deviations[3]_1  1.524923  0.002353
-## 70    m_initial_deviations[4]_1  1.636663 -0.003059
-## 71    m_initial_deviations[5]_1  1.533643  0.019035
-## 72    m_initial_deviations[6]_1 -0.062723 -0.015229
-## 73    m_initial_deviations[7]_1  1.910895 -0.035475
-## 74    m_initial_deviations[8]_1  1.059122  0.041606
-## 75    m_initial_deviations[9]_1  0.438787 -0.003645</code></pre>
+<pre><code><span class="co">##                       Parameter     Value  Gradient</span>
+<span class="co">## 1                           q_1  0.116814 -0.087419</span>
+<span class="co">## 2                      log_R0_1  6.124143 -1.916755</span>
+<span class="co">## 3                            h1  0.586745 -1.623832</span>
+<span class="co">## 4   recruitment_deviations[0]_1  0.000240  0.150183</span>
+<span class="co">## 5   recruitment_deviations[1]_1  0.135981  0.124807</span>
+<span class="co">## 6   recruitment_deviations[2]_1 -0.437754  0.133228</span>
+<span class="co">## 7   recruitment_deviations[3]_1 -0.116747  0.109432</span>
+<span class="co">## 8   recruitment_deviations[4]_1 -0.913764  0.126250</span>
+<span class="co">## 9   recruitment_deviations[5]_1  1.732160 -0.270467</span>
+<span class="co">## 10  recruitment_deviations[6]_1  0.237010  0.037883</span>
+<span class="co">## 11  recruitment_deviations[7]_1 -0.123830  0.052625</span>
+<span class="co">## 12  recruitment_deviations[8]_1  0.473060 -0.098611</span>
+<span class="co">## 13  recruitment_deviations[9]_1 -1.246040  0.089213</span>
+<span class="co">## 14 recruitment_deviations[10]_1  0.651242 -0.374376</span>
+<span class="co">## 15 recruitment_deviations[11]_1  0.106496 -0.183778</span>
+<span class="co">## 16 recruitment_deviations[12]_1  0.045656 -0.125922</span>
+<span class="co">## 17 recruitment_deviations[13]_1  0.134412 -0.101411</span>
+<span class="co">## 18 recruitment_deviations[14]_1  0.218716 -0.087173</span>
+<span class="co">## 19 recruitment_deviations[15]_1 -0.681356  0.069074</span>
+<span class="co">## 20 recruitment_deviations[16]_1  0.631851 -0.054901</span>
+<span class="co">## 21 recruitment_deviations[17]_1 -0.096068  0.109942</span>
+<span class="co">## 22 recruitment_deviations[18]_1 -0.117728  0.143791</span>
+<span class="co">## 23 recruitment_deviations[19]_1 -0.633537  0.150210</span>
+<span class="co">## 24   logistic_selectivity_a50_2  3.267358 -0.010201</span>
+<span class="co">## 25 logistic_selectivity_slope_2  0.642455  0.040175</span>
+<span class="co">## 26    age_base_selectivity[6]_1  1.181472 -0.031853</span>
+<span class="co">## 27    age_base_selectivity[7]_1  1.101689 -0.019538</span>
+<span class="co">## 28    age_base_selectivity[3]_1  1.047323 -0.044520</span>
+<span class="co">## 29    age_base_selectivity[0]_1  0.186248  0.720906</span>
+<span class="co">## 30    age_base_selectivity[2]_1  0.733026  0.212330</span>
+<span class="co">## 31    age_base_selectivity[5]_1  1.103064  0.001248</span>
+<span class="co">## 32    age_base_selectivity[9]_1  1.369639  0.035156</span>
+<span class="co">## 33    age_base_selectivity[4]_1  1.125421  0.039701</span>
+<span class="co">## 34    age_base_selectivity[8]_1  1.176315 -0.042361</span>
+<span class="co">## 35    age_base_selectivity[1]_1  0.418599  0.575501</span>
+<span class="co">## 36    fishing_mortality[1][0]_1  0.061617  1.753853</span>
+<span class="co">## 37    fishing_mortality[0][0]_1  0.012408 10.872945</span>
+<span class="co">## 38   fishing_mortality[19][0]_1  0.055890 -5.479015</span>
+<span class="co">## 39   fishing_mortality[13][0]_1  0.082539 -1.950506</span>
+<span class="co">## 40    fishing_mortality[4][0]_1  0.074438  0.331937</span>
+<span class="co">## 41    fishing_mortality[3][0]_1  0.106134  0.530025</span>
+<span class="co">## 42   fishing_mortality[10][0]_1  0.477467  0.853746</span>
+<span class="co">## 43   fishing_mortality[15][0]_1  0.067582 -1.855618</span>
+<span class="co">## 44    fishing_mortality[2][0]_1  0.086142  0.661488</span>
+<span class="co">## 45   fishing_mortality[18][0]_1  0.083885 -5.469752</span>
+<span class="co">## 46   fishing_mortality[11][0]_1  0.490031  0.693340</span>
+<span class="co">## 47    fishing_mortality[5][0]_1  0.120177  0.999723</span>
+<span class="co">## 48   fishing_mortality[14][0]_1  0.111936 -0.815927</span>
+<span class="co">## 49   fishing_mortality[17][0]_1  0.026808 -9.210778</span>
+<span class="co">## 50    fishing_mortality[8][0]_1  0.294565  0.357505</span>
+<span class="co">## 51   fishing_mortality[12][0]_1  0.420302  0.661984</span>
+<span class="co">## 52   fishing_mortality[16][0]_1  0.063790 -2.727988</span>
+<span class="co">## 53    fishing_mortality[6][0]_1  0.300743  0.440083</span>
+<span class="co">## 54    fishing_mortality[7][0]_1  0.223729  0.134802</span>
+<span class="co">## 55    fishing_mortality[9][0]_1  0.344674  0.692313</span>
+<span class="co">## 56    f_initial_deviations[0]_1  1.158598 -0.000468</span>
+<span class="co">## 57    f_initial_deviations[1]_1  1.550086  0.004717</span>
+<span class="co">## 58    f_initial_deviations[2]_1  0.982233 -0.023053</span>
+<span class="co">## 59    f_initial_deviations[3]_1  1.692824  0.019105</span>
+<span class="co">## 60    f_initial_deviations[4]_1  1.805016  0.040983</span>
+<span class="co">## 61    f_initial_deviations[5]_1  1.700331  0.013019</span>
+<span class="co">## 62    f_initial_deviations[6]_1  0.110729  0.009029</span>
+<span class="co">## 63    f_initial_deviations[7]_1  2.080406  0.022970</span>
+<span class="co">## 64    f_initial_deviations[8]_1  1.209888  0.008052</span>
+<span class="co">## 65    f_initial_deviations[9]_1  0.606117  0.016022</span>
+<span class="co">## 66    m_initial_deviations[0]_1  1.158598 -0.000468</span>
+<span class="co">## 67    m_initial_deviations[1]_1  1.550086  0.004717</span>
+<span class="co">## 68    m_initial_deviations[2]_1  0.982233 -0.023053</span>
+<span class="co">## 69    m_initial_deviations[3]_1  1.692824  0.019105</span>
+<span class="co">## 70    m_initial_deviations[4]_1  1.805016  0.040983</span>
+<span class="co">## 71    m_initial_deviations[5]_1  1.700331  0.013019</span>
+<span class="co">## 72    m_initial_deviations[6]_1  0.110729  0.009029</span>
+<span class="co">## 73    m_initial_deviations[7]_1  2.080406  0.022970</span>
+<span class="co">## 74    m_initial_deviations[8]_1  1.209888  0.008052</span>
+<span class="co">## 75    m_initial_deviations[9]_1  0.606117  0.016022</span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">popdy</span> <span class="op">&lt;-</span> <span class="va">mas_output</span><span class="op">$</span><span class="va">population_dynamics</span>
 <span class="va">pop</span> <span class="op">&lt;-</span> <span class="va">popdy</span><span class="op">$</span><span class="va">populations</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="va">flt</span> <span class="op">&lt;-</span> <span class="va">popdy</span><span class="op">$</span><span class="va">fleets</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="va">srvy</span> <span class="op">&lt;-</span> <span class="va">popdy</span><span class="op">$</span><span class="va">surveys</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 
-<span class="va">mas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">mas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="va">mas</span><span class="op">$</span><span class="va">biomass</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">pop</span><span class="op">$</span><span class="va">undifferentiated</span><span class="op">$</span><span class="va">biomass</span><span class="op">$</span><span class="va">values</span><span class="op">)</span>
-<span class="va">mas</span><span class="op">$</span><span class="va">abundance</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">pop</span><span class="op">$</span><span class="va">undifferentiated</span><span class="op">$</span><span class="va">abundance</span><span class="op">$</span><span class="va">values</span><span class="op">)</span>
-<span class="va">mas</span><span class="op">$</span><span class="va">ssb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">pop</span><span class="op">$</span><span class="va">undifferentiated</span><span class="op">$</span><span class="va">spawning_stock_biomass</span><span class="op">$</span><span class="va">values</span><span class="op">)</span>
-<span class="va">mas</span><span class="op">$</span><span class="va">recruit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">pop</span><span class="op">$</span><span class="va">undifferentiated</span><span class="op">$</span><span class="va">recruits</span><span class="op">$</span><span class="va">values</span><span class="op">)</span>
-<span class="va">mas</span><span class="op">$</span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">pop</span><span class="op">$</span><span class="va">undifferentiated</span><span class="op">$</span><span class="va">fishing_mortality</span><span class="op">$</span><span class="va">values</span><span class="op">)</span>
-<span class="va">mas</span><span class="op">$</span><span class="va">landing</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">flt</span><span class="op">$</span><span class="va">undifferentiated</span><span class="op">$</span><span class="va">catch_biomass</span><span class="op">$</span><span class="va">values</span><span class="op">)</span>
-<span class="va">mas</span><span class="op">$</span><span class="va">survey</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">srvy</span><span class="op">$</span><span class="va">undifferentiated</span><span class="op">$</span><span class="va">survey_biomass</span><span class="op">$</span><span class="va">values</span><span class="op">)</span>
-<span class="va">mas</span><span class="op">$</span><span class="va">agecomp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">pop</span><span class="op">$</span><span class="va">undifferentiated</span><span class="op">$</span><span class="va">numbers_at_age</span><span class="op">$</span><span class="va">values</span><span class="op">)</span>,
+<span class="va">mas</span><span class="op">$</span><span class="va">biomass</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">pop</span><span class="op">$</span><span class="va">undifferentiated</span><span class="op">$</span><span class="va">biomass</span><span class="op">$</span><span class="va">values</span><span class="op">)</span>
+<span class="va">mas</span><span class="op">$</span><span class="va">abundance</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">pop</span><span class="op">$</span><span class="va">undifferentiated</span><span class="op">$</span><span class="va">abundance</span><span class="op">$</span><span class="va">values</span><span class="op">)</span>
+<span class="va">mas</span><span class="op">$</span><span class="va">ssb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">pop</span><span class="op">$</span><span class="va">undifferentiated</span><span class="op">$</span><span class="va">spawning_stock_biomass</span><span class="op">$</span><span class="va">values</span><span class="op">)</span>
+<span class="va">mas</span><span class="op">$</span><span class="va">recruit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">pop</span><span class="op">$</span><span class="va">undifferentiated</span><span class="op">$</span><span class="va">recruits</span><span class="op">$</span><span class="va">values</span><span class="op">)</span>
+<span class="va">mas</span><span class="op">$</span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">pop</span><span class="op">$</span><span class="va">undifferentiated</span><span class="op">$</span><span class="va">fishing_mortality</span><span class="op">$</span><span class="va">values</span><span class="op">)</span>
+<span class="va">mas</span><span class="op">$</span><span class="va">landing</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">flt</span><span class="op">$</span><span class="va">undifferentiated</span><span class="op">$</span><span class="va">catch_biomass</span><span class="op">$</span><span class="va">values</span><span class="op">)</span>
+<span class="va">mas</span><span class="op">$</span><span class="va">survey</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">srvy</span><span class="op">$</span><span class="va">undifferentiated</span><span class="op">$</span><span class="va">survey_biomass</span><span class="op">$</span><span class="va">values</span><span class="op">)</span>
+<span class="va">mas</span><span class="op">$</span><span class="va">agecomp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">pop</span><span class="op">$</span><span class="va">undifferentiated</span><span class="op">$</span><span class="va">numbers_at_age</span><span class="op">$</span><span class="va">values</span><span class="op">)</span>,
     nrow <span class="op">=</span> <span class="va">popdy</span><span class="op">$</span><span class="va">nyears</span>,
     ncol <span class="op">=</span> <span class="va">popdy</span><span class="op">$</span><span class="va">nages</span>,
     byrow <span class="op">=</span> <span class="cn">T</span>
   <span class="op">)</span>,
   <span class="fl">1</span>,
-  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="va">mas</span><span class="op">$</span><span class="va">r0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">parameter_table</span><span class="op">$</span><span class="va">Value</span><span class="op">[</span><span class="va">parameter_table</span><span class="op">$</span><span class="va">Parameter</span> <span class="op">==</span> <span class="st">"log_R0_1"</span><span class="op">]</span><span class="op">)</span>
+<span class="va">mas</span><span class="op">$</span><span class="va">r0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">parameter_table</span><span class="op">$</span><span class="va">Value</span><span class="op">[</span><span class="va">parameter_table</span><span class="op">$</span><span class="va">Parameter</span> <span class="op">==</span> <span class="st">"log_R0_1"</span><span class="op">]</span><span class="op">)</span>
 <span class="va">mas</span><span class="op">$</span><span class="va">h</span> <span class="op">&lt;-</span> <span class="va">parameter_table</span><span class="op">$</span><span class="va">Value</span><span class="op">[</span><span class="va">parameter_table</span><span class="op">$</span><span class="va">Parameter</span> <span class="op">==</span> <span class="st">"h1"</span><span class="op">]</span>
-<span class="va">mas</span><span class="op">$</span><span class="va">q</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">parameter_table</span><span class="op">$</span><span class="va">Value</span><span class="op">[</span><span class="va">parameter_table</span><span class="op">$</span><span class="va">Parameter</span> <span class="op">==</span> <span class="st">"q_1"</span><span class="op">]</span><span class="op">)</span>
+<span class="va">mas</span><span class="op">$</span><span class="va">q</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">parameter_table</span><span class="op">$</span><span class="va">Value</span><span class="op">[</span><span class="va">parameter_table</span><span class="op">$</span><span class="va">Parameter</span> <span class="op">==</span> <span class="st">"q_1"</span><span class="op">]</span><span class="op">)</span>
 <span class="co"># mas$fleet_selectivity # Where to find selectivity outputs?</span>
 <span class="co"># mas$survey_selectivity # Where to find selectivity outputs?</span>
-<span class="va">mas</span><span class="op">$</span><span class="va">recruit_deviation</span> <span class="op">&lt;-</span> <span class="va">parameter_table</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">"recruitment_deviations"</span>, <span class="va">parameter_table</span><span class="op">$</span><span class="va">Parameter</span><span class="op">)</span>, <span class="st">"Value"</span><span class="op">]</span> <span class="co"># Is the order correct from starting year to ending year?</span></code></pre></div>
+<span class="va">mas</span><span class="op">$</span><span class="va">recruit_deviation</span> <span class="op">&lt;-</span> <span class="va">parameter_table</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"recruitment_deviations"</span>, <span class="va">parameter_table</span><span class="op">$</span><span class="va">Parameter</span><span class="op">)</span>, <span class="st">"Value"</span><span class="op">]</span> <span class="co"># Is the order correct from starting year to ending year?</span></code></pre></div>
 </div>
-<div id="generate-comparison-figures" class="section level2">
-<h2 class="hasAnchor">
-<a href="#generate-comparison-figures" class="anchor"></a>Generate comparison figures</h2>
+<div class="section level2">
+<h2 id="generate-comparison-figures">Generate comparison figures<a class="anchor" aria-label="anchor" href="#generate-comparison-figures"></a>
+</h2>
 <p>Compare temporal trends of biomass(B), abundance(A), spawning stock biomass (SSB), recruit (R), fishing mortality (F), Landings (L), and Survey index (SI) from <code>ASAP</code> (dots) and <code>MAS</code> (lines).</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">years</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">asap_output</span><span class="op">$</span><span class="va">N.age</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="va">col</span> <span class="op">&lt;-</span> <span class="fu">nmfspalette</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nmfspalette/man/nmfs_palette.html">nmfs_palette</a></span><span class="op">(</span><span class="st">"regional web"</span><span class="op">)</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
-<span class="va">var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+<code class="sourceCode R"><span class="va">years</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">asap_output</span><span class="op">$</span><span class="va">N.age</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
+<span class="va">col</span> <span class="op">&lt;-</span> <span class="fu">nmfspalette</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nmfspalette/man/nmfs_palette.html" class="external-link">nmfs_palette</a></span><span class="op">(</span><span class="st">"regional web"</span><span class="op">)</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
+<span class="va">var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
   <span class="st">"biomass"</span>, <span class="st">"abundance"</span>, <span class="st">"ssb"</span>, <span class="st">"recruit"</span>, <span class="st">"f"</span>,
   <span class="st">"landing"</span>, <span class="st">"survey"</span>
 <span class="op">)</span>
-<span class="va">ylab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+<span class="va">ylab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
   <span class="st">"B (mt)"</span>, <span class="st">"A (1000 fish)"</span>,
   <span class="st">"SSB (mt)"</span>, <span class="st">"R (1000 fish)"</span>,
   <span class="st">"F"</span>, <span class="st">"L (mt)"</span>, <span class="st">"SI 1"</span>
 <span class="op">)</span>
-<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">ylim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">asap</span><span class="op">[[</span><span class="va">var</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span>, <span class="va">mas</span><span class="op">[[</span><span class="va">var</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">years</span>, <span class="va">asap</span><span class="op">[[</span><span class="va">var</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span>,
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">ylim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">asap</span><span class="op">[[</span><span class="va">var</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span>, <span class="va">mas</span><span class="op">[[</span><span class="va">var</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">years</span>, <span class="va">asap</span><span class="op">[[</span><span class="va">var</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span>,
     xlab <span class="op">=</span> <span class="st">""</span>, ylab <span class="op">=</span> <span class="st">""</span>,
     ylim <span class="op">=</span> <span class="va">ylim</span>, pch <span class="op">=</span> <span class="fl">19</span>,
     col <span class="op">=</span> <span class="va">col</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>
   <span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">years</span>, <span class="va">mas</span><span class="op">[[</span><span class="va">var</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span>,
+  <span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">years</span>, <span class="va">mas</span><span class="op">[[</span><span class="va">var</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span>,
     col <span class="op">=</span> <span class="va">col</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, lty <span class="op">=</span> <span class="fl">1</span>
   <span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html">mtext</a></span><span class="op">(</span><span class="st">"Year"</span>, side <span class="op">=</span> <span class="fl">1</span>, line <span class="op">=</span> <span class="fl">2</span>, cex <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html">mtext</a></span><span class="op">(</span><span class="va">ylab</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, side <span class="op">=</span> <span class="fl">2</span>, line <span class="op">=</span> <span class="fl">2</span>, cex <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html" class="external-link">mtext</a></span><span class="op">(</span><span class="st">"Year"</span>, side <span class="op">=</span> <span class="fl">1</span>, line <span class="op">=</span> <span class="fl">2</span>, cex <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html" class="external-link">mtext</a></span><span class="op">(</span><span class="va">ylab</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, side <span class="op">=</span> <span class="fl">2</span>, line <span class="op">=</span> <span class="fl">2</span>, cex <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span>
 <span class="op">}</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/frame.html">plot.new</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span><span class="st">"center"</span>,
-  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ASAP"</span>, <span class="st">"MAS"</span><span class="op">)</span>,
-  pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">19</span>, <span class="cn">NA</span><span class="op">)</span>,
-  lty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span>,
+<span class="fu"><a href="https://rdrr.io/r/graphics/frame.html" class="external-link">plot.new</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"center"</span>,
+  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ASAP"</span>, <span class="st">"MAS"</span><span class="op">)</span>,
+  pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">19</span>, <span class="cn">NA</span><span class="op">)</span>,
+  lty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span>,
   col <span class="op">=</span> <span class="va">col</span>,
   bty <span class="op">=</span> <span class="st">"n"</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="003_ASAPCaseStudy_files/figure-html/unnamed-chunk-8-1.png" width="960"></p>
 <p>Compare age composition from the <code>ASAP</code> (dots) and <code>MAS</code> (lines).</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">3</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="va">col</span> <span class="op">&lt;-</span> <span class="fu">nmfspalette</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nmfspalette/man/nmfs_palette.html">nmfs_palette</a></span><span class="op">(</span><span class="st">"regional web"</span><span class="op">)</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
-<span class="va">var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"agecomp"</span><span class="op">)</span>
-<span class="va">ylab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Proportion"</span><span class="op">)</span>
-<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">asap</span><span class="op">[[</span><span class="va">var</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">ylim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">asap</span><span class="op">[[</span><span class="va">var</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span>, <span class="va">mas</span><span class="op">[[</span><span class="va">var</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">ages</span>, <span class="va">asap</span><span class="op">[[</span><span class="va">var</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span>,
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">3</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
+<span class="va">col</span> <span class="op">&lt;-</span> <span class="fu">nmfspalette</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nmfspalette/man/nmfs_palette.html" class="external-link">nmfs_palette</a></span><span class="op">(</span><span class="st">"regional web"</span><span class="op">)</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
+<span class="va">var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"agecomp"</span><span class="op">)</span>
+<span class="va">ylab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Proportion"</span><span class="op">)</span>
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">asap</span><span class="op">[[</span><span class="va">var</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">ylim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">asap</span><span class="op">[[</span><span class="va">var</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span>, <span class="va">mas</span><span class="op">[[</span><span class="va">var</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ages</span>, <span class="va">asap</span><span class="op">[[</span><span class="va">var</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span>,
     xlab <span class="op">=</span> <span class="st">""</span>, ylab <span class="op">=</span> <span class="st">""</span>,
     ylim <span class="op">=</span> <span class="va">ylim</span>, pch <span class="op">=</span> <span class="fl">19</span>,
     col <span class="op">=</span> <span class="va">col</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>
   <span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">ages</span>, <span class="va">mas</span><span class="op">[[</span><span class="va">var</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span>,
+  <span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">ages</span>, <span class="va">mas</span><span class="op">[[</span><span class="va">var</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span>,
     col <span class="op">=</span> <span class="va">col</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, lty <span class="op">=</span> <span class="fl">1</span>
   <span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html">mtext</a></span><span class="op">(</span><span class="st">"Age"</span>, side <span class="op">=</span> <span class="fl">1</span>, line <span class="op">=</span> <span class="fl">2</span>, cex <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html">mtext</a></span><span class="op">(</span><span class="va">ylab</span>, side <span class="op">=</span> <span class="fl">2</span>, line <span class="op">=</span> <span class="fl">2</span>, cex <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span><span class="st">"topright"</span>,
-    <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Year"</span>, <span class="va">years</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>,
+  <span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html" class="external-link">mtext</a></span><span class="op">(</span><span class="st">"Age"</span>, side <span class="op">=</span> <span class="fl">1</span>, line <span class="op">=</span> <span class="fl">2</span>, cex <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html" class="external-link">mtext</a></span><span class="op">(</span><span class="va">ylab</span>, side <span class="op">=</span> <span class="fl">2</span>, line <span class="op">=</span> <span class="fl">2</span>, cex <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"topright"</span>,
+    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Year"</span>, <span class="va">years</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>,
     bty <span class="op">=</span> <span class="st">"n"</span>
   <span class="op">)</span>
 <span class="op">}</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/frame.html">plot.new</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span><span class="st">"topright"</span>,
-  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ASAP"</span>, <span class="st">"MAS"</span><span class="op">)</span>,
-  pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">19</span>, <span class="cn">NA</span><span class="op">)</span>,
-  lty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span>,
+<span class="fu"><a href="https://rdrr.io/r/graphics/frame.html" class="external-link">plot.new</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"topright"</span>,
+  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ASAP"</span>, <span class="st">"MAS"</span><span class="op">)</span>,
+  pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">19</span>, <span class="cn">NA</span><span class="op">)</span>,
+  lty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span>,
   col <span class="op">=</span> <span class="va">col</span>,
   bty <span class="op">=</span> <span class="st">"n"</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="003_ASAPCaseStudy_files/figure-html/unnamed-chunk-9-1.png" width="960"></p>
 <p>Compare recruitment deviations over years from the OM and <code>MAS</code>.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-<span class="va">col</span> <span class="op">&lt;-</span> <span class="fu">nmfspalette</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nmfspalette/man/nmfs_palette.html">nmfs_palette</a></span><span class="op">(</span><span class="st">"regional web"</span><span class="op">)</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html">barplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">asap</span><span class="op">$</span><span class="va">recruit_deviation</span>, <span class="va">mas</span><span class="op">$</span><span class="va">recruit_deviation</span><span class="op">)</span>,
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<span class="va">col</span> <span class="op">&lt;-</span> <span class="fu">nmfspalette</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nmfspalette/man/nmfs_palette.html" class="external-link">nmfs_palette</a></span><span class="op">(</span><span class="st">"regional web"</span><span class="op">)</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link">barplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">asap</span><span class="op">$</span><span class="va">recruit_deviation</span>, <span class="va">mas</span><span class="op">$</span><span class="va">recruit_deviation</span><span class="op">)</span>,
   beside <span class="op">=</span> <span class="cn">T</span>,
   ylab <span class="op">=</span> <span class="st">"Recruitment Deviations"</span>,
   col <span class="op">=</span> <span class="va">col</span>
 <span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/box.html">box</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span><span class="st">"topright"</span>,
-  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ASAP"</span>, <span class="st">"MAS"</span><span class="op">)</span>,
-  col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gray80"</span>, <span class="st">"gray20"</span><span class="op">)</span>,
-  pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">15</span><span class="op">)</span>,
+<span class="fu"><a href="https://rdrr.io/r/graphics/box.html" class="external-link">box</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"topright"</span>,
+  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ASAP"</span>, <span class="st">"MAS"</span><span class="op">)</span>,
+  col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gray80"</span>, <span class="st">"gray20"</span><span class="op">)</span>,
+  pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">15</span><span class="op">)</span>,
   bty <span class="op">=</span> <span class="st">"n"</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="003_ASAPCaseStudy_files/figure-html/unnamed-chunk-10-1.png" width="960"></p>
-<div id="generate-comparison-table" class="section level3">
-<h3 class="hasAnchor">
-<a href="#generate-comparison-table" class="anchor"></a>Generate comparison table</h3>
+<div class="section level3">
+<h3 id="generate-comparison-table">Generate comparison table<a class="anchor" aria-label="anchor" href="#generate-comparison-table"></a>
+</h3>
 <p>Compare estimated R0, q, and h.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># var &lt;- c("R0", "h", "q")</span>
-<span class="va">summary_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+<span class="va">summary_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
   <span class="va">asap</span><span class="op">$</span><span class="va">r0</span>, <span class="va">mas</span><span class="op">$</span><span class="va">r0</span>,
   <span class="va">asap</span><span class="op">$</span><span class="va">h</span>, <span class="va">mas</span><span class="op">$</span><span class="va">h</span>,
   <span class="va">asap</span><span class="op">$</span><span class="va">q</span>, <span class="va">mas</span><span class="op">$</span><span class="va">q</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="op">)</span>,
 ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">summary_table</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ASAP"</span>, <span class="st">"MAS"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">summary_table</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"R0"</span>, <span class="st">"h"</span>, <span class="st">"q"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">summary_table</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ASAP"</span>, <span class="st">"MAS"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">summary_table</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"R0"</span>, <span class="st">"h"</span>, <span class="st">"q"</span><span class="op">)</span>
 <span class="va">summary_table</span></code></pre></div>
-<pre><code>##           ASAP        MAS
-## R0 471.7017000 540.916001
-## h    0.5792984   0.635369
-## q    0.1289099   0.116918</code></pre>
+<pre><code><span class="co">##           ASAP        MAS</span>
+<span class="co">## R0 471.7017000 456.753108</span>
+<span class="co">## h    0.5792984   0.586745</span>
+<span class="co">## q    0.1289099   0.116814</span></code></pre>
 </div>
 </div>
   </div>
@@ -765,11 +770,13 @@ ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op"
 
 
       <footer><div class="copyright">
-  <p>Developed by Christine Stawitz.</p>
+  <p></p>
+<p>Developed by Christine Stawitz.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -777,6 +784,8 @@ ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op"
 
   
 
+
+  
 
   </body>
 </html>

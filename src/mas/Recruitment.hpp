@@ -146,9 +146,13 @@ namespace mas {
                     sum += this->recruitment_deviations[i];
                 }
 
+   
+            
                 for (int i = 0; i < this->recruitment_deviations.size(); i++) {
                     this->recruitment_deviations[i] -= sum / static_cast<REAL_T> (this->recruitment_deviations.size());
                 }
+                
+
             }
             if (this->use_bias_correction) {
                 this->bias_correction = -0.5 * this->sigma_r * this->sigma_r; //bias correction
