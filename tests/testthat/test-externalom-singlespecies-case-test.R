@@ -42,7 +42,7 @@ test_that(
     recruitment$constrained_deviations <- TRUE
     recruitment$deviations_min <- -15.0
     recruitment$deviations_max <- 15.0
-    recruitment$deviation_phase <- 1
+    recruitment$deviation_phase <- 2
     recruitment$SetDeviations(om_input$logR.resid)
     recruitment$use_bias_correction <- FALSE
 
@@ -54,15 +54,6 @@ test_that(
     growth$SetUndifferentiatedSurveyWeight(survey_empirical_weight)
     growth$SetUndifferentiatedWeightAtSeasonStart(empirical_weight)
     growth$SetUndifferentiatedWeightAtSpawning(empirical_weight)
-    growth$a_min$value <- 0.01
-    growth$a_max$value <- 10.0
-    growth$c$value <- 0.3
-    growth$lmin$value <- 5
-    growth$lmax$value <- 50
-    growth$alpha_f$value <- 0.000025
-    growth$alpha_m$value <- 0.000025
-    growth$beta_f$value <- 2.9624
-    growth$beta_m$value <- 2.9624
 
     # Maturity
     maturity <- new(r4mas$Maturity)

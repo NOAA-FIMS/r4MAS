@@ -302,7 +302,7 @@ test_that(
     
     # Maturity
     maturity <- new(r4mas$Maturity)
-    maturity$values <- om_input$mat.age * 0.5
+    maturity$values <- om_input$mat.age 
     
     # Natural Mortality
     natural_mortality <- new(r4mas$NaturalMortality)
