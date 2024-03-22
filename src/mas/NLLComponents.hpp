@@ -78,8 +78,8 @@ namespace mas {
                 (T(9.984369578019570859563e-6) / (x + T(7)))+
                 (T(1.50563273514931155834e-7) / (x + T(8)));
 
-        term1 = (x + T(0.5)) * std::log((x + T(7.5)) / T(M_E));
-        term2 = T(0.9189385332046727418)/*HALF LOG 2M_PI*/ + std::log(Ag);
+        term1 = (x + T(0.5)) * mas::log((x + T(7.5)) / T(M_E));
+        term2 = T(0.9189385332046727418)/*HALF LOG 2M_PI*/ + mas::log(Ag);
         ret = term1 + (term2 - T(7.0));
 
         return ret;
@@ -98,13 +98,13 @@ namespace mas {
 
         y = x - 1.0;
         tmp = y + (5.5);
-        tmp -= (y + 0.5) * std::log(tmp);
+        tmp -= (y + 0.5) * mas::log(tmp);
         ser = 1.000000000190015;
         for (int j = 0; j <= 5; j++) {
             y += 1.0;
             ser += cof[j] / y;
         }
-        return -tmp + std::log(2.5066282746310005 * ser);
+        return -tmp + mas::log(2.5066282746310005 * ser);
     }
 
     template<typename T>
@@ -212,9 +212,9 @@ namespace mas {
                                     // likely_ind(ind) += log(index_sigma(ind, i));
                                     // likely_ind(ind) += 0.5 * square(log(index_obs(ind, i)) - log(index_pred(ind, i))) / index_sigma2(ind, i);
                                     cv = observed->get_error(i, j);
-                                    se2 = std::log(cv * cv + 1.0);
-                                    se = std::sqrt(se2) / std::sqrt(std::log(M_E));
-                                    nll1 += this->lambda->get(i, j) * std::log(se);
+                                    se2 = mas::log(cv * cv + 1.0);
+                                    se = mas::sqrt(se2) / std::sqrt(std::log(M_E));
+                                    nll1 += this->lambda->get(i, j) * mas::log(se);
 //                                     nll2 += this->lambda->get(i, j) * SQUARE((mas::log(obs) - mas::log(expected)))/se;
                                     nll2 += this->lambda->get(i, j) * SQUARE((mas::log((obs / expected)) / se) + 0.5 * se);
                                 }
@@ -232,9 +232,9 @@ namespace mas {
                                     // likely_ind(ind) += log(index_sigma(ind, i));
                                     // likely_ind(ind) += 0.5 * square(log(index_obs(ind, i)) - log(index_pred(ind, i))) / index_sigma2(ind, i);
                                     cv = observed->get_error(i, j);
-                                    se2 = std::log(cv * cv + 1.0);
-                                    se = std::sqrt(se2) / std::sqrt(std::log(M_E));
-                                    nll1 += this->lambda->get(i, j) * std::log(se);
+                                    se2 = mas::log(cv * cv + 1.0);
+                                    se = mas::sqrt(se2) / std::sqrt(std::log(M_E));
+                                    nll1 += this->lambda->get(i, j) * mas::log(se);
                                     nll2 += this->lambda->get(i, j) * SQUARE(mas::log((obs / expected))) / se2;
                                 }
                             }
@@ -333,7 +333,7 @@ namespace mas {
             }
 
             //compute effective sample size
-            this->neff = (1.0 + this->beta.GetValue() * static_cast<REAL_T> (N)) / (1.0 + this->beta.GetValue());
+            this->neff = (1.0 + mas::VariableTrait<REAL_T>::GetValue(this->beta) * static_cast<REAL_T> (N)) / (1.0 + mas::VariableTrait<REAL_T>::GetValue(this->beta));
 
             return nll;
         }
@@ -403,7 +403,7 @@ namespace mas {
             }
 
             //compute effective sample size
-            this->neff = (1.0 + this->beta.GetValue() * static_cast<REAL_T> (N)) / (1.0 + this->beta.GetValue());
+           this->neff = (1.0 + mas::VariableTrait<REAL_T>::GetValue(this->beta) * static_cast<REAL_T> (N)) / (1.0 + mas::VariableTrait<REAL_T>::GetValue(this->beta));
 
             return nll;
         }
@@ -459,7 +459,7 @@ namespace mas {
                             temp_sum += this->lambda->get(i, j, a) *((obs) * mas::log(predicted[index]));
 
                             temp1 += P_pred * (1.0 - P_pred);
-                            temp2 += std::pow((observed->get(i, j, a) - P_pred), 2.0);
+                            temp2 += mas::pow((observed->get(i, j, a) - P_pred), 2.0);
                         }
                     }
                     if (observed->get_sample_size(i, j) != observed->missing_value) {
@@ -527,8 +527,8 @@ namespace mas {
                             variable P_pred = (predicted[index] + this->epsilon) / temp3;
                             temp_sum += this->lambda->get(i, j, a) *((obs) * mas::log(P_pred));
 
-                            temp1 += P_pred.GetValue()*(1.0 - P_pred.GetValue());
-                            temp2 += std::pow((observed->get(i, j, a) - P_pred.GetValue()) + epsilon, 2.0);
+                            temp1 += mas::VariableTrait<REAL_T>::GetValue(P_pred)*(1.0 - mas::VariableTrait<REAL_T>::GetValue(P_pred));
+                            temp2 += mas::pow((observed->get(i, j, a) - mas::VariableTrait<REAL_T>::GetValue(P_pred)) + epsilon, 2.0);
                         }
                     }
                     if (observed->get_sample_size(i, j) != observed->missing_value) {

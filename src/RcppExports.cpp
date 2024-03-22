@@ -10,15 +10,15 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-
-RcppExport SEXP _rcpp_module_boot_rmas();
-
-static const R_CallMethodDef CallEntries[] = {
-    {"_rcpp_module_boot_rmas", (DL_FUNC) &_rcpp_module_boot_rmas, 0},
-    {NULL, NULL, 0}
-};
-
-RcppExport void R_init_r4MAS(DllInfo *dll) {
-    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
-    R_useDynamicSymbols(dll, FALSE);
-}
+//
+//RcppExport SEXP _rcpp_module_boot_rmas();
+//
+//static const R_CallMethodDef CallEntries[] = {
+//    {"_rcpp_module_boot_rmas", (DL_FUNC) &_rcpp_module_boot_rmas, 0},
+//    {NULL, NULL, 0}
+//};
+//
+//RcppExport void R_init_r4MAS(DllInfo *dll) {
+//    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+//    R_useDynamicSymbols(dll, FALSE);
+//}

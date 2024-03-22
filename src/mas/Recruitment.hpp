@@ -34,7 +34,9 @@
 #ifndef RECRUITMENT_HPP
 #define RECRUITMENT_HPP
 #include "Common.hpp"
+
 #define SQUARE(x) ((x)*(x))
+
 namespace mas {
 
     template<typename REAL_T>
@@ -98,6 +100,9 @@ namespace mas {
         }
 
         std::string RecruitDeviationsToJSON() {
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
+
             std::stringstream ss;
             ss.setf(std::ios::fixed, std::ios::floatfield);
             ss << "\"recruitment_deviations\":{";
@@ -115,6 +120,7 @@ namespace mas {
             }
             ss << this->recruitment_deviations[this->recruitment_deviations.size() - 1].GetValue() << "]\n}\n";
             return ss.str();
+#endif
         }
 
         virtual const std::string Name() {
@@ -146,12 +152,12 @@ namespace mas {
                     sum += this->recruitment_deviations[i];
                 }
 
-   
-            
+
+
                 for (int i = 0; i < this->recruitment_deviations.size(); i++) {
                     this->recruitment_deviations[i] -= sum / static_cast<REAL_T> (this->recruitment_deviations.size());
                 }
-                
+
 
             }
             if (this->use_bias_correction) {
@@ -189,21 +195,21 @@ namespace mas {
         }
 
         virtual const REAL_T GetAlpha() {
-            return this->alpha.GetValue();
+            return this->alpha;
         }
 
         virtual const REAL_T GetBeta() {
-            return this->beta.GetValue();
+            return this->beta;
         }
 
         virtual const REAL_T CalculateEquilibriumSpawningBiomass(REAL_T spawing_biomass_per_recruit) {
             return (1.0 / this->GetBeta())*
-                    (std::log(spawing_biomass_per_recruit) * this->GetAlpha());
+                    (mas::log(spawing_biomass_per_recruit) * this->GetAlpha());
         }
 
         virtual const REAL_T CalculateEquilibriumRecruitment(REAL_T equilibrium_spawning_biomass) {
             return this->GetAlpha() * equilibrium_spawning_biomass *
-                    std::exp(-1.0 * this->GetBeta() * equilibrium_spawning_biomass);
+                    mas::exp(-1.0 * this->GetBeta() * equilibrium_spawning_biomass);
         }
 
         virtual const variable CalculateEquilibriumRecruitment(variable spr, variable spr_F0) {
@@ -213,6 +219,8 @@ namespace mas {
         }
 
         virtual const std::string ToJSONString() {
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
             std::stringstream ss;
             ss.setf(std::ios::fixed, std::ios::floatfield);
             ss << "\"recruitment\": {\n";
@@ -229,6 +237,7 @@ namespace mas {
             ss << "}\n";
             ss << "}";
             return ss.str();
+#endif
         }
 
         virtual const std::string Name() {
@@ -278,6 +287,7 @@ namespace mas {
         }
 
         virtual const std::string ToJSONString() {
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
             std::stringstream ss;
             ss.setf(std::ios::fixed, std::ios::floatfield);
             ss << "\"recruitment\": {\n";
@@ -294,6 +304,7 @@ namespace mas {
             ss << "}\n";
             ss << "}";
             return ss.str();
+#endif
         }
 
         virtual const std::string Name() {
@@ -325,7 +336,7 @@ namespace mas {
 
             alpha = 4.0 * this->h * mas::exp(this->log_R0) / (5.0 * this->h - 1.0);
             beta = (this->SB0[pop_id][area_id] * (1.0 - this->h)) / (5.0 * this->h - 1.0);
-            
+
             return ( 4.0 * this->h * mas::exp(this->log_R0) * sb) / (this->SB0[pop_id][area_id]*(1.0 - this->h) + (sb * (5.0 * this->h - 1.0)));
         }
 
@@ -343,11 +354,11 @@ namespace mas {
         }
 
         virtual const REAL_T GetAlpha() {
-            return this->alpha.GetValue();
+            return this->alpha;
         }
 
         virtual const REAL_T GetBeta() {
-            return this->beta.GetValue();
+            return this->beta;
         }
 
         virtual const REAL_T CalculateEquilibriumSpawningBiomass(REAL_T spawing_biomass_per_recruit) {
@@ -355,33 +366,34 @@ namespace mas {
         }
 
         virtual const REAL_T CalculateEquilibriumRecruitment(REAL_T equilibrium_spawning_biomass) {
-             //                                                R_eq[i] = (R0 / ((5.0 * steep - 1.0) * spr[i]))*
-                //                                                        (BC * 4.0 * steep * spr[i] - spr_F0 * (1.0 - steep));
-//             (mas::exp(this->log_R0) / ((5.0 * this->h - 1.0) * spr[i]))*
-//                                                                       (BC * 4.0 * this->h * spr[i] - spr_F0 * (1.0 - this->h));
+            //                                                R_eq[i] = (R0 / ((5.0 * steep - 1.0) * spr[i]))*
+            //                                                        (BC * 4.0 * steep * spr[i] - spr_F0 * (1.0 - steep));
+            //             (mas::exp(this->log_R0) / ((5.0 * this->h - 1.0) * spr[i]))*
+            //                                                                       (BC * 4.0 * this->h * spr[i] - spr_F0 * (1.0 - this->h));
             return (this->GetAlpha() * equilibrium_spawning_biomass) /
                     (this->GetBeta() + equilibrium_spawning_biomass);
         }
 
-//         virtual const variable CalculateEquilibriumRecruitment(variable spr, variable spr_F0) {
+        //         virtual const variable CalculateEquilibriumRecruitment(variable spr, variable spr_F0) {
 
-//             return (mas::exp(this->log_R0) / ((5.0 * this->h - 1.0) * spr))*
-//                     (/*mas::exp(this->bias_correction)*/4.0 * this->h * spr - spr_F0 * (1.0 - this->h));
-//         }
+        //             return (mas::exp(this->log_R0) / ((5.0 * this->h - 1.0) * spr))*
+        //                     (/*mas::exp(this->bias_correction)*/4.0 * this->h * spr - spr_F0 * (1.0 - this->h));
+        //         }
 
         virtual const variable CalculateEquilibriumRecruitment(
-        const variable spawning_biomass_per_recruit_unfished,
+                const variable spawning_biomass_per_recruit_unfished,
                 const variable spawning_biomass_per_recruit_f) {
-//=R0*((4*h*R52-(1-h)*$B$7)/((5*h-1)*R52))
-//            std::cout<<spawning_biomass_per_recruit_unfished<<"\n"<<spawning_biomass_per_recruit_f<<"\n";
-            variable ret = mas::exp(this->log_R0)*((4.0*this->h*
-                    spawning_biomass_per_recruit_f-(1.0-this->h)*
-                    spawning_biomass_per_recruit_unfished)/(((5.0*this->h)-1.0)
-                    *spawning_biomass_per_recruit_f));
+            //=R0*((4*h*R52-(1-h)*$B$7)/((5*h-1)*R52))
+            //            std::cout<<spawning_biomass_per_recruit_unfished<<"\n"<<spawning_biomass_per_recruit_f<<"\n";
+            variable ret = mas::exp(this->log_R0)*((4.0 * this->h *
+                    spawning_biomass_per_recruit_f - (1.0 - this->h) *
+                    spawning_biomass_per_recruit_unfished) / (((5.0 * this->h) - 1.0)
+                    * spawning_biomass_per_recruit_f));
             return ret;
         }
 
         virtual const std::string ToJSONString() {
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
             std::stringstream ss;
             ss.setf(std::ios::fixed, std::ios::floatfield);
             ss << "\"recruitment\": {\n";
@@ -398,6 +410,7 @@ namespace mas {
             ss << "}\n";
             ss << "}";
             return ss.str();
+#endif
         }
 
         virtual const std::string Name() {
@@ -445,6 +458,7 @@ namespace mas {
         }
 
         virtual const std::string ToJSONString() {
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
             std::stringstream ss;
             ss << "\"recruitment\": {\n";
             ss.setf(std::ios::fixed, std::ios::floatfield);
@@ -459,6 +473,7 @@ namespace mas {
             ss << "}\n";
             ss << "}";
             return ss.str();
+#endif
         }
 
         virtual const std::string Name() {
@@ -504,6 +519,8 @@ namespace mas {
         }
 
         virtual const std::string ToJSONString() {
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
             std::stringstream ss;
             ss.setf(std::ios::fixed, std::ios::floatfield);
             ss << "\"recruitment\": {\n";
@@ -521,6 +538,7 @@ namespace mas {
             ss << "}\n";
             ss << "}";
             return ss.str();
+#endif
         }
 
         virtual const std::string Name() {
@@ -552,6 +570,8 @@ namespace mas {
         }
 
         virtual const std::string ToJSONString() {
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
             std::stringstream ss;
             ss.setf(std::ios::fixed, std::ios::floatfield);
             ss << "\"recruitment\": {\n";
@@ -569,6 +589,7 @@ namespace mas {
             ss << "}\n";
             ss << "}";
             return ss.str();
+#endif
         }
 
         virtual const std::string Name() {
@@ -599,6 +620,8 @@ namespace mas {
         }
 
         virtual const std::string ToJSONString() {
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
             std::stringstream ss;
             ss.setf(std::ios::fixed, std::ios::floatfield);
             ss << "\"recruitment\": {\n";
@@ -616,6 +639,7 @@ namespace mas {
             ss << "}\n";
             ss << "}";
             return ss.str();
+#endif
         }
 
         virtual const std::string Name() {

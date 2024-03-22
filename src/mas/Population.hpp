@@ -12,6 +12,7 @@
 #define POPULATION_HPP
 #include <memory>
 #include <vector>
+#include <valarray>
 #include <iomanip>
 #include <unordered_map>
 #include <unordered_set>
@@ -21,7 +22,9 @@
 #include "Recruitment.hpp"
 #include "HarvestControlRule.hpp"
 #include "MaximumSustainableYield.hpp"
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 #include "third_party/ATL/lib/Variable.hpp"
+#endif
 
 namespace mas {
 
@@ -469,7 +472,7 @@ namespace mas {
 
                         //weight at season start
                         this->growth_model->GetWeight(y, s,
-                                this->length_at_season_start[a], ages[a].GetValue(),
+                                this->length_at_season_start[a], mas::VariableTrait<REAL_T>::GetValue(ages[a]),
                                 this->sex, this->id,
                                 mas::MEAN_WEIGHT_AT_AGE_SEASON_START,
                                 weight_at_season_start[index]);
@@ -477,8 +480,8 @@ namespace mas {
                         //weight at spawning
                         this->growth_model->GetWeight(y, s,
                                 this->length_at_spawning[a],
-                                ages[a].GetValue()
-                                + this->spawning_season_offset.GetValue(),
+                                mas::VariableTrait<REAL_T>::GetValue(ages[a])
+                                + mas::VariableTrait<REAL_T>::GetValue(this->spawning_season_offset),
                                 this->sex, this->id,
                                 mas::MEAN_WEIGHT_AT_AGE_SPAWNING,
                                 weight_at_spawning[index]);
@@ -489,16 +492,16 @@ namespace mas {
                         //weight at catch time
                         this->growth_model->GetWeight(y, s,
                                 this->length_at_catch_time[a],
-                                ages[a].GetValue()
-                                + this->catch_season_offset.GetValue(),
+                                mas::VariableTrait<REAL_T>::GetValue(ages[a])
+                                + mas::VariableTrait<REAL_T>::GetValue(this->catch_season_offset),
                                 this->sex, this->id, mas::CATCH_MEAN_WEIGHT_AT_AGE,
                                 weight_at_catch_time[index]);
 
                         //weight at survey time
                         this->growth_model->GetWeight(y, s,
                                 this->length_at_survey_time[a],
-                                ages[a].GetValue()
-                                + this->survey_season_offset.GetValue(),
+                                mas::VariableTrait<REAL_T>::GetValue(ages[a])
+                                + mas::VariableTrait<REAL_T>::GetValue(this->survey_season_offset),
                                 this->sex, this->id, mas::SURVEY_MEAN_WEIGHT_AT_AGE,
                                 weight_at_survey_time[index]);
 
@@ -564,7 +567,7 @@ namespace mas {
 
             variable ret = sb_per_recruit[this->years - 1];
 
-            return ret.GetValue();
+            return mas::VariableTrait<REAL_T>::GetValue(ret);
         }
 
         /**
@@ -694,7 +697,7 @@ namespace mas {
 
                     size_t index2 = year * this->seasons * this->ages.size()
                             + season * this->ages.size() + j;
-                    temp += F * this->S[index2].GetValue() + this->M[j].GetValue();
+                    temp += F * mas::VariableTrait<REAL_T>::GetValue(this->S[index2]) + mas::VariableTrait<REAL_T>::GetValue(this->M[j]);
                 }
             }
         }
@@ -706,20 +709,20 @@ namespace mas {
 
                 size_t index = (this->years - 1) * this->seasons * this->ages.size()
                         + (this->seasons - 1) * this->ages.size() + i;
-                ret += ((this->weight_at_catch_time[index].GetValue() * F
-                        * this->sum_selectivity[index].GetValue())
-                        / (F * this->sum_selectivity[index].GetValue()
-                        + this->M[i].GetValue()))
+                ret += ((mas::VariableTrait<REAL_T>::GetValue(this->weight_at_catch_time[index]) * F
+                        * mas::VariableTrait<REAL_T>::GetValue(this->sum_selectivity[index]))
+                        / (F * mas::VariableTrait<REAL_T>::GetValue(this->sum_selectivity[index])
+                        + mas::VariableTrait<REAL_T>::GetValue(this->M[i])))
                         * this->CalculateProbabilityOfCaptureAtAge(i,
                         this->years - 1, this->seasons - 1, F)
                         * this->CalculateProbabilityOfSurvivalToAge(i,
                         this->years - 1, this->seasons - 1, F);
 
                 std::cout
-                        << ((this->weight_at_catch_time[index].GetValue() * F
-                        * this->sum_selectivity[index].GetValue())
-                        / (F * this->sum_selectivity[index].GetValue()
-                        + this->M[i].GetValue())) << " * "
+                        << ((mas::VariableTrait<REAL_T>::GetValue(this->weight_at_catch_time[index]) * F
+                        * mas::VariableTrait<REAL_T>::GetValue(this->sum_selectivity[index]))
+                        / (F * mas::VariableTrait<REAL_T>::GetValue(this->sum_selectivity[index])
+                        + mas::VariableTrait<REAL_T>::GetValue(this->M[i]))) << " * "
                         << this->CalculateProbabilityOfCaptureAtAge(i,
                         this->years - 1, this->seasons - 1, F) << " * "
                         << this->CalculateProbabilityOfSurvivalToAge(i,
@@ -746,8 +749,8 @@ namespace mas {
 
                 size_t index = year * this->seasons * this->ages.size()
                         + (season) * this->ages.size() + i;
-                sum_z += F * this->sum_selectivity[index].GetValue()
-                        + this->M[i].GetValue();
+                sum_z += F * mas::VariableTrait<REAL_T>::GetValue(this->sum_selectivity[index])
+                        + mas::VariableTrait<REAL_T>::GetValue(this->M[i]);
             }
             return std::exp(-1.0 * sum_z);
         }
@@ -757,7 +760,7 @@ namespace mas {
             size_t index = year * this->seasons * this->ages.size()
                     + (season) * this->ages.size() + a;
 
-            return (1.0 - std::exp(-1.0 * F * this->Z[index].GetValue()));
+            return (1.0 - std::exp(-1.0 * F * mas::VariableTrait<REAL_T>::GetValue(this->Z[index])));
         }
 
         inline REAL_T CalculateProbabilityOfCaptureAtAgeAOrOlder(int a, int year,
@@ -765,10 +768,10 @@ namespace mas {
             size_t index = year * this->seasons * this->ages.size()
                     + (season) * this->ages.size() + a;
 
-            return (this->weight_at_catch_time[index].GetValue() * F
-                    * this->sum_selectivity[index].GetValue())
-                    / (F * this->sum_selectivity[index].GetValue()
-                    + this->M[a].GetValue());
+            return (mas::VariableTrait<REAL_T>::GetValue(this->weight_at_catch_time[index]) * F
+                    * mas::VariableTrait<REAL_T>::GetValue(this->sum_selectivity[index]))
+                    / (F * mas::VariableTrait<REAL_T>::GetValue(this->sum_selectivity[index])
+                    + mas::VariableTrait<REAL_T>::GetValue(this->M[a]));
         }
 
         inline REAL_T CalculateSPR(REAL_T F) {
@@ -776,7 +779,7 @@ namespace mas {
                     this->years - 1, this->seasons - 1, F)
                     / this->CalculateUnfishedSpawningBiomassPerRecruit();
 
-            return ret.GetValue();
+            return mas::VariableTrait<REAL_T>::GetValue(ret);
         }
 
         inline REAL_T CalculateFSPR(REAL_T fraction) {
@@ -882,7 +885,7 @@ namespace mas {
                 this->initial_equilibrium_numbers[a] =
                         this->initial_equilibrium_numbers[a - 1]
                         * mas::exp(
-                        static_cast<REAL_T> (-1.0)
+                        static_cast<double> (-1.0)
                         * (this->M[a - 1]));
             }
             variable m = this->M[a - 1];
@@ -892,17 +895,17 @@ namespace mas {
 
                 this->initial_equilibrium_numbers[a] =
                         this->initial_equilibrium_numbers[a - 1]
-                        * mas::exp(static_cast<REAL_T> (-1.0) * (m));
+                        * mas::exp(static_cast<double> (-1.0) * (m));
                 sum += this->initial_equilibrium_numbers[a];
             }
 
             this->initial_equilibrium_numbers[this->ages.size() - 1] +=
                     sum
                     + (this->initial_equilibrium_numbers[this->initial_equilibrium_numbers.size()
-                    - 1] * mas::exp(static_cast<REAL_T> (-1.0) * (m)))
+                    - 1] * mas::exp(static_cast<double> (-1.0) * (m)))
                     / (1.0
                     - mas::exp(
-                    static_cast<REAL_T> (-1.0) * (m)));
+                    static_cast<double> (-1.0) * (m)));
         }
 
         void CalculateInitialNumbers() {
@@ -911,9 +914,9 @@ namespace mas {
             for (a = 0; a < this->ages.size(); a++) {
 
                 this->initial_numbers[a] = (mas::exp(
-                        static_cast<REAL_T> (-1.0) * this->M[a] - this->initialF)
+                        static_cast<double> (-1.0) * this->M[a] - this->initialF)
                         * this->initial_equilibrium_numbers[a]
-                        * mas::exp(initial_deviations[a] - static_cast<REAL_T> (0.5)
+                        * mas::exp(initial_deviations[a] - static_cast<double> (0.5)
                         /* mas::pow(sigma_r, static_cast<REAL_T> (2.0))*/));
             }
 
@@ -1078,8 +1081,8 @@ namespace mas {
                     for (int s = 0; s < this->seasons; s++) {
                         size_t index = (y * this->seasons * this->ages.size())
                                 + (s * this->ages.size()) + a;
-                        temp_n += this->numbers_at_age[index].GetValue();
-                        temp_s += this->S[index].GetValue();
+                        temp_n += mas::VariableTrait<REAL_T>::GetValue(this->numbers_at_age[index]);
+                        temp_s += mas::VariableTrait<REAL_T>::GetValue(this->S[index]);
                     }
                     compressed_numbers[y][a] = temp_n;
                     std::cout << compressed_numbers[y][a] << "  ";
@@ -1196,7 +1199,7 @@ namespace mas {
          *  using bisection search*/
         inline void FCalc() {
             //            if (this->initialF.GetValue() == 0.0) {
-
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
             bool recording = variable::tape.recording;
             variable::tape.recording = false;
             //                this->InitialNumbersEquilibrium();
@@ -1283,7 +1286,9 @@ namespace mas {
             }
             variable::tape.recording = recording;
             //            }
-
+#else
+            this->initialF = 0.00001;
+#endif
         }
 
         /**
@@ -1438,8 +1443,8 @@ namespace mas {
                     this->biomass_at_age[index1] = this->numbers_at_age[index1]
                             * this->weight_at_season_start[index1];
                     this->biomass_total[index] += this->biomass_at_age[index1];
-                    
-//                    std::cout<<this->numbers_at_age[index1]<<"  ";
+
+                    //                    std::cout<<this->numbers_at_age[index1]<<"  ";
                 }
 
                 if (age == this->ages.size() - 1) {
@@ -1916,25 +1921,25 @@ namespace mas {
 
             for (int j = 0; j < spr_ratio.size(); j++) {
                 //                spr_ratio[j] = spr[j] / spr_F0;
-                REAL_T temp = std::fabs(spr_ratio[j] - 0.001);
+                REAL_T temp = std::fabs(mas::VariableTrait<REAL_T>::GetValue(spr_ratio[j]) - 0.001);
 
                 if (temp < F01_dum) {
                     F01_dum = temp;
                 }
 
-                temp = std::fabs(spr_ratio[j] - 0.3);
+                temp = std::fabs(mas::VariableTrait<REAL_T>::GetValue(spr_ratio[j]) - 0.3);
 
                 if (temp < F30_dum) {
                     F30_dum = temp;
                 }
 
-                temp = std::fabs(spr_ratio[j] - 0.35);
+                temp = std::fabs(mas::VariableTrait<REAL_T>::GetValue(spr_ratio[j]) - 0.35);
 
                 if (temp < F35_dum) {
                     F35_dum = temp;
                 }
 
-                temp = std::fabs(spr_ratio[j] - 0.4);
+                temp = std::fabs(mas::VariableTrait<REAL_T>::GetValue(spr_ratio[j]) - 0.4);
 
                 if (temp < F40_dum) {
                     F40_dum = temp;
@@ -1950,7 +1955,7 @@ namespace mas {
             //            std::cout << "F40_dum " << F40_dum << "\n";
 
             for (int i = 0; i < L_eq.size(); i++) {
-                if (L_eq[i].GetValue() > max) {
+                if (mas::VariableTrait<REAL_T>::GetValue(L_eq[i]) > max) {
                     max = L_eq[i];
                     max_index = i;
                 }
@@ -1958,13 +1963,13 @@ namespace mas {
                 //                    F01_out = F[i];
                 //                }
 
-                if (std::fabs(spr_ratio[i] - 0.3) == F30_dum) {
+                if (std::fabs(mas::VariableTrait<REAL_T>::GetValue(spr_ratio[i]) - 0.3) == F30_dum) {
                     F30_out = i;
                 }
-                if (std::fabs(spr_ratio[i] - 0.35) == F35_dum) {
+                if (std::fabs(mas::VariableTrait<REAL_T>::GetValue(spr_ratio[i]) - 0.35) == F35_dum) {
                     F35_out = i;
                 }
-                if (std::fabs(spr_ratio[i] - 0.4) == F40_dum) {
+                if (std::fabs(mas::VariableTrait<REAL_T>::GetValue(spr_ratio[i]) - 0.4) == F40_dum) {
                     F40_out = i;
                 }
             }
@@ -2004,7 +2009,7 @@ namespace mas {
 
 
 
-            this->area->nsubpopulations++;
+            this->area->nsubpopulations += 1.0;
 
             this->msy.msy = msy_mt_out * 1000 * this->sex_fraction_value;
             //             std::cout << "\n\nthis->msy.msy = " << this->msy.msy << "\n";
@@ -2027,8 +2032,8 @@ namespace mas {
             this->msy.L_msy = L_eq[index_m];
 
             //             std::cout << "this->msy.E_msy = " << this->msy.E_msy << "\n";
-            
-            
+
+
 
             this->msy.F30 = F[F30_out];
             this->msy.spr_F30_msy = spr[F30_out];
@@ -2130,10 +2135,10 @@ namespace mas {
 
             std::vector<variable_t> N0(this->ages.size(), 1.0);
             for (int iage = 1; iage < nages; iage++) {
-                N0[iage] = N0[iage - 1] * std::exp(-1.0 * M[iage - 1].GetValue());
+                N0[iage] = N0[iage - 1] * std::exp(-1.0 * mas::VariableTrait<REAL_T>::GetValue(M[iage - 1]));
             }
-            N0[nages - 1] = N0[nages - 2] * std::exp(-1.0 * M[nages - 2].GetValue())
-                    / (1.0 - std::exp(-1.0 * M[nages - 1].GetValue()));
+            N0[nages - 1] = N0[nages - 2] * std::exp(-1.0 * mas::VariableTrait<REAL_T>::GetValue(M[nages - 2]))
+                    / (1.0 - std::exp(-1.0 * mas::VariableTrait<REAL_T>::GetValue(M[nages - 1])));
 
             std::valarray<variable_t> reprod(nages);
             std::valarray<variable_t> selL(nages);
@@ -2147,12 +2152,12 @@ namespace mas {
                         + (season) * this->ages.size() + a;
 
                 //is this ssb_unfished?
-                reprod[a] = this->weight_at_spawning[index].GetValue()
+                reprod[a] = mas::VariableTrait<REAL_T>::GetValue(this->weight_at_spawning[index])
                         * (this->maturity[a] * this->sex_fraction_value);
                 spr_F0 += N0[a] * reprod[a];
                 selL[a] = this->sum_selectivity[index]; //.GetValue();
                 selZ[a] = this->sum_selectivity[index]; //.GetValue();
-                M_age[a] = this->M[a].GetValue();
+                M_age[a] = mas::VariableTrait<REAL_T>::GetValue(this->M[a]);
                 wgt[a] = this->weight_at_catch_time[index]; //.GetValue();
             }
 
@@ -2584,7 +2589,7 @@ namespace mas {
                 variable fca;
                 if (age == 0) {
                     fleets[f]->fleet_population_total_interactions[year
-                            * this->seasons + (season - 1)]++;
+                            * this->seasons + (season - 1)] += 1.0;
                 }
 
                 if (this->sex == FEMALE) {
@@ -2618,7 +2623,7 @@ namespace mas {
                 //contribute to this population segments total catch biomass at age
                 catch_biomass_at_age[index] += fca
                         * this->weight_at_catch_time[index];
-                total_CB += catch_biomass_at_age[index].GetValue();
+                total_CB += mas::VariableTrait<REAL_T>::GetValue(catch_biomass_at_age[index]);
 
                 //add  to the fleet[i]'s total catch numbers at age
                 fleets[f]->catch_biomass_at_age[index] += fca
@@ -2682,8 +2687,8 @@ namespace mas {
 
                 this->survey_index_at_age[index] += saa
                         * this->weight_at_survey_time[index];
-                total_SI += saa.GetValue()
-                        * this->weight_at_survey_time[index].GetValue();
+                total_SI += mas::VariableTrait<REAL_T>::GetValue(saa)
+                        * mas::VariableTrait<REAL_T>::GetValue(this->weight_at_survey_time[index]);
                 surveys[s]->survey_biomass_at_age[index] += saa
                         * this->weight_at_survey_time[index];
 
@@ -2725,7 +2730,7 @@ namespace mas {
         out << std::setprecision(7);
         out << "Population " << pi.natal_population->id << "\n";
         out << "Area " << pi.area->id << "\n";
-        out << "R0\t" << mas::exp(pi.recruitment_model->log_R0).GetValue() << "\n";
+        out << "R0\t" << mas::VariableTrait<REAL_T>::GetValue(mas::exp(pi.recruitment_model->log_R0)) << "\n";
         out << "h\t" << pi.recruitment_model->h << "\n";
         out << "SB0\t" << pi.recruitment_model->SB0[pi.id][pi.area->id] << "\n";
         out << "\n\n";
@@ -3387,6 +3392,7 @@ namespace mas {
         int ages;
         int growth_id;
         REAL_T female_fraction_value = 0.5;
+        variable initial_f = 0.0001;
 
         //totals for this population
         std::vector<REAL_T> numbers_at_age;
@@ -3499,6 +3505,8 @@ namespace mas {
         }
 
         void Prepare() {
+
+
             //            survey_numbers_at_age.resize(0);
             //            survey_numbers_at_age.resize(years * seasons * ages, static_cast<REAL_T> (0.0));
             //            survey_index_at_age.resize(0);
@@ -3510,7 +3518,9 @@ namespace mas {
             for (int d = 0; d < males.size(); d++) {
 
                 males[areas_list[d]->id].Reset();
+                males[areas_list[d]->id].initialF = this->initial_f;
                 females[areas_list[d]->id].Reset();
+                females[areas_list[d]->id].initialF = this->initial_f;
             }
         }
 
@@ -3994,9 +4004,9 @@ namespace mas {
             InitializePopulationinAreas();
             int y;
             for (y = 0; y < this->years; y++) {
-//                std::cout<<"\nyear = "<<y<<"\n";
+                //                std::cout<<"\nyear = "<<y<<"\n";
                 for (int s = 1; s <= this->seasons; s++) {
-//                    std::cout<<"\nseason = "<<s<<"\n";
+                    //                    std::cout<<"\nseason = "<<s<<"\n";
                     for (int a = 0; a < this->ages; a++) {
                         for (int area = 0; area < areas_list.size(); area++) {
 
@@ -4105,58 +4115,58 @@ namespace mas {
                             males[areas_list[al]->id].Finalize();
                             //total numbers from subpopulations
                             this->numbers_at_age[index] +=
-                                    males[areas_list[al]->id].numbers_at_age[index].GetValue()
-                                    + females[areas_list[al]->id].numbers_at_age[index].GetValue();
+                                    mas::VariableTrait<REAL_T>::GetValue(males[areas_list[al]->id].numbers_at_age[index])
+                                    + mas::VariableTrait<REAL_T>::GetValue(females[areas_list[al]->id].numbers_at_age[index]);
 
                             this->numbers_at_age_females[index] +=
-                                    females[areas_list[al]->id].numbers_at_age[index].GetValue();
+                                    mas::VariableTrait<REAL_T>::GetValue(females[areas_list[al]->id].numbers_at_age[index]);
 
                             this->numbers_at_age_males[index] +=
-                                    males[areas_list[al]->id].numbers_at_age[index].GetValue();
+                                    mas::VariableTrait<REAL_T>::GetValue(males[areas_list[al]->id].numbers_at_age[index]);
 
                             //total catch numbers from subpopulations
                             this->catch_numbers_at_age[index] +=
-                                    males[areas_list[al]->id].catch_at_age[index].GetValue()
-                                    + females[areas_list[al]->id].catch_at_age[index].GetValue();
+                                    mas::VariableTrait<REAL_T>::GetValue(males[areas_list[al]->id].catch_at_age[index])
+                                    + mas::VariableTrait<REAL_T>::GetValue(females[areas_list[al]->id].catch_at_age[index]);
 
                             this->catch_numbers_at_age_females[index] +=
-                                    females[areas_list[al]->id].catch_at_age[index].GetValue();
+                                    mas::VariableTrait<REAL_T>::GetValue(females[areas_list[al]->id].catch_at_age[index]);
 
                             this->catch_numbers_at_age_males[index] +=
-                                    males[areas_list[al]->id].catch_at_age[index].GetValue();
+                                    mas::VariableTrait<REAL_T>::GetValue(males[areas_list[al]->id].catch_at_age[index]);
 
                             //total catch biomass from subpopulations
                             this->catch_biomass_at_age[index] +=
-                                    males[areas_list[al]->id].catch_biomass_at_age[index].GetValue()
-                                    + females[areas_list[al]->id].catch_biomass_at_age[index].GetValue();
+                                    mas::VariableTrait<REAL_T>::GetValue(males[areas_list[al]->id].catch_biomass_at_age[index])
+                                    + mas::VariableTrait<REAL_T>::GetValue(females[areas_list[al]->id].catch_biomass_at_age[index]);
 
                             this->catch_biomass_at_age_females[index] +=
-                                    females[areas_list[al]->id].catch_biomass_at_age[index].GetValue();
+                                    mas::VariableTrait<REAL_T>::GetValue(females[areas_list[al]->id].catch_biomass_at_age[index]);
 
                             this->catch_biomass_at_age_males[index] +=
-                                    males[areas_list[al]->id].catch_biomass_at_age[index].GetValue();
+                                    mas::VariableTrait<REAL_T>::GetValue(males[areas_list[al]->id].catch_biomass_at_age[index]);
 
                             //total survey numbers from subpopulations
                             this->survey_numbers_at_age[index] +=
-                                    males[areas_list[al]->id].survey_numbers_at_age[index].GetValue()
-                                    + females[areas_list[al]->id].survey_numbers_at_age[index].GetValue();
+                                    mas::VariableTrait<REAL_T>::GetValue(males[areas_list[al]->id].survey_numbers_at_age[index])
+                                    + mas::VariableTrait<REAL_T>::GetValue(females[areas_list[al]->id].survey_numbers_at_age[index]);
 
                             this->survey_numbers_at_age_females[index] +=
-                                    females[areas_list[al]->id].survey_numbers_at_age[index].GetValue();
+                                    mas::VariableTrait<REAL_T>::GetValue(females[areas_list[al]->id].survey_numbers_at_age[index]);
 
                             this->survey_numbers_at_age_males[index] +=
-                                    males[areas_list[al]->id].survey_numbers_at_age[index].GetValue();
+                                    mas::VariableTrait<REAL_T>::GetValue(males[areas_list[al]->id].survey_numbers_at_age[index]);
 
                             //total survey biomass from subpopulations
                             this->survey_biomass_at_age[index] +=
-                                    males[areas_list[al]->id].survey_index_at_age[index].GetValue()
-                                    + females[areas_list[al]->id].survey_index_at_age[index].GetValue();
+                                    mas::VariableTrait<REAL_T>::GetValue(males[areas_list[al]->id].survey_index_at_age[index])
+                                    + mas::VariableTrait<REAL_T>::GetValue(females[areas_list[al]->id].survey_index_at_age[index]);
 
                             this->survey_biomass_at_age_females[index] +=
-                                    females[areas_list[al]->id].survey_index_at_age[index].GetValue();
+                                    mas::VariableTrait<REAL_T>::GetValue(females[areas_list[al]->id].survey_index_at_age[index]);
 
                             this->survey_biomass_at_age_males[index] +=
-                                    males[areas_list[al]->id].survey_index_at_age[index].GetValue();
+                                    mas::VariableTrait<REAL_T>::GetValue(males[areas_list[al]->id].survey_index_at_age[index]);
 
                         }
                     }
@@ -4170,34 +4180,34 @@ namespace mas {
                         size_t index = y * this->seasons + (s - 1);
 
                         this->abundance[index] +=
-                                males[areas_list[al]->id].abundance[index].GetValue()
-                                + females[areas_list[al]->id].abundance[index].GetValue();
+                                mas::VariableTrait<REAL_T>::GetValue(males[areas_list[al]->id].abundance[index])
+                                + mas::VariableTrait<REAL_T>::GetValue(females[areas_list[al]->id].abundance[index]);
 
                         this->abundance_females[index] +=
-                                females[areas_list[al]->id].abundance[index].GetValue();
+                                mas::VariableTrait<REAL_T>::GetValue(females[areas_list[al]->id].abundance[index]);
 
                         this->abundance_males[index] +=
-                                males[areas_list[al]->id].abundance[index].GetValue();
+                                mas::VariableTrait<REAL_T>::GetValue(males[areas_list[al]->id].abundance[index]);
 
                         this->spawning_stock_biomass[index] +=
-                                males[areas_list[al]->id].spawning_stock_biomass[index].GetValue()
-                                + females[areas_list[al]->id].spawning_stock_biomass[index].GetValue();
+                                mas::VariableTrait<REAL_T>::GetValue(males[areas_list[al]->id].spawning_stock_biomass[index])
+                                + mas::VariableTrait<REAL_T>::GetValue(females[areas_list[al]->id].spawning_stock_biomass[index]);
 
                         this->spawning_stock_biomass_females[index] +=
-                                females[areas_list[al]->id].spawning_stock_biomass[index].GetValue();
+                                mas::VariableTrait<REAL_T>::GetValue(females[areas_list[al]->id].spawning_stock_biomass[index]);
 
                         this->spawning_stock_biomass_males[index] +=
-                                males[areas_list[al]->id].spawning_stock_biomass[index].GetValue();
+                                mas::VariableTrait<REAL_T>::GetValue(males[areas_list[al]->id].spawning_stock_biomass[index]);
 
                         this->biomass_total[index] +=
-                                males[areas_list[al]->id].biomass_total[index].GetValue()
-                                + females[areas_list[al]->id].biomass_total[index].GetValue();
+                                mas::VariableTrait<REAL_T>::GetValue(males[areas_list[al]->id].biomass_total[index])
+                                + mas::VariableTrait<REAL_T>::GetValue(females[areas_list[al]->id].biomass_total[index]);
 
                         this->biomass_total_females[index] +=
-                                females[areas_list[al]->id].biomass_total[index].GetValue();
+                                mas::VariableTrait<REAL_T>::GetValue(females[areas_list[al]->id].biomass_total[index]);
 
                         this->biomass_total_males[index] +=
-                                males[areas_list[al]->id].biomass_total[index].GetValue();
+                                mas::VariableTrait<REAL_T>::GetValue(males[areas_list[al]->id].biomass_total[index]);
 
                         this->catch_biomass_total[index] +=
                                 males[areas_list[al]->id].catch_biomass_total[index]
@@ -4220,27 +4230,27 @@ namespace mas {
                                 males[areas_list[al]->id].survey_biomass_total[index];
 
                         this->fishing_mortality[index] +=
-                                (males[areas_list[al]->id].fishing_mortality_total[index].GetValue()
-                                + females[areas_list[al]->id].fishing_mortality_total[index].GetValue())
+                                (mas::VariableTrait<REAL_T>::GetValue(males[areas_list[al]->id].fishing_mortality_total[index])
+                                + mas::VariableTrait<REAL_T>::GetValue(females[areas_list[al]->id].fishing_mortality_total[index]))
                                 / 2.0 / this->areas_list.size();
 
                         this->fishing_mortality_females[index] +=
-                                females[areas_list[al]->id].fishing_mortality_total[index].GetValue()
+                                mas::VariableTrait<REAL_T>::GetValue(females[areas_list[al]->id].fishing_mortality_total[index])
                                 / this->areas_list.size();
 
                         this->fishing_mortality_males[index] +=
-                                males[areas_list[al]->id].fishing_mortality_total[index].GetValue()
+                                mas::VariableTrait<REAL_T>::GetValue(males[areas_list[al]->id].fishing_mortality_total[index])
                                 / this->areas_list.size();
 
                         this->recruits[index] +=
-                                males[areas_list[al]->id].recruitment[index].GetValue()
-                                + females[areas_list[al]->id].recruitment[index].GetValue();
+                                mas::VariableTrait<REAL_T>::GetValue(males[areas_list[al]->id].recruitment[index])
+                                + mas::VariableTrait<REAL_T>::GetValue(females[areas_list[al]->id].recruitment[index]);
 
                         this->recruits_females[index] +=
-                                females[areas_list[al]->id].recruitment[index].GetValue();
+                                mas::VariableTrait<REAL_T>::GetValue(females[areas_list[al]->id].recruitment[index]);
 
                         this->recruits_males[index] +=
-                                males[areas_list[al]->id].recruitment[index].GetValue();
+                                mas::VariableTrait<REAL_T>::GetValue(males[areas_list[al]->id].recruitment[index]);
                     }
                 }
             }

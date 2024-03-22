@@ -68,7 +68,7 @@ namespace mas {
         int selectivity_model_id;
         std::vector<int> area_ids;
         atl::intrusive_ptr<DataObject<REAL_T> > survey_biomass_data;
-         atl::intrusive_ptr<DataObject<REAL_T> > catch_abundance_data;
+        atl::intrusive_ptr<DataObject<REAL_T> > catch_abundance_data;
         // NOTE:  need sex-specific proportions-at-age, proportions-at-length, and mean size-at-age data
         atl::intrusive_ptr<DataObject<REAL_T> > survey_proportion_at_age_data_N;
         atl::intrusive_ptr<DataObject<REAL_T> > survey_proportion_at_age_data;
@@ -194,7 +194,7 @@ namespace mas {
                                 ss.str("");
                                 ss << "survey_index_female" << tag;
                                 nll_component_values[i] = variable();
-                                nll_component_values[i].SetName(ss.str());
+                                mas::VariableTrait<REAL_T>::SetName(nll_component_values[i], ss.str());
                                 this->nll_components.push_back(mas::NLLComponent<REAL_T>(&survey_biomass_total_females,
                                         this->data_objects[i],
                                         this->survey_biomass_likelihood_component));
@@ -205,7 +205,7 @@ namespace mas {
                                 ss.str("");
                                 ss << "survey_index_male" << tag;
                                 nll_component_values[i] = variable();
-                                nll_component_values[i].SetName(ss.str());
+                                mas::VariableTrait<REAL_T>::SetName(nll_component_values[i], ss.str());
                                 this->nll_components.push_back(mas::NLLComponent<REAL_T>(&survey_biomass_total_males,
                                         this->data_objects[i],
                                         this->survey_biomass_likelihood_component));
@@ -216,7 +216,7 @@ namespace mas {
                                 ss.str("");
                                 ss << "survey_index_undifferentiated" << tag;
                                 nll_component_values[i] = variable();
-                                nll_component_values[i].SetName(ss.str());
+                                mas::VariableTrait<REAL_T>::SetName(nll_component_values[i], ss.str());
                                 this->nll_components.push_back(mas::NLLComponent<REAL_T>(&survey_biomass_total,
                                         this->data_objects[i],
                                         this->survey_biomass_likelihood_component));
@@ -234,7 +234,7 @@ namespace mas {
                                 ss.str("");
                                 ss << "survey_index_female" << tag;
                                 nll_component_values[i] = variable();
-                                nll_component_values[i].SetName(ss.str());
+                                mas::VariableTrait<REAL_T>::SetName(nll_component_values[i], ss.str());
                                 this->nll_components.push_back(mas::NLLComponent<REAL_T>(&survey_abundance_females,
                                         this->data_objects[i],
                                         this->survey_abundance_likelihood_component));
@@ -245,7 +245,7 @@ namespace mas {
                                 ss.str("");
                                 ss << "survey_index_male" << tag;
                                 nll_component_values[i] = variable();
-                                nll_component_values[i].SetName(ss.str());
+                                mas::VariableTrait<REAL_T>::SetName(nll_component_values[i], ss.str());
                                 this->nll_components.push_back(mas::NLLComponent<REAL_T>(&survey_abundance_males,
                                         this->data_objects[i],
                                         this->survey_abundance_likelihood_component));
@@ -256,7 +256,7 @@ namespace mas {
                                 ss.str("");
                                 ss << "survey_index_undifferentiated" << tag;
                                 nll_component_values[i] = variable();
-                                nll_component_values[i].SetName(ss.str());
+                                mas::VariableTrait<REAL_T>::SetName(nll_component_values[i], ss.str());
                                 this->nll_components.push_back(mas::NLLComponent<REAL_T>(&survey_abundance,
                                         this->data_objects[i],
                                         this->survey_abundance_likelihood_component));
@@ -275,7 +275,7 @@ namespace mas {
                                 ss.str("");
                                 ss << "survey_proportion_at_age_female" << tag;
                                 nll_component_values[i] = variable();
-                                nll_component_values[i].SetName(ss.str());
+                                mas::VariableTrait<REAL_T>::SetName(nll_component_values[i], ss.str());
                                 this->nll_components.push_back(mas::NLLComponent<REAL_T>(&survey_proportion_at_age_females,
                                         this->data_objects[i],
                                         survey_age_comp_likelihood_component));
@@ -284,7 +284,7 @@ namespace mas {
                                 ss.str("");
                                 ss << "survey_proportion_at_age_male" << tag;
                                 nll_component_values[i] = variable();
-                                nll_component_values[i].SetName(ss.str());
+                                mas::VariableTrait<REAL_T>::SetName(nll_component_values[i], ss.str());
                                 this->nll_components.push_back(mas::NLLComponent<REAL_T>(&survey_proportion_at_age_males,
                                         this->data_objects[i],
                                         this->survey_age_comp_likelihood_component));
@@ -294,7 +294,7 @@ namespace mas {
                                 ss.str("");
                                 ss << "survey_proportion_undifferentiated" << tag;
                                 nll_component_values[i] = variable();
-                                nll_component_values[i].SetName(ss.str());
+                                mas::VariableTrait<REAL_T>::SetName(nll_component_values[i], ss.str());
                                 this->nll_components.push_back(mas::NLLComponent<REAL_T>(&survey_proportion_at_age,
                                         this->data_objects[i],
                                         this->survey_age_comp_likelihood_component));

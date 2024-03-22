@@ -259,7 +259,7 @@ namespace mas {
                                 ss.str("");
                                 ss << "catch_biomass_female_" << tag;
                                 nll_component_values[i] = variable();
-                                nll_component_values[i].SetName(ss.str());
+                                mas::VariableTrait<REAL_T>::SetName(nll_component_values[i],ss.str());
                                 this->nll_components.push_back(
                                         mas::NLLComponent<REAL_T>(
                                         &catch_biomass_total_females,
@@ -271,7 +271,7 @@ namespace mas {
                                 ss.str("");
                                 ss << "catch_biomass_male" << tag;
                                 nll_component_values[i] = variable();
-                                nll_component_values[i].SetName(ss.str());
+                                mas::VariableTrait<REAL_T>::SetName(nll_component_values[i],ss.str());
                                 this->nll_components.push_back(
                                         mas::NLLComponent<REAL_T>(
                                         &catch_biomass_total_males,
@@ -283,7 +283,7 @@ namespace mas {
                                 ss.str("");
                                 ss << "catch_biomass_undifferentiated" << tag;
                                 nll_component_values[i] = variable();
-                                nll_component_values[i].SetName(ss.str());
+                                mas::VariableTrait<REAL_T>::SetName(nll_component_values[i],ss.str());
                                 this->nll_components.push_back(
                                         mas::NLLComponent<REAL_T>(&catch_biomass_total,
                                         this->data_objects[i],
@@ -299,7 +299,7 @@ namespace mas {
                                 ss.str("");
                                 ss << "fishery_index_female" << tag;
                                 nll_component_values[i] = variable();
-                                nll_component_values[i].SetName(ss.str());
+                                mas::VariableTrait<REAL_T>::SetName(nll_component_values[i],ss.str());
                                 this->nll_components.push_back(
                                         mas::NLLComponent<REAL_T>(&catch_abundance_females,
                                         this->data_objects[i],
@@ -311,7 +311,7 @@ namespace mas {
                                 ss.str("");
                                 ss << "fishery_index_male" << tag;
                                 nll_component_values[i] = variable();
-                                nll_component_values[i].SetName(ss.str());
+                                mas::VariableTrait<REAL_T>::SetName(nll_component_values[i],ss.str());
                                 this->nll_components.push_back(
                                         mas::NLLComponent<REAL_T>(&catch_abundance_males,
                                         this->data_objects[i],
@@ -323,7 +323,7 @@ namespace mas {
                                 ss.str("");
                                 ss << "fishery_index_undifferentiated" << tag;
                                 nll_component_values[i] = variable();
-                                nll_component_values[i].SetName(ss.str());
+                                mas::VariableTrait<REAL_T>::SetName(nll_component_values[i],ss.str());
                                 this->nll_components.push_back(
                                         mas::NLLComponent<REAL_T>(&catch_abundance,
                                         this->data_objects[i],
@@ -342,7 +342,7 @@ namespace mas {
                                 ss.str("");
                                 ss << "catch_proportion_at_age_female" << tag;
                                 nll_component_values[i] = variable();
-                                nll_component_values[i].SetName(ss.str());
+                                mas::VariableTrait<REAL_T>::SetName(nll_component_values[i],ss.str());
                                 this->nll_components.push_back(
                                         mas::NLLComponent<REAL_T>(
                                         &catch_proportion_at_age_females,
@@ -354,7 +354,7 @@ namespace mas {
                                 ss.str("");
                                 ss << "catch_proportion_at_age_male" << tag;
                                 nll_component_values[i] = variable();
-                                nll_component_values[i].SetName(ss.str());
+                                mas::VariableTrait<REAL_T>::SetName(nll_component_values[i],ss.str());
                                 this->nll_components.push_back(
                                         mas::NLLComponent<REAL_T>(
                                         &catch_proportion_at_age_males,
@@ -366,7 +366,7 @@ namespace mas {
                                 ss.str("");
                                 ss << "catch_proportion_undifferentiated" << tag;
                                 nll_component_values[i] = variable();
-                                nll_component_values[i].SetName(ss.str());
+                                mas::VariableTrait<REAL_T>::SetName(nll_component_values[i],ss.str());
                                 this->nll_components.push_back(
                                         mas::NLLComponent<REAL_T>(&catch_proportion_at_age,
                                         this->data_objects[i],
@@ -386,7 +386,7 @@ namespace mas {
                                 ss.str("");
                                 ss << "catch_length_comp_female" << tag;
                                 nll_component_values[i] = variable();
-                                nll_component_values[i].SetName(ss.str());
+                                mas::VariableTrait<REAL_T>::SetName(nll_component_values[i],ss.str());
                                 this->nll_components.push_back(
                                         mas::NLLComponent<REAL_T>(
                                         &catch_length_at_age_females,
@@ -398,7 +398,7 @@ namespace mas {
                                 ss.str("");
                                 ss << "catch_length_comp_male" << tag;
                                 nll_component_values[i] = variable();
-                                nll_component_values[i].SetName(ss.str());
+                                mas::VariableTrait<REAL_T>::SetName(nll_component_values[i],ss.str());
                                 this->nll_components.push_back(
                                         mas::NLLComponent<REAL_T>(
                                         &catch_length_at_age_males,
@@ -410,7 +410,7 @@ namespace mas {
                                 ss.str("");
                                 ss << "catch_length_undifferentiated" << tag;
                                 nll_component_values[i] = variable();
-                                nll_component_values[i].SetName(ss.str());
+                                mas::VariableTrait<REAL_T>::SetName(nll_component_values[i],ss.str());
                                 this->nll_components.push_back(
                                         mas::NLLComponent<REAL_T>(&catch_length_at_age,
                                         this->data_objects[i],

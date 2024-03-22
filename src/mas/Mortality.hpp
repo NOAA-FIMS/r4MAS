@@ -34,19 +34,18 @@
 #define MAS_MORTALITY_HPP
 
 #include "Common.hpp"
-
+#include <unordered_map>
 
 namespace mas {
 
     template<typename REAL_T>
     struct NaturalMortality : mas::ModelObject<REAL_T> {
-        
         typedef typename VariableTrait<REAL_T>::variable variable;
         std::vector<variable> mortality_vector;
 
-        std::unordered_map<REAL_T, variable> mortality;
+        std::unordered_map<double, variable> mortality;
 
-        typedef typename std::unordered_map<REAL_T, variable>::iterator mortality_iterator;
+        typedef typename std::unordered_map<double, variable>::iterator mortality_iterator;
 
         const variable Evaluate(const int& age_index) {
             return mortality_vector[age_index];
@@ -54,6 +53,7 @@ namespace mas {
         }
 
         virtual const std::string ToJSONString() {
+            #ifdef USE_ATL_ESTIMATION_ENGINE
             std::stringstream ss;
 
             ss << "\"natural_mortality\" : {";
@@ -92,6 +92,7 @@ namespace mas {
             }
             ss << "}\n}";
             return ss.str();
+#endif
         }
 
         virtual const std::string Name() {
@@ -123,37 +124,38 @@ namespace mas {
         }
 
         void AverageFmethodContributions() {
-//            if (this->contributions != 0) {
-//                bool recording = variable::tape.recording;
-//                variable::tape.recording = false;
-//                for (int i = 0; i < this->fishing_mortality.size(); i++) {
-//                    for (int j = 0; j < this->fishing_mortality[i].size(); j++) {
-//
-//                        this->fishing_mortality[i][j] /= this->contributions;
-//
-//                    }
-//                }
-//                this->contributions = 0.0;
-//                variable::tape.recording = recording;
-//            }
+            //            if (this->contributions != 0) {
+            //                bool recording = variable::tape.recording;
+            //                variable::tape.recording = false;
+            //                for (int i = 0; i < this->fishing_mortality.size(); i++) {
+            //                    for (int j = 0; j < this->fishing_mortality[i].size(); j++) {
+            //
+            //                        this->fishing_mortality[i][j] /= this->contributions;
+            //
+            //                    }
+            //                }
+            //                this->contributions = 0.0;
+            //                variable::tape.recording = recording;
+            //            }
         }
 
         virtual std::string ToString() {
             std::stringstream ss;
             ss.setf(std::ios::fixed, std::ios::floatfield);
-            
-            ss<<"Fishing Mortality: "<<this->id<<"\n";
-            for(int i =0; i < this->fishing_mortality.size(); i++){
-                for(int j=0; j < this->fishing_mortality[i].size(); j++){
-                    ss<<std::setw(12)<<std::left<<this->fishing_mortality[i][j];
+
+            ss << "Fishing Mortality: " << this->id << "\n";
+            for (int i = 0; i < this->fishing_mortality.size(); i++) {
+                for (int j = 0; j < this->fishing_mortality[i].size(); j++) {
+                    ss << std::setw(12) << std::left << this->fishing_mortality[i][j];
                 }
-                ss<<std::endl;
-                
+                ss << std::endl;
+
             }
             return ss.str();
         }
 
         virtual const std::string ToJSONString() {
+#ifdef USE_ATL_ESTIMATION_ENGINE
             std::stringstream ss;
             ss.setf(std::ios::fixed, std::ios::floatfield);
             ss << "\"fishing_mortality\" : {";
@@ -215,7 +217,10 @@ namespace mas {
                 }
             }
             ss << "}\n}";
+
             return ss.str();
+#endif
+
         }
 
         virtual const std::string Name() {

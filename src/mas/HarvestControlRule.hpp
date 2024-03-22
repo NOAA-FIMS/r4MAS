@@ -91,9 +91,9 @@ namespace mas
                 Fhigh = Fval + df;
                 Flow  = Fval - df;
 
-                Yrate = static_cast<REAL_T> (-1000.0) * atl::pow(atl::log( spr_fraction / (CalculateSBatF(Fval,  fsh_sel, api) / SB0) ), 2.0);
-                Yhigh = static_cast<REAL_T> (-1000.0) * atl::pow(atl::log( spr_fraction / (CalculateSBatF(Fhigh, fsh_sel, api) / SB0) ), 2.0);
-                Ylow  = static_cast<REAL_T> (-1000.0) * atl::pow(atl::log( spr_fraction / (CalculateSBatF(Flow,  fsh_sel, api) / SB0) ), 2.0);
+                Yrate = static_cast<REAL_T> (-1000.0) * mas::pow(mas::log( spr_fraction / (CalculateSBatF(Fval,  fsh_sel, api) / SB0) ), 2.0);
+                Yhigh = static_cast<REAL_T> (-1000.0) * mas::pow(mas::log( spr_fraction / (CalculateSBatF(Fhigh, fsh_sel, api) / SB0) ), 2.0);
+                Ylow  = static_cast<REAL_T> (-1000.0) * mas::pow(mas::log( spr_fraction / (CalculateSBatF(Flow,  fsh_sel, api) / SB0) ), 2.0);
 
                 deltaY       = (Yhigh - Ylow) / (static_cast<REAL_T> (2.0) * df);                 // First derivative (to find the root of this)
                 deltaYprime  = (Yhigh + Ylow - (static_cast<REAL_T> (2.0) * Yrate)) / (df * df);  // Newton-Raphson approximation 2nd deriv
@@ -130,16 +130,16 @@ namespace mas
 
             // R0 could be changed to the average recruitment over a specific period
             Ntmp[0] = static_cast<REAL_T> (0.5) * api.recruitment_model->R0;
-            SBatF += (Ntmp[0] * api.maturity[0] * api.weight_at_spawning[0] * atl::exp(static_cast<REAL_T> (-1.0) * api.spawning_season_offset * Ztmp[0]));
+            SBatF += (Ntmp[0] * api.maturity[0] * api.weight_at_spawning[0] * mas::exp(static_cast<REAL_T> (-1.0) * api.spawning_season_offset * Ztmp[0]));
 
             for (int a = 1; a < (Nages-1); ++a)
             {
-                Ntmp[a] = Ntmp[a-1] * atl::exp(static_cast<REAL_T> (-1.0) * Ztmp[a-1]);
-                SBatF  += (Ntmp[a] * api.maturity[a] * api.weight_at_spawning[a] * atl::exp(static_cast<REAL_T> (-1.0) * api.spawning_season_offset * Ztmp[a]));
+                Ntmp[a] = Ntmp[a-1] * mas::exp(static_cast<REAL_T> (-1.0) * Ztmp[a-1]);
+                SBatF  += (Ntmp[a] * api.maturity[a] * api.weight_at_spawning[a] * mas::exp(static_cast<REAL_T> (-1.0) * api.spawning_season_offset * Ztmp[a]));
             }
-            Ntmp[Nages-1] = Ntmp[Nages-2] * atl::exp(static_cast<REAL_T> (-1.0) * Ztmp[Nages-2]) /
-                            (static_cast<REAL_T> (1.0) - atl::exp(static_cast<REAL_T> (-1.0) * Ztmp[Nages-1]));
-            SBatF += (Ntmp[Nages-1] * api.maturity[Nages-1] * api.weight_at_spawning[Nages-1] * atl::exp(static_cast<REAL_T> (-1.0) * api.spawning_season_offset * Ztmp[Nages-1]));
+            Ntmp[Nages-1] = Ntmp[Nages-2] * mas::exp(static_cast<REAL_T> (-1.0) * Ztmp[Nages-2]) /
+                            (static_cast<REAL_T> (1.0) - mas::exp(static_cast<REAL_T> (-1.0) * Ztmp[Nages-1]));
+            SBatF += (Ntmp[Nages-1] * api.maturity[Nages-1] * api.weight_at_spawning[Nages-1] * mas::exp(static_cast<REAL_T> (-1.0) * api.spawning_season_offset * Ztmp[Nages-1]));
 
             return (SBatF / api.kg_to_tonnes);
         }
@@ -215,7 +215,7 @@ namespace mas
                     for (int a = 0; a < Nages; ++a)
                     {
                         Zf_ABC    = api_females.M[a] + (F_ABC * fsh_sel_f[a]);
-                        expZf_ABC = atl::exp(static_cast<REAL_T> (-1.0) * api_females.spawning_season_offset * Zf_ABC);
+                        expZf_ABC = mas::exp(static_cast<REAL_T> (-1.0) * api_females.spawning_season_offset * Zf_ABC);
                         sp_biomass    += (api_females.N_proj[(season - 1) * Nages + a] *
                                           api_females.maturity[a] * api_females.weight_at_spawning[a] * expZf_ABC);
                     }
@@ -248,23 +248,23 @@ namespace mas
                     for (int a = 0; a < Nages; ++a)
                     {
                         Zf_ABC    = api_females.M[a] + (F_ABC * fsh_sel_f[a]);
-                        expZf_ABC = atl::exp(static_cast<REAL_T> (-1.0) * Zf_ABC);
+                        expZf_ABC = mas::exp(static_cast<REAL_T> (-1.0) * Zf_ABC);
                         ABC += (api_females.N_proj[(season - 1) * Nages + a] * api_females.weight_at_catch_time[a] *
                                 (static_cast<REAL_T> (1.0) - expZf_ABC) * (F_ABC * fsh_sel_f[a]) / Zf_ABC);
 
                         Zm_ABC    = api_males.M[a] + (F_ABC * fsh_sel_m[a]);
-                        expZm_ABC = atl::exp(static_cast<REAL_T> (-1.0) * Zm_ABC);
+                        expZm_ABC = mas::exp(static_cast<REAL_T> (-1.0) * Zm_ABC);
                         ABC += (api_males.N_proj[(season - 1) * Nages + a] * api_males.weight_at_catch_time[a] *
                                 (static_cast<REAL_T> (1.0) - expZm_ABC) * (F_ABC * fsh_sel_m[a]) / Zm_ABC);
 
 
                         Zf_OFL    = api_females.M[a] + (F_OFL * fsh_sel_f[a]);
-                        expZf_OFL = atl::exp(static_cast<REAL_T> (-1.0) * Zf_OFL);
+                        expZf_OFL = mas::exp(static_cast<REAL_T> (-1.0) * Zf_OFL);
                         OFL += (api_females.N_proj[(season - 1) * Nages + a] * api_females.weight_at_catch_time[a] *
                                 (static_cast<REAL_T> (1.0) - expZf_OFL) * (F_OFL * fsh_sel_f[a]) / Zf_OFL);
 
                         Zm_OFL    = api_males.M[a] + (F_OFL * fsh_sel_m[a]);
-                        expZm_OFL = atl::exp(static_cast<REAL_T> (-1.0) * Zm_OFL);
+                        expZm_OFL = mas::exp(static_cast<REAL_T> (-1.0) * Zm_OFL);
                         OFL += (api_males.N_proj[(season - 1) * Nages + a] * api_males.weight_at_catch_time[a] *
                                 (static_cast<REAL_T> (1.0) - expZm_OFL) * (F_OFL * fsh_sel_m[a]) / Zm_OFL);
                     }

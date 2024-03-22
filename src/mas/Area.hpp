@@ -40,6 +40,7 @@
 #include "Fleet.hpp"
 #include "Survey.hpp"
 #include "MaximumSustainableYield.hpp"
+#include "Common.hpp"
 
 
 namespace mas {

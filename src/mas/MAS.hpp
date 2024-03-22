@@ -48,7 +48,8 @@ namespace mas {
     class MAS {
         typedef typename VariableTrait<REAL_T>::variable variable;
         std::unordered_map<int, mas::Population<REAL_T> > populations;
-
+        
+        
 
 
         std::string data_file;
@@ -72,10 +73,14 @@ namespace mas {
         variable nll_fleets;
         variable nll_surveys;
     public:
+        
+        static std::shared_ptr<mas::MAS<REAL_T> > instance_g;
         int phase;
         mas::Information< REAL_T> info;
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
         atl::RealMatrix<REAL_T > variance_covaiance;
         atl::RealVector<REAL_T> std_dev;
+#endif
         variable recruitment_likelihood;
         variable selectivity_likelihood;
 
@@ -98,6 +103,8 @@ namespace mas {
 
         virtual ~MAS() {
         }
+        
+        
 
         void Initialize(const std::string& config_file, const std::string& data_file) {
             info.ParseConfig(config_file);
@@ -327,7 +334,7 @@ namespace mas {
             }
 
         }
-
+#ifdef USE_ATL_ESTIMATION_ENGINE
         /**
          * Pearson's chi-squared test on biomass and age comp.
          */
@@ -369,7 +376,7 @@ namespace mas {
             }
 
         }
-
+#endif
         void Forecast() {
 
         }
@@ -580,10 +587,21 @@ namespace mas {
 
             }
         }
+        
+        static std::shared_ptr<mas::MAS<REAL_T> > GetInstance(){
+            if(mas::MAS<REAL_T>::instance_g == NULL){
+                mas::MAS<REAL_T>::instance_g = std::make_shared<mas::MAS<REAL_T> >();
+            }
+            
+            return mas::MAS<REAL_T>::instance_g;
+        }
 
     private:
 
     };
+    
+    template<typename REAL_T>
+    std::shared_ptr<mas::MAS<REAL_T> > mas::MAS<REAL_T>::instance_g  = std::make_shared<mas::MAS<REAL_T> >();
 
 
 

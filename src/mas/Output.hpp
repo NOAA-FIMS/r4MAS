@@ -13,6 +13,7 @@
 
 #ifndef OUTPUT_HPP
 #define OUTPUT_HPP
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
 #include "Information.hpp"
 #include "MAS.hpp"
@@ -2761,5 +2762,6 @@ namespace mas {
     };
 
 }
+#endif
 
 #endif /* OUTPUT_HPP */

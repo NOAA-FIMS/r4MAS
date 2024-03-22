@@ -14,7 +14,12 @@
 #ifndef COMMON_HPP
 #define COMMON_HPP
 
-#define USE_ATL_AS_ESTIMATION_ENGINE
+//#define USE_ATL_AS_ESTIMATION_ENGINE
+
+#define USE_TMB_AS_ESTIMATION_ENGINE
+
+
+
 
 #ifdef USE_ATL_AS_ESTIMATION_ENGINE
 #include "third_party/ATL/ATL.hpp"
@@ -29,6 +34,20 @@
 #include <chrono>
 #include <random>
 #include <cmath>
+#include <sstream>
+#include <fstream>
+#include <set>
+#include "third_party/untitled folder/ATL/lib/Utilities/intrusive_ptr.hpp"
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+#include <TMB.hpp>
+
+// simplify access to singletons
+#define TMB_REAL_TYPE double
+#define TMB_FIRST_ORDER CppAD::AD<TMB_REAL_TYPE>
+#define TMB_SECOND_ORDER CppAD::AD<TMB_FIRST_ORDER>
+#define TMB_THIRD_ORDER CppAD::AD<TMB_SECOND_ORDER>
+#endif
 
 namespace mas {
 
@@ -50,6 +69,10 @@ namespace mas {
 
         static void SetName(variable& var, const std::string& value) {
             var.SetName(value);
+        }
+
+        static std::string GetName(variable& var) {
+            return var.GetName();
         }
 
         static void SetValue(variable& var, const REAL_T& value) {
@@ -177,6 +200,293 @@ namespace mas {
     }
 #endif
 
+
+    /**
+     * 
+     * We are using The Analytics Template Library as the estimation engine, 
+     * this can be swapped out by defining the wrapper functions below.
+     * 
+     */
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+    template<typename REAL_T>
+    struct VariableTrait {
+        typedef REAL_T variable;
+
+        static void SetName(variable& var, const std::string& value) {
+            //            var.SetName(value);
+        }
+
+        static std::string GetName(variable& var) {
+            return std::string("NA");
+        }
+
+        static void SetValue(variable& var, const REAL_T& value) {
+            //            var.SetValue(value);
+            var = value;
+        }
+
+        static double GetValue(const variable& var) {
+            return static_cast<double> (var);
+        }
+
+        static void SetMinBoundary(variable& var, const REAL_T& value) {
+            //            var.SetMinBoundary(value);
+        }
+
+        static void SetMaxBoundary(variable& var, const REAL_T& value) {
+            //            var.SetMaxBoundary(value);
+        }
+
+        static void SetRecording(bool record) {
+            //            variable::tape.SetRecording(record);
+        }
+
+        static bool IsRecording() {
+            //            return variable::tape.recording;
+            return false;
+        }
+
+    };
+
+    template<>
+    struct VariableTrait<TMB_FIRST_ORDER> {
+        typedef TMB_FIRST_ORDER variable;
+
+        static void SetName(variable& var, const std::string& value) {
+            //            var.SetName(value);
+        }
+
+        static std::string GetName(variable& var) {
+            return std::string("NA");
+        }
+
+        static void SetValue(variable& var, const TMB_FIRST_ORDER& value) {
+            //            var.SetValue(value);
+            var = value;
+        }
+
+        static double GetValue(const variable& var) {
+            return CppAD::Value(var);
+        }
+
+        static void SetMinBoundary(variable& var, const TMB_FIRST_ORDER& value) {
+            //            var.SetMinBoundary(value);
+        }
+
+        static void SetMaxBoundary(variable& var, const TMB_FIRST_ORDER& value) {
+            //            var.SetMaxBoundary(value);
+        }
+
+        static void SetRecording(bool record) {
+            //            variable::tape.SetRecording(record);
+        }
+
+        static bool IsRecording() {
+            //            return variable::tape.recording;
+            return false;
+        }
+
+    };
+
+    template<>
+    struct VariableTrait<TMB_SECOND_ORDER> {
+        typedef TMB_SECOND_ORDER variable;
+
+        static void SetName(variable& var, const std::string& value) {
+            //            var.SetName(value);
+        }
+
+        static std::string GetName(variable& var) {
+            return std::string("NA");
+        }
+
+        static void SetValue(variable& var, const TMB_SECOND_ORDER& value) {
+            //            var.SetValue(value);
+            var = value;
+        }
+
+        static double GetValue(const variable& var) {
+            return CppAD::Value(CppAD::Value(var));
+        }
+
+        static void SetMinBoundary(variable& var, const TMB_SECOND_ORDER& value) {
+            //            var.SetMinBoundary(value);
+        }
+
+        static void SetMaxBoundary(variable& var, const TMB_SECOND_ORDER& value) {
+            //            var.SetMaxBoundary(value);
+        }
+
+        static void SetRecording(bool record) {
+            //            variable::tape.SetRecording(record);
+        }
+
+        static bool IsRecording() {
+            //            return variable::tape.recording;
+            return false;
+        }
+
+    };
+
+    template<>
+    struct VariableTrait<TMB_THIRD_ORDER> {
+        typedef TMB_THIRD_ORDER variable;
+
+        static void SetName(variable& var, const std::string& value) {
+            //            var.SetName(value);
+        }
+
+        static std::string GetName(variable& var) {
+            return std::string("NA");
+        }
+
+        static void SetValue(variable& var, const TMB_THIRD_ORDER& value) {
+            //            var.SetValue(value);
+            var = value;
+        }
+
+        static double GetValue(const variable& var) {
+            return CppAD::Value(CppAD::Value(CppAD::Value(var)));
+        }
+
+        static void SetMinBoundary(variable& var, const TMB_THIRD_ORDER& value) {
+            //            var.SetMinBoundary(value);
+        }
+
+        static void SetMaxBoundary(variable& var, const TMB_THIRD_ORDER& value) {
+            //            var.SetMaxBoundary(value);
+        }
+
+        static void SetRecording(bool record) {
+            //            variable::tape.SetRecording(record);
+        }
+
+        static bool IsRecording() {
+            //            return variable::tape.recording;
+            return false;
+        }
+
+    };
+
+    template<class REAL_T>
+    inline const REAL_T acos(const REAL_T& exp) {
+        return acos(exp);
+    }
+
+    template<class REAL_T>
+    inline const REAL_T asin(const REAL_T& exp) {
+        return asin(exp);
+    }
+
+    template<class REAL_T>
+    inline const REAL_T atan(const REAL_T& exp) {
+        return atan(exp);
+    }
+
+    //    template<class REAL_T>
+    //    inline const atl::Ceil<REAL_T, EXPR> ceil(const REAL_T& exp) {
+    //        return atl::ceil(exp);
+    //    }
+
+    template<class REAL_T>
+    inline const REAL_T cos(const REAL_T& exp) {
+        return cos(exp);
+    }
+
+    template<class REAL_T>
+    inline const REAL_T cosh(const REAL_T& exp) {
+        return cosh(exp);
+    }
+
+    template<class REAL_T>
+    inline const REAL_T exp(const REAL_T& expr) {
+        return exp(expr);
+    }
+
+    template<>
+    inline const double exp<double>(const double& expr) {
+        return std::exp(expr);
+    }
+
+    template<class REAL_T>
+    inline const REAL_T mfexp(const REAL_T& expr) {
+        return exp(expr);
+    }
+
+    template<class REAL_T>
+    inline const REAL_T fabs(const REAL_T& expr) {
+        return fabs(expr);
+    }
+
+    template<class REAL_T>
+    inline const REAL_T log(const REAL_T& exp) {
+        return log(exp);
+    }
+
+    template<>
+    inline const double log(const double& exp) {
+        return std::log(exp);
+    }
+
+    template<class REAL_T>
+    inline const REAL_T log10(const REAL_T & exp) {
+        return log10(exp);
+    }
+
+    template<class REAL_T>
+    inline const REAL_T sin(const REAL_T & exp) {
+        return sin(exp);
+    }
+
+    template<class REAL_T>
+    inline const REAL_T sinh(const REAL_T & exp) {
+        return sinh(exp);
+    }
+
+    template<class REAL_T>
+    inline const REAL_T sqrt(const REAL_T & exp) {
+        return pow(exp, 0.5);
+    }
+
+    template<class REAL_T>
+    inline const REAL_T tan(const REAL_T & exp) {
+        return tan(exp);
+    }
+
+    template<class REAL_T>
+    inline const REAL_T tanh(const REAL_T & exp) {
+        return tanh(exp);
+    }
+
+    template <class BASE, class EXP>
+    inline const BASE pow(const BASE& a,
+            const EXP & b) {
+        return pow(a, b);
+    }
+
+    template <>
+    inline const double pow<double, double>(const double& a,
+            const double & b) {
+        return std::pow(a, b);
+    }
+
+    //
+    //    template <class REAL_T >
+    //    inline const REAL_T pow(const REAL_T& a,
+    //            double b) {
+    //        return pow(a, b);
+    //    }
+    //
+    //    template <class REAL_T>
+    //    inline const REAL_T pow(const double& a,
+    //            const REAL_T& b) {
+    //        return pow(a, b);
+    //    }
+
+#endif
+
     template<typename REAL_T>
     struct ModelObject {
         typedef typename VariableTrait<REAL_T>::variable variable;
@@ -190,15 +500,14 @@ namespace mas {
         bool used = false;
         int references = 0;
 
-
-        virtual ~ModelObject(){
+        virtual ~ModelObject() {
         }
-        
+
         void Register(variable& var, int phase = 1) {
             estimated_parameters_map[&var] = phase;
-            this->estimated_parameters.push_back(&var);
-            initial_parameter_values.push_back(var.GetValue());
-            this->estimated_phase.push_back(phase);
+            estimated_parameters.push_back(&var);
+            initial_parameter_values.push_back(mas::VariableTrait<REAL_T>::GetValue(var));
+            estimated_phase.push_back(phase);
         }
 
         void RegisterRandom(variable& var) {
@@ -206,6 +515,7 @@ namespace mas {
         }
 
         virtual const std::string JSONParameter(variable& var, const std::string& name) {
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
             std::stringstream ss;
             ss.setf(std::ios::fixed, std::ios::floatfield);
             ss << "\"" << name << "\": {\n";
@@ -225,6 +535,8 @@ namespace mas {
             }
             ss << "}";
             return ss.str();
+#endif
+            return "";
         }
 
         virtual const std::string ToJSONString() {
@@ -236,7 +548,7 @@ namespace mas {
         }
     };
 
-    template<typename T>
+    template<typename T >
     std::ostream& operator<<(std::ostream& out, const ModelObject<T>& model) {
         out << model.ToString();
         return out;
@@ -547,7 +859,7 @@ namespace mas {
         std::vector<REAL_T> values;
     };
 
-    template<typename T>
+    template<typename T >
     std::ostream& operator<<(std::ostream& out, mas::DataObject<T>& data_object) {
 
         out.precision(10);
@@ -692,8 +1004,8 @@ namespace mas {
         return out;
     }
 
-    template <typename T>
-    T StringToNumber(const std::string &Text) {
+    template <typename T >
+    T StringToNumber(const std::string & Text) {
         std::istringstream ss(Text);
         T result;
         return (ss >> result) ? result : 0;

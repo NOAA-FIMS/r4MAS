@@ -45,7 +45,7 @@
 #include <memory>
 #include <unordered_set>
 #include <map>
-#include "third_party/ATL/lib//Utilities/flat_map.hpp"
+#include "third_party/untitled folder/ATL/lib/Utilities/flat_map.hpp"
 
 namespace mas {
 
@@ -180,7 +180,7 @@ namespace mas {
                 const variable& mean,
                 const variable& sd, int give_log = 0) {
             variable SD = sd;
-            if (sd.GetValue() == 0.0) {
+            if (sd == 0.0) {
                 SD += 1e-8;
                 throw std::overflow_error("Divide by zero exception");
             }

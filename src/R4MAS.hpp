@@ -12,15 +12,28 @@
 #ifndef R4MAS_HPP
 #define R4MAS_HPP
 
+
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+//#include <TMB.hpp>
+//#include "init.hpp"
+#endif
+
+#include <RcppCommon.h>
+#include <Rcpp.h>
+
 #include <cstdlib>
 #include <iostream>
 
 #include "mas/MAS.hpp"
+
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 #include "mas/Options.hpp"
 #include "mas/ObjectiveFunction.hpp"
+#endif
 
-#include <RcppCommon.h>
-#include <Rcpp.h>
 
 #define  Rcout std::cout
 
@@ -83,13 +96,32 @@ public:
     virtual ~MASSubModel() {
     }
 
-    virtual void AddToMAS(mas::Information<double> &info) {
+    virtual void AddToMAS() {
 
     }
 
     virtual void ExtractFromMAS(mas::Information<double> &info) {
 
     }
+
+    template<typename Type>
+    void InitializeParameter(mas::ModelObject<Type> *model, typename mas::VariableTrait<Type>::variable &v,
+            const Parameter &p, const std::string &name) {
+        v = p.value;
+        if (p.estimated) {
+            mas::VariableTrait<Type>::SetName(v, name);
+            if (p.min != std::numeric_limits<double>::min()) {
+                mas::VariableTrait<Type>::SetMinBoundary(v, p.min);
+            }
+
+            if (p.max != std::numeric_limits<double>::max()) {
+                mas::VariableTrait<Type>::SetMaxBoundary(v, p.max);
+            }
+            model->Register(v, p.phase);
+        }
+
+    }
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -98,23 +130,6 @@ public:
 
     virtual void DataToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
-
-    }
-
-    void InitializeParameter(mas::ModelObject<double> *model, variable &v,
-            const Parameter &p, const std::string &name) {
-        v = p.value;
-        if (p.estimated) {
-            mas::VariableTrait<double>::SetName(v, name);
-            if (p.min != std::numeric_limits<double>::min()) {
-                mas::VariableTrait<double>::SetMinBoundary(v, p.min);
-            }
-
-            if (p.max != std::numeric_limits<double>::max()) {
-                mas::VariableTrait<double>::SetMaxBoundary(v, p.max);
-            }
-            model->Register(v, p.phase);
-        }
 
     }
 
@@ -161,6 +176,7 @@ public:
         }
 
     }
+#endif
 };
 
 std::vector<MASSubModel*> MASSubModel::submodels;
@@ -241,10 +257,74 @@ public:
         selex->a50 = this->a50.value;
         selex->s = this->slope.value;
         ret = selex->Evaluate(A);
-        return mas::VariableTrait<double>::Value(ret);
+        return mas::VariableTrait<double>::GetValue(ret);
     }
 
-    virtual void AddToMAS(mas::Information<double> &info) {
+    template<typename Type>
+    void AddToMAS_internal(mas::Information<Type> &info) {
+        atl::intrusive_ptr<mas::LogisticSel<Type> > sel =
+                new mas::LogisticSel<Type>();
+
+
+        mas::VariableTrait<Type>::SetValue(sel->a50, a50.value);
+        mas::VariableTrait<Type>::SetMinBoundary(sel->a50, a50.min);
+        mas::VariableTrait<Type>::SetMaxBoundary(sel->a50, a50.max);
+        sel->id = id;
+
+        mas::VariableTrait<Type>::SetValue(sel->s, slope.value);
+        mas::VariableTrait<Type>::SetMinBoundary(sel->s, slope.min);
+        mas::VariableTrait<Type>::SetMaxBoundary(sel->s, slope.max);
+
+
+        mas::VariableTrait<Type>::SetValue(sel->cv, this->cv.value);
+        mas::VariableTrait<Type>::SetMinBoundary(sel->cv, this->cv.min);
+        mas::VariableTrait<Type>::SetMaxBoundary(sel->cv, this->cv.max);
+
+
+        mas::VariableTrait<Type>::SetValue(sel->sigma, sigma.value);
+        mas::VariableTrait<Type>::SetMinBoundary(sel->sigma, sigma.min);
+        mas::VariableTrait<Type>::SetMaxBoundary(sel->sigma, sigma.max);
+
+
+        mas::VariableTrait<Type>::SetValue(sel->sigma2, sigma2.value);
+        mas::VariableTrait<Type>::SetMinBoundary(sel->sigma2, sigma2.min);
+        mas::VariableTrait<Type>::SetMaxBoundary(sel->sigma2, sigma2.max);
+
+        if (a50.estimated) {
+            std::cout << "\n\nregistering a50\n";
+            std::stringstream ss;
+            ss << "logistic_selectivity_a50_" << id;
+            mas::VariableTrait<Type>::SetName(sel->a50, ss.str());
+            sel->Register(sel->a50, a50.phase);
+            sel->lambdas.push_back(a50.lambda);
+        }
+
+        sel->id = id;
+        if (this->slope.estimated) {
+
+            std::cout << "\n\nregistering slope\n";
+            std::stringstream ss;
+            ss << "logistic_selectivity_slope_" << id;
+            mas::VariableTrait<Type>::SetName(sel->s, ss.str());
+            sel->Register(sel->s, slope.phase);
+            sel->lambdas.push_back(slope.lambda);
+        }
+
+        info.selectivity_models[sel->id] = sel;
+    }
+
+    void AddToMAS() {
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+        this->AddToMAS_internal<TMB_REAL_TYPE> (mas::MAS<TMB_REAL_TYPE>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_FIRST_ORDER> (mas::MAS<TMB_FIRST_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_SECOND_ORDER> (mas::MAS<TMB_SECOND_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_THIRD_ORDER> (mas::MAS<TMB_THIRD_ORDER>::GetInstance()->info);
+
+#endif
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
         atl::intrusive_ptr<mas::LogisticSel<double> > sel =
                 new mas::LogisticSel<double>();
 
@@ -293,8 +373,9 @@ public:
             sel->lambdas.push_back(slope.lambda);
         }
         info.selectivity_models[sel->id] = sel;
-
+#endif
     }
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -391,11 +472,11 @@ public:
             atl::intrusive_ptr<mas::SelectivityBase<double> > sel = (*it).second;
             mas::LogisticSel<double> *lsel =
                     (mas::LogisticSel<double>*) sel.get();
-            this->a50.value = lsel->a50.GetValue();
-            this->slope.value = lsel->s.GetValue();
+            this->a50.value = mas::VariableTrait<double>::GetValue(lsel->a50);
+            this->slope.value = mas::VariableTrait<double>::GetValue(lsel->s);
         }
     }
-
+#endif
     static std::map<int, LogisticSelectivity*> initialized_models;
     typedef typename std::map<int, LogisticSelectivity*>::iterator model_iterator;
 };
@@ -443,10 +524,103 @@ public:
         selex->beta_asc = this->beta_asc.value;
         selex->beta_desc = this->beta_desc.value;
         ret = selex->Evaluate(A);
-        return mas::VariableTrait<double>::Value(ret);
+        return mas::VariableTrait<double>::GetValue(ret);
     }
 
-    virtual void AddToMAS(mas::Information<double> &info) {
+    template<typename Type>
+    void AddToMAS_internal(mas::Information<Type> &info) {
+        atl::intrusive_ptr<mas::DoubleLogisticSel<Type> > sel =
+                new mas::DoubleLogisticSel<Type>();
+        sel->id = id;
+        mas::DoubleLogisticSel<Type> *selex = sel.get();
+
+        mas::VariableTrait<Type>::SetValue(sel->cv, this->cv.value);
+        mas::VariableTrait<Type>::SetMinBoundary(sel->cv, this->cv.min);
+        mas::VariableTrait<Type>::SetMaxBoundary(sel->cv, this->cv.max);
+
+        mas::VariableTrait<Type>::SetValue(sel->sigma, sigma.value);
+        mas::VariableTrait<Type>::SetMinBoundary(sel->sigma, sigma.min);
+        mas::VariableTrait<Type>::SetMaxBoundary(sel->sigma, sigma.max);
+
+
+        mas::VariableTrait<Type>::SetValue(sel->sigma2, sigma2.value);
+        mas::VariableTrait<Type>::SetMinBoundary(sel->sigma2, sigma2.min);
+        mas::VariableTrait<Type>::SetMaxBoundary(sel->sigma2, sigma2.max);
+
+        mas::VariableTrait<Type>::SetValue(selex->alpha_asc,
+                this->alpha_asc.value);
+        mas::VariableTrait<Type>::SetMinBoundary(selex->alpha_asc,
+                this->alpha_asc.min);
+        mas::VariableTrait<Type>::SetMaxBoundary(selex->alpha_asc,
+                this->alpha_asc.max);
+        if (this->alpha_asc.estimated) {
+            std::stringstream ss;
+            ss << "double_logistic_selectivity_alpha_asc_" << id;
+            mas::VariableTrait<Type>::SetName(selex->alpha_asc, ss.str());
+            sel->Register(selex->alpha_asc, this->alpha_asc.phase);
+            sel->lambdas.push_back(alpha_asc.lambda);
+        }
+
+        mas::VariableTrait<Type>::SetValue(selex->beta_asc,
+                this->beta_asc.value);
+        mas::VariableTrait<Type>::SetMinBoundary(selex->beta_asc,
+                this->beta_asc.min);
+        mas::VariableTrait<Type>::SetMaxBoundary(selex->beta_asc,
+                this->beta_asc.max);
+        if (this->alpha_asc.estimated) {
+            std::stringstream ss;
+            ss << "double_logistic_selectivity_beta_asc_" << id;
+            mas::VariableTrait<Type>::SetName(selex->beta_asc, ss.str());
+            sel->Register(selex->beta_asc, this->beta_asc.phase);
+            sel->lambdas.push_back(beta_asc.lambda);
+        }
+
+        mas::VariableTrait<Type>::SetValue(selex->alpha_desc,
+                this->alpha_desc.value);
+        mas::VariableTrait<Type>::SetMinBoundary(selex->alpha_desc,
+                this->alpha_desc.min);
+        mas::VariableTrait<Type>::SetMaxBoundary(selex->alpha_desc,
+                this->alpha_desc.max);
+        if (this->alpha_asc.estimated) {
+            std::stringstream ss;
+            ss << "double_logistic_selectivity_alpha_desc_" << id;
+            mas::VariableTrait<Type>::SetName(selex->alpha_desc, ss.str());
+            sel->Register(selex->alpha_desc, this->alpha_desc.phase);
+            sel->lambdas.push_back(alpha_desc.lambda);
+        }
+
+        mas::VariableTrait<Type>::SetValue(selex->beta_desc,
+                this->beta_desc.value);
+        mas::VariableTrait<Type>::SetMinBoundary(selex->beta_desc,
+                this->beta_desc.min);
+        mas::VariableTrait<Type>::SetMaxBoundary(selex->beta_desc,
+                this->beta_desc.max);
+        if (this->alpha_asc.estimated) {
+
+            std::stringstream ss;
+            ss << "double_logistic_selectivity_beta_desc_" << id;
+            mas::VariableTrait<Type>::SetName(selex->beta_desc, ss.str());
+            sel->Register(selex->beta_desc, this->beta_desc.phase);
+            sel->lambdas.push_back(beta_desc.lambda);
+        }
+
+        info.selectivity_models[sel->id] = sel;
+    }
+
+    virtual void AddToMAS() {
+
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+        this->AddToMAS_internal<TMB_REAL_TYPE> (mas::MAS<TMB_REAL_TYPE>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_FIRST_ORDER> (mas::MAS<TMB_FIRST_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_SECOND_ORDER> (mas::MAS<TMB_SECOND_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_THIRD_ORDER> (mas::MAS<TMB_THIRD_ORDER>::GetInstance()->info);
+
+#endif
+
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
         atl::intrusive_ptr<mas::DoubleLogisticSel<double> > sel =
                 new mas::DoubleLogisticSel<double>();
         sel->id = id;
@@ -523,7 +697,7 @@ public:
         }
 
         info.selectivity_models[sel->id] = sel;
-
+#endif
     }
 
     void ExtractFromMAS(mas::Information<double> &info) {
@@ -535,12 +709,13 @@ public:
             atl::intrusive_ptr<mas::SelectivityBase<double> > sel = (*it).second;
             mas::DoubleLogisticSel<double> *lsel = (mas::DoubleLogisticSel<
                     double>*) sel.get();
-            this->alpha_asc.value = lsel->alpha_asc.GetValue();
-            this->beta_asc.value = lsel->beta_asc.GetValue();
-            this->alpha_desc = lsel->alpha_desc.GetValue();
-            this->beta_desc = lsel->beta_desc.GetValue();
+            this->alpha_asc.value = mas::VariableTrait<double>::GetValue(lsel->alpha_asc);
+            this->beta_asc.value = mas::VariableTrait<double>::GetValue(lsel->beta_asc);
+            this->alpha_desc = mas::VariableTrait<double>::GetValue(lsel->alpha_desc);
+            this->beta_desc = mas::VariableTrait<double>::GetValue(lsel->beta_desc);
         }
     }
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -698,7 +873,7 @@ public:
         selectivity.AddMember("parameters", parameters, allocator);
         selex.PushBack(selectivity, allocator);
     }
-
+#endif
     static std::map<int, DoubleLogisticSelectivity*> initialized_models;
     typedef typename std::map<int, DoubleLogisticSelectivity*>::iterator model_iterator;
 };
@@ -718,7 +893,7 @@ public:
     Parameter sigma;
     Parameter sigma2;
     Parameter cv;
-    
+
     AgeBasedSelectivity() : SelectivityBase() {
         cv.value = 0.05;
         this->id = SelectivityBase::id_g++;
@@ -741,10 +916,93 @@ public:
         }
 
         ret = selex->Evaluate(A);
-        return mas::VariableTrait<double>::Value(ret);
+        return mas::VariableTrait<double>::GetValue(ret);
     }
 
-    virtual void AddToMAS(mas::Information<double> &info) {
+    template<typename Type>
+    void AddToMAS_internal(mas::Information<Type> &info) {
+        if (this->values.size() != info.ages.size()) {
+            info.valid_configuration = false;
+            std::cout << "mismatch in nages and AgeBasedSelectivity vecrtor\n";
+            return;
+        }
+        atl::intrusive_ptr<mas::AgeBased<Type> > sel = new mas::AgeBased<
+                Type>();
+
+        mas::VariableTrait<Type>::SetValue(sel->cv, this->cv.value);
+        mas::VariableTrait<Type>::SetMinBoundary(sel->cv, this->cv.min);
+        mas::VariableTrait<Type>::SetMaxBoundary(sel->cv, this->cv.max);
+
+        mas::VariableTrait<Type>::SetValue(sel->sigma, sigma.value);
+        mas::VariableTrait<Type>::SetMinBoundary(sel->sigma, sigma.min);
+        mas::VariableTrait<Type>::SetMaxBoundary(sel->sigma, sigma.max);
+
+
+        mas::VariableTrait<Type>::SetValue(sel->sigma2, sigma2.value);
+        mas::VariableTrait<Type>::SetMinBoundary(sel->sigma2, sigma2.min);
+        mas::VariableTrait<Type>::SetMaxBoundary(sel->sigma2, sigma2.max);
+
+        mas::AgeBased<Type> *selex = sel.get();
+
+        selex->id = this->id;
+        for (int i = 0; i < this->values.size(); i++) {
+            selex->w.push_back(this->values[i]);
+        }
+
+        if (this->estimated) {
+            if (this->estimate_age.size() != this->values.size()
+                    || this->estimate_age.size() == 0) {
+
+                if (this->estimate_age.size() > 0) {
+                    std::cout
+                            << "Warning: Vector \"estimate_age\" for age based "
+                            "selectivity model \"" << this->id
+                            << "\" not 0 or "
+                            "values.size(). Resizing and setting all values to 1.\n";
+                    mas::mas_log
+                            << "Warning: Vector \"estimate_age\" for age based "
+                            "selectivity model \"" << this->id
+                            << "\" not 0 or "
+                            "values.size(). Resizing and setting all values to 1.\n";
+                }
+
+                for (int i = 0; i < this->values.size(); i++) {
+                    this->estimate_age.push_back(1);
+                }
+            }
+
+            for (int i = 0; i < this->values.size(); i++) {
+
+                std::stringstream ss;
+                ss << "age_base_selectivity[" << i << "]_" << this->id;
+                mas::VariableTrait<Type>::SetName(selex->w[i], ss.str());
+                selex->selex[info.ages[i]] = this->values[i];
+                mas::VariableTrait<Type>::SetName(selex->selex[info.ages[i]], ss.str());
+                if (this->estimate_age[i] > 0) {
+                    selex->Register(selex->selex[info.ages[i]], this->phase);
+                }
+            }
+        }
+        info.selectivity_models[selex->id] = sel;
+    }
+
+    virtual void AddToMAS() {
+
+
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+        this->AddToMAS_internal<TMB_REAL_TYPE> (mas::MAS<TMB_REAL_TYPE>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_FIRST_ORDER> (mas::MAS<TMB_FIRST_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_SECOND_ORDER> (mas::MAS<TMB_SECOND_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_THIRD_ORDER> (mas::MAS<TMB_THIRD_ORDER>::GetInstance()->info);
+
+#endif
+
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
+
+
         if (this->values.size() != info.ages.size()) {
             info.valid_configuration = false;
             std::cout << "mismatch in nages and AgeBasedSelectivity vecrtor\n";
@@ -799,15 +1057,16 @@ public:
 
                 std::stringstream ss;
                 ss << "age_base_selectivity[" << i << "]_" << this->id;
-                selex->w[i].SetName(ss.str());
+                mas::VariableTrait<double>::SetName(selex->w[i], ss.str());
                 selex->selex[info.ages[i]] = this->values[i];
-                selex->selex[info.ages[i]].SetName(ss.str());
+                mas::VariableTrait<double>::SetName(selex->selex[info.ages[i]], ss.str());
                 if (this->estimate_age[i] > 0) {
                     selex->Register(selex->selex[info.ages[i]], this->phase);
                 }
             }
         }
         info.selectivity_models[selex->id] = sel;
+#endif
     }
 
     void ExtractFromMAS(mas::Information<double> &info) {
@@ -818,11 +1077,12 @@ public:
             mas::AgeBased<double> *lsel = (mas::AgeBased<double>*) sel.get();
             for (int i = 0; i < lsel->w.size(); i++) {
 
-                this->values[i] = lsel->w[i].GetValue();
+                this->values[i] = mas::VariableTrait<double>::GetValue(lsel->w[i]);
             }
         }
 
     }
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -896,7 +1156,7 @@ public:
         selectivity.AddMember("parameters", parameters, allocator);
         selex.PushBack(selectivity, allocator);
     }
-
+#endif
     static std::map<int, AgeBasedSelectivity*> initialized_models;
     typedef typename std::map<int, AgeBasedSelectivity*>::iterator model_iterator;
 };
@@ -939,7 +1199,78 @@ public:
         this->values = values;
     }
 
-    virtual void AddToMAS(mas::Information<double> &info) {
+    template<typename Type>
+    void AddToMAS_internal(mas::Information<Type> &info) {
+
+        atl::intrusive_ptr<mas::FishingMortality<Type> > fm =
+                new mas::FishingMortality<Type>();
+        mas::FishingMortality<Type> *m = fm.get();
+        m->fishing_mortality_type = mas::ESTIMATED;
+        fm->id = this->id;
+        if (this->values.size() != info.nyears * info.nseasons) {
+            std::cout
+                    << "MAS Error: FishingMortality vector not equal to (nyears*nseasons)...";
+            std::cout << this->values.size() << "!="
+                    << (info.nyears * info.nseasons) << "\n";
+
+            info.valid_configuration = false;
+            return;
+        }
+
+        fm->fishing_mortality.resize(info.nyears);
+        typedef typename mas::VariableTrait<Type>::variable variable;
+        int i = 0;
+        for (int y = 0; y < info.nyears; y++) {
+            fm->fishing_mortality[y].resize(info.nseasons);
+            for (int s = 0; s < info.nseasons; s++) {
+                fm->fishing_mortality[y][s] = variable(this->values[i++]);
+            }
+        }
+
+        if (this->estimate) {
+            for (int y = 0; y < info.nyears; y++) {
+                fm->fishing_mortality[y].resize(info.nseasons);
+                for (int s = 0; s < info.nseasons; s++) {
+                    std::stringstream ss;
+                    ss << "fishing_mortality[" << y << "][" << s << "]_"
+                            << this->id;
+                    mas::VariableTrait<Type>::SetName(
+                            fm->fishing_mortality[y][s], ss.str());
+
+                    if (this->min != std::numeric_limits<double>::min()) {
+                        mas::VariableTrait<Type>::SetMinBoundary(
+                                fm->fishing_mortality[y][s], this->min);
+                    }
+                    if (this->max != std::numeric_limits<double>::max()) {
+
+                        mas::VariableTrait<Type>::SetMaxBoundary(
+                                fm->fishing_mortality[y][s], this->max);
+                    }
+                    std::cout << "Registering " << ss.str() << " "
+                            << this->phase << "\n";
+                    fm->Register(fm->fishing_mortality[y][s], this->phase);
+                }
+            }
+        }
+
+        info.fishing_mortality_models[m->id] = fm;
+    }
+
+    virtual void AddToMAS() {
+
+
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+        this->AddToMAS_internal<TMB_REAL_TYPE> (mas::MAS<TMB_REAL_TYPE>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_FIRST_ORDER> (mas::MAS<TMB_FIRST_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_SECOND_ORDER> (mas::MAS<TMB_SECOND_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_THIRD_ORDER> (mas::MAS<TMB_THIRD_ORDER>::GetInstance()->info);
+
+#endif
+
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
         atl::intrusive_ptr<mas::FishingMortality<double> > fm =
                 new mas::FishingMortality<double>();
         mas::FishingMortality<double> *m = fm.get();
@@ -991,6 +1322,7 @@ public:
         }
 
         info.fishing_mortality_models[m->id] = fm;
+#endif
     }
 
     void ExtractFromMAS(mas::Information<double> &info) {
@@ -1002,11 +1334,12 @@ public:
                 for (int s = 0; s < info.nseasons; s++) {
 
                     this->values[i++] =
-                            (*fit).second->fishing_mortality[y][s].GetValue();
+                            mas::VariableTrait<double>::GetValue((*fit).second->fishing_mortality[y][s]);
                 }
             }
         }
     }
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -1058,7 +1391,7 @@ public:
         fishing_mort.AddMember("parameters", parameters, allocator);
         fm.PushBack(fishing_mort, allocator);
     }
-
+#endif
     static std::map<int, FishingMortality*> initialized_models;
     typedef typename std::map<int, FishingMortality*>::iterator model_iterator;
 };
@@ -1092,7 +1425,57 @@ public:
         this->values = values;
     }
 
-    virtual void AddToMAS(mas::Information<double> &info) {
+    template<typename Type>
+    void AddToMAS_internal(mas::Information<Type> &info) {
+        typedef typename mas::VariableTrait<Type>::variable variable;
+
+        atl::intrusive_ptr<mas::NaturalMortality<Type> > nm =
+                new mas::NaturalMortality<Type>();
+        mas::NaturalMortality<Type> *m = nm.get();
+        m->mortality_vector.resize(info.ages.size());
+        m->id = this->id;
+
+        for (int i = 0; i < info.ages.size(); i++) {
+            m->mortality_vector[i] = variable(this->values[i]);
+        }
+
+        if (this->estimate) {
+            for (int i = 0; i < info.ages.size(); i++) {
+                std::stringstream ss;
+                ss << "natural_mortality[" << i << "]_" << this->id;
+                mas::VariableTrait<Type>::SetName(m->mortality_vector[i],
+                        ss.str());
+                if (min != std::numeric_limits<double>::min()) {
+                    mas::VariableTrait<Type>::SetMinBoundary(
+                            m->mortality_vector[i], min);
+                }
+                if (max != std::numeric_limits<double>::max()) {
+
+                    mas::VariableTrait<Type>::SetMaxBoundary(
+                            m->mortality_vector[i], max);
+                }
+                m->Register(m->mortality_vector[i], phase);
+            }
+        }
+
+        info.natural_mortality_models[this->id] = nm;
+    }
+
+    virtual void AddToMAS() {
+
+
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+        this->AddToMAS_internal<TMB_REAL_TYPE> (mas::MAS<TMB_REAL_TYPE>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_FIRST_ORDER> (mas::MAS<TMB_FIRST_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_SECOND_ORDER> (mas::MAS<TMB_SECOND_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_THIRD_ORDER> (mas::MAS<TMB_THIRD_ORDER>::GetInstance()->info);
+
+#endif
+
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
         typedef typename mas::VariableTrait<double>::variable variable;
 
         atl::intrusive_ptr<mas::NaturalMortality<double> > nm =
@@ -1125,6 +1508,7 @@ public:
         }
 
         info.natural_mortality_models[this->id] = nm;
+#endif
     }
 
     void ExtractFromMAS(mas::Information<double> &info) {
@@ -1136,10 +1520,11 @@ public:
             mas::NaturalMortality<double> *m = nm.get();
             for (int i = 0; i < info.ages.size(); i++) {
 
-                this->values[i] = m->mortality_vector[i].GetValue();
+                this->values[i] = mas::VariableTrait<double>::GetValue(m->mortality_vector[i]);
             }
         }
     }
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -1197,7 +1582,7 @@ public:
         natural_mort.AddMember("parameters", parameters, allocator);
         nm.PushBack(natural_mort, allocator);
     }
-
+#endif
     static std::map<int, NaturalMortality*> initialized_models;
     typedef typename std::map<int, NaturalMortality*>::iterator model_iterator;
 };
@@ -1228,6 +1613,11 @@ public:
         this->values = values;
     }
 
+
+
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
+
     virtual void AddToEMInputs(rapidjson::Document &document,
             rapidjson::Value &init_devs, size_t nyears, size_t nseasons,
             size_t nages, size_t nareas) {
@@ -1257,7 +1647,7 @@ public:
         init_devs.PushBack(initial_devs, allocator);
 
     }
-
+#endif
     static std::map<int, InitialDeviations*> initialized_models;
     typedef typename std::map<int, InitialDeviations*>::iterator model_iterator;
 };
@@ -1334,10 +1724,115 @@ public:
         r->beta = this->beta.value;
         ret = r->Evaluate(1, 1, sb_);
 
-        return mas::VariableTrait<double>::Value(ret);
+        return mas::VariableTrait<double>::GetValue(ret);
     }
 
-    virtual void AddToMAS(mas::Information<double> &info) {
+    template<typename Type>
+    void AddToMAS_internal(mas::Information<Type> &info) {
+        typedef typename mas::VariableTrait<Type>::variable variable;
+
+        atl::intrusive_ptr<mas::Ricker<Type> > rec =
+                new mas::Ricker<Type>();
+        mas::Ricker<Type> *r = rec.get();
+        r->id = this->id;
+
+        r->log_R0 = std::log(this->R0.value);
+
+
+        r->use_bias_correction = this->use_bias_correction;
+
+        if (this->R0.estimated) {
+            std::stringstream ss;
+            ss << "log_R0" << this->id;
+            mas::VariableTrait<Type>::SetName(r->log_R0, ss.str());
+            if (this->R0.min != std::numeric_limits<double>::min()) {
+                mas::VariableTrait<Type>::SetMinBoundary(r->log_R0,
+                        std::log(this->R0.min));
+            }
+            if (this->R0.max != std::numeric_limits<double>::max()) {
+                mas::VariableTrait<Type>::SetMaxBoundary(r->log_R0,
+                        std::log(this->R0.max));
+            }
+            r->Register(r->log_R0, this->R0.phase);
+        }
+
+        r->alpha = this->alpha.value;
+        if (this->alpha.estimated) {
+            std::stringstream ss;
+            ss << "alpha" << this->id;
+            mas::VariableTrait<Type>::SetName(r->alpha, ss.str());
+            if (this->alpha.min != std::numeric_limits<double>::min()) {
+                mas::VariableTrait<Type>::SetMinBoundary(r->alpha, alpha.min);
+            }
+            if (this->alpha.max != std::numeric_limits<double>::max()) {
+                mas::VariableTrait<Type>::SetMaxBoundary(r->alpha, alpha.max);
+            }
+            r->Register(r->alpha, this->alpha.phase);
+        }
+
+        r->beta = this->beta.value;
+        if (this->beta.estimated) {
+            std::stringstream ss;
+            ss << "beta" << this->id;
+            mas::VariableTrait<Type>::SetName(r->beta, ss.str());
+            if (this->beta.min != std::numeric_limits<double>::min()) {
+                mas::VariableTrait<Type>::SetMinBoundary(r->beta, beta.min);
+            }
+            if (this->beta.max != std::numeric_limits<double>::max()) {
+                mas::VariableTrait<Type>::SetMaxBoundary(r->beta, beta.max);
+            }
+            r->Register(r->beta, this->beta.phase);
+        }
+
+        r->recruitment_deviations.resize(this->deviations.size());
+        for (int i = 0; i < this->deviations.size(); i++) {
+            r->recruitment_deviations[i] = variable(this->deviations[i]);
+        }
+        r->recruitment_deviations_constrained = this->constrained_deviations;
+
+        if (this->estimate_deviations) {
+            r->estimating_recruitment_deviations = true;
+            for (int i = 0; i < info.nyears; i++) {
+                std::stringstream ss;
+                ss << "recruitment_deviations[" << i << "]_" << this->id;
+                mas::VariableTrait<Type>::SetName(
+                        r->recruitment_deviations[i], ss.str());
+                if (this->deviations_min
+                        != std::numeric_limits<double>::min()) {
+                    mas::VariableTrait<Type>::SetMinBoundary(
+                            r->recruitment_deviations[i], this->deviations_min);
+                }
+                if (this->deviations_max
+                        != std::numeric_limits<double>::max()) {
+
+                    mas::VariableTrait<Type>::SetMaxBoundary(
+                            r->recruitment_deviations[i], this->deviations_max);
+                }
+                r->recruitment_deviations[i] = variable(this->deviations[i]);
+                r->Register(r->recruitment_deviations[i],
+                        this->deviation_phase);
+
+            }
+        }
+
+        info.recruitment_models[this->id] = rec;
+    }
+
+    virtual void AddToMAS() {
+
+
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+        this->AddToMAS_internal<TMB_REAL_TYPE> (mas::MAS<TMB_REAL_TYPE>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_FIRST_ORDER> (mas::MAS<TMB_FIRST_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_SECOND_ORDER> (mas::MAS<TMB_SECOND_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_THIRD_ORDER> (mas::MAS<TMB_THIRD_ORDER>::GetInstance()->info);
+
+#endif
+
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
         typedef typename mas::VariableTrait<double>::variable variable;
 
         atl::intrusive_ptr<mas::Ricker<double> > rec =
@@ -1425,6 +1920,7 @@ public:
         }
 
         info.recruitment_models[this->id] = rec;
+#endif
     }
 
     void ExtractFromMAS(mas::Information<double> &info) {
@@ -1435,11 +1931,12 @@ public:
             atl::intrusive_ptr<mas::RecruitmentBase<double> > rec =
                     (*rit).second;
             mas::Ricker<double> *r = (mas::Ricker<double>*) rec.get();
-            this->R0.value = std::exp(r->log_R0.GetValue());
-            this->alpha.value = r->alpha.GetValue();
-            this->beta.value = r->beta.GetValue();
+            this->R0.value = std::exp(mas::VariableTrait<double>::GetValue(r->log_R0));
+            this->alpha.value = mas::VariableTrait<double>::GetValue(r->alpha);
+            this->beta.value = mas::VariableTrait<double>::GetValue(r->beta);
         }
     }
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -1639,7 +2136,7 @@ public:
         rec.PushBack(recruitment, allocator);
 
     }
-
+#endif
     static std::map<int, RickerRecruitment*> initialized_models;
     typedef typename std::map<int, RickerRecruitment*>::iterator model_iterator;
 };
@@ -1691,10 +2188,120 @@ public:
         r->h = this->h.value;
         r->sigma_r = this->sigma_r.value;
         ret = r->Evaluate(SB0_, sb_);
-        return mas::VariableTrait<double>::Value(ret);
+        return mas::VariableTrait<double>::GetValue(ret);
     }
 
-    virtual void AddToMAS(mas::Information<double> &info) {
+    template<typename Type>
+    void AddToMAS_internal(mas::Information<Type> &info) {
+        typedef typename mas::VariableTrait<Type>::variable variable;
+
+        atl::intrusive_ptr<mas::BevertonHolt<Type> > rec =
+                new mas::BevertonHolt<Type>();
+        mas::BevertonHolt<Type> *r = rec.get();
+        r->id = this->id;
+
+        r->R0 = this->R0.value;
+        r->log_R0 = std::log(this->R0.value);
+
+        r->use_bias_correction = this->use_bias_correction;
+
+        std::cout << "rec id = " << r->id << std::endl;
+
+        if (this->R0.estimated) {
+            std::stringstream ss;
+            ss << "log_R0_" << this->id;
+            mas::VariableTrait<Type>::SetName(r->log_R0, ss.str());
+            if (this->R0.min != std::numeric_limits<double>::min()) {
+                mas::VariableTrait<Type>::SetMinBoundary(r->log_R0,
+                        std::log(this->R0.min));
+            }
+            if (this->R0.max != std::numeric_limits<double>::max()) {
+                mas::VariableTrait<Type>::SetMaxBoundary(r->log_R0,
+                        std::log(this->R0.max));
+            }
+
+            r->Register(r->log_R0, this->R0.phase);
+        }
+
+        r->h = this->h.value;
+
+        if (this->h.estimated) {
+            std::stringstream ss;
+            ss << "h" << this->id;
+            mas::VariableTrait<Type>::SetName(r->h, ss.str());
+
+            if (this->h.min != std::numeric_limits<double>::min()) {
+                mas::VariableTrait<Type>::SetMinBoundary(r->h, h.min);
+            }
+            if (this->h.max != std::numeric_limits<double>::max()) {
+                mas::VariableTrait<Type>::SetMaxBoundary(r->h, h.max);
+            }
+            r->Register(r->h, this->h.phase);
+        }
+
+        r->sigma_r = this->sigma_r.value;
+        if (this->sigma_r.estimated) {
+            std::stringstream ss;
+            ss << "sigma_r" << this->id;
+            mas::VariableTrait<Type>::SetName(r->sigma_r, ss.str());
+            if (this->sigma_r.min != std::numeric_limits<double>::min()) {
+                mas::VariableTrait<Type>::SetMinBoundary(r->sigma_r,
+                        sigma_r.min);
+            }
+            if (this->sigma_r.max != std::numeric_limits<double>::max()) {
+                mas::VariableTrait<Type>::SetMaxBoundary(r->sigma_r,
+                        sigma_r.max);
+            }
+            r->Register(r->sigma_r, this->sigma_r.phase);
+        }
+
+        r->recruitment_deviations.resize(this->deviations.size());
+        for (int i = 0; i < this->deviations.size(); i++) {
+            r->recruitment_deviations[i] = variable(this->deviations[i]);
+        }
+        r->recruitment_deviations_constrained = this->constrained_deviations;
+
+        if (this->estimate_deviations) {
+            r->estimating_recruitment_deviations = true;
+            for (int i = 0; i < info.nyears; i++) {
+                std::stringstream ss;
+                ss << "recruitment_deviations[" << i << "]_" << this->id;
+                mas::VariableTrait<Type>::SetName(
+                        r->recruitment_deviations[i], ss.str());
+                if (this->deviations_min
+                        != std::numeric_limits<double>::min()) {
+                    mas::VariableTrait<Type>::SetMinBoundary(
+                            r->recruitment_deviations[i], this->deviations_min);
+                }
+                if (this->deviations_max
+                        != std::numeric_limits<double>::max()) {
+
+                    mas::VariableTrait<Type>::SetMaxBoundary(
+                            r->recruitment_deviations[i], this->deviations_max);
+                }
+                r->Register(r->recruitment_deviations[i],
+                        this->deviation_phase);
+
+            }
+        }
+
+        info.recruitment_models[this->id] = rec;
+    }
+
+    virtual void AddToMAS() {
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+        this->AddToMAS_internal<TMB_REAL_TYPE> (mas::MAS<TMB_REAL_TYPE>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_FIRST_ORDER> (mas::MAS<TMB_FIRST_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_SECOND_ORDER> (mas::MAS<TMB_SECOND_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_THIRD_ORDER> (mas::MAS<TMB_THIRD_ORDER>::GetInstance()->info);
+
+#endif
+
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
+
         typedef typename mas::VariableTrait<double>::variable variable;
 
         atl::intrusive_ptr<mas::BevertonHolt<double> > rec =
@@ -1784,6 +2391,7 @@ public:
         }
 
         info.recruitment_models[this->id] = rec;
+#endif
     }
 
     void ExtractFromMAS(mas::Information<double> &info) {
@@ -1795,11 +2403,12 @@ public:
                     (*rit).second;
             mas::BevertonHolt<double> *r =
                     (mas::BevertonHolt<double>*) rec.get();
-            this->R0.value = std::exp(r->log_R0.GetValue());
-            this->h.value = r->h.GetValue();
-            this->sigma_r.value = r->sigma_r.GetValue();
+            this->R0.value = std::exp(mas::VariableTrait<double>::GetValue(r->log_R0));
+            this->h.value = mas::VariableTrait<double>::GetValue(r->h);
+            this->sigma_r.value = mas::VariableTrait<double>::GetValue(r->sigma_r);
         }
     }
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -1966,6 +2575,7 @@ public:
         recruitment.AddMember("parameters", parameters, allocator);
         rec.PushBack(recruitment, allocator);
     }
+#endif
 
     static std::map<int, BevertonHoltRecruitment*> initialized_models;
     typedef typename std::map<int, BevertonHoltRecruitment*>::iterator model_iterator;
@@ -2019,10 +2629,115 @@ public:
         r->h = this->h.value;
         r->sigma_r = this->sigma_r.value;
         ret = r->Evaluate(SB0_, sb_);
-        return mas::VariableTrait<double>::Value(ret);
+        return mas::VariableTrait<double>::GetValue(ret);
     }
 
-    virtual void AddToMAS(mas::Information<double> &info) {
+    template<typename Type>
+    void AddToMAS_internal(mas::Information<Type> &info) {
+        typedef typename mas::VariableTrait<Type>::variable variable;
+
+        atl::intrusive_ptr<mas::BevertonHoltAlt<Type> > rec =
+                new mas::BevertonHoltAlt<Type>();
+        mas::BevertonHoltAlt<Type> *r = rec.get();
+        r->id = this->id;
+
+        r->R0 = this->R0.value;
+        r->log_R0 = std::log(this->R0.value);
+        r->use_bias_correction = this->use_bias_correction;
+
+        if (this->R0.estimated) {
+            std::stringstream ss;
+            ss << "log_R0_" << this->id;
+            mas::VariableTrait<Type>::SetName(r->log_R0, ss.str());
+            if (this->R0.min != std::numeric_limits<double>::min()) {
+                mas::VariableTrait<Type>::SetMinBoundary(r->log_R0,
+                        std::log(this->R0.min));
+            }
+            if (this->R0.max != std::numeric_limits<double>::max()) {
+                mas::VariableTrait<Type>::SetMaxBoundary(r->log_R0,
+                        std::log(this->R0.max));
+            }
+            r->Register(r->log_R0, this->R0.phase);
+        }
+
+        r->h = this->h.value;
+        if (this->h.estimated) {
+            std::stringstream ss;
+            ss << "h" << this->id;
+            mas::VariableTrait<Type>::SetName(r->h, ss.str());
+
+            if (this->h.min != std::numeric_limits<double>::min()) {
+                mas::VariableTrait<Type>::SetMinBoundary(r->h, h.min);
+            }
+            if (this->h.max != std::numeric_limits<double>::max()) {
+                mas::VariableTrait<Type>::SetMaxBoundary(r->h, h.max);
+            }
+            r->Register(r->h, this->h.phase);
+        }
+
+        r->sigma_r = this->sigma_r.value;
+        if (this->sigma_r.estimated) {
+            std::stringstream ss;
+            ss << "sigma_r" << this->id;
+            mas::VariableTrait<Type>::SetName(r->sigma_r, ss.str());
+            if (this->sigma_r.min != std::numeric_limits<double>::min()) {
+                mas::VariableTrait<Type>::SetMinBoundary(r->sigma_r,
+                        sigma_r.min);
+            }
+            if (this->sigma_r.max != std::numeric_limits<double>::max()) {
+                mas::VariableTrait<Type>::SetMaxBoundary(r->sigma_r,
+                        sigma_r.max);
+            }
+            r->Register(r->sigma_r, this->sigma_r.phase);
+        }
+
+        r->recruitment_deviations.resize(this->deviations.size());
+        for (int i = 0; i < this->deviations.size(); i++) {
+            r->recruitment_deviations[i] = variable(this->deviations[i]);
+        }
+        r->recruitment_deviations_constrained = this->constrained_deviations;
+
+        if (this->estimate_deviations) {
+            r->estimating_recruitment_deviations = true;
+            for (int i = 0; i < info.nyears; i++) {
+                std::stringstream ss;
+                ss << "recruitment_deviations[" << i << "]_" << this->id;
+                mas::VariableTrait<Type>::SetName(
+                        r->recruitment_deviations[i], ss.str());
+                if (this->deviations_min
+                        != std::numeric_limits<double>::min()) {
+                    mas::VariableTrait<Type>::SetMinBoundary(
+                            r->recruitment_deviations[i], this->deviations_min);
+                }
+                if (this->deviations_max
+                        != std::numeric_limits<double>::max()) {
+
+                    mas::VariableTrait<Type>::SetMaxBoundary(
+                            r->recruitment_deviations[i], this->deviations_max);
+                }
+                r->Register(r->recruitment_deviations[i],
+                        this->deviation_phase);
+
+            }
+        }
+
+        info.recruitment_models[this->id] = rec;
+    }
+
+    virtual void AddToMAS() {
+
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+        this->AddToMAS_internal<TMB_REAL_TYPE> (mas::MAS<TMB_REAL_TYPE>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_FIRST_ORDER> (mas::MAS<TMB_FIRST_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_SECOND_ORDER> (mas::MAS<TMB_SECOND_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_THIRD_ORDER> (mas::MAS<TMB_THIRD_ORDER>::GetInstance()->info);
+
+#endif
+
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
         typedef typename mas::VariableTrait<double>::variable variable;
 
         atl::intrusive_ptr<mas::BevertonHoltAlt<double> > rec =
@@ -2111,6 +2826,7 @@ public:
         }
 
         info.recruitment_models[this->id] = rec;
+#endif
     }
 
     void ExtractFromMAS(mas::Information<double> &info) {
@@ -2122,11 +2838,13 @@ public:
                     (*rit).second;
             mas::BevertonHoltAlt<double> *r =
                     (mas::BevertonHoltAlt<double>*) rec.get();
-            this->R0.value = std::exp(r->log_R0.GetValue());
-            this->h.value = r->h.GetValue();
-            this->sigma_r.value = r->sigma_r.GetValue();
+            this->R0.value = std::exp(mas::VariableTrait<double>::GetValue(r->log_R0));
+            this->h.value = mas::VariableTrait<double>::GetValue(r->h);
+            this->sigma_r.value = mas::VariableTrait<double>::GetValue(r->sigma_r);
         }
     }
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -2292,6 +3010,7 @@ public:
         recruitment.AddMember("parameters", parameters, allocator);
         rec.PushBack(recruitment, allocator);
     }
+#endif
 
     static std::map<int, BevertonHoltRecruitmentAlt*> initialized_models;
     typedef typename std::map<int, BevertonHoltRecruitmentAlt*>::iterator model_iterator;
@@ -2428,10 +3147,326 @@ public:
         mas::VariableTrait<double>::variable a;
         mas::VariableTrait<double>::SetValue(a, age);
         mas::VariableTrait<double>::variable ret = g->Evaluate(a, sex);
-        return mas::VariableTrait<double>::Value(ret);
+        return mas::VariableTrait<double>::GetValue(ret);
     }
 
-    virtual void AddToMAS(mas::Information<double> &info) {
+    template<typename Type>
+    void AddToMAS_internal(mas::Information<Type> &info) {
+        atl::intrusive_ptr<mas::VonBertalanffy<Type> > vb =
+                new mas::VonBertalanffy<Type>();
+        mas::VonBertalanffy<Type> *g = vb.get();
+        g->id = this->id;
+        std::stringstream ss;
+
+        ss << "amin_" << this->id;
+        this->InitializeParameter(g, g->a_min, this->a_min, ss.str());
+        ss.str("");
+        ss << "amax_" << this->id;
+        this->InitializeParameter(g, g->a_max, this->a_max, ss.str());
+        ss.str("");
+        ss << "alpha_f_" << this->id;
+        this->InitializeParameter(g, g->alpha_f, this->alpha_f, ss.str());
+        ss.str("");
+        ss << "alpha_m_" << this->id;
+        this->InitializeParameter(g, g->alpha_m, this->alpha_m, ss.str());
+        ss.str("");
+        ss << "beta_f_" << this->id;
+        this->InitializeParameter(g, g->beta_f, this->beta_f, ss.str());
+        ss.str("");
+        ss << "beta_m_" << this->id;
+        this->InitializeParameter(g, g->beta_m, this->beta_m, ss.str());
+        ss.str("");
+        ss << "k_" << this->id;
+        this->InitializeParameter(g, g->k, this->k, ss.str());
+        ss.str("");
+        ss << "l_inf_" << this->id;
+        this->InitializeParameter(g, g->l_inf, this->l_inf, ss.str());
+
+        size_t data_length = info.ages.size() * info.nyears * info.nseasons;
+
+        atl::intrusive_ptr<mas::WeightFunctorBase<Type> > weight_functor;
+        if (this->has_emprical_weight == true) {
+
+            weight_functor = new mas::EmpiricalWeightFunctor<Type>();
+            g->weight_functor = weight_functor;
+
+            mas::EmpiricalWeightFunctor<Type> *eg =
+                    (mas::EmpiricalWeightFunctor<Type>*) weight_functor.get();
+
+            /**
+             * Catch weight
+             */
+            if (this->weight_at_catch_females.size()) {
+                if (this->weight_at_catch_females.size() != data_length) {
+                    std::cout
+                            << "weight_at_catch_females vector not equal to (nyears*nseasons*nages)\n";
+                    info.valid_configuration = false;
+                    return;
+                }
+                size_t ages = info.ages.size();
+                size_t years = info.nyears;
+                size_t seasons = info.nseasons;
+
+                mas::EmpricalDataStructure<Type> eds;
+                atl::intrusive_ptr<mas::DataObject<Type> > data =
+                        new mas::DataObject<Type>();
+                mas::DataObject<Type> *d = data.get();
+                d->imax = years;
+                d->jmax = seasons;
+                d->kmax = ages;
+                d->data.resize(data_length);
+                for (int i = 0; i < data_length; i++) {
+                    d->data[i] = this->weight_at_catch_females[i];
+                }
+                eds.empirical_data_at_age = data;
+                mas::GrowthBase<Type>::Do3DInterpolation(
+                        eds.empirical_data_at_age,
+                        eds.interpolated_data_at_age);
+                eg->weight_at_age_data[mas::CATCH_MEAN_WEIGHT_AT_AGE][mas::FEMALE] =
+                        eds;
+            }
+
+            if (this->weight_at_catch_males.size()) {
+                if (this->weight_at_catch_males.size() != data_length) {
+                    std::cout
+                            << "weight_at_catch_males vector not equal to (nyears*nseasons*nages)\n";
+                    info.valid_configuration = false;
+                    return;
+                }
+                size_t ages = info.ages.size();
+                size_t years = info.nyears;
+                size_t seasons = info.nseasons;
+
+                mas::EmpricalDataStructure<Type> eds;
+                atl::intrusive_ptr<mas::DataObject<Type> > data =
+                        new mas::DataObject<Type>();
+                mas::DataObject<Type> *d = data.get();
+                d->imax = years;
+                d->jmax = seasons;
+                d->kmax = ages;
+                d->data.resize(data_length);
+                for (int i = 0; i < data_length; i++) {
+                    d->data[i] = this->weight_at_catch_males[i];
+                }
+                eds.empirical_data_at_age = data;
+                mas::GrowthBase<Type>::Do3DInterpolation(
+                        eds.empirical_data_at_age,
+                        eds.interpolated_data_at_age);
+                eg->weight_at_age_data[mas::CATCH_MEAN_WEIGHT_AT_AGE][mas::MALE] =
+                        eds;
+            }
+            /*
+             * Survey weight
+             */
+            if (this->weight_at_survey_females.size()) {
+                if (this->weight_at_survey_females.size() != data_length) {
+                    std::cout
+                            << "weight_at_survey_females vector not equal to (nyears*nseasons*nages)\n";
+                    info.valid_configuration = false;
+                    return;
+                }
+                size_t ages = info.ages.size();
+                size_t years = info.nyears;
+                size_t seasons = info.nseasons;
+
+                mas::EmpricalDataStructure<Type> eds;
+                atl::intrusive_ptr<mas::DataObject<Type> > data =
+                        new mas::DataObject<Type>();
+                mas::DataObject<Type> *d = data.get();
+                d->imax = years;
+                d->jmax = seasons;
+                d->kmax = ages;
+                d->data.resize(data_length);
+                for (int i = 0; i < data_length; i++) {
+                    d->data[i] = this->weight_at_survey_females[i];
+                }
+                eds.empirical_data_at_age = data;
+                mas::GrowthBase<Type>::Do3DInterpolation(
+                        eds.empirical_data_at_age,
+                        eds.interpolated_data_at_age);
+                eg->weight_at_age_data[mas::SURVEY_MEAN_WEIGHT_AT_AGE][mas::FEMALE] =
+                        eds;
+            }
+
+            if (this->weight_at_survey_males.size()) {
+                if (this->weight_at_survey_males.size() != data_length) {
+                    std::cout
+                            << "weight_at_survey_males vector not equal to (nyears*nseasons*nages)\n";
+                    info.valid_configuration = false;
+                    return;
+                }
+                size_t ages = info.ages.size();
+                size_t years = info.nyears;
+                size_t seasons = info.nseasons;
+
+                mas::EmpricalDataStructure<Type> eds;
+                atl::intrusive_ptr<mas::DataObject<Type> > data =
+                        new mas::DataObject<Type>();
+                mas::DataObject<Type> *d = data.get();
+                d->imax = years;
+                d->jmax = seasons;
+                d->kmax = ages;
+                d->data.resize(data_length);
+                for (int i = 0; i < data_length; i++) {
+                    d->data[i] = this->weight_at_survey_males[i];
+                }
+                eds.empirical_data_at_age = data;
+                mas::GrowthBase<Type>::Do3DInterpolation(
+                        eds.empirical_data_at_age,
+                        eds.interpolated_data_at_age);
+                eg->weight_at_age_data[mas::SURVEY_MEAN_WEIGHT_AT_AGE][mas::MALE] =
+                        eds;
+            }
+            /*
+             * Spawning weight
+             */
+            if (this->weight_at_spawning_females.size()) {
+                if (this->weight_at_spawning_females.size() != data_length) {
+                    std::cout
+                            << "weight_at_spawning_females vector not equal to (nyears*nseasons*nages)\n";
+                    info.valid_configuration = false;
+                    return;
+                }
+                size_t ages = info.ages.size();
+                size_t years = info.nyears;
+                size_t seasons = info.nseasons;
+
+                mas::EmpricalDataStructure<Type> eds;
+                atl::intrusive_ptr<mas::DataObject<Type> > data =
+                        new mas::DataObject<Type>();
+                mas::DataObject<Type> *d = data.get();
+                d->imax = years;
+                d->jmax = seasons;
+                d->kmax = ages;
+                d->data.resize(data_length);
+                for (int i = 0; i < data_length; i++) {
+                    d->data[i] = this->weight_at_spawning_females[i];
+                }
+                eds.empirical_data_at_age = data;
+                mas::GrowthBase<Type>::Do3DInterpolation(
+                        eds.empirical_data_at_age,
+                        eds.interpolated_data_at_age);
+                eg->weight_at_age_data[mas::MEAN_WEIGHT_AT_AGE_SPAWNING][mas::FEMALE] =
+                        eds;
+            }
+
+            if (this->weight_at_spawning_males.size()) {
+                if (this->weight_at_spawning_males.size() != data_length) {
+                    std::cout
+                            << "weight_at_spawning_males vector not equal to (nyears*nseasons*nages)\n";
+                    info.valid_configuration = false;
+                    return;
+                }
+                size_t ages = info.ages.size();
+                size_t years = info.nyears;
+                size_t seasons = info.nseasons;
+
+                mas::EmpricalDataStructure<Type> eds;
+                atl::intrusive_ptr<mas::DataObject<Type> > data =
+                        new mas::DataObject<Type>();
+                mas::DataObject<Type> *d = data.get();
+                d->imax = years;
+                d->jmax = seasons;
+                d->kmax = ages;
+                d->data.resize(data_length);
+                for (int i = 0; i < data_length; i++) {
+                    d->data[i] = this->weight_at_spawning_males[i];
+                }
+                eds.empirical_data_at_age = data;
+                mas::GrowthBase<Type>::Do3DInterpolation(
+                        eds.empirical_data_at_age,
+                        eds.interpolated_data_at_age);
+                eg->weight_at_age_data[mas::MEAN_WEIGHT_AT_AGE_SPAWNING][mas::MALE] =
+                        eds;
+            }
+            /*
+             * Season start weight
+             */
+            if (this->weight_at_season_start_females.size()) {
+                if (this->weight_at_season_start_females.size()
+                        != data_length) {
+                    std::cout
+                            << "weight_at_season_start_females vector not equal to (nyears*nseasons*nages)\n";
+                    info.valid_configuration = false;
+                    return;
+                }
+                size_t ages = info.ages.size();
+                size_t years = info.nyears;
+                size_t seasons = info.nseasons;
+
+                mas::EmpricalDataStructure<Type> eds;
+                atl::intrusive_ptr<mas::DataObject<Type> > data =
+                        new mas::DataObject<Type>();
+                mas::DataObject<Type> *d = data.get();
+                d->imax = years;
+                d->jmax = seasons;
+                d->kmax = ages;
+                d->data.resize(data_length);
+                for (int i = 0; i < data_length; i++) {
+                    d->data[i] = this->weight_at_season_start_females[i];
+                }
+                eds.empirical_data_at_age = data;
+                mas::GrowthBase<Type>::Do3DInterpolation(
+                        eds.empirical_data_at_age,
+                        eds.interpolated_data_at_age);
+                eg->weight_at_age_data[mas::MEAN_WEIGHT_AT_AGE_SEASON_START][mas::FEMALE] =
+                        eds;
+            }
+
+            if (this->weight_at_season_start_males.size()) {
+                if (this->weight_at_season_start_males.size() != data_length) {
+                    std::cout
+                            << "weight_at_season_start_males vector not equal to (nyears*nseasons*nages)\n";
+                    info.valid_configuration = false;
+                    return;
+                }
+                size_t ages = info.ages.size();
+                size_t years = info.nyears;
+                size_t seasons = info.nseasons;
+
+                mas::EmpricalDataStructure<Type> eds;
+                atl::intrusive_ptr<mas::DataObject<Type> > data =
+                        new mas::DataObject<Type>();
+                mas::DataObject<Type> *d = data.get();
+                d->imax = years;
+                d->jmax = seasons;
+                d->kmax = ages;
+                d->data.resize(data_length);
+                for (int i = 0; i < data_length; i++) {
+                    d->data[i] = this->weight_at_season_start_males[i];
+                }
+                eds.empirical_data_at_age = data;
+                mas::GrowthBase<Type>::Do3DInterpolation(
+                        eds.empirical_data_at_age,
+                        eds.interpolated_data_at_age);
+                eg->weight_at_age_data[mas::MEAN_WEIGHT_AT_AGE_SEASON_START][mas::MALE] =
+                        eds;
+            }
+        } else {
+
+            //instantiate default here
+
+            weight_functor = new mas::DefaultWeightFunctor<Type>(g->alpha_f,
+                    g->alpha_m, g->beta_f, g->beta_f);
+            g->weight_functor = weight_functor;
+        }
+
+        info.growth_models[this->id] = vb;
+    }
+
+    virtual void AddToMAS() {
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+        this->AddToMAS_internal<TMB_REAL_TYPE> (mas::MAS<TMB_REAL_TYPE>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_FIRST_ORDER> (mas::MAS<TMB_FIRST_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_SECOND_ORDER> (mas::MAS<TMB_SECOND_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_THIRD_ORDER> (mas::MAS<TMB_THIRD_ORDER>::GetInstance()->info);
+
+#endif
+
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
         atl::intrusive_ptr<mas::VonBertalanffy<double> > vb =
                 new mas::VonBertalanffy<double>();
         mas::VonBertalanffy<double> *g = vb.get();
@@ -2732,11 +3767,14 @@ public:
         }
 
         info.growth_models[this->id] = vb;
+#endif
     }
 
     void ExtractFromMAS(mas::Information<double> &info) {
 
     }
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -3231,7 +4269,7 @@ public:
 
         grth.PushBack(growth, allocator);
     }
-
+#endif
     static std::map<int, VonBertalanffy*> initialized_models;
     typedef typename std::map<int, VonBertalanffy*>::iterator model_iterator;
 };
@@ -3355,10 +4393,348 @@ public:
         mas::VariableTrait<double>::variable a;
         mas::VariableTrait<double>::SetValue(a, age);
         mas::VariableTrait<double>::variable ret = g->Evaluate(a, sex);
-        return mas::VariableTrait<double>::Value(ret);
+        return mas::VariableTrait<double>::GetValue(ret);
     }
 
-    virtual void AddToMAS(mas::Information<double> &info) {
+    template<typename Type>
+    void AddToMAS_internal(mas::Information<Type> &info) {
+        atl::intrusive_ptr<mas::VonBertalanffyModified<Type> > vb =
+                new mas::VonBertalanffyModified<Type>();
+        mas::VonBertalanffyModified<Type> *g = vb.get();
+        g->id = this->id;
+        std::stringstream ss;
+
+        ss << "amin_" << this->id;
+        this->InitializeParameter(g, g->a_min, this->a_min, ss.str());
+        ss.str("");
+        ss << "amax_" << this->id;
+        this->InitializeParameter(g, g->a_max, this->a_max, ss.str());
+        ss.str("");
+        ss << "alpha_f_" << this->id;
+        this->InitializeParameter(g, g->alpha_f, this->alpha_f, ss.str());
+        ss.str("");
+        ss << "alpha_m_" << this->id;
+        this->InitializeParameter(g, g->alpha_m, this->alpha_m, ss.str());
+        ss.str("");
+        ss << "beta_f_" << this->id;
+        this->InitializeParameter(g, g->beta_f, this->beta_f, ss.str());
+        ss.str("");
+        ss << "beta_m_" << this->id;
+        this->InitializeParameter(g, g->beta_m, this->beta_m, ss.str());
+        ss.str("");
+        ss << "lmin_" << this->id;
+        this->InitializeParameter(g, g->lmin, this->lmin, ss.str());
+        ss.str("");
+        ss << "lmax_" << this->id;
+        this->InitializeParameter(g, g->lmax, this->lmax, ss.str());
+        ss.str("");
+        ss << "c_" << this->id;
+        this->InitializeParameter(g, g->c, this->c, ss.str());
+        ss.str("");
+        ss << "l_inf_" << this->id;
+        this->InitializeParameter(g, g->l_inf, this->l_inf, ss.str());
+
+        atl::intrusive_ptr<mas::WeightFunctorBase<Type> > weight_functor;
+        size_t data_length = info.ages.size() * info.nyears * info.nseasons;
+        if (this->has_emprical_weight == true) {
+
+            weight_functor = new mas::EmpiricalWeightFunctor<Type>();
+            //            g->weight_functor = weight_functor;
+
+            mas::EmpiricalWeightFunctor<Type> *eg =
+                    (mas::EmpiricalWeightFunctor<Type>*) weight_functor.get();
+
+            /**
+             * Catch weight
+             */
+            if (this->weight_at_catch_females.size()) {
+                if (this->weight_at_catch_females.size() != data_length) {
+                    std::cout
+                            << "weight_at_catch_females vector not equal to (nyears*nseasons*nages)\n";
+                    info.valid_configuration = false;
+                    return;
+                }
+                size_t ages = info.ages.size();
+                size_t years = info.nyears;
+                size_t seasons = info.nseasons;
+
+                mas::EmpricalDataStructure<Type> eds;
+                atl::intrusive_ptr<mas::DataObject<Type> > data =
+                        new mas::DataObject<Type>();
+                mas::DataObject<Type> *d = data.get();
+                d->imax = years;
+                d->jmax = seasons;
+                d->kmax = ages;
+                d->dimensions = 3;
+                d->type = mas::CATCH_MEAN_WEIGHT_AT_AGE;
+                //                d->data.resize(data_length);
+                for (int i = 0; i < data_length; i++) {
+                    d->data.push_back(this->weight_at_catch_females[i]);
+                }
+                eds.empirical_data_at_age = data;
+
+                mas::GrowthBase<Type>::Do3DInterpolation(
+                        eds.empirical_data_at_age,
+                        eds.interpolated_data_at_age);
+                eg->weight_at_age_data[mas::CATCH_MEAN_WEIGHT_AT_AGE][mas::FEMALE] =
+                        eds;
+
+            }
+
+            if (this->weight_at_catch_males.size()) {
+                if (this->weight_at_catch_males.size() != data_length) {
+                    std::cout
+                            << "weight_at_catch_males vector not equal to (nyears*nseasons*nages)\n";
+                    info.valid_configuration = false;
+                    return;
+                }
+                size_t ages = info.ages.size();
+                size_t years = info.nyears;
+                size_t seasons = info.nseasons;
+
+                mas::EmpricalDataStructure<Type> eds;
+                atl::intrusive_ptr<mas::DataObject<Type> > data =
+                        new mas::DataObject<Type>();
+                mas::DataObject<Type> *d = data.get();
+                d->imax = years;
+                d->jmax = seasons;
+                d->kmax = ages;
+                d->dimensions = 3;
+                d->data.resize(data_length);
+                for (int i = 0; i < data_length; i++) {
+                    d->data[i] = this->weight_at_catch_males[i];
+                }
+                eds.empirical_data_at_age = data;
+
+                mas::GrowthBase<Type>::Do3DInterpolation(
+                        eds.empirical_data_at_age,
+                        eds.interpolated_data_at_age);
+                eg->weight_at_age_data[mas::CATCH_MEAN_WEIGHT_AT_AGE][mas::MALE] =
+                        eds;
+            }
+            /*
+             * Survey weight
+             */
+            if (this->weight_at_survey_females.size()) {
+                if (this->weight_at_survey_females.size() != data_length) {
+                    std::cout
+                            << "weight_at_survey_females vector not equal to (nyears*nseasons*nages)\n";
+                    info.valid_configuration = false;
+                    return;
+                }
+                size_t ages = info.ages.size();
+                size_t years = info.nyears;
+                size_t seasons = info.nseasons;
+
+                mas::EmpricalDataStructure<Type> eds;
+                atl::intrusive_ptr<mas::DataObject<Type> > data =
+                        new mas::DataObject<Type>();
+                mas::DataObject<Type> *d = data.get();
+                d->imax = years;
+                d->jmax = seasons;
+                d->kmax = ages;
+                d->dimensions = 3;
+                d->data.resize(data_length);
+                for (int i = 0; i < data_length; i++) {
+                    d->data[i] = this->weight_at_survey_females[i];
+                }
+                eds.empirical_data_at_age = data;
+
+                mas::GrowthBase<Type>::Do3DInterpolation(
+                        eds.empirical_data_at_age,
+                        eds.interpolated_data_at_age);
+                eg->weight_at_age_data[mas::SURVEY_MEAN_WEIGHT_AT_AGE][mas::FEMALE] =
+                        eds;
+            }
+
+            if (this->weight_at_survey_males.size()) {
+                if (this->weight_at_survey_males.size() != data_length) {
+                    std::cout
+                            << "weight_at_survey_males vector not equal to (nyears*nseasons*nages)\n";
+                    info.valid_configuration = false;
+                    return;
+                }
+                size_t ages = info.ages.size();
+                size_t years = info.nyears;
+                size_t seasons = info.nseasons;
+
+                mas::EmpricalDataStructure<Type> eds;
+                atl::intrusive_ptr<mas::DataObject<Type> > data =
+                        new mas::DataObject<Type>();
+                mas::DataObject<Type> *d = data.get();
+                d->imax = years;
+                d->jmax = seasons;
+                d->kmax = ages;
+                d->dimensions = 3;
+                d->data.resize(data_length);
+                for (int i = 0; i < data_length; i++) {
+                    d->data[i] = this->weight_at_survey_males[i];
+                }
+                eds.empirical_data_at_age = data;
+
+                mas::GrowthBase<Type>::Do3DInterpolation(
+                        eds.empirical_data_at_age,
+                        eds.interpolated_data_at_age);
+                eg->weight_at_age_data[mas::SURVEY_MEAN_WEIGHT_AT_AGE][mas::MALE] =
+                        eds;
+            }
+            /*
+             * Spawning weight
+             */
+            if (this->weight_at_spawning_females.size()) {
+                if (this->weight_at_spawning_females.size() != data_length) {
+                    std::cout
+                            << "weight_at_spawning_females vector not equal to (nyears*nseasons*nages)\n";
+                    info.valid_configuration = false;
+                    return;
+                }
+                size_t ages = info.ages.size();
+                size_t years = info.nyears;
+                size_t seasons = info.nseasons;
+
+                mas::EmpricalDataStructure<Type> eds;
+                atl::intrusive_ptr<mas::DataObject<Type> > data =
+                        new mas::DataObject<Type>();
+                mas::DataObject<Type> *d = data.get();
+                d->imax = years;
+                d->jmax = seasons;
+                d->kmax = ages;
+                d->dimensions = 3;
+                d->data.resize(data_length);
+                for (int i = 0; i < data_length; i++) {
+                    d->data[i] = this->weight_at_spawning_females[i];
+                }
+                eds.empirical_data_at_age = data;
+
+                mas::GrowthBase<Type>::Do3DInterpolation(
+                        eds.empirical_data_at_age,
+                        eds.interpolated_data_at_age);
+                eg->weight_at_age_data[mas::MEAN_WEIGHT_AT_AGE_SPAWNING][mas::FEMALE] =
+                        eds;
+            }
+
+            if (this->weight_at_spawning_males.size()) {
+                if (this->weight_at_spawning_males.size() != data_length) {
+                    std::cout
+                            << "weight_at_spawning_males vector not equal to (nyears*nseasons*nages)\n";
+                    info.valid_configuration = false;
+                    return;
+                }
+                size_t ages = info.ages.size();
+                size_t years = info.nyears;
+                size_t seasons = info.nseasons;
+
+                mas::EmpricalDataStructure<Type> eds;
+                atl::intrusive_ptr<mas::DataObject<Type> > data =
+                        new mas::DataObject<Type>();
+                mas::DataObject<Type> *d = data.get();
+                d->imax = years;
+                d->jmax = seasons;
+                d->kmax = ages;
+                d->dimensions = 3;
+                d->data.resize(data_length);
+                for (int i = 0; i < data_length; i++) {
+                    d->data[i] = this->weight_at_spawning_males[i];
+                }
+                eds.empirical_data_at_age = data;
+
+                mas::GrowthBase<Type>::Do3DInterpolation(
+                        eds.empirical_data_at_age,
+                        eds.interpolated_data_at_age);
+                eg->weight_at_age_data[mas::MEAN_WEIGHT_AT_AGE_SPAWNING][mas::MALE] =
+                        eds;
+            }
+            /*
+             * Season start weight
+             */
+            if (this->weight_at_season_start_females.size()) {
+                if (this->weight_at_season_start_females.size()
+                        != data_length) {
+                    std::cout
+                            << "weight_at_season_start_females vector not equal to (nyears*nseasons*nages)\n";
+                    info.valid_configuration = false;
+                    return;
+                }
+                size_t ages = info.ages.size();
+                size_t years = info.nyears;
+                size_t seasons = info.nseasons;
+
+                mas::EmpricalDataStructure<Type> eds;
+                atl::intrusive_ptr<mas::DataObject<Type> > data =
+                        new mas::DataObject<Type>();
+                mas::DataObject<Type> *d = data.get();
+                d->imax = years;
+                d->jmax = seasons;
+                d->kmax = ages;
+                d->dimensions = 3;
+                d->data.resize(data_length);
+                for (int i = 0; i < data_length; i++) {
+                    d->data[i] = this->weight_at_season_start_females[i];
+                }
+                eds.empirical_data_at_age = data;
+
+                mas::GrowthBase<Type>::Do3DInterpolation(
+                        eds.empirical_data_at_age,
+                        eds.interpolated_data_at_age);
+                eg->weight_at_age_data[mas::MEAN_WEIGHT_AT_AGE_SEASON_START][mas::FEMALE] =
+                        eds;
+            }
+
+            if (this->weight_at_season_start_males.size()) {
+                if (this->weight_at_season_start_males.size() != data_length) {
+                    std::cout
+                            << "weight_at_season_start_males vector not equal to (nyears*nseasons*nages)\n";
+                    info.valid_configuration = false;
+                    return;
+                }
+                size_t ages = info.ages.size();
+                size_t years = info.nyears;
+                size_t seasons = info.nseasons;
+
+                mas::EmpricalDataStructure<Type> eds;
+                atl::intrusive_ptr<mas::DataObject<Type> > data =
+                        new mas::DataObject<Type>();
+                mas::DataObject<Type> *d = data.get();
+                d->imax = years;
+                d->jmax = seasons;
+                d->kmax = ages;
+                d->dimensions = 3;
+                d->data.resize(data_length);
+                for (int i = 0; i < data_length; i++) {
+                    d->data[i] = this->weight_at_season_start_males[i];
+                }
+                eds.empirical_data_at_age = data;
+
+                mas::GrowthBase<Type>::Do3DInterpolation(
+                        eds.empirical_data_at_age,
+                        eds.interpolated_data_at_age);
+                eg->weight_at_age_data[mas::MEAN_WEIGHT_AT_AGE_SEASON_START][mas::MALE] =
+                        eds;
+            }
+        } else {
+
+            //instantiate default here
+
+            weight_functor = new mas::DefaultWeightFunctor<Type>(g->alpha_f,
+                    g->alpha_m, g->beta_f, g->beta_f);
+        }
+        vb->weight_functor = weight_functor;
+        info.growth_models[this->id] = vb;
+    }
+
+    virtual void AddToMAS() {
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+        this->AddToMAS_internal<TMB_REAL_TYPE> (mas::MAS<TMB_REAL_TYPE>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_FIRST_ORDER> (mas::MAS<TMB_FIRST_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_SECOND_ORDER> (mas::MAS<TMB_SECOND_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_THIRD_ORDER> (mas::MAS<TMB_THIRD_ORDER>::GetInstance()->info);
+
+#endif
+
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
         atl::intrusive_ptr<mas::VonBertalanffyModified<double> > vb =
                 new mas::VonBertalanffyModified<double>();
         mas::VonBertalanffyModified<double> *g = vb.get();
@@ -3681,11 +5057,13 @@ public:
         }
         vb->weight_functor = weight_functor;
         info.growth_models[this->id] = vb;
+#endif
     }
 
     void ExtractFromMAS(mas::Information<double> &info) {
 
     }
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -4254,7 +5632,7 @@ public:
         grth.PushBack(growth, allocator);
 
     }
-
+#endif
     static std::map<int, VonBertalanffyModified*> initialized_models;
     typedef typename std::map<int, VonBertalanffyModified*>::iterator model_iterator;
 };
@@ -4280,13 +5658,34 @@ public:
     virtual ~Area() {
     }
 
-    virtual void AddToMAS(mas::Information<double> &info) {
+    template<typename Type>
+    void AddToMAS_internal(mas::Information<Type> &info) {
+        atl::intrusive_ptr<mas::Area<Type> > area = new mas::Area<Type>();
+        mas::Area<Type> *a = area.get();
+        a->id = this->id;
+        info.areas[a->id] = area;
+    }
 
+    virtual void AddToMAS() {
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+        this->AddToMAS_internal<TMB_REAL_TYPE> (mas::MAS<TMB_REAL_TYPE>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_FIRST_ORDER> (mas::MAS<TMB_FIRST_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_SECOND_ORDER> (mas::MAS<TMB_SECOND_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_THIRD_ORDER> (mas::MAS<TMB_THIRD_ORDER>::GetInstance()->info);
+
+#endif
+
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
         atl::intrusive_ptr<mas::Area<double> > area = new mas::Area<double>();
         mas::Area<double> *a = area.get();
         a->id = this->id;
         info.areas[a->id] = area;
+#endif
     }
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -4306,7 +5705,7 @@ public:
         area.AddMember("id", this->id, allocator);
         a.PushBack(area, allocator);
     }
-
+#endif
     static std::map<int, Area*> initialized_models;
     typedef typename std::map<int, Area*>::iterator model_iterator;
 };
@@ -4342,7 +5741,72 @@ public:
     virtual ~Movement() {
     }
 
-    virtual void AddToMAS(mas::Information<double> &info) {
+    template<typename Type>
+    void AddToMAS_internal(mas::Information<Type> &info) {
+        if (this->connectivity_females.size() != std::pow(Area::id_g - 1, 2)
+                || this->connectivity_males.size()
+                != std::pow(Area::id_g - 1, 2)
+                || this->connectivity_recruits.size()
+                != std::pow(Area::id_g - 1, 2)) {
+            std::cout << "MAS Error: Movement connectivity not equal to "
+                    << std::pow(Area::id_g - 1, 2) << "\n";
+            info.valid_configuration = false;
+        } else {
+            typedef typename mas::VariableTrait<Type>::variable variable;
+
+            atl::intrusive_ptr<mas::Movement<Type> > movement =
+                    new mas::Movement<Type>();
+            mas::Movement<Type> *m = movement.get();
+            m->id = this->id;
+            int k = 0;
+            m->male_connectivity.resize(info.nseasons);
+            m->female_connectivity.resize(info.nseasons);
+            m->recruit_connectivity.resize(info.nseasons);
+
+            for (int s = 0; s < info.nseasons; s++) {
+                m->male_connectivity[s].resize(Area::id_g - 1);
+                m->female_connectivity[s].resize(Area::id_g - 1);
+                m->recruit_connectivity[s].resize(Area::id_g - 1);
+
+                for (int i = 0; i < Area::id_g - 1; i++) {
+                    m->male_connectivity[s][i].resize(Area::id_g - 1);
+                    m->female_connectivity[s][i].resize(Area::id_g - 1);
+                    m->recruit_connectivity[s][i].resize(Area::id_g - 1);
+                    for (int j = 0; j < Area::id_g - 1; j++) {
+                        k = (i * (Area::id_g - 1)) + j;
+                        m->male_connectivity[s][i][j] = variable(
+                                this->connectivity_males[k]);
+                        m->female_connectivity[s][i][j] = variable(
+                                this->connectivity_females[k]);
+                        m->recruit_connectivity[s][i][j] = variable(
+                                this->connectivity_recruits[k]);
+                        if (this->estimate_movement) {
+                            m->Register(m->male_connectivity[s][i][j]);
+                            m->Register(m->female_connectivity[s][i][j]);
+                            m->Register(m->recruit_connectivity[s][i][j]);
+
+                        }
+                    }
+
+                }
+            }
+            info.movement_models[m->id] = movement;
+        }
+    }
+
+    virtual void AddToMAS() {
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+        this->AddToMAS_internal<TMB_REAL_TYPE> (mas::MAS<TMB_REAL_TYPE>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_FIRST_ORDER> (mas::MAS<TMB_FIRST_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_SECOND_ORDER> (mas::MAS<TMB_SECOND_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_THIRD_ORDER> (mas::MAS<TMB_THIRD_ORDER>::GetInstance()->info);
+
+#endif
+
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
         if (this->connectivity_females.size() != std::pow(Area::id_g - 1, 2)
                 || this->connectivity_males.size()
                 != std::pow(Area::id_g - 1, 2)
@@ -4392,6 +5856,7 @@ public:
             }
             info.movement_models[m->id] = movement;
         }
+#endif
     }
 
     void ExtractFromMAS(mas::Information<double> &info) {
@@ -4407,16 +5872,17 @@ public:
                     for (int j = 0; j < Area::id_g; j++) {
 
                         this->connectivity_males[k] =
-                                m->male_connectivity[s][i][j].GetValue();
+                                mas::VariableTrait<double>::GetValue(m->male_connectivity[s][i][j]);
                         this->connectivity_females[k] =
-                                m->female_connectivity[s][i][j].GetValue();
+                                mas::VariableTrait<double>::GetValue(m->female_connectivity[s][i][j]);
                         this->connectivity_recruits[k++] =
-                                m->recruit_connectivity[s][i][j].GetValue();
+                                mas::VariableTrait<double>::GetValue(m->recruit_connectivity[s][i][j]);
                     }
                 }
             }
         }
     }
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -4507,7 +5973,7 @@ public:
         movement.AddMember("male", males, allocator);
         move.PushBack(movement, allocator);
     }
-
+#endif
     static std::map<int, Movement*> initialized_models;
     typedef typename std::map<int, Movement*>::iterator model_iterator;
 };
@@ -4530,6 +5996,7 @@ public:
 
     virtual ~Maturity() {
     }
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void AddToEMInputs(rapidjson::Document &document,
             rapidjson::Value &mat, size_t nyears, size_t nseasons, size_t nages,
@@ -4547,7 +6014,7 @@ public:
         maturity.AddMember("values", values, allocator);
         mat.PushBack(maturity, allocator);
     }
-
+#endif
     static std::map<int, Maturity*> initialized_models;
     typedef typename std::map<int, Maturity*>::iterator model_iterator;
 };
@@ -4573,6 +6040,7 @@ public:
     int id;
     double sex_ratio = 0.5;
     double spawning_season_offset = 0.35;
+    Parameter initial_f = 0.001;
 
     //not exposed
     std::map<int, int> maturity_males;
@@ -4681,7 +6149,194 @@ public:
         }
     }
 
-    virtual void AddToMAS(mas::Information<double> &info) {
+    template<typename Type>
+    void AddToMAS_internal(mas::Information<Type> &info) {
+
+        typedef typename mas::VariableTrait<Type>::variable variable;
+        atl::intrusive_ptr<mas::Population<Type> > population =
+                new mas::Population<Type>();
+        mas::Population<Type> *pop = population.get();
+
+        pop->id = this->id;
+        pop->female_fraction_value = this->sex_ratio;
+        pop->growth_id = this->growth;
+        maturity_iterator mit;
+
+        mas::VariableTrait<Type>::SetValue(pop->initial_f, this->initial_f.value);
+        if (this->initial_f.estimated) {
+            pop->Register(pop->initial_f);
+        }
+
+        /**
+         * Maturity
+         */
+        for (mit = this->maturity_females.begin();
+                mit != this->maturity_females.end(); ++mit) {
+            typename Maturity::model_iterator it;
+            it = Maturity::initialized_models.find((*mit).first);
+            if (it != Maturity::initialized_models.end()) {
+                Rcpp::NumericVector &v = (*it).second->values;
+                std::vector<Type> values(v.size());
+                for (int i = 0; i < v.size(); i++) {
+                    values[i] = v[i];
+                }
+                pop->maturity_models[(*mit).second][mas::FEMALE] = values;
+            }
+        }
+
+        for (mit = this->maturity_males.begin();
+                mit != this->maturity_males.end(); ++mit) {
+            typename Maturity::model_iterator it;
+            it = Maturity::initialized_models.find((*mit).first);
+            if (it != Maturity::initialized_models.end()) {
+                Rcpp::NumericVector &v = (*it).second->values;
+                std::vector<Type> values(v.size());
+                for (int i = 0; i < v.size(); i++) {
+                    values[i] = v[i];
+                }
+                pop->maturity_models[(*mit).second][mas::MALE] = values;
+            }
+        }
+
+        for (int i = 0; i < this->movement.size(); i++) {
+            pop->movement_models_ids[movement[i].second] = movement[i].first;
+        }
+
+        /*
+         * Initial deviations
+         */
+        std::cout<<"Parsing initial deviations......."<<intial_deviations_females.size()<<std::endl;
+        deviations_iterator dev_it;
+        for (dev_it = this->intial_deviations_females.begin();
+                dev_it != this->intial_deviations_females.end(); ++dev_it) {
+            typename InitialDeviations::model_iterator dit;
+
+            dit = InitialDeviations::initialized_models.find((*dev_it).second);
+            if (dit != InitialDeviations::initialized_models.end()) {
+                InitialDeviations *devs = (*dit).second;
+                std::cout<<"devs estimated: "<< devs->estimate<<std::endl;
+                std::cout<< devs->values.size()<<std::endl;
+                
+                if (devs->values.size() != info.ages.size()) {
+                    std::cout
+                            << "MAS Error: Initial deviations vector size not equal to "
+                            << info.ages.size() << "\n";
+                    info.valid_configuration = false;
+                } else {
+
+                    std::vector<variable> &v =
+                            pop->initial_deviations_females[(*dev_it).first].second;
+                    v.resize(devs->values.size());
+                    for (int i = 0; i < v.size(); i++) {
+                        v[i] = variable(devs->values[i]);
+                    }
+
+                    if (devs->estimate) {
+                        for (int i = 0; i < v.size(); i++) {
+                            std::stringstream ss;
+                            ss << "initial_deviations[" << i << "]_"
+                                    << pop->id;
+                            std::cout<<  "initial_deviations[" << i << "]_"
+                                    << pop->id<<std::endl;
+                            
+                            mas::VariableTrait<Type>::SetName(v[i], ss.str());
+                            pop->Register(v[i], devs->phase);
+                        }
+                    }
+
+                }
+
+            }
+        }
+
+        for (dev_it = this->intial_deviations_males.begin();
+                dev_it != this->intial_deviations_males.end(); ++dev_it) {
+            typename InitialDeviations::model_iterator dit;
+
+            dit = InitialDeviations::initialized_models.find((*dev_it).second);
+            if (dit != InitialDeviations::initialized_models.end()) {
+                InitialDeviations *devs = (*dit).second;
+                if (devs->values.size() != info.ages.size()) {
+                    std::cout
+                            << "MAS Error: Initial deviations vector size not equal to "
+                            << info.ages.size() << "\n";
+                    info.valid_configuration = false;
+                } else {
+
+                    std::vector<variable> &v =
+                            pop->initial_deviations_males[(*dev_it).first].second;
+                    v.resize(devs->values.size());
+                    for (int i = 0; i < v.size(); i++) {
+                        v[i] = variable(devs->values[i]);
+                    }
+
+                    if (devs->estimate) {
+                        for (int i = 0; i < v.size(); i++) {
+                            std::stringstream ss;
+                            ss << "m_initial_deviations[" << i << "]_"
+                                    << pop->id;
+                            mas::VariableTrait<Type>::SetName(v[i], ss.str());
+                            pop->Register(v[i], devs->phase);
+                        }
+                    }
+
+                }
+
+            }
+        }
+
+        /*
+         * Recruitment
+         */
+        for (int i = 0; i < this->recruitment.size(); i++) {
+            pop->recruitment_ids[recruitment[i].third] =
+                    this->recruitment[i].first;
+        }
+
+        std::cout << "growth model for this population is " << this->growth << "\n";
+        /*
+         * Growth
+         */
+        if (this->growth != -999) {
+            pop->growth_id = growth;
+        } else {
+            std::cout << "growth id " << growth << "\n\n";
+            std::cout << "MAS Error: No growth model set for Population "
+                    << this->id << "\n";
+            info.valid_configuration = false;
+        }
+
+        /*
+         * Natural Mortality
+         */
+
+        for (int i = 0; i < this->natural_mortality_males.size(); i++) {
+            pop->male_natural_mortality_ids[this->natural_mortality_males[i].second] =
+                    this->natural_mortality_males[i].first;
+        }
+        for (int i = 0; i < this->natural_mortality_females.size(); i++) {
+
+            pop->female_natural_mortality_ids[this->natural_mortality_females[i].second] =
+                    this->natural_mortality_females[i].first;
+        }
+
+        info.populations[this->id] = population;
+
+    }
+
+    virtual void AddToMAS() {
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+        this->AddToMAS_internal<TMB_REAL_TYPE> (mas::MAS<TMB_REAL_TYPE>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_FIRST_ORDER> (mas::MAS<TMB_FIRST_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_SECOND_ORDER> (mas::MAS<TMB_SECOND_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_THIRD_ORDER> (mas::MAS<TMB_THIRD_ORDER>::GetInstance()->info);
+
+#endif
+
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
         typedef typename mas::VariableTrait<double>::variable variable;
         atl::intrusive_ptr<mas::Population<double> > population =
                 new mas::Population<double>();
@@ -4838,11 +6493,13 @@ public:
         }
 
         info.populations[this->id] = population;
+#endif
     }
 
     void ExtractFromMAS(mas::Information<double> &info) {
 
     }
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -5184,7 +6841,7 @@ public:
         population.AddMember("parameters", parameters, allocator);
         pops.PushBack(population, allocator);
     }
-
+#endif
     static std::map<int, Population*> initialized_models;
     typedef typename std::map<int, Population*>::iterator model_iterator;
 };
@@ -5239,7 +6896,69 @@ public:
         this->has_lambdas = true;
     }
 
-    virtual void AddToMAS(mas::Information<double> &info) {
+    template<typename Type>
+    void AddToMAS_internal(mas::Information<Type> &info) {
+
+        atl::intrusive_ptr<mas::DataObject<Type> > lambda_data(
+                new mas::DataObject<Type>());
+        atl::intrusive_ptr<mas::Lognormal<Type> > ln = new mas::Lognormal<
+                Type>();
+        mas::Lognormal<Type> *nll = ln.get();
+        ln->use_bias_correction = this->use_bias_correction;
+        nll->lambda = lambda_data;
+        nll->id = this->id;
+        if (this->has_lambdas) {
+            nll->lambda = new mas::DataObject<Type>();
+            mas::DataObject<Type> *d = nll->lambda.get();
+            int prod = 1.0;
+            for (int i = 0; i < this->lambda_dimensions.size(); i++) {
+                prod *= this->lambdas[i];
+            }
+
+            if (this->lambdas.size() != prod) {
+                std::cout
+                        << "MAS Error: Lognormal lambda vector not equal to dimensions product\n";
+                info.valid_configuration = false;
+            }
+
+            switch (lambdas.size()) {
+                case 1:
+                    d->imax = this->lambda_dimensions[0];
+                    break;
+                case 2:
+                    d->imax = this->lambda_dimensions[0];
+                    d->jmax = this->lambda_dimensions[1];
+                    break;
+                case 3:
+                    d->imax = this->lambda_dimensions[0];
+                    d->jmax = this->lambda_dimensions[1];
+                    d->kmax = this->lambda_dimensions[2];
+                    break;
+            }
+            for (int i = 0; i < this->lambdas.size(); i++) {
+
+                d->data.push_back(this->lambdas[i]);
+            }
+        }
+
+        info.likelihood_components[nll->id] = ln;
+    }
+
+    virtual void AddToMAS() {
+
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+        this->AddToMAS_internal<TMB_REAL_TYPE> (mas::MAS<TMB_REAL_TYPE>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_FIRST_ORDER> (mas::MAS<TMB_FIRST_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_SECOND_ORDER> (mas::MAS<TMB_SECOND_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_THIRD_ORDER> (mas::MAS<TMB_THIRD_ORDER>::GetInstance()->info);
+
+#endif
+
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
+
         atl::intrusive_ptr<mas::DataObject<double> > lambda_data(
                 new mas::DataObject<double>());
         atl::intrusive_ptr<mas::Lognormal<double> > ln = new mas::Lognormal<
@@ -5283,11 +7002,13 @@ public:
         }
 
         info.likelihood_components[nll->id] = ln;
+#endif
     }
 
     void ExtractFromMAS(mas::Information<double> &info) {
 
     }
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -5337,6 +7058,7 @@ public:
         }
         nll.PushBack(likelihood, allocator);
     }
+#endif
 
     static std::map<int, Lognormal*> initialized_models;
     typedef typename std::map<int, Lognormal*>::iterator model_iterator;
@@ -5373,7 +7095,67 @@ public:
         this->has_lambdas = true;
     }
 
-    virtual void AddToMAS(mas::Information<double> &info) {
+    template<typename Type>
+    void AddToMAS_internal(mas::Information<Type> &info) {
+
+        atl::intrusive_ptr<mas::DataObject<Type> > lambda_data(
+                new mas::DataObject<Type>());
+        atl::intrusive_ptr<mas::DirichletMultinomial<Type> > ln =
+                new mas::DirichletMultinomial<Type>();
+        mas::DirichletMultinomial<Type> *nll = ln.get();
+        nll->lambda = lambda_data;
+        nll->id = this->id;
+        if (this->has_lambdas) {
+            nll->lambda = new mas::DataObject<Type>();
+            mas::DataObject<Type> *d = nll->lambda.get();
+            int prod = 1.0;
+            for (int i = 0; i < this->lambda_dimensions.size(); i++) {
+                prod *= this->lambdas[i];
+            }
+
+            if (this->lambdas.size() != prod) {
+                std::cout
+                        << "MAS Error: DirichletMultinomial lambda vector not equal to dimensions product\n";
+                info.valid_configuration = false;
+            }
+
+            switch (lambdas.size()) {
+                case 1:
+                    d->imax = this->lambda_dimensions[0];
+                    break;
+                case 2:
+                    d->imax = this->lambda_dimensions[0];
+                    d->jmax = this->lambda_dimensions[1];
+                    break;
+                case 3:
+                    d->imax = this->lambda_dimensions[0];
+                    d->jmax = this->lambda_dimensions[1];
+                    d->kmax = this->lambda_dimensions[2];
+                    break;
+            }
+            for (int i = 0; i < this->lambdas.size(); i++) {
+
+                d->data.push_back(this->lambdas[i]);
+            }
+        }
+
+        info.likelihood_components[nll->id] = ln;
+    }
+
+    virtual void AddToMAS() {
+
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+        this->AddToMAS_internal<TMB_REAL_TYPE> (mas::MAS<TMB_REAL_TYPE>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_FIRST_ORDER> (mas::MAS<TMB_FIRST_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_SECOND_ORDER> (mas::MAS<TMB_SECOND_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_THIRD_ORDER> (mas::MAS<TMB_THIRD_ORDER>::GetInstance()->info);
+
+#endif
+
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
         atl::intrusive_ptr<mas::DataObject<double> > lambda_data(
                 new mas::DataObject<double>());
         atl::intrusive_ptr<mas::DirichletMultinomial<double> > ln =
@@ -5416,7 +7198,9 @@ public:
         }
 
         info.likelihood_components[nll->id] = ln;
+#endif
     }
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -5490,6 +7274,7 @@ public:
         }
         nll.PushBack(likelihood, allocator);
     }
+#endif
 
     void ExtractFromMAS(mas::Information<double> &info) {
 
@@ -5530,7 +7315,69 @@ public:
         this->has_lambdas = true;
     }
 
-    virtual void AddToMAS(mas::Information<double> &info) {
+    template<typename Type>
+    void AddToMAS_internal(mas::Information<Type> &info) {
+
+        atl::intrusive_ptr<mas::DataObject<Type> > lambda_data(
+                new mas::DataObject<Type>());
+
+        atl::intrusive_ptr<mas::DirichletMultinomialRobust<Type> > ln =
+                new mas::DirichletMultinomialRobust<Type>();
+        mas::DirichletMultinomialRobust<Type> *nll = ln.get();
+        nll->lambda = lambda_data;
+        nll->id = this->id;
+        if (this->has_lambdas) {
+            nll->lambda = new mas::DataObject<Type>();
+            mas::DataObject<Type> *d = nll->lambda.get();
+            int prod = 1.0;
+            for (int i = 0; i < this->lambda_dimensions.size(); i++) {
+                prod *= this->lambdas[i];
+            }
+
+            if (this->lambdas.size() != prod) {
+                std::cout
+                        << "MAS Error: DirichletMultinomialRobust lambda vector not equal to dimensions product\n";
+                info.valid_configuration = false;
+            }
+
+            switch (lambdas.size()) {
+                case 1:
+                    d->imax = this->lambda_dimensions[0];
+                    break;
+                case 2:
+                    d->imax = this->lambda_dimensions[0];
+                    d->jmax = this->lambda_dimensions[1];
+                    break;
+                case 3:
+                    d->imax = this->lambda_dimensions[0];
+                    d->jmax = this->lambda_dimensions[1];
+                    d->kmax = this->lambda_dimensions[2];
+                    break;
+            }
+            for (int i = 0; i < this->lambdas.size(); i++) {
+
+                d->data.push_back(this->lambdas[i]);
+            }
+        }
+
+        info.likelihood_components[nll->id] = ln;
+
+    }
+
+    virtual void AddToMAS() {
+
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+        this->AddToMAS_internal<TMB_REAL_TYPE> (mas::MAS<TMB_REAL_TYPE>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_FIRST_ORDER> (mas::MAS<TMB_FIRST_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_SECOND_ORDER> (mas::MAS<TMB_SECOND_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_THIRD_ORDER> (mas::MAS<TMB_THIRD_ORDER>::GetInstance()->info);
+
+#endif
+
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
         atl::intrusive_ptr<mas::DataObject<double> > lambda_data(
                 new mas::DataObject<double>());
 
@@ -5574,11 +7421,13 @@ public:
         }
 
         info.likelihood_components[nll->id] = ln;
+#endif
     }
 
     void ExtractFromMAS(mas::Information<double> &info) {
 
     }
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -5654,7 +7503,7 @@ public:
         }
         nll.PushBack(likelihood, allocator);
     }
-
+#endif
     static std::map<int, DirichletMultinomialRobust*> initialized_models;
     typedef typename std::map<int, DirichletMultinomialRobust*>::iterator model_iterator;
 };
@@ -5689,7 +7538,68 @@ public:
         this->has_lambdas = true;
     }
 
-    virtual void AddToMAS(mas::Information<double> &info) {
+    template<typename Type>
+    void AddToMAS_internal(mas::Information<Type> &info) {
+
+        atl::intrusive_ptr<mas::Multinomial<Type> > ln = new mas::Multinomial<
+                Type>();
+        mas::Multinomial<Type> *nll = ln.get();
+        atl::intrusive_ptr<mas::DataObject<Type> > lambda_data(
+                new mas::DataObject<Type>());
+        nll->lambda = lambda_data;
+
+        nll->id = this->id;
+        if (this->has_lambdas) {
+            nll->lambda = new mas::DataObject<Type>();
+            mas::DataObject<Type> *d = nll->lambda.get();
+            int prod = 1.0;
+            for (int i = 0; i < this->lambda_dimensions.size(); i++) {
+                prod *= this->lambdas[i];
+            }
+
+            if (this->lambdas.size() != prod) {
+                std::cout
+                        << "MAS Error: Multinomial lambda vector not equal to dimensions product\n";
+                info.valid_configuration = false;
+            }
+
+            switch (lambdas.size()) {
+                case 1:
+                    d->imax = this->lambda_dimensions[0];
+                    break;
+                case 2:
+                    d->imax = this->lambda_dimensions[0];
+                    d->jmax = this->lambda_dimensions[1];
+                    break;
+                case 3:
+                    d->imax = this->lambda_dimensions[0];
+                    d->jmax = this->lambda_dimensions[1];
+                    d->kmax = this->lambda_dimensions[2];
+                    break;
+            }
+            for (int i = 0; i < this->lambdas.size(); i++) {
+
+                d->data.push_back(this->lambdas[i]);
+            }
+        }
+
+        info.likelihood_components[nll->id] = ln;
+    }
+
+    virtual void AddToMAS() {
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+        this->AddToMAS_internal<TMB_REAL_TYPE> (mas::MAS<TMB_REAL_TYPE>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_FIRST_ORDER> (mas::MAS<TMB_FIRST_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_SECOND_ORDER> (mas::MAS<TMB_SECOND_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_THIRD_ORDER> (mas::MAS<TMB_THIRD_ORDER>::GetInstance()->info);
+
+#endif
+
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
+
         atl::intrusive_ptr<mas::Multinomial<double> > ln = new mas::Multinomial<
                 double>();
         mas::Multinomial<double> *nll = ln.get();
@@ -5733,11 +7643,13 @@ public:
         }
 
         info.likelihood_components[nll->id] = ln;
+#endif
     }
 
     void ExtractFromMAS(mas::Information<double> &info) {
 
     }
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -5787,7 +7699,7 @@ public:
         }
         nll.PushBack(likelihood, allocator);
     }
-
+#endif
     static std::map<int, Multinomial*> initialized_models;
     typedef typename std::map<int, Multinomial*>::iterator model_iterator;
 };
@@ -5822,7 +7734,65 @@ public:
         this->has_lambdas = true;
     }
 
-    virtual void AddToMAS(mas::Information<double> &info) {
+    template<typename Type>
+    void AddToMAS_internal(mas::Information<Type> &info) {
+        atl::intrusive_ptr<mas::MultinomialRobust<Type> > ln =
+                new mas::MultinomialRobust<Type>();
+        mas::MultinomialRobust<Type> *nll = ln.get();
+        atl::intrusive_ptr<mas::DataObject<Type> > lambda_data(
+                new mas::DataObject<Type>());
+        nll->lambda = lambda_data;
+        nll->id = this->id;
+        if (this->has_lambdas) {
+            nll->lambda = new mas::DataObject<Type>();
+            mas::DataObject<Type> *d = nll->lambda.get();
+            int prod = 1.0;
+            for (int i = 0; i < this->lambda_dimensions.size(); i++) {
+                prod *= this->lambdas[i];
+            }
+
+            if (this->lambdas.size() != prod) {
+                std::cout
+                        << "MAS Error: MultinomialRobust lambda vector not equal to dimensions product\n";
+                info.valid_configuration = false;
+            }
+
+            switch (lambdas.size()) {
+                case 1:
+                    d->imax = this->lambda_dimensions[0];
+                    break;
+                case 2:
+                    d->imax = this->lambda_dimensions[0];
+                    d->jmax = this->lambda_dimensions[1];
+                    break;
+                case 3:
+                    d->imax = this->lambda_dimensions[0];
+                    d->jmax = this->lambda_dimensions[1];
+                    d->kmax = this->lambda_dimensions[2];
+                    break;
+            }
+            for (int i = 0; i < this->lambdas.size(); i++) {
+
+                d->data.push_back(this->lambdas[i]);
+            }
+        }
+
+        info.likelihood_components[nll->id] = ln;
+    }
+
+    virtual void AddToMAS() {
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+        this->AddToMAS_internal<TMB_REAL_TYPE> (mas::MAS<TMB_REAL_TYPE>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_FIRST_ORDER> (mas::MAS<TMB_FIRST_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_SECOND_ORDER> (mas::MAS<TMB_SECOND_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_THIRD_ORDER> (mas::MAS<TMB_THIRD_ORDER>::GetInstance()->info);
+
+#endif
+
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
         atl::intrusive_ptr<mas::MultinomialRobust<double> > ln =
                 new mas::MultinomialRobust<double>();
         mas::MultinomialRobust<double> *nll = ln.get();
@@ -5865,11 +7835,13 @@ public:
         }
 
         info.likelihood_components[nll->id] = ln;
+#endif
     }
 
     void ExtractFromMAS(mas::Information<double> &info) {
 
     }
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -5919,7 +7891,7 @@ public:
         }
         nll.PushBack(likelihood, allocator);
     }
-
+#endif
     static std::map<int, MultinomialRobust*> initialized_models;
     typedef typename std::map<int, MultinomialRobust*>::iterator model_iterator;
 };
@@ -5948,6 +7920,7 @@ public:
     Rcpp::NumericVector error;
     std::string sex;
     double missing_values = -999;
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -5958,7 +7931,7 @@ public:
             rapidjson::Value &selex, size_t nyears, size_t nseasons,
             size_t nages, size_t nareas) {
     }
-
+#endif
     static std::map<int, IndexData*> initialized_models;
     typedef typename std::map<int, IndexData*>::iterator model_iterator;
 };
@@ -5987,6 +7960,7 @@ public:
     Rcpp::NumericVector sample_size;
     std::string sex;
     double missing_values = -999;
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -5997,7 +7971,7 @@ public:
             rapidjson::Value &selex, size_t nyears, size_t nseasons,
             size_t nages, size_t nareas) {
     }
-
+#endif
     static std::map<int, AgeCompData*> initialized_models;
     typedef typename std::map<int, AgeCompData*>::iterator model_iterator;
 };
@@ -6025,6 +7999,7 @@ public:
     Rcpp::NumericVector sample_size;
     std::string sex;
     double missing_values = -999;
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -6035,7 +8010,7 @@ public:
             rapidjson::Value &selex, size_t nyears, size_t nseasons,
             size_t nages, size_t nareas) {
     }
-
+#endif
     static std::map<int, LengthCompData*> initialized_models;
     typedef typename std::map<int, LengthCompData*>::iterator model_iterator;
 };
@@ -6136,7 +8111,274 @@ public:
         this->selectivity.push_back(triple<int, int, int>(id, season, area));
     }
 
-    virtual void AddToMAS(mas::Information<double> &info) {
+    template<typename Type>
+    void AddToMAS_internal(mas::Information<Type> &info) {
+
+        if (this->used) {
+
+            atl::intrusive_ptr<mas::Fleet<Type> > fleet = new mas::Fleet<
+                    Type>();
+            mas::Fleet<Type> *f = fleet.get();
+            f->id = this->id;
+            f->catch_fraction_of_year = this->catch_fraction_of_year;
+            Type fraction = 0.5; //what's this?
+            for (int i = 0; i < this->selectivity.size(); i++) {
+                int sseason = this->selectivity[i].second;
+                int sid = this->selectivity[i].first;
+                int sarea = this->selectivity[i].third;
+                f->operational_areas.insert(sarea);
+                f->season_area_selectivity_ids[sseason][sarea] = sid;
+                f->area_season_selectivity_ids[sarea][sseason] = sid;
+                f->area_season_catch_fraction[sarea][sseason] = fraction;
+                f->season_area_catch_fraction[sseason][sarea] = fraction;
+            }
+
+            for (int i = 0; i < this->fishing_nortality.size(); i++) {
+                int sseason = this->fishing_nortality[i].second;
+                int sid = this->fishing_nortality[i].first;
+                int sarea = this->fishing_nortality[i].third;
+                f->season_area_fishing_mortality_ids[sseason][sarea] = sid;
+                f->area_season_fishing_mortality_ids[sarea][sseason] = sid;
+            }
+
+            if (this->index_nll_id != -999) {
+
+                bool nll_exists = false;
+                for (int i = 0; i < NLLBase::nll_submodels.size(); i++) {
+                    if (NLLBase::nll_submodels[i]->id_ == this->index_nll_id) {
+                        nll_exists = true;
+                    }
+                }
+                if (!nll_exists) {
+                    std::cout << "MAS Error: Index NLL not found!";
+                    info.valid_configuration = false;
+                }
+
+                for (int i = 0; i < this->index_data.size(); i++) {
+                    IndexData::model_iterator it;
+                    it = IndexData::initialized_models.find(
+                            this->index_data[i].second);
+                    if (it != IndexData::initialized_models.end()) {
+                        IndexData *data = (*it).second;
+                        atl::intrusive_ptr<mas::DataObject<Type> > dd =
+                                new mas::DataObject<Type>();
+                        mas::DataObject<Type> *d = dd.get();
+                        d->missing_value = data->missing_values;
+                        d->dimensions = 2;
+                        switch (this->index_data[i].first) {
+                            case MALE:
+                                d->sex_type = mas::MALE;
+                                break;
+                            case FEMALE:
+                                d->sex_type = mas::FEMALE;
+                                break;
+                            case UNDIFFERENTIATED:
+                                d->sex_type = mas::UNDIFFERENTIATED;
+                                break;
+                        }
+
+                        if (data->data.size() != info.nyears * info.nseasons
+                                || data->error.size()
+                                != info.nyears * info.nseasons) {
+                            std::cout
+                                    << "MAS Error: Index data or error vector not equal to (nseasons*nyears)\n";
+                            info.valid_configuration = false;
+                        } else {
+                            d->imax = info.nyears;
+                            d->jmax = info.nseasons;
+
+                            for (int i = 0; i < data->data.size(); i++) {
+                                d->data.push_back(data->data[i]);
+                                d->observation_error.push_back(data->error[i]);
+                            }
+                            d->id = this->id;
+                            d->name = "Index Data";
+                            if (data->is_abundance) {
+                                f->fishery_abundance_likelihood_component_id =
+                                        this->index_nll_id;
+                                d->type = mas::CATCH_ABUNDANCE;
+                            } else {
+                                d->type = mas::CATCH_BIOMASS;
+                                f->fishery_biomass_likelihood_component_id =
+                                        this->index_nll_id;
+                            }
+                            d->Validate();
+                            info.data_dictionary[d->id].push_back(dd);
+                            info.data.push_back(dd);
+                        }
+                    }
+                }
+
+            }
+
+            if (this->age_comp_nll_id != -999) {
+                f->fishery_age_comp_likelihood_component_id =
+                        this->age_comp_nll_id;
+
+                bool nll_exists = false;
+                for (int i = 0; i < NLLBase::nll_submodels.size(); i++) {
+                    if (NLLBase::nll_submodels[i]->id_
+                            == this->age_comp_nll_id) {
+                        nll_exists = true;
+                    }
+                }
+                if (!nll_exists) {
+                    std::cout << "MAS Error: Age Comp NLL not found!";
+                    info.valid_configuration = false;
+                }
+                for (int i = 0; i < this->age_comp_data.size(); i++) {
+                    AgeCompData::model_iterator it;
+                    it = AgeCompData::initialized_models.find(
+                            this->age_comp_data[i].second);
+                    if (it != AgeCompData::initialized_models.end()) {
+                        AgeCompData *data = (*it).second;
+                        atl::intrusive_ptr<mas::DataObject<Type> > dd =
+                                new mas::DataObject<Type>();
+                        mas::DataObject<Type> *d = dd.get();
+                        d->missing_value = data->missing_values;
+                        d->dimensions = 3;
+                        switch (this->age_comp_data[i].first) {
+                            case MALE:
+                                d->sex_type = mas::MALE;
+                                break;
+                            case FEMALE:
+                                d->sex_type = mas::FEMALE;
+                                break;
+                            case UNDIFFERENTIATED:
+                                d->sex_type = mas::UNDIFFERENTIATED;
+                                break;
+                        }
+
+                        if (data->data.size()
+                                != info.nyears * info.nseasons
+                                * info.ages.size()) {
+                            std::cout
+                                    << "MAS Error: Fleet Age Comp data vector not equal to (nseasons*nyears*nages) \n";
+                            info.valid_configuration = false;
+                        } else if (data->sample_size.size()
+                                != info.nyears * info.nseasons) {
+                            std::cout
+                                    << "MAS Error: Fleet Age Comp error vector not equal to (nseasons*nyears) \n";
+                            info.valid_configuration = false;
+                        } else {
+
+                            d->imax = info.nyears;
+                            d->jmax = info.nseasons;
+                            d->kmax = info.ages.size();
+                            for (int i = 0; i < data->data.size(); i++) {
+                                d->data.push_back(data->data[i]);
+                            }
+                            for (int i = 0; i < data->sample_size.size(); i++) {
+                                d->sample_size.push_back(data->sample_size[i]);
+                            }
+                            d->id = this->id;
+                            d->name = "AgeComp Data";
+                            d->type = mas::CATCH_PROPORTION_AT_AGE;
+
+                            d->Validate();
+                            info.data_dictionary[d->id].push_back(dd);
+                            info.data.push_back(dd);
+                        }
+                    }
+                }
+
+            }
+            if (this->length_comp_nll_id != -999) {
+                f->fishery_length_comp_likelihood_component_id =
+                        this->length_comp_nll_id;
+
+                bool nll_exists = false;
+                for (int i = 0; i < NLLBase::nll_submodels.size(); i++) {
+                    if (NLLBase::nll_submodels[i]->id_
+                            == this->length_comp_nll_id) {
+                        nll_exists = true;
+                    }
+                }
+                if (!nll_exists) {
+                    std::cout << "MAS Error: Length Comp NLL not found!";
+                    info.valid_configuration = false;
+                }
+                for (int i = 0; i < this->length_comp_data.size(); i++) {
+                    LengthCompData::model_iterator it;
+                    it = LengthCompData::initialized_models.find(
+                            this->length_comp_data[i].second);
+                    if (it != LengthCompData::initialized_models.end()) {
+                        LengthCompData *data = (*it).second;
+                        atl::intrusive_ptr<mas::DataObject<Type> > dd =
+                                new mas::DataObject<Type>();
+                        mas::DataObject<Type> *d = dd.get();
+                        d->missing_value = data->missing_values;
+                        d->dimensions = 3;
+                        switch (this->length_comp_data[i].first) {
+                            case MALE:
+                                d->sex_type = mas::MALE;
+                                break;
+                            case FEMALE:
+                                d->sex_type = mas::FEMALE;
+                                break;
+                            case UNDIFFERENTIATED:
+                                d->sex_type = mas::UNDIFFERENTIATED;
+                                break;
+                        }
+
+                        if (data->data.size()
+                                != info.nyears * info.nseasons
+                                * info.ages.size()) {
+                            std::cout
+                                    << "MAS Error: Fleet Length Comp data vector not equal to (nseasons*nyears*nages) \n";
+                            info.valid_configuration = false;
+                        } else if (data->sample_size.size()
+                                != info.nyears * info.nseasons) {
+                            std::cout
+                                    << "MAS Error: Fleet Length Comp error vector not equal to (nseasons*nyears) \n";
+                            info.valid_configuration = false;
+                        } else {
+
+                            d->imax = info.nyears;
+                            d->jmax = info.nseasons;
+                            d->kmax = info.ages.size();
+                            for (int i = 0; i < data->data.size(); i++) {
+                                d->data.push_back(data->data[i]);
+                            }
+                            for (int i = 0; i < data->sample_size.size(); i++) {
+                                d->sample_size.push_back(data->sample_size[i]);
+                            }
+                            d->id = this->id;
+                            d->name = "LengthComp Data";
+                            d->type = mas::CATCH_MEAN_SIZE_AT_AGE;
+
+                            d->Validate();
+                            info.data_dictionary[d->id].push_back(dd);
+                            info.data.push_back(dd);
+                        }
+                    }
+                }
+
+            }
+
+            info.fleets[f->id] = fleet;
+        } else {
+
+            std::cout << "MAS Warning: Fleet_" << this->id
+                    << " defined, but not used in the Model.\n";
+            mas::mas_log << "MAS Warning: Fleet_" << this->id
+                    << " defined, but not used in the Model.\n";
+        }
+    }
+
+    virtual void AddToMAS() {
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+        this->AddToMAS_internal<TMB_REAL_TYPE> (mas::MAS<TMB_REAL_TYPE>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_FIRST_ORDER> (mas::MAS<TMB_FIRST_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_SECOND_ORDER> (mas::MAS<TMB_SECOND_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_THIRD_ORDER> (mas::MAS<TMB_THIRD_ORDER>::GetInstance()->info);
+
+#endif
+
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE  
         if (this->used) {
 
             atl::intrusive_ptr<mas::Fleet<double> > fleet = new mas::Fleet<
@@ -6387,12 +8629,13 @@ public:
             mas::mas_log << "MAS Warning: Fleet_" << this->id
                     << " defined, but not used in the Model.\n";
         }
-
+#endif
     }
 
     void ExtractFromMAS(mas::Information<double> &info) {
 
     }
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void DataToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -6705,7 +8948,7 @@ public:
 
         flt.PushBack(fleet, allocator);
     }
-
+#endif
     static std::map<int, Fleet*> initialized_models;
     typedef typename std::map<int, Fleet*>::iterator model_iterator;
 };
@@ -6798,7 +9041,216 @@ public:
         this->selectivity.push_back(triple<int, int, int>(id, season, area));
     }
 
-    virtual void AddToMAS(mas::Information<double> &info) {
+    template<typename Type>
+    void AddToMAS_internal(mas::Information<Type> &info) {
+        std::cout << "Pushing survey " << this->id
+                << " to MAS model engine!!!\n\n";
+        if (this->used) {
+            atl::intrusive_ptr<mas::Survey<Type> > survey = new mas::Survey<
+                    Type>();
+            mas::Survey<Type> *s = survey.get();
+            s->id = this->id;
+            s->survey_fraction_of_year = this->survey_fraction_of_year;
+            double fraction = 0.5; //what's this?
+            for (int i = 0; i < this->selectivity.size(); i++) {
+                int sseason = this->selectivity[i].second;
+                int sid = this->selectivity[i].first;
+                int sarea = this->selectivity[i].third;
+                s->season_area_selectivity_ids[sseason][sarea] = sid;
+                s->area_season_selectivity_ids[sarea][sseason] = sid;
+                s->area_season_survey_fraction[sarea][sseason] = fraction;
+                s->season_area_survey_fraction[sseason][sarea] = fraction;
+            }
+
+            mas::VariableTrait<Type>::SetValue(s->q, q.value);
+            if (q.estimated) {
+
+                std::stringstream ss;
+                ss << "q_" << this->id;
+                mas::VariableTrait<Type>::SetName(s->q, ss.str());
+                if (q.min != std::numeric_limits<double>::min()) {
+                    mas::VariableTrait<Type>::SetMinBoundary(s->q, q.min);
+                }
+
+                if (q.max != std::numeric_limits<double>::max()) {
+                    mas::VariableTrait<Type>::SetMaxBoundary(s->q, q.max);
+                }
+
+                survey->Register(s->q, q.phase);
+                std::cout << "Survey " << survey->id
+                        << " \"q\" will be estimated in phase " << q.phase
+                        << "!\n";
+
+            } else {
+                std::cout << "Survey " << survey->id
+                        << " \"q\" not estimated!\n";
+            }
+
+            if (this->index_nll_id != -999) {
+                s->survey_biomass_likelihood_component_id = this->index_nll_id;
+
+                bool nll_exists = false;
+                for (int i = 0; i < NLLBase::nll_submodels.size(); i++) {
+                    if (NLLBase::nll_submodels[i]->id_ == this->index_nll_id) {
+                        nll_exists = true;
+                    }
+                }
+                if (!nll_exists) {
+                    std::cout << "MAS Error: Index NLL not found!";
+                    info.valid_configuration = false;
+                }
+
+                for (int i = 0; i < this->index_data.size(); i++) {
+                    IndexData::model_iterator it;
+                    it = IndexData::initialized_models.find(
+                            this->index_data[i].second);
+                    if (it != IndexData::initialized_models.end()) {
+                        IndexData *data = (*it).second;
+                        atl::intrusive_ptr<mas::DataObject<Type> > dd =
+                                new mas::DataObject<Type>();
+                        mas::DataObject<Type> *d = dd.get();
+                        d->missing_value = data->missing_values;
+                        d->dimensions = 2;
+                        switch (this->index_data[i].first) {
+                            case MALE:
+                                d->sex_type = mas::MALE;
+                                break;
+                            case FEMALE:
+                                d->sex_type = mas::FEMALE;
+                                break;
+                            case UNDIFFERENTIATED:
+                                d->sex_type = mas::UNDIFFERENTIATED;
+                                break;
+                        }
+
+                        if (data->data.size() != info.nyears * info.nseasons
+                                || data->error.size()
+                                != info.nyears * info.nseasons) {
+                            std::cout
+                                    << "MAS Error: Index data or error vector not equal to (nseasons*nyears)\n";
+                            info.valid_configuration = false;
+                        } else {
+                            d->imax = info.nyears;
+                            d->jmax = info.nseasons;
+
+                            for (int i = 0; i < data->data.size(); i++) {
+                                d->data.push_back(data->data[i]);
+                                d->observation_error.push_back(data->error[i]);
+                            }
+                            d->id = this->id;
+                            d->name = "Index Data";
+                            if (data->is_abundance) {
+                                d->type = mas::SURVEY_ABUNDANCE;
+                            } else {
+                                d->type = mas::SURVEY_BIOMASS;
+                            }
+                            d->Validate();
+                            info.data_dictionary[d->id].push_back(dd);
+                            info.data.push_back(dd);
+                        }
+                    }
+                }
+
+            }
+
+            if (this->age_comp_nll_id != -999) {
+                s->survey_age_comp_likelihood_component_id =
+                        this->age_comp_nll_id;
+
+                bool nll_exists = false;
+                for (int i = 0; i < NLLBase::nll_submodels.size(); i++) {
+                    if (NLLBase::nll_submodels[i]->id_
+                            == this->age_comp_nll_id) {
+                        nll_exists = true;
+                    }
+                }
+                if (!nll_exists) {
+                    std::cout << "MAS Error: Age Comp NLL not found!";
+                    info.valid_configuration = false;
+                }
+                for (int i = 0; i < this->age_comp_data.size(); i++) {
+                    AgeCompData::model_iterator it;
+                    it = AgeCompData::initialized_models.find(
+                            this->age_comp_data[i].second);
+                    if (it != AgeCompData::initialized_models.end()) {
+                        AgeCompData *data = (*it).second;
+                        atl::intrusive_ptr<mas::DataObject<Type> > dd =
+                                new mas::DataObject<Type>();
+                        mas::DataObject<Type> *d = dd.get();
+                        d->missing_value = data->missing_values;
+                        d->dimensions = 3;
+                        switch (this->age_comp_data[i].first) {
+                            case MALE:
+                                d->sex_type = mas::MALE;
+                                break;
+                            case FEMALE:
+                                d->sex_type = mas::FEMALE;
+                                break;
+                            case UNDIFFERENTIATED:
+                                d->sex_type = mas::UNDIFFERENTIATED;
+                                break;
+                        }
+
+                        if (data->data.size()
+                                != info.nyears * info.nseasons
+                                * info.ages.size()) {
+                            std::cout
+                                    << "MAS Error: Survey Age Comp data vector not equal to (nseasons*nyears*nages) \n";
+                            info.valid_configuration = false;
+                        } else if (data->sample_size.size()
+                                != info.nyears * info.nseasons) {
+                            std::cout
+                                    << "MAS Error: Survey Age Comp error vector not equal to (nseasons*nyears) \n";
+                            info.valid_configuration = false;
+                        } else {
+                            d->imax = info.nyears;
+                            d->jmax = info.nseasons;
+                            d->kmax = info.ages.size();
+                            for (int i = 0; i < data->data.size(); i++) {
+                                d->data.push_back(data->data[i]);
+                            }
+                            for (int i = 0; i < data->sample_size.size(); i++) {
+                                d->sample_size.push_back(data->sample_size[i]);
+                            }
+                            d->id = this->id;
+                            d->name = "AgeComp Data";
+                            d->type = mas::SURVEY_PROPORTION_AT_AGE;
+
+                            d->Validate();
+                            info.data_dictionary[d->id].push_back(dd);
+                            info.data.push_back(dd);
+                        }
+                    }
+                }
+
+            }
+
+            info.survey_models[survey->id] = survey;
+        } else {
+
+            std::cout << "MAS Warning: Survey_" << this->id
+                    << " defined, but not used in the Model.\n";
+            mas::mas_log << "MAS Warning: Survey_" << this->id
+                    << " defined, but not used in the Model.\n";
+        }
+    }
+
+    virtual void AddToMAS() {
+
+
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+        this->AddToMAS_internal<TMB_REAL_TYPE> (mas::MAS<TMB_REAL_TYPE>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_FIRST_ORDER> (mas::MAS<TMB_FIRST_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_SECOND_ORDER> (mas::MAS<TMB_SECOND_ORDER>::GetInstance()->info);
+        this->AddToMAS_internal<TMB_THIRD_ORDER> (mas::MAS<TMB_THIRD_ORDER>::GetInstance()->info);
+
+#endif
+
+
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE  
+
         std::cout << "Pushing survey " << this->id
                 << " to MAS model engine!!!\n\n";
         if (this->used) {
@@ -6989,11 +9441,14 @@ public:
             mas::mas_log << "MAS Warning: Survey_" << this->id
                     << " defined, but not used in the Model.\n";
         }
+
+#endif
     }
 
     void ExtractFromMAS(mas::Information<double> &info) {
 
     }
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     virtual void ToJSON(rapidjson::Document &document, size_t nyears,
             size_t nseasons, size_t nages, size_t nareas) {
@@ -7304,7 +9759,7 @@ public:
         srvy.AddMember("data", jdata, allocator);
         srvy.PushBack(survey, allocator);
     }
-
+#endif
     static std::map<int, Survey*> initialized_models;
     typedef typename std::map<int, Survey*>::iterator model_iterator;
 };
@@ -7333,13 +9788,18 @@ private:
 
         }
     }
-
+#ifdef USE_ATL_ESTIMATION_ENGINE
     std::shared_ptr<mas::MASObjectiveFunction<double> > mas;
+#endif
+
+
+
+
 public:
     bool compute_variance_for_derived_quantities = true;
-    int nyears;
-    int nseasons;
-    int nages;
+    int nyears = 0;
+    int nseasons = 0;
+    int nages = 0;
     int max_line_searches = 500;
     int max_iterations = 5000;
     int print_interval = 10;
@@ -7383,6 +9843,113 @@ public:
 
         this->nyears = nyears;
     }
+
+    Rcpp::NumericVector GetParameterValues() {
+        std::shared_ptr<mas::MAS<double> > mas_instance = mas::MAS<double>::GetInstance();
+        size_t n = mas_instance->info.estimated_parameters.size();
+        Rcpp::NumericVector p(n);
+        for (size_t i = 0; i < n; i++) {
+            p[i] = *mas_instance->info.estimated_parameters[i];
+        }
+        return p;
+    }
+
+    Rcpp::NumericVector GetRandomValues() {
+        std::shared_ptr<mas::MAS<double> > mas_instance = mas::MAS<double>::GetInstance();
+        size_t n = mas_instance->info.random_variables.size();
+        Rcpp::NumericVector r(n);
+        for (size_t i = 0; i < n; i++) {
+            r[i] = *mas_instance->info.random_variables[i];
+        }
+        return r;
+    }
+
+#ifdef USE_TMB_AS_ESTIMATION_ENGINE
+
+    template<typename Type>
+    bool CreateTMBModel_internal() {
+
+        std::shared_ptr<mas::MAS<Type> > mas_instance = mas::MAS<Type>::GetInstance();
+
+        if (this->nages == 0) {
+            std::cout << "MAS error: nages = 0\n";
+            return false;
+        }
+        if (this->nyears == 0) {
+            std::cout << "MAS error: nyears = 0\n";
+            return false;
+        }
+
+        if (this->extended_plus_group == 0) {
+            std::cout << "MAS error: extended_plus_group = 0\n";
+            return false;
+        } else {
+            mas::Subpopulation<double>::length_weight_key_carryout =
+                    this->extended_plus_group;
+        }
+
+        mas_instance->info.nyears = this->nyears;
+        mas_instance->info.nseasons = this->nseasons;
+        mas_instance->info.spawning_season_offset =
+                this->spawning_season_offset;
+        mas_instance->info.survey_fraction_of_year =
+                this->survey_season_offset;
+        mas_instance->info.catch_fraction_of_year =
+                this->catch_season_offset;
+
+
+
+        typedef typename mas::VariableTrait<Type>::variable variable;
+        mas_instance->info.ages.resize(this->nages);
+        mas_instance->info.ages_real.resize(this->nages);
+        mas::GrowthBase<Type>::ages.clear();
+        mas::GrowthBase<Type>::ages_to_intrpolate.clear();
+        for (int i = 0; i < nages; i++) {
+            mas_instance->info.ages[i] = variable(this->ages[i]);
+            std::cout << mas_instance->info.ages[i] << "  ";
+            mas_instance->info.ages_real[i] = (this->ages[i]);
+            mas::GrowthBase<Type>::ages.push_back(this->ages[i]);
+            mas::GrowthBase<Type>::ages_to_intrpolate.insert(this->ages[i]);
+            mas::GrowthBase<Type>::ages_to_intrpolate.insert(
+                    this->ages[i] + this->catch_season_offset);
+            mas::GrowthBase<Type>::ages_to_intrpolate.insert(
+                    this->ages[i] + this->survey_season_offset);
+            mas::GrowthBase<Type>::ages_to_intrpolate.insert(
+                    this->ages[i] + this->spawning_season_offset);
+
+        }
+
+        std::cout << "\n\n";
+
+
+        return true;
+    }
+
+    bool CreateTMBModel() {
+        this->CreateTMBModel_internal<TMB_REAL_TYPE>();
+        this->CreateTMBModel_internal<TMB_FIRST_ORDER>();
+        this->CreateTMBModel_internal<TMB_SECOND_ORDER>();
+        this->CreateTMBModel_internal<TMB_THIRD_ORDER>();
+
+        std::cout << MASSubModel::submodels.size() << "\n";
+        for (int i = 0; i < NLLBase::nll_submodels.size(); i++) {
+            NLLBase::nll_submodels[i]->AddToMAS();
+        }
+
+        for (int i = 0; i < MASSubModel::submodels.size(); i++) {
+            MASSubModel::submodels[i]->AddToMAS();
+        }
+
+        mas::MAS<TMB_REAL_TYPE>::GetInstance()->info.CreateModel();
+        mas::MAS<TMB_FIRST_ORDER>::GetInstance()->info.CreateModel();
+        mas::MAS<TMB_SECOND_ORDER>::GetInstance()->info.CreateModel();
+        mas::MAS<TMB_THIRD_ORDER>::GetInstance()->info.CreateModel();
+
+        return true;
+    }
+#endif
+
+#ifdef USE_ATL_ESTIMATION_ENGINE
 
     void Run() {
 
@@ -7615,6 +10182,7 @@ public:
         }
 
     }
+#endif
 
     void AddFleet(int id) {
         Fleet::model_iterator it = Fleet::initialized_models.find(id);
@@ -7644,11 +10212,12 @@ public:
 
     std::string GetOuptput() {
 
-        mas::JSONOutputGenerator<double> json;
-        mas->SetVarianceCovariance();
-
-        return json.GenerateOutput(mas->mas_instance);
+        //        mas::JSONOutputGenerator<double> json;
+        //        mas->SetVarianceCovariance();
+        //
+        //        return json.GenerateOutput(mas->mas_instance);
     }
+#ifdef USE_ATL_AS_ESTIMATION_ENGINE
 
     std::string GetJSONData() {
         rapidjson::Document document;
@@ -7776,6 +10345,7 @@ public:
         return buffer.GetString();
 
     }
+#endif
 
     Rcpp::List GetParameterEstimates() {
 
@@ -8073,6 +10643,7 @@ RCPP_MODULE(rmas) {
             .field("id", &Population::id)
             .field("sex_ratio", &Population::sex_ratio)
             .field("spawning_season_offset", &Population::spawning_season_offset)
+            .field("initial_f", &Population::initial_f)
             .method("SetGrowth", &Population::SetGrowth)
             .method("AddMaturity", &Population::AddMaturity)
             .method("AddMovement", &Population::AddMovement)
@@ -8181,11 +10752,17 @@ RCPP_MODULE(rmas) {
             .method("AddFleet", &MASModel::AddFleet)
             .method("AddSurvey", &MASModel::AddSurvey)
             .method("AddPopulation", &MASModel::AddPopulation)
+            .method("GetParameterValues", &MASModel::GetParameterValues)
+            .method("GetRandomValues", &MASModel::GetRandomValues)
+            .method("CreateTMBModel", &MASModel::CreateTMBModel)
+#ifdef USE_ATL_ESTIMATION_ENGINE
             .method("Run", &MASModel::Run)
             .method("RunOperatingModel", &MASModel::RunOM)
+
             .method("GetOutput", &MASModel::GetOuptput)
             .method("GetJSONConfig", &MASModel::GetJSONConfig)
             .method("GetJSONData", &MASModel::GetJSONData)
+#endif
             .method("Reset", &MASModel::Reset);
 }
 

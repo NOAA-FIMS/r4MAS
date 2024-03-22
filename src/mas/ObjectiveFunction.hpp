@@ -19,7 +19,8 @@
 #include "Output.hpp"
 
 namespace mas {
-
+#ifdef USE_ATL_ESTIMATION_ENGINE
+    
     template<typename REAL_T>
     class MASObjectiveFunction : public atl::ObjectiveFunction<REAL_T> {
     public:
@@ -236,6 +237,7 @@ namespace mas {
             }
         }
 
+        
         virtual const atl::Variable<REAL_T> Evaluate() {
             variable f;
             mas_instance.phase = this->phase_m;
@@ -250,9 +252,9 @@ namespace mas {
         }
 
 
-
     };
 
+#endif
 
 
 }
