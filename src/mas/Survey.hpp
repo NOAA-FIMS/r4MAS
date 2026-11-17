@@ -67,40 +67,40 @@ namespace mas {
         int population;
         int selectivity_model_id;
         std::vector<int> area_ids;
-        atl::intrusive_ptr<DataObject<REAL_T> > survey_biomass_data;
-         atl::intrusive_ptr<DataObject<REAL_T> > catch_abundance_data;
+        mas::backend::intrusive_ptr<DataObject<REAL_T> > survey_biomass_data;
+         mas::backend::intrusive_ptr<DataObject<REAL_T> > catch_abundance_data;
         // NOTE:  need sex-specific proportions-at-age, proportions-at-length, and mean size-at-age data
-        atl::intrusive_ptr<DataObject<REAL_T> > survey_proportion_at_age_data_N;
-        atl::intrusive_ptr<DataObject<REAL_T> > survey_proportion_at_age_data;
-        atl::intrusive_ptr<DataObject<REAL_T> > survey_proportion_at_length_data_N;
-        atl::intrusive_ptr<DataObject<REAL_T> > survey_proportion_at_length_data;
-        atl::intrusive_ptr<DataObject<REAL_T> > survey_mean_size_at_age_data;
-        atl::intrusive_ptr<DataObject<REAL_T> > survey_mean_weight_at_age_data;
+        mas::backend::intrusive_ptr<DataObject<REAL_T> > survey_proportion_at_age_data_N;
+        mas::backend::intrusive_ptr<DataObject<REAL_T> > survey_proportion_at_age_data;
+        mas::backend::intrusive_ptr<DataObject<REAL_T> > survey_proportion_at_length_data_N;
+        mas::backend::intrusive_ptr<DataObject<REAL_T> > survey_proportion_at_length_data;
+        mas::backend::intrusive_ptr<DataObject<REAL_T> > survey_mean_size_at_age_data;
+        mas::backend::intrusive_ptr<DataObject<REAL_T> > survey_mean_weight_at_age_data;
 
 
-        std::vector<atl::intrusive_ptr<DataObject<REAL_T> > > data_objects;
+        std::vector<mas::backend::intrusive_ptr<DataObject<REAL_T> > > data_objects;
         std::vector<variable> nll_component_values;
 
-        atl::intrusive_ptr<mas::SelectivityBase<REAL_T> > selectivity;
+        mas::backend::intrusive_ptr<mas::SelectivityBase<REAL_T> > selectivity;
         std::unordered_map<int, std::unordered_map<int, int> > area_season_selectivity_ids;
-        std::unordered_map<int, std::unordered_map<int, atl::intrusive_ptr<mas::SelectivityBase<REAL_T> > > > area_season_selectivity;
+        std::unordered_map<int, std::unordered_map<int, mas::backend::intrusive_ptr<mas::SelectivityBase<REAL_T> > > > area_season_selectivity;
 
         std::unordered_map<int, std::unordered_map<int, int> > season_area_selectivity_ids;
-        std::unordered_map<int, std::unordered_map<int, atl::intrusive_ptr<mas::SelectivityBase<REAL_T> > > > season_area_selectivity;
+        std::unordered_map<int, std::unordered_map<int, mas::backend::intrusive_ptr<mas::SelectivityBase<REAL_T> > > > season_area_selectivity;
 
         std::unordered_map<int, std::unordered_map<int, REAL_T> > season_area_survey_fraction;
         std::unordered_map<int, std::unordered_map<int, REAL_T> > area_season_survey_fraction;
 
 
-        std::unordered_map<int, std::unordered_map<int, atl::intrusive_ptr<mas::Area< REAL_T> > > > seasonal_areas_of_operation;
+        std::unordered_map<int, std::unordered_map<int, mas::backend::intrusive_ptr<mas::Area< REAL_T> > > > seasonal_areas_of_operation;
 
         typedef typename std::unordered_map<int, std::unordered_map<int, int> >::iterator season_area_selectivity_ids_iterator;
         typedef typename std::unordered_map<int, std::unordered_map<int, int> >::const_iterator season_area_selectivity_ids_const_iterator;
-        typedef typename std::unordered_map<int, atl::intrusive_ptr<mas::SelectivityBase<REAL_T> > >::iterator area_sectivity_iterator;
+        typedef typename std::unordered_map<int, mas::backend::intrusive_ptr<mas::SelectivityBase<REAL_T> > >::iterator area_sectivity_iterator;
         typedef typename std::unordered_map<int, std::unordered_map<int, int> >::iterator season_area_id_iterator;
         typedef typename std::unordered_map<int, int>::iterator area_id_iteraor;
         typedef typename std::unordered_map<int, int>::iterator season_id_iteraor;
-        typedef typename std::unordered_map<int, std::unordered_map<int, atl::intrusive_ptr<mas::SelectivityBase<REAL_T> > > >::iterator season_area_selectivity_iterator;
+        typedef typename std::unordered_map<int, std::unordered_map<int, mas::backend::intrusive_ptr<mas::SelectivityBase<REAL_T> > > >::iterator season_area_selectivity_iterator;
 
         REAL_T survey_fraction_of_year = 0.75;
         REAL_T CV = .2;
@@ -113,13 +113,13 @@ namespace mas {
         variable survey_age_comp_component;
 
         int survey_age_comp_likelihood_component_id = -999;
-        atl::intrusive_ptr<mas::NLLFunctor<REAL_T> > survey_age_comp_likelihood_component;
+        mas::backend::intrusive_ptr<mas::NLLFunctor<REAL_T> > survey_age_comp_likelihood_component;
 
         int survey_biomass_likelihood_component_id = -999;
-        atl::intrusive_ptr<mas::NLLFunctor<REAL_T> > survey_biomass_likelihood_component;
+        mas::backend::intrusive_ptr<mas::NLLFunctor<REAL_T> > survey_biomass_likelihood_component;
 
         int survey_abundance_likelihood_component_id = -999;
-        atl::intrusive_ptr<mas::NLLFunctor<REAL_T> > survey_abundance_likelihood_component;
+        mas::backend::intrusive_ptr<mas::NLLFunctor<REAL_T> > survey_abundance_likelihood_component;
 
         REAL_T chi_squared;
         REAL_T g_test;
@@ -405,7 +405,7 @@ namespace mas {
                 //                    mas::mas_log << this->nll_component_values[nllc].GetName() << " signaling NaN" << std::endl;
                 //                    std::cout << this->nll_component_values[nllc].GetName() << " signaling NaN" << std::endl;
                 //                }
-                //                if (std::fabs(this->nll_component_values[nllc].GetValue()) == std::numeric_limits<double>::infinity()) {
+                //                if (mas::fabs(this->nll_component_values[nllc].GetValue()) == std::numeric_limits<double>::infinity()) {
                 //                    mas::mas_log << this->nll_component_values[nllc].GetName() << " signaling inf" << std::endl;
                 //                    std::cout << this->nll_component_values[nllc].GetName() << " signaling inf" << std::endl;
                 //                }
@@ -437,7 +437,7 @@ namespace mas {
             this->survey_proportion_at_age_data->sample_size.resize(this->years * this->seasons);
 
 
-            REAL_T sd = std::sqrt(1 + std::pow(this->CV, 2.0));
+            REAL_T sd = mas::sqrt(1 + mas::pow(this->CV, 2.0));
 
             std::default_random_engine generator;
             std::normal_distribution<double> distribution(0.0, sd);
@@ -450,7 +450,7 @@ namespace mas {
 
                     this->survey_biomass_data->get_error(y, s) =
                             this->survey_biomass_data->get(y, s) *
-                            std::exp(distribution(generator));
+                            mas::exp(distribution(generator));
 
                     REAL_T total_c = 0.0;
                     std::vector<REAL_T> probs(this->ages);
@@ -522,9 +522,9 @@ namespace mas {
             REAL_T temp = this->survey_biomass_data->get(year, season);
             if (temp != this->survey_biomass_data->missing_value) {
                 this->survey_biomass_component +=
-                        (.5) * mas::pow((std::log(temp + o) -
+                        (.5) * mas::pow((mas::log(temp + o) -
                         mas::log(this->survey_biomass_total[year * seasons + season] + o)
-                        + (std::pow(this->CV, 2.0) / 2.0)) / this->CV, 2.0);
+                        + (mas::pow(this->CV, 2.0) / 2.0)) / this->CV, 2.0);
             }
         }
 
@@ -540,7 +540,7 @@ namespace mas {
                     REAL_T temp_data = this->survey_proportion_at_age_data->get(year, season, a);
                     o = this->survey_proportion_at_age_data->get_error(year, season, a);
                     sum -= temp_sample_size * temp_data *
-                            (mas::log(this->survey_proportion_at_age[index] + o) - std::log(temp_data + o));
+                            (mas::log(this->survey_proportion_at_age[index] + o) - mas::log(temp_data + o));
                 }
             }
 

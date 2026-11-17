@@ -1,4 +1,15 @@
-CXX_STD = CXX14
-PKG_CXXFLAGS =   -w -d -O3
-CXX17STD = -std=c++14 
+CXX_STD = CXX17
+PKG_CPPFLAGS = -I./mas/third_party/Quadra/external/eigen -I./mas/third_party/Quadra/external/LBFGSpp/include
 
+# Homebrew Clang may not discover Apple's SDK when R has no configured sysroot.
+# Respect an explicitly selected SDK; otherwise ask the active Xcode toolchain.
+ifeq ($(shell uname -s),Darwin)
+R4MAS_SDKROOT := $(strip $(SDKROOT))
+ifeq ($(R4MAS_SDKROOT),)
+R4MAS_SDKROOT := $(shell xcrun --sdk macosx --show-sdk-path 2>/dev/null)
+endif
+ifneq ($(R4MAS_SDKROOT),)
+PKG_CPPFLAGS += -isysroot "$(R4MAS_SDKROOT)"
+PKG_LIBS += -isysroot "$(R4MAS_SDKROOT)"
+endif
+endif

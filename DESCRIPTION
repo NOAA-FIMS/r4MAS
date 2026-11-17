@@ -13,6 +13,7 @@ StagedInstall: no
 Imports:
     Rcpp
 RoxygenNote: 7.1.2
+SystemRequirements: C++17
 LinkingTo: 
     Rcpp
 Suggests: 

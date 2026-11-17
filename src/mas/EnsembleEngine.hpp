@@ -477,9 +477,9 @@ namespace mas {
 
         REAL_T RunChildModel(const std::vector<int>& candidate) {
 
-            atl::VariableIdGenerator::instance()->reset();
-            atl::Variable<REAL_T>::tape.Reset();
-            atl::Variable<REAL_T>::tape.recording = true;
+            // Graph epochs replace ATL variable-ID resets.
+            mas::backend::Variable<REAL_T>::tape.Reset();
+            mas::backend::Variable<REAL_T>::tape.recording = true;
 
 
             for (int i = 0; i < this->info.ensemble_units.size(); i++) {
@@ -502,7 +502,7 @@ namespace mas {
 
                 objective_function.Initialize();
                 //create an instance of a L-BFGS minimizer
-                atl::LBFGS<double> fm;
+                mas::backend::LBFGS<double> fm;
                 fm.max_line_searches = 1000;
                 fm.SetPrintWidth(2);
                 fm.SetTolerance(options.tol);
@@ -533,9 +533,9 @@ namespace mas {
         std::string RunAcceptedChildModel(const std::vector<int>& candidate) {
 
 
-            atl::VariableIdGenerator::instance()->reset();
-            atl::Variable<REAL_T>::tape.Reset();
-            atl::Variable<REAL_T>::tape.recording = true;
+            // Graph epochs replace ATL variable-ID resets.
+            mas::backend::Variable<REAL_T>::tape.Reset();
+            mas::backend::Variable<REAL_T>::tape.recording = true;
 
             for (int i = 0; i < this->info.ensemble_units.size(); i++) {
                 this->info.ensemble_units[i].val->value.SetInt(candidate[i]);
@@ -558,7 +558,7 @@ namespace mas {
 
 
             //create an instance of a L-BFGS minimizer
-            atl::LBFGS<double> fm;
+            mas::backend::LBFGS<double> fm;
             fm.SetPrintWidth(2);
             fm.SetTolerance(options.tol);
 
@@ -573,7 +573,7 @@ namespace mas {
 //            objective_function.mas_instance.std_dev.Resize(objective_function.mas_instance.variance_covaiance.rows);
 //            for (int i = 0; i < objective_function.mas_instance.std_dev.GetSize(); i++) {
 //                objective_function.mas_instance.std_dev(i) =
-//                        std::sqrt(objective_function.mas_instance.variance_covaiance(i, i));
+//                        mas::sqrt(objective_function.mas_instance.variance_covaiance(i, i));
 //            }
             mas::JSONOutputGenerator<REAL_T> out;
             return out.GenerateOutput(objective_function.mas_instance);

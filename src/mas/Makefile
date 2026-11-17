@@ -13,9 +13,9 @@ CXX = clang++
 
 
 BASICOPTS =   -g  -s -m64
-CCFLAGS = -std=c++14
-CXXFLAGS = -DMAS_COMMAND_TOOL -fmax-errors=5 -O3  -pthread -std=c++14 $(EXTRA_CXXFLAGS)
-CXXFLAGS =  -w -DMAS_COMMAND_TOOL -fmax-errors=5 -O3  -pthread -std=c++14 $(EXTRA_CXXFLAGS)
+CCFLAGS = -std=c++17
+CXXFLAGS = -DMAS_COMMAND_TOOL -O3 -pthread -std=c++17 $(EXTRA_CXXFLAGS)
+CPPFLAGS += -Ithird_party/Quadra/external/eigen -Ithird_party/Quadra/external/LBFGSpp/include
 CCADMIN = 
 # Define the target directories.
 TARGETDIR_mas=bin

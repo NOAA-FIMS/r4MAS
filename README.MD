@@ -10,7 +10,7 @@ This tool is supported by the NOAA Fisheries Integrated Toolbox. More informatio
 # Getting started
 
 ## Installation instructions
-Since this package contains C++ files, you will need to ensure you have a C++ compiler installed. You can install a C++ compiler [here](https://clang.llvm.org/), please make sure it is C++14 or more recent.
+Since this package contains C++ files, you will need to ensure you have a C++ compiler installed. You can install a C++ compiler [here](https://clang.llvm.org/), please make sure it is C++17 or more recent.
 
 You will also need to have the `Rcpp` package installed. 
 
@@ -30,9 +30,8 @@ if (!file.exists(dotR))
 M <- file.path(dotR, "Makevars.win")
 if (!file.exists(M)) 
   file.create(M)
-cat("\nCXX14FLAGS=-O3 -Wno-unused-variable -Wno-unused-function",
-    "CXX14 = $(BINPREF)g++ -m$(WIN) -std=c++1y",
-    "CXX11FLAGS=-O3 -Wno-unused-variable -Wno-unused-function",
+cat("\nCXX17FLAGS=-O3 -Wno-unused-variable -Wno-unused-function",
+    "CXX17 = $(BINPREF)g++ -m$(WIN) -std=c++17",
     file = M, sep = "\n", append = TRUE)
 ```
 To get notifications about `r4MAS`, you can watch this GitHub project.
@@ -40,6 +39,45 @@ To get notifications about `r4MAS`, you can watch this GitHub project.
 ## Creating a model
 Once you've installed the package and have confirmed you can load it, we recommend starting with the introductory [vignette](vignettes/001_Introduction.Rmd) to see an example of building and running a simple model within r4MAS. The [write_test_data()](R/write_test_data.R) function will generate simple dummy input data. You can replace these dummy data with your own data.
 
+
+## Numerical backend
+
+The backend uses [NOAA-FIMS/Quadra](https://github.com/NOAA-FIMS/Quadra) for
+reverse-mode differentiation, Hessians, L-BFGS fitting, and Laplace integration.
+C++17 is required. Headers and dependencies are vendored, so package builds do
+not need network access. The pinned revision and local patches are
+recorded in `src/mas/third_party/Quadra/UPSTREAM.md`.
+
+MAS parameter names, estimation phases, finite bounds on fixed effects, and
+JSON output are retained. Uncertainty is calculated through Quadra's
+`estimate_fixed_effect_covariance_from_hessian` (fixed effects),
+`estimate_fixed_effect_covariance_from_gradient` (Laplace fits),
+`build_fixed_effect_report`, `solve_dense_laplace_mode_sensitivity`, and
+`compute_laplace_profiled_delta_method_vector` APIs. The adapter extracts
+exact AD derivatives from the fitted Quadra graph and maps report results onto
+MAS output arrays; it does not maintain a separate uncertainty formula or
+singular-Hessian inverse.
+
+Covariance and fixed-effect summaries are reported on the physical parameter
+scale. The JSON `uncertainty` object includes Quadra fixed-effect SEs, z values,
+95% intervals, and named profiled derived-quantity estimates, variances, SEs,
+and CVs. Derived variances include random-mode sensitivity to fixed effects.
+The existing variance and standard-deviation fields use the same report results.
+Quadra rejects singular or non-positive-definite Hessians; unavailable
+uncertainty serializes as JSON `null`, with report status and messages.
+Derived quantities absent from the fitted graph are listed under
+`uncertainty.derived.unrecorded_quantities` and have unavailable variances.
+Optimizer status and convergence remain in output metrics. Bounded random
+effects and random-only fits are currently rejected with an explicit error.
+Quadra uses double precision.
+
+Run the numerical backend regression tests from the repository root:
+
+```sh
+c++ -std=c++17 -O1 -Isrc/mas/third_party/Quadra/external/eigen \
+  tests/cpp/test-quadra-backend.cpp -o /tmp/test-r4mas-quadra
+/tmp/test-r4mas-quadra
+```
 
 ## Disclaimer
 

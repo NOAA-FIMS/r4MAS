@@ -23,17 +23,7 @@ using namespace std;
 
 template<typename REAL_T>
 void forward() {
-    double v = 0.0;
-    for (int i = 0; i < atl::Variable<REAL_T>::tape.stack_current; i++) {
-        atl::StackEntry<REAL_T>& entry = atl::Variable<REAL_T>::tape.stack[i];
-        entry.w->value = 0.0;
-
-    }
-    for (int i = 0; i < atl::Variable<REAL_T>::tape.stack_current; i++) {
-        atl::StackEntry<REAL_T>& entry = atl::Variable<REAL_T>::tape.stack[i];
-        v = entry.exp->GetValue();
-        entry.w->value = v;
-    }
+    had::Forward();
 }
 
 template<typename REAL_T>
@@ -52,7 +42,7 @@ void Run(const mas::Options<REAL_T>& options) {
 
     if (objective_function.mas_instance.info.valid_configuration) {
         //create an instance of a L-BFGS minimizer
-        atl::LBFGS<double> fm;
+        mas::backend::LBFGS<double> fm;
         fm.SetPrintWidth(2);
         fm.SetTolerance(options.tol);
         fm.max_line_searches = options.max_ls;

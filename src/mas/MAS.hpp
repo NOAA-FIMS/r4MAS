@@ -35,6 +35,8 @@
 
 
 #include "Information.hpp"
+#include "third_party/Quadra/core/inference/fixed_effect_report.hpp"
+#include "third_party/Quadra/core/laplace/laplace_profiled_derived_report.hpp"
 
 
 #define MAS_VERSION_MAJOR 1
@@ -74,8 +76,16 @@ namespace mas {
     public:
         int phase;
         mas::Information< REAL_T> info;
-        atl::RealMatrix<REAL_T > variance_covaiance;
-        atl::RealVector<REAL_T> std_dev;
+        mas::backend::RealMatrix<REAL_T > variance_covaiance;
+        mas::backend::RealVector<REAL_T> std_dev;
+        std::vector<REAL_T> parameter_gradients;
+        bool fit_converged = false;
+        std::string optimizer_status = "not fitted";
+        std::string covariance_status = "not computed";
+        int covariance_rank = 0;
+        quadra::FixedEffectReport fixed_effect_report;
+        quadra::LaplaceProfiledDerivedReport derived_report;
+        std::vector<std::string> unrecorded_derived_quantities;
         variable recruitment_likelihood;
         variable selectivity_likelihood;
 
@@ -120,8 +130,8 @@ namespace mas {
             
             typename mas::Information<REAL_T>::fleet_iterator fit;
             typename mas::Information<REAL_T>::survey_model_iterator sit;
-            typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator it;
-            std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >& pops =
+            typename std::unordered_map<int, mas::backend::intrusive_ptr<mas::Population<REAL_T> > >::iterator it;
+            std::unordered_map<int, mas::backend::intrusive_ptr<mas::Population<REAL_T> > >& pops =
                     info.GetPopulations();
             typename mas::Information<REAL_T>::area_iterator ait;
             typename mas::Information<REAL_T>::recruitment_model_iterator rit;
@@ -236,8 +246,8 @@ namespace mas {
 
             typename mas::Information<REAL_T>::fleet_iterator fit;
             typename mas::Information<REAL_T>::survey_model_iterator sit;
-            typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator it;
-            std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >& pops =
+            typename std::unordered_map<int, mas::backend::intrusive_ptr<mas::Population<REAL_T> > >::iterator it;
+            std::unordered_map<int, mas::backend::intrusive_ptr<mas::Population<REAL_T> > >& pops =
                     info.GetPopulations();
             typename mas::Information<REAL_T>::area_iterator ait;
             typename mas::Information<REAL_T>::recruitment_model_iterator rit;
@@ -335,13 +345,13 @@ namespace mas {
             this->max_gc = -1.0;
             
             variable f;
-            atl::Variable<REAL_T>::tape.Reset();
-            atl::Variable<REAL_T>::tape.recording = true;
-            atl::Variable<REAL_T>::tape.derivative_trace_level = atl::SECOND_ORDER_REVERSE;
+            mas::backend::Variable<REAL_T>::tape.Reset();
+            mas::backend::Variable<REAL_T>::tape.recording = true;
+
             this->Run(f);
-            atl::Variable<REAL_T>::tape.AccumulateSecondOrder();
+            mas::backend::Variable<REAL_T>::tape.Reverse(f.AD().varId);
             for(int i =0; i < this->info.estimated_parameters.size(); i++){
-                REAL_T g = std::fabs(atl::Variable<REAL_T>::tape.Value(this->info.estimated_parameters[i]->info->id));
+                REAL_T g = mas::fabs(mas::backend::Variable<REAL_T>::tape.Value(this->info.estimated_parameters[i]->info->id));
                 if( g  > this->max_gc){
                     this->max_gc = g;
                 }
@@ -378,9 +388,9 @@ namespace mas {
             
           
 
-            std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >& pops =
+            std::unordered_map<int, mas::backend::intrusive_ptr<mas::Population<REAL_T> > >& pops =
                     info.GetPopulations();
-            typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator it;
+            typename std::unordered_map<int, mas::backend::intrusive_ptr<mas::Population<REAL_T> > >::iterator it;
 
 //            for (it = pops.begin(); it != pops.end(); ++it) {
 ////               (*it).second->do_msy_calculations = true;
@@ -392,7 +402,7 @@ namespace mas {
                // (*it).second->ComputeBiologicalReferencePoints();
             }
 
-            typename std::unordered_map<int, atl::intrusive_ptr<mas::Area<REAL_T> > >::iterator ait;
+            typename std::unordered_map<int, mas::backend::intrusive_ptr<mas::Area<REAL_T> > >::iterator ait;
             for (ait = this->info.areas.begin(); ait != this->info.areas.end(); ++ait) {
                 (*ait).second->msy.F_msy /= (*ait).second->nsubpopulations;//this->info.populations.size()*2.0;
                 (*ait).second->msy.F30 /= (*ait).second->nsubpopulations;//this->info.populations.size()*2.0;
@@ -405,14 +415,14 @@ namespace mas {
 
         void Report() {
 
-            //            std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >& pops =
+            //            std::unordered_map<int, mas::backend::intrusive_ptr<mas::Population<REAL_T> > >& pops =
             //                    info.GetPopulations();
-            //            typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator it;
+            //            typename std::unordered_map<int, mas::backend::intrusive_ptr<mas::Population<REAL_T> > >::iterator it;
             //            this->info.DumpSelectivity("selectivity.txt");
             //            this->info.DumpFishingMortality("fishing_mortality.txt");
-            //            atl::Variable<REAL_T>::tape.Reset();
-            //            atl::Variable<REAL_T>::tape.recording = true;
-            //            atl::Variable<REAL_T> f;
+            //            mas::backend::Variable<REAL_T>::tape.Reset();
+            //            mas::backend::Variable<REAL_T>::tape.recording = true;
+            //            mas::backend::Variable<REAL_T> f;
             //            this->Run(f);
             //
             //            /**
@@ -421,9 +431,9 @@ namespace mas {
             //             */
             //
             //
-            //            atl::Variable<REAL_T>::tape.AccumulateFirstOrder();
+            //            mas::backend::Variable<REAL_T>::tape.AccumulateFirstOrder();
             //
-            //            atl::Variable<REAL_T>::tape.recording = false;
+            //            mas::backend::Variable<REAL_T>::tape.recording = false;
             //
             //            //            for (it = pops.begin(); it != pops.end(); ++it) {
             //            //                (*it).second->PushToAreasAndFleets();
@@ -500,7 +510,7 @@ namespace mas {
             //            out << std::setw(45) << std::left << "Name" << std::setw(25) << "Value" << " " << std::setw(25) << "Gradient" << "\n";
             //
             //            for (int i = 0; i < this->info.estimated_parameters.size(); i++) {
-            //                out << std::setw(30) << std::left << this->info.estimated_parameters[i]->GetName() << std::setw(25) << std::fixed << this->info.estimated_parameters[i]->info->value << " " << std::setw(25) << std::scientific << atl::Variable<double>::tape.Value(this->info.estimated_parameters[i]->info->id) << "\n";
+            //                out << std::setw(30) << std::left << this->info.estimated_parameters[i]->GetName() << std::setw(25) << std::fixed << this->info.estimated_parameters[i]->info->value << " " << std::setw(25) << std::scientific << mas::backend::Variable<double>::tape.Value(this->info.estimated_parameters[i]->info->id) << "\n";
             //            }
             //            out << "\n\n";
             //            out << std::fixed;
@@ -537,10 +547,10 @@ namespace mas {
         void HTMLReport() {
 
 
-            std::unordered_map<int, atl::intrusive_ptr<mas::Population<double> > >& pops =
+            std::unordered_map<int, mas::backend::intrusive_ptr<mas::Population<double> > >& pops =
                     info.GetPopulations();
 
-            typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<double> > >::iterator it;
+            typename std::unordered_map<int, mas::backend::intrusive_ptr<mas::Population<double> > >::iterator it;
             std::ofstream out("mas_report.html");
 
 
@@ -570,9 +580,9 @@ namespace mas {
         }
 
         void show(std::ostream& out) {
-            std::unordered_map<int, atl::intrusive_ptr<mas::Population<double> > >& pops =
+            std::unordered_map<int, mas::backend::intrusive_ptr<mas::Population<double> > >& pops =
                     info.GetPopulations();
-            typename std::unordered_map<int, atl::intrusive_ptr<mas::Population<double> > >::iterator it;
+            typename std::unordered_map<int, mas::backend::intrusive_ptr<mas::Population<double> > >::iterator it;
 
             for (it = pops.begin(); it != pops.end(); ++it) {
 

@@ -65,7 +65,7 @@ namespace mas {
          * @return fraction_mature
          */
         virtual const variable Evaluate(const int& sex, const variable& age) {
-            return static_cast<REAL_T> (1.0) / (static_cast<REAL_T> (1.0) + std::exp(-1.0*(age - a50)/s));
+            return static_cast<REAL_T> (1.0) / (static_cast<REAL_T> (1.0) + mas::exp(-1.0*(age - a50)/s));
         }
 
         virtual const std::string Name() {
@@ -92,10 +92,10 @@ namespace mas {
         virtual const variable Evaluate(const int& sex, const variable& age) {
             return (static_cast<REAL_T> (1.0) /
                     (static_cast<REAL_T> (1.0) +
-                    std::exp(-beta_asc * (age - alpha_asc)))) *
+                    mas::exp(-beta_asc * (age - alpha_asc)))) *
                     (static_cast<REAL_T> (1.0) - (static_cast<REAL_T> (1.0) /
                     (static_cast<REAL_T> (1.0) +
-                    std::exp(-beta_desc * (age - alpha_desc)))));
+                    mas::exp(-beta_desc * (age - alpha_desc)))));
         }
 
         virtual const std::string Name() {

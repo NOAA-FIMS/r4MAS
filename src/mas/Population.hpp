@@ -21,7 +21,8 @@
 #include "Recruitment.hpp"
 #include "HarvestControlRule.hpp"
 #include "MaximumSustainableYield.hpp"
-#include "third_party/ATL/lib/Variable.hpp"
+#include "QuadraBackend.hpp"
+#include <valarray>
 
 namespace mas {
 
@@ -57,12 +58,12 @@ namespace mas {
 
         Population<REAL_T> *natal_population;
         bool natal_homing = false;
-        atl::intrusive_ptr<Area<REAL_T> > area;
-        atl::intrusive_ptr<Area<REAL_T> > natal_area;
-        atl::intrusive_ptr<GrowthBase<REAL_T> > growth_model;
-        atl::intrusive_ptr<mas::NaturalMortality<REAL_T> > natural_mortality_model; // population - area specific
-        atl::intrusive_ptr<mas::RecruitmentBase<REAL_T> > recruitment_model; // population - area specific
-        std::unordered_map<int, atl::intrusive_ptr<mas::RecruitmentBase<REAL_T> > > seasonal_recruitment_models;
+        mas::backend::intrusive_ptr<Area<REAL_T> > area;
+        mas::backend::intrusive_ptr<Area<REAL_T> > natal_area;
+        mas::backend::intrusive_ptr<GrowthBase<REAL_T> > growth_model;
+        mas::backend::intrusive_ptr<mas::NaturalMortality<REAL_T> > natural_mortality_model; // population - area specific
+        mas::backend::intrusive_ptr<mas::RecruitmentBase<REAL_T> > recruitment_model; // population - area specific
+        std::unordered_map<int, mas::backend::intrusive_ptr<mas::RecruitmentBase<REAL_T> > > seasonal_recruitment_models;
 
         std::vector<REAL_T> maturity; // should be the same across areas, same length as ages
         // these PARAMETERS can be fixed or estimated; should be in model config
@@ -749,7 +750,7 @@ namespace mas {
                 sum_z += F * this->sum_selectivity[index].GetValue()
                         + this->M[i].GetValue();
             }
-            return std::exp(-1.0 * sum_z);
+            return mas::exp(-1.0 * sum_z);
         }
 
         inline REAL_T CalculateProbabilityOfCaptureAtAge(int a, int year,
@@ -757,7 +758,7 @@ namespace mas {
             size_t index = year * this->seasons * this->ages.size()
                     + (season) * this->ages.size() + a;
 
-            return (1.0 - std::exp(-1.0 * F * this->Z[index].GetValue()));
+            return (1.0 - mas::exp(-1.0 * F * this->Z[index].GetValue()));
         }
 
         inline REAL_T CalculateProbabilityOfCaptureAtAgeAOrOlder(int a, int year,
@@ -786,7 +787,7 @@ namespace mas {
 
                 REAL_T spr = this->CalculateSPR(f);
 
-                REAL_T dist = std::fabs(spr - fraction);
+                REAL_T dist = mas::fabs(spr - fraction);
 
                 if (dist < distance) {
 
@@ -1091,10 +1092,10 @@ namespace mas {
             REAL_T tempR = 0.0;
             for (int y = 0; y < this->years; y++) {
 
-                tempR += std::log(compressed_numbers[y][0]);
+                tempR += mas::log(compressed_numbers[y][0]);
 
             }
-            NAAbsn[0] = std::exp(tempR / (this->years + 1.0));
+            NAAbsn[0] = mas::exp(tempR / (this->years + 1.0));
 
             //NAAbsn(iage) = NAA(nyears, iage - 1) * S(nyears, iage - 1);
             std::cout << "BSN Recruitment Vector:\nSex " << this->sex << "\n";
@@ -1141,10 +1142,10 @@ namespace mas {
         //            bool recording = variable::tape.recording;
         //            variable::tape.recording = false;
         //            mas::Tape<REAL_T> tape_l; //local tape
-        //            tape_l.derivative_trace_level = atl::SECOND_ORDER_REVERSE;
-        //            atl::Variable<REAL_T> f_l;
-        //            atl::Variable<REAL_T> c_biomass;
-        //            atl::Variable<REAL_T> sum;
+        //            tape_l.derivative_trace_level = mas::backend::SECOND_ORDER_REVERSE;
+        //            mas::backend::Variable<REAL_T> f_l;
+        //            mas::backend::Variable<REAL_T> c_biomass;
+        //            mas::backend::Variable<REAL_T> sum;
         //            this->initialF.SetValue(static_cast<REAL_T> (0.0));
         //            tape_l.recording = true;
         //            REAL_T previous = 0;
@@ -1152,7 +1153,7 @@ namespace mas {
         //                f_l.SetValue(0.0);
         //                c_biomass.SetValue(0.0);
         //                sum.SetValue(0.0);
-        //                std::vector< atl::intrusive_ptr<mas::Fleet<REAL_T> > >& fleets = this->area->seasonal_fleet_operations[1];
+        //                std::vector< mas::backend::intrusive_ptr<mas::Fleet<REAL_T> > >& fleets = this->area->seasonal_fleet_operations[1];
         //                for (int f = 0; f < fleets.size(); f++) {
         //                    for (int a = 0; a < this->ages.size(); a++) {
         //                        //                        variable length_at_catch = this->growth_model->Evaluate(this->ages[a].GetValue() + this->catch_season_offset, this->sex);
@@ -1161,7 +1162,7 @@ namespace mas {
         //                        c_biomass.Assign(tape_l, c_biomass + this->weight_at_catch_time[a] *
         //                                fleets[f]->season_area_selectivity[1][this->area->id]->Evaluate(this->ages[a]) *
         //                                this->initialF * this->initial_equilibrium_numbers[a] *
-        //                                (1.0 - atl::exp(-this->M[a] - this->initialF)) /
+        //                                (1.0 - mas::backend::exp(-this->M[a] - this->initialF)) /
         //                                (this->M[a] + this->initialF), tape_l.NextIndex());
         //
         //                    }
@@ -1172,14 +1173,14 @@ namespace mas {
         //                std::cout << tape_l.Value(this->initialF.info->id) << "   " << tape_l.stack_current << "---->\n";
         //                tape_l.AccumulateSecondOrder();
         //                REAL_T deltaX = tape_l.Value(this->initialF.info->id) / tape_l.Value(this->initialF.info->id, this->initialF.info->id);
-        //                if (std::fabs(tape_l.Value(this->initialF.info->id)) <= tolerance ||
+        //                if (mas::fabs(tape_l.Value(this->initialF.info->id)) <= tolerance ||
         //                        deltaX != deltaX) {
         //                    tape_l.Reset();
         //                    break;
         //                }
         //                this->initialF.SetValue(this->initialF.GetValue() - deltaX);
         //                if (iter) {
-        //                    if (std::fabs(previous - this->initialF.GetValue()) < 1e-5) {
+        //                    if (mas::fabs(previous - this->initialF.GetValue()) < 1e-5) {
         //                        tape_l.Reset();
         //                        break;
         //                    }
@@ -1201,14 +1202,14 @@ namespace mas {
             variable::tape.recording = false;
             //                this->InitialNumbersEquilibrium();
             this->initialF = static_cast<REAL_T> (0.0);
-            std::vector<atl::intrusive_ptr<Fleet<REAL_T> > > &fleets =
+            std::vector<mas::backend::intrusive_ptr<Fleet<REAL_T> > > &fleets =
                     this->area->seasonal_fleet_operations[1];
             variable wct, wct2;
 
             for (int f = 0; f < fleets.size(); f++) {
 
                 if (fleets[f]->catch_biomass_data.get() != NULL) {
-                    //                        atl::intrusive_ptr<mas::FishingMortality<REAL_T> >& fm =
+                    //                        mas::backend::intrusive_ptr<mas::FishingMortality<REAL_T> >& fm =
                     //                                fleets[f]->season_area_fishing_mortality[1][this->area->id];
                     REAL_T Epsilon = 0.0001;
                     REAL_T LowerBound = 0.0;
@@ -1239,7 +1240,7 @@ namespace mas {
                                     this->ages[a]).GetValue()
                                     * MidPoint * N_
                                     * (1.0
-                                    - std::exp(
+                                    - mas::exp(
                                     -this->natural_mortality_model->Evaluate(
                                     a).GetValue()
                                     - MidPoint))
@@ -1263,7 +1264,7 @@ namespace mas {
                                     this->ages[a]).GetValue()
                                     * UpperBound * N_
                                     * (1.0
-                                    - std::exp(
+                                    - mas::exp(
                                     -this->natural_mortality_model->Evaluate(
                                     a).GetValue()
                                     - UpperBound))
@@ -1294,7 +1295,7 @@ namespace mas {
         inline void CalculateMortality(const int &year, const int &season,
                 const int &age) {
 
-            std::vector<atl::intrusive_ptr<Fleet<REAL_T> > > &fleets =
+            std::vector<mas::backend::intrusive_ptr<Fleet<REAL_T> > > &fleets =
                     this->area->seasonal_fleet_operations[season];
             this->sum_of_Z = 0.0;
 
@@ -1542,7 +1543,7 @@ namespace mas {
             std::valarray<variable> ret(val.size());
             for (int i = 0; i < val.size(); i++) {
 
-                ret[i] = std::fabs(val[i]);
+                ret[i] = mas::fabs(val[i]);
 
             }
             return ret;
@@ -1699,11 +1700,11 @@ namespace mas {
             }
 
 
-            std::vector<atl::intrusive_ptr<Fleet<REAL_T> > > &fleets =
+            std::vector<mas::backend::intrusive_ptr<Fleet<REAL_T> > > &fleets =
                     this->area->seasonal_fleet_operations[season];
 
 
-            std::vector<atl::intrusive_ptr<Fleet<REAL_T> > > &surveys =
+            std::vector<mas::backend::intrusive_ptr<Fleet<REAL_T> > > &surveys =
                     this->area->seasonal_fleet_operations[season];
 
             std::vector<variable_t> surviavability(this->ages.size());
@@ -1916,25 +1917,25 @@ namespace mas {
 
             for (int j = 0; j < spr_ratio.size(); j++) {
                 //                spr_ratio[j] = spr[j] / spr_F0;
-                REAL_T temp = std::fabs(spr_ratio[j] - 0.001);
+                REAL_T temp = mas::fabs(spr_ratio[j] - 0.001).GetValue();
 
                 if (temp < F01_dum) {
                     F01_dum = temp;
                 }
 
-                temp = std::fabs(spr_ratio[j] - 0.3);
+                temp = mas::fabs(spr_ratio[j] - 0.3).GetValue();
 
                 if (temp < F30_dum) {
                     F30_dum = temp;
                 }
 
-                temp = std::fabs(spr_ratio[j] - 0.35);
+                temp = mas::fabs(spr_ratio[j] - 0.35).GetValue();
 
                 if (temp < F35_dum) {
                     F35_dum = temp;
                 }
 
-                temp = std::fabs(spr_ratio[j] - 0.4);
+                temp = mas::fabs(spr_ratio[j] - 0.4).GetValue();
 
                 if (temp < F40_dum) {
                     F40_dum = temp;
@@ -1954,17 +1955,17 @@ namespace mas {
                     max = L_eq[i];
                     max_index = i;
                 }
-                //                if (std::fabs(spr_ratio[i] - 0.001) == F01_dum) {
+                //                if (mas::fabs(spr_ratio[i] - 0.001) == F01_dum) {
                 //                    F01_out = F[i];
                 //                }
 
-                if (std::fabs(spr_ratio[i] - 0.3) == F30_dum) {
+                if (mas::fabs(spr_ratio[i] - 0.3) == F30_dum) {
                     F30_out = i;
                 }
-                if (std::fabs(spr_ratio[i] - 0.35) == F35_dum) {
+                if (mas::fabs(spr_ratio[i] - 0.35) == F35_dum) {
                     F35_out = i;
                 }
-                if (std::fabs(spr_ratio[i] - 0.4) == F40_dum) {
+                if (mas::fabs(spr_ratio[i] - 0.4) == F40_dum) {
                     F40_out = i;
                 }
             }
@@ -2130,10 +2131,10 @@ namespace mas {
 
             std::vector<variable_t> N0(this->ages.size(), 1.0);
             for (int iage = 1; iage < nages; iage++) {
-                N0[iage] = N0[iage - 1] * std::exp(-1.0 * M[iage - 1].GetValue());
+                N0[iage] = N0[iage - 1] * mas::exp(-1.0 * M[iage - 1].GetValue());
             }
-            N0[nages - 1] = N0[nages - 2] * std::exp(-1.0 * M[nages - 2].GetValue())
-                    / (1.0 - std::exp(-1.0 * M[nages - 1].GetValue()));
+            N0[nages - 1] = N0[nages - 2] * mas::exp(-1.0 * M[nages - 2].GetValue())
+                    / (1.0 - mas::exp(-1.0 * M[nages - 1].GetValue()));
 
             std::valarray<variable_t> reprod(nages);
             std::valarray<variable_t> selL(nages);
@@ -2246,25 +2247,25 @@ namespace mas {
 
             for (int j = 0; j < spr_ratio.size(); j++) {
                 spr_ratio[j] = spr[j] / spr_F0;
-                REAL_T temp = std::fabs(spr_ratio[j] - 0.001);
+                REAL_T temp = mas::fabs(spr_ratio[j] - 0.001).GetValue();
 
                 if (temp < F01_dum) {
                     F01_dum = temp;
                 }
 
-                temp = std::fabs(spr_ratio[j] - 0.3);
+                temp = mas::fabs(spr_ratio[j] - 0.3).GetValue();
 
                 if (temp < F30_dum) {
                     F30_dum = temp;
                 }
 
-                temp = std::fabs(spr_ratio[j] - 0.35);
+                temp = mas::fabs(spr_ratio[j] - 0.35).GetValue();
 
                 if (temp < F35_dum) {
                     F35_dum = temp;
                 }
 
-                temp = std::fabs(spr_ratio[j] - 0.4);
+                temp = mas::fabs(spr_ratio[j] - 0.4).GetValue();
 
                 if (temp < F40_dum) {
                     F40_dum = temp;
@@ -2284,17 +2285,17 @@ namespace mas {
                     max = L_eq[i];
                     max_index = i;
                 }
-                //                if (std::fabs(spr_ratio[i] - 0.001) == F01_dum) {
+                //                if (mas::fabs(spr_ratio[i] - 0.001) == F01_dum) {
                 //                    F01_out = F[i];
                 //                }
 
-                if (std::fabs(spr_ratio[i] - 0.3) == F30_dum) {
+                if (mas::fabs(spr_ratio[i] - 0.3) == F30_dum) {
                     F30_out = i;
                 }
-                if (std::fabs(spr_ratio[i] - 0.35) == F35_dum) {
+                if (mas::fabs(spr_ratio[i] - 0.35) == F35_dum) {
                     F35_out = i;
                 }
-                if (std::fabs(spr_ratio[i] - 0.4) == F40_dum) {
+                if (mas::fabs(spr_ratio[i] - 0.4) == F40_dum) {
                     F40_out = i;
                 }
             }
@@ -2562,7 +2563,7 @@ namespace mas {
                 const int &age) {
 
             //get a vector of fleets operating this area at this season
-            std::vector<atl::intrusive_ptr<Fleet<REAL_T> > > &fleets =
+            std::vector<mas::backend::intrusive_ptr<Fleet<REAL_T> > > &fleets =
                     this->area->seasonal_fleet_operations[season];
 
             //loop through the ages and calculate catch numbers and catch biomass
@@ -2655,7 +2656,7 @@ namespace mas {
          */
         inline void CalculateSurveyNumbersAtAge(const int &year, const int &season,
                 const int &age) {
-            std::vector<atl::intrusive_ptr<Survey<REAL_T> > > &surveys =
+            std::vector<mas::backend::intrusive_ptr<Survey<REAL_T> > > &surveys =
                     this->area->seasonal_survey_operations[season];
 
             REAL_T total_SI = static_cast<REAL_T> (0.0);
@@ -2751,7 +2752,7 @@ namespace mas {
             out << "Females\n";
         }
         for (int s = 1; s <= pi.seasons; s++) {
-            std::vector<atl::intrusive_ptr<Fleet<REAL_T> > > &fleets =
+            std::vector<mas::backend::intrusive_ptr<Fleet<REAL_T> > > &fleets =
                     pi.area->seasonal_fleet_operations[s];
             if (fleets.size() > 0) {
                 for (int f = 0; f < fleets.size(); f++) {
@@ -2775,7 +2776,7 @@ namespace mas {
             out << "Females\n";
         }
         for (int s = 1; s <= pi.seasons; s++) {
-            std::vector<atl::intrusive_ptr<Fleet<REAL_T> > > &fleets =
+            std::vector<mas::backend::intrusive_ptr<Fleet<REAL_T> > > &fleets =
                     pi.area->seasonal_fleet_operations[s];
             if (fleets.size() > 0) {
                 for (int f = 0; f < fleets.size(); f++) {
@@ -3366,11 +3367,11 @@ namespace mas {
         typedef typename std::unordered_map<int, std::unordered_map<int, int> >::iterator season_area_id_iterator;
         std::unordered_map<int,
         std::unordered_map<int,
-        atl::intrusive_ptr<mas::RecruitmentBase<REAL_T> > > > area_season_recruitment;
+        mas::backend::intrusive_ptr<mas::RecruitmentBase<REAL_T> > > > area_season_recruitment;
         std::unordered_map<int, std::unordered_map<int, int> > season_area_recruitment_ids;
         std::unordered_map<int,
         std::unordered_map<int,
-        atl::intrusive_ptr<mas::RecruitmentBase<REAL_T> > > > season_area_recruitment;
+        mas::backend::intrusive_ptr<mas::RecruitmentBase<REAL_T> > > > season_area_recruitment;
         std::map<int, int> recruitment_ids; //area, recruitment model
         typedef typename std::map<int, int>::iterator recruitment_ids_iterator;
         // typedef typename std::map<int, int>::iterator recruitment_season_ids_iterator;
@@ -3430,18 +3431,18 @@ namespace mas {
         std::vector<REAL_T> abundance_males;
         std::vector<REAL_T> fishing_mortality_males;
 
-        atl::intrusive_ptr<Area<REAL_T> > natal_area; //birth area
-        std::vector<atl::intrusive_ptr<Area<REAL_T> > > areas_list; //all areas
+        mas::backend::intrusive_ptr<Area<REAL_T> > natal_area; //birth area
+        std::vector<mas::backend::intrusive_ptr<Area<REAL_T> > > areas_list; //all areas
         //Movement Tracking
         typedef typename std::unordered_map<int, Subpopulation<REAL_T> >::iterator cohort_iterator;
         std::unordered_map<int, Subpopulation<REAL_T> > males;
         std::unordered_map<int, Subpopulation<REAL_T> > females;
         std::unordered_map<int, int> movement_models_ids; //season keyed
         typedef typename std::unordered_map<int, int>::iterator movement_model_id_iterator;
-        atl::intrusive_ptr<mas::Movement<REAL_T> > movement_model;
-        std::unordered_map<int, atl::intrusive_ptr<mas::Movement<REAL_T> > > movement_models; //year keyed
+        mas::backend::intrusive_ptr<mas::Movement<REAL_T> > movement_model;
+        std::unordered_map<int, mas::backend::intrusive_ptr<mas::Movement<REAL_T> > > movement_models; //year keyed
         typedef typename std::unordered_map<int,
-        atl::intrusive_ptr<mas::Movement<REAL_T> > >::iterator movement_model_iterator;
+        mas::backend::intrusive_ptr<mas::Movement<REAL_T> > >::iterator movement_model_iterator;
         //Estimable
         std::unordered_map<int, std::pair<bool, std::vector<variable> > > initial_deviations_males; // area indexed
         std::unordered_map<int, std::pair<bool, std::vector<variable> > > initial_deviations_females; // area indexed
@@ -3454,7 +3455,7 @@ namespace mas {
         typedef typename std::unordered_map<int, std::vector<REAL_T> >::iterator area_maturity_model_iterator;
         //    typedef typename std::unordered_map<std::vector<std::vector<variable> > >::iterator movement_coefficient_iterator;
         // std::vector<mas::InitialNumbers<typename mas::VariableTrait<REAL_T>::variable > > initial_numbers;
-        atl::intrusive_ptr<mas::HCRBase<REAL_T> > harvest_control_rule;
+        mas::backend::intrusive_ptr<mas::HCRBase<REAL_T> > harvest_control_rule;
         std::unordered_set<int> active_fleets;
 
         //averages across all subpopulations
@@ -3475,8 +3476,8 @@ namespace mas {
         }
 
         Population(int years, int seasons, int areas,
-                const atl::intrusive_ptr<Area<REAL_T> > &natal_area,
-                const std::vector<atl::intrusive_ptr<Area<REAL_T> > > &areas_list) :
+                const mas::backend::intrusive_ptr<Area<REAL_T> > &natal_area,
+                const std::vector<mas::backend::intrusive_ptr<Area<REAL_T> > > &areas_list) :
         years(years), seasons(seasons), areas(areas), natal_area(
         natal_area), areas_list(areas) {
 
@@ -3747,7 +3748,7 @@ namespace mas {
                 }
                 int area = males[areas_list[a]->id].area->id;
                 typename std::unordered_map<int,
-                        atl::intrusive_ptr<mas::RecruitmentBase<REAL_T> > >::iterator it;
+                        mas::backend::intrusive_ptr<mas::RecruitmentBase<REAL_T> > >::iterator it;
                 for (it = this->area_season_recruitment[area].begin();
                         it != this->area_season_recruitment[area].end(); ++it) {
                     males[areas_list[a]->id].seasonal_recruitment_models[(*it).first] =

@@ -68,12 +68,12 @@ class Information: public mas::ModelObject<REAL_T> {
 	typedef typename VariableTrait<REAL_T>::variable variable;
 
 	typedef typename std::map<int,
-			std::vector<atl::intrusive_ptr<DataObject<REAL_T> > > >::iterator data_iterator;
+			std::vector<mas::backend::intrusive_ptr<DataObject<REAL_T> > > >::iterator data_iterator;
 
 	std::string data_path;
 public:
-	std::map<int, std::vector<atl::intrusive_ptr<DataObject<REAL_T> > > > data_dictionary;
-	std::vector<atl::intrusive_ptr<DataObject<REAL_T> > > data;
+	std::map<int, std::vector<mas::backend::intrusive_ptr<DataObject<REAL_T> > > > data_dictionary;
+	std::vector<mas::backend::intrusive_ptr<DataObject<REAL_T> > > data;
 	std::string analyst = "NA";
 	std::string study_name = "NA";
 	int nyears;
@@ -89,56 +89,56 @@ public:
 	bool natal_movement = false;
 	bool valid_configuration = true;
 
-	std::unordered_map<int, atl::intrusive_ptr<mas::Area<REAL_T> > > areas;
-	std::unordered_map<int, atl::intrusive_ptr<mas::Season<REAL_T> > > seasons;
+	std::unordered_map<int, mas::backend::intrusive_ptr<mas::Area<REAL_T> > > areas;
+	std::unordered_map<int, mas::backend::intrusive_ptr<mas::Season<REAL_T> > > seasons;
 
 	//System sub model objects
-	std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > > populations;
-	std::unordered_map<int, atl::intrusive_ptr<mas::FishingMortality<REAL_T> > > fishing_mortality_models;
-	std::unordered_map<int, atl::intrusive_ptr<mas::SelectivityBase<REAL_T> > > selectivity_models;
+	std::unordered_map<int, mas::backend::intrusive_ptr<mas::Population<REAL_T> > > populations;
+	std::unordered_map<int, mas::backend::intrusive_ptr<mas::FishingMortality<REAL_T> > > fishing_mortality_models;
+	std::unordered_map<int, mas::backend::intrusive_ptr<mas::SelectivityBase<REAL_T> > > selectivity_models;
 
-	std::unordered_map<int, atl::intrusive_ptr<mas::Fleet<REAL_T> > > fleets;
+	std::unordered_map<int, mas::backend::intrusive_ptr<mas::Fleet<REAL_T> > > fleets;
 
-	std::unordered_map<int, atl::intrusive_ptr<mas::Survey<REAL_T> > > survey_models;
+	std::unordered_map<int, mas::backend::intrusive_ptr<mas::Survey<REAL_T> > > survey_models;
 
 	// per population
-	std::unordered_map<int, atl::intrusive_ptr<mas::GrowthBase<REAL_T> > > growth_models;
-	std::unordered_map<int, atl::intrusive_ptr<mas::FecundityBase<REAL_T> > > fecundity_models;
-	std::unordered_map<int, atl::intrusive_ptr<mas::Movement<REAL_T> > > movement_models;
+	std::unordered_map<int, mas::backend::intrusive_ptr<mas::GrowthBase<REAL_T> > > growth_models;
+	std::unordered_map<int, mas::backend::intrusive_ptr<mas::FecundityBase<REAL_T> > > fecundity_models;
+	std::unordered_map<int, mas::backend::intrusive_ptr<mas::Movement<REAL_T> > > movement_models;
 
 	// per population - area
-	std::unordered_map<int, atl::intrusive_ptr<mas::NaturalMortality<REAL_T> > > natural_mortality_models;
-	std::unordered_map<int, atl::intrusive_ptr<mas::RecruitmentBase<REAL_T> > > recruitment_models;
+	std::unordered_map<int, mas::backend::intrusive_ptr<mas::NaturalMortality<REAL_T> > > natural_mortality_models;
+	std::unordered_map<int, mas::backend::intrusive_ptr<mas::RecruitmentBase<REAL_T> > > recruitment_models;
 
-	std::unordered_map<int, atl::intrusive_ptr<mas::NLLFunctor<REAL_T> > > likelihood_components;
+	std::unordered_map<int, mas::backend::intrusive_ptr<mas::NLLFunctor<REAL_T> > > likelihood_components;
 
 	//System sub model iterators
 	typedef typename std::unordered_map<int,
-			atl::intrusive_ptr<mas::Season<REAL_T> > >::iterator seasons_iterator;
+			mas::backend::intrusive_ptr<mas::Season<REAL_T> > >::iterator seasons_iterator;
 	typedef typename std::unordered_map<int,
-			atl::intrusive_ptr<mas::Area<REAL_T> > >::iterator area_iterator;
+			mas::backend::intrusive_ptr<mas::Area<REAL_T> > >::iterator area_iterator;
 	typedef typename std::unordered_map<int,
-			atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator population_iterator;
+			mas::backend::intrusive_ptr<mas::Population<REAL_T> > >::iterator population_iterator;
 	typedef typename std::unordered_map<int,
-			atl::intrusive_ptr<mas::GrowthBase<REAL_T> > >::iterator growth_model_iterator;
+			mas::backend::intrusive_ptr<mas::GrowthBase<REAL_T> > >::iterator growth_model_iterator;
 	typedef typename std::unordered_map<int,
-			atl::intrusive_ptr<mas::RecruitmentBase<REAL_T> > >::iterator recruitment_model_iterator;
+			mas::backend::intrusive_ptr<mas::RecruitmentBase<REAL_T> > >::iterator recruitment_model_iterator;
 	typedef typename std::unordered_map<int,
-			atl::intrusive_ptr<mas::NaturalMortality<REAL_T> > >::iterator natural_mortality_model_iterator;
+			mas::backend::intrusive_ptr<mas::NaturalMortality<REAL_T> > >::iterator natural_mortality_model_iterator;
 	typedef typename std::unordered_map<int,
-			atl::intrusive_ptr<mas::FishingMortality<REAL_T> > >::iterator fishing_mortality_model_iterator;
+			mas::backend::intrusive_ptr<mas::FishingMortality<REAL_T> > >::iterator fishing_mortality_model_iterator;
 	typedef typename std::unordered_map<int,
-			atl::intrusive_ptr<mas::FecundityBase<REAL_T> > >::iterator fecundity_model_iterator;
+			mas::backend::intrusive_ptr<mas::FecundityBase<REAL_T> > >::iterator fecundity_model_iterator;
 	typedef typename std::unordered_map<int,
-			atl::intrusive_ptr<mas::Movement<REAL_T> > >::iterator movement_model_iterator;
+			mas::backend::intrusive_ptr<mas::Movement<REAL_T> > >::iterator movement_model_iterator;
 	typedef typename std::unordered_map<int,
-			atl::intrusive_ptr<mas::SelectivityBase<REAL_T> > >::iterator selectivity_model_iterator;
+			mas::backend::intrusive_ptr<mas::SelectivityBase<REAL_T> > >::iterator selectivity_model_iterator;
 	typedef typename std::unordered_map<int,
-			atl::intrusive_ptr<mas::Fleet<REAL_T> > >::iterator fleet_iterator;
+			mas::backend::intrusive_ptr<mas::Fleet<REAL_T> > >::iterator fleet_iterator;
 	typedef typename std::unordered_map<int,
-			atl::intrusive_ptr<mas::Survey<REAL_T> > >::iterator survey_model_iterator;
+			mas::backend::intrusive_ptr<mas::Survey<REAL_T> > >::iterator survey_model_iterator;
 	typedef typename std::unordered_map<int,
-			atl::intrusive_ptr<mas::NLLFunctor<REAL_T> > >::iterator likelihood_components_iterator;
+			mas::backend::intrusive_ptr<mas::NLLFunctor<REAL_T> > >::iterator likelihood_components_iterator;
 
 	rapidjson::Document config_document;
 	rapidjson::Document data_document;
@@ -282,7 +282,7 @@ public:
 				mas::GrowthBase<REAL_T>::ages.resize(0);
 				mas::GrowthBase<REAL_T>::ages_to_intrpolate.clear();
 				for (int i = 0; i < this->ages.size(); i++) {
-					mas::GrowthBase<REAL_T>::ages.push_back(this->ages[i]);
+					mas::GrowthBase<REAL_T>::ages.push_back(this->ages[i].GetValue());
 					mas::GrowthBase<REAL_T>::ages_to_intrpolate.insert(
 							this->ages[i].GetValue());
 					mas::GrowthBase<REAL_T>::ages_to_intrpolate.insert(
@@ -364,7 +364,7 @@ public:
 	void HandleLikelihoodComponent(
 			rapidjson::Document::MemberIterator &likelihood_component) {
 		INFO_DEBUG
-		atl::intrusive_ptr<mas::DataObject<REAL_T> > lambda_data(
+		mas::backend::intrusive_ptr<mas::DataObject<REAL_T> > lambda_data(
 				new mas::DataObject<REAL_T>());
 		rapidjson::Document::MemberIterator rit;
 		rit = (*likelihood_component).value.FindMember("model");
@@ -378,7 +378,7 @@ public:
 
 		}
 
-		atl::intrusive_ptr<mas::NLLFunctor<REAL_T> > model(NULL);
+		mas::backend::intrusive_ptr<mas::NLLFunctor<REAL_T> > model(NULL);
 		std::string smodel = std::string((*rit).value.GetString());
 
 		rit = (*likelihood_component).value.FindMember("id");
@@ -650,7 +650,7 @@ public:
 	}
 
 	void HandleSurveyModel(rapidjson::Document::MemberIterator &survey_model) {
-		atl::intrusive_ptr<mas::Survey<REAL_T> > model(
+		mas::backend::intrusive_ptr<mas::Survey<REAL_T> > model(
 				new mas::Survey<REAL_T>());
 		std::stringstream ss;
 		INFO_DEBUG
@@ -928,7 +928,7 @@ public:
 	void HandleFishingMortalityModel(
 			rapidjson::Document::MemberIterator &mortality_model) {
 		INFO_DEBUG
-		atl::intrusive_ptr<mas::FishingMortality<REAL_T> > model(
+		mas::backend::intrusive_ptr<mas::FishingMortality<REAL_T> > model(
 				new mas::FishingMortality<REAL_T>());
 		bool estimated = false;
 		bool delta_method = false;
@@ -1109,7 +1109,7 @@ public:
 	void HandleNaturalMortalityModel(
 			rapidjson::Document::MemberIterator &mortality_model) {
 		INFO_DEBUG
-		atl::intrusive_ptr<mas::NaturalMortality<REAL_T> > model(
+		mas::backend::intrusive_ptr<mas::NaturalMortality<REAL_T> > model(
 				new mas::NaturalMortality<REAL_T>());
 		bool estimated = false;
 		int phase = 1;
@@ -1241,7 +1241,7 @@ public:
 	void HandleMovementModel(
 			rapidjson::Document::MemberIterator &movement_model) {
 		INFO_DEBUG
-		atl::intrusive_ptr<mas::Movement<REAL_T> > model(
+		mas::backend::intrusive_ptr<mas::Movement<REAL_T> > model(
 				new mas::Movement<REAL_T>());
 		bool estimated = false;
 		int phase = 1;
@@ -1486,7 +1486,7 @@ public:
 
 	void HandleFleetModel(rapidjson::Document::MemberIterator &fleet_model) {
 		INFO_DEBUG
-		atl::intrusive_ptr<mas::Fleet<REAL_T> > model(new mas::Fleet<REAL_T>());
+		mas::backend::intrusive_ptr<mas::Fleet<REAL_T> > model(new mas::Fleet<REAL_T>());
 
 		rapidjson::Document::MemberIterator rit =
 				(*fleet_model).value.FindMember("id");
@@ -1773,7 +1773,7 @@ public:
 	void HandlePopulationModel(
 			rapidjson::Document::MemberIterator &population_model) {
 		INFO_DEBUG
-		atl::intrusive_ptr<mas::Population<REAL_T> > model(
+		mas::backend::intrusive_ptr<mas::Population<REAL_T> > model(
 				new mas::Population<REAL_T>());
 
 		rapidjson::Document::MemberIterator rit =
@@ -2492,7 +2492,7 @@ public:
 
 	void HandleAreaModel(rapidjson::Document::MemberIterator &area_model) {
 		INFO_DEBUG
-		atl::intrusive_ptr<mas::Area<REAL_T> > model(new mas::Area<REAL_T>());
+		mas::backend::intrusive_ptr<mas::Area<REAL_T> > model(new mas::Area<REAL_T>());
 
 		rapidjson::Document::MemberIterator rit =
 				(*area_model).value.FindMember("id");
@@ -2545,7 +2545,7 @@ public:
 			this->valid_configuration = false;
 		}
 
-		atl::intrusive_ptr<mas::SelectivityBase<REAL_T> > model(NULL);
+		mas::backend::intrusive_ptr<mas::SelectivityBase<REAL_T> > model(NULL);
 		std::string smodel = std::string((*rit).value.GetString());
 
 		rit = (*selectivity_model).value.FindMember("id");
@@ -3658,7 +3658,7 @@ public:
 	void HandleGrowthModel(rapidjson::Document::MemberIterator &growth_model) {
 		INFO_DEBUG
 
-		atl::intrusive_ptr<mas::WeightFunctorBase<REAL_T> > weight_functor(
+		mas::backend::intrusive_ptr<mas::WeightFunctorBase<REAL_T> > weight_functor(
 				NULL);
 		rapidjson::Document::MemberIterator rit;
 		rit = (*growth_model).value.FindMember("model");
@@ -3671,7 +3671,7 @@ public:
 			this->valid_configuration = false;
 		}
 
-		atl::intrusive_ptr<mas::GrowthBase<REAL_T> > model(NULL);
+		mas::backend::intrusive_ptr<mas::GrowthBase<REAL_T> > model(NULL);
 		std::string smodel = std::string((*rit).value.GetString());
 
 		rit = (*growth_model).value.FindMember("id");
@@ -6966,7 +6966,7 @@ public:
 				if ((*ewaa_it).value.IsArray()) {
 					rapidjson::Value &v = (*ewaa_it).value;
 					for (int ii = 0; ii < v.Size(); ii++) {
-						atl::intrusive_ptr<mas::DataObject<REAL_T> > data_object(
+						mas::backend::intrusive_ptr<mas::DataObject<REAL_T> > data_object(
 								new mas::DataObject<REAL_T>());
 						rapidjson::Document::MemberIterator t_it =
 								v[ii].FindMember("data_object_type");
@@ -7242,7 +7242,7 @@ public:
 
 		}
 
-		atl::intrusive_ptr<mas::RecruitmentBase<REAL_T> > model(NULL);
+		mas::backend::intrusive_ptr<mas::RecruitmentBase<REAL_T> > model(NULL);
 		std::string smodel = std::string((*rit).value.GetString());
 
 		rit = (*recruitment_model).value.FindMember("id");
@@ -7324,7 +7324,7 @@ public:
 						this->valid_configuration = false;
 					} else {
 						VariableTrait<REAL_T>::SetValue(bh->log_R0,
-								std::log(
+								mas::log(
 										static_cast<REAL_T>((*pm).value.GetDouble())));
 						VariableTrait<REAL_T>::SetValue(bh->R0,
 								(static_cast<REAL_T>((*pm).value.GetDouble())));
@@ -7334,7 +7334,7 @@ public:
 					pm = (*ppit).value.FindMember("min");
 					if (pm != (*ppit).value.MemberEnd()) {
 						VariableTrait<REAL_T>::SetMinBoundary(bh->log_R0,
-								std::log(
+								mas::log(
 										static_cast<REAL_T>((*pm).value.GetDouble())));
 					}
 
@@ -7342,7 +7342,7 @@ public:
 					pm = (*ppit).value.FindMember("max");
 					if (pm != (*ppit).value.MemberEnd()) {
 						VariableTrait<REAL_T>::SetMaxBoundary(bh->log_R0,
-								std::log(
+								mas::log(
 										static_cast<REAL_T>((*pm).value.GetDouble())));
 					}
 
@@ -7732,7 +7732,7 @@ public:
 						this->valid_configuration = false;
 					} else {
 						VariableTrait<REAL_T>::SetValue(bh->log_R0,
-								std::log(
+								mas::log(
 										static_cast<REAL_T>((*pm).value.GetDouble())));
 						VariableTrait<REAL_T>::SetValue(bh->R0,
 								(static_cast<REAL_T>((*pm).value.GetDouble())));
@@ -7742,7 +7742,7 @@ public:
 					pm = (*ppit).value.FindMember("min");
 					if (pm != (*ppit).value.MemberEnd()) {
 						VariableTrait<REAL_T>::SetMinBoundary(bh->log_R0,
-								std::log(
+								mas::log(
 										static_cast<REAL_T>((*pm).value.GetDouble())));
 					}
 
@@ -7750,7 +7750,7 @@ public:
 					pm = (*ppit).value.FindMember("max");
 					if (pm != (*ppit).value.MemberEnd()) {
 						VariableTrait<REAL_T>::SetMaxBoundary(bh->log_R0,
-								std::log(
+								mas::log(
 										static_cast<REAL_T>((*pm).value.GetDouble())));
 					}
 
@@ -8014,7 +8014,7 @@ public:
 						this->valid_configuration = false;
 					} else {
 						VariableTrait<REAL_T>::SetValue(bh->log_R0,
-								std::log(
+								mas::log(
 										static_cast<REAL_T>((*pm).value.GetDouble())));
 						VariableTrait<REAL_T>::SetValue(bh->R0,
 								(static_cast<REAL_T>((*pm).value.GetDouble())));
@@ -8024,7 +8024,7 @@ public:
 					pm = (*ppit).value.FindMember("min");
 					if (pm != (*ppit).value.MemberEnd()) {
 						VariableTrait<REAL_T>::SetMinBoundary(bh->log_R0,
-								std::log(
+								mas::log(
 										static_cast<REAL_T>((*pm).value.GetDouble())));
 					}
 
@@ -8032,7 +8032,7 @@ public:
 					pm = (*ppit).value.FindMember("max");
 					if (pm != (*ppit).value.MemberEnd()) {
 						VariableTrait<REAL_T>::SetMaxBoundary(bh->log_R0,
-								std::log(
+								mas::log(
 										static_cast<REAL_T>((*pm).value.GetDouble())));
 					}
 
@@ -8434,7 +8434,7 @@ public:
 								<< "Configuration Warning: Recruitment model \"Ricker Alt\" does not provide a initial value for \"Ro\".\n";
 					} else {
 						VariableTrait<REAL_T>::SetValue(ra->log_R0,
-								std::log(
+								mas::log(
 										static_cast<REAL_T>((*pm).value.GetDouble())));
 						VariableTrait<REAL_T>::SetValue(ra->R0,
 								(static_cast<REAL_T>((*pm).value.GetDouble())));
@@ -8444,7 +8444,7 @@ public:
 					pm = (*ppit).value.FindMember("min");
 					if (pm != (*ppit).value.MemberEnd()) {
 						VariableTrait<REAL_T>::SetMinBoundary(ra->log_R0,
-								std::log(
+								mas::log(
 										static_cast<REAL_T>((*pm).value.GetDouble())));
 					}
 
@@ -8452,7 +8452,7 @@ public:
 					pm = (*ppit).value.FindMember("max");
 					if (pm != (*ppit).value.MemberEnd()) {
 						VariableTrait<REAL_T>::SetMaxBoundary(ra->log_R0,
-								std::log(
+								mas::log(
 										static_cast<REAL_T>((*pm).value.GetDouble())));
 					}
 
@@ -8687,20 +8687,20 @@ public:
 			//                            mas::mas_log << "Configuration Error: Recruitment model \"Beverton-Holt Alt\" does not provide a initial value for \"R0\".\n";
 			//                            this->valid_configuration = false;
 			//                        } else {
-			//                            VariableTrait<REAL_T>::SetValue(bh->log_R0, std::log(static_cast<REAL_T> ((*pm).value.GetDouble())));
+			//                            VariableTrait<REAL_T>::SetValue(bh->log_R0, mas::log(static_cast<REAL_T> ((*pm).value.GetDouble())));
 			//                            VariableTrait<REAL_T>::SetValue(bh->R0, (static_cast<REAL_T> ((*pm).value.GetDouble())));
 			//                        }
 			//
 			//                        //2. Get min boundary if there is one.
 			//                        pm = (*ppit).value.FindMember("min");
 			//                        if (pm != (*ppit).value.MemberEnd()) {
-			//                            VariableTrait<REAL_T>::SetMinBoundary(bh->log_R0, std::log(static_cast<REAL_T> ((*pm).value.GetDouble())));
+			//                            VariableTrait<REAL_T>::SetMinBoundary(bh->log_R0, mas::log(static_cast<REAL_T> ((*pm).value.GetDouble())));
 			//                        }
 			//
 			//                        //3. Get max boundary if there is one.
 			//                        pm = (*ppit).value.FindMember("max");
 			//                        if (pm != (*ppit).value.MemberEnd()) {
-			//                            VariableTrait<REAL_T>::SetMaxBoundary(bh->log_R0, std::log(static_cast<REAL_T> ((*pm).value.GetDouble())));
+			//                            VariableTrait<REAL_T>::SetMaxBoundary(bh->log_R0, mas::log(static_cast<REAL_T> ((*pm).value.GetDouble())));
 			//                        }
 			//
 			//                        pm = (*ppit).value.FindMember("estimated");
@@ -9420,7 +9420,7 @@ public:
 		for (dit = document.MemberBegin(); dit != document.MemberEnd(); ++dit) {
 			if (std::string((*dit).name.GetString()) == "data_object") {
 				rapidjson::Document::MemberIterator mit;
-				atl::intrusive_ptr<DataObject<REAL_T> > data_object(
+				mas::backend::intrusive_ptr<DataObject<REAL_T> > data_object(
 						new DataObject<REAL_T>());
 				INFO_DEBUG
 				//                    data_object->imax = years;
@@ -11605,7 +11605,7 @@ void CreateModel() {
 
 }
 
-std::unordered_map<int, atl::intrusive_ptr<mas::Population<REAL_T> > >& GetPopulations() {
+std::unordered_map<int, mas::backend::intrusive_ptr<mas::Population<REAL_T> > >& GetPopulations() {
 	return populations;
 }
 
@@ -11613,7 +11613,7 @@ void DumpFishingMortality(std::string file) {
 	std::ofstream out(file.c_str());
 
 	typename std::unordered_map<int,
-			atl::intrusive_ptr<mas::FishingMortality<REAL_T> > >::iterator it;
+			mas::backend::intrusive_ptr<mas::FishingMortality<REAL_T> > >::iterator it;
 	for (it = this->fishing_mortality_models.begin();
 			it != this->fishing_mortality_models.end(); ++it) {
 		out << (*it).second->ToString() << "\n\n";

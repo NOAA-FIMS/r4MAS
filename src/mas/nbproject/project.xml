@@ -10,7 +10,7 @@
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList>
-                <sourceRootElem>third_party/ATL</sourceRootElem>
+                <sourceRootElem>third_party/Quadra</sourceRootElem>
                 <sourceRootElem>Tests</sourceRootElem>
             </sourceRootList>
             <confList>

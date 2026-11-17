@@ -78,8 +78,8 @@ namespace mas {
                 (T(9.984369578019570859563e-6) / (x + T(7)))+
                 (T(1.50563273514931155834e-7) / (x + T(8)));
 
-        term1 = (x + T(0.5)) * std::log((x + T(7.5)) / T(M_E));
-        term2 = T(0.9189385332046727418)/*HALF LOG 2M_PI*/ + std::log(Ag);
+        term1 = (x + T(0.5)) * mas::log((x + T(7.5)) / T(M_E));
+        term2 = T(0.9189385332046727418)/*HALF LOG 2M_PI*/ + mas::log(Ag);
         ret = term1 + (term2 - T(7.0));
 
         return ret;
@@ -98,13 +98,13 @@ namespace mas {
 
         y = x - 1.0;
         tmp = y + (5.5);
-        tmp -= (y + 0.5) * std::log(tmp);
+        tmp -= (y + 0.5) * mas::log(tmp);
         ser = 1.000000000190015;
         for (int j = 0; j <= 5; j++) {
             y += 1.0;
             ser += cof[j] / y;
         }
-        return -tmp + std::log(2.5066282746310005 * ser);
+        return -tmp + mas::log(2.5066282746310005 * ser);
     }
 
     template<typename T>
@@ -141,7 +141,7 @@ namespace mas {
 
 #warning NLLFunctor can only be used once
 
-        atl::intrusive_ptr<mas::DataObject<REAL_T> > lambda;
+        mas::backend::intrusive_ptr<mas::DataObject<REAL_T> > lambda;
 
         NLLFunctor() {
         }
@@ -154,12 +154,12 @@ namespace mas {
         }
 
 
-        virtual variable Evaluate(const atl::intrusive_ptr<DataObject<REAL_T> >& observed,
+        virtual variable Evaluate(const mas::backend::intrusive_ptr<DataObject<REAL_T> >& observed,
                 const std::vector<variable>& predicted,
                 size_t N) = 0;
 
         virtual const REAL_T Neff() {
-            return this->neff;
+            return this->neff.GetValue();
         }
 
         virtual std::string ToString() {
@@ -182,7 +182,7 @@ namespace mas {
         NLLFunctor<REAL_T>(years, seasons, ages) {
         }
 
-        virtual variable Evaluate(const atl::intrusive_ptr<DataObject<REAL_T> >& observed,
+        virtual variable Evaluate(const mas::backend::intrusive_ptr<DataObject<REAL_T> >& observed,
                 const std::vector<variable>& predicted,
                 size_t N) {
             //
@@ -212,9 +212,9 @@ namespace mas {
                                     // likely_ind(ind) += log(index_sigma(ind, i));
                                     // likely_ind(ind) += 0.5 * square(log(index_obs(ind, i)) - log(index_pred(ind, i))) / index_sigma2(ind, i);
                                     cv = observed->get_error(i, j);
-                                    se2 = std::log(cv * cv + 1.0);
-                                    se = std::sqrt(se2) / std::sqrt(std::log(M_E));
-                                    nll1 += this->lambda->get(i, j) * std::log(se);
+                                    se2 = mas::log(cv * cv + 1.0);
+                                    se = mas::sqrt(se2) / mas::sqrt(mas::log(M_E));
+                                    nll1 += this->lambda->get(i, j) * mas::log(se);
 //                                     nll2 += this->lambda->get(i, j) * SQUARE((mas::log(obs) - mas::log(expected)))/se;
                                     nll2 += this->lambda->get(i, j) * SQUARE((mas::log((obs / expected)) / se) + 0.5 * se);
                                 }
@@ -232,9 +232,9 @@ namespace mas {
                                     // likely_ind(ind) += log(index_sigma(ind, i));
                                     // likely_ind(ind) += 0.5 * square(log(index_obs(ind, i)) - log(index_pred(ind, i))) / index_sigma2(ind, i);
                                     cv = observed->get_error(i, j);
-                                    se2 = std::log(cv * cv + 1.0);
-                                    se = std::sqrt(se2) / std::sqrt(std::log(M_E));
-                                    nll1 += this->lambda->get(i, j) * std::log(se);
+                                    se2 = mas::log(cv * cv + 1.0);
+                                    se = mas::sqrt(se2) / mas::sqrt(mas::log(M_E));
+                                    nll1 += this->lambda->get(i, j) * mas::log(se);
                                     nll2 += this->lambda->get(i, j) * SQUARE(mas::log((obs / expected))) / se2;
                                 }
                             }
@@ -294,7 +294,7 @@ namespace mas {
         NLLFunctor<REAL_T>(years, seasons, ages) {
         }
 
-        virtual variable Evaluate(const atl::intrusive_ptr<DataObject<REAL_T> >& observed,
+        virtual variable Evaluate(const mas::backend::intrusive_ptr<DataObject<REAL_T> >& observed,
                 const std::vector<variable>& predicted,
                 size_t N) {
 
@@ -358,7 +358,7 @@ namespace mas {
         NLLFunctor<REAL_T>(years, seasons, ages) {
         }
 
-        virtual variable Evaluate(const atl::intrusive_ptr<DataObject<REAL_T> >& observed,
+        virtual variable Evaluate(const mas::backend::intrusive_ptr<DataObject<REAL_T> >& observed,
                 const std::vector<variable>& predicted,
                 size_t N) {
 
@@ -426,7 +426,7 @@ namespace mas {
         NLLFunctor<REAL_T>(years, seasons, ages) {
         }
 
-        virtual variable Evaluate(const atl::intrusive_ptr<DataObject<REAL_T> >& observed,
+        virtual variable Evaluate(const mas::backend::intrusive_ptr<DataObject<REAL_T> >& observed,
                 const std::vector<variable>& predicted,
                 size_t N) {
             this->years = observed->imax;
@@ -459,7 +459,7 @@ namespace mas {
                             temp_sum += this->lambda->get(i, j, a) *((obs) * mas::log(predicted[index]));
 
                             temp1 += P_pred * (1.0 - P_pred);
-                            temp2 += std::pow((observed->get(i, j, a) - P_pred), 2.0);
+                            temp2 += mas::pow((observed->get(i, j, a) - P_pred), 2.0);
                         }
                     }
                     if (observed->get_sample_size(i, j) != observed->missing_value) {
@@ -496,7 +496,7 @@ namespace mas {
         NLLFunctor<REAL_T>(years, seasons, ages) {
         }
 
-        virtual variable Evaluate(const atl::intrusive_ptr<DataObject<REAL_T> >& observed,
+        virtual variable Evaluate(const mas::backend::intrusive_ptr<DataObject<REAL_T> >& observed,
                 const std::vector<variable>& predicted,
                 size_t N) {
             this->years = observed->imax;
@@ -528,7 +528,7 @@ namespace mas {
                             temp_sum += this->lambda->get(i, j, a) *((obs) * mas::log(P_pred));
 
                             temp1 += P_pred.GetValue()*(1.0 - P_pred.GetValue());
-                            temp2 += std::pow((observed->get(i, j, a) - P_pred.GetValue()) + epsilon, 2.0);
+                            temp2 += mas::pow((observed->get(i, j, a) - P_pred.GetValue()) + epsilon, 2.0);
                         }
                     }
                     if (observed->get_sample_size(i, j) != observed->missing_value) {
@@ -554,8 +554,8 @@ namespace mas {
     struct NLLComponent {
         typedef typename VariableTrait<REAL_T>::variable variable;
         std::vector<variable>* estimated;
-        atl::intrusive_ptr<DataObject<REAL_T> > observed;
-        atl::intrusive_ptr<mas::NLLFunctor<REAL_T> > nll_functor;
+        mas::backend::intrusive_ptr<DataObject<REAL_T> > observed;
+        mas::backend::intrusive_ptr<mas::NLLFunctor<REAL_T> > nll_functor;
         size_t N;
         static bool record_residuals;
         std::vector<REAL_T> residuals;
@@ -570,8 +570,8 @@ namespace mas {
         static int k; //number of parameters
 
         NLLComponent(std::vector<variable>* estimated,
-                atl::intrusive_ptr<DataObject<REAL_T> > observed,
-                atl::intrusive_ptr<mas::NLLFunctor<REAL_T> > nll_functor) :
+                mas::backend::intrusive_ptr<DataObject<REAL_T> > observed,
+                mas::backend::intrusive_ptr<mas::NLLFunctor<REAL_T> > nll_functor) :
         estimated(estimated), observed(observed), nll_functor(nll_functor) {
             if (nll_functor->lambda.get() == NULL) {
                 nll_functor->lambda = new mas::DataObject<REAL_T>();
@@ -628,11 +628,11 @@ namespace mas {
                         if (obs != observed->missing_value) {
                             n++;
                             residuals[index] = obs - estimated->at(index).GetValue();
-                            residual_sum_sqr += std::pow(residuals[index], 2.0);
-                            chi_square += (std::pow(residuals[index], 2.0)) / estimated->at(index).GetValue();
-                            g_test += obs * std::log(obs / estimated->at(index).GetValue());
-                            rmse += std::pow(estimated->at(index).GetValue() - obs, 2.0);
-                            rmsle += std::pow(std::log(obs + 1.0) - std::log(estimated->at(index).GetValue() + 1.0), 2.0);
+                            residual_sum_sqr += mas::pow(residuals[index], 2.0);
+                            chi_square += (mas::pow(residuals[index], 2.0)) / estimated->at(index).GetValue();
+                            g_test += obs * mas::log(obs / estimated->at(index).GetValue());
+                            rmse += mas::pow(estimated->at(index).GetValue() - obs, 2.0);
+                            rmsle += mas::pow(mas::log(obs + 1.0) - mas::log(estimated->at(index).GetValue() + 1.0), 2.0);
 
                             // sum of elements of array X. 
                             sum_X = sum_X + estimated->at(index).GetValue();
@@ -654,15 +654,15 @@ namespace mas {
                 }
             }
 
-            this->AIC = n * std::log(residual_sum_sqr / n) + mas::NLLComponent<REAL_T>::k * 2;
-            this->BIC = n * std::log(residual_sum_sqr / n) + mas::NLLComponent<REAL_T>::k * std::log(n);
+            this->AIC = n * mas::log(residual_sum_sqr / n) + mas::NLLComponent<REAL_T>::k * 2;
+            this->BIC = n * mas::log(residual_sum_sqr / n) + mas::NLLComponent<REAL_T>::k * mas::log(n);
 
             g_test *= 2.0;
-            rmse = std::sqrt((1.0 / n) * rmse);
-            rmsle = std::sqrt((1.0 / n) * rmsle);
+            rmse = mas::sqrt((1.0 / n) * rmse);
+            rmsle = mas::sqrt((1.0 / n) * rmsle);
 
             r_squared = (n * sum_XY - sum_X * sum_Y)
-                    / std::sqrt((n * squareSum_X - sum_X * sum_X)
+                    / mas::sqrt((n * squareSum_X - sum_X * sum_X)
                     * (n * squareSum_Y - sum_Y * sum_Y));
 
         }

@@ -25,14 +25,19 @@ namespace mas {
     class JSONOutputGenerator {
         typedef typename VariableTrait<REAL_T>::variable variable;
         typedef typename std::unordered_map<int,
-        atl::intrusive_ptr<mas::Population<REAL_T> > >::iterator population_iterator;
+        mas::backend::intrusive_ptr<mas::Population<REAL_T> > >::iterator population_iterator;
         typedef typename std::unordered_map<int,
-        atl::intrusive_ptr<mas::Fleet<REAL_T> > >::iterator fleet_iterator;
+        mas::backend::intrusive_ptr<mas::Fleet<REAL_T> > >::iterator fleet_iterator;
         typedef typename std::unordered_map<int,
-        atl::intrusive_ptr<mas::Survey<REAL_T> > >::iterator survey_iterator;
+        mas::backend::intrusive_ptr<mas::Survey<REAL_T> > >::iterator survey_iterator;
         typedef typename std::unordered_map<int,
-        atl::intrusive_ptr<mas::Area<REAL_T> > >::iterator area_iterator;
+        mas::backend::intrusive_ptr<mas::Area<REAL_T> > >::iterator area_iterator;
         rapidjson::Document document;
+
+        static rapidjson::Value Number(double value) {
+            if (std::isfinite(value)) return rapidjson::Value(value);
+            return rapidjson::Value(rapidjson::kNullType);
+        }
 
         void GenerateArrayObject(rapidjson::Value &array,
                 const std::vector<variable> &darray, int dimensions, size_t imax,
@@ -45,7 +50,7 @@ namespace mas {
             if (dimensions == 1) {
 
                 for (i = 0; i < imax; i++) {
-                    array.PushBack(darray[i].GetValue(), allocator);
+                    array.PushBack(Number(darray[i].GetValue()), allocator);
                 }
 
             } else if (dimensions == 2) {
@@ -54,7 +59,7 @@ namespace mas {
                             allocator);
                     for (j = 0; j < jmax; j++) {
                         size_t index = i * jmax + j;
-                        array[i].PushBack(darray[index].GetValue(), allocator);
+                        array[i].PushBack(Number(darray[index].GetValue()), allocator);
                     }
                 }
 
@@ -68,7 +73,7 @@ namespace mas {
                                 allocator);
                         for (k = 0; k < kmax; k++) {
                             size_t index = i * jmax * kmax + j * kmax + k;
-                            array[i][j].PushBack(darray[index].GetValue(),
+                            array[i][j].PushBack(Number(darray[index].GetValue()),
                                     allocator);
                         }
                     }
@@ -89,7 +94,7 @@ namespace mas {
             if (dimensions == 1) {
 
                 for (i = 0; i < imax; i++) {
-                    array.PushBack(darray[i], allocator);
+                    array.PushBack(Number(darray[i]), allocator);
                 }
 
             } else if (dimensions == 2) {
@@ -98,7 +103,7 @@ namespace mas {
                             allocator);
                     for (j = 0; j < jmax; j++) {
                         size_t index = i * jmax + j;
-                        array[i].PushBack(darray[index], allocator);
+                        array[i].PushBack(Number(darray[index]), allocator);
                     }
                 }
 
@@ -112,7 +117,7 @@ namespace mas {
                                 allocator);
                         for (k = 0; k < kmax; k++) {
                             size_t index = i * jmax * kmax + j * kmax + k;
-                            array[i][j].PushBack(darray[index], allocator);
+                            array[i][j].PushBack(Number(darray[index]), allocator);
                         }
                     }
                 }
@@ -122,7 +127,7 @@ namespace mas {
         }
 
         void GenerateArrayObject(rapidjson::Value &array,
-                const atl::intrusive_ptr<DataObject<REAL_T> > &darray,
+                const mas::backend::intrusive_ptr<DataObject<REAL_T> > &darray,
                 int dimensions, size_t imax, size_t jmax, size_t kmax) {
 
             size_t i, j, k;
@@ -618,195 +623,195 @@ namespace mas {
                             "these values represent the sum across all subpopulations for this population",
                             this->document.GetAllocator());
                     
-                    popobject.AddMember("msy", popinfo.msy.msy,
+                    popobject.AddMember("msy", popinfo.msy.msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("spr_F0", popinfo.msy.spr_F0,
+                    popobject.AddMember("spr_F0", popinfo.msy.spr_F0.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("F_msy", popinfo.msy.F_msy,
+                    popobject.AddMember("F_msy", popinfo.msy.F_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("spr_msy", popinfo.msy.spr_msy,
+                    popobject.AddMember("spr_msy", popinfo.msy.spr_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SR_msy", popinfo.msy.SR_msy,
+                    popobject.AddMember("SR_msy", popinfo.msy.SR_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("R_msy", popinfo.msy.R_msy,
+                    popobject.AddMember("R_msy", popinfo.msy.R_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SSB_msy", popinfo.msy.SSB_msy,
+                    popobject.AddMember("SSB_msy", popinfo.msy.SSB_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("B_msy", popinfo.msy.B_msy,
+                    popobject.AddMember("B_msy", popinfo.msy.B_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("E_msy", popinfo.msy.E_msy,
+                    popobject.AddMember("E_msy", popinfo.msy.E_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("F30", popinfo.msy.F30,
+                    popobject.AddMember("F30", popinfo.msy.F30.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("spr_F30_msy", popinfo.msy.spr_F30_msy,
+                    popobject.AddMember("spr_F30_msy", popinfo.msy.spr_F30_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SR_F30_msy", popinfo.msy.SR_F30_msy,
+                    popobject.AddMember("SR_F30_msy", popinfo.msy.SR_F30_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("R_F30_msy", popinfo.msy.R_F30_msy,
+                    popobject.AddMember("R_F30_msy", popinfo.msy.R_F30_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SSB_F30_msy", popinfo.msy.SSB_F30_msy,
+                    popobject.AddMember("SSB_F30_msy", popinfo.msy.SSB_F30_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("B_F30_msy", popinfo.msy.B_F30_msy,
+                    popobject.AddMember("B_F30_msy", popinfo.msy.B_F30_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("E_F30_msy", popinfo.msy.E_F30_msy,
+                    popobject.AddMember("E_F30_msy", popinfo.msy.E_F30_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("F35", popinfo.msy.F35,
+                    popobject.AddMember("F35", popinfo.msy.F35.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("spr_F35_msy", popinfo.msy.spr_F35_msy,
+                    popobject.AddMember("spr_F35_msy", popinfo.msy.spr_F35_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SR_F35_msy", popinfo.msy.SR_F35_msy,
+                    popobject.AddMember("SR_F35_msy", popinfo.msy.SR_F35_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("R_F35_msy", popinfo.msy.R_F35_msy,
+                    popobject.AddMember("R_F35_msy", popinfo.msy.R_F35_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SSB_F35_msy", popinfo.msy.SSB_F35_msy,
+                    popobject.AddMember("SSB_F35_msy", popinfo.msy.SSB_F35_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("B_F35_msy", popinfo.msy.B_F35_msy,
+                    popobject.AddMember("B_F35_msy", popinfo.msy.B_F35_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("E_F35_msy", popinfo.msy.E_F35_msy,
+                    popobject.AddMember("E_F35_msy", popinfo.msy.E_F35_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("F40", popinfo.msy.F40,
+                    popobject.AddMember("F40", popinfo.msy.F40.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("spr_F40_msy", popinfo.msy.spr_F40_msy,
+                    popobject.AddMember("spr_F40_msy", popinfo.msy.spr_F40_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SR_F40_msy", popinfo.msy.SR_F40_msy,
+                    popobject.AddMember("SR_F40_msy", popinfo.msy.SR_F40_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("R_F40_msy", popinfo.msy.R_F40_msy,
+                    popobject.AddMember("R_F40_msy", popinfo.msy.R_F40_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SSB_F40_msy", popinfo.msy.SSB_F40_msy,
+                    popobject.AddMember("SSB_F40_msy", popinfo.msy.SSB_F40_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("B_F40_msy", popinfo.msy.B_F40_msy,
+                    popobject.AddMember("B_F40_msy", popinfo.msy.B_F40_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("E_F40_msy", popinfo.msy.E_F40_msy,
+                    popobject.AddMember("E_F40_msy", popinfo.msy.E_F40_msy.GetValue(),
                             this->document.GetAllocator());
                     break;
                 case mas::FEMALE:
                     popobject.AddMember("note",
                             "these values represent the mean across all female subpopulations",
                             this->document.GetAllocator());
-                    popobject.AddMember("msy", popinfo.msy_females.msy,
+                    popobject.AddMember("msy", popinfo.msy_females.msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("spr_F0", popinfo.msy_females.spr_F0,
+                    popobject.AddMember("spr_F0", popinfo.msy_females.spr_F0.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("F_msy", popinfo.msy_females.F_msy,
+                    popobject.AddMember("F_msy", popinfo.msy_females.F_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("spr_msy", popinfo.msy_females.spr_msy,
+                    popobject.AddMember("spr_msy", popinfo.msy_females.spr_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SR_msy", popinfo.msy_females.SR_msy,
+                    popobject.AddMember("SR_msy", popinfo.msy_females.SR_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("R_msy", popinfo.msy_females.R_msy,
+                    popobject.AddMember("R_msy", popinfo.msy_females.R_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SSB_msy", popinfo.msy_females.SSB_msy,
+                    popobject.AddMember("SSB_msy", popinfo.msy_females.SSB_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("B_msy", popinfo.msy_females.B_msy,
+                    popobject.AddMember("B_msy", popinfo.msy_females.B_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("E_msy", popinfo.msy_females.E_msy,
+                    popobject.AddMember("E_msy", popinfo.msy_females.E_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("F30", popinfo.msy_females.F30,
+                    popobject.AddMember("F30", popinfo.msy_females.F30.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("spr_F30_msy", popinfo.msy_females.spr_F30_msy,
+                    popobject.AddMember("spr_F30_msy", popinfo.msy_females.spr_F30_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SR_F30_msy", popinfo.msy_females.SR_F30_msy,
+                    popobject.AddMember("SR_F30_msy", popinfo.msy_females.SR_F30_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("R_F30_msy", popinfo.msy_females.R_F30_msy,
+                    popobject.AddMember("R_F30_msy", popinfo.msy_females.R_F30_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SSB_F30_msy", popinfo.msy_females.SSB_F30_msy,
+                    popobject.AddMember("SSB_F30_msy", popinfo.msy_females.SSB_F30_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("B_F30_msy", popinfo.msy_females.B_F30_msy,
+                    popobject.AddMember("B_F30_msy", popinfo.msy_females.B_F30_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("E_F30_msy", popinfo.msy_females.E_F30_msy,
+                    popobject.AddMember("E_F30_msy", popinfo.msy_females.E_F30_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("F35", popinfo.msy_females.F35,
+                    popobject.AddMember("F35", popinfo.msy_females.F35.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("spr_F35_msy", popinfo.msy_females.spr_F35_msy,
+                    popobject.AddMember("spr_F35_msy", popinfo.msy_females.spr_F35_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SR_F35_msy", popinfo.msy_females.SR_F35_msy,
+                    popobject.AddMember("SR_F35_msy", popinfo.msy_females.SR_F35_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("R_F35_msy", popinfo.msy_females.R_F35_msy,
+                    popobject.AddMember("R_F35_msy", popinfo.msy_females.R_F35_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SSB_F35_msy", popinfo.msy_females.SSB_F35_msy,
+                    popobject.AddMember("SSB_F35_msy", popinfo.msy_females.SSB_F35_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("B_F35_msy", popinfo.msy_females.B_F35_msy,
+                    popobject.AddMember("B_F35_msy", popinfo.msy_females.B_F35_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("E_F35_msy", popinfo.msy_females.E_F35_msy,
+                    popobject.AddMember("E_F35_msy", popinfo.msy_females.E_F35_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("F40", popinfo.msy_females.F40,
+                    popobject.AddMember("F40", popinfo.msy_females.F40.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("spr_F40_msy", popinfo.msy_females.spr_F40_msy,
+                    popobject.AddMember("spr_F40_msy", popinfo.msy_females.spr_F40_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SR_F40_msy", popinfo.msy_females.SR_F40_msy,
+                    popobject.AddMember("SR_F40_msy", popinfo.msy_females.SR_F40_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("R_F40_msy", popinfo.msy_females.R_F40_msy,
+                    popobject.AddMember("R_F40_msy", popinfo.msy_females.R_F40_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SSB_F40_msy", popinfo.msy_females.SSB_F40_msy,
+                    popobject.AddMember("SSB_F40_msy", popinfo.msy_females.SSB_F40_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("B_F40_msy", popinfo.msy_females.B_F40_msy,
+                    popobject.AddMember("B_F40_msy", popinfo.msy_females.B_F40_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("E_F40_msy", popinfo.msy_females.E_F40_msy,
+                    popobject.AddMember("E_F40_msy", popinfo.msy_females.E_F40_msy.GetValue(),
                             this->document.GetAllocator());
                     break;
                 case mas::MALE:
                     popobject.AddMember("note",
                             "these values represent the mean across all male subpopulations",
                             this->document.GetAllocator());
-                    popobject.AddMember("msy", popinfo.msy_males.msy,
+                    popobject.AddMember("msy", popinfo.msy_males.msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("spr_F0", popinfo.msy_males.spr_F0,
+                    popobject.AddMember("spr_F0", popinfo.msy_males.spr_F0.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("F_msy", popinfo.msy_males.F_msy,
+                    popobject.AddMember("F_msy", popinfo.msy_males.F_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("spr_msy", popinfo.msy_males.spr_msy,
+                    popobject.AddMember("spr_msy", popinfo.msy_males.spr_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SR_msy", popinfo.msy_males.SR_msy,
+                    popobject.AddMember("SR_msy", popinfo.msy_males.SR_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("R_msy", popinfo.msy_males.R_msy,
+                    popobject.AddMember("R_msy", popinfo.msy_males.R_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SSB_msy", popinfo.msy_males.SSB_msy,
+                    popobject.AddMember("SSB_msy", popinfo.msy_males.SSB_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("B_msy", popinfo.msy_males.B_msy,
+                    popobject.AddMember("B_msy", popinfo.msy_males.B_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("E_msy", popinfo.msy_males.E_msy,
+                    popobject.AddMember("E_msy", popinfo.msy_males.E_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("F30", popinfo.msy_males.F30,
+                    popobject.AddMember("F30", popinfo.msy_males.F30.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("spr_F30_msy", popinfo.msy_males.spr_F30_msy,
+                    popobject.AddMember("spr_F30_msy", popinfo.msy_males.spr_F30_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SR_F30_msy", popinfo.msy_males.SR_F30_msy,
+                    popobject.AddMember("SR_F30_msy", popinfo.msy_males.SR_F30_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("R_F30_msy", popinfo.msy_males.R_F30_msy,
+                    popobject.AddMember("R_F30_msy", popinfo.msy_males.R_F30_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SSB_F30_msy", popinfo.msy_males.SSB_F30_msy,
+                    popobject.AddMember("SSB_F30_msy", popinfo.msy_males.SSB_F30_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("B_F30_msy", popinfo.msy_males.B_F30_msy,
+                    popobject.AddMember("B_F30_msy", popinfo.msy_males.B_F30_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("E_F30_msy", popinfo.msy_males.E_F30_msy,
+                    popobject.AddMember("E_F30_msy", popinfo.msy_males.E_F30_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("F35", popinfo.msy_males.F35,
+                    popobject.AddMember("F35", popinfo.msy_males.F35.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("spr_F35_msy", popinfo.msy_males.spr_F35_msy,
+                    popobject.AddMember("spr_F35_msy", popinfo.msy_males.spr_F35_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SR_F35_msy", popinfo.msy_males.SR_F35_msy,
+                    popobject.AddMember("SR_F35_msy", popinfo.msy_males.SR_F35_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("R_F35_msy", popinfo.msy_males.R_F35_msy,
+                    popobject.AddMember("R_F35_msy", popinfo.msy_males.R_F35_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SSB_F35_msy", popinfo.msy_males.SSB_F35_msy,
+                    popobject.AddMember("SSB_F35_msy", popinfo.msy_males.SSB_F35_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("B_F35_msy", popinfo.msy_males.B_F35_msy,
+                    popobject.AddMember("B_F35_msy", popinfo.msy_males.B_F35_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("E_F35_msy", popinfo.msy_males.E_F35_msy,
+                    popobject.AddMember("E_F35_msy", popinfo.msy_males.E_F35_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("F40", popinfo.msy_males.F40,
+                    popobject.AddMember("F40", popinfo.msy_males.F40.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("spr_F40_msy", popinfo.msy_males.spr_F40_msy,
+                    popobject.AddMember("spr_F40_msy", popinfo.msy_males.spr_F40_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SR_F40_msy", popinfo.msy_males.SR_F40_msy,
+                    popobject.AddMember("SR_F40_msy", popinfo.msy_males.SR_F40_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("R_F40_msy", popinfo.msy_males.R_F40_msy,
+                    popobject.AddMember("R_F40_msy", popinfo.msy_males.R_F40_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("SSB_F40_msy", popinfo.msy_males.SSB_F40_msy,
+                    popobject.AddMember("SSB_F40_msy", popinfo.msy_males.SSB_F40_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("B_F40_msy", popinfo.msy_males.B_F40_msy,
+                    popobject.AddMember("B_F40_msy", popinfo.msy_males.B_F40_msy.GetValue(),
                             this->document.GetAllocator());
-                    popobject.AddMember("E_F40_msy", popinfo.msy_males.E_F40_msy,
+                    popobject.AddMember("E_F40_msy", popinfo.msy_males.E_F40_msy.GetValue(),
                             this->document.GetAllocator());
                     break;
 
@@ -815,130 +820,130 @@ namespace mas {
 
         void GenerateReferencePoints(rapidjson::Value &popobject,
                 const mas::Subpopulation<REAL_T> &popinfo) {
-            popobject.AddMember("msy", popinfo.msy.msy,
+            popobject.AddMember("msy", popinfo.msy.msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("spr_F0", popinfo.msy.spr_F0,
+            popobject.AddMember("spr_F0", popinfo.msy.spr_F0.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("F_msy", popinfo.msy.F_msy,
+            popobject.AddMember("F_msy", popinfo.msy.F_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("spr_msy", popinfo.msy.spr_msy,
+            popobject.AddMember("spr_msy", popinfo.msy.spr_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("SR_msy", popinfo.msy.SR_msy,
+            popobject.AddMember("SR_msy", popinfo.msy.SR_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("R_msy", popinfo.msy.R_msy,
+            popobject.AddMember("R_msy", popinfo.msy.R_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("SSB_msy", popinfo.msy.SSB_msy,
+            popobject.AddMember("SSB_msy", popinfo.msy.SSB_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("B_msy", popinfo.msy.B_msy,
+            popobject.AddMember("B_msy", popinfo.msy.B_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("E_msy", popinfo.msy.E_msy,
+            popobject.AddMember("E_msy", popinfo.msy.E_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("F30", popinfo.msy.F30,
+            popobject.AddMember("F30", popinfo.msy.F30.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("spr_F30_msy", popinfo.msy.spr_F30_msy,
+            popobject.AddMember("spr_F30_msy", popinfo.msy.spr_F30_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("SR_F30_msy", popinfo.msy.SR_F30_msy,
+            popobject.AddMember("SR_F30_msy", popinfo.msy.SR_F30_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("R_F30_msy", popinfo.msy.R_F30_msy,
+            popobject.AddMember("R_F30_msy", popinfo.msy.R_F30_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("SSB_F30_msy", popinfo.msy.SSB_F30_msy,
+            popobject.AddMember("SSB_F30_msy", popinfo.msy.SSB_F30_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("B_F30_msy", popinfo.msy.B_F30_msy,
+            popobject.AddMember("B_F30_msy", popinfo.msy.B_F30_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("E_F30_msy", popinfo.msy.E_F30_msy,
+            popobject.AddMember("E_F30_msy", popinfo.msy.E_F30_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("F35", popinfo.msy.F35,
+            popobject.AddMember("F35", popinfo.msy.F35.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("spr_F35_msy", popinfo.msy.spr_F35_msy,
+            popobject.AddMember("spr_F35_msy", popinfo.msy.spr_F35_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("SR_F35_msy", popinfo.msy.SR_F35_msy,
+            popobject.AddMember("SR_F35_msy", popinfo.msy.SR_F35_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("R_F35_msy", popinfo.msy.R_F35_msy,
+            popobject.AddMember("R_F35_msy", popinfo.msy.R_F35_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("SSB_F35_msy", popinfo.msy.SSB_F35_msy,
+            popobject.AddMember("SSB_F35_msy", popinfo.msy.SSB_F35_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("B_F35_msy", popinfo.msy.B_F35_msy,
+            popobject.AddMember("B_F35_msy", popinfo.msy.B_F35_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("E_F35_msy", popinfo.msy.E_F35_msy,
+            popobject.AddMember("E_F35_msy", popinfo.msy.E_F35_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("F40", popinfo.msy.F40,
+            popobject.AddMember("F40", popinfo.msy.F40.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("spr_F40_msy", popinfo.msy.spr_F40_msy,
+            popobject.AddMember("spr_F40_msy", popinfo.msy.spr_F40_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("SR_F40_msy", popinfo.msy.SR_F40_msy,
+            popobject.AddMember("SR_F40_msy", popinfo.msy.SR_F40_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("R_F40_msy", popinfo.msy.R_F40_msy,
+            popobject.AddMember("R_F40_msy", popinfo.msy.R_F40_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("SSB_F40_msy", popinfo.msy.SSB_F40_msy,
+            popobject.AddMember("SSB_F40_msy", popinfo.msy.SSB_F40_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("B_F40_msy", popinfo.msy.B_F40_msy,
+            popobject.AddMember("B_F40_msy", popinfo.msy.B_F40_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("E_F40_msy", popinfo.msy.E_F40_msy,
+            popobject.AddMember("E_F40_msy", popinfo.msy.E_F40_msy.GetValue(),
                     this->document.GetAllocator());
 
         }
 
         void GenerateReferencePoints(rapidjson::Value &popobject,
                 const mas::Area<REAL_T> &popinfo) {
-            popobject.AddMember("msy", popinfo.msy.msy,
+            popobject.AddMember("msy", popinfo.msy.msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("spr_F0", popinfo.msy.spr_F0,
+            popobject.AddMember("spr_F0", popinfo.msy.spr_F0.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("F_msy", popinfo.msy.F_msy,
+            popobject.AddMember("F_msy", popinfo.msy.F_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("spr_msy", popinfo.msy.spr_msy,
+            popobject.AddMember("spr_msy", popinfo.msy.spr_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("SR_msy", popinfo.msy.SR_msy,
+            popobject.AddMember("SR_msy", popinfo.msy.SR_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("R_msy", popinfo.msy.R_msy,
+            popobject.AddMember("R_msy", popinfo.msy.R_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("SSB_msy", popinfo.msy.SSB_msy,
+            popobject.AddMember("SSB_msy", popinfo.msy.SSB_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("B_msy", popinfo.msy.B_msy,
+            popobject.AddMember("B_msy", popinfo.msy.B_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("E_msy", popinfo.msy.E_msy,
+            popobject.AddMember("E_msy", popinfo.msy.E_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("F30", popinfo.msy.F30,
+            popobject.AddMember("F30", popinfo.msy.F30.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("spr_F30_msy", popinfo.msy.spr_F30_msy,
+            popobject.AddMember("spr_F30_msy", popinfo.msy.spr_F30_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("SR_F30_msy", popinfo.msy.SR_F30_msy,
+            popobject.AddMember("SR_F30_msy", popinfo.msy.SR_F30_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("R_F30_msy", popinfo.msy.R_F30_msy,
+            popobject.AddMember("R_F30_msy", popinfo.msy.R_F30_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("SSB_F30_msy", popinfo.msy.SSB_F30_msy,
+            popobject.AddMember("SSB_F30_msy", popinfo.msy.SSB_F30_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("B_F30_msy", popinfo.msy.B_F30_msy,
+            popobject.AddMember("B_F30_msy", popinfo.msy.B_F30_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("E_F30_msy", popinfo.msy.E_F30_msy,
+            popobject.AddMember("E_F30_msy", popinfo.msy.E_F30_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("F35", popinfo.msy.F35,
+            popobject.AddMember("F35", popinfo.msy.F35.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("spr_F35_msy", popinfo.msy.spr_F35_msy,
+            popobject.AddMember("spr_F35_msy", popinfo.msy.spr_F35_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("SR_F35_msy", popinfo.msy.SR_F35_msy,
+            popobject.AddMember("SR_F35_msy", popinfo.msy.SR_F35_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("R_F35_msy", popinfo.msy.R_F35_msy,
+            popobject.AddMember("R_F35_msy", popinfo.msy.R_F35_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("SSB_F35_msy", popinfo.msy.SSB_F35_msy,
+            popobject.AddMember("SSB_F35_msy", popinfo.msy.SSB_F35_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("B_F35_msy", popinfo.msy.B_F35_msy,
+            popobject.AddMember("B_F35_msy", popinfo.msy.B_F35_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("E_F35_msy", popinfo.msy.E_F35_msy,
+            popobject.AddMember("E_F35_msy", popinfo.msy.E_F35_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("F40", popinfo.msy.F40,
+            popobject.AddMember("F40", popinfo.msy.F40.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("spr_F40_msy", popinfo.msy.spr_F40_msy,
+            popobject.AddMember("spr_F40_msy", popinfo.msy.spr_F40_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("SR_F40_msy", popinfo.msy.SR_F40_msy,
+            popobject.AddMember("SR_F40_msy", popinfo.msy.SR_F40_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("R_F40_msy", popinfo.msy.R_F40_msy,
+            popobject.AddMember("R_F40_msy", popinfo.msy.R_F40_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("SSB_F40_msy", popinfo.msy.SSB_F40_msy,
+            popobject.AddMember("SSB_F40_msy", popinfo.msy.SSB_F40_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("B_F40_msy", popinfo.msy.B_F40_msy,
+            popobject.AddMember("B_F40_msy", popinfo.msy.B_F40_msy.GetValue(),
                     this->document.GetAllocator());
-            popobject.AddMember("E_F40_msy", popinfo.msy.E_F40_msy,
+            popobject.AddMember("E_F40_msy", popinfo.msy.E_F40_msy.GetValue(),
                     this->document.GetAllocator());
 
         }
@@ -1201,7 +1206,7 @@ namespace mas {
         }
 
         void GenerateFleetOutput(rapidjson::Value &popobject,
-                const atl::intrusive_ptr<mas::Fleet<REAL_T> > &fleet) {
+                const mas::backend::intrusive_ptr<mas::Fleet<REAL_T> > &fleet) {
 
             rapidjson::Value females(rapidjson::kObjectType);
             rapidjson::Value males(rapidjson::kObjectType);
@@ -1557,7 +1562,7 @@ namespace mas {
         }
 
         void GenerateSurveyOutput(rapidjson::Value &popobject,
-                const atl::intrusive_ptr<mas::Survey<REAL_T> > &survey) {
+                const mas::backend::intrusive_ptr<mas::Survey<REAL_T> > &survey) {
 
             rapidjson::Value females(rapidjson::kObjectType);
             rapidjson::Value males(rapidjson::kObjectType);
@@ -1805,7 +1810,7 @@ namespace mas {
         }
 
         void GenerateAreaOutput(rapidjson::Value &popobject,
-                const atl::intrusive_ptr<mas::Area<REAL_T> > &area) {
+                const mas::backend::intrusive_ptr<mas::Area<REAL_T> > &area) {
         }
 
         void GenerateConfig(rapidjson::Value &popobject,
@@ -1842,16 +1847,20 @@ namespace mas {
             metrics.AddMember("RMSE", mas.rmse, allocator);
             metrics.AddMember("RMSLE", mas.rmsle, allocator);
             metrics.AddMember("AIC", mas.AIC, allocator);
+            metrics.AddMember("converged",mas.fit_converged,allocator);
+            rapidjson::Value optimizer_status;
+            optimizer_status.SetString(mas.optimizer_status.c_str(),allocator);
+            metrics.AddMember("optimizer_status",optimizer_status,allocator);
             metrics.AddMember("BIC", mas.BIC, allocator);
 
             rapidjson::Value rcomponent(rapidjson::kObjectType);
             rcomponent.AddMember("name", "recruitment_likelihood", allocator);
-            rcomponent.AddMember("value", mas.recruitment_likelihood, allocator);
+            rcomponent.AddMember("value", mas.recruitment_likelihood.GetValue(), allocator);
             likelihood_components.PushBack(rcomponent, allocator);
 
             rapidjson::Value scomponent(rapidjson::kObjectType);
             scomponent.AddMember("name", "selectivity_likelihood", allocator);
-            scomponent.AddMember("value", mas.selectivity_likelihood, allocator);
+            scomponent.AddMember("value", mas.selectivity_likelihood.GetValue(), allocator);
             likelihood_components.PushBack(scomponent, allocator);
 
             fleet_iterator fit;
@@ -1959,14 +1968,15 @@ namespace mas {
                 rapidjson::Value parameter(rapidjson::kObjectType);
                 std::string n = mas.info.estimated_parameters[i]->GetName();
                 //                rapidjson::GenericStringRef<char> name(n.c_str(), n.size());
-                REAL_T g = atl::Variable<REAL_T>::tape.Value(
-                        mas.info.estimated_parameters[i]->info->id);
+                REAL_T g = mas.parameter_gradients.size() == mas.info.estimated_parameters.size()
+                        ? mas.parameter_gradients[i]
+                        : mas::backend::Variable<REAL_T>::tape.Value(mas.info.estimated_parameters[i]->info->id);
 
                 rapidjson::Value name;
                 name.SetString(n.c_str(), n.size(), allocator);
                 parameter.AddMember("name", name, allocator);
-                if (std::fabs(g) > max_gc) {
-                    max_gc = std::fabs(g);
+                if (mas::fabs(g) > max_gc) {
+                    max_gc = mas::fabs(g);
                     name_max_gc = n;
                     gc = g;
                     p = mas.info.estimated_parameters[i]->GetValue();
@@ -1993,10 +2003,14 @@ namespace mas {
             estimated_parameters.AddMember("parameters", estimated_parameters_array,
                     allocator);
 
+            rapidjson::Value covariance_status;
+            covariance_status.SetString(mas.covariance_status.c_str(),allocator);
+            estimated_parameters.AddMember("covariance_status",covariance_status,allocator);
+            estimated_parameters.AddMember("covariance_rank",mas.covariance_rank,allocator);
             rapidjson::Value stddev(rapidjson::kObjectType);
             rapidjson::Value stddev_values(rapidjson::kArrayType);
             for (int i = 0; i < mas.std_dev.GetSize(); i++) {
-                stddev_values.PushBack(mas.std_dev(i), allocator);
+                stddev_values.PushBack(Number(mas.std_dev(i)), allocator);
             }
 
             stddev.AddMember("values", stddev_values, allocator);
@@ -2009,7 +2023,7 @@ namespace mas {
                 varcovar_values.PushBack(rapidjson::Value(rapidjson::kArrayType),
                         allocator);
                 for (int j = 0; j < mas.variance_covaiance.GetColumns(); j++) {
-                    varcovar_values[i].PushBack(mas.variance_covaiance(i, j),
+                    varcovar_values[i].PushBack(Number(mas.variance_covaiance(i, j)),
                             allocator);
                 }
             }
@@ -2019,13 +2033,66 @@ namespace mas {
 
             document.AddMember("estimated_parameters", estimated_parameters,
                     allocator);
+
+            // Serialize Quadra's report results; MAS does not recalculate SEs,
+            // confidence intervals, CVs, or derived variances here.
+            rapidjson::Value uncertainty(rapidjson::kObjectType);
+            uncertainty.AddMember("backend","Quadra",allocator);
+            rapidjson::Value fixed_report(rapidjson::kObjectType);
+            fixed_report.AddMember("success",mas.fixed_effect_report.success_m,allocator);
+            rapidjson::Value fixed_message;
+            fixed_message.SetString(mas.fixed_effect_report.message_m.c_str(),allocator);
+            fixed_report.AddMember("message",fixed_message,allocator);
+            rapidjson::Value fixed_rows(rapidjson::kArrayType);
+            for (const auto& row:mas.fixed_effect_report.rows_m) {
+                rapidjson::Value item(rapidjson::kObjectType), name;
+                name.SetString(row.name_m.c_str(),allocator);
+                item.AddMember("name",name,allocator);
+                item.AddMember("estimate",Number(row.estimate_m),allocator);
+                item.AddMember("std_error",Number(row.std_error_m),allocator);
+                item.AddMember("z_value",Number(row.z_value_m),allocator);
+                item.AddMember("lower95",Number(row.lower95_m),allocator);
+                item.AddMember("upper95",Number(row.upper95_m),allocator);
+                fixed_rows.PushBack(item,allocator);
+            }
+            fixed_report.AddMember("rows",fixed_rows,allocator);
+            uncertainty.AddMember("fixed_effects",fixed_report,allocator);
+            rapidjson::Value derived_report(rapidjson::kObjectType), derived_message;
+            derived_report.AddMember("success",mas.derived_report.success_m,allocator);
+            derived_message.SetString(mas.derived_report.message_m.c_str(),allocator);
+            derived_report.AddMember("message",derived_message,allocator);
+            rapidjson::Value derived_rows(rapidjson::kArrayType);
+            if (mas.derived_report.success_m) {
+                const auto& delta=mas.derived_report.delta_m;
+                for (std::size_t i=0;i<mas.derived_report.names_m.size();++i) {
+                    rapidjson::Value item(rapidjson::kObjectType), name;
+                    name.SetString(mas.derived_report.names_m[i].c_str(),allocator);
+                    item.AddMember("name",name,allocator);
+                    item.AddMember("estimate",Number(delta.estimate_m[i]),allocator);
+                    item.AddMember("variance",Number(delta.covariance_m(i,i)),allocator);
+                    item.AddMember("std_error",Number(delta.std_error_m[i]),allocator);
+                    item.AddMember("cv",Number(delta.cv_m[i]),allocator);
+                    derived_rows.PushBack(item,allocator);
+                }
+            }
+            derived_report.AddMember("rows",derived_rows,allocator);
+            rapidjson::Value unrecorded(rapidjson::kArrayType);
+            for (const auto& label:mas.unrecorded_derived_quantities) {
+                rapidjson::Value name;
+                name.SetString(label.c_str(),allocator);
+                unrecorded.PushBack(name,allocator);
+            }
+            derived_report.AddMember("unrecorded_quantities",unrecorded,allocator);
+            uncertainty.AddMember("derived",derived_report,allocator);
+            document.AddMember("uncertainty",uncertainty,allocator);
+
             population_iterator pit;
 
             rapidjson::Value popdyn(rapidjson::kObjectType);
 
             rapidjson::Value ages_array(rapidjson::kArrayType);
             for (int i = 0; i < mas.info.ages.size(); i++) {
-                ages_array.PushBack(mas.info.ages[i], allocator);
+                ages_array.PushBack(mas.info.ages[i].GetValue(), allocator);
             }
             popdyn.AddMember("nyears", mas.info.nyears, allocator);
             popdyn.AddMember("nseasons", mas.info.nseasons, allocator);
@@ -2045,7 +2112,7 @@ namespace mas {
                 rapidjson::Value males(rapidjson::kObjectType);
                 rapidjson::Value undiff(rapidjson::kObjectType);
 
-                females.AddMember("SB0", (*pit).second->SB0, allocator);
+                females.AddMember("SB0", (*pit).second->SB0.GetValue(), allocator);
 
                 rapidjson::Value fmsy(rapidjson::kObjectType);
                 this->GenerateReferencePoints(fmsy, *(*pit).second, mas::FEMALE);
@@ -2112,7 +2179,7 @@ namespace mas {
 
                 Popobject.AddMember("females", females, allocator);
 
-                males.AddMember("SB0", (*pit).second->SB0, allocator);
+                males.AddMember("SB0", (*pit).second->SB0.GetValue(), allocator);
 
                 rapidjson::Value mmsy(rapidjson::kObjectType);
                 this->GenerateReferencePoints(mmsy, *(*pit).second, mas::MALE);
@@ -2178,7 +2245,7 @@ namespace mas {
 
                 Popobject.AddMember("males", males, allocator);
 
-                undiff.AddMember("SB0", (*pit).second->SB0, allocator);
+                undiff.AddMember("SB0", (*pit).second->SB0.GetValue(), allocator);
 
                 rapidjson::Value urecruits(rapidjson::kObjectType);
                 urecruits.AddMember("units", "1000 fish", allocator);
@@ -2268,7 +2335,7 @@ namespace mas {
                     rapidjson::Value init_numbers(rapidjson::kObjectType);
 
                     females.AddMember("initial_f",
-                            (*pit).second->females[(*pit).second->areas_list[i]->id].initialF,
+                            (*pit).second->females[(*pit).second->areas_list[i]->id].initialF.GetValue(),
                             allocator);
 
                     rapidjson::Value fnvalues(rapidjson::kArrayType);
@@ -2301,7 +2368,7 @@ namespace mas {
                             allocator);
 
                     females.AddMember("unfished_spawning_biomass_equilibrium",
-                            (*pit).second->females[(*pit).second->areas_list[i]->id].SB0,
+                            (*pit).second->females[(*pit).second->areas_list[i]->id].SB0.GetValue(),
                             allocator);
 
                     init_numbers_eq.AddMember("units", "1000 fish", allocator);
@@ -2412,7 +2479,7 @@ namespace mas {
                     rapidjson::Value minit_numbers(rapidjson::kObjectType);
 
                     males.AddMember("initial_f",
-                            (*pit).second->males[(*pit).second->areas_list[i]->id].initialF,
+                            (*pit).second->males[(*pit).second->areas_list[i]->id].initialF.GetValue(),
                             allocator);
 
                     rapidjson::Value mnvalues(rapidjson::kArrayType);
@@ -2445,7 +2512,7 @@ namespace mas {
                             allocator);
 
                     males.AddMember("unfished_spawning_biomass_equilibrium",
-                            (*pit).second->males[(*pit).second->areas_list[i]->id].SB0,
+                            (*pit).second->males[(*pit).second->areas_list[i]->id].SB0.GetValue(),
                             allocator);
 
                     mminit_numbers_eq.AddMember("units", "1000 fish", allocator);

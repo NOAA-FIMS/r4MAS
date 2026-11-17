@@ -56,47 +56,47 @@ namespace mas {
         bool has_catch_data_numbers_at_age;
         bool has_catch_data_proportion_at_age;
         std::vector<bool> active_years;
-        atl::intrusive_ptr<DataObject<REAL_T> > catch_biomass_data;
-        atl::intrusive_ptr<DataObject<REAL_T> > catch_abundance_data;
+        mas::backend::intrusive_ptr<DataObject<REAL_T> > catch_biomass_data;
+        mas::backend::intrusive_ptr<DataObject<REAL_T> > catch_abundance_data;
         // NOTE:  need sex-specific proportions-at-age, proportions-at-length, and mean size-at-age data
-        atl::intrusive_ptr<DataObject<REAL_T> > catch_proportion_at_age_data_N;
-        atl::intrusive_ptr<DataObject<REAL_T> > catch_proportion_at_age_data;
-        atl::intrusive_ptr<DataObject<REAL_T> > catch_proportion_at_length_data_N;
-        atl::intrusive_ptr<DataObject<REAL_T> > catch_proportion_at_length_data;
-        atl::intrusive_ptr<DataObject<REAL_T> > catch_mean_size_at_age_data;
-        atl::intrusive_ptr<DataObject<REAL_T> > catch_mean_weight_at_age_data;
-        atl::intrusive_ptr<DataObject<REAL_T> > catch_mean_weight_at_age_data_female;
-        atl::intrusive_ptr<DataObject<REAL_T> > catch_mean_weight_at_age_data_male;
+        mas::backend::intrusive_ptr<DataObject<REAL_T> > catch_proportion_at_age_data_N;
+        mas::backend::intrusive_ptr<DataObject<REAL_T> > catch_proportion_at_age_data;
+        mas::backend::intrusive_ptr<DataObject<REAL_T> > catch_proportion_at_length_data_N;
+        mas::backend::intrusive_ptr<DataObject<REAL_T> > catch_proportion_at_length_data;
+        mas::backend::intrusive_ptr<DataObject<REAL_T> > catch_mean_size_at_age_data;
+        mas::backend::intrusive_ptr<DataObject<REAL_T> > catch_mean_weight_at_age_data;
+        mas::backend::intrusive_ptr<DataObject<REAL_T> > catch_mean_weight_at_age_data_female;
+        mas::backend::intrusive_ptr<DataObject<REAL_T> > catch_mean_weight_at_age_data_male;
 
-        std::vector<atl::intrusive_ptr<DataObject<REAL_T> > > data_objects;
+        std::vector<mas::backend::intrusive_ptr<DataObject<REAL_T> > > data_objects;
         std::vector<variable> nll_component_values;
 
         int fishery_age_comp_likelihood_component_id = -999;
-        atl::intrusive_ptr<mas::NLLFunctor<REAL_T> > fishery_age_comp_likelihood_component;
+        mas::backend::intrusive_ptr<mas::NLLFunctor<REAL_T> > fishery_age_comp_likelihood_component;
 
         int fishery_length_comp_likelihood_component_id = -999;
-        atl::intrusive_ptr<mas::NLLFunctor<REAL_T> > fishery_length_comp_likelihood_component;
+        mas::backend::intrusive_ptr<mas::NLLFunctor<REAL_T> > fishery_length_comp_likelihood_component;
 
         int fishery_biomass_likelihood_component_id = -999;
-        atl::intrusive_ptr<mas::NLLFunctor<REAL_T> > fishery_biomass_likelihood_component;
+        mas::backend::intrusive_ptr<mas::NLLFunctor<REAL_T> > fishery_biomass_likelihood_component;
 
         int fishery_biomass_index_likelihood_component_id = -999;
-        atl::intrusive_ptr<mas::NLLFunctor<REAL_T> > fishery_biomass_index_likelihood_component;
+        mas::backend::intrusive_ptr<mas::NLLFunctor<REAL_T> > fishery_biomass_index_likelihood_component;
 
         int fishery_abundance_likelihood_component_id = -999;
-        atl::intrusive_ptr<mas::NLLFunctor<REAL_T> > fishery_abundance_likelihood_component;
+        mas::backend::intrusive_ptr<mas::NLLFunctor<REAL_T> > fishery_abundance_likelihood_component;
 
         std::unordered_set<int> operational_areas;
         std::unordered_map<int, std::unordered_map<int, int> > season_area_selectivity_ids;
         std::unordered_map<int, std::unordered_map<int, std::vector<int> > > season_area_selectivity_ensemble_ids;
         std::unordered_map<int,
         std::unordered_map<int,
-        atl::intrusive_ptr<mas::SelectivityBase<REAL_T> > > > season_area_selectivity;
+        mas::backend::intrusive_ptr<mas::SelectivityBase<REAL_T> > > > season_area_selectivity;
 
         std::unordered_map<int, std::unordered_map<int, int> > area_season_selectivity_ids;
         std::unordered_map<int,
         std::unordered_map<int,
-        atl::intrusive_ptr<mas::SelectivityBase<REAL_T> > > > area_season_selectivity;
+        mas::backend::intrusive_ptr<mas::SelectivityBase<REAL_T> > > > area_season_selectivity;
 
         std::unordered_map<int, std::unordered_map<int, REAL_T> > season_area_catch_fraction;
         std::unordered_map<int, std::unordered_map<int, REAL_T> > area_season_catch_fraction;
@@ -104,30 +104,30 @@ namespace mas {
         std::unordered_map<int, std::unordered_map<int, int> > area_season_fishing_mortality_ids;
         std::unordered_map<int,
         std::unordered_map<int,
-        atl::intrusive_ptr<mas::FishingMortality<REAL_T> > > > area_season_fishing_mortality;
+        mas::backend::intrusive_ptr<mas::FishingMortality<REAL_T> > > > area_season_fishing_mortality;
 
         std::unordered_map<int, std::unordered_map<int, int> > season_area_fishing_mortality_ids;
         std::unordered_map<int, std::unordered_map<int, std::vector<int> > > season_area_fishing_mortality_ensemble_ids;
         std::unordered_map<int,
         std::unordered_map<int,
-        atl::intrusive_ptr<mas::FishingMortality<REAL_T> > > > season_area_fishing_mortality;
+        mas::backend::intrusive_ptr<mas::FishingMortality<REAL_T> > > > season_area_fishing_mortality;
 
         typedef typename std::unordered_map<int, std::unordered_map<int, int> >::iterator season_area_selectivity_ids_iterator;
         typedef typename std::unordered_map<int,
-        atl::intrusive_ptr<mas::SelectivityBase<REAL_T> > >::iterator area_sectivity_iterator;
+        mas::backend::intrusive_ptr<mas::SelectivityBase<REAL_T> > >::iterator area_sectivity_iterator;
         typedef typename std::unordered_map<int, std::unordered_map<int, int> >::iterator season_area_id_iterator;
         typedef typename std::unordered_map<int, int>::iterator area_id_iterator;
         typedef typename std::unordered_map<int, int>::iterator season_id_iterator;
         typedef typename std::unordered_map<int,
         std::unordered_map<int,
-        atl::intrusive_ptr<mas::SelectivityBase<REAL_T> > > >::iterator season_area_selectivity_iterator;
+        mas::backend::intrusive_ptr<mas::SelectivityBase<REAL_T> > > >::iterator season_area_selectivity_iterator;
         typedef typename std::unordered_map<int,
         std::unordered_map<int,
-        atl::intrusive_ptr<mas::FishingMortality<REAL_T> > > >::iterator season_area_fishing_mortality_iterator;
+        mas::backend::intrusive_ptr<mas::FishingMortality<REAL_T> > > >::iterator season_area_fishing_mortality_iterator;
         typedef typename std::unordered_map<int,
-        atl::intrusive_ptr<mas::FishingMortality<REAL_T> > >::iterator area_fishing_mortality_iterator;
+        mas::backend::intrusive_ptr<mas::FishingMortality<REAL_T> > >::iterator area_fishing_mortality_iterator;
         typedef typename std::unordered_map<int,
-        atl::intrusive_ptr<mas::FishingMortality<REAL_T> > >::iterator delta_method_fishing_mortality_iterator;
+        mas::backend::intrusive_ptr<mas::FishingMortality<REAL_T> > >::iterator delta_method_fishing_mortality_iterator;
 
         std::vector<variable> catch_biomass_total;
         std::vector<variable> catch_abundance;
@@ -602,7 +602,7 @@ namespace mas {
             this->catch_proportion_at_age_data->sample_size.resize(
                     this->years * this->seasons);
 
-            REAL_T sd = std::sqrt(std::log(1 + std::pow(this->CV, 2.0)));
+            REAL_T sd = mas::sqrt(mas::log(1 + mas::pow(this->CV, 2.0)));
 
             std::default_random_engine generator;
             std::normal_distribution<double> distribution(0.0, sd);
@@ -612,7 +612,7 @@ namespace mas {
 
                     this->catch_biomass_data->get(y, s) =
                             this->catch_biomass_total[y * this->seasons + s].GetValue()
-                            * std::exp(distribution(generator));
+                            * mas::exp(distribution(generator));
 
                     this->catch_biomass_data->get_error(y, s) = this->CV;
 
@@ -689,7 +689,7 @@ namespace mas {
             if (temp != catch_biomass_data->missing_value) {
                 this->catch_biomass_component += .5
                         * mas::pow(
-                        std::log(temp + o)
+                        mas::log(temp + o)
                         - mas::log(
                         this->catch_biomass_total[year
                         * seasons + season] + o),
@@ -711,7 +711,7 @@ namespace mas {
                             + (season) * this->ages + a;
                     this->fishery_age_comp_component -= temp_sample_size * temp_data
                             * (mas::log(this->catch_proportion_at_age[index] + o)
-                            - std::log(temp_data + o));
+                            - mas::log(temp_data + o));
                 }
             }
         }

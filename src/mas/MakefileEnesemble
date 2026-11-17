@@ -7,11 +7,12 @@
 ## This file is generated automatically.
 ##
 #### Compiler and tool definitions shared by all build targets #####
-CCC = mpic++++
+CCC = mpic++
 CXX = mpic++
 BASICOPTS =   -O3   -s -m64
-CCFLAGS = -std=c++11
-CXXFLAGS =  -O3  -DMAS_ENSEMBLE -pthread -std=c++11 $(EXTRA_CXXFLAGS)
+CCFLAGS = -std=c++17
+CXXFLAGS =  -O3  -DMAS_ENSEMBLE -pthread -std=c++17 $(EXTRA_CXXFLAGS)
+CPPFLAGS += -Ithird_party/Quadra/external/eigen -Ithird_party/Quadra/external/LBFGSpp/include
 CCADMIN = 
 # Define the target directories.
 TARGETDIR_mas_ensemble=bin

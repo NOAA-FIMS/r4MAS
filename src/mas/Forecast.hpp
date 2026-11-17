@@ -724,7 +724,7 @@ namespace mas {
             } while (r2 > 1.0 || r2 == 0);
 
             /* Box-Muller transform */
-            return (y * std::sqrt(-2.0 * std::log(r2) / r2));
+            return (y * mas::sqrt(-2.0 * mas::log(r2) / r2));
         }
 
         void DateString(std::string& str) {
@@ -4071,7 +4071,7 @@ namespace mas {
         REAL_T LogNormalError(REAL_T x, REAL_T cv, REAL_T xlo, REAL_T xhi) {
             REAL_T sd, xx, zscore;
 
-            sd = std::sqrt(log(cv * cv + 1.0));
+            sd = mas::sqrt(log(cv * cv + 1.0));
 
 
             do {

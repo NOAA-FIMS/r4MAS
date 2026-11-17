@@ -131,29 +131,29 @@ namespace mas {
 
 
 
-        std::map<int, std::vector< atl::intrusive_ptr<Fleet<REAL_T> > > > seasonal_fleet_operations;
-        std::map<int, std::vector< atl::intrusive_ptr<Survey<REAL_T> > > > seasonal_survey_operations;
-        std::set<atl::intrusive_ptr<Fleet<REAL_T> > > active_fleets; //set of fleets that may be operational in this area
-        typedef typename std::set<atl::intrusive_ptr<Fleet<REAL_T> > >::iterator active_fleets_iterator;
-        typedef typename std::map<int, std::vector< atl::intrusive_ptr<Fleet<REAL_T> > > >::iterator seasonal_fleet_operations_iterator;
+        std::map<int, std::vector< mas::backend::intrusive_ptr<Fleet<REAL_T> > > > seasonal_fleet_operations;
+        std::map<int, std::vector< mas::backend::intrusive_ptr<Survey<REAL_T> > > > seasonal_survey_operations;
+        std::set<mas::backend::intrusive_ptr<Fleet<REAL_T> > > active_fleets; //set of fleets that may be operational in this area
+        typedef typename std::set<mas::backend::intrusive_ptr<Fleet<REAL_T> > >::iterator active_fleets_iterator;
+        typedef typename std::map<int, std::vector< mas::backend::intrusive_ptr<Fleet<REAL_T> > > >::iterator seasonal_fleet_operations_iterator;
 
-        std::map<int, std::map<int, atl::intrusive_ptr<mas::Survey<REAL_T> > > > survey_models; //population, season keyed
-        typedef typename std::map<int, std::map<int, atl::intrusive_ptr<mas::Survey<REAL_T> > > > ::iterator survey_model_iterator;
-        typedef typename std::map<int, atl::intrusive_ptr<mas::Survey<REAL_T> > >::iterator survey_season_iterator;
+        std::map<int, std::map<int, mas::backend::intrusive_ptr<mas::Survey<REAL_T> > > > survey_models; //population, season keyed
+        typedef typename std::map<int, std::map<int, mas::backend::intrusive_ptr<mas::Survey<REAL_T> > > > ::iterator survey_model_iterator;
+        typedef typename std::map<int, mas::backend::intrusive_ptr<mas::Survey<REAL_T> > >::iterator survey_season_iterator;
 
-        std::vector<atl::intrusive_ptr<DataObject<REAL_T> > > survey_biomass_data;
-        std::vector<atl::intrusive_ptr<DataObject<REAL_T> > > survey_proportion_data_N;
-        std::vector<atl::intrusive_ptr<DataObject<REAL_T> > > survey_proportion_data;
-        std::vector<atl::intrusive_ptr<DataObject<REAL_T> > > survey_proportion_length_data_N;
-        std::vector<atl::intrusive_ptr<DataObject<REAL_T> > > survey_proportion_length_data;
-        std::vector<atl::intrusive_ptr<DataObject<REAL_T> > > survey_mean_size_data;
+        std::vector<mas::backend::intrusive_ptr<DataObject<REAL_T> > > survey_biomass_data;
+        std::vector<mas::backend::intrusive_ptr<DataObject<REAL_T> > > survey_proportion_data_N;
+        std::vector<mas::backend::intrusive_ptr<DataObject<REAL_T> > > survey_proportion_data;
+        std::vector<mas::backend::intrusive_ptr<DataObject<REAL_T> > > survey_proportion_length_data_N;
+        std::vector<mas::backend::intrusive_ptr<DataObject<REAL_T> > > survey_proportion_length_data;
+        std::vector<mas::backend::intrusive_ptr<DataObject<REAL_T> > > survey_mean_size_data;
 
-        std::vector<atl::intrusive_ptr<DataObject<REAL_T> > > catch_biomass_data;
-        std::vector<atl::intrusive_ptr<DataObject<REAL_T> > > catch_proportion_data_N;
-        std::vector<atl::intrusive_ptr<DataObject<REAL_T> > > catch_proportion_data;
-        std::vector<atl::intrusive_ptr<DataObject<REAL_T> > > catch_proportion_length_data_N;
-        std::vector<atl::intrusive_ptr<DataObject<REAL_T> > > catch_proportion_length_data;
-        std::vector<atl::intrusive_ptr<DataObject<REAL_T> > > catch_mean_size_data;
+        std::vector<mas::backend::intrusive_ptr<DataObject<REAL_T> > > catch_biomass_data;
+        std::vector<mas::backend::intrusive_ptr<DataObject<REAL_T> > > catch_proportion_data_N;
+        std::vector<mas::backend::intrusive_ptr<DataObject<REAL_T> > > catch_proportion_data;
+        std::vector<mas::backend::intrusive_ptr<DataObject<REAL_T> > > catch_proportion_length_data_N;
+        std::vector<mas::backend::intrusive_ptr<DataObject<REAL_T> > > catch_proportion_length_data;
+        std::vector<mas::backend::intrusive_ptr<DataObject<REAL_T> > > catch_mean_size_data;
 
 
         //runtime
@@ -564,7 +564,7 @@ namespace mas {
 
         // output fully-selected fishing mortality and selectivity-at-age for all seasons and fleets in each season
         for (int s = 1; s <= area.seasons; ++s) {
-            const std::vector< atl::intrusive_ptr<Fleet<REAL_T> > >& area_fleets = area.seasonal_fleet_operations.at(s);
+            const std::vector< mas::backend::intrusive_ptr<Fleet<REAL_T> > >& area_fleets = area.seasonal_fleet_operations.at(s);
 
             if (!area_fleets.empty()) {
                 for (int f = 0; f < area_fleets.size(); ++f) {

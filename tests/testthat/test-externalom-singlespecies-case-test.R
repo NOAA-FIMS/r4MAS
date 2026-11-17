@@ -210,6 +210,17 @@ test_that(
     args <- commandArgs(trailingOnly = TRUE)
     args <- "test_output.json"
     json_output <- read_json(file.path(test_path, args[1]))
+    expect_equal(json_output$uncertainty$backend, "Quadra")
+    fixed_report <- json_output$uncertainty$fixed_effects
+    expect_type(fixed_report$success, "logical")
+    if (fixed_report$success) {
+      report_se <- vapply(fixed_report$rows, function(row) row$std_error, numeric(1))
+      expect_equal(report_se, unlist(json_output$estimated_parameters$standard_deviation$values))
+    } else {
+      expect_length(fixed_report$rows, 0)
+      expect_true(all(vapply(json_output$estimated_parameters$standard_deviation$values, is.null, logical(1))))
+    }
+    expect_type(json_output$uncertainty$derived$success, "logical")
     popdy <- json_output$population_dynamics
     pop <- popdy$populations[[1]]
     flt <- popdy$fleets[[1]]

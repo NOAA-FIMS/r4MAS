@@ -68,22 +68,22 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/mas: ${OBJECTFILES}
 ${OBJECTDIR}/Tests/ASAP/admb2r.o: Tests/ASAP/admb2r.cpp
 	${MKDIR} -p ${OBJECTDIR}/Tests/ASAP
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Ithird_party/ATL/lib/third_party/EASTL/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Tests/ASAP/admb2r.o Tests/ASAP/admb2r.cpp
+	$(COMPILE.cc) -g -Ithird_party/Quadra/external/eigen -Ithird_party/Quadra/external/LBFGSpp/include -std=c++17 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Tests/ASAP/admb2r.o Tests/ASAP/admb2r.cpp
 
 ${OBJECTDIR}/Tests/ASAP/asap2mas.o: Tests/ASAP/asap2mas.cpp
 	${MKDIR} -p ${OBJECTDIR}/Tests/ASAP
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Ithird_party/ATL/lib/third_party/EASTL/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Tests/ASAP/asap2mas.o Tests/ASAP/asap2mas.cpp
+	$(COMPILE.cc) -g -Ithird_party/Quadra/external/eigen -Ithird_party/Quadra/external/LBFGSpp/include -std=c++17 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Tests/ASAP/asap2mas.o Tests/ASAP/asap2mas.cpp
 
 ${OBJECTDIR}/Tests/NLL/main.o: Tests/NLL/main.cpp
 	${MKDIR} -p ${OBJECTDIR}/Tests/NLL
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Ithird_party/ATL/lib/third_party/EASTL/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Tests/NLL/main.o Tests/NLL/main.cpp
+	$(COMPILE.cc) -g -Ithird_party/Quadra/external/eigen -Ithird_party/Quadra/external/LBFGSpp/include -std=c++17 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Tests/NLL/main.o Tests/NLL/main.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Ithird_party/ATL/lib/third_party/EASTL/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -Ithird_party/Quadra/external/eigen -Ithird_party/Quadra/external/LBFGSpp/include -std=c++17 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:

@@ -17,14 +17,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/Users/mattadmin/current_r4mas/r4MAS/src/mas/Population.hpp</file>
-            <file>file:/Users/mattadmin/current_r4mas/r4MAS/src/mas/third_party/ATL/lib/Variable.hpp</file>
             <file>file:/Users/mattadmin/current_r4mas/r4MAS/src/mas/Selectivity.hpp</file>
             <file>file:/Users/mattadmin/current_r4mas/r4MAS/src/mas/Recruitment.hpp</file>
-            <file>file:/Users/mattadmin/current_r4mas/r4MAS/src/mas/third_party/ATL/lib/Tape.hpp</file>
             <file>file:/Users/mattadmin/current_r4mas/r4MAS/src/mas/HarvestControlRule.hpp</file>
             <file>file:/Users/mattadmin/current_r4mas/r4MAS/src/mas/Growth.hpp</file>
             <file>file:/Users/mattadmin/current_r4mas/r4MAS/src/mas/Fleet.hpp</file>
-            <file>file:/Users/mattadmin/current_r4mas/r4MAS/src/mas/third_party/ATL/lib/DynamicExpression.hpp</file>
         </group>
     </open-files>
 </project-private>

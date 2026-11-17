@@ -1,4 +1,2 @@
-CXX_STD = CXX14	
-PKG_CXXFLAGS = -O3 -w 	
-CXX14 = $(BINPREF)g++ -w  -m$(WIN) -std=c++1y 
-CXX11FLAGS=-O3 -w
+CXX_STD = CXX17
+PKG_CPPFLAGS = -I./mas/third_party/Quadra/external/eigen -I./mas/third_party/Quadra/external/LBFGSpp/include

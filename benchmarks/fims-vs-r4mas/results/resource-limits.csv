@@ -1,0 +1,2 @@
+"case","engine","mode","replicate","limit_seconds","observed_process_seconds","peak_process_rss_mib","outcome"
+"large","r4MAS","fixed preflight",0,120,147.194772005081,1331.09375,"Preflight completed above budget; subsequent fit interrupted after 78 s; excluded from paired summary"

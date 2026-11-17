@@ -14,7 +14,7 @@
 #ifndef OPTIONS_HPP
 #define OPTIONS_HPP
 
-#include "third_party/ATL/lib/Utilities/StringUtil.hpp"
+#include "StringUtil.hpp"
 
 
 
